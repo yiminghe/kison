@@ -12,7 +12,7 @@ program
     .option('-w, --watch', 'Watch grammar file change')
     .option('-k, --kissy', 'Generate kissy module format')
     // defaults bool true
-    .option('--no-compressSymbol', 'Set compress symbol', true)
+    .option('--no-compressSymbol', 'Set compress symbol')
     .option('--compressLexerState', 'Set compress lexer state')
     .parse(process.argv);
 

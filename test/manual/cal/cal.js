@@ -149,8 +149,14 @@
                 (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
             return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
         },
-        'mapSymbol': function mapSymbolForCodeGen(t) {
-            return this.symbolMap[t];
+        'mapSymbol': function (t) {
+            var self = this,
+                symbolMap = self.symbolMap;
+            if (!symbolMap) {
+                return t;
+            }
+            // force string, see util.clone iphone5s ios7 bug
+            return symbolMap[t] || (symbolMap[t] = self.genShortId('symbol'));
         },
         'mapReverseSymbol': function (rs) {
             var self = this,
@@ -240,39 +246,37 @@
         'END_TAG': '$EOF'
     };
     var lexer = new Lexer({
-        'rules': [
-            [0, /^\s+/, 0],
-            ['b', /^[0-9]+(\.[0-9]+)?\b/, 0],
-            ['c', /^\+/, 0],
-            ['d', /^-/, 0],
-            ['e', /^./, 0]
-        ]
+        'rules': [{
+            'regexp': /^\s+/
+        }, {
+            'regexp': /^[0-9]+(\.[0-9]+)?\b/,
+            'token': 'NUMBER'
+        }, {
+            'regexp': /^\+/,
+            'token': '+'
+        }, {
+            'regexp': /^-/,
+            'token': '-'
+        }, {
+            'regexp': /^./,
+            'token': 'ERROR_LA'
+        }]
     });
     parser.lexer = lexer;
-    lexer.symbolMap = {
-        '$EOF': 'a',
-        'NUMBER': 'b',
-        '+': 'c',
-        '-': 'd',
-        'ERROR_LA': 'e',
-        '$START': 'f',
-        'expressions': 'g',
-        'e': 'h'
-    };
     parser.productions = [
-        ['f', ['g']],
-        ['g', ['h']],
-        ['h', ['h', 'd', 'h'],
+        ['$START', ['expressions']],
+        ['expressions', ['e']],
+        ['e', ['e', '-', 'e'],
             function () {
                 return this.$1 - this.$3;
             }
         ],
-        ['h', ['h', 'c', 'h'],
+        ['e', ['e', '+', 'e'],
             function () {
                 return this.$1 + this.$3;
             }
         ],
-        ['h', ['b'],
+        ['e', ['NUMBER'],
             function () {
                 return Number(this.$1);
             }
@@ -281,48 +285,48 @@
     parser.table = {
         'gotos': {
             '0': {
-                'g': 2,
-                'h': 3
+                'expressions': 2,
+                'e': 3
             },
             '4': {
-                'h': 6
+                'e': 6
             },
             '5': {
-                'h': 7
+                'e': 7
             }
         },
         'action': {
             '0': {
-                'b': [1, undefined, 1]
+                'NUMBER': [1, undefined, 1]
             },
             '1': {
-                'a': [2, 4],
-                'c': [2, 4],
-                'd': [2, 4]
+                '$EOF': [2, 4],
+                '+': [2, 4],
+                '-': [2, 4]
             },
             '2': {
-                'a': [0]
+                '$EOF': [0]
             },
             '3': {
-                'a': [2, 1],
-                'c': [1, undefined, 4],
-                'd': [1, undefined, 5]
+                '$EOF': [2, 1],
+                '+': [1, undefined, 4],
+                '-': [1, undefined, 5]
             },
             '4': {
-                'b': [1, undefined, 1]
+                'NUMBER': [1, undefined, 1]
             },
             '5': {
-                'b': [1, undefined, 1]
+                'NUMBER': [1, undefined, 1]
             },
             '6': {
-                'a': [2, 3],
-                'c': [1, undefined, 4],
-                'd': [1, undefined, 5]
+                '$EOF': [2, 3],
+                '+': [1, undefined, 4],
+                '-': [1, undefined, 5]
             },
             '7': {
-                'a': [2, 2],
-                'c': [1, undefined, 4],
-                'd': [1, undefined, 5]
+                '$EOF': [2, 2],
+                '+': [1, undefined, 4],
+                '-': [1, undefined, 5]
             }
         }
     };

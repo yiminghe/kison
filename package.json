@@ -1,0 +1,27 @@
+{
+    "name": "kison",
+    "version": "0.1.0",
+    "description": "parser generator for javascript",
+    "author": "yiminghe <yiminghe@gmail.com>",
+    "directories": {
+        "lib": "./lib/"
+    },
+    "main": "./lib/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:yiminghe/kison.git"
+    },
+    "devDependencies": {
+        "jasmine-node": "~1.14.2"
+    },
+    "dependencies": {
+        "debug": "~0.8.1",
+        "js-beautify": "~1.5.1"
+    },
+    "scripts": {
+        "test": "node ./node_modules/jasmine-node/bin/jasmine-node test/spec/"
+    },
+    "bin": {
+        "kison": "./bin/kison.js"
+    }
+}

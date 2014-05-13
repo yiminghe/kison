@@ -1,0 +1,1 @@
+node ../../../bin/kison -k -n cal-kissy -g parser-grammar.kison

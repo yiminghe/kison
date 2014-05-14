@@ -1,6 +1,6 @@
 {
     "name": "kison",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "parser generator for javascript",
     "author": "yiminghe <yiminghe@gmail.com>",
     "directories": {

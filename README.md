@@ -85,7 +85,7 @@ kison -g cal-grammar.kison
 
 cal.js:
 
-```
+``` javascript
 (function(){
     var parser = {
         parse: function(){
@@ -94,4 +94,12 @@ cal.js:
     }
     return parser;
 })();
+```
+
+### run parser
+
+``` javascript
+    parser.parse('1+2') // => 3
+    parser.parse('2-1') // => 1
+    parser.parse('2a') // => syntax error at line 1: 2^a expect NUMBER
 ```

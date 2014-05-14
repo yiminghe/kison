@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/yiminghe/kison.svg?branch=master)](https://travis-ci.org/yiminghe/kison)
 
 
-A parser generator for javascript originated in KISSY
+A LALR parser generator for javascript originated in KISSY
 
 ## example
 

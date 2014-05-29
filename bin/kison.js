@@ -4,7 +4,7 @@
  * Generate parser function using LALR algorithm.
  * @author yiminghe@gmail.com
  */
-var program = require('./commander');
+var program = require('commander');
 program
     .option('-g, --grammar <grammar>', 'Set kison grammar file')
     .option('-n, --name [name]', 'Set file name')
@@ -14,6 +14,15 @@ program
     .option('--no-compressSymbol', 'Set compress symbol')
     .option('--compressLexerState', 'Set compress lexer state')
     .parse(process.argv);
+
+var options = program.options;
+
+options.forEach(function (o) {
+    var name = o.name();
+    if (o.required && !(name in program)) {
+        program.optionMissingArgument(o);
+    }
+});
 
 var Utils = require('../lib/utils'),
     KISON = require('../lib/'),

@@ -435,3 +435,6 @@ var cal = (function (undefined) {
     };
     return parser;
 })();
+if (typeof module !== 'undefined') {
+    module.exports = cal;
+}

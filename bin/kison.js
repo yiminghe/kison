@@ -48,7 +48,10 @@ var codeTemplate = '' +
     'var {name} = (function(undefined){\n' +
     '/*jshint quotmark:false, loopfunc:true, indent:false, unused:false, asi:true, boss:true*/\n' +
     '{code}\n' +
-    '})();';
+    '})();' +
+    'if(typeof module !== \'undefined\'){' +
+    'module.exports = {name};' +
+    '}';
 
 var kissyCodeTemplate = '' +
     '/*\n' +

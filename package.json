@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "directories": {
@@ -17,7 +17,8 @@
   "dependencies": {
     "debug": "~0.8.1",
     "js-beautify": "~1.5.1",
-    "commander": "~2.2.0"
+    "commander": "~2.2.0",
+    "kissy": "~5.0.0-alpha.2"
   },
   "scripts": {
     "test": "node ./node_modules/jasmine-node/bin/jasmine-node test/spec/"

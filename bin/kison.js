@@ -4,6 +4,8 @@
  * Generate parser function using LALR algorithm.
  * @author yiminghe@gmail.com
  */
+var esprima = require('esprima');
+var escodegen = require('escodegen');
 var program = require('commander');
 program
     .option('-g, --grammar <grammar>', 'Set kison grammar file')
@@ -25,8 +27,6 @@ options.forEach(function (o) {
 
 var Utils = require('../lib/utils'),
     KISON = require('../lib/'),
-/*jshint camelcase:false*/
-    js_beautify = require('js-beautify').js_beautify,
     fs = require('fs'),
     path = require('path'),
     grammar = path.resolve(program.grammar),
@@ -52,17 +52,14 @@ var codeTemplate = '' +
     'module.exports = {name};' +
     '}';
 
-function my_js_beautify(str) {
-    //return str;
-    var opts = {
-        'indent_size': '4',
-        'indent_char': ' ',
-        'preserve_newlines': true,
-        'brace_style': 'collapse',
-        'keep_array_indentation': false,
-        'space_after_anon_function': true
-    };
-    return js_beautify(str, opts);
+function myJsBeautify(str) {
+    try {
+        return escodegen.generate(esprima.parse(str));
+    } catch (e) {
+        console.log('syntax error: ');
+        console.log(str);
+        throw e;
+    }
 }
 
 function genParser() {
@@ -73,7 +70,7 @@ function genParser() {
     /*jshint evil:true*/
     var code = new KISON.Grammar(eval(grammarContent)).genCode(kisonCfg);
 
-    var moduleCode = my_js_beautify(Utils.substitute(codeTemplate, {
+    var moduleCode = myJsBeautify(Utils.substitute(codeTemplate, {
             code: code,
             name: grammarBaseName
         }));

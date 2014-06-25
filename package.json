@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "directories": {
@@ -15,8 +15,9 @@
     "jasmine-node": "~1.14.2"
   },
   "dependencies": {
+    "esprima": "~1.1.1",
+    "escodegen": "~1.3.2",
     "debug": "~0.8.1",
-    "js-beautify": "~1.5.1",
     "commander": "~2.2.0",
     "kissy": "~5.0.0-alpha.2"
   },

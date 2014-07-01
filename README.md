@@ -103,3 +103,9 @@ cal.js:
     parser.parse('2-1') // => 1
     parser.parse('2a') // => syntax error at line 1: 2^a expect NUMBER
 ```
+
+## changelog
+
+### 0.3.0
+
+* optimize error debug info

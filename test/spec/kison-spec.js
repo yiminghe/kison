@@ -219,7 +219,7 @@ describe("kison", function () {
         expect(function () {
             Function.call(null, grammar.genCode())().parse("dc");
         }).toThrow('syntax error at line 1:\ndc\n--^\n' +
-            'expect c, d');
+            'expect shift:c, shift:d');
 
     });
 
@@ -270,7 +270,7 @@ describe("kison", function () {
                 compressSymbol: 1
             }))().parse("dc");
         }).toThrow('syntax error at line 1:\ndc\n--^\n' +
-            'expect c, d');
+            'expect shift:c, shift:d');
 
     });
 
@@ -378,7 +378,7 @@ describe("kison", function () {
                 parser.parse("abb");
             }).toThrow('syntax error at line 1:\n' +
                 'abb\n' +
-                '--^\nexpect b');
+                '--^\nexpect shift:b');
         });
 
         it('can not parse when compress', function () {
@@ -428,7 +428,7 @@ describe("kison", function () {
                 parser.parse("abb");
             }).toThrow('syntax error at line 1:\n' +
                 'abb\n' +
-                '--^\nexpect b');
+                '--^\nexpect shift:b');
         });
     });
 

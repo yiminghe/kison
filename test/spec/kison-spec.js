@@ -62,13 +62,6 @@ describe("kison", function () {
 
         var cItem = itemSets[0].gotos.c;
         expect(cItem === itemSets[1]).toBe(true);
-
-        // S.log("!!!!!!!!!!!!!!!");
-        // // S.log(itemSets[4].get('gotos').c.toString());
-        // S.log("!!!!!!!!!!!!!!!");
-
-        // expect(itemSets[4].get('gotos').c).toBe(itemSets[1]);
-
         var num = 0;
 
         for (var symbol in i1gotos) {
@@ -171,7 +164,7 @@ describe("kison", function () {
             }
         });
         var code = grammar.genCode(true);
-        expect(Function.call(null, code)().parse("ccdd")).not.toBe(false);
+        expect(Function.call(null, code+'\n return parser;')().parse("ccdd")).not.toBe(false);
     });
 
     it("can not parse invalid input", function () {
@@ -217,7 +210,7 @@ describe("kison", function () {
         });
 
         expect(function () {
-            Function.call(null, grammar.genCode())().parse("dc");
+            Function.call(null, grammar.genCode()+'\n return parser;')().parse("dc");
         }).toThrow('syntax error at line 1:\ndc\n--^\n' +
             'expect shift:c, shift:d');
 
@@ -268,14 +261,13 @@ describe("kison", function () {
         expect(function () {
             Function.call(null, grammar.genCode({
                 compressSymbol: 1
-            }))().parse("dc");
+            })+'\n return parser;')().parse("dc");
         }).toThrow('syntax error at line 1:\ndc\n--^\n' +
             'expect shift:c, shift:d');
 
     });
 
     describe('state', function () {
-
         it('can parse', function () {
             var log = [];
             var grammar = new Grammar({
@@ -314,7 +306,7 @@ describe("kison", function () {
 
             var parser = Function.call(null, grammar.genCode({
                 compressSymbol: 0
-            }))();
+            })+'\n return parser;')();
 
             parser.yy = {
                 log: log
@@ -368,7 +360,7 @@ describe("kison", function () {
             });
             var parser = Function.call(null, grammar.genCode({
                 compressSymbol: 1
-            }))();
+            })+'\n return parser;')();
 
             parser.yy = {
                 log: log
@@ -418,7 +410,7 @@ describe("kison", function () {
             });
             var parser = Function.call(null, grammar.genCode({
                 compressSymbol: 0
-            }))();
+            })+'\n return parser;')();
 
             parser.yy = {
                 log: log
@@ -433,7 +425,6 @@ describe("kison", function () {
     });
 
     it("parse ok with action", function () {
-
         // S.log("---------------- parse ok with action : ccdd by ");
         // S.log(" S0 => S ");
         // S.log(" S => CC ");
@@ -445,7 +436,6 @@ describe("kison", function () {
         // S => CC
         // C => cC
         // C => d
-
 
         var grammar = new Grammar({
             productions: [
@@ -516,9 +506,7 @@ describe("kison", function () {
         });
 
         expect(function () {
-            Function.call(null, grammar.genCode())().parse("ccdd");
+            Function.call(null, grammar.genCode()+'\n return parser;')().parse("ccdd");
         }).not.toThrow(undefined);
-
-        // S.log(global.TEST_RET.join('\n'));
     });
 });

@@ -12,7 +12,7 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
-    "jasmine-node": "~1.14.2"
+    "jasmine-node": "1.14.3"
   },
   "dependencies": {
     "esprima": "~1.1.1",

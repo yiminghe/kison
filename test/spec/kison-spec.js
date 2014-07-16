@@ -1,12 +1,13 @@
 var Kison = require('../../lib/');
 var Grammar = Kison.Grammar;
 var Utils = Kison.Utils;
+var expect = require('chai').expect;
 
 /*jshint quotmark:false*/
 describe("kison", function () {
     it('escape correctly', function () {
-        expect(Utils.escapeString("'\\")).toBe("\\'\\\\");
-        expect(Function.call(null, "return '" + Utils.escapeString("'\\") + "'")()).toBe("'\\");
+        expect(Utils.escapeString("'\\")).to.equal("\\'\\\\");
+        expect(Function.call(null, "return '" + Utils.escapeString("'\\") + "'")()).to.equal("'\\");
     });
 
     // 4-41 文法 GOTO 图
@@ -56,23 +57,23 @@ describe("kison", function () {
 
         var itemSets = grammar.itemSets;
 
-        expect(itemSets.length).toBe(8);
+        expect(itemSets.length).to.equal(8);
 
         var i1gotos = itemSets[1].gotos;
 
         var cItem = itemSets[0].gotos.c;
-        expect(cItem === itemSets[1]).toBe(true);
+        expect(cItem === itemSets[1]).to.equal(true);
         var num = 0;
 
         for (var symbol in i1gotos) {
             var itemSet = i1gotos[symbol];
             if (symbol === "c") {
-                expect(itemSet === itemSets[1]).toBe(true);
+                expect(itemSet === itemSets[1]).to.equal(true);
             }
             num++;
         }
 
-        expect(num).toBe(3);
+        expect(num).to.equal(3);
     });
 
     it("generate table ok", function () {
@@ -164,7 +165,7 @@ describe("kison", function () {
             }
         });
         var code = grammar.genCode(true);
-        expect(Function.call(null, code+'\n return parser;')().parse("ccdd")).not.toBe(false);
+        expect(Function.call(null, code+'\n return parser;')().parse("ccdd")).not.to.equal(false);
     });
 
     it("can not parse invalid input", function () {
@@ -211,7 +212,7 @@ describe("kison", function () {
 
         expect(function () {
             Function.call(null, grammar.genCode()+'\n return parser;')().parse("dc");
-        }).toThrow('syntax error at line 1:\ndc\n--^\n' +
+        }).to['throw']('syntax error at line 1:\ndc\n--^\n' +
             'expect shift:c, shift:d');
 
     });
@@ -262,7 +263,7 @@ describe("kison", function () {
             Function.call(null, grammar.genCode({
                 compressSymbol: 1
             })+'\n return parser;')().parse("dc");
-        }).toThrow('syntax error at line 1:\ndc\n--^\n' +
+        }).to['throw']('syntax error at line 1:\ndc\n--^\n' +
             'expect shift:c, shift:d');
 
     });
@@ -314,13 +315,13 @@ describe("kison", function () {
 
             expect(function () {
                 parser.parse("ab");
-            }).not.toThrow(undefined);
+            }).not.to['throw'](undefined);
 
-            expect(log.length).toBe(2);
+            expect(log.length).to.equal(2);
 
-            expect(log[0]).toBe('a');
+            expect(log[0]).to.equal('a');
 
-            expect(log[1]).toBe('b');
+            expect(log[1]).to.equal('b');
         });
 
         it('can not parse', function () {
@@ -368,7 +369,7 @@ describe("kison", function () {
 
             expect(function () {
                 parser.parse("abb");
-            }).toThrow('syntax error at line 1:\n' +
+            }).to['throw']('syntax error at line 1:\n' +
                 'abb\n' +
                 '--^\nexpect shift:b');
         });
@@ -418,7 +419,7 @@ describe("kison", function () {
 
             expect(function () {
                 parser.parse("abb");
-            }).toThrow('syntax error at line 1:\n' +
+            }).to['throw']('syntax error at line 1:\n' +
                 'abb\n' +
                 '--^\nexpect shift:b');
         });
@@ -507,6 +508,6 @@ describe("kison", function () {
 
         expect(function () {
             Function.call(null, grammar.genCode()+'\n return parser;')().parse("ccdd");
-        }).not.toThrow(undefined);
+        }).not.to['throw'](undefined);
     });
 });

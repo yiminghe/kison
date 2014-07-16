@@ -20,7 +20,6 @@
     "globals": {
         "KISSY": false,
         "describe": false,
-        "expect": false,
         "runs": false,
         "beforeEach": false,
         "afterEach": false,

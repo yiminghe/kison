@@ -58,7 +58,8 @@ var grammar = new Grammar({
 });
 
 var code = grammar.genCode();
+// console.log(code);
 // console.log(JSON.stringify(grammar.table));
-//console.log(grammar.visualizeTable());
+// console.log(grammar.visualizeTable());
 var parser = Function.call(null, code+'\n return parser;')();
 console.log(parser.parse('a'));

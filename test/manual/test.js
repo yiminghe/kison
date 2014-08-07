@@ -1,13 +1,11 @@
 var Kison = require('../../lib/');
 var Grammar = Kison.Grammar;
-var Utils = Kison.Utils;
 var grammar = new Grammar({
     productions: [
         {
-            symbol: "a",
+            symbol: 'a',
             rhs: [
-                "A",
-                "d"
+                'A'
             ]
         },
         {
@@ -15,17 +13,17 @@ var grammar = new Grammar({
             rhs:['D']
         },
         {
-            symbol: "d",
+            symbol: 'd',
             rhs: [
-                "d",
-                "E"
+                'd',
+                'E'
             ]
         },
         {
-            symbol: "d",
+            symbol: 'd',
             rhs: [
-                "d",
-                "b"
+                'd',
+                'b'
             ]
         },
         {
@@ -58,7 +56,9 @@ var grammar = new Grammar({
         ]
     }
 });
-debugger
-grammar.build();
-var nonTerminals = grammar.nonTerminals;
-console.log(grammar.visualizeTable());
+
+var code = grammar.genCode();
+// console.log(JSON.stringify(grammar.table));
+//console.log(grammar.visualizeTable());
+var parser = Function.call(null, code+'\n return parser;')();
+console.log(parser.parse('a'));

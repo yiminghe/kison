@@ -14,28 +14,28 @@
             {
                 symbol: 'program',
                 rhs: ['statements', 'INVERSE', 'statements'],
-                action: function () {
+                action() {
                     return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3);
                 }
             },
             {
                 symbol: 'program',
                 rhs: ['statements'],
-                action: function () {
+                action() {
                     return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1);
                 }
             },
             {
                 symbol: 'statements',
                 rhs: ['statement'],
-                action: function () {
+                action() {
                     return [this.$1];
                 }
             },
             {
                 symbol: 'statements',
                 rhs: ['statements', 'statement'],
-                action: function () {
+                action() {
                     this.$1.push(this.$2);
                 }
             },
@@ -44,7 +44,7 @@
             {
                 symbol: 'statement',
                 rhs: ['OPEN_BLOCK', 'function', 'CLOSE', 'program', 'OPEN_CLOSE_BLOCK', 'id', 'CLOSE'],
-                action: function () {
+                action() {
                     return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2,
                         this.$4, this.$6, this.$1.length !== 4);
                 }
@@ -54,7 +54,7 @@
             {
                 symbol: 'statement',
                 rhs: ['OPEN_TPL', 'expression', 'CLOSE'],
-                action: function () {
+                action() {
                     return new this.yy.ExpressionStatement(this.lexer.lineNumber, this.$2, this.$1.length !== 3);
                 }
             },
@@ -63,7 +63,7 @@
             {
                 symbol: 'statement',
                 rhs: ['CONTENT'],
-                action: function () {
+                action() {
                     return new this.yy.ContentStatement(this.lexer.lineNumber, this.$1);
                 }
             },
@@ -71,7 +71,7 @@
             {
                 symbol: 'function',
                 rhs: ['id', 'LPAREN', 'params', 'COMMA', 'hash', 'RPAREN'],
-                action: function () {
+                action() {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3, this.$5);
                 }
             },
@@ -79,21 +79,21 @@
             {
                 symbol: 'function',
                 rhs: ['id', 'LPAREN', 'params', 'RPAREN'],
-                action: function () {
+                action() {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3);
                 }
             },
             {
                 symbol: 'function',
                 rhs: ['id', 'LPAREN', 'hash', 'RPAREN'],
-                action: function () {
+                action() {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1, null, this.$3);
                 }
             },
             {
                 symbol: 'function',
                 rhs: ['id', 'LPAREN', 'RPAREN'],
-                action: function () {
+                action() {
                     return new this.yy.Function(this.lexer.lineNumber, this.$1);
                 }
             },
@@ -102,14 +102,14 @@
             {
                 symbol: 'params',
                 rhs: ['params', 'COMMA', 'param'],
-                action: function () {
+                action() {
                     this.$1.push(this.$3);
                 }
             },
             {
                 symbol: 'params',
                 rhs: ['param'],
-                action: function () {
+                action() {
                     return [this.$1];
                 }
             },
@@ -131,7 +131,7 @@
             {
                 symbol: 'conditionalOrExpression',
                 rhs: ['conditionalOrExpression', 'OR', 'conditionalAndExpression'],
-                action: function () {
+                action() {
                     return new this.yy.ConditionalOrExpression(this.$1, this.$3);
                 }
             },
@@ -142,7 +142,7 @@
             {
                 symbol: 'conditionalAndExpression',
                 rhs: ['conditionalAndExpression', 'AND', 'equalityExpression'],
-                action: function () {
+                action() {
                     return new this.yy.ConditionalAndExpression(this.$1, this.$3);
                 }
             },
@@ -153,14 +153,14 @@
             {
                 symbol: 'equalityExpression',
                 rhs: ['equalityExpression', 'LOGIC_EQUALS', 'relationalExpression'],
-                action: function () {
+                action() {
                     return new this.yy.EqualityExpression(this.$1, '===', this.$3);
                 }
             },
             {
                 symbol: 'equalityExpression',
                 rhs: ['equalityExpression', 'LOGIC_NOT_EQUALS', 'relationalExpression'],
-                action: function () {
+                action() {
                     return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
                 }
             },
@@ -171,28 +171,28 @@
             {
                 symbol: 'relationalExpression',
                 rhs: ['relationalExpression', 'LT', 'additiveExpression'],
-                action: function () {
+                action() {
                     return new this.yy.RelationalExpression(this.$1, '<', this.$3);
                 }
             },
             {
                 symbol: 'relationalExpression',
                 rhs: ['relationalExpression', 'GT', 'additiveExpression'],
-                action: function () {
+                action() {
                     return new this.yy.RelationalExpression(this.$1, '>', this.$3);
                 }
             },
             {
                 symbol: 'relationalExpression',
                 rhs: ['relationalExpression', 'LE', 'additiveExpression'],
-                action: function () {
+                action() {
                     return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
                 }
             },
             {
                 symbol: 'relationalExpression',
                 rhs: ['relationalExpression', 'GE', 'additiveExpression'],
-                action: function () {
+                action() {
                     return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
                 }
             },
@@ -203,14 +203,14 @@
             {
                 symbol: 'additiveExpression',
                 rhs: ['additiveExpression', 'PLUS', 'multiplicativeExpression'],
-                action: function () {
+                action() {
                     return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
                 }
             },
             {
                 symbol: 'additiveExpression',
                 rhs: ['additiveExpression', 'MINUS', 'multiplicativeExpression'],
-                action: function () {
+                action() {
                     return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
                 }
             },
@@ -221,35 +221,35 @@
             {
                 symbol: 'multiplicativeExpression',
                 rhs: ['multiplicativeExpression', 'MULTIPLY', 'unaryExpression'],
-                action: function () {
+                action() {
                     return new this.yy.MultiplicativeExpression(this.$1, '*', this.$3);
                 }
             },
             {
                 symbol: 'multiplicativeExpression',
                 rhs: ['multiplicativeExpression', 'DIVIDE', 'unaryExpression'],
-                action: function () {
+                action() {
                     return new this.yy.MultiplicativeExpression(this.$1, '/', this.$3);
                 }
             },
             {
                 symbol: 'multiplicativeExpression',
                 rhs: ['multiplicativeExpression', 'MODULUS', 'unaryExpression'],
-                action: function () {
+                action() {
                     return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
                 }
             },
             {
                 symbol: 'unaryExpression',
                 rhs: ['NOT', 'unaryExpression'],
-                action: function () {
+                action() {
                     return new this.yy.UnaryExpression(this.$1, this.$2);
                 }
             },
             {
                 symbol: 'unaryExpression',
                 rhs: ['MINUS', 'unaryExpression'],
-                action: function () {
+                action() {
                     return new this.yy.UnaryExpression(this.$1, this.$2);
                 }
             },
@@ -264,21 +264,21 @@
             {
                 symbol: 'primaryExpression',
                 rhs: ['STRING'],
-                action: function () {
+                action() {
                     return new this.yy.String(this.lexer.lineNumber, this.$1);
                 }
             },
             {
                 symbol: 'primaryExpression',
                 rhs: ['NUMBER'],
-                action: function () {
+                action() {
                     return new this.yy.Number(this.lexer.lineNumber, this.$1);
                 }
             },
             {
                 symbol: 'primaryExpression',
                 rhs: ['BOOLEAN'],
-                action: function () {
+                action() {
                     return new this.yy.Boolean(this.lexer.lineNumber, this.$1);
                 }
             },
@@ -289,7 +289,7 @@
             {
                 symbol: 'primaryExpression',
                 rhs: ['LPAREN', 'expression', 'RPAREN'],
-                action: function () {
+                action() {
                     return this.$2;
                 }
             },
@@ -299,7 +299,7 @@
             {
                 symbol: 'hash',
                 rhs: ['hash', 'COMMA', 'hashSegment'],
-                action: function () {
+                action() {
                     var hash = this.$1,
                         seg = this.$3;
                     hash.value[seg[0]] = seg[1];
@@ -308,7 +308,7 @@
             {
                 symbol: 'hash',
                 rhs: ['hashSegment'],
-                action: function () {
+                action() {
                     var hash = new this.yy.Hash(this.lexer.lineNumber),
                         $1 = this.$1;
                     hash.value[$1[0]] = $1[1];
@@ -318,7 +318,7 @@
             {
                 symbol: 'hashSegment',
                 rhs: ['ID', 'EQUALS', 'expression'],
-                action: function () {
+                action() {
                     return [this.$1, this.$3];
                 }
             },
@@ -328,28 +328,28 @@
             {
                 symbol: 'id',
                 rhs: ['idSegments'],
-                action: function () {
+                action() {
                     return new this.yy.Id(this.lexer.lineNumber, this.$1);
                 }
             },
             {
                 symbol: 'idSegments',
                 rhs: ['idSegments', 'SEP', 'ID'],
-                action: function () {
+                action() {
                     this.$1.push(this.$3);
                 }
             },
             {
                 symbol: 'idSegments',
                 rhs: ['idSegments', 'REF_START', 'expression', 'REF_END'],
-                action: function () {
+                action() {
                     this.$1.push(this.$3);
                 }
             },
             {
                 symbol: 'idSegments',
                 rhs: ['ID'],
-                action: function () {
+                action() {
                     return [this.$1];
                 }
             }
@@ -365,7 +365,7 @@
                 {
                     // "\n".match(/./)
                     regexp: /^[\s\S]*?(?={{)/,
-                    action: function () {
+                    action() {
                         var self = this,
                             text = self.text,
                             m,
@@ -407,7 +407,7 @@
                     // support {{@
                     regexp: /^{{{?(?:#|@)/,
                     token: 'OPEN_BLOCK',
-                    action: function () {
+                    action() {
                         var self = this,
                             text = self.text;
                         if (text.length === 4) {
@@ -421,7 +421,7 @@
                     state: ['t'],
                     regexp: /^{{{?\//,
                     token: 'OPEN_CLOSE_BLOCK',
-                    action: function () {
+                    action() {
                         var self = this,
                             text = self.text;
                         if (text.length === 4) {
@@ -447,7 +447,7 @@
                     // literal mode
                     state: ['t'],
                     regexp: /^{{%([\s\S]*?)%}}/,
-                    action: function () {
+                    action() {
                         // return to content mode
                         this.text = this.matches[1] || '';
                         this.popState();
@@ -458,7 +458,7 @@
                     state: ['t'],
                     regexp: /^{{{?/,
                     token: 'OPEN_TPL',
-                    action: function () {
+                    action() {
                         var self = this,
                             text = self.text;
                         if (text.length === 3) {
@@ -481,7 +481,7 @@
                 {
                     state: ['p'],
                     regexp: /^}}}/,
-                    action: function () {
+                    action() {
                         this.popState(2);
                     },
                     token: 'CLOSE'
@@ -489,7 +489,7 @@
                 {
                     state: ['e'],
                     regexp: /^}}/,
-                    action: function () {
+                    action() {
                         this.popState(2);
                     },
                     token: 'CLOSE'
@@ -578,7 +578,7 @@
                     state: codeSection,
                     // notice escape string
                     regexp: /^"(\\[\s\S]|[^\\"])*"/,
-                    action: function () {
+                    action() {
                         this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
                     },
                     token: 'STRING'
@@ -587,7 +587,7 @@
                     state: codeSection,
                     // notice escape string
                     regexp: /^'(\\[\s\S]|[^\\'])*'/,
-                    action: function () {
+                    action() {
                         this.text = this.text.slice(1, -1).replace(/\\'/g, '\'');
                     },
                     token: 'STRING'
@@ -616,7 +616,7 @@
                     state: codeSection,
                     regexp: /^\.\./,
                     token: 'ID',
-                    action: function () {
+                    action() {
                         // wait for '/'
                         this.pushState('ws');
                     }

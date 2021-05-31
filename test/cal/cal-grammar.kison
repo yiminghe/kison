@@ -9,21 +9,21 @@
             {
                 symbol: 'e',
                 rhs: ['e', '-', 'e'],
-                action: function () {
+                action() {
                     return this.$1 - this.$3;
                 }
             },
             {
                 symbol: 'e',
                 rhs: ['e', '+', 'e'],
-                action: function () {
+                action() {
                     return this.$1 + this.$3;
                 }
             },
             {
                 symbol: 'e',
                 rhs: ['NUMBER'],
-                action: function () {
+                action() {
                     return Number(this.$1);
                 }
             }

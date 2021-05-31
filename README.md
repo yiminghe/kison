@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/yiminghe/kison.svg?branch=master)](https://travis-ci.org/yiminghe/kison)
 
 
-A LALR parser generator for javascript originated in KISSY
+A parser generator for javascript originated in KISSY. (LALR/LL)
 
 ## example
 
@@ -26,21 +26,21 @@ cal-grammar.kison:
             {
                 symbol: 'e',
                 rhs: ['e', '-', 'e'],
-                action: function () {
+                action() {
                     return this.$1 - this.$3;
                 }
             },
             {
                 symbol: 'e',
                 rhs: ['e', '+', 'e'],
-                action: function () {
+                action() {
                     return this.$1 + this.$3;
                 }
             },
             {
                 symbol: 'e',
                 rhs: ['NUMBER'],
-                action: function () {
+                action() {
                     return Number(this.$1);
                 }
             }

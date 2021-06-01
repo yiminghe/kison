@@ -91,6 +91,9 @@ var cal = (function(undefined) {
         lastColumn: 1
       });
     },
+    mapEndSymbol: function() {
+      return this.mapSymbol(Lexer.STATIC.END_TAG);
+    },
     getCurrentRules: function() {
       var self = this,
         currentState = self.stateStack[self.stateStack.length - 1],
@@ -174,7 +177,7 @@ var cal = (function(undefined) {
       self.match = self.text = "";
 
       if (!input) {
-        return self.mapSymbol(Lexer.STATIC.END_TAG);
+        return self.mapEndSymbol();
       }
 
       for (i = 0; i < rules.length; i++) {
@@ -237,7 +240,11 @@ var cal = (function(undefined) {
       ["b", /^[0-9]+(\.[0-9]+)?\b/, 0],
       ["c", /^\+/, 0],
       ["d", /^-/, 0],
-      ["e", /^./, 0]
+      ["e", /^\*/, 0],
+      ["f", /^\//, 0],
+      ["g", /^\(/, 0],
+      ["h", /^\)/, 0],
+      ["i", /^./, 0]
     ]
   });
   parser.lexer = lexer;
@@ -246,30 +253,59 @@ var cal = (function(undefined) {
     NUMBER: "b",
     "+": "c",
     "-": "d",
-    ERROR_LA: "e",
-    $START: "f",
-    expressions: "g",
-    e: "h"
+    "*": "e",
+    "/": "f",
+    "(": "g",
+    ")": "h",
+    ERROR_LA: "i",
+    $START: "j",
+    expression: "k",
+    AddtiveExpression: "l",
+    multiplicativeExpression: "m",
+    primaryExpression: "n"
   };
   parser.productions = [
-    ["f", ["g"]],
-    ["g", ["h"]],
+    ["j", ["k"]],
+    ["k", ["l"]],
+    ["l", ["m"]],
     [
-      "h",
-      ["h", "d", "h"],
-      function() {
-        return this.$1 - this.$3;
-      }
-    ],
-    [
-      "h",
-      ["h", "c", "h"],
+      "l",
+      ["l", "c", "m"],
       function() {
         return this.$1 + this.$3;
       }
     ],
     [
-      "h",
+      "l",
+      ["l", "d", "m"],
+      function() {
+        return this.$1 - this.$3;
+      }
+    ],
+    ["m", ["n"]],
+    [
+      "m",
+      ["m", "e", "n"],
+      function() {
+        return this.$1 * this.$3;
+      }
+    ],
+    [
+      "m",
+      ["m", "f", "n"],
+      function() {
+        return this.$1 / this.$3;
+      }
+    ],
+    [
+      "n",
+      ["g", "k", "h"],
+      function() {
+        return this.$2;
+      }
+    ],
+    [
+      "n",
       ["b"],
       function() {
         return Number(this.$1);
@@ -291,53 +327,140 @@ var cal = (function(undefined) {
   parser.table = {
     gotos: {
       "0": {
-        g: 2,
-        h: 3
+        k: 3,
+        l: 4,
+        m: 5,
+        n: 6
       },
-      "4": {
-        h: 6
+      "2": {
+        k: 7,
+        l: 4,
+        m: 5,
+        n: 6
       },
-      "5": {
-        h: 7
+      "8": {
+        m: 13,
+        n: 6
+      },
+      "9": {
+        m: 14,
+        n: 6
+      },
+      "10": {
+        n: 15
+      },
+      "11": {
+        n: 16
       }
     },
     action: {
       "0": {
-        b: [1, undefined, 1]
+        b: [1, undefined, 1],
+        g: [1, undefined, 2]
       },
       "1": {
-        a: [2, 4],
-        c: [2, 4],
-        d: [2, 4]
+        a: [2, 9],
+        c: [2, 9],
+        d: [2, 9],
+        e: [2, 9],
+        f: [2, 9],
+        h: [2, 9]
       },
       "2": {
-        a: [0]
+        b: [1, undefined, 1],
+        g: [1, undefined, 2]
       },
       "3": {
-        a: [2, 1],
-        c: [1, undefined, 4],
-        d: [1, undefined, 5]
+        a: [0]
       },
       "4": {
-        b: [1, undefined, 1]
+        a: [2, 1],
+        h: [2, 1],
+        c: [1, undefined, 8],
+        d: [1, undefined, 9]
       },
       "5": {
-        b: [1, undefined, 1]
+        a: [2, 2],
+        c: [2, 2],
+        d: [2, 2],
+        h: [2, 2],
+        e: [1, undefined, 10],
+        f: [1, undefined, 11]
       },
       "6": {
-        a: [2, 3],
-        c: [1, undefined, 4],
-        d: [1, undefined, 5]
+        a: [2, 5],
+        c: [2, 5],
+        d: [2, 5],
+        e: [2, 5],
+        f: [2, 5],
+        h: [2, 5]
       },
       "7": {
-        a: [2, 2],
-        c: [1, undefined, 4],
-        d: [1, undefined, 5]
+        h: [1, undefined, 12]
+      },
+      "8": {
+        b: [1, undefined, 1],
+        g: [1, undefined, 2]
+      },
+      "9": {
+        b: [1, undefined, 1],
+        g: [1, undefined, 2]
+      },
+      "10": {
+        b: [1, undefined, 1],
+        g: [1, undefined, 2]
+      },
+      "11": {
+        b: [1, undefined, 1],
+        g: [1, undefined, 2]
+      },
+      "12": {
+        a: [2, 8],
+        c: [2, 8],
+        d: [2, 8],
+        e: [2, 8],
+        f: [2, 8],
+        h: [2, 8]
+      },
+      "13": {
+        a: [2, 3],
+        c: [2, 3],
+        d: [2, 3],
+        h: [2, 3],
+        e: [1, undefined, 10],
+        f: [1, undefined, 11]
+      },
+      "14": {
+        a: [2, 4],
+        c: [2, 4],
+        d: [2, 4],
+        h: [2, 4],
+        e: [1, undefined, 10],
+        f: [1, undefined, 11]
+      },
+      "15": {
+        a: [2, 6],
+        c: [2, 6],
+        d: [2, 6],
+        e: [2, 6],
+        f: [2, 6],
+        h: [2, 6]
+      },
+      "16": {
+        a: [2, 7],
+        c: [2, 7],
+        d: [2, 7],
+        e: [2, 7],
+        f: [2, 7],
+        h: [2, 7]
       }
     }
   };
-  parser.parse = function parse(input, filename) {
-    var state, symbol, ret, action, $$;
+  parser.parse = function parse(input, options) {
+    options = options || {};
+    var { onErrorRecovery } = options;
+    var filename = options.filename;
+    var state, token, ret, action, $$;
     var self = this;
     var lexer = self.lexer;
     var table = self.table;
@@ -353,12 +476,12 @@ var cal = (function(undefined) {
     while (1) {
       // retrieve state number from top of stack
       state = peekStack(stateStack);
-      if (!symbol) {
-        symbol = lexer.lex();
+      if (!token) {
+        token = lexer.lex();
       }
-      if (symbol) {
+      if (token) {
         // read action for current state and first input
-        action = tableAction[state] && tableAction[state][symbol];
+        action = tableAction[state] && tableAction[state][token];
       } else {
         action = null;
       }
@@ -389,17 +512,33 @@ var cal = (function(undefined) {
           "\n" +
           "expect " +
           expected.join(", ");
-        throw new Error(error);
+        if (onErrorRecovery) {
+          const action = (
+            onErrorRecovery({
+              error,
+              lexer,
+              expected,
+              token: lexer.mapReverseSymbol(token)
+            }) || {}
+          ).action;
+          if (!action || action === "del") {
+            lexer.matched = lexer.matched.slice(0, -lexer.match.length);
+            token = null;
+            continue;
+          }
+        } else {
+          throw new Error(error);
+        }
       }
 
       switch (action[GrammarConst.TYPE_INDEX]) {
         case GrammarConst.SHIFT_TYPE:
-          symbolStack.push(symbol);
+          symbolStack.push(token);
           valueStack.push(lexer.text);
           // push state
           stateStack.push(action[GrammarConst.TO_INDEX]);
           // allow to read more
-          symbol = null;
+          token = null;
           break;
 
         case GrammarConst.REDUCE_TYPE:

@@ -8,6 +8,7 @@ var program = require("commander");
 program
   .option("-g, --grammar <grammar>", "Set kison grammar file")
   .option("-n, --name [name]", "Set file name")
+  .option("-m, --mode [mode]", "lalr or ll")
   .option("-w, --watch", "Watch grammar file change")
   // defaults bool true
   .option("--no-compressSymbol", "Set compress symbol")
@@ -38,6 +39,9 @@ var kisonCfg = {
 var grammarBaseName = program.name
   ? program.name
   : path.basename(grammar, "-grammar.js");
+
+const mode = program.mode ? mode : "lalr";
+
 var modulePath = path.resolve(grammar, "../" + grammarBaseName + ".js");
 
 var codeTemplate = [
@@ -68,10 +72,16 @@ function myJsBeautify(str) {
 function genParser() {
   var grammarObj = require(grammar);
 
+  if (typeof grammarObj === "function") {
+    grammarObj = grammarObj();
+  }
+
+  const Cons = mode === "lalr" ? KISON.LALRGrammar : KISON.LLGrammar;
+
   console.info("start generate grammar module: " + modulePath + "\n");
   var start = Date.now();
   /*jshint evil:true*/
-  var code = new KISON.LALRGrammar(grammarObj).genCode(kisonCfg);
+  var code = new Cons(grammarObj).genCode(kisonCfg);
 
   var moduleCode = Utils.substitute(codeTemplate, {
     code: myJsBeautify(code),

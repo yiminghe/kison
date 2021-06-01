@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.3.5",
+  "version": "0.4.0-alpha.0",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -33,7 +33,7 @@
     "modulex-util": "^1.0.4"
   },
   "scripts": {
-    "pub": "np --no-publish --no-release-draft && npm publish",
+    "pub": "np --no-publish --no-release-draft && npm publish --tag alpha",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{lib,__tests__,tests}/**/*.{js,tsx}\"",
     "test": "jest"

@@ -12,74 +12,82 @@ A parser generator for javascript originated in KISSY. (LALR/LL)
 
 ### grammar and lexer definition
 
-cal-grammar.kison:
+cal-grammar.js:
 
 ``` javascript
-(function () {
-    return {
-        productions: [
-            {
-                symbol: 'expressions',
-                rhs: ['e']
-            },
+module.exports = {
+    productions: [
+        {
+            symbol: 'expressions',
+            rhs: ['e']
+        },
 
-            {
-                symbol: 'e',
-                rhs: ['e', '-', 'e'],
-                action() {
-                    return this.$1 - this.$3;
-                }
-            },
-            {
-                symbol: 'e',
-                rhs: ['e', '+', 'e'],
-                action() {
-                    return this.$1 + this.$3;
-                }
-            },
-            {
-                symbol: 'e',
-                rhs: ['NUMBER'],
-                action() {
-                    return Number(this.$1);
-                }
+        {
+            symbol: 'e',
+            rhs: ['e', '-', 'e'],
+            action() {
+                return this.$1 - this.$3;
             }
-        ],
-
-        lexer: {
-            rules: [
-                {
-                    regexp: /^\s+/
-                },
-                {
-                    regexp: /^[0-9]+(\.[0-9]+)?\b/,
-                    token: 'NUMBER'
-                },
-                {
-                    regexp: /^\+/,
-                    token: '+'
-                },
-                {
-                    regexp: /^-/,
-                    token: '-'
-                },
-                {
-                    // force to match one for error message
-                    regexp: /^./,
-                    token: 'ERROR_LA'
-                }
-            ]
+        },
+        {
+            symbol: 'e',
+            rhs: ['e', '+', 'e'],
+            action() {
+                return this.$1 + this.$3;
+            }
+        },
+        {
+            symbol: 'e',
+            rhs: ['NUMBER'],
+            action() {
+                return Number(this.$1);
+            }
         }
-    };
+    ],
 
-})();
+    lexer: {
+        rules: [
+            {
+                regexp: /^\s+/
+            },
+            {
+                regexp: /^[0-9]+(\.[0-9]+)?\b/,
+                token: 'NUMBER'
+            },
+            {
+                regexp: /^\+/,
+                token: '+'
+            },
+            {
+                regexp: /^-/,
+                token: '-'
+            },
+            {
+                // force to match one for error message
+                regexp: /^./,
+                token: 'ERROR_LA'
+            }
+        ]
+    }
+};
 ```
 
 ### run command
 
+defaults to lalr parser generator
+
 ```
-kison -g cal-grammar.kison
+kison -g cal-grammar.js
 ```
+
+or
+
+ll parser generator, need to eliminate left recursive. (TODO)
+
+```
+kison -m ll -g cal-grammar.js
+```
+
 
 ### generated parser
 
@@ -105,6 +113,10 @@ cal.js:
 ```
 
 ## changelog
+
+### 0.4.0-alpha.0
+
+* support ll parser
 
 ### 0.3.0
 

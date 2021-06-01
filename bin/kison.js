@@ -37,7 +37,7 @@ var kisonCfg = {
 
 var grammarBaseName = program.name
   ? program.name
-  : path.basename(grammar, "-grammar.kison");
+  : path.basename(grammar, "-grammar.js");
 var modulePath = path.resolve(grammar, "../" + grammarBaseName + ".js");
 
 var codeTemplate = [
@@ -66,12 +66,12 @@ function myJsBeautify(str) {
 }
 
 function genParser() {
-  var grammarContent = fs.readFileSync(grammar, encoding);
+  var grammarObj = require(grammar);
 
   console.info("start generate grammar module: " + modulePath + "\n");
   var start = Date.now();
   /*jshint evil:true*/
-  var code = new KISON.LALRGrammar(eval(grammarContent)).genCode(kisonCfg);
+  var code = new KISON.LALRGrammar(grammarObj).genCode(kisonCfg);
 
   var moduleCode = Utils.substitute(codeTemplate, {
     code: myJsBeautify(code),

@@ -1,1 +1,1 @@
-node ../../bin/kison -g parser-grammar.kison
+node ../../bin/kison -g parser-grammar.js

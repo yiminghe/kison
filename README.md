@@ -114,10 +114,11 @@ cal.js:
 
 ## changelog
 
-### 0.4.0-alpha.0
+### 0.4.0-alpha.0 - 2021/06/02
 
 * support ll parser
+* change config
 
-### 0.3.0
+### 0.3.0 - 2014/08/25
 
 * optimize error debug info

@@ -1,6 +1,6 @@
 import Kison from "../lib";
 import AstProcessor from "./AstProcessor";
-import calGrammar from "../test/cal-ll/cal-grammar";
+import calGrammar from "../examples/cal-ll/cal-grammar";
 
 var LLGrammar = Kison.LLGrammar;
 

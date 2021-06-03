@@ -12,7 +12,7 @@ A parser generator for javascript originated in KISSY. (LALR/LL)
 
 ### grammar and lexer definition
 
-### LALR
+#### LALR
 
 cal-grammar.js:
 
@@ -73,7 +73,7 @@ module.exports = {
     }
 };
 ```
-#### ll
+#### LL
 
 cal-grammar.js:
 
@@ -188,6 +188,10 @@ module.exports = () => ({
 
 ### run command
 
+#### params
+
+- es: generate es module `kison --es -g cal-grammar.js`
+
 #### LALR
 
 ```
@@ -202,26 +206,6 @@ ll parser generator, need to eliminate left recursive.
 kison -m ll -g cal-grammar.js
 ```
 
-#### params
-
-- es: generate es module `kison --es -g cal-grammar.js`
-
-
-### generated parser
-
-cal.js:
-
-``` javascript
-(function(){
-    var parser = {
-        parse: function(){
-            // ...
-        }
-    }
-    return parser;
-})();
-```
-
 ### run parser
 
 ``` javascript
@@ -232,7 +216,7 @@ cal.js:
 
 ## changelog
 
-### 0.4.0-alpha.1 - 2021/06/02
+### 0.4.0-alpha.1 - 2021/06/03
 
 * support ll parser
 * change config

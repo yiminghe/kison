@@ -31,9 +31,9 @@
     ]
   },
   "dependencies": {
-    "commander": "~2.2.0",
-    "debug": "~4.1.1",
-    "modulex-util": "^1.0.4"
+    "commander": "2.x",
+    "debug": "4.x",
+    "modulex-util": "1.x"
   },
   "scripts": {
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish --tag alpha",

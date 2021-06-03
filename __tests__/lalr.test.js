@@ -1,4 +1,5 @@
-var Kison = require("../lib");
+import Kison from "../lib";
+
 var LALRGrammar = Kison.LALRGrammar;
 var Utils = Kison.Utils;
 

@@ -1,0 +1,35 @@
+<script type="module">
+    import cal from './cal.js';
+    import AstProcessor from './AstProcessor.js';
+    function parseResult(input, options = {}) {
+        const ast = new AstProcessor();
+        cal.parse(input, {
+            onAction({ action, lexer }) {
+                action(ast, lexer);
+            },
+            ...options,
+        });
+        if (ast.stack.length !== 1) {
+            console.error('error stack');
+        }
+        return ast.stack[0];
+    }
+    console.log(parseResult('1+2*5'));
+    console.log(parseResult('(1+2)*5'));
+    console.log(parseResult('11+2*5'));
+    let input = '2+*3*+5';
+    let o = input;
+    console.log(parseResult(input, {
+        onErrorRecovery(args) {
+            const { lexer } = args;
+            input = lexer.matched.slice(0, -lexer.match.length) + lexer.input;
+            console.log(args);
+            return {
+                action: 'del',
+            };
+        }
+    }));
+    // error recovery: 2+*3*+5 => 2+3*5
+    console.log(`error recovery: ${o} => ${input}`)
+    console.log(parseResult('2+/3'));
+</script>

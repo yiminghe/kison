@@ -1,7 +1,7 @@
 module.exports = () => ({
   productions: [
     {
-      symbol: "expressions",
+      symbol: "Exp",
       rhs: ["AddExp"]
     },
     {
@@ -10,7 +10,17 @@ module.exports = () => ({
     },
     {
       symbol: "AddExp1",
-      rhs: ["add", "MulExp", "AddExp1"]
+      rhs: [
+        "+",
+        function(astProcessor) {
+          astProcessor.pushStack(lexer.text);
+        },
+        "MulExp",
+        function(astProcessor) {
+          astProcessor.createOpNode("+");
+        },
+        "AddExp1"
+      ]
     },
     {
       symbol: "AddExp1",
@@ -18,39 +28,38 @@ module.exports = () => ({
     },
     {
       symbol: "MulExp",
-      rhs: ["Exp", "MulExp1"]
+      rhs: ["PrimExp", "MulExp1"]
     },
     {
       symbol: "MulExp1",
-      rhs: ["mul", "Exp", "MulExp1"]
+      rhs: [
+        "*",
+        function(astProcessor) {
+          astProcessor.pushStack(lexer.text);
+        },
+        "PrimExp",
+        function(astProcessor) {
+          astProcessor.createOpNode("*");
+        },
+        "MulExp1"
+      ]
     },
     {
       symbol: "MulExp1",
       rhs: []
     },
     {
-      symbol: "Exp",
-      rhs: ["NUMBER"]
+      symbol: "PrimExp",
+      rhs: [
+        "NUMBER",
+        function(astProcessor, lexer) {
+          astProcessor.pushStack(Number(lexer.text));
+        }
+      ]
     },
     {
-      symbol: "Exp",
-      rhs: ["(", "NUMBER", ")"]
-    },
-    {
-      symbol: "add",
-      rhs: ["+"]
-    },
-    {
-      symbol: "add",
-      rhs: ["-"]
-    },
-    {
-      symbol: "mul",
-      rhs: ["*"]
-    },
-    {
-      symbol: "mul",
-      rhs: ["/"]
+      symbol: "PrimExp",
+      rhs: ["(", "AddExp", ")"]
     }
   ],
 

@@ -88,6 +88,10 @@ ll parser generator, need to eliminate left recursive. (TODO)
 kison -m ll -g cal-grammar.js
 ```
 
+#### params
+
+- es: generate es module `kison --es -g cal-grammar.js`
+
 
 ### generated parser
 

@@ -1,7 +1,8 @@
-var Kison = require("../lib");
-var LLGrammar = Kison.LLGrammar;
+import Kison from "../lib";
+import AstProcessor from "./AstProcessor";
+import calGrammar from "../test/cal-ll/cal-grammar";
 
-const calGrammar = require("../test/cal-ll/cal-grammar");
+var LLGrammar = Kison.LLGrammar;
 
 function getGrammar() {
   var grammar = new LLGrammar({
@@ -139,28 +140,30 @@ describe("ll", () => {
     `);
   });
 
-  it("parse works", () => {
+  it("ast works", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
-    const terminals = [];
     const parser = Function.call(null, code + "\n return parser;")();
+    debugger;
+    const astProcessor = new AstProcessor();
     parser.parse("1+2*3", {
-      onTerminal(token) {
-        terminals.push(token);
-      },
-      onErrorRecovery({ token, top, lex }) {
-        return { action: "del" };
+      onAction({ action, lexer }) {
+        action(astProcessor, lexer);
       }
     });
-    expect(terminals).toMatchInlineSnapshot(`
-      Array [
-        "NUMBER",
-        "+",
-        "NUMBER",
-        "*",
-        "NUMBER",
-      ]
-    `);
+    expect(astProcessor.stack).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "left": 1,
+    "right": Object {
+      "left": 2,
+      "right": 3,
+      "type": "*",
+    },
+    "type": "+",
+  },
+]
+`);
   });
 
   it("error recovery works", () => {
@@ -178,13 +181,7 @@ describe("ll", () => {
         return { action: "del" };
       }
     });
-    expect(terminals).toMatchInlineSnapshot(`
-Array [
-  "NUMBER",
-  "+",
-  "NUMBER",
-]
-`);
+    expect(terminals).toMatchInlineSnapshot(`Array []`);
     expect(errorCalled).toMatchInlineSnapshot(`
 "1+/2
 --^"

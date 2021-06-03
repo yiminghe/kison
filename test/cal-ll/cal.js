@@ -142,7 +142,7 @@ var cal = (function(undefined) {
         (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
       return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
     },
-    mapSymbol: function mapSymbolForCodeGen(t) {
+    mapSymbol: function(t) {
       return this.symbolMap[t];
     },
     mapReverseSymbol: function(rs) {

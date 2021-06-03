@@ -92,7 +92,7 @@ module.exports = () => ({
       symbol: "AddExp1",
       rhs: [
         "+",
-        function(astProcessor) {
+        function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
         "MulExp",
@@ -114,7 +114,7 @@ module.exports = () => ({
       symbol: "MulExp1",
       rhs: [
         "*",
-        function(astProcessor) {
+        function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
         "PrimExp",

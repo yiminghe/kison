@@ -216,10 +216,11 @@ kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### 0.4.0-alpha.1 - 2021/06/03
+### 0.4.0-alpha.2 - 2021/06/04
 
+* use js config file
 * support ll parser
-* change config
+* support operator priority for lalr
 
 ### 0.3.0 - 2014/08/25
 

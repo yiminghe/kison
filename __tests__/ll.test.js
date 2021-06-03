@@ -144,7 +144,6 @@ describe("ll", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = Function.call(null, code + "\n return parser;")();
-    debugger;
     const astProcessor = new AstProcessor();
     parser.parse("1+2*3", {
       onAction({ action, lexer }) {

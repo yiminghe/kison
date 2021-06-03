@@ -14,8 +14,9 @@ var Utils = require("../lib/utils"),
 var program = require("commander");
 program
   .option("-g, --grammar <grammar>", "Set kison grammar file")
-  .option("-n, --name [name]", "Set file name")
+  .option("-f, --file [file]", "Set file name")
   .option("-m, --mode [mode]", "lalr or ll")
+  .option("-v, --visual", "visual")
   .option("-w, --watch", "Watch grammar file change")
   .option("--es [es]", "generate es module")
   // defaults bool true
@@ -39,8 +40,8 @@ var kisonCfg = {
   compressSymbol: program.compressSymbol
 };
 
-var grammarBaseName = program.name
-  ? program.name
+var grammarBaseName = program.file
+  ? program.file
   : path.basename(grammar, "-grammar.js");
 
 const mode = program.mode || "lalr";
@@ -91,8 +92,9 @@ function genParser() {
 
   console.info("start generate grammar module: " + modulePath + "\n");
   var start = Date.now();
+  const instance = new Cons(grammarObj);
   /*jshint evil:true*/
-  var code = new Cons(grammarObj).genCode(kisonCfg);
+  var code = instance.genCode(kisonCfg);
 
   var moduleCode = codeTemplate.replace("{{code}}", myJsBeautify(code));
 
@@ -105,6 +107,11 @@ function genParser() {
       new Date().toLocaleString()
   );
   console.info("duration: " + (Date.now() - start) + "ms");
+
+  if (program.visual) {
+    console.log();
+    console.log(instance.visualizeTable().join("\n"));
+  }
 }
 
 var bufferCompile = Utils.buffer(genParser);

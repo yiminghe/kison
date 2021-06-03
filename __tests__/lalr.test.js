@@ -1,4 +1,6 @@
 import Kison from "../lib";
+import getGrammar from "../examples/cal/precedence/cal-grammar";
+import { prettyJson } from "./utils";
 
 var LALRGrammar = Kison.LALRGrammar;
 var Utils = Kison.Utils;
@@ -471,5 +473,76 @@ describe("lalr", function() {
     expect(function() {
       Function.call(null, code + "\n return parser;")().parse("ccdd");
     }).not.toThrow(undefined);
+  });
+
+  it("precedence works", function() {
+    var grammar = new LALRGrammar(getGrammar());
+
+    const code = grammar.genCode();
+    const parser = Function.call(null, code + "\n return parser;")();
+    expect(prettyJson(parser.parse("1+1+2"))).toMatchInlineSnapshot(`
+      "{
+        'v': 4,
+        'l': {
+          'v': 2,
+          'l': {
+            'v': 1
+          },
+          'r': {
+            'v': 1
+          },
+          'op': '+'
+        },
+        'r': {
+          'v': 2
+        },
+        'op': '+'
+      }"
+    `);
+    expect(prettyJson(parser.parse("1+1*2-1"))).toMatchInlineSnapshot(`
+      "{
+        'v': 2,
+        'l': {
+          'v': 3,
+          'l': {
+            'v': 1
+          },
+          'r': {
+            'v': 2,
+            'l': {
+              'v': 1
+            },
+            'r': {
+              'v': 2
+            },
+            'op': '*'
+          },
+          'op': '+'
+        },
+        'r': {
+          'v': 1
+        },
+        'op': '-'
+      }"
+    `);
+    expect(prettyJson(parser.parse("2^2^3"))).toMatchInlineSnapshot(`
+"{
+  'v': 256,
+  'l': {
+    'v': 2
+  },
+  'r': {
+    'v': 8,
+    'l': {
+      'v': 2
+    },
+    'r': {
+      'v': 3
+    },
+    'op': '^'
+  },
+  'op': '^'
+}"
+`);
   });
 });

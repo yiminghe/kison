@@ -5,20 +5,43 @@ class AstProcessor {
     this.stack.push(node);
   }
 
-  popStack() {
-    return this.stack.pop();
-  }
-
-  createOpNode(op1) {
+  createOpNode() {
     const { stack } = this;
     const right = stack.pop();
+    let rv = right;
+    if (typeof right === "object" && "v" in right) {
+      rv = right.v;
+    }
     const op = stack.pop();
     const left = stack.pop();
-    if (op1 !== op) {
-      throw new Error("unmatched operator!");
+    let lv = left;
+    if (typeof left === "object" && "v" in left) {
+      lv = left.v;
     }
-    const ret = op === "*" ? left * right : left + right;
-    stack.push(ret);
+    let ret;
+    switch (op) {
+      case "*":
+        ret = lv * rv;
+        break;
+      case "+":
+        ret = lv + rv;
+        break;
+      case "-":
+        ret = lv - rv;
+        break;
+      case "/":
+        ret = lv / rv;
+        break;
+      case "^":
+        ret = lv ** rv;
+        break;
+    }
+    stack.push({
+      op,
+      left,
+      right,
+      v: ret
+    });
     return ret;
   }
 }

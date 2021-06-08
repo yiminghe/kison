@@ -1,55 +1,90 @@
+const operators = [["+", "-"], ["*", "/"], ["^"], ["$"]];
+
+const rightOperatorMap = {
+  "^": 1
+};
+
+function generateOpProductions() {
+  const ret = [];
+  operators.forEach((o, index) => {
+    if (index === operators.length - 1) {
+      return;
+    }
+    const next = operators[index + 1][0];
+    const current = operators[index][0];
+    const exp = `Exp${current}`;
+    const exp_ = exp + "_";
+    const nextExp = `Exp${next}`;
+    if (rightOperatorMap[current]) {
+      for (const o of operators[index]) {
+        ret.push(
+          {
+            symbol: exp_,
+            rhs: [
+              o,
+              function(astProcessor, lexer) {
+                astProcessor.pushStack(lexer.text);
+              },
+              exp,
+              function(astProcessor) {
+                astProcessor.createOpNode();
+              }
+            ]
+          },
+          {
+            symbol: exp_,
+            rhs: []
+          },
+          {
+            symbol: exp,
+            rhs: [nextExp, exp_]
+          }
+        );
+      }
+    } else {
+      ret.push(
+        {
+          symbol: exp,
+          rhs: [nextExp, exp_]
+        },
+
+        {
+          symbol: exp_,
+          rhs: []
+        }
+      );
+      for (const o of operators[index]) {
+        ret.push({
+          symbol: exp_,
+          rhs: [
+            o,
+            function(astProcessor, lexer) {
+              astProcessor.pushStack(lexer.text);
+            },
+            nextExp,
+            function(astProcessor) {
+              astProcessor.createOpNode();
+            },
+            exp_
+          ]
+        });
+      }
+    }
+  });
+  return ret;
+}
+
 module.exports = () => ({
   productions: [
     {
       symbol: "Exp",
-      rhs: ["AddExp"]
+      rhs: ["Exp+"]
     },
+
+    ...generateOpProductions(),
+
     {
-      symbol: "AddExp",
-      rhs: ["MulExp", "AddExp1"]
-    },
-    {
-      symbol: "AddExp1",
-      rhs: [
-        "+",
-        function(astProcessor, lexer) {
-          astProcessor.pushStack(lexer.text);
-        },
-        "MulExp",
-        function(astProcessor) {
-          astProcessor.createOpNode("+");
-        },
-        "AddExp1"
-      ]
-    },
-    {
-      symbol: "AddExp1",
-      rhs: []
-    },
-    {
-      symbol: "MulExp",
-      rhs: ["PrimExp", "MulExp1"]
-    },
-    {
-      symbol: "MulExp1",
-      rhs: [
-        "*",
-        function(astProcessor, lexer) {
-          astProcessor.pushStack(lexer.text);
-        },
-        "PrimExp",
-        function(astProcessor) {
-          astProcessor.createOpNode("*");
-        },
-        "MulExp1"
-      ]
-    },
-    {
-      symbol: "MulExp1",
-      rhs: []
-    },
-    {
-      symbol: "PrimExp",
+      symbol: "Exp$",
       rhs: [
         "NUMBER",
         function(astProcessor, lexer) {
@@ -58,8 +93,8 @@ module.exports = () => ({
       ]
     },
     {
-      symbol: "PrimExp",
-      rhs: ["(", "AddExp", ")"]
+      symbol: "Exp$",
+      rhs: ["(", "Exp+", ")"]
     }
   ],
 
@@ -95,6 +130,10 @@ module.exports = () => ({
       {
         regexp: /^\//,
         token: "/"
+      },
+      {
+        regexp: /^\^/,
+        token: "^"
       },
       {
         // force to match one for error message

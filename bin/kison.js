@@ -16,8 +16,8 @@ program
   .option("-g, --grammar <grammar>", "Set kison grammar file")
   .option("-f, --file [file]", "Set file name")
   .option("-m, --mode [mode]", "lalr or ll")
-  .option("-v, --visual", "visual")
-  .option("-w, --watch", "Watch grammar file change")
+  .option("-v, --visual [visual]", "visual")
+  .option("-w, --watch [watch]", "Watch grammar file change")
   .option("--es [es]", "generate es module")
   // defaults bool true
   .option("--no-compressSymbol", "Set compress symbol")
@@ -107,10 +107,12 @@ function genParser() {
       new Date().toLocaleString()
   );
   console.info("duration: " + (Date.now() - start) + "ms");
-
   if (program.visual) {
     console.log();
-    console.log(instance.visualizeTable().join("\n"));
+    console.log();
+    console.log();
+    console.log("******************* table");
+    console.log(instance.visualizeTable());
   }
 }
 

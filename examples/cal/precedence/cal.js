@@ -539,16 +539,17 @@ var cal = (function(undefined) {
         map[GrammarConst.SHIFT_TYPE] = "shift";
         map[GrammarConst.REDUCE_TYPE] = "reduce";
         map[GrammarConst.ACCEPT_TYPE] = "accept";
-        var expected = [];
-        var error;
+        var expectedInfo = [];
+        var expected = {};
         //#JSCOVERAGE_IF
         if (tableAction[state]) {
           each(tableAction[state], function(v, symbolForState) {
             action = v[GrammarConst.TYPE_INDEX];
-
-            expected.push(
-              map[action] + ":" + self.lexer.mapReverseSymbol(symbolForState)
-            );
+            const actionStr = map[action];
+            const arr = (expected[actionStr] = expected[actionStr] || []);
+            const s = self.lexer.mapReverseSymbol(symbolForState);
+            arr.push(s);
+            expectedInfo.push(actionStr + ":" + s);
           });
         }
         error =
@@ -559,20 +560,24 @@ var cal = (function(undefined) {
           lexer.showDebugInfo() +
           "\n" +
           "expect " +
-          expected.join(", ");
+          expectedInfo.join(", ");
         if (onErrorRecovery) {
-          const action = (
+          const recovery =
             onErrorRecovery({
               error,
               lexer,
               expected,
               token: lexer.mapReverseSymbol(token)
-            }) || {}
-          ).action;
+            }) || {};
+          const { action } = recovery;
           if (!action || action === "del") {
             lexer.matched = lexer.matched.slice(0, -lexer.match.length);
             token = null;
             continue;
+          } else if (action === "add") {
+            token = lexer.mapSymbol(recovery.token);
+            lexer.text = recovery.content || "<?>";
+            lexer.matched += lexer.text;
           }
         } else {
           throw new Error(error);

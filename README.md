@@ -216,7 +216,7 @@ kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### 0.4.0-alpha.2 - 2021/06/04
+### 0.4.0-alpha.3 - 2021/06/08
 
 * use js config file
 * support ll parser

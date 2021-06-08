@@ -1,5 +1,15 @@
 <script src="cal.js"></script>
 <script>
+    console.log(cal.parse('1+5*', {
+        onErrorRecovery({ expected }) {
+            if (expected.shift) {
+                return {
+                    action: 'add',
+                    token: expected.shift[0],
+                };
+            }
+        }
+    }));
     console.log(cal.parse('1+5*4/2'));
     console.log(cal.parse('5-5-4'));
     console.log(cal.parse('5^2^3'));

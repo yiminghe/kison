@@ -168,7 +168,7 @@ var parser = (function(undefined) {
       }
       //#JSCOVERAGE_IF
       if (reverseSymbolMap) {
-        return reverseSymbolMap[rs];
+        return reverseSymbolMap[rs] || rs;
       } else {
         return rs;
       }

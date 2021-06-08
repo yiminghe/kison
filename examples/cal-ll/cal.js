@@ -86,6 +86,8 @@ var cal = (function(undefined) {
         firstLine: 1,
         lineNumber: 1,
         lastLine: 1,
+        start: 0,
+        end: 0,
         firstColumn: 1,
         lastColumn: 1
       });
@@ -143,7 +145,13 @@ var cal = (function(undefined) {
       return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
     },
     mapSymbol: function(t) {
-      return this.symbolMap[t];
+      var self = this,
+        symbolMap = self.symbolMap;
+      if (!symbolMap) {
+        return t;
+      }
+      // force string, see util.clone iphone5s ios7 bug
+      return symbolMap[t] || (symbolMap[t] = self.genShortId("symbol"));
     },
     mapReverseSymbol: function(rs) {
       var self = this,
@@ -158,10 +166,22 @@ var cal = (function(undefined) {
       }
       //#JSCOVERAGE_IF
       if (reverseSymbolMap) {
-        return reverseSymbolMap[rs];
+        return reverseSymbolMap[rs] || rs;
       } else {
         return rs;
       }
+    },
+    toJSON: function() {
+      return {
+        text: this.text,
+        firstLine: this.firstLine,
+        firstColumn: this.firstColumn,
+        lastLine: this.lastLine,
+        lastColumn: this.lastColumn,
+        token: this.token,
+        start: this.start,
+        end: this.end
+      };
     },
     lex: function() {
       var self = this,
@@ -187,6 +207,8 @@ var cal = (function(undefined) {
           action = rule.action || rule[2] || undefined;
         //#JSCOVERAGE_ENDIF
         if ((m = input.match(regexp))) {
+          self.start = self.end;
+          self.end += m[0].length;
           lines = m[0].match(/\n.*/g);
           if (lines) {
             self.lineNumber += lines.length;
@@ -236,110 +258,227 @@ var cal = (function(undefined) {
   };
   var lexer = new Lexer({
     rules: [
-      [0, /^\s+/, 0],
-      ["b", /^[0-9]+(\.[0-9]+)?\b/, 0],
-      ["c", /^\+/, 0],
-      ["d", /^-/, 0],
-      ["e", /^\(/, 0],
-      ["f", /^\)/, 0],
-      ["g", /^\*/, 0],
-      ["h", /^\//, 0],
-      ["i", /^./, 0]
+      {
+        regexp: /^\s+/
+      },
+      {
+        regexp: /^[0-9]+(\.[0-9]+)?\b/,
+        token: "NUMBER"
+      },
+      {
+        regexp: /^\+/,
+        token: "+"
+      },
+      {
+        regexp: /^-/,
+        token: "-"
+      },
+      {
+        regexp: /^\(/,
+        token: "("
+      },
+      {
+        regexp: /^\)/,
+        token: ")"
+      },
+      {
+        regexp: /^\*/,
+        token: "*"
+      },
+      {
+        regexp: /^\//,
+        token: "/"
+      },
+      {
+        regexp: /^\^/,
+        token: "^"
+      },
+      {
+        regexp: /^./,
+        token: "ERROR_LA"
+      }
     ]
   });
   parser.lexer = lexer;
-  lexer.symbolMap = {
-    $EOF: "a",
-    NUMBER: "b",
-    "+": "c",
-    "-": "d",
-    "(": "e",
-    ")": "f",
-    "*": "g",
-    "/": "h",
-    ERROR_LA: "i",
-    Exp: "j",
-    AddExp: "k",
-    MulExp: "l",
-    AddExp1: "m",
-    PrimExp: "n",
-    MulExp1: "o"
-  };
   parser.productions = [
-    ["j", ["k"]],
-    ["k", ["l", "m"]],
+    ["Exp", ["Exp+"]],
+    ["Exp+", ["Exp*", "Exp+_"]],
+    ["Exp+_", []],
     [
-      "m",
+      "Exp+_",
       [
-        "c",
-        function(astProcessor) {
+        "+",
+        function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "l",
+        "Exp*",
         function(astProcessor) {
-          astProcessor.createOpNode("+");
+          astProcessor.createOpNode();
         },
-        "m"
+        "Exp+_"
       ]
     ],
-    ["m", []],
-    ["l", ["n", "o"]],
     [
-      "o",
+      "Exp+_",
       [
-        "g",
-        function(astProcessor) {
+        "-",
+        function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "n",
+        "Exp*",
         function(astProcessor) {
-          astProcessor.createOpNode("*");
+          astProcessor.createOpNode();
         },
-        "o"
+        "Exp+_"
       ]
     ],
-    ["o", []],
+    ["Exp*", ["Exp^", "Exp*_"]],
+    ["Exp*_", []],
     [
-      "n",
+      "Exp*_",
       [
-        "b",
+        "*",
+        function(astProcessor, lexer) {
+          astProcessor.pushStack(lexer.text);
+        },
+        "Exp^",
+        function(astProcessor) {
+          astProcessor.createOpNode();
+        },
+        "Exp*_"
+      ]
+    ],
+    [
+      "Exp*_",
+      [
+        "/",
+        function(astProcessor, lexer) {
+          astProcessor.pushStack(lexer.text);
+        },
+        "Exp^",
+        function(astProcessor) {
+          astProcessor.createOpNode();
+        },
+        "Exp*_"
+      ]
+    ],
+    [
+      "Exp^_",
+      [
+        "^",
+        function(astProcessor, lexer) {
+          astProcessor.pushStack(lexer.text);
+        },
+        "Exp^",
+        function(astProcessor) {
+          astProcessor.createOpNode();
+        }
+      ]
+    ],
+    ["Exp^_", []],
+    ["Exp^", ["Exp$", "Exp^_"]],
+    [
+      "Exp$",
+      [
+        "NUMBER",
         function(astProcessor, lexer) {
           astProcessor.pushStack(Number(lexer.text));
         }
       ]
     ],
-    ["n", ["e", "k", "f"]]
+    ["Exp$", ["(", "Exp+", ")"]]
   ];
   parser.table = {
-    j: {
-      b: 0,
-      e: 0
+    Exp: {
+      NUMBER: [0],
+      "(": [0]
     },
-    k: {
-      b: 1,
-      e: 1
+    "Exp+": {
+      NUMBER: [1],
+      "(": [1]
     },
-    m: {
-      c: 2,
-      a: 3,
-      f: 3
+    "Exp+_": {
+      $EOF: [2],
+      ")": [2],
+      "+": [3],
+      "-": [4]
     },
-    l: {
-      b: 4,
-      e: 4
+    "Exp*": {
+      NUMBER: [5],
+      "(": [5]
     },
-    o: {
-      g: 5,
-      c: 6,
-      a: 6,
-      f: 6
+    "Exp*_": {
+      "+": [6],
+      "-": [6],
+      $EOF: [6],
+      ")": [6],
+      "*": [7],
+      "/": [8]
     },
-    n: {
-      b: 7,
-      e: 8
+    "Exp^_": {
+      "^": [9],
+      "*": [10],
+      "/": [10],
+      "+": [10],
+      "-": [10],
+      $EOF: [10],
+      ")": [10]
+    },
+    "Exp^": {
+      NUMBER: [11],
+      "(": [11]
+    },
+    Exp$: {
+      NUMBER: [12],
+      "(": [13]
     }
   };
   parser.parse = function parse(input, options) {
+    class AstNode {
+      constructor(cfg) {
+        Object.assign(this, cfg);
+      }
+
+      addChild(c) {
+        this.addChildren([c]);
+      }
+
+      addChildren(cs) {
+        this.children.push(...cs);
+        for (const c of cs) {
+          c.parent = this;
+        }
+      }
+
+      toJSON() {
+        const ret = {};
+        for (const k of Object.keys(this)) {
+          if (k !== "parent") {
+            ret[k] = this[k];
+          }
+        }
+        return ret;
+      }
+    }
+
+    function isExtraSymbol(ast) {
+      return ast.children && !ast.children.length;
+      // const { children } = ast;
+      // if (children.length <= 1) {
+      //   return true;
+      // }
+      // // endsWith _ is extra symbol: add_
+      // const s = ast.symbol;
+      // const o = lexer.mapReverseSymbol(s);
+      // if (o.charAt(o.length - 1) === '_') {
+      //   return true;
+      // }
+      // compress level
+      return false;
+    }
+
+    const endToken = "kison-end-" + Date.now();
+
     function peekStack(stack, n) {
       n = n || 1;
       return stack[stack.length - n];
@@ -359,18 +498,27 @@ var cal = (function(undefined) {
       return p.rhs || p[1];
     }
 
+    function getOriginalSymbol(s) {
+      return lexer.mapReverseSymbol(s);
+    }
+
     options = options || {};
-    var {
-      onErrorRecovery = ({ error }) => {
-        throw new Error(error);
-      },
-      onAction = noop
-    } = options;
+    let error;
+    var { onErrorRecovery, onAction = noop } = options;
     var self = this;
-    var lexer = self.lexer;
-    var table = self.table;
-    var productions = self.productions;
+    var {
+      lexer,
+      operatorPriorityMap,
+      rightOperatorMap,
+      table,
+      productions
+    } = self;
     var symbolStack = [getProductionSymbol(productions[0])];
+    const astStack = [
+      new AstNode({
+        children: []
+      })
+    ];
     lexer.resetInput(input);
     let token;
     let next;
@@ -390,56 +538,140 @@ var cal = (function(undefined) {
 
     let topSymbol;
 
+    let errorNode;
+
     function getExpected() {
       const ret = (table[topSymbol] && Object.keys(table[topSymbol])) || [];
       return ret.map(r => lexer.mapReverseSymbol(r));
     }
 
+    function closeAstWhenError() {
+      errorNode = new AstNode({
+        error
+      });
+      peekStack(astStack).addChild(errorNode);
+      while (astStack.length !== 1) {
+        const ast = astStack.pop();
+        if (ast.symbol && isExtraSymbol(ast)) {
+          const topAst = peekStack(astStack);
+          topAst.children.pop();
+          topAst.addChildren(ast.children);
+        }
+      }
+    }
+
+    // const operatorPriorityStack = [-Infinity];
+
+    // function lastOperatorPriority(n) {
+    //   n = n || 1;
+    //   return operatorPriorityStack[operatorPriorityStack.length - n];
+    // }
+
+    let production;
+
     while (1) {
       topSymbol = peekStack(symbolStack);
-      currentToken = token = token || lexer.lex();
 
-      if (topSymbol === token) {
+      while (topSymbol === endToken) {
+        const ast = astStack.pop();
+        if (ast.symbol && isExtraSymbol(ast)) {
+          const topAst = peekStack(astStack);
+          topAst.children.pop();
+          topAst.children.push(...ast.children);
+        }
         symbolStack.pop();
-        token = null;
-      } else if ((next = getTableVal(topSymbol, token)) !== undefined) {
-        symbolStack.pop();
-        const production = productions[next];
-        symbolStack.push.apply(
-          symbolStack,
-          getProductionRhs(production)
-            .concat()
-            .reverse()
-        );
-      } else {
-        if (token === lexer.mapEndSymbol()) {
-          onErrorRecovery({
-            lexer,
-            error: getError(),
-            expected: getExpected(),
-            symbol: lexer.mapReverseSymbol(topSymbol),
-            token: null
+        topSymbol = peekStack(symbolStack);
+      }
+
+      if (typeof topSymbol === "string") {
+        currentToken = token = token || lexer.lex();
+
+        // const currentPriority = operatorPriorityMap && operatorPriorityMap[token];
+        // if (currentPriority) {
+        //   operatorPriorityStack.push(currentPriority);
+        // }
+
+        if (topSymbol === token) {
+          symbolStack.pop();
+          peekStack(astStack).addChild(new AstNode(lexer.toJSON()));
+          token = null;
+        } else if ((next = getTableVal(topSymbol, token)) !== undefined) {
+          let n = next[0];
+          // if (next.length > 1) {
+          //   if (currentPriority) {
+          //     const reduceIndex = next[1];
+          //     const shiftIndex = next[0];
+          //     const lastPriority = lastOperatorPriority(2);
+          //     if (currentPriority < lastPriority || (lastPriority === currentPriority && !rightOperatorMap[token])) {
+          //       n = reduceIndex;
+          //     } else {
+          //       n = shiftIndex;
+          //     }
+          //   } else {
+          //     const e = [`Conflict ${lexer.mapReverseSymbol(symbol)} : ${lexer.mapReverseSymbol(f)} ->`];
+          //     for (const index of next) {
+          //       e.push(productions[index].toString(undefined, lexer));
+          //     }
+          //     throw new Error(e.join('\n'));
+          //   }
+          // }
+          const newAst = new AstNode({
+            symbol: getOriginalSymbol(topSymbol),
+            children: []
           });
-          break;
+          peekStack(astStack).addChild(newAst);
+          astStack.push(newAst);
+          symbolStack.pop();
+          production = productions[n];
+          symbolStack.push.apply(
+            symbolStack,
+            getProductionRhs(production)
+              .concat(endToken)
+              .reverse()
+          );
         } else {
-          const action = (
-            onErrorRecovery({
+          if (token === lexer.mapEndSymbol()) {
+            error = {
               lexer,
-              error: getError(),
+              errorMessage: getError(),
+              expected: getExpected(),
+              symbol: lexer.mapReverseSymbol(topSymbol),
+              token: null
+            };
+            if (onErrorRecovery) {
+              onErrorRecovery(error);
+            } else {
+              closeAstWhenError();
+            }
+            break;
+          } else {
+            error = {
+              lexer,
+              errorMessage: getError(),
               expected: getExpected(),
               symbol: lexer.mapReverseSymbol(topSymbol),
               token
-            }) || {}
-          ).action;
-          if (!action || action === "del") {
-            lexer.matched = lexer.matched.slice(0, -lexer.match.length);
-            token = null;
+            };
+            if (onErrorRecovery) {
+              const recovery = onErrorRecovery(error) || {};
+              const { action } = recovery;
+              if (!action || action === "del") {
+                lexer.matched = lexer.matched.slice(0, -lexer.match.length);
+                token = null;
+              } else if (action === "add") {
+                token = lexer.mapSymbol(recovery.token);
+                lexer.text = recovery.content || "<?>";
+                lexer.matched += lexer.text;
+              }
+            } else {
+              closeAstWhenError();
+              return {
+                ast: astStack[0],
+                error
+              };
+            }
           }
         }
-      }
-
-      if (!symbolStack.length) {
-        break;
       }
 
       topSymbol = peekStack(symbolStack);
@@ -452,16 +684,37 @@ var cal = (function(undefined) {
         symbolStack.pop();
         topSymbol = peekStack(symbolStack);
       }
+
+      if (!symbolStack.length) {
+        break;
+      }
     }
 
     if (currentToken !== lexer.mapEndSymbol()) {
-      onErrorRecovery({
+      error = {
         lexer,
-        error: getError(),
+        errorMessage: getError(),
         symbol: null,
         token: currentToken
-      });
+      };
+      if (onErrorRecovery) {
+        onErrorRecovery(error);
+      } else if (!error) {
+        closeAstWhenError();
+      }
     }
+
+    const ast = astStack[0] && astStack[0].children && astStack[0].children[0];
+
+    if (ast) {
+      delete ast.parent;
+    }
+
+    return {
+      ast,
+      errorNode,
+      error
+    };
   };
 
   return parser;

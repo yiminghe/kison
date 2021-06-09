@@ -75,7 +75,7 @@ module.exports = {
 ```
 #### LL
 
-cal-grammar.js:
+cal-grammar.js: support direct left recursive.
 
 ``` javascript
 module.exports = () => ({
@@ -86,47 +86,39 @@ module.exports = () => ({
     },
     {
       symbol: "AddExp",
-      rhs: ["MulExp", "AddExp1"]
+      rhs: ["MulExp"]
     },
     {
-      symbol: "AddExp1",
+      symbol: "AddExp",
       rhs: [
+        "AddExp",
         "+",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
         "MulExp",
         function(astProcessor) {
-          astProcessor.createOpNode("+");
-        },
-        "AddExp1"
+          astProcessor.createOpNode();
+        }
       ]
     },
     {
-      symbol: "AddExp1",
-      rhs: []
+      symbol: "MulExp",
+      rhs: ["PrimExp"]
     },
     {
       symbol: "MulExp",
-      rhs: ["PrimExp", "MulExp1"]
-    },
-    {
-      symbol: "MulExp1",
       rhs: [
+        "MulExp",
         "*",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
         "PrimExp",
         function(astProcessor) {
-          astProcessor.createOpNode("*");
+          astProcessor.createOpNode();
         },
-        "MulExp1"
       ]
-    },
-    {
-      symbol: "MulExp1",
-      rhs: []
     },
     {
       symbol: "PrimExp",
@@ -200,7 +192,7 @@ kison -g cal-grammar.js
 
 #### LL
 
-ll parser generator, need to eliminate left recursive.
+ll parser generator
 
 ```
 kison -m ll -g cal-grammar.js

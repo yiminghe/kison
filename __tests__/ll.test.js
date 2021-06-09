@@ -76,6 +76,111 @@ function getGrammar() {
 }
 
 describe("ll", () => {
+  it("eliminate left recursive works", () => {
+    var grammar = new LLGrammar({
+      productions: [
+        {
+          symbol: "B",
+          rhs: ["A", "c"]
+        },
+        {
+          symbol: "B",
+          rhs: ["d"]
+        },
+        {
+          symbol: "A",
+          rhs: ["a", "B"]
+        },
+        {
+          symbol: "A",
+          rhs: ["B", "b"]
+        }
+      ],
+      lexer: {
+        rules: [
+          {
+            regexp: /^a/,
+            token: "a"
+          },
+          {
+            regexp: /^b/,
+            token: "b"
+          },
+          {
+            regexp: /^c/,
+            token: "c"
+          },
+          {
+            regexp: /^d/,
+            token: "d"
+          }
+        ]
+      }
+    });
+
+    grammar.build();
+
+    expect(prettyJson(grammar.productions.map(p => p.toString())))
+      .toMatchInlineSnapshot(`
+      "[
+        'B => a B c B| ',
+        'B| => b c B| ',
+        'B| => ',
+        'B => d B| ',
+        'A => a B ',
+        'A => B b '
+      ]"
+    `);
+  });
+
+  it("extract common prefix works", () => {
+    var grammar = new LLGrammar({
+      productions: [
+        {
+          symbol: "S",
+          rhs: ["a", "A"]
+        },
+        {
+          symbol: "S",
+          rhs: ["a", "B"]
+        },
+        {
+          symbol: "S",
+          rhs: ["a", "C"]
+        },
+        {
+          symbol: "S",
+          rhs: ["b"]
+        }
+      ],
+      lexer: {
+        rules: [
+          {
+            regexp: /^a/,
+            token: "a"
+          },
+          {
+            regexp: /^b/,
+            token: "b"
+          }
+        ]
+      }
+    });
+
+    grammar.build();
+
+    expect(prettyJson(grammar.productions.map(p => p + "")))
+      .toMatchInlineSnapshot(`
+      "[
+        'S => a S| ',
+        'S| => C ',
+        'S| => A ',
+        'S| => B ',
+        'S => b '
+      ]"
+    `);
+  });
+
   it("find follows works", () => {
     const grammar = getGrammar();
 
@@ -147,227 +252,227 @@ describe("ll", () => {
     const parser = Function.call(null, code + "\n return parser;")();
     const ast = parser.parse("1+2*4-5^2^3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'Exp',
-  'children': [
-    {
-      'symbol': 'Exp+',
-      'children': [
-        {
-          'symbol': 'Exp*',
-          'children': [
-            {
-              'symbol': 'Exp^',
-              'children': [
-                {
-                  'symbol': 'Exp$',
-                  'children': [
-                    {
-                      'text': '1',
-                      'firstLine': 1,
-                      'firstColumn': 1,
-                      'lastLine': 1,
-                      'lastColumn': 2,
-                      'token': 'NUMBER',
-                      'start': 0,
-                      'end': 1
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          'symbol': 'Exp+_',
-          'children': [
-            {
-              'text': '+',
-              'firstLine': 1,
-              'firstColumn': 2,
-              'lastLine': 1,
-              'lastColumn': 3,
-              'token': '+',
-              'start': 1,
-              'end': 2
-            },
-            {
-              'symbol': 'Exp*',
-              'children': [
-                {
-                  'symbol': 'Exp^',
-                  'children': [
-                    {
-                      'symbol': 'Exp$',
-                      'children': [
-                        {
-                          'text': '2',
-                          'firstLine': 1,
-                          'firstColumn': 3,
-                          'lastLine': 1,
-                          'lastColumn': 4,
-                          'token': 'NUMBER',
-                          'start': 2,
-                          'end': 3
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  'symbol': 'Exp*_',
-                  'children': [
-                    {
-                      'text': '*',
-                      'firstLine': 1,
-                      'firstColumn': 4,
-                      'lastLine': 1,
-                      'lastColumn': 5,
-                      'token': '*',
-                      'start': 3,
-                      'end': 4
-                    },
-                    {
-                      'symbol': 'Exp^',
-                      'children': [
-                        {
-                          'symbol': 'Exp$',
-                          'children': [
-                            {
-                              'text': '4',
-                              'firstLine': 1,
-                              'firstColumn': 5,
-                              'lastLine': 1,
-                              'lastColumn': 6,
-                              'token': 'NUMBER',
-                              'start': 4,
-                              'end': 5
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              'symbol': 'Exp+_',
-              'children': [
-                {
-                  'text': '-',
-                  'firstLine': 1,
-                  'firstColumn': 6,
-                  'lastLine': 1,
-                  'lastColumn': 7,
-                  'token': '-',
-                  'start': 5,
-                  'end': 6
-                },
-                {
-                  'symbol': 'Exp*',
-                  'children': [
-                    {
-                      'symbol': 'Exp^',
-                      'children': [
-                        {
-                          'symbol': 'Exp$',
-                          'children': [
-                            {
-                              'text': '5',
-                              'firstLine': 1,
-                              'firstColumn': 7,
-                              'lastLine': 1,
-                              'lastColumn': 8,
-                              'token': 'NUMBER',
-                              'start': 6,
-                              'end': 7
-                            }
-                          ]
-                        },
-                        {
-                          'symbol': 'Exp^_',
-                          'children': [
-                            {
-                              'text': '^',
-                              'firstLine': 1,
-                              'firstColumn': 8,
-                              'lastLine': 1,
-                              'lastColumn': 9,
-                              'token': '^',
-                              'start': 7,
-                              'end': 8
-                            },
-                            {
-                              'symbol': 'Exp^',
-                              'children': [
-                                {
-                                  'symbol': 'Exp$',
-                                  'children': [
-                                    {
-                                      'text': '2',
-                                      'firstLine': 1,
-                                      'firstColumn': 9,
-                                      'lastLine': 1,
-                                      'lastColumn': 10,
-                                      'token': 'NUMBER',
-                                      'start': 8,
-                                      'end': 9
-                                    }
-                                  ]
-                                },
-                                {
-                                  'symbol': 'Exp^_',
-                                  'children': [
-                                    {
-                                      'text': '^',
-                                      'firstLine': 1,
-                                      'firstColumn': 10,
-                                      'lastLine': 1,
-                                      'lastColumn': 11,
-                                      'token': '^',
-                                      'start': 9,
-                                      'end': 10
-                                    },
-                                    {
-                                      'symbol': 'Exp^',
-                                      'children': [
-                                        {
-                                          'symbol': 'Exp$',
-                                          'children': [
-                                            {
-                                              'text': '3',
-                                              'firstLine': 1,
-                                              'firstColumn': 11,
-                                              'lastLine': 1,
-                                              'lastColumn': 12,
-                                              'token': 'NUMBER',
-                                              'start': 10,
-                                              'end': 11
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}"
-`);
+      "{
+        'symbol': 'Exp',
+        'children': [
+          {
+            'symbol': 'Exp+',
+            'children': [
+              {
+                'symbol': 'Exp*',
+                'children': [
+                  {
+                    'symbol': 'Exp^',
+                    'children': [
+                      {
+                        'symbol': 'Exp$',
+                        'children': [
+                          {
+                            'text': '1',
+                            'firstLine': 1,
+                            'firstColumn': 1,
+                            'lastLine': 1,
+                            'lastColumn': 2,
+                            'token': 'NUMBER',
+                            'start': 0,
+                            'end': 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                'symbol': 'Exp+_',
+                'children': [
+                  {
+                    'text': '+',
+                    'firstLine': 1,
+                    'firstColumn': 2,
+                    'lastLine': 1,
+                    'lastColumn': 3,
+                    'token': '+',
+                    'start': 1,
+                    'end': 2
+                  },
+                  {
+                    'symbol': 'Exp*',
+                    'children': [
+                      {
+                        'symbol': 'Exp^',
+                        'children': [
+                          {
+                            'symbol': 'Exp$',
+                            'children': [
+                              {
+                                'text': '2',
+                                'firstLine': 1,
+                                'firstColumn': 3,
+                                'lastLine': 1,
+                                'lastColumn': 4,
+                                'token': 'NUMBER',
+                                'start': 2,
+                                'end': 3
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        'symbol': 'Exp*_',
+                        'children': [
+                          {
+                            'text': '*',
+                            'firstLine': 1,
+                            'firstColumn': 4,
+                            'lastLine': 1,
+                            'lastColumn': 5,
+                            'token': '*',
+                            'start': 3,
+                            'end': 4
+                          },
+                          {
+                            'symbol': 'Exp^',
+                            'children': [
+                              {
+                                'symbol': 'Exp$',
+                                'children': [
+                                  {
+                                    'text': '4',
+                                    'firstLine': 1,
+                                    'firstColumn': 5,
+                                    'lastLine': 1,
+                                    'lastColumn': 6,
+                                    'token': 'NUMBER',
+                                    'start': 4,
+                                    'end': 5
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    'symbol': 'Exp+_',
+                    'children': [
+                      {
+                        'text': '-',
+                        'firstLine': 1,
+                        'firstColumn': 6,
+                        'lastLine': 1,
+                        'lastColumn': 7,
+                        'token': '-',
+                        'start': 5,
+                        'end': 6
+                      },
+                      {
+                        'symbol': 'Exp*',
+                        'children': [
+                          {
+                            'symbol': 'Exp^',
+                            'children': [
+                              {
+                                'symbol': 'Exp$',
+                                'children': [
+                                  {
+                                    'text': '5',
+                                    'firstLine': 1,
+                                    'firstColumn': 7,
+                                    'lastLine': 1,
+                                    'lastColumn': 8,
+                                    'token': 'NUMBER',
+                                    'start': 6,
+                                    'end': 7
+                                  }
+                                ]
+                              },
+                              {
+                                'symbol': 'Exp^_',
+                                'children': [
+                                  {
+                                    'text': '^',
+                                    'firstLine': 1,
+                                    'firstColumn': 8,
+                                    'lastLine': 1,
+                                    'lastColumn': 9,
+                                    'token': '^',
+                                    'start': 7,
+                                    'end': 8
+                                  },
+                                  {
+                                    'symbol': 'Exp^',
+                                    'children': [
+                                      {
+                                        'symbol': 'Exp$',
+                                        'children': [
+                                          {
+                                            'text': '2',
+                                            'firstLine': 1,
+                                            'firstColumn': 9,
+                                            'lastLine': 1,
+                                            'lastColumn': 10,
+                                            'token': 'NUMBER',
+                                            'start': 8,
+                                            'end': 9
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        'symbol': 'Exp^_',
+                                        'children': [
+                                          {
+                                            'text': '^',
+                                            'firstLine': 1,
+                                            'firstColumn': 10,
+                                            'lastLine': 1,
+                                            'lastColumn': 11,
+                                            'token': '^',
+                                            'start': 9,
+                                            'end': 10
+                                          },
+                                          {
+                                            'symbol': 'Exp^',
+                                            'children': [
+                                              {
+                                                'symbol': 'Exp$',
+                                                'children': [
+                                                  {
+                                                    'text': '3',
+                                                    'firstLine': 1,
+                                                    'firstColumn': 11,
+                                                    'lastLine': 1,
+                                                    'lastColumn': 12,
+                                                    'token': 'NUMBER',
+                                                    'start': 10,
+                                                    'end': 11
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }"
+    `);
   });
 
   it("error recovery works", () => {
@@ -376,139 +481,139 @@ describe("ll", () => {
     const parser = Function.call(null, code + "\n return parser;")();
     const { ast, error } = parser.parse("1+2*");
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'Exp',
-  'children': [
-    {
-      'symbol': 'Exp+',
-      'children': [
-        {
-          'symbol': 'Exp*',
-          'children': [
-            {
-              'symbol': 'Exp^',
-              'children': [
-                {
-                  'symbol': 'Exp$',
-                  'children': [
-                    {
-                      'text': '1',
-                      'firstLine': 1,
-                      'firstColumn': 1,
-                      'lastLine': 1,
-                      'lastColumn': 2,
-                      'token': 'NUMBER',
-                      'start': 0,
-                      'end': 1
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          'symbol': 'Exp+_',
-          'children': [
-            {
-              'text': '+',
-              'firstLine': 1,
-              'firstColumn': 2,
-              'lastLine': 1,
-              'lastColumn': 3,
-              'token': '+',
-              'start': 1,
-              'end': 2
-            },
-            {
-              'symbol': 'Exp*',
-              'children': [
-                {
-                  'symbol': 'Exp^',
-                  'children': [
-                    {
-                      'symbol': 'Exp$',
-                      'children': [
-                        {
-                          'text': '2',
-                          'firstLine': 1,
-                          'firstColumn': 3,
-                          'lastLine': 1,
-                          'lastColumn': 4,
-                          'token': 'NUMBER',
-                          'start': 2,
-                          'end': 3
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  'symbol': 'Exp*_',
-                  'children': [
-                    {
-                      'text': '*',
-                      'firstLine': 1,
-                      'firstColumn': 4,
-                      'lastLine': 1,
-                      'lastColumn': 5,
-                      'token': '*',
-                      'start': 3,
-                      'end': 4
-                    },
-                    {
-                      'error': {
-                        'lexer': {
-                          'text': '',
-                          'firstLine': 1,
-                          'firstColumn': 4,
-                          'lastLine': 1,
-                          'lastColumn': 5,
-                          'token': '*',
-                          'start': 3,
-                          'end': 4
-                        },
-                        'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
-                        'expected': [
-                          'NUMBER',
-                          '('
-                        ],
-                        'symbol': 'Exp^',
-                        'token': null
+      "{
+        'symbol': 'Exp',
+        'children': [
+          {
+            'symbol': 'Exp+',
+            'children': [
+              {
+                'symbol': 'Exp*',
+                'children': [
+                  {
+                    'symbol': 'Exp^',
+                    'children': [
+                      {
+                        'symbol': 'Exp$',
+                        'children': [
+                          {
+                            'text': '1',
+                            'firstLine': 1,
+                            'firstColumn': 1,
+                            'lastLine': 1,
+                            'lastColumn': 2,
+                            'token': 'NUMBER',
+                            'start': 0,
+                            'end': 1
+                          }
+                        ]
                       }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}"
-`);
+                    ]
+                  }
+                ]
+              },
+              {
+                'symbol': 'Exp+_',
+                'children': [
+                  {
+                    'text': '+',
+                    'firstLine': 1,
+                    'firstColumn': 2,
+                    'lastLine': 1,
+                    'lastColumn': 3,
+                    'token': '+',
+                    'start': 1,
+                    'end': 2
+                  },
+                  {
+                    'symbol': 'Exp*',
+                    'children': [
+                      {
+                        'symbol': 'Exp^',
+                        'children': [
+                          {
+                            'symbol': 'Exp$',
+                            'children': [
+                              {
+                                'text': '2',
+                                'firstLine': 1,
+                                'firstColumn': 3,
+                                'lastLine': 1,
+                                'lastColumn': 4,
+                                'token': 'NUMBER',
+                                'start': 2,
+                                'end': 3
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        'symbol': 'Exp*_',
+                        'children': [
+                          {
+                            'text': '*',
+                            'firstLine': 1,
+                            'firstColumn': 4,
+                            'lastLine': 1,
+                            'lastColumn': 5,
+                            'token': '*',
+                            'start': 3,
+                            'end': 4
+                          },
+                          {
+                            'error': {
+                              'lexer': {
+                                'text': '',
+                                'firstLine': 1,
+                                'firstColumn': 4,
+                                'lastLine': 1,
+                                'lastColumn': 5,
+                                'token': '*',
+                                'start': 3,
+                                'end': 4
+                              },
+                              'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+                              'expected': [
+                                'NUMBER',
+                                '('
+                              ],
+                              'symbol': 'Exp^',
+                              'token': null
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }"
+    `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
-"{
-  'lexer': {
-    'text': '',
-    'firstLine': 1,
-    'firstColumn': 4,
-    'lastLine': 1,
-    'lastColumn': 5,
-    'token': '*',
-    'start': 3,
-    'end': 4
-  },
-  'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
-  'expected': [
-    'NUMBER',
-    '('
-  ],
-  'symbol': 'Exp^',
-  'token': null
-}"
-`);
+      "{
+        'lexer': {
+          'text': '',
+          'firstLine': 1,
+          'firstColumn': 4,
+          'lastLine': 1,
+          'lastColumn': 5,
+          'token': '*',
+          'start': 3,
+          'end': 4
+        },
+        'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+        'expected': [
+          'NUMBER',
+          '('
+        ],
+        'symbol': 'Exp^',
+        'token': null
+      }"
+    `);
   });
 
   it("onAction works", () => {
@@ -522,35 +627,35 @@ describe("ll", () => {
       }
     });
     expect(astProcessor.stack).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "left": Object {
-      "left": 1,
-      "op": "+",
-      "right": Object {
-        "left": 2,
-        "op": "*",
-        "right": 3,
-        "v": 6,
-      },
-      "v": 7,
-    },
-    "op": "-",
-    "right": Object {
-      "left": 2,
-      "op": "^",
-      "right": Object {
-        "left": 1,
-        "op": "^",
-        "right": 3,
-        "v": 1,
-      },
-      "v": 2,
-    },
-    "v": 5,
-  },
-]
-`);
+      Array [
+        Object {
+          "left": Object {
+            "left": 1,
+            "op": "+",
+            "right": Object {
+              "left": 2,
+              "op": "*",
+              "right": 3,
+              "v": 6,
+            },
+            "v": 7,
+          },
+          "op": "-",
+          "right": Object {
+            "left": 2,
+            "op": "^",
+            "right": Object {
+              "left": 1,
+              "op": "^",
+              "right": 3,
+              "v": 1,
+            },
+            "v": 2,
+          },
+          "v": 5,
+        },
+      ]
+    `);
   });
 
   it("error recovery works", () => {

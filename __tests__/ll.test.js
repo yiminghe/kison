@@ -80,8 +80,8 @@ describe("ll", () => {
     var grammar = new LLGrammar({
       productions: [
         {
-          symbol: "B",
-          rhs: ["A", "c"]
+          symbol: "S",
+          rhs: ["A"]
         },
         {
           symbol: "B",
@@ -93,7 +93,7 @@ describe("ll", () => {
         },
         {
           symbol: "A",
-          rhs: ["B", "b"]
+          rhs: ["A", "c", "b"]
         }
       ],
       lexer: {
@@ -123,12 +123,11 @@ describe("ll", () => {
     expect(prettyJson(grammar.productions.map(p => p.toString())))
       .toMatchInlineSnapshot(`
       "[
-        'B => a B c B| ',
-        'B| => b c B| ',
-        'B| => ',
-        'B => d B| ',
-        'A => a B ',
-        'A => B b '
+        'S => A ',
+        'B => d ',
+        'A_ => c b A_ ',
+        'A => a B A_ ',
+        'A_ => '
       ]"
     `);
   });
@@ -136,6 +135,10 @@ describe("ll", () => {
   it("extract common prefix works", () => {
     var grammar = new LLGrammar({
       productions: [
+        {
+          symbol: "S",
+          rhs: ["b"]
+        },
         {
           symbol: "S",
           rhs: ["a", "A"]
@@ -147,10 +150,6 @@ describe("ll", () => {
         {
           symbol: "S",
           rhs: ["a", "C"]
-        },
-        {
-          symbol: "S",
-          rhs: ["b"]
         }
       ],
       lexer: {
@@ -172,11 +171,11 @@ describe("ll", () => {
     expect(prettyJson(grammar.productions.map(p => p + "")))
       .toMatchInlineSnapshot(`
       "[
-        'S => a S| ',
-        'S| => C ',
-        'S| => A ',
-        'S| => B ',
-        'S => b '
+        'S => b ',
+        'S => a S_ ',
+        'S_ => C ',
+        'S_ => A ',
+        'S_ => B '
       ]"
     `);
   });

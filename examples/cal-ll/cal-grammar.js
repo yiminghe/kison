@@ -13,50 +13,34 @@ function generateOpProductions() {
     const next = operators[index + 1][0];
     const current = operators[index][0];
     const exp = `Exp${current}`;
-    const exp_ = exp + "_";
     const nextExp = `Exp${next}`;
+    ret.push({
+      symbol: exp,
+      rhs: [nextExp]
+    });
     if (rightOperatorMap[current]) {
       for (const o of operators[index]) {
-        ret.push(
-          {
-            symbol: exp_,
-            rhs: [
-              o,
-              function(astProcessor, lexer) {
-                astProcessor.pushStack(lexer.text);
-              },
-              exp,
-              function(astProcessor) {
-                astProcessor.createOpNode();
-              }
-            ]
-          },
-          {
-            symbol: exp_,
-            rhs: []
-          },
-          {
-            symbol: exp,
-            rhs: [nextExp, exp_]
-          }
-        );
+        ret.push({
+          symbol: exp,
+          rhs: [
+            nextExp,
+            o,
+            function(astProcessor, lexer) {
+              astProcessor.pushStack(lexer.text);
+            },
+            exp,
+            function(astProcessor) {
+              astProcessor.createOpNode();
+            }
+          ]
+        });
       }
     } else {
-      ret.push(
-        {
-          symbol: exp,
-          rhs: [nextExp, exp_]
-        },
-
-        {
-          symbol: exp_,
-          rhs: []
-        }
-      );
       for (const o of operators[index]) {
         ret.push({
-          symbol: exp_,
+          symbol: exp,
           rhs: [
+            exp,
             o,
             function(astProcessor, lexer) {
               astProcessor.pushStack(lexer.text);
@@ -64,8 +48,7 @@ function generateOpProductions() {
             nextExp,
             function(astProcessor) {
               astProcessor.createOpNode();
-            },
-            exp_
+            }
           ]
         });
       }
@@ -80,9 +63,7 @@ module.exports = () => ({
       symbol: "Exp",
       rhs: ["Exp+"]
     },
-
     ...generateOpProductions(),
-
     {
       symbol: "Exp$",
       rhs: [

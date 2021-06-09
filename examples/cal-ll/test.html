@@ -3,46 +3,50 @@
     import AstProcessor from './AstProcessor.js';
 
 
-    function parseResult(input, options = {}, callback) {
-        console.log('');
-        console.log('***********************start ' + input);
+    (function () {
+        function parseResult(input, options = {}, callback) {
+            console.log('');
+            console.log('***********************start ' + input);
 
-        const ast = new AstProcessor();
-        const ret = cal.parse(input, {
-            onAction({ action, lexer }) {
-                action(ast, lexer);
-            },
-            ...options,
-        });
-      
-        console.log('use ast stack', ast.stack);
-        console.log('parse result', ret);
-        callback && callback();
-        console.log('***********************end ' + input);
-        console.log('');
-    }
+            const ast = new AstProcessor();
+            const ret = cal.parse(input, {
+                onAction({ action, lexer }) {
+                    action(ast, lexer);
+                },
+                ...options,
+            });
 
-    parseResult('2^1^3');
-
-    parseResult('1+2*5');
-    parseResult('(1+2)*5');
-    parseResult('11+2*5');
-
-    let input = '2+*3*+5';
-    let o = input;
-    parseResult(input, {
-        onErrorRecovery(args) {
-            const { lexer } = args;
-            input = lexer.matched.slice(0, -lexer.match.length) + lexer.input;
-            console.log('onErrorRecovery', args);
-            return {
-                action: 'del',
-            };
+            console.log('user ast stack', ast.stack);
+            console.log('parse result', ret);
+            callback && callback();
+            console.log('***********************end ' + input);
+            console.log('');
         }
-    }, () => {
-        // error recovery: 2+*3*+5 => 2+3*5
-        console.log(`after error recovery: ${o} => ${input}`);
-    });
 
-    parseResult('1+2*');
+        parseResult('1+2+3');
+
+        parseResult('2^1^3');
+
+        parseResult('1+2*5');
+        parseResult('(1+2)*5');
+        parseResult('11+2*5');
+
+        let input = '2+*3*+5';
+        let o = input;
+        parseResult(input, {
+            onErrorRecovery(args) {
+                const { lexer } = args;
+                input = lexer.matched.slice(0, -lexer.match.length) + lexer.input;
+                console.log('onErrorRecovery', args);
+                return {
+                    action: 'del',
+                };
+            }
+        }, () => {
+            // error recovery: 2+*3*+5 => 2+3*5
+            console.log(`after error recovery: ${o} => ${input}`);
+        });
+
+        parseResult('1+2*');
+    })();
 </script>

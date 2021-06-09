@@ -302,8 +302,6 @@ var cal = (function(undefined) {
   parser.lexer = lexer;
   parser.productions = [
     ["Exp", ["Exp+"]],
-    ["Exp+", ["Exp*", "Exp+_"]],
-    ["Exp+_", []],
     [
       "Exp+_",
       [
@@ -332,8 +330,8 @@ var cal = (function(undefined) {
         "Exp+_"
       ]
     ],
-    ["Exp*", ["Exp^", "Exp*_"]],
-    ["Exp*_", []],
+    ["Exp+_", []],
+    ["Exp+", ["Exp*", "Exp+_"]],
     [
       "Exp*_",
       [
@@ -362,6 +360,10 @@ var cal = (function(undefined) {
         "Exp*_"
       ]
     ],
+    ["Exp*_", []],
+    ["Exp*", ["Exp^", "Exp*_"]],
+    ["Exp^", ["Exp$", "Exp^_"]],
+    ["Exp^_", []],
     [
       "Exp^_",
       [
@@ -375,8 +377,6 @@ var cal = (function(undefined) {
         }
       ]
     ],
-    ["Exp^_", []],
-    ["Exp^", ["Exp$", "Exp^_"]],
     [
       "Exp$",
       [
@@ -393,40 +393,40 @@ var cal = (function(undefined) {
       NUMBER: [0],
       "(": [0]
     },
-    "Exp+": {
-      NUMBER: [1],
-      "(": [1]
-    },
     "Exp+_": {
-      $EOF: [2],
-      ")": [2],
-      "+": [3],
-      "-": [4]
+      "+": [1],
+      "-": [2],
+      $EOF: [3],
+      ")": [3]
     },
-    "Exp*": {
-      NUMBER: [5],
-      "(": [5]
+    "Exp+": {
+      NUMBER: [4],
+      "(": [4]
     },
     "Exp*_": {
-      "+": [6],
-      "-": [6],
-      $EOF: [6],
-      ")": [6],
-      "*": [7],
-      "/": [8]
+      "*": [5],
+      "/": [6],
+      "+": [7],
+      "-": [7],
+      $EOF: [7],
+      ")": [7]
+    },
+    "Exp*": {
+      NUMBER: [8],
+      "(": [8]
+    },
+    "Exp^": {
+      NUMBER: [9],
+      "(": [9]
     },
     "Exp^_": {
-      "^": [9],
       "*": [10],
       "/": [10],
       "+": [10],
       "-": [10],
       $EOF: [10],
-      ")": [10]
-    },
-    "Exp^": {
-      NUMBER: [11],
-      "(": [11]
+      ")": [10],
+      "^": [11]
     },
     Exp$: {
       NUMBER: [12],

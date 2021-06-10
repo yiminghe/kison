@@ -7,11 +7,11 @@
 
 Offical site: https://yiminghe.me/kison
 
-A parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate). (LALR/LL)
+A LALR/LL parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate)
 
 ## examples
 
-https://yiminghe.me/kison/examples/
+[https://yiminghe.me/kison/examples/](https://yiminghe.me/kison/examples/)
 
 ### grammar and lexer definition
 

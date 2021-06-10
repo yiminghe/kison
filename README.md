@@ -7,6 +7,8 @@
 
 [https://yiminghe.me/kison](https://yiminghe.me/kison)
 
+[https://github.com/yiminghe/kison](https://github.com/yiminghe/kison)
+
 A LALR/LL parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate)
 
 ## examples

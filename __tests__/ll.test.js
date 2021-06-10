@@ -620,7 +620,7 @@ describe("ll", () => {
     const code = grammar.genCode();
     const parser = Function.call(null, code + "\n return parser;")();
     const astProcessor = new AstProcessor();
-    parser.parse("1+2*3-2^1^3", {
+    parser.parse("1 + 2*3-2^1^3", {
       onAction({ action, lexer }) {
         action(astProcessor, lexer);
       }

@@ -2,7 +2,8 @@ module.exports = () => ({
   lexer: {
     rules: [
       {
-        regexp: /^\s+/
+        regexp: /^\s+/,
+        token: "HIDDEN"
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,

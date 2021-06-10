@@ -5,7 +5,7 @@
 [![NPM downloads](http://img.shields.io/npm/dm/kison.svg)](https://npmjs.org/package/kison)
 [![Build Status](https://travis-ci.org/yiminghe/kison.svg?branch=master)](https://travis-ci.org/yiminghe/kison)
 
-Offical site: https://yiminghe.me/kison
+[https://yiminghe.me/kison](https://yiminghe.me/kison)
 
 A LALR/LL parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate)
 

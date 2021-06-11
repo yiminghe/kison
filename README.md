@@ -213,7 +213,7 @@ kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### 0.4.0-alpha.5 - 2021/06/11
+### 0.4.0-alpha.6 - 2021/06/11
 
 * use js config file
 * support LL parser

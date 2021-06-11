@@ -1,34 +1,6 @@
-<script src="cal.js"></script>
 <h2>open devtools console</h2>
-<script>
-    console.log(cal.parse('1+5*', {
-        onErrorRecovery({ expected }) {
-            if (expected.shift) {
-                return {
-                    action: 'add',
-                    token: expected.shift[0],
-                };
-            }
-        }
-    }));
-    console.log(cal.parse('1+5*4/2'));
-    console.log(cal.parse('5-5-4'));
-    console.log(cal.parse('5^2^3'));
-    // console.log(cal.parse('(1+2)*5'));
-    // console.log(cal.parse('11-2*5'));
-    // let input = '2+*3*+5';
-    // let o = input;
-    // console.log(cal.parse(input, {
-    //     onErrorRecovery(args) {
-    //         const { lexer } = args;
-    //         input = lexer.matched.slice(0, -lexer.match.length) + lexer.input;
-    //         console.log(args);
-    //         return {
-    //             action: 'del',
-    //         };
-    //     }
-    // }));
-    // // error recovery: 2+*3*+5 => 2+3*5
-    // console.log(`error recovery: ${o} => ${input}`)
-    // console.log(cal.parse('2+/3'));
+<script type="module">
+    import cal from './cal.js';
+    import test from '../test.js';
+    test(cal);
 </script>

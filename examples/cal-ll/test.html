@@ -33,19 +33,35 @@
         parseResult('11+2*5');
 
         let input = '2+*3*+5';
+
+        parseResult(input);
+
         let o = input;
+
+        let arr = o.split('');
+        let offset = 0;
+
         parseResult(input, {
-            onErrorRecovery(args) {
-                const { lexer } = args;
-                input = lexer.matched.slice(0, -lexer.match.length) + lexer.input;
-                console.log('onErrorRecovery', args);
-                return {
-                    action: 'del',
-                };
+            onErrorRecovery({ lexer, expected }, recommendAction) {
+                if (recommendAction.action === 'add') {
+                    arr.splice(offset + lexer.end, 0, '0');
+                    offset + 1;
+                    return {
+                        action: 'add',
+                        token: expected[0],
+                        text: '0',
+                    };
+                } else if (recommendAction.action === 'del') {
+                    arr.splice(offset + lexer.start, lexer.end - lexer.start);
+                    offset -= lexer.end - lexer.start;
+                    return {
+                        action: 'del',
+                    };
+                }
             }
         }, () => {
             // error recovery: 2+*3*+5 => 2+3*5
-            console.log(`after error recovery: ${o} => ${input}`);
+            console.log(`after error recovery: ${o} => ${arr.join('')}`);
         });
 
         parseResult('1+2*');

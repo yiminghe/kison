@@ -1,1 +1,1 @@
-node ../../bin/kison -g cal-grammar.js
+node ../../bin/kison --es -g cal-grammar.js

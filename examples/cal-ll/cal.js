@@ -65,6 +65,7 @@ var cal = (function(undefined) {
      ]
      */
     self.rules = [];
+    self.tokensQueue = [];
 
     mix(self, cfg);
 
@@ -183,7 +184,35 @@ var cal = (function(undefined) {
         end: this.end
       };
     },
-    lex: function() {
+    peek: function(skipHidden) {
+      const token = this.lex(skipHidden, true);
+      if (this.tokensQueue.indexOf(token) === -1) {
+        this.tokensQueue.push(token);
+      }
+      return token;
+    },
+    lex: function(skipHidden, reserveQueue) {
+      if (skipHidden === undefined) {
+        skipHidden = true;
+      }
+      const { tokensQueue } = this;
+      if (reserveQueue) {
+        for (let i = 0; i < tokensQueue.length; i++) {
+          const token = tokensQueue[i];
+          if (skipHidden && token.token === "HIDDEN") {
+            continue;
+          }
+          return token;
+        }
+      } else {
+        while (tokensQueue.length) {
+          const token = tokensQueue.shift();
+          if (skipHidden && token.token === "HIDDEN") {
+            continue;
+          }
+          return token;
+        }
+      }
       var self = this,
         input = self.input,
         i,
@@ -196,7 +225,7 @@ var cal = (function(undefined) {
       self.match = self.text = "";
 
       if (!input) {
-        return self.mapEndSymbol();
+        return { token: self.mapEndSymbol() };
       }
 
       for (i = 0; i < rules.length; i++) {
@@ -213,14 +242,17 @@ var cal = (function(undefined) {
           if (lines) {
             self.lineNumber += lines.length;
           }
-          mix(self, {
+          const position = {
+            start: self.start,
+            end: self.end,
             firstLine: self.lastLine,
             lastLine: self.lineNumber,
             firstColumn: self.lastColumn,
             lastColumn: lines
               ? lines[lines.length - 1].length - 1
               : self.lastColumn + m[0].length
-          });
+          };
+          mix(self, position);
           var match;
           // for error report
           match = self.match = m[0];
@@ -242,7 +274,14 @@ var cal = (function(undefined) {
 
           if (ret) {
             self.token = self.mapReverseSymbol(ret);
-            return ret;
+            if (ret === "HIDDEN" && skipHidden) {
+              return self.lex();
+            }
+            return {
+              text: self.text,
+              token: self.token,
+              ...position
+            };
           } else {
             // ignore
             return self.lex();
@@ -259,7 +298,8 @@ var cal = (function(undefined) {
   var lexer = new Lexer({
     rules: [
       {
-        regexp: /^\s+/
+        regexp: /^\s+/,
+        token: "HIDDEN"
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,
@@ -506,13 +546,7 @@ var cal = (function(undefined) {
     let error;
     var { onErrorRecovery, onAction = noop } = options;
     var self = this;
-    var {
-      lexer,
-      operatorPriorityMap,
-      rightOperatorMap,
-      table,
-      productions
-    } = self;
+    var { lexer, table, productions } = self;
     var symbolStack = [getProductionSymbol(productions[0])];
     const astStack = [
       new AstNode({
@@ -560,13 +594,6 @@ var cal = (function(undefined) {
       }
     }
 
-    // const operatorPriorityStack = [-Infinity];
-
-    // function lastOperatorPriority(n) {
-    //   n = n || 1;
-    //   return operatorPriorityStack[operatorPriorityStack.length - n];
-    // }
-
     let production;
 
     while (1) {
@@ -586,35 +613,12 @@ var cal = (function(undefined) {
       if (typeof topSymbol === "string") {
         currentToken = token = token || lexer.lex();
 
-        // const currentPriority = operatorPriorityMap && operatorPriorityMap[token];
-        // if (currentPriority) {
-        //   operatorPriorityStack.push(currentPriority);
-        // }
-
-        if (topSymbol === token) {
+        if (topSymbol === token.token) {
           symbolStack.pop();
           peekStack(astStack).addChild(new AstNode(lexer.toJSON()));
           token = null;
-        } else if ((next = getTableVal(topSymbol, token)) !== undefined) {
+        } else if ((next = getTableVal(topSymbol, token.token)) !== undefined) {
           let n = next[0];
-          // if (next.length > 1) {
-          //   if (currentPriority) {
-          //     const reduceIndex = next[1];
-          //     const shiftIndex = next[0];
-          //     const lastPriority = lastOperatorPriority(2);
-          //     if (currentPriority < lastPriority || (lastPriority === currentPriority && !rightOperatorMap[token])) {
-          //       n = reduceIndex;
-          //     } else {
-          //       n = shiftIndex;
-          //     }
-          //   } else {
-          //     const e = [`Conflict ${lexer.mapReverseSymbol(symbol)} : ${lexer.mapReverseSymbol(f)} ->`];
-          //     for (const index of next) {
-          //       e.push(productions[index].toString(undefined, lexer));
-          //     }
-          //     throw new Error(e.join('\n'));
-          //   }
-          // }
           const newAst = new AstNode({
             symbol: getOriginalSymbol(topSymbol),
             children: []
@@ -630,13 +634,12 @@ var cal = (function(undefined) {
               .reverse()
           );
         } else {
-          if (token === lexer.mapEndSymbol()) {
+          if (token.token === lexer.mapEndSymbol()) {
             error = {
-              lexer,
               errorMessage: getError(),
               expected: getExpected(),
               symbol: lexer.mapReverseSymbol(topSymbol),
-              token: null
+              lexer: token
             };
             if (onErrorRecovery) {
               onErrorRecovery(error);
@@ -646,29 +649,41 @@ var cal = (function(undefined) {
             break;
           } else {
             error = {
-              lexer,
               errorMessage: getError(),
               expected: getExpected(),
               symbol: lexer.mapReverseSymbol(topSymbol),
-              token
+              lexer: token
             };
             if (onErrorRecovery) {
-              const recovery = onErrorRecovery(error) || {};
+              const recommendedAction = {};
+              const nextToken = lexer.peek();
+
+              // should delete
+              if (
+                topSymbol === nextToken.token ||
+                getTableVal(topSymbol, nextToken.token) !== undefined
+              ) {
+                recommendedAction.action = "del";
+              } else if (error.expected.length) {
+                recommendedAction.action = "add";
+              }
+
+              const recovery = onErrorRecovery(error, recommendedAction) || {};
               const { action } = recovery;
-              if (!action || action === "del") {
-                lexer.matched = lexer.matched.slice(0, -lexer.match.length);
+
+              if (!action) {
+                closeAstWhenError();
+                break;
+              }
+
+              if (action === "del") {
                 token = null;
               } else if (action === "add") {
-                token = lexer.mapSymbol(recovery.token);
-                lexer.text = recovery.content || "<?>";
-                lexer.matched += lexer.text;
+                token = { ...token, token: lexer.mapSymbol(recovery.token) };
               }
             } else {
               closeAstWhenError();
-              return {
-                ast: astStack[0],
-                error
-              };
+              break;
             }
           }
         }
@@ -678,7 +693,7 @@ var cal = (function(undefined) {
 
       while (topSymbol && typeof topSymbol !== "string") {
         onAction({
-          lexer,
+          lexer: currentToken,
           action: topSymbol
         });
         symbolStack.pop();
@@ -690,12 +705,11 @@ var cal = (function(undefined) {
       }
     }
 
-    if (currentToken !== lexer.mapEndSymbol()) {
+    if (!error && currentToken.token !== lexer.mapEndSymbol()) {
       error = {
-        lexer,
         errorMessage: getError(),
         symbol: null,
-        token: currentToken
+        lexer: currentToken
       };
       if (onErrorRecovery) {
         onErrorRecovery(error);

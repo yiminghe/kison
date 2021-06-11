@@ -1,1 +1,1 @@
-node ../../../bin/kison --no-compressSymbol -v -g cal-grammar.js
+node ../../../bin/kison --no-compressSymbol --es -g cal-grammar.js

@@ -65,6 +65,7 @@ var cal = (function(undefined) {
      ]
      */
     self.rules = [];
+    self.tokensQueue = [];
 
     mix(self, cfg);
 
@@ -86,12 +87,17 @@ var cal = (function(undefined) {
         firstLine: 1,
         lineNumber: 1,
         lastLine: 1,
+        start: 0,
+        end: 0,
         firstColumn: 1,
         lastColumn: 1
       });
     },
     mapEndSymbol: function() {
       return this.mapSymbol(Lexer.STATIC.END_TAG);
+    },
+    mapHiddenSymbol: function() {
+      return this.mapSymbol(Lexer.STATIC.HIDDEN_TAG);
     },
     getCurrentRules: function() {
       var self = this,
@@ -164,12 +170,52 @@ var cal = (function(undefined) {
       }
       //#JSCOVERAGE_IF
       if (reverseSymbolMap) {
-        return reverseSymbolMap[rs];
+        return reverseSymbolMap[rs] || rs;
       } else {
         return rs;
       }
     },
-    lex: function() {
+    toJSON: function() {
+      return {
+        text: this.text,
+        firstLine: this.firstLine,
+        firstColumn: this.firstColumn,
+        lastLine: this.lastLine,
+        lastColumn: this.lastColumn,
+        token: this.token,
+        start: this.start,
+        end: this.end
+      };
+    },
+    peek: function(skipHidden) {
+      const token = this.lex(skipHidden, true);
+      if (this.tokensQueue.indexOf(token) === -1) {
+        this.tokensQueue.push(token);
+      }
+      return token;
+    },
+    lex: function(skipHidden, reserveQueue) {
+      if (skipHidden === undefined) {
+        skipHidden = true;
+      }
+      const { tokensQueue } = this;
+      if (reserveQueue) {
+        for (let i = 0; i < tokensQueue.length; i++) {
+          const token = tokensQueue[i];
+          if (skipHidden && token.t === this.mapHiddenSymbol()) {
+            continue;
+          }
+          return token;
+        }
+      } else {
+        while (tokensQueue.length) {
+          const token = tokensQueue.shift();
+          if (skipHidden && token.t === this.mapHiddenSymbol()) {
+            continue;
+          }
+          return token;
+        }
+      }
       var self = this,
         input = self.input,
         i,
@@ -182,7 +228,16 @@ var cal = (function(undefined) {
       self.match = self.text = "";
 
       if (!input) {
-        return self.mapEndSymbol();
+        return {
+          t: self.mapEndSymbol(),
+          token: Lexer.STATIC.END_TAG,
+          start: self.end,
+          end: self.end,
+          firstLine: self.lastLine,
+          firstColumn: self.lastColumn,
+          lastLine: self.lastLine,
+          lastColumn: self.lastColumn
+        };
       }
 
       for (i = 0; i < rules.length; i++) {
@@ -193,18 +248,23 @@ var cal = (function(undefined) {
           action = rule.action || rule[2] || undefined;
         //#JSCOVERAGE_ENDIF
         if ((m = input.match(regexp))) {
+          self.start = self.end;
+          self.end += m[0].length;
           lines = m[0].match(/\n.*/g);
           if (lines) {
             self.lineNumber += lines.length;
           }
-          mix(self, {
+          const position = {
+            start: self.start,
+            end: self.end,
             firstLine: self.lastLine,
             lastLine: self.lineNumber,
             firstColumn: self.lastColumn,
             lastColumn: lines
               ? lines[lines.length - 1].length - 1
               : self.lastColumn + m[0].length
-          });
+          };
+          mix(self, position);
           var match;
           // for error report
           match = self.match = m[0];
@@ -226,7 +286,15 @@ var cal = (function(undefined) {
 
           if (ret) {
             self.token = self.mapReverseSymbol(ret);
-            return ret;
+            if (ret === self.mapHiddenSymbol() && skipHidden) {
+              return self.lex();
+            }
+            return {
+              text: self.text,
+              token: self.token,
+              t: ret,
+              ...position
+            };
           } else {
             // ignore
             return self.lex();
@@ -238,12 +306,14 @@ var cal = (function(undefined) {
   Lexer.STATIC = {
     INITIAL: "I",
     DEBUG_CONTEXT_LIMIT: 20,
-    END_TAG: "$EOF"
+    END_TAG: "$EOF",
+    HIDDEN_TAG: "$HIDDEN"
   };
   var lexer = new Lexer({
     rules: [
       {
-        regexp: /^\s+/
+        regexp: /^\s+/,
+        token: "$HIDDEN"
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,
@@ -258,6 +328,14 @@ var cal = (function(undefined) {
         token: "-"
       },
       {
+        regexp: /^\(/,
+        token: "("
+      },
+      {
+        regexp: /^\)/,
+        token: ")"
+      },
+      {
         regexp: /^\*/,
         token: "*"
       },
@@ -268,14 +346,6 @@ var cal = (function(undefined) {
       {
         regexp: /^\^/,
         token: "^"
-      },
-      {
-        regexp: /^\(/,
-        token: "("
-      },
-      {
-        regexp: /^\)/,
-        token: ")"
       },
       {
         regexp: /^./,
@@ -423,10 +493,10 @@ var cal = (function(undefined) {
       "5": {
         "+": [1, undefined, 6],
         "-": [1, undefined, 7],
+        ")": [1, undefined, 11],
         "*": [1, undefined, 8],
         "/": [1, undefined, 9],
-        "^": [1, undefined, 10],
-        ")": [1, undefined, 11]
+        "^": [1, undefined, 10]
       },
       "6": {
         NUMBER: [1, undefined, 1],
@@ -529,7 +599,7 @@ var cal = (function(undefined) {
       }
       if (token) {
         // read action for current state and first input
-        action = tableAction[state] && tableAction[state][token];
+        action = tableAction[state] && tableAction[state][token.t];
       } else {
         action = null;
       }
@@ -552,7 +622,7 @@ var cal = (function(undefined) {
             expectedInfo.push(actionStr + ":" + s);
           });
         }
-        error =
+        const error =
           prefix +
           "syntax error at line " +
           lexer.lineNumber +
@@ -561,32 +631,12 @@ var cal = (function(undefined) {
           "\n" +
           "expect " +
           expectedInfo.join(", ");
-        if (onErrorRecovery) {
-          const recovery =
-            onErrorRecovery({
-              error,
-              lexer,
-              expected,
-              token: lexer.mapReverseSymbol(token)
-            }) || {};
-          const { action } = recovery;
-          if (!action || action === "del") {
-            lexer.matched = lexer.matched.slice(0, -lexer.match.length);
-            token = null;
-            continue;
-          } else if (action === "add") {
-            token = lexer.mapSymbol(recovery.token);
-            lexer.text = recovery.content || "<?>";
-            lexer.matched += lexer.text;
-          }
-        } else {
-          throw new Error(error);
-        }
+        throw new Error(error);
       }
 
       switch (action[GrammarConst.TYPE_INDEX]) {
         case GrammarConst.SHIFT_TYPE:
-          symbolStack.push(token);
+          symbolStack.push(token.t);
           valueStack.push(lexer.text);
           // push state
           stateStack.push(action[GrammarConst.TO_INDEX]);
@@ -633,6 +683,4 @@ var cal = (function(undefined) {
   return parser;
 })();
 
-if (typeof module !== "undefined") {
-  module.exports = cal;
-}
+export default cal;

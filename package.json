@@ -39,7 +39,8 @@
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish --tag alpha",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{lib,__tests__,tests}/**/*.{js,tsx}\"",
-    "test": "jest"
+    "test": "jest",
+    "test-debug": "jest -i"
   },
   "bin": {
     "kison": "./bin/kison.js"

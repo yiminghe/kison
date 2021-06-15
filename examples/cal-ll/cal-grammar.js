@@ -2,6 +2,15 @@ const lexerConfig = require("../common/cal-lexer");
 
 const operators = [["+", "-"], ["*", "/"], ["^"], ["$"]];
 
+const map = {
+  "exp^": "expo",
+  "exp-": "subtract",
+  "exp+": "add",
+  "exp*": "mul",
+  "exp/": "divide",
+  exp$: "atom"
+};
+
 const rightOperatorMap = {
   "^": 1
 };
@@ -14,11 +23,12 @@ function generateOpProductions() {
     }
     const next = operators[index + 1][0];
     const current = operators[index][0];
-    const exp = `Exp${current}`;
-    const nextExp = `Exp${next}`;
+    const exp = map[`exp${current}`];
+    const nextExp = map[`exp${next}`];
     ret.push({
       symbol: exp,
-      rhs: [nextExp]
+      rhs: [nextExp],
+      label: "single-exp"
     });
     if (rightOperatorMap[current]) {
       for (const o of operators[index]) {
@@ -34,7 +44,8 @@ function generateOpProductions() {
             function(astProcessor) {
               astProcessor.createOpNode();
             }
-          ]
+          ],
+          label: "single-exp"
         });
       }
     } else {
@@ -51,7 +62,8 @@ function generateOpProductions() {
             function(astProcessor) {
               astProcessor.createOpNode();
             }
-          ]
+          ],
+          label: "single-exp"
         });
       }
     }
@@ -59,15 +71,17 @@ function generateOpProductions() {
   return ret;
 }
 
+const startExp = map["exp" + operators[0][0]];
+
 module.exports = () => ({
   productions: [
     {
-      symbol: "Exp",
-      rhs: ["Exp+"]
+      symbol: "exp",
+      rhs: [startExp]
     },
     ...generateOpProductions(),
     {
-      symbol: "Exp$",
+      symbol: "atom",
       rhs: [
         "NUMBER",
         function(astProcessor, lexer) {
@@ -76,8 +90,8 @@ module.exports = () => ({
       ]
     },
     {
-      symbol: "Exp$",
-      rhs: ["(", "Exp+", ")"]
+      symbol: "atom",
+      rhs: ["(", startExp, ")"]
     }
   ],
 

@@ -96,6 +96,9 @@ var cal = (function(undefined) {
     mapEndSymbol: function() {
       return this.mapSymbol(Lexer.STATIC.END_TAG);
     },
+    mapHiddenSymbol: function() {
+      return this.mapSymbol(Lexer.STATIC.HIDDEN_TAG);
+    },
     getCurrentRules: function() {
       var self = this,
         currentState = self.stateStack[self.stateStack.length - 1],
@@ -199,7 +202,7 @@ var cal = (function(undefined) {
       if (reserveQueue) {
         for (let i = 0; i < tokensQueue.length; i++) {
           const token = tokensQueue[i];
-          if (skipHidden && token.token === "HIDDEN") {
+          if (skipHidden && token.t === this.mapHiddenSymbol()) {
             continue;
           }
           return token;
@@ -207,7 +210,7 @@ var cal = (function(undefined) {
       } else {
         while (tokensQueue.length) {
           const token = tokensQueue.shift();
-          if (skipHidden && token.token === "HIDDEN") {
+          if (skipHidden && token.t === this.mapHiddenSymbol()) {
             continue;
           }
           return token;
@@ -225,7 +228,16 @@ var cal = (function(undefined) {
       self.match = self.text = "";
 
       if (!input) {
-        return { token: self.mapEndSymbol() };
+        return {
+          t: self.mapEndSymbol(),
+          token: Lexer.STATIC.END_TAG,
+          start: self.end,
+          end: self.end,
+          firstLine: self.lastLine,
+          firstColumn: self.lastColumn,
+          lastLine: self.lastLine,
+          lastColumn: self.lastColumn
+        };
       }
 
       for (i = 0; i < rules.length; i++) {
@@ -274,12 +286,13 @@ var cal = (function(undefined) {
 
           if (ret) {
             self.token = self.mapReverseSymbol(ret);
-            if (ret === "HIDDEN" && skipHidden) {
+            if (ret === self.mapHiddenSymbol() && skipHidden) {
               return self.lex();
             }
             return {
               text: self.text,
               token: self.token,
+              t: ret,
               ...position
             };
           } else {
@@ -293,13 +306,14 @@ var cal = (function(undefined) {
   Lexer.STATIC = {
     INITIAL: "I",
     DEBUG_CONTEXT_LIMIT: 20,
-    END_TAG: "$EOF"
+    END_TAG: "$EOF",
+    HIDDEN_TAG: "$HIDDEN"
   };
   var lexer = new Lexer({
     rules: [
       {
         regexp: /^\s+/,
-        token: "HIDDEN"
+        token: "$HIDDEN"
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,
@@ -341,84 +355,118 @@ var cal = (function(undefined) {
   });
   parser.lexer = lexer;
   parser.productions = [
-    ["Exp", ["Exp+"]],
+    ["exp", ["add"]],
     [
-      "Exp+_",
+      "add_",
       [
         "+",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "Exp*",
+        "mul",
         function(astProcessor) {
           astProcessor.createOpNode();
         },
-        "Exp+_"
+        {
+          s: 1
+        },
+        "add_"
       ]
     ],
     [
-      "Exp+_",
+      "add_",
       [
         "-",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "Exp*",
+        "mul",
         function(astProcessor) {
           astProcessor.createOpNode();
         },
-        "Exp+_"
+        {
+          s: 1
+        },
+        "add_"
       ]
     ],
-    ["Exp+_", []],
-    ["Exp+", ["Exp*", "Exp+_"]],
+    ["add_", []],
     [
-      "Exp*_",
+      "add",
+      [
+        "mul",
+        {
+          s: 1
+        },
+        "add_"
+      ],
+      undefined,
+      "single-exp"
+    ],
+    [
+      "mul_",
       [
         "*",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "Exp^",
+        "expo",
         function(astProcessor) {
           astProcessor.createOpNode();
         },
-        "Exp*_"
+        {
+          s: 1
+        },
+        "mul_"
       ]
     ],
     [
-      "Exp*_",
+      "mul_",
       [
         "/",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "Exp^",
+        "expo",
         function(astProcessor) {
           astProcessor.createOpNode();
         },
-        "Exp*_"
+        {
+          s: 1
+        },
+        "mul_"
       ]
     ],
-    ["Exp*_", []],
-    ["Exp*", ["Exp^", "Exp*_"]],
-    ["Exp^", ["Exp$", "Exp^_"]],
-    ["Exp^_", []],
+    ["mul_", []],
     [
-      "Exp^_",
+      "mul",
+      [
+        "expo",
+        {
+          s: 1
+        },
+        "mul_"
+      ],
+      undefined,
+      "single-exp"
+    ],
+    ["expo", ["atom", "_expo"], undefined, "single-exp"],
+    ["_expo", []],
+    [
+      "_expo",
       [
         "^",
         function(astProcessor, lexer) {
           astProcessor.pushStack(lexer.text);
         },
-        "Exp^",
+        "expo",
         function(astProcessor) {
           astProcessor.createOpNode();
         }
       ]
     ],
     [
-      "Exp$",
+      "atom",
       [
         "NUMBER",
         function(astProcessor, lexer) {
@@ -426,24 +474,25 @@ var cal = (function(undefined) {
         }
       ]
     ],
-    ["Exp$", ["(", "Exp+", ")"]]
+    ["atom", ["(", "add", ")"]]
   ];
+  const productionEndToken = "kison-end-1623772267345";
   parser.table = {
-    Exp: {
+    exp: {
       NUMBER: [0],
       "(": [0]
     },
-    "Exp+_": {
+    add_: {
       "+": [1],
       "-": [2],
       $EOF: [3],
       ")": [3]
     },
-    "Exp+": {
+    add: {
       NUMBER: [4],
       "(": [4]
     },
-    "Exp*_": {
+    mul_: {
       "*": [5],
       "/": [6],
       "+": [7],
@@ -451,15 +500,15 @@ var cal = (function(undefined) {
       $EOF: [7],
       ")": [7]
     },
-    "Exp*": {
+    mul: {
       NUMBER: [8],
       "(": [8]
     },
-    "Exp^": {
+    expo: {
       NUMBER: [9],
       "(": [9]
     },
-    "Exp^_": {
+    _expo: {
       "*": [10],
       "/": [10],
       "+": [10],
@@ -468,7 +517,7 @@ var cal = (function(undefined) {
       ")": [10],
       "^": [11]
     },
-    Exp$: {
+    atom: {
       NUMBER: [12],
       "(": [13]
     }
@@ -490,10 +539,17 @@ var cal = (function(undefined) {
         }
       }
 
+      setChildren(cs) {
+        this.children = cs;
+        for (const c of cs) {
+          c.parent = this;
+        }
+      }
+
       toJSON() {
         const ret = {};
         for (const k of Object.keys(this)) {
-          if (k !== "parent") {
+          if (k !== "parent" && k !== "t") {
             ret[k] = this[k];
           }
         }
@@ -517,8 +573,6 @@ var cal = (function(undefined) {
       return false;
     }
 
-    const endToken = "kison-end-" + Date.now();
-
     function peekStack(stack, n) {
       n = n || 1;
       return stack[stack.length - n];
@@ -538,8 +592,20 @@ var cal = (function(undefined) {
       return p.rhs || p[1];
     }
 
+    function getProductionLabel(p) {
+      return p.label || p[3];
+    }
+
     function getOriginalSymbol(s) {
       return lexer.mapReverseSymbol(s);
+    }
+
+    function isSuffixSymbol(s) {
+      return s.charAt(s.length - 1) === "_";
+    }
+
+    function isPrefixSymbol(s) {
+      return s.charAt(0) === "_";
     }
 
     options = options || {};
@@ -594,104 +660,156 @@ var cal = (function(undefined) {
       }
     }
 
+    function canMergeByLabel(top1, top2) {
+      return (
+        top1 &&
+        top2 &&
+        // top1.symbol !== top2.symbol &&
+        top1.label &&
+        top2.label &&
+        top1.label === top2.label &&
+        top1.children.length === 1 &&
+        top2.children.length === 1
+      );
+    }
+
+    function replaceStackTopChild(ast) {
+      const topAst = peekStack(astStack);
+      topAst.children.pop();
+      topAst.children.push(...ast.children);
+    }
+
     let production;
 
     while (1) {
       topSymbol = peekStack(symbolStack);
 
-      while (topSymbol === endToken) {
-        const ast = astStack.pop();
-        if (ast.symbol && isExtraSymbol(ast)) {
-          const topAst = peekStack(astStack);
-          topAst.children.pop();
-          topAst.children.push(...ast.children);
+      if (!topSymbol) {
+        break;
+      }
+
+      while (topSymbol === productionEndToken || topSymbol.s) {
+        if (topSymbol.s) {
+          let ast = astStack.pop();
+          const stackTop = peekStack(astStack);
+          const wrap = new AstNode({
+            symbol: ast.symbol,
+            children: [ast],
+            label: ast.label
+          });
+          const topChildren = stackTop.children;
+          topChildren[topChildren.length - 1] = wrap;
+          astStack.push(wrap);
+        } else {
+          let ast = astStack.pop();
+          if (ast.symbol && isExtraSymbol(ast)) {
+            replaceStackTopChild(ast);
+          }
         }
         symbolStack.pop();
         topSymbol = peekStack(symbolStack);
+        if (!topSymbol) {
+          break;
+        }
       }
 
       if (typeof topSymbol === "string") {
-        currentToken = token = token || lexer.lex();
+        if (!token) {
+          token = lexer.lex();
+        }
 
-        if (topSymbol === token.token) {
+        currentToken = token;
+
+        if (topSymbol === token.t) {
           symbolStack.pop();
-          peekStack(astStack).addChild(new AstNode(lexer.toJSON()));
+          peekStack(astStack).addChild(new AstNode(token));
           token = null;
-        } else if ((next = getTableVal(topSymbol, token.token)) !== undefined) {
+        } else if ((next = getTableVal(topSymbol, token.t)) !== undefined) {
           let n = next[0];
-          const newAst = new AstNode({
-            symbol: getOriginalSymbol(topSymbol),
-            children: []
-          });
-          peekStack(astStack).addChild(newAst);
-          astStack.push(newAst);
+
           symbolStack.pop();
           production = productions[n];
-          symbolStack.push.apply(
-            symbolStack,
-            getProductionRhs(production)
-              .concat(endToken)
-              .reverse()
-          );
-        } else {
-          if (token.token === lexer.mapEndSymbol()) {
-            error = {
-              errorMessage: getError(),
-              expected: getExpected(),
-              symbol: lexer.mapReverseSymbol(topSymbol),
-              lexer: token
-            };
-            if (onErrorRecovery) {
-              onErrorRecovery(error);
-            } else {
-              closeAstWhenError();
-            }
-            break;
+
+          if (isPrefixSymbol(topSymbol)) {
+            symbolStack.push.apply(
+              symbolStack,
+              getProductionRhs(production)
+                .concat()
+                .reverse()
+            );
+          } else if (isSuffixSymbol(topSymbol)) {
+            symbolStack.push.apply(
+              symbolStack,
+              getProductionRhs(production)
+                .concat()
+                .reverse()
+            );
           } else {
-            error = {
-              errorMessage: getError(),
-              expected: getExpected(),
-              symbol: lexer.mapReverseSymbol(topSymbol),
-              lexer: token
-            };
-            if (onErrorRecovery) {
-              const recommendedAction = {};
-              const nextToken = lexer.peek();
+            const newAst = new AstNode({
+              symbol: getOriginalSymbol(topSymbol),
+              label: getProductionLabel(production),
+              children: []
+            });
+            peekStack(astStack).addChild(newAst);
+            astStack.push(newAst);
+            symbolStack.push.apply(
+              symbolStack,
+              getProductionRhs(production)
+                .concat(productionEndToken)
+                .reverse()
+            );
+          }
+        } else {
+          error = {
+            errorMessage: getError(),
+            expected: getExpected(),
+            symbol: lexer.mapReverseSymbol(topSymbol),
+            lexer: token
+          };
+          if (onErrorRecovery) {
+            const recommendedAction = {};
+            const nextToken = lexer.peek();
 
-              // should delete
-              if (
-                topSymbol === nextToken.token ||
-                getTableVal(topSymbol, nextToken.token) !== undefined
-              ) {
-                recommendedAction.action = "del";
-              } else if (error.expected.length) {
-                recommendedAction.action = "add";
-              }
+            // should delete
+            if (
+              topSymbol === nextToken.t ||
+              getTableVal(topSymbol, nextToken.t) !== undefined
+            ) {
+              recommendedAction.action = "del";
+            } else if (error.expected.length) {
+              recommendedAction.action = "add";
+            }
 
-              const recovery = onErrorRecovery(error, recommendedAction) || {};
-              const { action } = recovery;
+            const recovery = onErrorRecovery(error, recommendedAction) || {};
+            const { action } = recovery;
 
-              if (!action) {
-                closeAstWhenError();
-                break;
-              }
-
-              if (action === "del") {
-                token = null;
-              } else if (action === "add") {
-                token = { ...token, token: lexer.mapSymbol(recovery.token) };
-              }
-            } else {
+            if (!action) {
               closeAstWhenError();
               break;
             }
+
+            if (action === "del") {
+              error.recovery = true;
+              token = null;
+            } else if (action === "add") {
+              error.recovery = true;
+              token = {
+                ...token,
+                token: recovery.token,
+                text: recovery.text,
+                t: lexer.mapSymbol(recovery.token)
+              };
+            }
+          } else {
+            closeAstWhenError();
+            break;
           }
         }
       }
 
       topSymbol = peekStack(symbolStack);
 
-      while (topSymbol && typeof topSymbol !== "string") {
+      while (topSymbol && typeof topSymbol === "function") {
         onAction({
           lexer: currentToken,
           action: topSymbol
@@ -705,17 +823,9 @@ var cal = (function(undefined) {
       }
     }
 
-    if (!error && currentToken.token !== lexer.mapEndSymbol()) {
-      error = {
-        errorMessage: getError(),
-        symbol: null,
-        lexer: currentToken
-      };
-      if (onErrorRecovery) {
-        onErrorRecovery(error);
-      } else if (!error) {
-        closeAstWhenError();
-      }
+    if (!error && currentToken.t !== lexer.mapEndSymbol()) {
+      error = "parse end error";
+      closeAstWhenError();
     }
 
     const ast = astStack[0] && astStack[0].children && astStack[0].children[0];
@@ -724,8 +834,29 @@ var cal = (function(undefined) {
       delete ast.parent;
     }
 
+    function cleanAst(ast) {
+      if (!ast.children) {
+        return ast;
+      }
+      if (ast.children.length === 1) {
+        const child = ast.children[0];
+        if (ast.label && child.label && ast.label === child.label) {
+          ast.setChildren(child.children);
+          cleanAst(ast);
+        } else {
+          cleanAst(child);
+        }
+      } else {
+        for (const c of ast.children) {
+          cleanAst(c);
+        }
+      }
+      return ast;
+    }
+
     return {
-      ast,
+      ast: cleanAst(ast),
+      // ast,
       errorNode,
       error
     };

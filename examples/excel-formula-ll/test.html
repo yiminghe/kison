@@ -1,0 +1,45 @@
+<h1>excel formula parser</h1>
+
+<h2>tool</h2>
+
+<div>
+    <a href="./formula-grammar.js">excel formula grammar definition</a>
+</div>
+
+<div>
+    <p>run</p>
+    <pre>
+    npm i kison@alpha -g
+
+    kison --no-compressSymbol -m ll --es -g formula-grammar.js
+</pre>
+</div>
+
+<h2>open devtools console</h2>
+
+<div>
+    <input style="width:200px" id='input' value="sum(1,2)" /> &nbsp; <button id='parse'>parse</button>
+</div>
+
+<script type="module">
+    import formula from './formula.js';
+    (function () {
+        function $(id) {
+            return document.getElementById(id);
+        }
+        const input = $('input');
+        const parse = $('parse');
+        parse.addEventListener('click', () => {
+            const { value } = input;
+            console.log('***********************', value);
+            const ret = (formula.parse(value, {
+                lexerEnv: 'en'
+            }));
+            console.log(ret);
+            if (ret.error) {
+                console.error(ret.error.errorMessage);
+            }
+            console.log('***********************');
+        }, false);
+    })();
+</script>

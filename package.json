@@ -13,6 +13,7 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
+    "regex-escape": "3.x",
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
     "babel-jest": "^27.0.2",

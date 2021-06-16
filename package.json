@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.4.0-alpha.7",
+  "version": "0.4.0-alpha.8",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -13,7 +13,6 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
-    "regex-escape": "3.x",
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
     "babel-jest": "^27.0.2",
@@ -21,7 +20,8 @@
     "lint-staged": "^7.2.0",
     "np": "^7.x",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.11.1"
+    "prettier": "^1.11.1",
+    "regex-escape": "3.x"
   },
   "jest": {
     "collectCoverageFrom": [

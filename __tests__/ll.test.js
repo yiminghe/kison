@@ -674,7 +674,7 @@ describe("ll", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = Function.call(null, code + "\n return parser;")();
-    const { ast, error } = parser.parse("1+2*");
+    const { ast, errorNode } = parser.parse("1+2*");
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
@@ -776,26 +776,28 @@ describe("ll", () => {
   ]
 }"
 `);
-    expect(prettyJson(error)).toMatchInlineSnapshot(`
-      "{
-        'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
-        'expected': [
-          'NUMBER',
-          '('
-        ],
-        'symbol': 'expo',
-        'lexer': {
-          't': '$EOF',
-          'token': '$EOF',
-          'start': 4,
-          'end': 4,
-          'firstLine': 1,
-          'firstColumn': 5,
-          'lastLine': 1,
-          'lastColumn': 5
-        }
-      }"
-    `);
+    expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
+"{
+  'error': {
+    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+    'expected': [
+      'NUMBER',
+      '('
+    ],
+    'symbol': 'expo',
+    'lexer': {
+      't': '$EOF',
+      'token': '$EOF',
+      'start': 4,
+      'end': 4,
+      'firstLine': 1,
+      'firstColumn': 5,
+      'lastLine': 1,
+      'lastColumn': 5
+    }
+  }
+}"
+`);
   });
 
   it("onAction works", () => {
@@ -865,7 +867,7 @@ describe("ll", () => {
     const code = grammar.genCode();
     let errorCalled = 0;
     const parser = Function.call(null, code + "\n return parser;")();
-    const { ast, error } = parser.parse("1+", {
+    const { ast, error, errorNode } = parser.parse("1+", {
       onErrorRecovery({ errorMessage, expected }, { action }) {
         errorCalled = errorMessage;
         if (action === "add" && expected[0] === "NUMBER") {
@@ -877,6 +879,7 @@ describe("ll", () => {
         }
       }
     });
+    expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',

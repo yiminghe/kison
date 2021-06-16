@@ -107,7 +107,6 @@ var parser = (function(undefined) {
       var self = this,
         currentState = self.stateStack[self.stateStack.length - 1],
         rules = [];
-      //#JSCOVERAGE_IF
       if (self.mapState) {
         currentState = self.mapState(currentState);
       }
@@ -141,12 +140,10 @@ var parser = (function(undefined) {
         match = self.match,
         input = self.input;
       matched = matched.slice(0, matched.length - match.length);
-      //#JSCOVERAGE_IF 0
       var past =
           (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
           matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/g, " "),
         next = match + input;
-      //#JSCOVERAGE_ENDIF
       next =
         next.slice(0, DEBUG_CONTEXT_LIMIT).replace(/\n/g, " ") +
         (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
@@ -166,7 +163,6 @@ var parser = (function(undefined) {
           reverseSymbolMap[symbolMap[i]] = i;
         }
       }
-      //#JSCOVERAGE_IF
       if (reverseSymbolMap) {
         return reverseSymbolMap[rs] || rs;
       } else {
@@ -191,7 +187,6 @@ var parser = (function(undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        //#JSCOVERAGE_IF 0
         var regexp = rule.regexp || rule[1],
           token = rule.token || rule[0],
           action = rule.action || rule[2] || undefined;
@@ -2078,7 +2073,6 @@ var parser = (function(undefined) {
         map[GrammarConst.ACCEPT_TYPE] = "accept";
         var expected = [];
         var error;
-        //#JSCOVERAGE_IF
         if (tableAction[state]) {
           each(tableAction[state], function(v, symbolForState) {
             action = v[GrammarConst.TYPE_INDEX];

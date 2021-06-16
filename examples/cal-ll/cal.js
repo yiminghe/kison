@@ -476,7 +476,7 @@ var cal = (function(undefined) {
     ],
     ["atom", ["(", "add", ")"]]
   ];
-  const productionEndToken = "kison-end-1623772267345";
+  const productionSkipEndSet = new Set([1, 2, 3, 5, 6, 7, 10, 11]);
   parser.table = {
     exp: {
       NUMBER: [0],
@@ -523,6 +523,10 @@ var cal = (function(undefined) {
     }
   };
   parser.parse = function parse(input, options) {
+    const productionEndToken = "kison-end-" + Date.now();
+
+    const terminalNodes = [];
+
     class AstNode {
       constructor(cfg) {
         Object.assign(this, cfg);
@@ -559,18 +563,6 @@ var cal = (function(undefined) {
 
     function isExtraSymbol(ast) {
       return ast.children && !ast.children.length;
-      // const { children } = ast;
-      // if (children.length <= 1) {
-      //   return true;
-      // }
-      // // endsWith _ is extra symbol: add_
-      // const s = ast.symbol;
-      // const o = lexer.mapReverseSymbol(s);
-      // if (o.charAt(o.length - 1) === '_') {
-      //   return true;
-      // }
-      // compress level
-      return false;
     }
 
     function peekStack(stack, n) {
@@ -598,14 +590,6 @@ var cal = (function(undefined) {
 
     function getOriginalSymbol(s) {
       return lexer.mapReverseSymbol(s);
-    }
-
-    function isSuffixSymbol(s) {
-      return s.charAt(s.length - 1) === "_";
-    }
-
-    function isPrefixSymbol(s) {
-      return s.charAt(0) === "_";
     }
 
     options = options || {};
@@ -660,19 +644,6 @@ var cal = (function(undefined) {
       }
     }
 
-    function canMergeByLabel(top1, top2) {
-      return (
-        top1 &&
-        top2 &&
-        // top1.symbol !== top2.symbol &&
-        top1.label &&
-        top2.label &&
-        top1.label === top2.label &&
-        top1.children.length === 1 &&
-        top2.children.length === 1
-      );
-    }
-
     function replaceStackTopChild(ast) {
       const topAst = peekStack(astStack);
       topAst.children.pop();
@@ -722,7 +693,9 @@ var cal = (function(undefined) {
 
         if (topSymbol === token.t) {
           symbolStack.pop();
-          peekStack(astStack).addChild(new AstNode(token));
+          const terminalNode = new AstNode(token);
+          terminalNodes.push(terminalNode);
+          peekStack(astStack).addChild(terminalNode);
           token = null;
         } else if ((next = getTableVal(topSymbol, token.t)) !== undefined) {
           let n = next[0];
@@ -730,14 +703,7 @@ var cal = (function(undefined) {
           symbolStack.pop();
           production = productions[n];
 
-          if (isPrefixSymbol(topSymbol)) {
-            symbolStack.push.apply(
-              symbolStack,
-              getProductionRhs(production)
-                .concat()
-                .reverse()
-            );
-          } else if (isSuffixSymbol(topSymbol)) {
+          if (productionSkipEndSet.has(n)) {
             symbolStack.push.apply(
               symbolStack,
               getProductionRhs(production)
@@ -858,7 +824,7 @@ var cal = (function(undefined) {
       ast: cleanAst(ast),
       // ast,
       errorNode,
-      error
+      terminalNodes
     };
   };
 

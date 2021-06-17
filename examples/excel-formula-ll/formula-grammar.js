@@ -11,6 +11,14 @@ const operators = [
   ["%"]
 ];
 
+function getExpSymbol(op) {
+  return `exp${op}`;
+}
+
+const startExp = getExpSymbol(operators[0][0]);
+const lastOp = operators[operators.length - 1][0];
+const endExp = getExpSymbol(lastOp);
+
 const operatorTokens = [].concat(...operators);
 
 const rightOperatorMap = {
@@ -25,8 +33,8 @@ function generateOpProductions() {
     }
     const next = operators[index + 1][0];
     const current = operators[index][0];
-    const exp = `exp${current}`;
-    const nextExp = `exp${next}`;
+    const exp = getExpSymbol(current);
+    const nextExp = getExpSymbol(next);
     ret.push({
       symbol: exp,
       rhs: [nextExp],
@@ -73,8 +81,6 @@ function generateOpProductions() {
   return ret;
 }
 
-const startExp = "exp" + operators[0][0];
-
 function createRules(tokens) {
   return tokens.map(token => {
     return {
@@ -97,12 +103,12 @@ module.exports = () => ({
     },
     ...generateOpProductions(),
     {
-      symbol: "exp%",
-      rhs: ["exp%", "%"],
+      symbol: endExp,
+      rhs: [endExp, lastOp],
       label: "single-exp"
     },
     {
-      symbol: "exp%",
+      symbol: endExp,
       rhs: ["prefix-exp"],
       label: "single-exp"
     },

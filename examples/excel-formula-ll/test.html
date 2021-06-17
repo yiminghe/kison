@@ -82,8 +82,14 @@
             }
             cursorNode = cursorNode || errorNode;
             console.log('cursor node', cursorNode);
+
             if (cursorNode) {
-                let func = cursorNode.parent;
+                let func = isTopCursorFunction(cursorNode, selectionStart);
+                if (func) {
+                    console.log(`at function ${func.children[0].text}`)
+                    return;
+                }
+                func = cursorNode.parent;
                 while (func && func.symbol !== 'function') {
                     func = func.parent;
                 }
@@ -93,11 +99,12 @@
                         console.log(`at argument index ${1} of function ${func.children[0].text}`);
                         return;
                     } else {
-                        while (args && args.symbol !== 'arguments') {
-                            args = args.parent;
-                        }
-                        if (!args && cursorNode.token === ')') {
+                        if (cursorNode.token === ')') {
                             args = func.children[2];
+                        } else {
+                            while (args && args.symbol !== 'arguments') {
+                                args = args.parent;
+                            }
                         }
                     }
                     if (args && args !== errorNode) {
@@ -136,6 +143,40 @@
         function prevSibling(node) {
             const index = node.parent.children.indexOf(node);
             return node.parent.children[index - 1];
+        }
+
+        function isTopCursorFunction(node, selectionStart) {
+            if (!node) {
+                return false;
+            }
+
+            if (node.token === 'FUNCTION') {
+                if (selectionStart === node.start) {
+                    return false;
+                }
+                return returnIfTopFn(node.parent);
+            }
+
+            if (node.symbol !== 'function') {
+                const parent = node.parent;
+                if (parent.symbol === 'function') {
+                    const prev = prevSibling(node);
+                    if (parent.children.indexOf(prev) === 0) {
+                        return returnIfTopFn(parent);
+                    }
+                }
+                return false;
+            }
+
+            function returnIfTopFn(n) {
+                let topFn = n.parent;
+                while (topFn && topFn.symbol !== 'function') {
+                    topFn = topFn.parent;
+                }
+                return !topFn && n;
+            }
+
+            return returnIfTopFn(node);
         }
 
         function getArgumentsLength(args) {

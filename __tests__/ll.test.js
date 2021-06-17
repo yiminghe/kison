@@ -676,106 +676,106 @@ describe("ll", () => {
     const parser = Function.call(null, code + "\n return parser;")();
     const { ast, errorNode } = parser.parse("1+2*");
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'add',
-            'children': [
-              {
-                'symbol': 'add',
-                'label': 'single-exp',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'text': '1',
-                        'token': 'NUMBER',
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                'text': '+',
-                'token': '+',
-                'start': 1,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 2,
-                'lastColumn': 3
-              },
-              {
-                'symbol': 'mul',
-                'children': [
-                  {
-                    'symbol': 'mul',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '2',
-                            'token': 'NUMBER',
-                            'start': 2,
-                            'end': 3,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 3,
-                            'lastColumn': 4
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    'text': '*',
-                    'token': '*',
-                    'start': 3,
-                    'end': 4,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 4,
-                    'lastColumn': 5
-                  },
-                  {
-                    'error': {
-                      'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
-                      'expected': [
-                        'NUMBER',
-                        '('
-                      ],
-                      'symbol': 'expo',
-                      'lexer': {
-                        't': '$EOF',
-                        'token': '$EOF',
-                        'start': 4,
-                        'end': 4,
-                        'firstLine': 1,
-                        'firstColumn': 5,
-                        'lastLine': 1,
-                        'lastColumn': 5
-                      }
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'add',
+      'children': [
+        {
+          'symbol': 'expo',
+          'label': 'single-exp',
+          'children': [
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '1',
+                  'token': 'NUMBER',
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'text': '+',
+          'token': '+',
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3
+        },
+        {
+          'symbol': 'mul',
+          'children': [
+            {
+              'symbol': 'expo',
+              'label': 'single-exp',
+              'children': [
+                {
+                  'symbol': 'atom',
+                  'children': [
+                    {
+                      'text': '2',
+                      'token': 'NUMBER',
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
                     }
-                  }
+                  ]
+                }
+              ]
+            },
+            {
+              'text': '*',
+              'token': '*',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'error': {
+                'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+                'expected': [
+                  'NUMBER',
+                  '('
                 ],
-                'label': 'single-exp'
+                'symbol': 'expo',
+                'lexer': {
+                  't': '$EOF',
+                  'token': '$EOF',
+                  'start': 4,
+                  'end': 4,
+                  'firstLine': 1,
+                  'firstColumn': 5,
+                  'lastLine': 1,
+                  'lastColumn': 5
+                }
               }
-            ],
-            'label': 'single-exp'
-          }
-        ]
-      }"
-    `);
+            }
+          ],
+          'label': 'single-exp'
+        }
+      ],
+      'label': 'single-exp'
+    }
+  ]
+}"
+`);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
       "{
         'error': {

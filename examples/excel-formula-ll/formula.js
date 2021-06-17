@@ -906,7 +906,8 @@ var formula = (function(undefined) {
     48,
     52,
     53,
-    54
+    54,
+    55
   ]);
   parser.table = {
     formula: {
@@ -1335,6 +1336,30 @@ var formula = (function(undefined) {
       );
     }
 
+    function cleanAst(ast) {
+      if (!ast.children) {
+        return ast;
+      }
+      if (ast.children.length === 1) {
+        const child = ast.children[0];
+        if (
+          (ast.label && child.label && ast.label === child.label) ||
+          (!ast.label && !child.label && ast.symbol === child.symbol)
+        ) {
+          ast.setChildren(child.children);
+          ast.symbol = child.symbol;
+          cleanAst(ast);
+        } else {
+          cleanAst(child);
+        }
+      } else {
+        for (const c of ast.children) {
+          cleanAst(c);
+        }
+      }
+      return ast;
+    }
+
     function getAst() {
       const ast =
         astStack[0] && astStack[0].children && astStack[0].children[0];
@@ -1343,7 +1368,7 @@ var formula = (function(undefined) {
         delete ast.parent;
       }
 
-      return ast;
+      return ast && cleanAst(ast);
     }
 
     let topSymbol;
@@ -1529,29 +1554,8 @@ var formula = (function(undefined) {
 
     const ast = getAst();
 
-    function cleanAst(ast) {
-      if (!ast.children) {
-        return ast;
-      }
-      if (ast.children.length === 1) {
-        const child = ast.children[0];
-        if (ast.label && child.label && ast.label === child.label) {
-          ast.setChildren(child.children);
-          cleanAst(ast);
-        } else {
-          cleanAst(child);
-        }
-      } else {
-        for (const c of ast.children) {
-          cleanAst(c);
-        }
-      }
-      return ast;
-    }
-
     return {
-      ast: cleanAst(ast),
-      // ast,
+      ast,
       errorNode,
       error,
       terminalNodes

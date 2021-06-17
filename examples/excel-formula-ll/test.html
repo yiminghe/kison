@@ -18,28 +18,104 @@
 <h2>open devtools console</h2>
 
 <div>
-    <input style="width:200px" id='input' value="sum(1,2)" /> &nbsp; <button id='parse'>parse</button>
+    <input style="width:200px" id='input' value="sum(a1:a2, b2)" />
+    &nbsp; <button id='parse'>parse</button>
+    &nbsp; <button id='evaluate'>evaluate</button>
 </div>
 
 <script type="module">
     import formula from './formula.js';
     (function () {
+        let currentText;
+        let currentAst;
+
+        function getAst(value) {
+            if (currentText === value) {
+                return currentAst;
+            }
+            console.log('***********************', value);
+            currentText = value;
+            currentAst = formula.parse(value, {
+                lexerEnv: 'en'
+            });
+            console.log(currentAst);
+            if (currentAst.error) {
+                console.error(currentAst.error.errorMessage);
+            }
+            console.log('***********************');
+            return currentAst;
+        }
+
         function $(id) {
             return document.getElementById(id);
         }
+
         const input = $('input');
         const parse = $('parse');
+        const evaluate = $('evaluate');
+
+        evaluate.addEventListener('click', () => {
+            const { ast, errorNode } = getAst(input.value);
+            console.log('TODO');
+        });
+
         parse.addEventListener('click', () => {
-            const { value } = input;
-            console.log('***********************', value);
-            const ret = (formula.parse(value, {
-                lexerEnv: 'en'
-            }));
-            console.log(ret);
-            if (ret.error) {
-                console.error(ret.error.errorMessage);
-            }
-            console.log('***********************');
+            getAst(input.value);
         }, false);
+
+        input.addEventListener('click', () => {
+            const { selectionStart } = input;
+            const { terminalNodes, errorNode } = getAst(input.value);
+            let cursorNode;
+            for (const n of terminalNodes) {
+                if (n.start <= selectionStart && n.end > selectionStart) {
+                    cursorNode = n;
+                }
+            }
+            cursorNode = cursorNode || errorNode;
+            console.log('cursor node', cursorNode);
+            if (cursorNode) {
+                let func = cursorNode;
+                while (func && func.symbol !== 'function') {
+                    func = func.parent;
+                }
+                if (func) {
+                    let argIndex = 0;
+                    let args = cursorNode;
+                    if (cursorNode === errorNode && cursorNode.parent === func) {
+                        console.log(`at argument index ${0} of function ${func.children[0].text}`);
+                        return;
+                    } else {
+                        while (args && args.symbol !== 'arguments') {
+                            args = args.parent;
+                        }
+                        if (!args && cursorNode.token === ')') {
+                            args = func.children[2];
+                        }
+                    }
+                    if (args && args !== errorNode) {
+                        let argsLength = getArgumentsLength(args);
+                        if (cursorNode.token === 'ARGUMENT_SEPARATOR') {
+                            argsLength--;
+                        }
+                        console.log(`at argument index ${argsLength} of function ${func.children[0].text}`)
+                    }
+                }
+            }
+        });
+
+        function getArgumentsLength(args) {
+            let c = 0;
+            const { children = [] } = args;
+            if (children[0] && children[0].symbol === 'arguments') {
+                if (children[2] && !children[2].error) {
+                    c = 1;
+                }
+                return c + getArgumentsLength(children[0]);
+            } else if (children[0] && !children[0].error) {
+                c = 1;
+            }
+            return c;
+        }
     })();
 </script>

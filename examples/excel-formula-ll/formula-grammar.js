@@ -39,11 +39,11 @@ function generateOpProductions() {
           rhs: [
             nextExp,
             o,
-            function (astProcessor, lexer) {
+            function(astProcessor, lexer) {
               astProcessor.pushStack(lexer.text);
             },
             exp,
-            function (astProcessor) {
+            function(astProcessor) {
               astProcessor.createOpNode();
             }
           ],
@@ -57,11 +57,11 @@ function generateOpProductions() {
           rhs: [
             exp,
             o,
-            function (astProcessor, lexer) {
+            function(astProcessor, lexer) {
               astProcessor.pushStack(lexer.text);
             },
             nextExp,
-            function (astProcessor) {
+            function(astProcessor) {
               astProcessor.createOpNode();
             }
           ],
@@ -171,20 +171,20 @@ module.exports = () => ({
       rhs: ["FUNCTION", "(", ")"]
     },
     {
-      symbol: 'array-element',
-      rhs: ['STRING']
+      symbol: "array-element",
+      rhs: ["STRING"]
     },
     {
-      symbol: 'array-element',
-      rhs: ['NUMBER']
+      symbol: "array-element",
+      rhs: ["NUMBER"]
     },
     {
-      symbol: 'array-element',
-      rhs: ['LOGIC']
+      symbol: "array-element",
+      rhs: ["LOGIC"]
     },
     {
-      symbol: 'array-element',
-      rhs: ['ERROR']
+      symbol: "array-element",
+      rhs: ["ERROR"]
     },
     {
       symbol: "function",
@@ -192,15 +192,15 @@ module.exports = () => ({
     },
     {
       symbol: "array-list",
-      rhs: ['array-element']
+      rhs: ["array-element"]
     },
     {
       symbol: "array-list",
-      rhs: ["array-list", "SEPARATOR", 'array-element']
+      rhs: ["array-list", "ARRAY_SEPARATOR", "array-element"]
     },
     {
-      symbol: 'array',
-      rhs: ['{', 'array-list', '}']
+      symbol: "array",
+      rhs: ["{", "array-list", "}"]
     },
     {
       symbol: "arguments",
@@ -208,7 +208,7 @@ module.exports = () => ({
     },
     {
       symbol: "arguments",
-      rhs: ["arguments", "SEPARATOR", startExp]
+      rhs: ["arguments", "ARGUMENT_SEPARATOR", startExp]
     },
     {
       symbol: "cell",
@@ -217,7 +217,7 @@ module.exports = () => ({
     {
       symbol: "cell",
       rhs: ["CELL", ":", "CELL"]
-    },
+    }
   ],
 
   lexer: {
@@ -257,18 +257,37 @@ module.exports = () => ({
         regexp: /^\d+/,
         token: "NUMBER"
       },
-      ...createRules(["(", ")", ":", "{", "}", ";", ...operatorTokens]),
+      ...createRules(["(", ")", ":", ";", ...operatorTokens]),
+      {
+        regexp: /^\{/,
+        token: "{",
+        action() {
+          this.userData.inArray = this.userData.inArray || 0;
+          this.userData.inArray++;
+        }
+      },
+      {
+        regexp: /^\}/,
+        token: "}",
+        action() {
+          this.userData.inArray = this.userData.inArray || 1;
+          this.userData.inArray--;
+        }
+      },
+      {
+        filter() {
+          return !!this.userData.inArray;
+        },
+        regexp: { en: /^,/, de: /^\\/ },
+        token: "ARRAY_SEPARATOR"
+      },
       {
         regexp: { en: /^,/, de: /^;/ },
-        token: "SEPARATOR"
+        token: "ARGUMENT_SEPARATOR"
       },
       {
         regexp: /^NOT/,
         token: "NOT"
-      },
-      {
-        regexp: /^./,
-        token: "$ERROR"
       }
     ]
   }

@@ -53,6 +53,7 @@
         const input = $('input');
         const parse = $('parse');
         const evaluate = $('evaluate');
+        const ARGUMENT_SEPARATOR = 'ARGUMENT_SEPARATOR';
 
         evaluate.addEventListener('click', () => {
             const { ast, errorNode } = getAst(input.value);
@@ -100,11 +101,11 @@
                         }
                     }
                     if (args && args !== errorNode) {
-                        let argsLength = getArgumentsLength(args)||1;
-                        if (cursorNode.token === 'SEPARATOR') {
+                        let argsLength = getArgumentsLength(args) || 1;
+                        if (cursorNode.token === ARGUMENT_SEPARATOR) {
                             argsLength--;
                         }
-                        if (cursorNode === errorNode && prevSibling(cursorNode).token === 'SEPARATOR') {
+                        if (cursorNode === errorNode && prevSibling(cursorNode).token === ARGUMENT_SEPARATOR) {
                             argsLength++;
                         }
                         func = args.parent;

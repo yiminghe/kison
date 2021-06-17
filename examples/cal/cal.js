@@ -69,6 +69,13 @@ var cal = (function(undefined) {
 
     mix(self, cfg);
 
+    self.userData = {};
+
+    self.errorRule = {
+      regexp: /^./,
+      token: Lexer.STATIC.UNKNOWN_TOKEN
+    };
+
     /*
      Input languages
      @type {String}
@@ -79,9 +86,10 @@ var cal = (function(undefined) {
   Lexer.prototype = {
     resetInput: function(input) {
       mix(this, {
+        userData: {},
         input: input,
         matched: "",
-        stateStack: [Lexer.STATIC.INITIAL],
+        stateStack: [Lexer.STATIC.INITIAL_STATE],
         match: "",
         text: "",
         firstLine: 1,
@@ -94,30 +102,42 @@ var cal = (function(undefined) {
       });
     },
     mapEndSymbol: function() {
-      return this.mapSymbol(Lexer.STATIC.END_TAG);
+      return this.mapSymbol(Lexer.STATIC.EOF_TOKEN);
     },
     mapHiddenSymbol: function() {
-      return this.mapSymbol(Lexer.STATIC.HIDDEN_TAG);
+      return this.mapSymbol(Lexer.STATIC.HIDDEN_TOKEN);
     },
     getCurrentRules: function() {
       var self = this,
         currentState = self.stateStack[self.stateStack.length - 1],
         rules = [];
-      //#JSCOVERAGE_IF
       if (self.mapState) {
         currentState = self.mapState(currentState);
       }
+      const isBuild = self.isBuild;
       each(self.rules, function(r) {
-        var state = r.state || r[3];
+        var filter = isBuild ? r[4] : r.filter;
+        if (filter) {
+          if (filter.call(self)) {
+            rules.push(r);
+          }
+          return;
+        }
+        var state = isBuild ? r[3] : r.state;
         if (!state) {
-          if (currentState === Lexer.STATIC.INITIAL) {
+          if (currentState === Lexer.STATIC.INITIAL_STATE) {
             rules.push(r);
           }
         } else if (inArray(currentState, state)) {
           rules.push(r);
         }
       });
+      rules.push(self.errorRule);
       return rules;
+    },
+    peekState: function(n) {
+      n = n || 1;
+      return this.stateStack[this.stateStack.length - n];
     },
     pushState: function(state) {
       this.stateStack.push(state);
@@ -137,7 +157,6 @@ var cal = (function(undefined) {
         match = self.match,
         input = self.input;
       matched = matched.slice(0, matched.length - match.length);
-      //#JSCOVERAGE_IF 0
       var past =
           (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
           matched.slice(0 - DEBUG_CONTEXT_LIMIT).replace(/\n/g, " "),
@@ -162,7 +181,6 @@ var cal = (function(undefined) {
           reverseSymbolMap[symbolMap[i]] = i;
         }
       }
-      //#JSCOVERAGE_IF
       if (reverseSymbolMap) {
         return reverseSymbolMap[rs] || rs;
       } else {
@@ -211,6 +229,7 @@ var cal = (function(undefined) {
         }
       }
       var self = this,
+        env = self.env,
         input = self.input,
         i,
         rule,
@@ -224,7 +243,7 @@ var cal = (function(undefined) {
       if (!input) {
         return {
           t: self.mapEndSymbol(),
-          token: Lexer.STATIC.END_TAG,
+          token: Lexer.STATIC.EOF_TOKEN,
           start: self.end,
           end: self.end,
           firstLine: self.lastLine,
@@ -236,10 +255,18 @@ var cal = (function(undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        //#JSCOVERAGE_IF 0
         var regexp = rule.regexp || rule[1],
           token = rule.token || rule[0],
           action = rule.action || rule[2] || undefined;
+
+        if (env && typeof regexp.test !== "function") {
+          regexp = regexp[env];
+        }
+
+        if (!regexp) {
+          continue;
+        }
+
         //#JSCOVERAGE_ENDIF
         if ((m = input.match(regexp))) {
           self.start = self.end;
@@ -298,87 +325,90 @@ var cal = (function(undefined) {
     }
   };
   Lexer.STATIC = {
-    INITIAL: "I",
+    INITIAL_STATE: "I",
     DEBUG_CONTEXT_LIMIT: 20,
-    END_TAG: "$EOF",
-    HIDDEN_TAG: "$HIDDEN"
+    EOF_TOKEN: "$EOF",
+    UNKNOWN_TOKEN: "$UNKNOWN",
+    HIDDEN_TOKEN: "$HIDDEN"
   };
   var lexer = new Lexer({
     rules: [
-      ["b", /^\s+/, 0],
-      ["c", /^[0-9]+(\.[0-9]+)?\b/, 0],
-      ["d", /^\+/, 0],
-      ["e", /^-/, 0],
-      ["f", /^\(/, 0],
-      ["g", /^\)/, 0],
-      ["h", /^\*/, 0],
-      ["i", /^\//, 0],
-      ["j", /^\^/, 0],
-      ["k", /^./, 0]
-    ]
+      ["$HIDDEN", /^\s+/],
+      ["a", /^[0-9]+(\.[0-9]+)?\b/],
+      ["b", /^\+/],
+      ["c", /^-/],
+      ["d", /^\(/],
+      ["e", /^\)/],
+      ["f", /^\*/],
+      ["g", /^\//],
+      ["h", /^\^/],
+      ["i", /^./]
+    ],
+    isBuild: 1
   });
   parser.lexer = lexer;
   lexer.symbolMap = {
-    $EOF: "a",
-    $HIDDEN: "b",
-    NUMBER: "c",
-    "+": "d",
-    "-": "e",
-    "(": "f",
-    ")": "g",
-    "*": "h",
-    "/": "i",
-    "^": "j",
-    ERROR_LA: "k",
-    $START: "l",
-    expression: "m",
-    AddtiveExpression: "n",
-    multiplicativeExpression: "o",
-    primaryExpression: "p"
+    $UNKNOWN: "$UNKNOWN",
+    $HIDDEN: "$HIDDEN",
+    $EOF: "$EOF",
+    NUMBER: "a",
+    "+": "b",
+    "-": "c",
+    "(": "d",
+    ")": "e",
+    "*": "f",
+    "/": "g",
+    "^": "h",
+    ERROR_LA: "i",
+    $START: "j",
+    expression: "k",
+    AddtiveExpression: "l",
+    multiplicativeExpression: "m",
+    primaryExpression: "n"
   };
   parser.productions = [
+    ["j", ["k"]],
+    ["k", ["l"]],
     ["l", ["m"]],
-    ["m", ["n"]],
-    ["n", ["o"]],
     [
-      "n",
-      ["n", "d", "o"],
+      "l",
+      ["l", "b", "m"],
       function() {
         return this.$1 + this.$3;
       }
     ],
     [
-      "n",
-      ["n", "e", "o"],
+      "l",
+      ["l", "c", "m"],
       function() {
         return this.$1 - this.$3;
       }
     ],
-    ["o", ["p"]],
+    ["m", ["n"]],
     [
-      "o",
-      ["o", "h", "p"],
+      "m",
+      ["m", "f", "n"],
       function() {
         return this.$1 * this.$3;
       }
     ],
     [
-      "o",
-      ["o", "i", "p"],
+      "m",
+      ["m", "g", "n"],
       function() {
         return this.$1 / this.$3;
       }
     ],
     [
-      "p",
-      ["f", "m", "g"],
+      "n",
+      ["d", "k", "e"],
       function() {
         return this.$2;
       }
     ],
     [
-      "p",
-      ["c"],
+      "n",
+      ["a"],
       function() {
         return Number(this.$1);
       }
@@ -399,132 +429,132 @@ var cal = (function(undefined) {
   parser.table = {
     gotos: {
       "0": {
-        m: 3,
-        n: 4,
-        o: 5,
-        p: 6
+        k: 3,
+        l: 4,
+        m: 5,
+        n: 6
       },
       "2": {
-        m: 7,
-        n: 4,
-        o: 5,
-        p: 6
+        k: 7,
+        l: 4,
+        m: 5,
+        n: 6
       },
       "8": {
-        o: 13,
-        p: 6
+        m: 13,
+        n: 6
       },
       "9": {
-        o: 14,
-        p: 6
+        m: 14,
+        n: 6
       },
       "10": {
-        p: 15
+        n: 15
       },
       "11": {
-        p: 16
+        n: 16
       }
     },
     action: {
       "0": {
-        c: [1, undefined, 1],
-        f: [1, undefined, 2]
+        a: [1, undefined, 1],
+        d: [1, undefined, 2]
       },
       "1": {
-        a: [2, 9],
-        d: [2, 9],
-        e: [2, 9],
-        h: [2, 9],
-        i: [2, 9],
-        g: [2, 9]
+        $EOF: [2, 9],
+        b: [2, 9],
+        c: [2, 9],
+        f: [2, 9],
+        g: [2, 9],
+        e: [2, 9]
       },
       "2": {
-        c: [1, undefined, 1],
-        f: [1, undefined, 2]
+        a: [1, undefined, 1],
+        d: [1, undefined, 2]
       },
       "3": {
-        a: [0]
+        $EOF: [0]
       },
       "4": {
-        a: [2, 1],
-        g: [2, 1],
-        d: [1, undefined, 8],
-        e: [1, undefined, 9]
+        $EOF: [2, 1],
+        e: [2, 1],
+        b: [1, undefined, 8],
+        c: [1, undefined, 9]
       },
       "5": {
-        a: [2, 2],
-        d: [2, 2],
+        $EOF: [2, 2],
+        b: [2, 2],
+        c: [2, 2],
         e: [2, 2],
-        g: [2, 2],
-        h: [1, undefined, 10],
-        i: [1, undefined, 11]
+        f: [1, undefined, 10],
+        g: [1, undefined, 11]
       },
       "6": {
-        a: [2, 5],
-        d: [2, 5],
-        e: [2, 5],
-        h: [2, 5],
-        i: [2, 5],
-        g: [2, 5]
+        $EOF: [2, 5],
+        b: [2, 5],
+        c: [2, 5],
+        f: [2, 5],
+        g: [2, 5],
+        e: [2, 5]
       },
       "7": {
-        g: [1, undefined, 12]
+        e: [1, undefined, 12]
       },
       "8": {
-        c: [1, undefined, 1],
-        f: [1, undefined, 2]
+        a: [1, undefined, 1],
+        d: [1, undefined, 2]
       },
       "9": {
-        c: [1, undefined, 1],
-        f: [1, undefined, 2]
+        a: [1, undefined, 1],
+        d: [1, undefined, 2]
       },
       "10": {
-        c: [1, undefined, 1],
-        f: [1, undefined, 2]
+        a: [1, undefined, 1],
+        d: [1, undefined, 2]
       },
       "11": {
-        c: [1, undefined, 1],
-        f: [1, undefined, 2]
+        a: [1, undefined, 1],
+        d: [1, undefined, 2]
       },
       "12": {
-        a: [2, 8],
-        d: [2, 8],
-        e: [2, 8],
-        h: [2, 8],
-        i: [2, 8],
-        g: [2, 8]
+        $EOF: [2, 8],
+        b: [2, 8],
+        c: [2, 8],
+        f: [2, 8],
+        g: [2, 8],
+        e: [2, 8]
       },
       "13": {
-        a: [2, 3],
-        d: [2, 3],
+        $EOF: [2, 3],
+        b: [2, 3],
+        c: [2, 3],
         e: [2, 3],
-        g: [2, 3],
-        h: [1, undefined, 10],
-        i: [1, undefined, 11]
+        f: [1, undefined, 10],
+        g: [1, undefined, 11]
       },
       "14": {
-        a: [2, 4],
-        d: [2, 4],
+        $EOF: [2, 4],
+        b: [2, 4],
+        c: [2, 4],
         e: [2, 4],
-        g: [2, 4],
-        h: [1, undefined, 10],
-        i: [1, undefined, 11]
+        f: [1, undefined, 10],
+        g: [1, undefined, 11]
       },
       "15": {
-        a: [2, 6],
-        d: [2, 6],
-        e: [2, 6],
-        h: [2, 6],
-        i: [2, 6],
-        g: [2, 6]
+        $EOF: [2, 6],
+        b: [2, 6],
+        c: [2, 6],
+        f: [2, 6],
+        g: [2, 6],
+        e: [2, 6]
       },
       "16": {
-        a: [2, 7],
-        d: [2, 7],
-        e: [2, 7],
-        h: [2, 7],
-        i: [2, 7],
-        g: [2, 7]
+        $EOF: [2, 7],
+        b: [2, 7],
+        c: [2, 7],
+        f: [2, 7],
+        g: [2, 7],
+        e: [2, 7]
       }
     }
   };
@@ -565,7 +595,6 @@ var cal = (function(undefined) {
         map[GrammarConst.ACCEPT_TYPE] = "accept";
         var expectedInfo = [];
         var expected = {};
-        //#JSCOVERAGE_IF
         if (tableAction[state]) {
           each(tableAction[state], function(v, symbolForState) {
             action = v[GrammarConst.TYPE_INDEX];

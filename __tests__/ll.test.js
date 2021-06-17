@@ -765,7 +765,14 @@ describe("ll", () => {
                   'lastLine': 1,
                   'lastColumn': 5
                 }
-              }
+              },
+              'token': '$EOF',
+              'start': 4,
+              'end': 4,
+              'firstLine': 1,
+              'firstColumn': 5,
+              'lastLine': 1,
+              'lastColumn': 5
             }
           ],
           'label': 'single-exp'
@@ -777,27 +784,34 @@ describe("ll", () => {
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
-      "{
-        'error': {
-          'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
-          'expected': [
-            'NUMBER',
-            '('
-          ],
-          'symbol': 'expo',
-          'lexer': {
-            't': '$EOF',
-            'token': '$EOF',
-            'start': 4,
-            'end': 4,
-            'firstLine': 1,
-            'firstColumn': 5,
-            'lastLine': 1,
-            'lastColumn': 5
-          }
-        }
-      }"
-    `);
+"{
+  'error': {
+    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+    'expected': [
+      'NUMBER',
+      '('
+    ],
+    'symbol': 'expo',
+    'lexer': {
+      't': '$EOF',
+      'token': '$EOF',
+      'start': 4,
+      'end': 4,
+      'firstLine': 1,
+      'firstColumn': 5,
+      'lastLine': 1,
+      'lastColumn': 5
+    }
+  },
+  'token': '$EOF',
+  'start': 4,
+  'end': 4,
+  'firstLine': 1,
+  'firstColumn': 5,
+  'lastLine': 1,
+  'lastColumn': 5
+}"
+`);
   });
 
   it("onAction works", () => {

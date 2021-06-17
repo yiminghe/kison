@@ -64,13 +64,19 @@
             getAst(input.value);
         }, false);
 
-        function detectCursor() {
+        function detectCursor(e) {
             const { selectionStart } = input;
+            // console.log('cursor position:', selectionStart)
             const { terminalNodes, errorNode } = getAst(input.value);
             let cursorNode;
             for (const n of terminalNodes) {
                 if (n.start <= selectionStart && n.end > selectionStart) {
                     cursorNode = n;
+                    break;
+                }
+                if (n.start > selectionStart) {
+                    cursorNode = n;
+                    break;
                 }
             }
             cursorNode = cursorNode || errorNode;
@@ -81,10 +87,9 @@
                     func = func.parent;
                 }
                 if (func) {
-                    let argIndex = 0;
                     let args = cursorNode.parent;
                     if (cursorNode === errorNode && cursorNode.parent === func) {
-                        console.log(`at argument index ${0} of function ${func.children[0].text}`);
+                        console.log(`at argument index ${1} of function ${func.children[0].text}`);
                         return;
                     } else {
                         while (args && args.symbol !== 'arguments') {
@@ -95,9 +100,12 @@
                         }
                     }
                     if (args && args !== errorNode) {
-                        let argsLength = getArgumentsLength(args);
-                        if (cursorNode.token === 'ARGUMENT_SEPARATOR') {
+                        let argsLength = getArgumentsLength(args)||1;
+                        if (cursorNode.token === 'SEPARATOR') {
                             argsLength--;
+                        }
+                        if (cursorNode === errorNode && prevSibling(cursorNode).token === 'SEPARATOR') {
+                            argsLength++;
                         }
                         func = args.parent;
                         while (func && func.symbol !== 'function') {
@@ -109,9 +117,25 @@
             }
         }
 
+        function debounce(fn, ms) {
+            let timer
+            return (...args) => {
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(() => {
+                    fn(...args);
+                }, ms);
+            };
+        }
+
         input.addEventListener('click', detectCursor);
-        input.addEventListener('input', detectCursor);
-        input.addEventListener('keydown', detectCursor);
+        input.addEventListener('keydown', debounce(detectCursor, 100));
+
+        function prevSibling(node) {
+            const index = node.parent.children.indexOf(node);
+            return node.parent.children[index - 1];
+        }
 
         function getArgumentsLength(args) {
             let c = 0;

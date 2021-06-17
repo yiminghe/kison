@@ -39,11 +39,11 @@ function generateOpProductions() {
           rhs: [
             nextExp,
             o,
-            function(astProcessor, lexer) {
+            function (astProcessor, lexer) {
               astProcessor.pushStack(lexer.text);
             },
             exp,
-            function(astProcessor) {
+            function (astProcessor) {
               astProcessor.createOpNode();
             }
           ],
@@ -57,11 +57,11 @@ function generateOpProductions() {
           rhs: [
             exp,
             o,
-            function(astProcessor, lexer) {
+            function (astProcessor, lexer) {
               astProcessor.pushStack(lexer.text);
             },
             nextExp,
-            function(astProcessor) {
+            function (astProcessor) {
               astProcessor.createOpNode();
             }
           ],
@@ -138,7 +138,17 @@ module.exports = () => ({
     },
     {
       symbol: "atom-exp",
+      rhs: ["LOGIC"],
+      label: "string-exp"
+    },
+    {
+      symbol: "atom-exp",
       rhs: ["ERROR"],
+      label: "error-exp"
+    },
+    {
+      symbol: "atom-exp",
+      rhs: ["VARIABLE"],
       label: "error-exp"
     },
     {
@@ -152,12 +162,45 @@ module.exports = () => ({
       label: "single-exp"
     },
     {
+      symbol: "atom-exp",
+      rhs: ["array"],
+      label: "single-exp"
+    },
+    {
       symbol: "function",
       rhs: ["FUNCTION", "(", ")"]
     },
     {
+      symbol: 'array-element',
+      rhs: ['STRING']
+    },
+    {
+      symbol: 'array-element',
+      rhs: ['NUMBER']
+    },
+    {
+      symbol: 'array-element',
+      rhs: ['LOGIC']
+    },
+    {
+      symbol: 'array-element',
+      rhs: ['ERROR']
+    },
+    {
       symbol: "function",
       rhs: ["FUNCTION", "(", "arguments", ")"]
+    },
+    {
+      symbol: "array-list",
+      rhs: ['array-element']
+    },
+    {
+      symbol: "array-list",
+      rhs: ["array-list", "SEPARATOR", 'array-element']
+    },
+    {
+      symbol: 'array',
+      rhs: ['{', 'array-list', '}']
     },
     {
       symbol: "arguments",
@@ -165,56 +208,16 @@ module.exports = () => ({
     },
     {
       symbol: "arguments",
-      rhs: ["arguments", "ARGUMENT_SEPARATOR", startExp]
+      rhs: ["arguments", "SEPARATOR", startExp]
     },
     {
       symbol: "cell",
-      rhs: ["ABSOLUTE_CELL"]
+      rhs: ["CELL"]
     },
     {
       symbol: "cell",
-      rhs: ["RELATIVE_CELL"]
+      rhs: ["CELL", ":", "CELL"]
     },
-    {
-      symbol: "cell",
-      rhs: ["MIXED_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["ABSOLUTE_CELL", ":", "ABSOLUTE_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["ABSOLUTE_CELL", ":", "RELATIVE_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["ABSOLUTE_CELL", ":", "MIXED_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["RELATIVE_CELL", ":", "ABSOLUTE_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["RELATIVE_CELL", ":", "RELATIVE_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["RELATIVE_CELL", ":", "MIXED_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["MIXED_CELL", ":", "ABSOLUTE_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["MIXED_CELL", ":", "RELATIVE_CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["MIXED_CELL", ":", "MIXED_CELL"]
-    }
   ],
 
   lexer: {
@@ -231,14 +234,7 @@ module.exports = () => ({
         }
       },
       {
-        regexp: /^'(''|[^'])*'/,
-        token: "STRING",
-        action() {
-          this.text = this.text.slice(1, -1).replace(/''/g, "'");
-        }
-      },
-      {
-        regexp: /^[A-Za-z]+[A-Za-z_0-9\.]+(?=[(])/,
+        regexp: /^[A-Za-z]+[A-Za-z_0-9\.]*(?=[(])/,
         token: "FUNCTION"
       },
       {
@@ -246,31 +242,15 @@ module.exports = () => ({
         token: "ERROR"
       },
       {
-        regexp: /^\$[A-Za-z]+\$[0-9]+/,
-        token: "ABSOLUTE_CELL"
+        regexp: /^\$?[A-Za-z]+\$?[0-9]+/,
+        token: "CELL"
       },
       {
-        regexp: /^\$[A-Za-z]+[0-9]+/,
-        token: "MIXED_CELL"
+        regexp: /^(TRUE|FALSE)(?=\b)/,
+        token: "LOGIC"
       },
       {
-        regexp: /^[A-Za-z]+\$[0-9]+/,
-        token: "MIXED_CELL"
-      },
-      {
-        regexp: /^[A-Za-z]+[0-9]+/,
-        token: "RELATIVE_CELL"
-      },
-      {
-        regexp: /^[A-Za-z\.]+(?=[(])/,
-        token: "FUNCTION"
-      },
-      {
-        regexp: /^[A-Za-z]+[A-Za-z_0-9]+/,
-        token: "VARIABLE"
-      },
-      {
-        regexp: /^[A-Za-z_]+/,
+        regexp: /^[A-Za-z]+[A-Za-z_0-9]*/,
         token: "VARIABLE"
       },
       {
@@ -280,7 +260,7 @@ module.exports = () => ({
       ...createRules(["(", ")", ":", "{", "}", ";", ...operatorTokens]),
       {
         regexp: { en: /^,/, de: /^;/ },
-        token: "ARGUMENT_SEPARATOR"
+        token: "SEPARATOR"
       },
       {
         regexp: /^NOT/,

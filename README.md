@@ -68,11 +68,6 @@ module.exports = {
             {
                 regexp: /^-/,
                 token: '-'
-            },
-            {
-                // force to match one for error message
-                regexp: /^./,
-                token: 'ERROR_LA'
             }
         ]
     }
@@ -98,13 +93,7 @@ module.exports = () => ({
       rhs: [
         "AddExp",
         "+",
-        function(astProcessor, lexer) {
-          astProcessor.pushStack(lexer.text);
-        },
         "MulExp",
-        function(astProcessor) {
-          astProcessor.createOpNode();
-        }
       ]
     },
     {
@@ -116,22 +105,13 @@ module.exports = () => ({
       rhs: [
         "MulExp",
         "*",
-        function(astProcessor, lexer) {
-          astProcessor.pushStack(lexer.text);
-        },
         "PrimExp",
-        function(astProcessor) {
-          astProcessor.createOpNode();
-        },
       ]
     },
     {
       symbol: "PrimExp",
       rhs: [
         "NUMBER",
-        function(astProcessor, lexer) {
-          astProcessor.pushStack(Number(lexer.text));
-        }
       ]
     },
     {
@@ -154,10 +134,6 @@ module.exports = () => ({
         token: "+"
       },
       {
-        regexp: /^-/,
-        token: "-"
-      },
-      {
         regexp: /^\(/,
         token: "("
       },
@@ -169,15 +145,6 @@ module.exports = () => ({
         regexp: /^\*/,
         token: "*"
       },
-      {
-        regexp: /^\//,
-        token: "/"
-      },
-      {
-        // force to match one for error message
-        regexp: /^./,
-        token: "ERROR_LA"
-      }
     ]
   }
 });

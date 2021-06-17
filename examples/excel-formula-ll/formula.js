@@ -336,7 +336,7 @@ var formula = (function(undefined) {
         }
       },
       {
-        regexp: /[A-Za-z]+[A-Za-z_0-9\.]+(?=[(])/,
+        regexp: /^[A-Za-z]+[A-Za-z_0-9\.]+(?=[(])/,
         token: "FUNCTION"
       },
       {
@@ -1238,6 +1238,8 @@ var formula = (function(undefined) {
   parser.parse = function parse(input, options) {
     const productionEndToken = "kison-end-" + Date.now();
 
+    const tokens = [];
+
     const terminalNodes = [];
 
     class AstNode {
@@ -1438,6 +1440,7 @@ var formula = (function(undefined) {
       if (typeof topSymbol === "string") {
         if (!token) {
           token = lexer.lex();
+          tokens.push(token);
         }
 
         currentToken = token;
@@ -1556,6 +1559,7 @@ var formula = (function(undefined) {
 
     return {
       ast,
+      tokens,
       errorNode,
       error,
       terminalNodes

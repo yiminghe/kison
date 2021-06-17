@@ -60,10 +60,11 @@
         });
 
         parse.addEventListener('click', () => {
+            currentText = undefined;
             getAst(input.value);
         }, false);
 
-        input.addEventListener('click', () => {
+        function detectCursor() {
             const { selectionStart } = input;
             const { terminalNodes, errorNode } = getAst(input.value);
             let cursorNode;
@@ -75,13 +76,13 @@
             cursorNode = cursorNode || errorNode;
             console.log('cursor node', cursorNode);
             if (cursorNode) {
-                let func = cursorNode;
+                let func = cursorNode.parent;
                 while (func && func.symbol !== 'function') {
                     func = func.parent;
                 }
                 if (func) {
                     let argIndex = 0;
-                    let args = cursorNode;
+                    let args = cursorNode.parent;
                     if (cursorNode === errorNode && cursorNode.parent === func) {
                         console.log(`at argument index ${0} of function ${func.children[0].text}`);
                         return;
@@ -98,11 +99,19 @@
                         if (cursorNode.token === 'ARGUMENT_SEPARATOR') {
                             argsLength--;
                         }
+                        func = args.parent;
+                        while (func && func.symbol !== 'function') {
+                            func = func.parent;
+                        }
                         console.log(`at argument index ${argsLength} of function ${func.children[0].text}`)
                     }
                 }
             }
-        });
+        }
+
+        input.addEventListener('click', detectCursor);
+        input.addEventListener('input', detectCursor);
+        input.addEventListener('keydown', detectCursor);
 
         function getArgumentsLength(args) {
             let c = 0;

@@ -212,6 +212,34 @@ module.exports = () => ({
         regexp: /^\s+/,
         token: "$HIDDEN"
       },
+      ...createRules(["(", ")", ":", ";", ...operatorTokens]),
+      {
+        regexp: /^\{/,
+        token: "{",
+        action() {
+          this.userData.inArray = this.userData.inArray || 0;
+          this.userData.inArray++;
+        }
+      },
+      {
+        regexp: /^\}/,
+        token: "}",
+        action() {
+          this.userData.inArray = this.userData.inArray || 1;
+          this.userData.inArray--;
+        }
+      },
+      {
+        filter() {
+          return !!this.userData.inArray;
+        },
+        regexp: { en: /^,/, de: /^\\/ },
+        token: "ARRAY_SEPARATOR"
+      },
+      {
+        regexp: { en: /^,/, de: /^;/ },
+        token: "ARGUMENT_SEPARATOR"
+      },
       {
         regexp: /^"(""|[^"])*"/,
         token: "STRING",
@@ -242,38 +270,6 @@ module.exports = () => ({
       {
         regexp: /^\d+/,
         token: "NUMBER"
-      },
-      ...createRules(["(", ")", ":", ";", ...operatorTokens]),
-      {
-        regexp: /^\{/,
-        token: "{",
-        action() {
-          this.userData.inArray = this.userData.inArray || 0;
-          this.userData.inArray++;
-        }
-      },
-      {
-        regexp: /^\}/,
-        token: "}",
-        action() {
-          this.userData.inArray = this.userData.inArray || 1;
-          this.userData.inArray--;
-        }
-      },
-      {
-        filter() {
-          return !!this.userData.inArray;
-        },
-        regexp: { en: /^,/, de: /^\\/ },
-        token: "ARRAY_SEPARATOR"
-      },
-      {
-        regexp: { en: /^,/, de: /^;/ },
-        token: "ARGUMENT_SEPARATOR"
-      },
-      {
-        regexp: /^NOT/,
-        token: "NOT"
       }
     ]
   }

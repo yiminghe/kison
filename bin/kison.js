@@ -80,7 +80,7 @@ function myJsBeautify(str) {
       parser: "babel"
     });
   } catch (e) {
-    console.log("You can install prettier manually so kison will use it to format code.");
+    console.log("Info: you can install prettier manually so kison will use it to format generated code.\n");
   }
   return str;
 }
@@ -110,6 +110,7 @@ function genParser() {
     " at " +
     new Date().toLocaleString()
   );
+  console.log();
   console.info("duration: " + (Date.now() - start) + "ms");
   if (program.visual) {
     console.log();

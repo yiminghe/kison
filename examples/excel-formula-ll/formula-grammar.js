@@ -2,7 +2,7 @@ var RegexEscape = require("regex-escape");
 
 const operators = [
   ["="],
-  ["<=", ">=", "<>", "NOT", "||"],
+  ["<=", ">=", "<>", "||"],
   ["<", ">"],
   ["+", "-"],
   ["*", "/"],

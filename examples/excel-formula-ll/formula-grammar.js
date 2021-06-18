@@ -44,17 +44,7 @@ function generateOpProductions() {
       for (const o of operators[index]) {
         ret.push({
           symbol: exp,
-          rhs: [
-            nextExp,
-            o,
-            function(astProcessor, lexer) {
-              astProcessor.pushStack(lexer.text);
-            },
-            exp,
-            function(astProcessor) {
-              astProcessor.createOpNode();
-            }
-          ],
+          rhs: [nextExp, o, exp],
           label: "single-exp"
         });
       }
@@ -62,17 +52,7 @@ function generateOpProductions() {
       for (const o of operators[index]) {
         ret.push({
           symbol: exp,
-          rhs: [
-            exp,
-            o,
-            function(astProcessor, lexer) {
-              astProcessor.pushStack(lexer.text);
-            },
-            nextExp,
-            function(astProcessor) {
-              astProcessor.createOpNode();
-            }
-          ],
+          rhs: [exp, o, nextExp],
           label: "single-exp"
         });
       }

@@ -228,12 +228,13 @@ describe("lalr", function() {
     });
 
     expect(function() {
-      Function.call(
+      const parser=Function.call(
         null,
         grammar.genCode({
           compressSymbol: 1
         }) + "\n return parser;"
-      )().parse("dc");
+      )();
+      parser.parse("dc");
     }).toThrow(
       "syntax error at line 1:\ndc\n--^\n" + "expect shift:c, shift:d"
     );

@@ -75,12 +75,19 @@ if (program.es) {
 }
 
 function myJsBeautify(str) {
+  let prettier;
   try {
-    return require("prettier").format(str, {
+    prettier = require("prettier");
+  } catch (e) {
+    console.log("Info: you can install prettier manually so kison will use it to format generated code.\n");
+    return str;
+  }
+  try {
+    return prettier.format(str, {
       parser: "babel"
     });
   } catch (e) {
-    console.log("Info: you can install prettier manually so kison will use it to format generated code.\n");
+    console.log(e);
   }
   return str;
 }

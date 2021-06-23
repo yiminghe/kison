@@ -15,9 +15,15 @@ A LALR/LL parser generator for javascript originated from [KISSY XTemplate](http
 
 [https://yiminghe.me/kison/examples/](https://yiminghe.me/kison/examples/)
 
-### grammar and lexer definition
+## run command
 
-#### LALR
+```
+npx kison -g xx-grammar.js
+```
+
+## grammar and lexer definition
+
+### LALR
 
 cal-grammar.js:
 
@@ -73,7 +79,7 @@ module.exports = {
     }
 };
 ```
-#### LL
+### LL
 
 cal-grammar.js: support direct left recursive.
 
@@ -150,32 +156,24 @@ module.exports = () => ({
 });
 ```
 
-### run command
+## command options
 
-#### params
+- es: generate es module `npx kison --es -g cal-grammar.js`
+- g: grammar file
+- m: ll or lalr
 
-- es: generate es module `kison --es -g cal-grammar.js`
-
-#### LALR
+### LALR
 
 ```
-kison -g cal-grammar.js
+npx kison -g cal-grammar.js
 ```
 
-#### LL
+### LL
 
 ll parser generator
 
 ```
-kison -m ll -g cal-grammar.js
-```
-
-### run parser
-
-``` javascript
-    parser.parse('1+2') // => 3
-    parser.parse('2-1') // => 1
-    parser.parse('2a') // => syntax error at line 1: 2^a expect NUMBER
+npx kison -m ll -g cal-grammar.js
 ```
 
 ## changelog

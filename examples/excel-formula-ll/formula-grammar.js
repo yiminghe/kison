@@ -1,4 +1,6 @@
-var RegexEscape = require("regex-escape");
+function RegexEscape(input) {
+  return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
 
 const operators = [
   ["="],

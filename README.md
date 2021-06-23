@@ -180,7 +180,7 @@ kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### alpha - 2021/06/16
+### 0.4.0 - 2021/06/16
 
 * COMMON
   * add $HIDDEN token type 

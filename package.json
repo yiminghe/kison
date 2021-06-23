@@ -37,7 +37,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
-    "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish --tag alpha",
+    "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{lib,__tests__,tests}/**/*.{js,tsx}\"",
     "test": "jest",

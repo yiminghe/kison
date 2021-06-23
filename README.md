@@ -180,12 +180,13 @@ kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### 0.4.0 - 2021/06/16
+### 0.4.1 - 2021/06/23
 
 * COMMON
   * add $HIDDEN token type 
   * use js config file
   * add excel formula demo
+  * support filter for lexer config
 
 * LL
   * support LL parser

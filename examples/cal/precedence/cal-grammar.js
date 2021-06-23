@@ -50,7 +50,7 @@ module.exports = () => ({
       symbol: "primaryExpression",
       rhs: ["(", "Exp", ")"],
       action() {
-        return { v: this.$2, op: "()" };
+        return this.$2;
       }
     },
     {

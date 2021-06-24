@@ -161,6 +161,7 @@ module.exports = () => ({
 - es: generate es module `npx kison --es -g cal-grammar.js`
 - g: grammar file
 - m: ll or lalr
+- babel: use babel to transform code. need install @babel/core@7.x and @babel/preset-env manually
 
 ### LALR
 
@@ -178,7 +179,7 @@ npx kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### 0.4.1 - 2021/06/23
+### 0.4.2 - 2021/06/24
 
 * COMMON
   * add $HIDDEN token type 

@@ -144,11 +144,11 @@ function genParser() {
   /*jshint evil:true*/
   var code = instance.genCode(kisonCfg);
 
-  code = myJsBeautify(code);
-
   if (program.babel) {
     code = myBabel(code);
   }
+
+  code = myJsBeautify(code);
 
   var moduleCode = codeTemplate.replace("{{code}}", code);
 

@@ -14,10 +14,11 @@
 </div>
 
 <h2>open devtools console</h2>
-
+<p>error recovery example: &nbsp;&nbsp; <b>sum(1,sum(2,</b> &nbsp; &nbsp;=> &nbsp;&nbsp;<b>sum(1,sum(2,))</b></p>
 <div>
     <input style="width:200px" id='input' value="sum(a1:a2, b2)" />
     &nbsp; <button id='parse'>parse</button>
+    &nbsp; <button id='fix'>error recovery</button>
     &nbsp; <button id='evaluate'>evaluate</button>
 </div>
 
@@ -27,14 +28,15 @@
         let currentText;
         let currentAst;
 
-        function getAst(value) {
+        function getAst(value, onErrorRecovery) {
             if (currentText === value) {
                 return currentAst;
             }
             console.log('***********************', value);
             currentText = value;
             currentAst = formula.parse(value, {
-                lexerEnv: 'en'
+                lexerEnv: 'en',
+                onErrorRecovery,
             });
             console.log(currentAst);
             if (currentAst.error) {
@@ -49,6 +51,7 @@
         }
 
         const input = $('input');
+        const fix = $('fix');
         const parse = $('parse');
         const evaluate = $('evaluate');
         const ARGUMENT_SEPARATOR = 'ARGUMENT_SEPARATOR';
@@ -57,6 +60,28 @@
             const { ast, errorNode } = getAst(input.value);
             console.log('TODO');
         });
+
+        fix.addEventListener('click', () => {
+            currentText = undefined;
+            let fixed = false;
+            const { ast, error, recoveryTokens, tokens } = getAst(input.value, ({ errorNode }, recommendAction) => {
+                if (recommendAction.action === 'add') {
+                    if (errorNode.parent.symbol === 'arguments' && errorNode.error.expected.indexOf(')') !== -1) {
+                        fixed = true;
+                        return {
+                            action: 'add',
+                            token: ')',
+                            text: ')',
+                        };
+                    }
+                }
+            });
+            if (fixed) {
+                const val = recoveryTokens.map(t => t.text).join('');
+                console.log('`' + input.value.trim() + '` will fixed to `' + val + '`');
+                input.value = val;
+            }
+        }, false);
 
         parse.addEventListener('click', () => {
             currentText = undefined;
@@ -106,18 +131,12 @@
                         }
                     }
                     if (args && args !== errorNode) {
-                        let argsLength = getArgumentsLength(args) || 1;
-                        if (cursorNode.token === ARGUMENT_SEPARATOR) {
-                            argsLength--;
-                        }
-                        if (cursorNode === errorNode && prevSibling(cursorNode).token === ARGUMENT_SEPARATOR) {
-                            argsLength++;
-                        }
                         func = args.parent;
                         while (func && func.symbol !== 'function') {
                             func = func.parent;
                         }
-                        console.log(`at argument index ${argsLength} of function ${func.children[0].text}`)
+                        let argumentIndex = getArgumentIndex(args, selectionStart) || 1;
+                        console.log(`at argument index ${argumentIndex} of function ${func.children[0].text}`)
                     }
                 }
             }
@@ -157,7 +176,7 @@
 
             if (node.symbol !== 'function') {
                 const parent = node.parent;
-                if (parent.symbol === 'function') {
+                if (parent && parent.symbol === 'function') {
                     const prev = prevSibling(node);
                     if (parent.children.indexOf(prev) === 0) {
                         return returnIfTopFn(parent);
@@ -177,18 +196,35 @@
             return returnIfTopFn(node);
         }
 
-        function getArgumentsLength(args) {
+        function getArgumentIndex(args, selectionStart) {
             let c = 0;
             const { children = [] } = args;
             if (children[0] && children[0].symbol === 'arguments') {
-                if (children[2] && !children[2].error) {
-                    c = 1;
+                if (children[1] && children[1].token === 'ARGUMENT_SEPARATOR') {
+                    if (children[1].end <= selectionStart) {
+                        c = 1;
+                    }
                 }
-                return c + getArgumentsLength(children[0]);
+                return c + getArgumentIndex(children[0], selectionStart);
             } else if (children[0] && !children[0].error) {
-                c = 1;
+                if (children.length === 1 && children[0].token === 'ARGUMENT_SEPARATOR') {
+                    if (children[0].end <= selectionStart) {
+                        c = 2;
+                    } else {
+                        c = 1;
+                    }
+                } else {
+                    if (children[0].start <= selectionStart) {
+                        c = 1;
+                    }
+                }
             }
             return c;
+        }
+
+        function lastChild(c) {
+            c = c.children || [];
+            return c[c.length - 1];
         }
     })();
 </script>

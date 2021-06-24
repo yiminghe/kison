@@ -31,9 +31,10 @@
                 console.error(ret.errorNode.error.errorMessage);
             }
             console.log('parse tree', JSON.parse(JSON.stringify(ret.ast, null, 2)));
-            callback && callback();
+            callback && callback(ret);
             console.log('***********************end ' + input);
             console.log('');
+            return ret;
         }
 
         parseResult('1+2+3');
@@ -42,8 +43,8 @@
 
         parseResult('1+2*5');
 
-        
-     
+
+
 
         parseResult('2^1^3');
 
@@ -56,30 +57,23 @@
 
         let o = input;
 
-        let arr = o.split('');
-        let offset = 0;
-
         parseResult(input, {
-            onErrorRecovery({ lexer, expected }, recommendAction) {
+            onErrorRecovery({ errorNode }, recommendAction) {
                 if (recommendAction.action === 'add') {
-                    arr.splice(offset + lexer.end, 0, '0');
-                    offset + 1;
                     return {
                         action: 'add',
-                        token: expected[0],
+                        token: errorNode.error.expected[0],
                         text: '0',
                     };
                 } else if (recommendAction.action === 'del') {
-                    arr.splice(offset + lexer.start, lexer.end - lexer.start);
-                    offset -= lexer.end - lexer.start;
                     return {
                         action: 'del',
                     };
                 }
             }
-        }, () => {
+        }, ({ recoveryTokens }) => {
             // error recovery: 2+*3*+5 => 2+3*5
-            console.log(`after error recovery: ${o} => ${arr.join('')}`);
+            console.log(`after error recovery: ${recoveryTokens.map(t => t.text).join('')}`);
         });
 
         parseResult('1+2*');

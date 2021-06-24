@@ -155,10 +155,6 @@ module.exports = () => ({
       label: "single-exp"
     },
     {
-      symbol: "function",
-      rhs: ["FUNCTION", "(", ")"]
-    },
-    {
       symbol: "array-element",
       rhs: ["STRING"]
     },
@@ -175,10 +171,6 @@ module.exports = () => ({
       rhs: ["ERROR"]
     },
     {
-      symbol: "function",
-      rhs: ["FUNCTION", "(", "arguments", ")"]
-    },
-    {
       symbol: "array-list",
       rhs: ["array-element"]
     },
@@ -190,13 +182,29 @@ module.exports = () => ({
       symbol: "array",
       rhs: ["{", "array-list", "}"]
     },
+
     {
-      symbol: "arguments",
+      symbol: "function",
+      rhs: ["FUNCTION", "(", "arguments", ")"]
+    },
+    {
+      symbol: "argument",
+      label: "single-exp",
+      rhs: []
+    },
+
+    {
+      symbol: "argument",
+      label: "single-exp",
       rhs: [startExp]
     },
     {
       symbol: "arguments",
-      rhs: ["arguments", "ARGUMENT_SEPARATOR", startExp]
+      rhs: ["argument"]
+    },
+    {
+      symbol: "arguments",
+      rhs: ["arguments", "ARGUMENT_SEPARATOR", "argument"]
     },
     {
       symbol: "cell",

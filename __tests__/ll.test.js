@@ -276,9 +276,21 @@ describe("ll", () => {
                       'firstColumn': 1,
                       'lastColumn': 2
                     }
-                  ]
+                  ],
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
                 }
-              ]
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
             },
             {
               'text': '+',
@@ -306,13 +318,31 @@ describe("ll", () => {
                       'firstColumn': 3,
                       'lastColumn': 4
                     }
-                  ]
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
                 }
               ],
-              'label': 'single-exp'
+              'label': 'single-exp',
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 0,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 4
         },
         {
           'text': '+',
@@ -340,15 +370,39 @@ describe("ll", () => {
                   'firstColumn': 5,
                   'lastColumn': 6
                 }
-              ]
+              ],
+              'start': 4,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 6
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6
         }
       ],
-      'label': 'single-exp'
+      'label': 'single-exp',
+      'start': 0,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 6
     }
-  ]
+  ],
+  'start': 0,
+  'end': 5,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 6
 }"
 `);
   });
@@ -382,9 +436,21 @@ describe("ll", () => {
                   'firstColumn': 1,
                   'lastColumn': 2
                 }
-              ]
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
             }
-          ]
+          ],
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
         },
         {
           'text': '+',
@@ -416,9 +482,21 @@ describe("ll", () => {
                       'firstColumn': 3,
                       'lastColumn': 4
                     }
-                  ]
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
                 }
-              ]
+              ],
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
             },
             {
               'text': '*',
@@ -447,17 +525,47 @@ describe("ll", () => {
                       'firstColumn': 5,
                       'lastColumn': 6
                     }
-                  ]
+                  ],
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
                 }
-              ]
+              ],
+              'start': 4,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 6
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 2,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 6
         }
       ],
-      'label': 'single-exp'
+      'label': 'single-exp',
+      'start': 0,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 6
     }
-  ]
+  ],
+  'start': 0,
+  'end': 5,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 6
 }"
 `);
   });
@@ -494,9 +602,21 @@ describe("ll", () => {
                       'firstColumn': 1,
                       'lastColumn': 2
                     }
-                  ]
+                  ],
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
                 }
-              ]
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
             },
             {
               'text': '+',
@@ -528,9 +648,21 @@ describe("ll", () => {
                           'firstColumn': 3,
                           'lastColumn': 4
                         }
-                      ]
+                      ],
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
                     }
-                  ]
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
                 },
                 {
                   'text': '*',
@@ -559,15 +691,39 @@ describe("ll", () => {
                           'firstColumn': 5,
                           'lastColumn': 6
                         }
-                      ]
+                      ],
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
                     }
-                  ]
+                  ],
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
                 }
               ],
-              'label': 'single-exp'
+              'label': 'single-exp',
+              'start': 2,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 6
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 0,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 6
         },
         {
           'text': '-',
@@ -595,7 +751,13 @@ describe("ll", () => {
                   'firstColumn': 7,
                   'lastColumn': 8
                 }
-              ]
+              ],
+              'start': 6,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 7,
+              'lastColumn': 8
             },
             {
               'text': '^',
@@ -624,7 +786,13 @@ describe("ll", () => {
                       'firstColumn': 9,
                       'lastColumn': 10
                     }
-                  ]
+                  ],
+                  'start': 8,
+                  'end': 9,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 9,
+                  'lastColumn': 10
                 },
                 {
                   'text': '^',
@@ -653,19 +821,55 @@ describe("ll", () => {
                           'firstColumn': 11,
                           'lastColumn': 12
                         }
-                      ]
+                      ],
+                      'start': 10,
+                      'end': 11,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 11,
+                      'lastColumn': 12
                     }
-                  ]
+                  ],
+                  'start': 10,
+                  'end': 11,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 11,
+                  'lastColumn': 12
                 }
-              ]
+              ],
+              'start': 8,
+              'end': 11,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 9,
+              'lastColumn': 12
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 6,
+          'end': 11,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 12
         }
       ],
-      'label': 'single-exp'
+      'label': 'single-exp',
+      'start': 0,
+      'end': 11,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 12
     }
-  ]
+  ],
+  'start': 0,
+  'end': 11,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 12
 }"
 `);
   });
@@ -699,9 +903,21 @@ describe("ll", () => {
                   'firstColumn': 1,
                   'lastColumn': 2
                 }
-              ]
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
             }
-          ]
+          ],
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
         },
         {
           'text': '+',
@@ -733,9 +949,21 @@ describe("ll", () => {
                       'firstColumn': 3,
                       'lastColumn': 4
                     }
-                  ]
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
                 }
-              ]
+              ],
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
             },
             {
               'text': '*',
@@ -775,12 +1003,30 @@ describe("ll", () => {
               'lastColumn': 5
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 2,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 5
         }
       ],
-      'label': 'single-exp'
+      'label': 'single-exp',
+      'start': 0,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 5
     }
-  ]
+  ],
+  'start': 0,
+  'end': 4,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 5
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
@@ -862,18 +1108,47 @@ describe("ll", () => {
     let errorCalled = 0;
     const parser = Function.call(null, code + "\n return parser;")();
     parser.parse("1+/2", {
-      onErrorRecovery({ errorMessage }, { action }) {
-        errorCalled = errorMessage;
+      onErrorRecovery({ errorNode }, { action }) {
+        errorCalled = errorNode;
         expect(action).toBe("del");
         return { action };
       }
     });
     expect(errorCalled).toMatchInlineSnapshot(`
-      "syntax error at line 1:
-      1+/2
-      --^
-      expect NUMBER, ("
-    `);
+Object {
+  "end": 3,
+  "error": Object {
+    "errorMessage": "syntax error at line 1:
+1+/2
+--^
+expect NUMBER, (",
+    "expected": Array [
+      "NUMBER",
+      "(",
+    ],
+    "lexer": Object {
+      "end": 3,
+      "firstColumn": 3,
+      "firstLine": 1,
+      "lastColumn": 4,
+      "lastLine": 1,
+      "start": 2,
+      "t": "/",
+      "text": "/",
+      "token": "/",
+    },
+    "recovery": true,
+    "symbol": "mul",
+  },
+  "firstColumn": 3,
+  "firstLine": 1,
+  "lastColumn": 4,
+  "lastLine": 1,
+  "start": 2,
+  "text": "/",
+  "token": "/",
+}
+`);
   });
 
   it("add error recovery works", () => {
@@ -882,12 +1157,12 @@ describe("ll", () => {
     let errorCalled = 0;
     const parser = Function.call(null, code + "\n return parser;")();
     const { ast, error, errorNode } = parser.parse("1+", {
-      onErrorRecovery({ errorMessage, expected }, { action }) {
-        errorCalled = errorMessage;
-        if (action === "add" && expected[0] === "NUMBER") {
+      onErrorRecovery({ errorNode }, { action }) {
+        errorCalled = errorNode;
+        if (action === "add" && errorNode.error.expected[0] === "NUMBER") {
           return {
             action,
-            token: expected[0],
+            token: "NUMBER",
             text: "0"
           };
         }
@@ -918,9 +1193,21 @@ describe("ll", () => {
                   'firstColumn': 1,
                   'lastColumn': 2
                 }
-              ]
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
             }
-          ]
+          ],
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
         },
         {
           'text': '+',
@@ -948,15 +1235,39 @@ describe("ll", () => {
                   'lastColumn': 3,
                   'text': '0'
                 }
-              ]
+              ],
+              'start': 2,
+              'end': 2,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 3
             }
           ],
-          'label': 'single-exp'
+          'label': 'single-exp',
+          'start': 2,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 3
         }
       ],
-      'label': 'single-exp'
+      'label': 'single-exp',
+      'start': 0,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 3
     }
-  ]
+  ],
+  'start': 0,
+  'end': 2,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 3
 }"
 `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
@@ -981,10 +1292,37 @@ describe("ll", () => {
 }"
 `);
     expect(errorCalled).toMatchInlineSnapshot(`
-      "syntax error at line 1:
-      1+
-      --^
-      expect NUMBER, ("
-    `);
+Object {
+  "end": 2,
+  "error": Object {
+    "errorMessage": "syntax error at line 1:
+1+
+--^
+expect NUMBER, (",
+    "expected": Array [
+      "NUMBER",
+      "(",
+    ],
+    "lexer": Object {
+      "end": 2,
+      "firstColumn": 3,
+      "firstLine": 1,
+      "lastColumn": 3,
+      "lastLine": 1,
+      "start": 2,
+      "t": "$EOF",
+      "token": "$EOF",
+    },
+    "recovery": true,
+    "symbol": "mul",
+  },
+  "firstColumn": 3,
+  "firstLine": 1,
+  "lastColumn": 3,
+  "lastLine": 1,
+  "start": 2,
+  "token": "$EOF",
+}
+`);
   });
 });

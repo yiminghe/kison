@@ -83,7 +83,7 @@ function myBabel(str) {
     console.log(
       "Info: you need to install @babel/core@7.x and @babel/preset-env@7.x manually so kison will use it to trans generated code.\n"
     );
-    str;
+    return str;
   }
   const pkg = require("@babel/core/package.json");
   if (!pkg.version.startsWith("7.")) {

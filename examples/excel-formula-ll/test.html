@@ -64,14 +64,21 @@
         fix.addEventListener('click', () => {
             currentText = undefined;
             let fixed = false;
-            const { ast, error, recoveryTokens, tokens } = getAst(input.value, ({ errorNode }, recommendAction) => {
-                if (recommendAction.action === 'add') {
-                    if (errorNode.parent.symbol === 'arguments' && errorNode.error.expected.indexOf(')') !== -1) {
+            const { ast, error, recoveryTokens, tokens } = getAst(input.value, ({ errorNode }, { action }) => {
+                if (action === 'add') {
+                    let token = ')';
+                    const { parent: { symbol }, error: { expected } } = errorNode;
+                    const hasToken = expected.indexOf(token) !== -1;
+                    if (
+                        (symbol === 'arguments' || symbol === 'function')
+                        &&
+                        hasToken
+                    ) {
                         fixed = true;
                         return {
-                            action: 'add',
-                            token: ')',
-                            text: ')',
+                            action,
+                            token,
+                            text: token,
                         };
                     }
                 }

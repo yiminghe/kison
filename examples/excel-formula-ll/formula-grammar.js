@@ -3,9 +3,7 @@ function RegexEscape(input) {
 }
 
 const operators = [
-  ["="],
-  ["<=", ">=", "<>", "||"],
-  ["<", ">"],
+  ["=", "<=", ">=", "<>", ">", "<"],
   ["+", "-"],
   ["*", "/"],
   ["^"],
@@ -71,6 +69,14 @@ function createRules(tokens) {
     };
   });
 }
+
+const decimalFractionLiteral = "(?:[0-9][0-9]*)";
+const decimalIntegerLiteral = "(?:0|[1-9][0-9]*)";
+const exponentPart = "(?:[eE][+-]?[0-9]+)";
+const namePart = "(?:[_A-Za-z]+[_A-Za-z_0-9]*)";
+const fullNamePart = `(?:${namePart}(?:\\.${namePart})*)`;
+const cellAddressLiteral = `(?:\\$?[A-Za-z]+\\$?[0-9]+)`;
+const sheetAddress = `(?:(?:(?:'(?:''|[^'])*')|${namePart})!)`;
 
 module.exports = () => ({
   productions: [
@@ -141,7 +147,7 @@ module.exports = () => ({
     },
     {
       symbol: "atom-exp",
-      rhs: ["cell"],
+      rhs: ["CELL"],
       label: "single-exp"
     },
     {
@@ -205,14 +211,6 @@ module.exports = () => ({
     {
       symbol: "arguments",
       rhs: ["arguments", "ARGUMENT_SEPARATOR", "argument"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["CELL"]
-    },
-    {
-      symbol: "cell",
-      rhs: ["CELL", ":", "CELL"]
     }
   ],
 
@@ -222,7 +220,7 @@ module.exports = () => ({
         regexp: /^\s+/,
         token: "$HIDDEN"
       },
-      ...createRules(["(", ")", ":", ";", ...operatorTokens]),
+      ...createRules(["(", ")", ":", ...operatorTokens]),
       {
         regexp: /^\{/,
         token: "{",
@@ -243,7 +241,7 @@ module.exports = () => ({
         filter() {
           return !!this.userData.inArray;
         },
-        regexp: { en: /^,/, de: /^\\/ },
+        regexp: { en: /^[,;]/, de: /^[\\;]/ },
         token: "ARRAY_SEPARATOR"
       },
       {
@@ -251,14 +249,14 @@ module.exports = () => ({
         token: "ARGUMENT_SEPARATOR"
       },
       {
-        regexp: /^"(""|[^"])*"/,
+        regexp: /^"(?:""|[^"])*"/,
         token: "STRING",
         action() {
           this.text = this.text.slice(1, -1).replace(/""/g, '"');
         }
       },
       {
-        regexp: /^[A-Za-z]+[A-Za-z_0-9\.]*(?=[(])/,
+        regexp: new RegExp(`^${fullNamePart}(?=[(])`),
         token: "FUNCTION"
       },
       {
@@ -266,19 +264,32 @@ module.exports = () => ({
         token: "ERROR"
       },
       {
-        regexp: /^\$?[A-Za-z]+\$?[0-9]+/,
+        regexp: new RegExp(
+          `^${sheetAddress}?${cellAddressLiteral}(?:\\:${cellAddressLiteral})?`
+        ),
         token: "CELL"
       },
       {
-        regexp: /^(TRUE|FALSE)(?=\b)/,
+        regexp: /^(TRUE|FALSE)(?=\b)/i,
         token: "LOGIC"
       },
       {
-        regexp: /^[A-Za-z]+[A-Za-z_0-9]*/,
+        regexp: new RegExp(`^${fullNamePart}`),
         token: "VARIABLE"
       },
       {
-        regexp: /^\d+/,
+        regexp: {
+          en: new RegExp(
+            `^${decimalIntegerLiteral}?\\.${decimalFractionLiteral}${exponentPart}?`
+          ),
+          de: new RegExp(
+            `^${decimalIntegerLiteral}?,${decimalFractionLiteral}${exponentPart}?`
+          )
+        },
+        token: "NUMBER"
+      },
+      {
+        regexp: new RegExp(`^${decimalIntegerLiteral}${exponentPart}?`),
         token: "NUMBER"
       }
     ]

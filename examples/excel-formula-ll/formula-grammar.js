@@ -76,7 +76,15 @@ const exponentPart = "(?:[eE][+-]?[0-9]+)";
 const namePart = "(?:[_A-Za-z]+[_A-Za-z_0-9]*)";
 const fullNamePart = `(?:${namePart}(?:\\.${namePart})*)`;
 const cellAddressLiteral = `(?:\\$?[A-Za-z]+\\$?[0-9]+)`;
-const sheetAddress = `(?:(?:(?:'(?:''|[^'])*')|${namePart})!)`;
+const sheetAddress = `(?:(?:
+  
+  (?:'(?:''|[^'])*')
+  
+  |
+
+(?:${namePart}(?:\\:${namePart})?)
+
+)!)`.replace(/\s/g,'');
 
 module.exports = () => ({
   productions: [
@@ -265,7 +273,7 @@ module.exports = () => ({
       },
       {
         regexp: new RegExp(
-          `^${sheetAddress}?${cellAddressLiteral}(?:\\:${cellAddressLiteral})?`
+          `^${sheetAddress}?${cellAddressLiteral}(?:\\s*\\:\\s*${cellAddressLiteral})?`
         ),
         token: "CELL"
       },

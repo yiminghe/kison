@@ -198,3 +198,9 @@ npx kison -m ll -g cal-grammar.js
 ### 0.3.0 - 2014/08/25
 
 * optimize error debug info
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+
+<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>

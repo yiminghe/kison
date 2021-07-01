@@ -73,7 +73,7 @@ function createRules(tokens) {
 const decimalFractionLiteral = "(?:[0-9][0-9]*)";
 const decimalIntegerLiteral = "(?:0|[1-9][0-9]*)";
 const exponentPart = "(?:[eE][+-]?[0-9]+)";
-const namePart = "(?:[_A-Za-z]+[_A-Za-z_0-9]*)";
+const namePart = "(?:[_A-Za-z\u4e00-\u9fa5]+[_A-Za-z_0-9\u4e00-\u9fa5]*)";
 const fullNamePart = `(?:${namePart}(?:\\.${namePart})*)`;
 const cellAddressLiteral = `(?:\\$?[A-Za-z]+\\$?[0-9]+)`;
 const sheetAddress = `(?:(?:
@@ -84,10 +84,36 @@ const sheetAddress = `(?:(?:
 
 (?:${namePart}(?:\\:${namePart})?)
 
-)!)`.replace(/\s/g,'');
+)!)`.replace(/\s/g, "");
+const tableColumnSpecifierLiteral = `(?:
+  \\[
+    (?:
+      '\\]|[^\\]]
+      )+
+    \\]
+  )`.replace(/\s/g, "");
+const tableColumnRange = `(?:${tableColumnSpecifierLiteral}(?:\\:${tableColumnSpecifierLiteral})?)`;
+const tableColumnSpecifier = `(?:${tableColumnRange}|${namePart})`;
+
+const my = {
+  markType(self, type, enter = true) {
+    const { userData } = self;
+    userData[type] = userData[type] || 0;
+    if (enter) {
+      ++userData[type];
+    } else if (userData.inArray) {
+      --userData[type];
+    }
+  },
+  last(arr) {
+    return arr && arr[arr.length - 1];
+  }
+};
 
 module.exports = () => ({
+  my,
   productions: [
+    // basic
     {
       symbol: "formula",
       rhs: ["expression"]
@@ -150,13 +176,33 @@ module.exports = () => ({
     },
     {
       symbol: "atom-exp",
-      rhs: ["VARIABLE"],
+      rhs: ["NAME"],
       label: "error-exp"
     },
     {
       symbol: "atom-exp",
-      rhs: ["CELL"],
+      rhs: ["reference"],
       label: "single-exp"
+    },
+    {
+      symbol: "reference-item",
+      rhs: ["CELL"]
+    },
+    {
+      symbol: "reference-item",
+      rhs: ["structure-reference"]
+    },
+    {
+      symbol: "reference",
+      rhs: ["reference-item"]
+    },
+    {
+      symbol: "reference",
+      rhs: ["reference", "reference-item"]
+    },
+    {
+      symbol: "reference",
+      rhs: ["reference", "REF_SEPARATOR", "reference-item"]
     },
     {
       symbol: "atom-exp",
@@ -197,6 +243,7 @@ module.exports = () => ({
       rhs: ["{", "array-list", "}"]
     },
 
+    // function
     {
       symbol: "function",
       rhs: ["FUNCTION", "(", "arguments", ")"]
@@ -206,7 +253,6 @@ module.exports = () => ({
       label: "single-exp",
       rhs: []
     },
-
     {
       symbol: "argument",
       label: "single-exp",
@@ -219,6 +265,60 @@ module.exports = () => ({
     {
       symbol: "arguments",
       rhs: ["arguments", "ARGUMENT_SEPARATOR", "argument"]
+    },
+
+    // structure reference
+    {
+      symbol: "structure-reference",
+      rhs: ["TABLE_NAME", "table-specifier"]
+    },
+    {
+      symbol: "structure-reference",
+      rhs: ["table-specifier"]
+    },
+    {
+      symbol: "table-specifier",
+      rhs: ["TABLE_ITEM_SPECIFIER"]
+    },
+    {
+      symbol: "table-specifier",
+      rhs: ["[", "table-specifier-inner", "]"]
+    },
+    {
+      symbol: "table-this-row",
+      rhs: ["@"]
+    },
+    {
+      symbol: "table-this-row",
+      rhs: ["@", "TABLE_COLUMN_SPECIFIER"]
+    },
+    {
+      symbol: "table-specifier-inner",
+      rhs: ["table-this-row"]
+    },
+    {
+      symbol: "table-specifier-inner",
+      rhs: ["table-column-specifier"]
+    },
+    {
+      symbol: "table-specifier-item",
+      rhs: ["TABLE_COLUMN_SPECIFIER"]
+    },
+    {
+      symbol: "table-specifier-item",
+      rhs: ["TABLE_ITEM_SPECIFIER"]
+    },
+    {
+      symbol: "table-column-specifier",
+      rhs: ["table-specifier-item"]
+    },
+    {
+      symbol: "table-column-specifier",
+      rhs: [
+        "table-column-specifier",
+        "SPECIFIER_SEPARATOR",
+        "table-specifier-item"
+      ]
     }
   ],
 
@@ -228,29 +328,96 @@ module.exports = () => ({
         regexp: /^\s+/,
         token: "$HIDDEN"
       },
-      ...createRules(["(", ")", ":", ...operatorTokens]),
+      {
+        regexp: /^\(/,
+        token: "(",
+        action() {
+          const { userData } = this;
+          userData.markParen = userData.markParen || [];
+          const lastItem = my.last(userData.markParen);
+          if (lastItem && lastItem.index === this.start) {
+            return;
+          }
+          userData.markParen.push({ index: this.end, func: false });
+        }
+      },
+      {
+        regexp: /^\)/,
+        token: ")",
+        action() {
+          const { userData } = this;
+          userData.markParen = userData.markParen || [];
+          userData.markParen.pop();
+        }
+      },
       {
         regexp: /^\{/,
         token: "{",
         action() {
-          this.userData.inArray = this.userData.inArray || 0;
-          this.userData.inArray++;
+          // array constants
+          my.markType(this, "a");
         }
       },
+      ...createRules([":", ...operatorTokens]),
       {
         regexp: /^\}/,
         token: "}",
         action() {
-          this.userData.inArray = this.userData.inArray || 1;
-          this.userData.inArray--;
+          my.markType(this, "a", false);
+        }
+      },
+
+      // structure reference
+      {
+        state: ["s", "I"],
+        regexp: /^\[#[^\]]+\]/,
+        token: "TABLE_ITEM_SPECIFIER"
+      },
+      {
+        state: ["s"],
+        regexp: new RegExp(`^${tableColumnSpecifier}`),
+        token: "TABLE_COLUMN_SPECIFIER"
+      },
+      {
+        state: ["s", "I"],
+        regexp: /^\[/,
+        token: "[",
+        action() {
+          this.pushState("s");
         }
       },
       {
+        state: ["s"],
+        regexp: /^@/,
+        token: "@"
+      },
+      {
+        state: ["s"],
+        regexp: /^\]/,
+        token: "]",
+        action() {
+          this.popState();
+        }
+      },
+      {
+        state: ["s"],
+        regexp: /^,/,
+        token: "SPECIFIER_SEPARATOR"
+      },
+      {
         filter() {
-          return !!this.userData.inArray;
+          return !!this.userData.a;
         },
         regexp: { en: /^[,;]/, de: /^[\\;]/ },
         token: "ARRAY_SEPARATOR"
+      },
+      {
+        filter() {
+          const lastItem = my.last(this.userData.markParen);
+          return !lastItem || !lastItem.func;
+        },
+        regexp: /^,/,
+        token: "REF_SEPARATOR"
       },
       {
         regexp: { en: /^,/, de: /^;/ },
@@ -265,7 +432,12 @@ module.exports = () => ({
       },
       {
         regexp: new RegExp(`^${fullNamePart}(?=[(])`),
-        token: "FUNCTION"
+        token: "FUNCTION",
+        action() {
+          const { userData } = this;
+          userData.markParen = userData.markParen || [];
+          userData.markParen.push({ index: this.end, func: true });
+        }
       },
       {
         regexp: /^#[A-Z0-9\/]+(!|\?)? /,
@@ -282,8 +454,12 @@ module.exports = () => ({
         token: "LOGIC"
       },
       {
+        regexp: new RegExp(`^${fullNamePart}(?=[\\[])`),
+        token: "TABLE_NAME"
+      },
+      {
         regexp: new RegExp(`^${fullNamePart}`),
-        token: "VARIABLE"
+        token: "NAME"
       },
       {
         regexp: {

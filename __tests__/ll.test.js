@@ -229,20 +229,20 @@ describe("ll", () => {
     const table = grammar.visualizeTable();
 
     expect(table).toMatchInlineSnapshot(`
-      "E ( => E -> T, E_
-      E id => E -> T, E_
-      E_ + => E_ -> +, T, E_
-      E_ $EOF => E_ -> EMPTY
-      E_ ) => E_ -> EMPTY
-      T ( => T -> F, T_
-      T id => T -> F, T_
-      T_ * => T_ -> *, F, T_
-      T_ + => T_ -> EMPTY
-      T_ $EOF => T_ -> EMPTY
-      T_ ) => T_ -> EMPTY
-      F ( => F -> (, E, )
-      F id => F -> id"
-    `);
+"-: E ( => E -> T, E_
+-: E id => E -> T, E_
+E_ + => E_ -> +, T, E_
+-: E_ $EOF => E_ -> EMPTY
+-: E_ ) => E_ -> EMPTY
+T ( => T -> F, T_
+T id => T -> F, T_
+T_ * => T_ -> *, F, T_
+-: T_ + => T_ -> EMPTY
+-: T_ $EOF => T_ -> EMPTY
+-: T_ ) => T_ -> EMPTY
+F ( => F -> (, E, )
+F id => F -> id"
+`);
   });
   it("ast works", () => {
     var grammar = new LLGrammar(calGrammar());

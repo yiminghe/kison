@@ -1,0 +1,13 @@
+{
+  "name": "@yiminghe/excel-formula-parser",
+  "version": "0.0.1",
+  "author": "yiminghe <yiminghe@gmail.com>",
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yiminghe/kison.git"
+  },
+  "main": "index.js"
+}

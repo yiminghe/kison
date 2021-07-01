@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/excel-formula-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"

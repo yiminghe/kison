@@ -88,7 +88,7 @@ const sheetAddress = `(?:(?:
 const tableColumnSpecifierLiteral = `(?:
   \\[
     (?:
-      '\\]|[^\\]]
+      '\\]|'#|''|[^\\]'#]
       )+
     \\]
   )`.replace(/\s/g, "");
@@ -370,7 +370,7 @@ module.exports = () => ({
       // structure reference
       {
         state: ["s", "I"],
-        regexp: /^\[#[^\]]+\]/,
+        regexp: new RegExp(`^\\[#${namePart}\\]`),
         token: "TABLE_ITEM_SPECIFIER"
       },
       {

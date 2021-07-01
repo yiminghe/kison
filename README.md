@@ -16,7 +16,7 @@ A LALR/LL parser generator for javascript originated from [KISSY XTemplate](http
 [https://yiminghe.me/kison/examples/](https://yiminghe.me/kison/examples/)
 
 
-excel-formula-parser:
+[excel-formula-parser](https://yiminghe.me/kison/examples/excel-formula-ll/test.html):
 
 [![excel-formula-parser](https://nodei.co/npm/@yiminghe/excel-formula-parser.png)](https://npmjs.org/package/%40yiminghe%2Fexcel-formula-parser)
 [![npm version](https://badge.fury.io/js/%40yiminghe%2Fexcel-formula-parser.svg)](https://badge.fury.io/js/%40yiminghe%2Fexcel-formula-parser)

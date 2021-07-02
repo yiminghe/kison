@@ -323,6 +323,8 @@ module.exports = () => ({
   ],
 
   lexer: {
+    defaultEnv: "en",
+
     rules: [
       {
         state: ["s", "I"],

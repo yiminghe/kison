@@ -46,7 +46,7 @@
             console.log('***********************', value);
             currentText = value;
             currentAst = formula.parse(value, {
-                lexerEnv: 'en',
+                // lexerEnv: 'en',
                 onErrorRecovery,
             });
             console.log(currentAst);

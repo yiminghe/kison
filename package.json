@@ -27,7 +27,7 @@
       "lib/*"
     ],
     "testMatch": [
-      "**/__tests__/**/*.test.[j|t]s?(x)"
+      "**/*.test.[j|t]s?(x)"
     ]
   },
   "dependencies": {
@@ -38,7 +38,7 @@
   "scripts": {
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
-    "prettier": "prettier --write \"{lib,__tests__,tests}/**/*.{js,tsx}\"",
+    "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx}\"",
     "test": "jest",
     "test-debug": "jest -i"
   },

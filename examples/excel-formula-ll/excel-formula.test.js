@@ -1,14 +1,207 @@
 import { expect } from "@jest/globals";
-import formula from "../examples/excel-formula-ll/formula";
-import { prettyJson } from "./utils";
+import formula from "./formula";
+import { prettyJson } from "../../__tests__/utils";
 
 function parse(input) {
-  return formula.parse(input, {
-    lexerEnv: "en"
-  });
+  return formula.parse(input);
 }
 
 describe("excel-formula-parser", () => {
+  it("works for env", () => {
+    expect(
+      prettyJson(
+        formula.parse(`sum(a1:a2;b1)`, {
+          lexerEnv: "de"
+        }).ast
+      )
+    ).toMatchInlineSnapshot(`
+      "{
+        'symbol': 'formula',
+        'children': [
+          {
+            'symbol': 'atom-exp',
+            'label': 'single-exp',
+            'children': [
+              {
+                'symbol': 'function',
+                'children': [
+                  {
+                    'text': 'sum',
+                    'token': 'FUNCTION',
+                    'start': 0,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 4
+                  },
+                  {
+                    'text': '(',
+                    'token': '(',
+                    'start': 3,
+                    'end': 4,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 4,
+                    'lastColumn': 5
+                  },
+                  {
+                    'symbol': 'arguments',
+                    'children': [
+                      {
+                        'symbol': 'arguments',
+                        'children': [
+                          {
+                            'symbol': 'atom-exp',
+                            'label': 'single-exp',
+                            'children': [
+                              {
+                                'symbol': 'reference',
+                                'children': [
+                                  {
+                                    'symbol': 'reference-item',
+                                    'children': [
+                                      {
+                                        'text': 'a1:a2',
+                                        'token': 'CELL',
+                                        'start': 4,
+                                        'end': 9,
+                                        'firstLine': 1,
+                                        'lastLine': 1,
+                                        'firstColumn': 5,
+                                        'lastColumn': 10
+                                      }
+                                    ],
+                                    'start': 4,
+                                    'end': 9,
+                                    'firstLine': 1,
+                                    'lastLine': 1,
+                                    'firstColumn': 5,
+                                    'lastColumn': 10
+                                  }
+                                ],
+                                'start': 4,
+                                'end': 9,
+                                'firstLine': 1,
+                                'lastLine': 1,
+                                'firstColumn': 5,
+                                'lastColumn': 10
+                              }
+                            ],
+                            'start': 4,
+                            'end': 9,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 5,
+                            'lastColumn': 10
+                          }
+                        ],
+                        'start': 4,
+                        'end': 9,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 5,
+                        'lastColumn': 10
+                      },
+                      {
+                        'text': ';',
+                        'token': 'ARGUMENT_SEPARATOR',
+                        'start': 9,
+                        'end': 10,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 10,
+                        'lastColumn': 11
+                      },
+                      {
+                        'symbol': 'atom-exp',
+                        'label': 'single-exp',
+                        'children': [
+                          {
+                            'symbol': 'reference',
+                            'children': [
+                              {
+                                'symbol': 'reference-item',
+                                'children': [
+                                  {
+                                    'text': 'b1',
+                                    'token': 'CELL',
+                                    'start': 10,
+                                    'end': 12,
+                                    'firstLine': 1,
+                                    'lastLine': 1,
+                                    'firstColumn': 11,
+                                    'lastColumn': 13
+                                  }
+                                ],
+                                'start': 10,
+                                'end': 12,
+                                'firstLine': 1,
+                                'lastLine': 1,
+                                'firstColumn': 11,
+                                'lastColumn': 13
+                              }
+                            ],
+                            'start': 10,
+                            'end': 12,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 11,
+                            'lastColumn': 13
+                          }
+                        ],
+                        'start': 10,
+                        'end': 12,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 11,
+                        'lastColumn': 13
+                      }
+                    ],
+                    'start': 4,
+                    'end': 12,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 5,
+                    'lastColumn': 13
+                  },
+                  {
+                    'text': ')',
+                    'token': ')',
+                    'start': 12,
+                    'end': 13,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 13,
+                    'lastColumn': 14
+                  }
+                ],
+                'start': 0,
+                'end': 13,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 14
+              }
+            ],
+            'start': 0,
+            'end': 13,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 14
+          }
+        ],
+        'start': 0,
+        'end': 13,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 14
+      }"
+    `);
+  });
+
   it("works for simple", () => {
     expect(prettyJson(parse(`sum(a1:a2,b1)`).ast)).toMatchInlineSnapshot(`
       "{

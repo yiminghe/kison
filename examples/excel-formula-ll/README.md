@@ -7,8 +7,11 @@ https://github.com/yiminghe/kison
 ```js
 const formula = require('@yiminghe/excel-formula-parser');
 
-console.log(formula.parse('sum(a1,a2)',{
-  lexerEnv: 'en'
+console.log(formula.parse('sum(a1,a2)'));
+
+// or 
+console.log(formula.parse('sum(a1;a2)',{
+  lexerEnv: 'de'
 }));
 ```
 

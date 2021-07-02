@@ -88,12 +88,12 @@ const sheetAddress = `(?:(?:
 const tableColumnSpecifierLiteral = `(?:
   \\[
     (?:
-      '\\]|'#|''|[^\\]'#]
+      '.|[^\\]'#]
       )+
     \\]
   )`.replace(/\s/g, "");
 const tableColumnRange = `(?:${tableColumnSpecifierLiteral}(?:\\:${tableColumnSpecifierLiteral})?)`;
-const tableColumnSpecifier = `(?:${tableColumnRange}|${namePart})`;
+const tableColumnSpecifier = `(?:${tableColumnRange}|(?:'.|[^\\]#'])+)`;
 
 const my = {
   markType(self, type, enter = true) {
@@ -325,6 +325,7 @@ module.exports = () => ({
   lexer: {
     rules: [
       {
+        state: ["s", "I"],
         regexp: /^\s+/,
         token: "$HIDDEN"
       },
@@ -369,6 +370,11 @@ module.exports = () => ({
 
       // structure reference
       {
+        state: ["s"],
+        regexp: /^,/,
+        token: "SPECIFIER_SEPARATOR"
+      },
+      {
         state: ["s", "I"],
         regexp: new RegExp(`^\\[#${namePart}\\]`),
         token: "TABLE_ITEM_SPECIFIER"
@@ -398,11 +404,6 @@ module.exports = () => ({
         action() {
           this.popState();
         }
-      },
-      {
-        state: ["s"],
-        regexp: /^,/,
-        token: "SPECIFIER_SEPARATOR"
       },
       {
         filter() {

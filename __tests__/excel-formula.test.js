@@ -676,405 +676,552 @@ describe("excel-formula-parser", () => {
     `);
   });
 
-  it("works for structure reference", () => {
-    expect(prettyJson(parse(`sum(t[[#total],[y]],t[x])`).ast))
-      .toMatchInlineSnapshot(`
-      "{
-        'symbol': 'formula',
-        'children': [
-          {
-            'symbol': 'atom-exp',
-            'label': 'single-exp',
-            'children': [
-              {
-                'symbol': 'function',
-                'children': [
-                  {
-                    'text': 'sum',
-                    'token': 'FUNCTION',
-                    'start': 0,
-                    'end': 3,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 1,
-                    'lastColumn': 4
-                  },
-                  {
-                    'text': '(',
-                    'token': '(',
-                    'start': 3,
-                    'end': 4,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 4,
-                    'lastColumn': 5
-                  },
-                  {
-                    'symbol': 'arguments',
-                    'children': [
-                      {
-                        'symbol': 'arguments',
-                        'children': [
-                          {
-                            'symbol': 'atom-exp',
-                            'label': 'single-exp',
-                            'children': [
-                              {
-                                'symbol': 'reference',
-                                'children': [
-                                  {
-                                    'symbol': 'reference-item',
-                                    'children': [
-                                      {
-                                        'symbol': 'structure-reference',
-                                        'children': [
-                                          {
-                                            'text': 't',
-                                            'token': 'TABLE_NAME',
-                                            'start': 4,
-                                            'end': 5,
-                                            'firstLine': 1,
-                                            'lastLine': 1,
-                                            'firstColumn': 5,
-                                            'lastColumn': 6
-                                          },
-                                          {
-                                            'symbol': 'table-specifier',
-                                            'children': [
-                                              {
-                                                'text': '[',
-                                                'token': '[',
-                                                'start': 5,
-                                                'end': 6,
-                                                'firstLine': 1,
-                                                'lastLine': 1,
-                                                'firstColumn': 6,
-                                                'lastColumn': 7
-                                              },
-                                              {
-                                                'symbol': 'table-specifier-inner',
-                                                'children': [
-                                                  {
-                                                    'symbol': 'table-column-specifier',
-                                                    'children': [
-                                                      {
-                                                        'symbol': 'table-column-specifier',
-                                                        'children': [
-                                                          {
-                                                            'symbol': 'table-specifier-item',
-                                                            'children': [
-                                                              {
-                                                                'text': '[#total]',
-                                                                'token': 'TABLE_ITEM_SPECIFIER',
-                                                                'start': 6,
-                                                                'end': 14,
-                                                                'firstLine': 1,
-                                                                'lastLine': 1,
-                                                                'firstColumn': 7,
-                                                                'lastColumn': 15
-                                                              }
-                                                            ],
-                                                            'start': 6,
-                                                            'end': 14,
-                                                            'firstLine': 1,
-                                                            'lastLine': 1,
-                                                            'firstColumn': 7,
-                                                            'lastColumn': 15
-                                                          }
-                                                        ],
-                                                        'start': 6,
-                                                        'end': 14,
-                                                        'firstLine': 1,
-                                                        'lastLine': 1,
-                                                        'firstColumn': 7,
-                                                        'lastColumn': 15
-                                                      },
-                                                      {
-                                                        'text': ',',
-                                                        'token': 'SPECIFIER_SEPARATOR',
-                                                        'start': 14,
-                                                        'end': 15,
-                                                        'firstLine': 1,
-                                                        'lastLine': 1,
-                                                        'firstColumn': 15,
-                                                        'lastColumn': 16
-                                                      },
-                                                      {
-                                                        'symbol': 'table-specifier-item',
-                                                        'children': [
-                                                          {
-                                                            'text': '[y]',
-                                                            'token': 'TABLE_COLUMN_SPECIFIER',
-                                                            'start': 15,
-                                                            'end': 18,
-                                                            'firstLine': 1,
-                                                            'lastLine': 1,
-                                                            'firstColumn': 16,
-                                                            'lastColumn': 19
-                                                          }
-                                                        ],
-                                                        'start': 15,
-                                                        'end': 18,
-                                                        'firstLine': 1,
-                                                        'lastLine': 1,
-                                                        'firstColumn': 16,
-                                                        'lastColumn': 19
-                                                      }
-                                                    ],
-                                                    'start': 6,
-                                                    'end': 18,
-                                                    'firstLine': 1,
-                                                    'lastLine': 1,
-                                                    'firstColumn': 7,
-                                                    'lastColumn': 19
-                                                  }
-                                                ],
-                                                'start': 6,
-                                                'end': 18,
-                                                'firstLine': 1,
-                                                'lastLine': 1,
-                                                'firstColumn': 7,
-                                                'lastColumn': 19
-                                              },
-                                              {
-                                                'text': ']',
-                                                'token': ']',
-                                                'start': 18,
-                                                'end': 19,
-                                                'firstLine': 1,
-                                                'lastLine': 1,
-                                                'firstColumn': 19,
-                                                'lastColumn': 20
-                                              }
-                                            ],
-                                            'start': 5,
-                                            'end': 19,
-                                            'firstLine': 1,
-                                            'lastLine': 1,
-                                            'firstColumn': 6,
-                                            'lastColumn': 20
-                                          }
-                                        ],
-                                        'start': 4,
-                                        'end': 19,
-                                        'firstLine': 1,
-                                        'lastLine': 1,
-                                        'firstColumn': 5,
-                                        'lastColumn': 20
-                                      }
-                                    ],
-                                    'start': 4,
-                                    'end': 19,
-                                    'firstLine': 1,
-                                    'lastLine': 1,
-                                    'firstColumn': 5,
-                                    'lastColumn': 20
-                                  }
-                                ],
-                                'start': 4,
-                                'end': 19,
-                                'firstLine': 1,
-                                'lastLine': 1,
-                                'firstColumn': 5,
-                                'lastColumn': 20
-                              }
-                            ],
-                            'start': 4,
-                            'end': 19,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 5,
-                            'lastColumn': 20
-                          }
-                        ],
-                        'start': 4,
-                        'end': 19,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 5,
-                        'lastColumn': 20
-                      },
-                      {
-                        'text': ',',
-                        'token': 'ARGUMENT_SEPARATOR',
-                        'start': 19,
-                        'end': 20,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 20,
-                        'lastColumn': 21
-                      },
-                      {
-                        'symbol': 'atom-exp',
-                        'label': 'single-exp',
-                        'children': [
-                          {
-                            'symbol': 'reference',
-                            'children': [
-                              {
-                                'symbol': 'reference-item',
-                                'children': [
-                                  {
-                                    'symbol': 'structure-reference',
-                                    'children': [
-                                      {
-                                        'text': 't',
-                                        'token': 'TABLE_NAME',
-                                        'start': 20,
-                                        'end': 21,
-                                        'firstLine': 1,
-                                        'lastLine': 1,
-                                        'firstColumn': 21,
-                                        'lastColumn': 22
-                                      },
-                                      {
-                                        'symbol': 'table-specifier',
-                                        'children': [
-                                          {
-                                            'text': '[',
-                                            'token': '[',
-                                            'start': 21,
-                                            'end': 22,
-                                            'firstLine': 1,
-                                            'lastLine': 1,
-                                            'firstColumn': 22,
-                                            'lastColumn': 23
-                                          },
-                                          {
-                                            'symbol': 'table-specifier-inner',
-                                            'children': [
-                                              {
-                                                'symbol': 'table-column-specifier',
-                                                'children': [
-                                                  {
-                                                    'symbol': 'table-specifier-item',
-                                                    'children': [
-                                                      {
-                                                        'text': 'x',
-                                                        'token': 'TABLE_COLUMN_SPECIFIER',
-                                                        'start': 22,
-                                                        'end': 23,
-                                                        'firstLine': 1,
-                                                        'lastLine': 1,
-                                                        'firstColumn': 23,
-                                                        'lastColumn': 24
-                                                      }
-                                                    ],
-                                                    'start': 22,
-                                                    'end': 23,
-                                                    'firstLine': 1,
-                                                    'lastLine': 1,
-                                                    'firstColumn': 23,
-                                                    'lastColumn': 24
-                                                  }
-                                                ],
-                                                'start': 22,
-                                                'end': 23,
-                                                'firstLine': 1,
-                                                'lastLine': 1,
-                                                'firstColumn': 23,
-                                                'lastColumn': 24
-                                              }
-                                            ],
-                                            'start': 22,
-                                            'end': 23,
-                                            'firstLine': 1,
-                                            'lastLine': 1,
-                                            'firstColumn': 23,
-                                            'lastColumn': 24
-                                          },
-                                          {
-                                            'text': ']',
-                                            'token': ']',
-                                            'start': 23,
-                                            'end': 24,
-                                            'firstLine': 1,
-                                            'lastLine': 1,
-                                            'firstColumn': 24,
-                                            'lastColumn': 25
-                                          }
-                                        ],
-                                        'start': 21,
-                                        'end': 24,
-                                        'firstLine': 1,
-                                        'lastLine': 1,
-                                        'firstColumn': 22,
-                                        'lastColumn': 25
-                                      }
-                                    ],
-                                    'start': 20,
-                                    'end': 24,
-                                    'firstLine': 1,
-                                    'lastLine': 1,
-                                    'firstColumn': 21,
-                                    'lastColumn': 25
-                                  }
-                                ],
-                                'start': 20,
-                                'end': 24,
-                                'firstLine': 1,
-                                'lastLine': 1,
-                                'firstColumn': 21,
-                                'lastColumn': 25
-                              }
-                            ],
-                            'start': 20,
-                            'end': 24,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 21,
-                            'lastColumn': 25
-                          }
-                        ],
-                        'start': 20,
-                        'end': 24,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 21,
-                        'lastColumn': 25
-                      }
-                    ],
-                    'start': 4,
-                    'end': 24,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 5,
-                    'lastColumn': 25
-                  },
-                  {
-                    'text': ')',
-                    'token': ')',
-                    'start': 24,
-                    'end': 25,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 25,
-                    'lastColumn': 26
-                  }
-                ],
-                'start': 0,
-                'end': 25,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 26
-              }
-            ],
-            'start': 0,
-            'end': 25,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 26
-          }
-        ],
-        'start': 0,
-        'end': 25,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 26
-      }"
-    `);
+  describe("structure reference", () => {
+    it("works", () => {
+      expect(prettyJson(parse(`sum(t[[#total],[y]],t[x])`).ast))
+        .toMatchInlineSnapshot(`
+        "{
+          'symbol': 'formula',
+          'children': [
+            {
+              'symbol': 'atom-exp',
+              'label': 'single-exp',
+              'children': [
+                {
+                  'symbol': 'function',
+                  'children': [
+                    {
+                      'text': 'sum',
+                      'token': 'FUNCTION',
+                      'start': 0,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 4
+                    },
+                    {
+                      'text': '(',
+                      'token': '(',
+                      'start': 3,
+                      'end': 4,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 4,
+                      'lastColumn': 5
+                    },
+                    {
+                      'symbol': 'arguments',
+                      'children': [
+                        {
+                          'symbol': 'arguments',
+                          'children': [
+                            {
+                              'symbol': 'atom-exp',
+                              'label': 'single-exp',
+                              'children': [
+                                {
+                                  'symbol': 'reference',
+                                  'children': [
+                                    {
+                                      'symbol': 'reference-item',
+                                      'children': [
+                                        {
+                                          'symbol': 'structure-reference',
+                                          'children': [
+                                            {
+                                              'text': 't',
+                                              'token': 'TABLE_NAME',
+                                              'start': 4,
+                                              'end': 5,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 5,
+                                              'lastColumn': 6
+                                            },
+                                            {
+                                              'symbol': 'table-specifier',
+                                              'children': [
+                                                {
+                                                  'text': '[',
+                                                  'token': '[',
+                                                  'start': 5,
+                                                  'end': 6,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 6,
+                                                  'lastColumn': 7
+                                                },
+                                                {
+                                                  'symbol': 'table-specifier-inner',
+                                                  'children': [
+                                                    {
+                                                      'symbol': 'table-column-specifier',
+                                                      'children': [
+                                                        {
+                                                          'symbol': 'table-column-specifier',
+                                                          'children': [
+                                                            {
+                                                              'symbol': 'table-specifier-item',
+                                                              'children': [
+                                                                {
+                                                                  'text': '[#total]',
+                                                                  'token': 'TABLE_ITEM_SPECIFIER',
+                                                                  'start': 6,
+                                                                  'end': 14,
+                                                                  'firstLine': 1,
+                                                                  'lastLine': 1,
+                                                                  'firstColumn': 7,
+                                                                  'lastColumn': 15
+                                                                }
+                                                              ],
+                                                              'start': 6,
+                                                              'end': 14,
+                                                              'firstLine': 1,
+                                                              'lastLine': 1,
+                                                              'firstColumn': 7,
+                                                              'lastColumn': 15
+                                                            }
+                                                          ],
+                                                          'start': 6,
+                                                          'end': 14,
+                                                          'firstLine': 1,
+                                                          'lastLine': 1,
+                                                          'firstColumn': 7,
+                                                          'lastColumn': 15
+                                                        },
+                                                        {
+                                                          'text': ',',
+                                                          'token': 'SPECIFIER_SEPARATOR',
+                                                          'start': 14,
+                                                          'end': 15,
+                                                          'firstLine': 1,
+                                                          'lastLine': 1,
+                                                          'firstColumn': 15,
+                                                          'lastColumn': 16
+                                                        },
+                                                        {
+                                                          'symbol': 'table-specifier-item',
+                                                          'children': [
+                                                            {
+                                                              'text': '[y]',
+                                                              'token': 'TABLE_COLUMN_SPECIFIER',
+                                                              'start': 15,
+                                                              'end': 18,
+                                                              'firstLine': 1,
+                                                              'lastLine': 1,
+                                                              'firstColumn': 16,
+                                                              'lastColumn': 19
+                                                            }
+                                                          ],
+                                                          'start': 15,
+                                                          'end': 18,
+                                                          'firstLine': 1,
+                                                          'lastLine': 1,
+                                                          'firstColumn': 16,
+                                                          'lastColumn': 19
+                                                        }
+                                                      ],
+                                                      'start': 6,
+                                                      'end': 18,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 7,
+                                                      'lastColumn': 19
+                                                    }
+                                                  ],
+                                                  'start': 6,
+                                                  'end': 18,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 7,
+                                                  'lastColumn': 19
+                                                },
+                                                {
+                                                  'text': ']',
+                                                  'token': ']',
+                                                  'start': 18,
+                                                  'end': 19,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 19,
+                                                  'lastColumn': 20
+                                                }
+                                              ],
+                                              'start': 5,
+                                              'end': 19,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 6,
+                                              'lastColumn': 20
+                                            }
+                                          ],
+                                          'start': 4,
+                                          'end': 19,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 5,
+                                          'lastColumn': 20
+                                        }
+                                      ],
+                                      'start': 4,
+                                      'end': 19,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 5,
+                                      'lastColumn': 20
+                                    }
+                                  ],
+                                  'start': 4,
+                                  'end': 19,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 5,
+                                  'lastColumn': 20
+                                }
+                              ],
+                              'start': 4,
+                              'end': 19,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 20
+                            }
+                          ],
+                          'start': 4,
+                          'end': 19,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 20
+                        },
+                        {
+                          'text': ',',
+                          'token': 'ARGUMENT_SEPARATOR',
+                          'start': 19,
+                          'end': 20,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 20,
+                          'lastColumn': 21
+                        },
+                        {
+                          'symbol': 'atom-exp',
+                          'label': 'single-exp',
+                          'children': [
+                            {
+                              'symbol': 'reference',
+                              'children': [
+                                {
+                                  'symbol': 'reference-item',
+                                  'children': [
+                                    {
+                                      'symbol': 'structure-reference',
+                                      'children': [
+                                        {
+                                          'text': 't',
+                                          'token': 'TABLE_NAME',
+                                          'start': 20,
+                                          'end': 21,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 21,
+                                          'lastColumn': 22
+                                        },
+                                        {
+                                          'symbol': 'table-specifier',
+                                          'children': [
+                                            {
+                                              'text': '[',
+                                              'token': '[',
+                                              'start': 21,
+                                              'end': 22,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 22,
+                                              'lastColumn': 23
+                                            },
+                                            {
+                                              'symbol': 'table-specifier-inner',
+                                              'children': [
+                                                {
+                                                  'symbol': 'table-column-specifier',
+                                                  'children': [
+                                                    {
+                                                      'symbol': 'table-specifier-item',
+                                                      'children': [
+                                                        {
+                                                          'text': 'x',
+                                                          'token': 'TABLE_COLUMN_SPECIFIER',
+                                                          'start': 22,
+                                                          'end': 23,
+                                                          'firstLine': 1,
+                                                          'lastLine': 1,
+                                                          'firstColumn': 23,
+                                                          'lastColumn': 24
+                                                        }
+                                                      ],
+                                                      'start': 22,
+                                                      'end': 23,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 23,
+                                                      'lastColumn': 24
+                                                    }
+                                                  ],
+                                                  'start': 22,
+                                                  'end': 23,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 23,
+                                                  'lastColumn': 24
+                                                }
+                                              ],
+                                              'start': 22,
+                                              'end': 23,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 23,
+                                              'lastColumn': 24
+                                            },
+                                            {
+                                              'text': ']',
+                                              'token': ']',
+                                              'start': 23,
+                                              'end': 24,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 24,
+                                              'lastColumn': 25
+                                            }
+                                          ],
+                                          'start': 21,
+                                          'end': 24,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 22,
+                                          'lastColumn': 25
+                                        }
+                                      ],
+                                      'start': 20,
+                                      'end': 24,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 21,
+                                      'lastColumn': 25
+                                    }
+                                  ],
+                                  'start': 20,
+                                  'end': 24,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 21,
+                                  'lastColumn': 25
+                                }
+                              ],
+                              'start': 20,
+                              'end': 24,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 21,
+                              'lastColumn': 25
+                            }
+                          ],
+                          'start': 20,
+                          'end': 24,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 21,
+                          'lastColumn': 25
+                        }
+                      ],
+                      'start': 4,
+                      'end': 24,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 25
+                    },
+                    {
+                      'text': ')',
+                      'token': ')',
+                      'start': 24,
+                      'end': 25,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 25,
+                      'lastColumn': 26
+                    }
+                  ],
+                  'start': 0,
+                  'end': 25,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 26
+                }
+              ],
+              'start': 0,
+              'end': 25,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 26
+            }
+          ],
+          'start': 0,
+          'end': 25,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 26
+        }"
+      `);
+    });
+
+    it("works for space inside column name", () => {
+      expect(prettyJson(parse("t[a b]").ast)).toMatchInlineSnapshot(`
+        "{
+          'symbol': 'formula',
+          'children': [
+            {
+              'symbol': 'atom-exp',
+              'label': 'single-exp',
+              'children': [
+                {
+                  'symbol': 'reference',
+                  'children': [
+                    {
+                      'symbol': 'reference-item',
+                      'children': [
+                        {
+                          'symbol': 'structure-reference',
+                          'children': [
+                            {
+                              'text': 't',
+                              'token': 'TABLE_NAME',
+                              'start': 0,
+                              'end': 1,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 1,
+                              'lastColumn': 2
+                            },
+                            {
+                              'symbol': 'table-specifier',
+                              'children': [
+                                {
+                                  'text': '[',
+                                  'token': '[',
+                                  'start': 1,
+                                  'end': 2,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 2,
+                                  'lastColumn': 3
+                                },
+                                {
+                                  'symbol': 'table-specifier-inner',
+                                  'children': [
+                                    {
+                                      'symbol': 'table-column-specifier',
+                                      'children': [
+                                        {
+                                          'symbol': 'table-specifier-item',
+                                          'children': [
+                                            {
+                                              'text': 'a b',
+                                              'token': 'TABLE_COLUMN_SPECIFIER',
+                                              'start': 2,
+                                              'end': 5,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 3,
+                                              'lastColumn': 6
+                                            }
+                                          ],
+                                          'start': 2,
+                                          'end': 5,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 3,
+                                          'lastColumn': 6
+                                        }
+                                      ],
+                                      'start': 2,
+                                      'end': 5,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 3,
+                                      'lastColumn': 6
+                                    }
+                                  ],
+                                  'start': 2,
+                                  'end': 5,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 3,
+                                  'lastColumn': 6
+                                },
+                                {
+                                  'text': ']',
+                                  'token': ']',
+                                  'start': 5,
+                                  'end': 6,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 6,
+                                  'lastColumn': 7
+                                }
+                              ],
+                              'start': 1,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 2,
+                              'lastColumn': 7
+                            }
+                          ],
+                          'start': 0,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 7
+                        }
+                      ],
+                      'start': 0,
+                      'end': 6,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 7
+                    }
+                  ],
+                  'start': 0,
+                  'end': 6,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 7
+                }
+              ],
+              'start': 0,
+              'end': 6,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 7
+            }
+          ],
+          'start': 0,
+          'end': 6,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 7
+        }"
+      `);
+    });
   });
 });

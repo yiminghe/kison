@@ -49,29 +49,18 @@ describe("excel-formula-parser", () => {
                     'symbol': 'arguments',
                     'children': [
                       {
-                        'symbol': 'arguments',
+                        'symbol': 'atom-exp',
+                        'label': 'single-exp',
                         'children': [
                           {
-                            'symbol': 'atom-exp',
-                            'label': 'single-exp',
+                            'symbol': 'reference',
                             'children': [
                               {
-                                'symbol': 'reference',
+                                'symbol': 'reference-item',
                                 'children': [
                                   {
-                                    'symbol': 'reference-item',
-                                    'children': [
-                                      {
-                                        'text': 'a1:a2',
-                                        'token': 'CELL',
-                                        'start': 4,
-                                        'end': 9,
-                                        'firstLine': 1,
-                                        'lastLine': 1,
-                                        'firstColumn': 5,
-                                        'lastColumn': 10
-                                      }
-                                    ],
+                                    'text': 'a1:a2',
+                                    'token': 'CELL',
                                     'start': 4,
                                     'end': 9,
                                     'firstLine': 1,
@@ -238,29 +227,18 @@ describe("excel-formula-parser", () => {
                     'symbol': 'arguments',
                     'children': [
                       {
-                        'symbol': 'arguments',
+                        'symbol': 'atom-exp',
+                        'label': 'single-exp',
                         'children': [
                           {
-                            'symbol': 'atom-exp',
-                            'label': 'single-exp',
+                            'symbol': 'reference',
                             'children': [
                               {
-                                'symbol': 'reference',
+                                'symbol': 'reference-item',
                                 'children': [
                                   {
-                                    'symbol': 'reference-item',
-                                    'children': [
-                                      {
-                                        'text': 'a1:a2',
-                                        'token': 'CELL',
-                                        'start': 4,
-                                        'end': 9,
-                                        'firstLine': 1,
-                                        'lastLine': 1,
-                                        'firstColumn': 5,
-                                        'lastColumn': 10
-                                      }
-                                    ],
+                                    'text': 'a1:a2',
+                                    'token': 'CELL',
                                     'start': 4,
                                     'end': 9,
                                     'firstLine': 1,
@@ -434,22 +412,11 @@ describe("excel-formula-parser", () => {
                             'symbol': 'reference',
                             'children': [
                               {
-                                'symbol': 'reference',
+                                'symbol': 'reference-item',
                                 'children': [
                                   {
-                                    'symbol': 'reference-item',
-                                    'children': [
-                                      {
-                                        'text': 'a1:a2',
-                                        'token': 'CELL',
-                                        'start': 4,
-                                        'end': 9,
-                                        'firstLine': 1,
-                                        'lastLine': 1,
-                                        'firstColumn': 5,
-                                        'lastColumn': 10
-                                      }
-                                    ],
+                                    'text': 'a1:a2',
+                                    'token': 'CELL',
                                     'start': 4,
                                     'end': 9,
                                     'firstLine': 1,
@@ -602,22 +569,11 @@ describe("excel-formula-parser", () => {
                                 'symbol': 'reference',
                                 'children': [
                                   {
-                                    'symbol': 'reference',
+                                    'symbol': 'reference-item',
                                     'children': [
                                       {
-                                        'symbol': 'reference-item',
-                                        'children': [
-                                          {
-                                            'text': 'a1:a2',
-                                            'token': 'CELL',
-                                            'start': 5,
-                                            'end': 10,
-                                            'firstLine': 1,
-                                            'lastLine': 1,
-                                            'firstColumn': 6,
-                                            'lastColumn': 11
-                                          }
-                                        ],
+                                        'text': 'a1:a2',
+                                        'token': 'CELL',
                                         'start': 5,
                                         'end': 10,
                                         'firstLine': 1,
@@ -907,106 +863,84 @@ describe("excel-formula-parser", () => {
                       'symbol': 'arguments',
                       'children': [
                         {
-                          'symbol': 'arguments',
+                          'symbol': 'atom-exp',
+                          'label': 'single-exp',
                           'children': [
                             {
-                              'symbol': 'atom-exp',
-                              'label': 'single-exp',
+                              'symbol': 'reference',
                               'children': [
                                 {
-                                  'symbol': 'reference',
+                                  'symbol': 'reference-item',
                                   'children': [
                                     {
-                                      'symbol': 'reference-item',
+                                      'symbol': 'structure-reference',
                                       'children': [
                                         {
-                                          'symbol': 'structure-reference',
+                                          'text': 't',
+                                          'token': 'TABLE_NAME',
+                                          'start': 4,
+                                          'end': 5,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 5,
+                                          'lastColumn': 6
+                                        },
+                                        {
+                                          'symbol': 'table-specifier',
                                           'children': [
                                             {
-                                              'text': 't',
-                                              'token': 'TABLE_NAME',
-                                              'start': 4,
-                                              'end': 5,
+                                              'text': '[',
+                                              'token': '[',
+                                              'start': 5,
+                                              'end': 6,
                                               'firstLine': 1,
                                               'lastLine': 1,
-                                              'firstColumn': 5,
-                                              'lastColumn': 6
+                                              'firstColumn': 6,
+                                              'lastColumn': 7
                                             },
                                             {
-                                              'symbol': 'table-specifier',
+                                              'symbol': 'table-specifier-inner',
                                               'children': [
                                                 {
-                                                  'text': '[',
-                                                  'token': '[',
-                                                  'start': 5,
-                                                  'end': 6,
-                                                  'firstLine': 1,
-                                                  'lastLine': 1,
-                                                  'firstColumn': 6,
-                                                  'lastColumn': 7
-                                                },
-                                                {
-                                                  'symbol': 'table-specifier-inner',
+                                                  'symbol': 'table-column-specifier',
                                                   'children': [
                                                     {
-                                                      'symbol': 'table-column-specifier',
+                                                      'symbol': 'table-specifier-item',
                                                       'children': [
                                                         {
-                                                          'symbol': 'table-column-specifier',
-                                                          'children': [
-                                                            {
-                                                              'symbol': 'table-specifier-item',
-                                                              'children': [
-                                                                {
-                                                                  'text': '[#total]',
-                                                                  'token': 'TABLE_ITEM_SPECIFIER',
-                                                                  'start': 6,
-                                                                  'end': 14,
-                                                                  'firstLine': 1,
-                                                                  'lastLine': 1,
-                                                                  'firstColumn': 7,
-                                                                  'lastColumn': 15
-                                                                }
-                                                              ],
-                                                              'start': 6,
-                                                              'end': 14,
-                                                              'firstLine': 1,
-                                                              'lastLine': 1,
-                                                              'firstColumn': 7,
-                                                              'lastColumn': 15
-                                                            }
-                                                          ],
+                                                          'text': '[#total]',
+                                                          'token': 'TABLE_ITEM_SPECIFIER',
                                                           'start': 6,
                                                           'end': 14,
                                                           'firstLine': 1,
                                                           'lastLine': 1,
                                                           'firstColumn': 7,
                                                           'lastColumn': 15
-                                                        },
+                                                        }
+                                                      ],
+                                                      'start': 6,
+                                                      'end': 14,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 7,
+                                                      'lastColumn': 15
+                                                    },
+                                                    {
+                                                      'text': ',',
+                                                      'token': 'SPECIFIER_SEPARATOR',
+                                                      'start': 14,
+                                                      'end': 15,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 15,
+                                                      'lastColumn': 16
+                                                    },
+                                                    {
+                                                      'symbol': 'table-specifier-item',
+                                                      'children': [
                                                         {
-                                                          'text': ',',
-                                                          'token': 'SPECIFIER_SEPARATOR',
-                                                          'start': 14,
-                                                          'end': 15,
-                                                          'firstLine': 1,
-                                                          'lastLine': 1,
-                                                          'firstColumn': 15,
-                                                          'lastColumn': 16
-                                                        },
-                                                        {
-                                                          'symbol': 'table-specifier-item',
-                                                          'children': [
-                                                            {
-                                                              'text': '[y]',
-                                                              'token': 'TABLE_COLUMN_SPECIFIER',
-                                                              'start': 15,
-                                                              'end': 18,
-                                                              'firstLine': 1,
-                                                              'lastLine': 1,
-                                                              'firstColumn': 16,
-                                                              'lastColumn': 19
-                                                            }
-                                                          ],
+                                                          'text': '[y]',
+                                                          'token': 'TABLE_COLUMN_SPECIFIER',
                                                           'start': 15,
                                                           'end': 18,
                                                           'firstLine': 1,
@@ -1015,11 +949,11 @@ describe("excel-formula-parser", () => {
                                                           'lastColumn': 19
                                                         }
                                                       ],
-                                                      'start': 6,
+                                                      'start': 15,
                                                       'end': 18,
                                                       'firstLine': 1,
                                                       'lastLine': 1,
-                                                      'firstColumn': 7,
+                                                      'firstColumn': 16,
                                                       'lastColumn': 19
                                                     }
                                                   ],
@@ -1029,31 +963,31 @@ describe("excel-formula-parser", () => {
                                                   'lastLine': 1,
                                                   'firstColumn': 7,
                                                   'lastColumn': 19
-                                                },
-                                                {
-                                                  'text': ']',
-                                                  'token': ']',
-                                                  'start': 18,
-                                                  'end': 19,
-                                                  'firstLine': 1,
-                                                  'lastLine': 1,
-                                                  'firstColumn': 19,
-                                                  'lastColumn': 20
                                                 }
                                               ],
-                                              'start': 5,
+                                              'start': 6,
+                                              'end': 18,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 7,
+                                              'lastColumn': 19
+                                            },
+                                            {
+                                              'text': ']',
+                                              'token': ']',
+                                              'start': 18,
                                               'end': 19,
                                               'firstLine': 1,
                                               'lastLine': 1,
-                                              'firstColumn': 6,
+                                              'firstColumn': 19,
                                               'lastColumn': 20
                                             }
                                           ],
-                                          'start': 4,
+                                          'start': 5,
                                           'end': 19,
                                           'firstLine': 1,
                                           'lastLine': 1,
-                                          'firstColumn': 5,
+                                          'firstColumn': 6,
                                           'lastColumn': 20
                                         }
                                       ],

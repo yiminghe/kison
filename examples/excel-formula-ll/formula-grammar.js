@@ -198,11 +198,13 @@ module.exports = () => ({
     },
     {
       symbol: "reference",
-      rhs: ["reference", "reference-item"]
+      rhs: ["reference", "reference-item"],
+      flat: true
     },
     {
       symbol: "reference",
-      rhs: ["reference", "REF_SEPARATOR", "reference-item"]
+      rhs: ["reference", "REF_SEPARATOR", "reference-item"],
+      flat: true
     },
     {
       symbol: "atom-exp",
@@ -236,7 +238,8 @@ module.exports = () => ({
     },
     {
       symbol: "array-list",
-      rhs: ["array-list", "ARRAY_SEPARATOR", "array-element"]
+      rhs: ["array-list", "ARRAY_SEPARATOR", "array-element"],
+      flat: true
     },
     {
       symbol: "array",
@@ -264,7 +267,8 @@ module.exports = () => ({
     },
     {
       symbol: "arguments",
-      rhs: ["arguments", "ARGUMENT_SEPARATOR", "argument"]
+      rhs: ["arguments", "ARGUMENT_SEPARATOR", "argument"],
+      flat: true // arguments => (argument,)*
     },
 
     // structure reference
@@ -318,7 +322,8 @@ module.exports = () => ({
         "table-column-specifier",
         "SPECIFIER_SEPARATOR",
         "table-specifier-item"
-      ]
+      ],
+      flat: true
     }
   ],
 

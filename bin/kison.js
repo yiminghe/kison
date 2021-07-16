@@ -15,6 +15,7 @@ var program = require("commander");
 program
   .option("-g, --grammar <grammar>", "Set kison grammar file")
   .option("-f, --file [file]", "Set file name")
+  .option("--bnf")
   .option("-m, --mode [mode]", "lalr or ll")
   .option("-b, --babel [babel]", "use babel")
   .option("-v, --visual [visual]", "visual")
@@ -141,6 +142,13 @@ function genParser() {
   console.info("start generate grammar module: " + modulePath + "\n");
   var start = Date.now();
   const instance = new Cons(grammarObj);
+
+  if (program.bnf) {
+    console.log("");
+    console.log(instance.toBNF());
+    console.log("");
+  }
+
   /*jshint evil:true*/
   var code = instance.genCode(kisonCfg);
 

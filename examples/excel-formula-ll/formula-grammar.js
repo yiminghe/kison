@@ -11,8 +11,24 @@ const operators = [
   ["%"]
 ];
 
+const nameMap = {
+  "=": "equal",
+  "<=": "lessEqual",
+  ">=": "greaterEqual",
+  "<>": "notEqual",
+  "<": "less",
+  ">": "greater",
+  "+": "add",
+  "-": "minus",
+  "*": "mul",
+  "/": "divide",
+  "^": "expo",
+  "&": "concat",
+  "%": "percent"
+};
+
 function getExpSymbol(op) {
-  return `exp${op}`;
+  return `${nameMap[op]}Exp`;
 }
 
 const startExp = getExpSymbol(operators[0][0]);

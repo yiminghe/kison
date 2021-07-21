@@ -1,0 +1,78 @@
+<h1>regexp parser</h1>
+
+<h2>grammar</h2>
+
+<div>
+    regexp grammar <a href="./regexp-grammar.js">definition</a> and <a href="./diagram.xhtml">diagram</a>
+</div>
+
+<h2>build</h2>
+<div>
+    <pre>
+    npx kison -m ll --es -g regexp-grammar.js
+</pre>
+</div>
+
+<h2>install prebuild</h2>
+<div>
+    <pre>
+        npm install @yiminghe/regexp
+    </pre>
+</div>
+
+<div>
+    <a href="./README.md">regexp readme</a>
+</div>
+
+<h2>open devtools console</h2><div>
+    <input style="width:200px" id='input' value="(a|b)*z" />
+    &nbsp; <button id='parse'>parse</button>
+    &nbsp; <button id='evaluate'>evaluate</button>
+</div>
+
+<script type="module">
+    import regexp from './regexp.js';
+    (function () {
+        let currentText;
+        let currentAst;
+
+        function getAst(value) {
+            if (currentText === value) {
+                return currentAst;
+            }
+            console.log('***********************', value);
+            currentText = value;
+            currentAst = regexp.parse(value);
+            console.log(currentAst);
+            if (currentAst.error) {
+                console.error(currentAst.error.errorMessage);
+            }
+            console.log('***********************');
+            return currentAst;
+        }
+
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        const input = $('input');
+        const parse = $('parse');
+        const evaluate = $('evaluate');
+
+        evaluate.addEventListener('click', () => {
+            const { ast, errorNode } = getAst(input.value);
+            console.log('TODO');
+        });
+
+        parse.addEventListener('click', () => {
+            currentText = undefined;
+            getAst(input.value);
+        }, false);
+    })();
+</script>
+
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+
+<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+    title="Fork me on GitHub">Fork me on GitHub</a>

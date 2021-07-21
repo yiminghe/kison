@@ -144,6 +144,7 @@ function genParser() {
   const instance = new Cons(grammarObj);
 
   if (program.bnf) {
+    instance.expandOptionalSymbol();
     console.log("");
     console.log(instance.toBNF());
     console.log("");

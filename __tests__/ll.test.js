@@ -977,7 +977,7 @@ F id => F -> id"
             },
             {
               'error': {
-                'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+                'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
                 'expected': [
                   'NUMBER',
                   '('
@@ -1032,7 +1032,7 @@ F id => F -> id"
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
 "{
   'error': {
-    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (',
+    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
     'expected': [
       'NUMBER',
       '('
@@ -1121,7 +1121,8 @@ Object {
     "errorMessage": "syntax error at line 1:
 1+/2
 --^
-expect NUMBER, (",
+expect NUMBER, (
+current token is /",
     "expected": Array [
       "NUMBER",
       "(",
@@ -1272,7 +1273,7 @@ expect NUMBER, (",
 `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
 "{
-  'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\nexpect NUMBER, (',
+  'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
   'expected': [
     'NUMBER',
     '('
@@ -1298,7 +1299,8 @@ Object {
     "errorMessage": "syntax error at line 1:
 1+
 --^
-expect NUMBER, (",
+expect NUMBER, (
+current token is $EOF",
     "expected": Array [
       "NUMBER",
       "(",

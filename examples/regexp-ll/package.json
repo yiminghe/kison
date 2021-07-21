@@ -1,0 +1,13 @@
+{
+  "name": "@yiminghe/regexp",
+  "version": "0.0.2",
+  "author": "yiminghe <yiminghe@gmail.com>",
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yiminghe/kison.git"
+  },
+  "main": "index.js"
+}

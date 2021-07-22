@@ -1,0 +1,1446 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`regexp parser works for (?:a)+? 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Group',
+                  'children': [
+                    {
+                      'text': '(',
+                      'token': '(',
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    },
+                    {
+                      'text': '?:',
+                      'token': '?:',
+                      'start': 1,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 4
+                    },
+                    {
+                      'symbol': 'Expression',
+                      'children': [
+                        {
+                          'symbol': 'SubExpression',
+                          'children': [
+                            {
+                              'symbol': 'ExpressionItem',
+                              'children': [
+                                {
+                                  'symbol': 'Match',
+                                  'children': [
+                                    {
+                                      'symbol': 'MatchItem',
+                                      'children': [
+                                        {
+                                          'text': 'a',
+                                          'token': 'char',
+                                          'start': 3,
+                                          'end': 4,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 4,
+                                          'lastColumn': 5
+                                        }
+                                      ],
+                                      'start': 3,
+                                      'end': 4,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 4,
+                                      'lastColumn': 5
+                                    }
+                                  ],
+                                  'start': 3,
+                                  'end': 4,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 4,
+                                  'lastColumn': 5
+                                }
+                              ],
+                              'start': 3,
+                              'end': 4,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 4,
+                              'lastColumn': 5
+                            }
+                          ],
+                          'start': 3,
+                          'end': 4,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 4,
+                          'lastColumn': 5
+                        }
+                      ],
+                      'start': 3,
+                      'end': 4,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 4,
+                      'lastColumn': 5
+                    },
+                    {
+                      'text': ')',
+                      'token': ')',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    },
+                    {
+                      'symbol': 'Quantifier',
+                      'children': [
+                        {
+                          'symbol': 'QuantifierType',
+                          'children': [
+                            {
+                              'text': '+',
+                              'token': '+',
+                              'start': 5,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 7
+                            }
+                          ],
+                          'start': 5,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 6,
+                          'lastColumn': 7
+                        },
+                        {
+                          'text': '?',
+                          'token': '?',
+                          'start': 6,
+                          'end': 7,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 7,
+                          'lastColumn': 8
+                        }
+                      ],
+                      'start': 5,
+                      'end': 7,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 6,
+                      'lastColumn': 8
+                    }
+                  ],
+                  'start': 0,
+                  'end': 7,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 8
+                }
+              ],
+              'start': 0,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 8
+            }
+          ],
+          'start': 0,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 8
+        }
+      ],
+      'start': 0,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 8
+    }
+  ],
+  'start': 0,
+  'end': 7,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 8
+}"
+`;
+
+exports[`regexp parser works for (a|b)*z 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Group',
+                  'children': [
+                    {
+                      'text': '(',
+                      'token': '(',
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    },
+                    {
+                      'symbol': 'Expression',
+                      'children': [
+                        {
+                          'symbol': 'SubExpression',
+                          'children': [
+                            {
+                              'symbol': 'ExpressionItem',
+                              'children': [
+                                {
+                                  'symbol': 'Match',
+                                  'children': [
+                                    {
+                                      'symbol': 'MatchItem',
+                                      'children': [
+                                        {
+                                          'text': 'a',
+                                          'token': 'char',
+                                          'start': 1,
+                                          'end': 2,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 2,
+                                          'lastColumn': 3
+                                        }
+                                      ],
+                                      'start': 1,
+                                      'end': 2,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 2,
+                                      'lastColumn': 3
+                                    }
+                                  ],
+                                  'start': 1,
+                                  'end': 2,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 2,
+                                  'lastColumn': 3
+                                }
+                              ],
+                              'start': 1,
+                              'end': 2,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 2,
+                              'lastColumn': 3
+                            }
+                          ],
+                          'start': 1,
+                          'end': 2,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 2,
+                          'lastColumn': 3
+                        },
+                        {
+                          'text': '|',
+                          'token': '|',
+                          'start': 2,
+                          'end': 3,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 3,
+                          'lastColumn': 4
+                        },
+                        {
+                          'symbol': 'SubExpression',
+                          'children': [
+                            {
+                              'symbol': 'ExpressionItem',
+                              'children': [
+                                {
+                                  'symbol': 'Match',
+                                  'children': [
+                                    {
+                                      'symbol': 'MatchItem',
+                                      'children': [
+                                        {
+                                          'text': 'b',
+                                          'token': 'char',
+                                          'start': 3,
+                                          'end': 4,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 4,
+                                          'lastColumn': 5
+                                        }
+                                      ],
+                                      'start': 3,
+                                      'end': 4,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 4,
+                                      'lastColumn': 5
+                                    }
+                                  ],
+                                  'start': 3,
+                                  'end': 4,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 4,
+                                  'lastColumn': 5
+                                }
+                              ],
+                              'start': 3,
+                              'end': 4,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 4,
+                              'lastColumn': 5
+                            }
+                          ],
+                          'start': 3,
+                          'end': 4,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 4,
+                          'lastColumn': 5
+                        }
+                      ],
+                      'start': 1,
+                      'end': 4,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 5
+                    },
+                    {
+                      'text': ')',
+                      'token': ')',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    },
+                    {
+                      'symbol': 'Quantifier',
+                      'children': [
+                        {
+                          'symbol': 'QuantifierType',
+                          'children': [
+                            {
+                              'text': '*',
+                              'token': '*',
+                              'start': 5,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 7
+                            }
+                          ],
+                          'start': 5,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 6,
+                          'lastColumn': 7
+                        }
+                      ],
+                      'start': 5,
+                      'end': 6,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 6,
+                      'lastColumn': 7
+                    }
+                  ],
+                  'start': 0,
+                  'end': 6,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 7
+                }
+              ],
+              'start': 0,
+              'end': 6,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 7
+            },
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'text': 'z',
+                          'token': 'char',
+                          'start': 6,
+                          'end': 7,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 7,
+                          'lastColumn': 8
+                        }
+                      ],
+                      'start': 6,
+                      'end': 7,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 7,
+                      'lastColumn': 8
+                    }
+                  ],
+                  'start': 6,
+                  'end': 7,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 7,
+                  'lastColumn': 8
+                }
+              ],
+              'start': 6,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 7,
+              'lastColumn': 8
+            }
+          ],
+          'start': 0,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 8
+        }
+      ],
+      'start': 0,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 8
+    }
+  ],
+  'start': 0,
+  'end': 7,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 8
+}"
+`;
+
+exports[`regexp parser works for [^a-z] 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'symbol': 'MatchCharacterClass',
+                          'children': [
+                            {
+                              'symbol': 'CharacterGroup',
+                              'children': [
+                                {
+                                  'text': '[',
+                                  'token': '[',
+                                  'start': 0,
+                                  'end': 1,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 1,
+                                  'lastColumn': 2
+                                },
+                                {
+                                  'text': '^',
+                                  'token': '^',
+                                  'start': 1,
+                                  'end': 2,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 2,
+                                  'lastColumn': 3
+                                },
+                                {
+                                  'symbol': 'CharacterGroupInner',
+                                  'children': [
+                                    {
+                                      'symbol': 'CharacterGroupItem',
+                                      'children': [
+                                        {
+                                          'symbol': 'CharacterRange',
+                                          'children': [
+                                            {
+                                              'text': 'a',
+                                              'token': 'char',
+                                              'start': 2,
+                                              'end': 3,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 3,
+                                              'lastColumn': 4
+                                            },
+                                            {
+                                              'text': '-',
+                                              'token': '-',
+                                              'start': 3,
+                                              'end': 4,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 4,
+                                              'lastColumn': 5
+                                            },
+                                            {
+                                              'text': 'z',
+                                              'token': 'char',
+                                              'start': 4,
+                                              'end': 5,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 5,
+                                              'lastColumn': 6
+                                            }
+                                          ],
+                                          'start': 2,
+                                          'end': 5,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 3,
+                                          'lastColumn': 6
+                                        }
+                                      ],
+                                      'start': 2,
+                                      'end': 5,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 3,
+                                      'lastColumn': 6
+                                    }
+                                  ],
+                                  'start': 2,
+                                  'end': 5,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 3,
+                                  'lastColumn': 6
+                                },
+                                {
+                                  'text': ']',
+                                  'token': ']',
+                                  'start': 5,
+                                  'end': 6,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 6,
+                                  'lastColumn': 7
+                                }
+                              ],
+                              'start': 0,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 1,
+                              'lastColumn': 7
+                            }
+                          ],
+                          'start': 0,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 7
+                        }
+                      ],
+                      'start': 0,
+                      'end': 6,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 7
+                    }
+                  ],
+                  'start': 0,
+                  'end': 6,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 7
+                }
+              ],
+              'start': 0,
+              'end': 6,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 7
+            }
+          ],
+          'start': 0,
+          'end': 6,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 7
+        }
+      ],
+      'start': 0,
+      'end': 6,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 7
+    }
+  ],
+  'start': 0,
+  'end': 6,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 7
+}"
+`;
+
+exports[`regexp parser works for [a-z\\b] 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'symbol': 'MatchCharacterClass',
+                          'children': [
+                            {
+                              'symbol': 'CharacterGroup',
+                              'children': [
+                                {
+                                  'text': '[',
+                                  'token': '[',
+                                  'start': 0,
+                                  'end': 1,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 1,
+                                  'lastColumn': 2
+                                },
+                                {
+                                  'symbol': 'CharacterGroupInner',
+                                  'children': [
+                                    {
+                                      'symbol': 'CharacterGroupItem',
+                                      'children': [
+                                        {
+                                          'symbol': 'CharacterRange',
+                                          'children': [
+                                            {
+                                              'text': 'a',
+                                              'token': 'char',
+                                              'start': 1,
+                                              'end': 2,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 2,
+                                              'lastColumn': 3
+                                            },
+                                            {
+                                              'text': '-',
+                                              'token': '-',
+                                              'start': 2,
+                                              'end': 3,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 3,
+                                              'lastColumn': 4
+                                            },
+                                            {
+                                              'text': 'z',
+                                              'token': 'char',
+                                              'start': 3,
+                                              'end': 4,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 4,
+                                              'lastColumn': 5
+                                            }
+                                          ],
+                                          'start': 1,
+                                          'end': 4,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 2,
+                                          'lastColumn': 5
+                                        }
+                                      ],
+                                      'start': 1,
+                                      'end': 4,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 2,
+                                      'lastColumn': 5
+                                    },
+                                    {
+                                      'symbol': 'CharacterGroupItem',
+                                      'children': [
+                                        {
+                                          'symbol': 'CharacterClass',
+                                          'children': [
+                                            {
+                                              'symbol': 'Anchor',
+                                              'children': [
+                                                {
+                                                  'text': '\\\\\\\\b',
+                                                  'token': 'anchorWordBoundary',
+                                                  'start': 4,
+                                                  'end': 6,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 5,
+                                                  'lastColumn': 7
+                                                }
+                                              ],
+                                              'start': 4,
+                                              'end': 6,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 5,
+                                              'lastColumn': 7
+                                            }
+                                          ],
+                                          'start': 4,
+                                          'end': 6,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 5,
+                                          'lastColumn': 7
+                                        }
+                                      ],
+                                      'start': 4,
+                                      'end': 6,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 5,
+                                      'lastColumn': 7
+                                    }
+                                  ],
+                                  'start': 1,
+                                  'end': 6,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 2,
+                                  'lastColumn': 7
+                                },
+                                {
+                                  'text': ']',
+                                  'token': ']',
+                                  'start': 6,
+                                  'end': 7,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 7,
+                                  'lastColumn': 8
+                                }
+                              ],
+                              'start': 0,
+                              'end': 7,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 1,
+                              'lastColumn': 8
+                            }
+                          ],
+                          'start': 0,
+                          'end': 7,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 8
+                        }
+                      ],
+                      'start': 0,
+                      'end': 7,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 8
+                    }
+                  ],
+                  'start': 0,
+                  'end': 7,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 8
+                }
+              ],
+              'start': 0,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 8
+            }
+          ],
+          'start': 0,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 8
+        }
+      ],
+      'start': 0,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 8
+    }
+  ],
+  'start': 0,
+  'end': 7,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 8
+}"
+`;
+
+exports[`regexp parser works for \\12\\b 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'text': '\\\\\\\\12',
+                  'token': 'backreference',
+                  'start': 0,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 4
+                }
+              ],
+              'start': 0,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 4
+            },
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Anchor',
+                  'children': [
+                    {
+                      'text': '\\\\\\\\b',
+                      'token': 'anchorWordBoundary',
+                      'start': 3,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 4,
+                      'lastColumn': 6
+                    }
+                  ],
+                  'start': 3,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 4,
+                  'lastColumn': 6
+                }
+              ],
+              'start': 3,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 6
+            }
+          ],
+          'start': 0,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 6
+        }
+      ],
+      'start': 0,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 6
+    }
+  ],
+  'start': 0,
+  'end': 5,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 6
+}"
+`;
+
+exports[`regexp parser works for ^a+z$ 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'text': '^',
+      'token': '^',
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2
+    },
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'text': 'a',
+                          'token': 'char',
+                          'start': 1,
+                          'end': 2,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 2,
+                          'lastColumn': 3
+                        }
+                      ],
+                      'start': 1,
+                      'end': 2,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 3
+                    },
+                    {
+                      'symbol': 'Quantifier',
+                      'children': [
+                        {
+                          'symbol': 'QuantifierType',
+                          'children': [
+                            {
+                              'text': '+',
+                              'token': '+',
+                              'start': 2,
+                              'end': 3,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 3,
+                              'lastColumn': 4
+                            }
+                          ],
+                          'start': 2,
+                          'end': 3,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 3,
+                          'lastColumn': 4
+                        }
+                      ],
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
+                    }
+                  ],
+                  'start': 1,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 2,
+                  'lastColumn': 4
+                }
+              ],
+              'start': 1,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 2,
+              'lastColumn': 4
+            },
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'text': 'z',
+                          'token': 'char',
+                          'start': 3,
+                          'end': 4,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 4,
+                          'lastColumn': 5
+                        }
+                      ],
+                      'start': 3,
+                      'end': 4,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 4,
+                      'lastColumn': 5
+                    }
+                  ],
+                  'start': 3,
+                  'end': 4,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 4,
+                  'lastColumn': 5
+                }
+              ],
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Anchor',
+                  'children': [
+                    {
+                      'text': '$',
+                      'token': '$',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    }
+                  ],
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
+                }
+              ],
+              'start': 4,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 6
+            }
+          ],
+          'start': 1,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 6
+        }
+      ],
+      'start': 1,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 6
+    }
+  ],
+  'start': 0,
+  'end': 5,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 6
+}"
+`;
+
+exports[`regexp parser works for a{1,2} 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'text': 'a',
+                          'token': 'char',
+                          'start': 0,
+                          'end': 1,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 2
+                        }
+                      ],
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    },
+                    {
+                      'symbol': 'Quantifier',
+                      'children': [
+                        {
+                          'symbol': 'QuantifierType',
+                          'children': [
+                            {
+                              'text': '{',
+                              'token': '{',
+                              'start': 1,
+                              'end': 2,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 2,
+                              'lastColumn': 3
+                            },
+                            {
+                              'text': '1',
+                              'token': 'int',
+                              'start': 2,
+                              'end': 3,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 3,
+                              'lastColumn': 4
+                            },
+                            {
+                              'text': ',',
+                              'token': ',',
+                              'start': 3,
+                              'end': 4,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 4,
+                              'lastColumn': 5
+                            },
+                            {
+                              'text': '2',
+                              'token': 'int',
+                              'start': 4,
+                              'end': 5,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 6
+                            },
+                            {
+                              'text': '}',
+                              'token': '}',
+                              'start': 5,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 7
+                            }
+                          ],
+                          'start': 1,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 2,
+                          'lastColumn': 7
+                        }
+                      ],
+                      'start': 1,
+                      'end': 6,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 7
+                    }
+                  ],
+                  'start': 0,
+                  'end': 6,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 7
+                }
+              ],
+              'start': 0,
+              'end': 6,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 7
+            }
+          ],
+          'start': 0,
+          'end': 6,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 7
+        }
+      ],
+      'start': 0,
+      'end': 6,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 7
+    }
+  ],
+  'start': 0,
+  'end': 6,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 7
+}"
+`;
+
+exports[`regexp parser works for a{1} 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'text': 'a',
+                          'token': 'char',
+                          'start': 0,
+                          'end': 1,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 2
+                        }
+                      ],
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    },
+                    {
+                      'symbol': 'Quantifier',
+                      'children': [
+                        {
+                          'symbol': 'QuantifierType',
+                          'children': [
+                            {
+                              'text': '{',
+                              'token': '{',
+                              'start': 1,
+                              'end': 2,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 2,
+                              'lastColumn': 3
+                            },
+                            {
+                              'text': '1',
+                              'token': 'int',
+                              'start': 2,
+                              'end': 3,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 3,
+                              'lastColumn': 4
+                            },
+                            {
+                              'text': '}',
+                              'token': '}',
+                              'start': 3,
+                              'end': 4,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 4,
+                              'lastColumn': 5
+                            }
+                          ],
+                          'start': 1,
+                          'end': 4,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 2,
+                          'lastColumn': 5
+                        }
+                      ],
+                      'start': 1,
+                      'end': 4,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 5
+                    }
+                  ],
+                  'start': 0,
+                  'end': 4,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 5
+                }
+              ],
+              'start': 0,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 5
+            }
+          ],
+          'start': 0,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 5
+        }
+      ],
+      'start': 0,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 5
+    }
+  ],
+  'start': 0,
+  'end': 4,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 5
+}"
+`;

@@ -1,6 +1,88 @@
 // https://github.com/kean/Regex/blob/master/grammar.ebnf
 
+const c0 = "0".charCodeAt(0);
+const c9 = "9".charCodeAt(0);
+
+const my = {
+  c0,
+  c9,
+  createMatchString(str, lexer) {
+    const { input } = lexer;
+    if (input.lastIndexOf(str, str.length) !== 0) {
+      return false;
+    }
+    return [str];
+  },
+  createMatchCharRange(range, lexer) {
+    const char = lexer.input[0];
+    const charCode = char.charCodeAt(0);
+    for (const r of range) {
+      if (r.length == 1) {
+        if (r[0] === charCode) {
+          return [char];
+        }
+      } else if (charCode >= r[0] || charCode <= r[1]) {
+        return [char];
+      }
+    }
+    return false;
+  },
+  matchBackreference(lexer) {
+    const { input } = lexer;
+    if (input[0] !== "\\") {
+      return false;
+    }
+    const match = my.matchNumber({ input: input.slice(1) });
+    if (match === false) {
+      return false;
+    }
+    match[0] = "\\" + match[0];
+    return match;
+  },
+  matchNumber(lexer) {
+    let index = 0;
+    const match = [];
+    const { input } = lexer;
+    const l = input.length;
+    while (index < l) {
+      const char = input[index];
+      const codeCode = input.charCodeAt(index);
+      if (codeCode < my.c0 || codeCode > my.c9) {
+        break;
+      }
+      match.push(char);
+      index++;
+    }
+    return match.length ? [match.join("")] : false;
+  }
+};
+
+function createLiteralLexerRules(chars) {
+  return chars.map(c => ({
+    token: c,
+    regexp: createStringMatch(c)
+  }));
+}
+
+function createEscapeMatchLexerRules(map) {
+  return Object.keys(map).map(k => ({
+    token: map[k],
+    regexp: createStringMatch(`\\${k}`)
+  }));
+}
+
+const slashCode = "\\".charCodeAt(0);
+
+function createRangeMatch(range) {
+  return `my.createMatchCharRange.bind(undefined, ${JSON.stringify(range)})`;
+}
+
+function createStringMatch(str) {
+  return `my.createMatchString.bind(undefined, ${JSON.stringify(str)})`;
+}
+
 module.exports = () => ({
+  my,
   productions: [
     {
       symbol: "Regexp",
@@ -57,7 +139,7 @@ module.exports = () => ({
     },
     {
       symbol: "MatchItem",
-      rhs: ["matchAnyCharacter"]
+      rhs: ["."]
     },
     {
       symbol: "MatchItem",
@@ -98,12 +180,16 @@ module.exports = () => ({
     },
     {
       symbol: "CharacterGroupItem",
+      rhs: ["CharacterClass"]
+    },
+    {
+      symbol: "CharacterGroupItem",
       rhs: ["CharacterRange"]
     },
 
     {
       symbol: "CharacterClass",
-      rhs: ["characterClassAnyWord"]
+      rhs: ["Anchor"]
     },
     {
       symbol: "CharacterClass",
@@ -130,24 +216,19 @@ module.exports = () => ({
     ------------------------------------------------------------------*/
     {
       symbol: "Quantifier",
-      rhs: ["QuantifierType", "LazyModifier?"]
-    },
-    {
-      symbol: "LazyModifier",
-      rhs: ["lazyModifier"]
-    },
-
-    {
-      symbol: "QuantifierType",
-      rhs: ["zeroOrMoreQuantifier"]
+      rhs: ["QuantifierType", "??"]
     },
     {
       symbol: "QuantifierType",
-      rhs: ["oneOrMoreQuantifier"]
+      rhs: ["*"]
     },
     {
       symbol: "QuantifierType",
-      rhs: ["zeroOrOneQuantifier"]
+      rhs: ["+"]
+    },
+    {
+      symbol: "QuantifierType",
+      rhs: ["?"]
     },
     {
       symbol: "QuantifierType",
@@ -190,137 +271,69 @@ module.exports = () => ({
     },
     {
       symbol: "Anchor",
-      rhs: ["anchorEndOfString"]
+      rhs: ["$"]
     }
   ],
 
   lexer: {
     rules: [
-      {
-        regexp: /^\\w/,
-        token: "characterClassAnyWord"
-      },
-      {
-        regexp: /^\\W/,
-        token: "characterClassAnyWordInverted"
-      },
-      {
-        regexp: /^\\d/,
-        token: "characterClassAnyDecimalDigit"
-      },
-      {
-        regexp: /^\\D/,
-        token: "characterClassAnyDecimalDigitInverted"
-      },
+      ...createLiteralLexerRules([
+        "$",
+        ",",
+        "^",
+        "?:",
+        "?",
+        "(",
+        ")",
+        "{",
+        "}",
+        "[",
+        "]",
+        "-",
+        "|",
+        "*",
+        "+",
+        "."
+      ]),
 
-      {
-        regexp: /^\?/,
-        token: "lazyModifier"
-      },
-      {
-        regexp: /^\*/,
-        token: "zeroOrMoreQuantifier"
-      },
-      {
-        regexp: /^\+/,
-        token: "oneOrMoreQuantifier"
-      },
-      {
-        regexp: /^\?/,
-        token: "zeroOrOneQuantifier"
-      },
+      ...createEscapeMatchLexerRules({
+        w: "characterClassAnyWord",
+        W: "characterClassAnyWordInverted",
+        d: "characterClassAnyDecimalDigit",
+        D: "characterClassAnyDecimalDigitInverted"
+      }),
+
       /* Backreferences
 ------------------------------------------------------------------*/
       {
-        regexp: /^\\\d+/,
+        regexp: `my.matchBackreference`,
         token: "backreference"
       },
 
       /* Anchors
       ------------------------------------------------------------------*/
-      {
-        regexp: /^\\b/,
-        token: "anchorWordBoundary"
-      },
-      {
-        regexp: /^\\B/,
-        token: "anchorNonWordBoundary"
-      },
-      {
-        regexp: /^\\A/,
-        token: "anchorStartOfStringOnly"
-      },
-      {
-        regexp: /^\\z/,
-        token: "anchorEndOfStringOnlyNotNewline"
-      },
-      {
-        regexp: /^\\Z/,
-        token: "anchorEndOfStringOnly"
-      },
-      {
-        regexp: /^\\G/,
-        token: "anchorPreviousMatchEnd"
-      },
-      {
-        regexp: /^\$/,
-        token: "anchorEndOfString"
-      },
+      ...createEscapeMatchLexerRules({
+        b: "anchorWordBoundary",
+        B: "anchorNonWordBoundary",
+        A: "anchorStartOfStringOnly",
+        z: "anchorEndOfStringOnlyNotNewline",
+        Z: "anchorEndOfStringOnly",
+        G: "anchorPreviousMatchEnd"
+      }),
 
       {
-        regexp: /^\d+/,
+        regexp: "my.matchNumber",
         token: "int"
       },
       {
-        regexp: /^,/,
-        token: ","
-      },
-      {
-        regexp: /^\^/,
-        token: "^"
-      },
-      {
-        regexp: /^\?:/,
-        token: "?:"
-      },
-      {
-        regexp: /^\(/,
-        token: "("
-      },
-      {
-        regexp: /^\)/,
-        token: ")"
-      },
-      {
-        regexp: /^\{/,
-        token: "{"
-      },
-      {
-        regexp: /^\}/,
-        token: "}"
-      },
-      {
-        regexp: /^\[/,
-        token: "["
-      },
-      {
-        regexp: /^\]/,
-        token: "]"
-      },
-      {
-        regexp: /^\-/,
-        token: "-"
-      },
-      {
-        regexp: /^\|/,
-        token: "|"
-      },
-      {
-        regexp: /^\./,
-        token: "matchAnyCharacter"
-      },
-      {
-        regexp: /^[\x09\x0a\x0d\x20-\ud7ff\ue000-\ufffd\u10000-\u10ffff]/,
+        regexp: createRangeMatch([
+          [0x09],
+          [0x0a],
+          [0x0d],
+          [0x20, 0xd7ff],
+          [0xe000, 0xfffd],
+          [0x10000, 0x10ffff]
+        ]),
         token: "char"
       }
     ]

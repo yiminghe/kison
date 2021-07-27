@@ -28,12 +28,12 @@
 <div>
     <input style="width:200px" id='input' value="abzaaz" />.match(/
     <input style="width:200px" id='pattern' value="(a|b)*z" />/);
-    <br /> <br /> <button id='parse'>parse</button>
+    <br /> <br /> <button id='parseBtn'>parse</button>
     &nbsp; <button id='evaluate'>evaluate</button>
 </div>
 
 <script type="module">
-    import regexp from './src/index.js';
+    import { parse, compile } from './src/index.js';
     (function () {
         let currentText;
         let currentAst;
@@ -44,7 +44,7 @@
             }
             console.log('parse ***********************', value);
             currentText = value;
-            currentAst = regexp.parse(value);
+            currentAst = parse(value);
             console.log(currentAst);
             if (currentAst.error) {
                 console.error(currentAst.error.errorMessage);
@@ -59,11 +59,11 @@
 
         const pattern = $('pattern');
         const input = $('input');
-        const parse = $('parse');
+        const parseBtn = $('parseBtn');
         const evaluate = $('evaluate');
 
         evaluate.addEventListener('click', () => {
-            const patternInstance = regexp.compile(pattern.value);
+            const patternInstance = compile(pattern.value);
             const matcher = patternInstance.matcher(input.value);
             let m;
             console.log('match ***********************');
@@ -74,7 +74,7 @@
             console.log('***********************');
         });
 
-        parse.addEventListener('click', () => {
+        parseBtn.addEventListener('click', () => {
             currentText = undefined;
             getAst(pattern.value);
         }, false);

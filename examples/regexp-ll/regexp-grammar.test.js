@@ -1,4 +1,4 @@
-import regexp from "./src/index";
+import { parse } from "./src/index";
 import { prettyJson } from "../../__tests__/utils";
 
 describe("regexp", () => {
@@ -16,7 +16,7 @@ describe("regexp", () => {
 
     for (const r of reg) {
       it(`works for ${r}`, () => {
-        expect(prettyJson(regexp.parse(r).ast)).toMatchSnapshot();
+        expect(prettyJson(parse(r).ast)).toMatchSnapshot();
       });
     }
   });

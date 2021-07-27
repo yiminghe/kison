@@ -661,7 +661,7 @@ exports[`regexp parser works for [^a-z] 1`] = `
 }"
 `;
 
-exports[`regexp parser works for [a-z\\b] 1`] = `
+exports[`regexp parser works for [a-z] 1`] = `
 "{
   'symbol': 'Regexp',
   'children': [
@@ -755,126 +755,115 @@ exports[`regexp parser works for [a-z\\b] 1`] = `
                                       'symbol': 'CharacterGroupItem',
                                       'children': [
                                         {
-                                          'symbol': 'CharacterClass',
+                                          'symbol': 'CharacterRange',
                                           'children': [
                                             {
-                                              'symbol': 'Anchor',
-                                              'children': [
-                                                {
-                                                  'text': '\\\\\\\\b',
-                                                  'token': 'anchorWordBoundary',
-                                                  'start': 4,
-                                                  'end': 6,
-                                                  'firstLine': 1,
-                                                  'lastLine': 1,
-                                                  'firstColumn': 5,
-                                                  'lastColumn': 7
-                                                }
-                                              ],
+                                              'text': '\\\\b',
+                                              'token': 'char',
                                               'start': 4,
-                                              'end': 6,
+                                              'end': 5,
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 5,
-                                              'lastColumn': 7
+                                              'lastColumn': 6
                                             }
                                           ],
                                           'start': 4,
-                                          'end': 6,
+                                          'end': 5,
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 5,
-                                          'lastColumn': 7
+                                          'lastColumn': 6
                                         }
                                       ],
                                       'start': 4,
-                                      'end': 6,
+                                      'end': 5,
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 5,
-                                      'lastColumn': 7
+                                      'lastColumn': 6
                                     }
                                   ],
                                   'start': 1,
-                                  'end': 6,
+                                  'end': 5,
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 2,
-                                  'lastColumn': 7
+                                  'lastColumn': 6
                                 },
                                 {
                                   'text': ']',
                                   'token': ']',
-                                  'start': 6,
-                                  'end': 7,
+                                  'start': 5,
+                                  'end': 6,
                                   'firstLine': 1,
                                   'lastLine': 1,
-                                  'firstColumn': 7,
-                                  'lastColumn': 8
+                                  'firstColumn': 6,
+                                  'lastColumn': 7
                                 }
                               ],
                               'start': 0,
-                              'end': 7,
+                              'end': 6,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 1,
-                              'lastColumn': 8
+                              'lastColumn': 7
                             }
                           ],
                           'start': 0,
-                          'end': 7,
+                          'end': 6,
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 1,
-                          'lastColumn': 8
+                          'lastColumn': 7
                         }
                       ],
                       'start': 0,
-                      'end': 7,
+                      'end': 6,
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 8
+                      'lastColumn': 7
                     }
                   ],
                   'start': 0,
-                  'end': 7,
+                  'end': 6,
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 1,
-                  'lastColumn': 8
+                  'lastColumn': 7
                 }
               ],
               'start': 0,
-              'end': 7,
+              'end': 6,
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 8
+              'lastColumn': 7
             }
           ],
           'start': 0,
-          'end': 7,
+          'end': 6,
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 1,
-          'lastColumn': 8
+          'lastColumn': 7
         }
       ],
       'start': 0,
-      'end': 7,
+      'end': 6,
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 8
+      'lastColumn': 7
     }
   ],
   'start': 0,
-  'end': 7,
+  'end': 6,
   'firstLine': 1,
   'lastLine': 1,
   'firstColumn': 1,
-  'lastColumn': 8
+  'lastColumn': 7
 }"
 `;
 

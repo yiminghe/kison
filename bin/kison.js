@@ -30,7 +30,7 @@ var options = program.options;
 
 var grammar = path.resolve(program.grammar);
 
-options.forEach(function(o) {
+options.forEach(function (o) {
   var name = o.name();
   if (o.required && !(name in program)) {
     program.optionMissingArgument(o);
@@ -42,13 +42,15 @@ var kisonCfg = {
   compressSymbol: program.compressSymbol
 };
 
-var grammarBaseName = program.file
+var outFile = program.file
   ? program.file
   : path.basename(grammar, "-grammar.js");
 
+var grammarBaseName = path.basename(outFile);
+
 const mode = program.mode || "lalr";
 
-var modulePath = path.resolve(grammar, "../" + grammarBaseName + ".js");
+var modulePath = path.resolve(grammar, "../" + outFile + ".js");
 
 const pkg = require("../package.json");
 
@@ -165,9 +167,9 @@ function genParser() {
 
   console.info(
     "generate grammar module: " +
-      modulePath +
-      " at " +
-      new Date().toLocaleString()
+    modulePath +
+    " at " +
+    new Date().toLocaleString()
   );
   console.log();
   console.info("duration: " + (Date.now() - start) + "ms");

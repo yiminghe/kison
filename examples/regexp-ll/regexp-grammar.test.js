@@ -1,4 +1,4 @@
-import regexp from "./regexp";
+import regexp from "./src/index";
 import { prettyJson } from "../../__tests__/utils";
 
 describe("regexp", () => {

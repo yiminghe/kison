@@ -24,14 +24,16 @@
     <a href="./README.md">regexp readme</a>
 </div>
 
-<h2>open devtools console</h2><div>
-    <input style="width:200px" id='input' value="(a|b)*z" />
-    &nbsp; <button id='parse'>parse</button>
+<h2>open devtools console</h2>
+<div>
+    <input style="width:200px" id='input' value="abzaaz" />.match(/
+    <input style="width:200px" id='pattern' value="(a|b)*z" />/);
+    <br /> <br /> <button id='parse'>parse</button>
     &nbsp; <button id='evaluate'>evaluate</button>
 </div>
 
 <script type="module">
-    import regexp from './regexp.js';
+    import regexp from './src/index.js';
     (function () {
         let currentText;
         let currentAst;
@@ -40,7 +42,7 @@
             if (currentText === value) {
                 return currentAst;
             }
-            console.log('***********************', value);
+            console.log('parse ***********************', value);
             currentText = value;
             currentAst = regexp.parse(value);
             console.log(currentAst);
@@ -55,18 +57,26 @@
             return document.getElementById(id);
         }
 
+        const pattern = $('pattern');
         const input = $('input');
         const parse = $('parse');
         const evaluate = $('evaluate');
 
         evaluate.addEventListener('click', () => {
-            const { ast, errorNode } = getAst(input.value);
-            console.log('TODO');
+            const patternInstance = regexp.compile(pattern.value);
+            const matcher = patternInstance.matcher(input.value);
+            let m;
+            console.log('match ***********************');
+            console.log(input.value + '.match(/' + pattern.value + '/)');
+            while (m = matcher.match()) {
+                console.log(m);
+            }
+            console.log('***********************');
         });
 
         parse.addEventListener('click', () => {
             currentText = undefined;
-            getAst(input.value);
+            getAst(pattern.value);
         }, false);
     })();
 </script>

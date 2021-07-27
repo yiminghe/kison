@@ -1,10 +1,37 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"
   ],
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg",
+        {
+          "exclude": [
+            "__tests__/**/*"
+          ]
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "format": "cjs"
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel"
+      ],
+      [
+        "pika-plugin-clean-dist-src"
+      ]
+    ]
+  },
+  "scripts": {
+    "build": "pika-pack build"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"

@@ -22,3 +22,4 @@ tmp/
 reports/
 yarn.lock
 .vscode
+examples/regexp-ll/pkg/

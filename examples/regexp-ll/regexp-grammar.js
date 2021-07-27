@@ -157,26 +157,22 @@ module.exports = () => ({
       symbol: "MatchCharacterClass",
       rhs: ["CharacterClass"]
     },
-    {
-      symbol: "CharacterGroupInner",
-      rhs: ["CharacterGroupItem"]
-    },
+
 
     /* Character Classes
 ------------------------------------------------------------------*/
     {
-      symbol: "CharacterGroupInner",
-      rhs: ["CharacterGroupInner", "CharacterGroupItem"],
-      flat: true
-    },
-    {
       symbol: "CharacterGroup",
       rhs: ["[", "^?", "CharacterGroupInner", "]"]
     },
-
     {
-      symbol: "CharacterGroupItem",
-      rhs: ["CharacterClass"]
+      symbol: "CharacterGroupInner",
+      rhs: ["CharacterGroupItem"]
+    },
+    {
+      symbol: "CharacterGroupInner",
+      rhs: ["CharacterGroupInner", "CharacterGroupItem"],
+      flat: true
     },
     {
       symbol: "CharacterGroupItem",
@@ -185,11 +181,6 @@ module.exports = () => ({
     {
       symbol: "CharacterGroupItem",
       rhs: ["CharacterRange"]
-    },
-
-    {
-      symbol: "CharacterClass",
-      rhs: ["Anchor"]
     },
     {
       symbol: "CharacterClass",
@@ -229,10 +220,6 @@ module.exports = () => ({
     {
       symbol: "QuantifierType",
       rhs: ["?"]
-    },
-    {
-      symbol: "QuantifierType",
-      rhs: ["RangeQuantifier"]
     },
     {
       symbol: "QuantifierType",

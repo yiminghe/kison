@@ -1,39 +1,37 @@
-import parser from './parser.js';
-import Compiler from './Compiler.js';
-import Input from './Input.js';
+import Compiler from "./Compiler.js";
+import Input from "./Input.js";
 
-function match(input, start) {
-  while (!input.isEnd()) {
-    if (matchInput(input, start)) {
-      let start = input.startIndex;
-      const matchString = input.str.slice(input.startIndex, input.index);
-      input.previousMatchIndex = input.index;
-      input.startIndex = input.previousMatchIndex;
-      return {
-        match: matchString,
-        index: start,
-      }
-    }
-    input.startIndex++;
+function matchInput(compiler, input, state) {
+  let groupStartIndex = compiler.groupStartIndex(state);
+  if (groupStartIndex) {
+    groupStartIndex--;
+    input.startGroupIndex[groupStartIndex] = input.index;
   }
-  return null;
-}
+  let groupEndIndex = compiler.groupEndIndex(state);
+  if (groupEndIndex) {
+    groupEndIndex--;
+    const index = input.startGroupIndex[groupEndIndex];
+    input.groups[groupEndIndex] = {
+      index,
+      match: input.getString(index - input.index)
+    };
+  }
 
-function matchInput(input, state) {
   if (!state.transitions.length) {
-    return true;
+    return input;
   }
   if (input.isEnd()) {
     return false;
   }
+
   for (const t of state.transitions) {
     let newInput = input.clone();
     const find = t.perform(newInput);
     if (find) {
       newInput.advance(find.count);
-      if (matchInput(newInput, t.to)) {
-        input.index = newInput.index;
-        return true;
+      const ret = matchInput(compiler, newInput, t.to);
+      if (ret) {
+        return ret;
       }
     } else {
       continue;
@@ -42,18 +40,45 @@ function matchInput(input, state) {
   return false;
 }
 
+class Matcher {
+  constructor(compiler, string, options) {
+    this.input = new Input(string, options);
+    this.compiler = compiler;
+  }
+
+  reset() {
+    this.input.reset();
+  }
+
+  match() {
+    let { input, compiler } = this;
+    while (!input.isEnd()) {
+      let matchedInput = matchInput(compiler, input, compiler.startState);
+      if (matchedInput) {
+        input = matchedInput;
+        this.input = input;
+        const { startIndex, index } = input;
+        const matchString = input.getString(startIndex - index);
+        const ret = {
+          input: input.str,
+          match: matchString,
+          index: startIndex,
+          groups: input.groups
+        };
+        input.advanceMatch();
+        return ret;
+      }
+      input.advanceStartIndex();
+    }
+    return null;
+  }
+}
+
 export default function compile(pattern, options = {}) {
-  const compiler = new Compiler(options);
-  const start = compiler.compile(parser.parse(pattern).ast).start;
+  const compiler = new Compiler(options).initWithPattern(pattern);
   return {
     matcher(str) {
-      const input = new Input(str);
-      input.multiline = options.multiline;
-      return {
-        match() {
-          return match(input, start);
-        }
-      };
+      return new Matcher(compiler, str, options);
     }
-  }
+  };
 }

@@ -3,23 +3,32 @@ import {
   backreferenceMatcher,
   anyCharMatcher,
   stringMatcher,
-  charGroupMatcher,
-} from './matchers.js';
-import { concatUnits, upperCaseFirstChar } from './utils.js';
-import { StateUnit } from './state.js';
+  charGroupMatcher
+} from "./matchers.js";
+import { concatUnits, upperCaseFirstChar } from "./utils.js";
+import { StateUnit } from "./state.js";
+import parser from "./parser.js";
 
 export default class Compiler {
   constructor(options) {
     this.options = options || {};
-    this.captureGroups = [];
+    this.captureGroupStateStartMap = new Map();
+    this.captureGroupStateEndMap = new Map();
+    this.captureGroupIndex = 1;
+  }
+
+  initWithPattern(pattern) {
+    this.unit = this.compile(parser.parse(pattern).ast);
+    this.startState = this.unit.start;
+    return this;
   }
 
   compile(node) {
     const m = `compile${node.symbol || upperCaseFirstChar(node.token)}`;
     if (this[m]) {
       return this[m](node);
-    };
-    throw new Error('no compile procedure for ' + m);
+    }
+    throw new Error("no compile procedure for " + m);
   }
 
   compileRegexp(node) {
@@ -27,24 +36,26 @@ export default class Compiler {
     let units = [];
     if (children[0]) {
       let expression = children[0];
-      if (children[0].text === '^') {
-        const unit = new StateUnit('^');
-        unit.start.pushTransition(unit.end, anchorMatchers['^']);
+      if (children[0].text === "^") {
+        const unit = new StateUnit("^");
+        unit.start.pushTransition(unit.end, anchorMatchers["^"]);
         expression = children[1];
         units.push(unit);
       }
       const expressionUnit = this.compile(expression);
       units.push(expressionUnit);
-      return concatUnits('RegExp', units);
+      return concatUnits("RegExp", units);
     }
   }
 
   compileExpression(node) {
-    const subUnits = node.children.filter(s => s.text !== '|').map(this.compile, this);
+    const subUnits = node.children
+      .filter(s => s.text !== "|")
+      .map(this.compile, this);
     if (subUnits.length === 1) {
       return subUnits[0];
     }
-    const unit = new StateUnit('|');
+    const unit = new StateUnit("|");
     for (const u of subUnits) {
       unit.start.pushTransition(u.start);
       u.end.pushTransition(unit.end);
@@ -53,7 +64,7 @@ export default class Compiler {
   }
 
   compileSubExpression(node) {
-    return concatUnits('SubExpression', node.children.map(this.compile, this));
+    return concatUnits("SubExpression", node.children.map(this.compile, this));
   }
 
   compileExpressionItem(node) {
@@ -62,31 +73,31 @@ export default class Compiler {
 
   compileBackrefernce(node) {
     const index = parseInt(node.text.slice(1));
-    const unit = new StateUnit('Backreference' + index);
+    const unit = new StateUnit("Backreference" + index);
     unit.start.pushTransition(unit.end, backreferenceMatcher(index));
   }
 
   _compileQuantifier(unit, quantifier) {
-    const lazy = quantifier.children[1]?.text === '?';
+    const lazy = quantifier.children[1]?.text === "?";
     const typeNodes = quantifier.children[0].children;
     const type = typeNodes[0].text;
     switch (type) {
-      case '*':
+      case "*":
         return this._zeroOrMore(unit, lazy);
-      case '+':
+      case "+":
         return this._oneOrMore(unit, lazy);
-      case '?':
+      case "?":
         return this._zeroOrOne(unit, lazy);
-      case '{':
+      case "{":
         return this._range(unit, typeNodes, lazy);
     }
-    throw new Error('unsupported quantifier for ' + type);
+    throw new Error("unsupported quantifier for " + type);
   }
 
-  _range(unit, range, lazy) { }
+  _range(unit, range, lazy) {}
 
   _zeroOrOne(unit, lazy) {
-    const qUnit = new StateUnit('?');
+    const qUnit = new StateUnit("?");
     qUnit.start.pushTransition(unit.start);
     qUnit.start.pushTransition(qUnit.end);
     unit.end.pushTransition(qUnit.end);
@@ -97,7 +108,7 @@ export default class Compiler {
   }
 
   _oneOrMore(unit, lazy) {
-    const qUnit = new StateUnit('+');
+    const qUnit = new StateUnit("+");
     qUnit.start.pushTransition(unit.start);
     unit.end.pushTransition(unit.start);
     unit.end.pushTransition(qUnit.end);
@@ -108,7 +119,7 @@ export default class Compiler {
   }
 
   _zeroOrMore(unit, lazy) {
-    const qUnit = new StateUnit('*');
+    const qUnit = new StateUnit("*");
     qUnit.start.pushTransition(unit.start);
     unit.start.pushTransition(qUnit.end);
     unit.end.pushTransition(unit.start);
@@ -118,26 +129,32 @@ export default class Compiler {
     return qUnit;
   }
 
+  groupStartIndex(state) {
+    return this.captureGroupStateStartMap.get(state);
+  }
+
+  groupEndIndex(state) {
+    return this.captureGroupStateEndMap.get(state);
+  }
+
   compileGroup(node) {
     let capture = true;
-    const exp = node.children[1];
-    if (exp.text === '?:') {
+    let exp = node.children[1];
+    if (exp.text === "?:") {
       capture = false;
       exp = node.children[2];
     }
-    let groupIndex = this.captureGroups.length;
+    let groupIndex = this.captureGroupIndex;
     if (capture) {
-      this.captureGroups.push(0);
+      this.captureGroupIndex++;
     }
     const expUnit = this.compile(exp);
     if (capture) {
-      this.captureGroups[groupIndex] = {
-        start: expUnit.start,
-        end: expUnit.end,
-      };
+      this.captureGroupStateStartMap.set(expUnit.start, groupIndex);
+      this.captureGroupStateEndMap.set(expUnit.end, groupIndex);
     }
     const lastChild = node.children[node.children.length - 1];
-    if (lastChild.symbol === 'Quantifier') {
+    if (lastChild.symbol === "Quantifier") {
       return this._compileQuantifier(expUnit, lastChild);
     }
     return expUnit;
@@ -146,7 +163,7 @@ export default class Compiler {
   compileMatch(node) {
     const itemUnit = this.compile(node.children[0]);
     const lastChild = node.children[node.children.length - 1];
-    if (lastChild.symbol === 'Quantifier') {
+    if (lastChild.symbol === "Quantifier") {
       return this._compileQuantifier(itemUnit, lastChild);
     }
     return itemUnit;
@@ -156,32 +173,36 @@ export default class Compiler {
     return this.compile(node.children[0]);
   }
 
-  compileMatchCharacterClass(node) {
-
-  }
+  compileMatchCharacterClass(node) {}
 
   compileCharacterGroup(node) {
     let invert = false;
     const itemsNode = node.children[1];
-    if (itemNode.text === '^') {
+    if (itemNode.text === "^") {
       invert = true;
       itemsNode = node.children[2];
     }
     const items = itemsNode.children;
-    const unit = new StateUnit('CharacterGroup');
+    const unit = new StateUnit("CharacterGroup");
     unit.start.pushTransition(unit.end, charGroupMatcher(items, invert));
   }
 
-  'compile.'(node) {
-    const unit = new StateUnit('.');
-    unit.start.pushTransition(unit.end, anyCharMatcher(this.options.includeNewLine));
+  "compile."(node) {
+    const unit = new StateUnit(".");
+    unit.start.pushTransition(
+      unit.end,
+      anyCharMatcher(this.options.includeNewLine)
+    );
     return unit;
   }
 
   compileChar(node) {
     const char = node.text;
-    const unit = new StateUnit('Char');
-    unit.start.pushTransition(unit.end, stringMatcher(char, this.options.caseInsensitive));
+    const unit = new StateUnit("Char");
+    unit.start.pushTransition(
+      unit.end,
+      stringMatcher(char, this.options.caseInsensitive)
+    );
     return unit;
   }
 

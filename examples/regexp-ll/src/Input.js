@@ -1,17 +1,35 @@
-import { isWord } from './utils.js';
+import { isWord } from "./utils.js";
 
 export default class Input {
-  constructor(str, startIndex = 0, index = 0) {
+  constructor(str, options) {
     this.str = str;
-    this.multiline = false;
-    this.startIndex = startIndex;
-    this.index = index || startIndex;
+    this.options = options;
     this.endIndex = str.length - 1;
-    this.previousMatchIndex = -1;
+    this.reset();
+  }
+
+  reset() {
+    this.startIndex = 0;
+    this.index = 0;
+    this.previousMatchIndex = 0;
+    this.startGroupIndex = [];
+    this.groups = [];
   }
 
   advance(count) {
     this.index += count;
+  }
+
+  advanceStartIndex() {
+    this.startIndex++;
+    this.groups = [];
+  }
+
+  advanceMatch() {
+    const { index } = this;
+    this.previousMatchIndex = index;
+    this.startIndex = index;
+    this.groups = [];
   }
 
   getString(count = 1) {
@@ -24,7 +42,13 @@ export default class Input {
   }
 
   clone() {
-    return new Input(this.str, this.startIndex, this.index);
+    const input = new Input(this.str, this.options);
+    input.previousMatchIndex = this.previousMatchIndex;
+    input.index = this.index;
+    input.startIndex = this.startIndex;
+    input.startGroupIndex = this.startGroupIndex.concat();
+    input.groups = this.groups.map(g => Object.assign({}, g));
+    return input;
   }
 
   isStart() {
@@ -44,11 +68,14 @@ export default class Input {
       return true;
     }
     const c = this.getString();
-    const l = this.index > this.startIndex ? this.getString(-1) : ' ';
+    const l = this.index > this.startIndex ? this.getString(-1) : " ";
     if (isWord(c)) {
       return !isWord(l);
     } else {
-      const r = this.index === this.endIndex ? ' ' : this.input.slice(this.index + 1, 1);
+      const r =
+        this.index === this.endIndex
+          ? " "
+          : this.input.slice(this.index + 1, 1);
       return isWord(l) && isWord(r);
     }
   }

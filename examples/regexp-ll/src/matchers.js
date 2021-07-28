@@ -1,6 +1,9 @@
 export const anchorMatchers = {
   "^"(input) {
-    return input.isStart() || (input.multiline && input.getString(-1) === '\n');
+    return (
+      input.isStart() ||
+      (input.options.multiline && input.getString(-1) === "\n")
+    );
   },
   anchorWordBoundary(input) {
     return input.isAtWordBoundary();
@@ -15,10 +18,14 @@ export const anchorMatchers = {
     return input.isEnd();
   },
   $(input) {
-    return input.isEnd() || (input.multiline && input.getString() === '\n')
+    return (
+      input.isEnd() || (input.options.multiline && input.getString() === "\n")
+    );
   },
   anchorEndOfStringOnly(input) {
-    return input.isEnd() || (input.isAtLastIndex() && input.getString() === '\n')
+    return (
+      input.isEnd() || (input.isAtLastIndex() && input.getString() === "\n")
+    );
   },
   anchorPreviousMatchEnd(input) {
     if (input.isStart()) {
@@ -40,30 +47,30 @@ export const stringMatcher = (str, caseInsensitive) => {
   };
 };
 
-export const backreferenceMatcher = (index) => {
+export const backreferenceMatcher = index => {
   return input => {
     const group = input.group[index];
     if (!group) {
       return false;
     }
-    return group === input.getString(group.length) ? { count: group.length } : null;
+    return group === input.getString(group.length)
+      ? { count: group.length }
+      : null;
   };
 };
 
-export const anyCharMatcher = (includingNewline) => {
+export const anyCharMatcher = includingNewline => {
   return input => {
     if (input.isEnd()) {
       return false;
     }
-    if (input.getString() === '\n') {
+    if (input.getString() === "\n") {
       return includingNewline ? { count: 1 } : null;
     }
     return { count: 1 };
   };
-}
+};
 
-export const charGroupMatcher=(items,invert)=>{
-  return input=>{
-    
-  };
+export const charGroupMatcher = (items, invert) => {
+  return input => {};
 };

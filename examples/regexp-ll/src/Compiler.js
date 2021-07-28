@@ -130,7 +130,7 @@ export default class Compiler {
     qUnit.start.pushTransition(qUnit.end);
     unit.end.pushTransition(qUnit.end);
     if (lazy) {
-      qUnit.end.transitions.reverse();
+      qUnit.start.transitions.reverse();
     }
     return qUnit;
   }
@@ -154,7 +154,7 @@ export default class Compiler {
     unit.start.pushTransition(qUnit.end);
     unit.end.pushTransition(unit.start);
     if (lazy) {
-      unit.transitions.reverse();
+      unit.start.transitions.reverse();
     }
     return qUnit;
   }

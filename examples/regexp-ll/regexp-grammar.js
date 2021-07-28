@@ -8,7 +8,7 @@ const my = {
   c9,
   createMatchString(str, lexer) {
     const { input } = lexer;
-    if (input.lastIndexOf(str, str.length) !== 0) {
+    if (input.lastIndexOf(str, 0) !== 0) {
       return false;
     }
     return [str];

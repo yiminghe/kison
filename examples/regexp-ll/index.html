@@ -36,6 +36,7 @@
 <h2>test case</h2>
 <div>
     &nbsp; <button id='range'>range</button>
+    &nbsp; <button id='lazy'>lazy</button>
 </div>
 
 <script type="module">
@@ -106,6 +107,11 @@
         range.addEventListener('click', () => {
             pattern.value = '(a|b){2,4}';
             input.value = 'ababab';
+        });
+
+        $('lazy').addEventListener('click', () => {
+            pattern.value = 'a*?a';
+            input.value = 'aaa';
         });
 
         parseBtn.addEventListener('click', () => {

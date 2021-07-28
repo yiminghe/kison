@@ -1,8 +1,7 @@
 export const anchorMatchers = {
   "^"(input) {
     return (
-      input.isStart() ||
-      (input.options.multiline && input.getString(-1) === "\n")
+      !input.index || (input.options.multiline && input.getString(-1) === "\n")
     );
   },
   anchorWordBoundary(input) {
@@ -12,7 +11,7 @@ export const anchorMatchers = {
     return !input.isAtWordBoundary();
   },
   anchorStartOfStringOnly(input) {
-    return input.isStart();
+    return !input.index;
   },
   anchorEndOfStringOnlyNotNewline(input) {
     return input.isEnd();
@@ -28,15 +27,15 @@ export const anchorMatchers = {
     );
   },
   anchorPreviousMatchEnd(input) {
-    if (input.isStart()) {
-      return true;
-    }
     return input.index === input.previousMatchIndex;
   }
 };
 
 export const stringMatcher = (str, caseInsensitive) => {
   return input => {
+    if (input.isEnd()) {
+      return null;
+    }
     let ret;
     if (caseInsensitive) {
       ret = input.getString(str.length).toLowerCase() === str.toLowerCase();
@@ -53,6 +52,9 @@ export const backreferenceMatcher = index => {
     if (!group) {
       return false;
     }
+    if (input.isEnd()) {
+      return null;
+    }
     return group === input.getString(group.length)
       ? { count: group.length }
       : null;
@@ -62,7 +64,7 @@ export const backreferenceMatcher = index => {
 export const anyCharMatcher = includingNewline => {
   return input => {
     if (input.isEnd()) {
-      return false;
+      return null;
     }
     if (input.getString() === "\n") {
       return includingNewline ? { count: 1 } : null;

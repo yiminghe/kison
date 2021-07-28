@@ -25,6 +25,9 @@ export default class Compiler {
 
   compile(node) {
     const m = `compile${node.symbol || upperCaseFirstChar(node.token)}`;
+    if (m === "compile$") {
+      debugger;
+    }
     if (this[m]) {
       return this[m](node);
     }
@@ -77,26 +80,51 @@ export default class Compiler {
     unit.start.pushTransition(unit.end, backreferenceMatcher(index));
   }
 
-  _compileQuantifier(unit, quantifier) {
+  _compileQuantifier(getUnit, quantifier) {
     const lazy = quantifier.children[1]?.text === "?";
     const typeNodes = quantifier.children[0].children;
     const type = typeNodes[0].text;
     switch (type) {
       case "*":
-        return this._zeroOrMore(unit, lazy);
+        return this._zeroOrMore(getUnit, lazy);
       case "+":
-        return this._oneOrMore(unit, lazy);
+        return this._oneOrMore(getUnit, lazy);
       case "?":
-        return this._zeroOrOne(unit, lazy);
+        return this._zeroOrOne(getUnit, lazy);
       case "{":
-        return this._range(unit, typeNodes, lazy);
+        return this._range(getUnit, typeNodes, lazy);
     }
     throw new Error("unsupported quantifier for " + type);
   }
 
-  _range(unit, range, lazy) {}
+  _range(getUnit, range, lazy) {
+    const lower = parseInt(range[1].text);
+    const upper = parseInt(range[3]?.text);
+    const hasMore = range.length > 3;
+    let units = [];
+    for (let i = 0; i < lower; i++) {
+      units.push(getUnit());
+    }
+    if (upper) {
+      // `(x(x(x)?)?)?`
+      let nest;
+      if (upper > lower) {
+        for (let i = lower; i < upper; i++) {
+          nest = nest ? concatUnits("nest", [getUnit(), nest]) : getUnit();
+          nest = this._zeroOrOne(() => nest, lazy);
+        }
+      }
+      if (nest) {
+        units.push(nest);
+      }
+    } else if (hasMore) {
+      units.push(this._zeroOrMore(getUnit, lazy));
+    }
+    return concatUnits("range", units);
+  }
 
-  _zeroOrOne(unit, lazy) {
+  _zeroOrOne(getUnit, lazy) {
+    const unit = getUnit();
     const qUnit = new StateUnit("?");
     qUnit.start.pushTransition(unit.start);
     qUnit.start.pushTransition(qUnit.end);
@@ -107,7 +135,8 @@ export default class Compiler {
     return qUnit;
   }
 
-  _oneOrMore(unit, lazy) {
+  _oneOrMore(getUnit, lazy) {
+    const unit = getUnit();
     const qUnit = new StateUnit("+");
     qUnit.start.pushTransition(unit.start);
     unit.end.pushTransition(unit.start);
@@ -118,7 +147,8 @@ export default class Compiler {
     return qUnit;
   }
 
-  _zeroOrMore(unit, lazy) {
+  _zeroOrMore(getUnit, lazy) {
+    const unit = getUnit();
     const qUnit = new StateUnit("*");
     qUnit.start.pushTransition(unit.start);
     unit.start.pushTransition(qUnit.end);
@@ -148,25 +178,30 @@ export default class Compiler {
     if (capture) {
       this.captureGroupIndex++;
     }
-    const expUnit = this.compile(exp);
-    if (capture) {
-      this.captureGroupStateStartMap.set(expUnit.start, groupIndex);
-      this.captureGroupStateEndMap.set(expUnit.end, groupIndex);
-    }
+
+    const getUnit = () => {
+      const expUnit = this.compile(exp);
+      if (capture) {
+        this.captureGroupStateStartMap.set(expUnit.start, groupIndex);
+        this.captureGroupStateEndMap.set(expUnit.end, groupIndex);
+      }
+      return expUnit;
+    };
+
     const lastChild = node.children[node.children.length - 1];
     if (lastChild.symbol === "Quantifier") {
-      return this._compileQuantifier(expUnit, lastChild);
+      return this._compileQuantifier(getUnit, lastChild);
     }
-    return expUnit;
+    return getUnit();
   }
 
   compileMatch(node) {
-    const itemUnit = this.compile(node.children[0]);
+    const getUnit = () => this.compile(node.children[0]);
     const lastChild = node.children[node.children.length - 1];
     if (lastChild.symbol === "Quantifier") {
-      return this._compileQuantifier(itemUnit, lastChild);
+      return this._compileQuantifier(getUnit, lastChild);
     }
-    return itemUnit;
+    return getUnit();
   }
 
   compileMatchItem(node) {
@@ -208,6 +243,8 @@ export default class Compiler {
 
   compileAnchor(node) {
     const token = node.children[0].token;
-    return anchorMatchers[token];
+    const unit = new StateUnit(token);
+    unit.start.pushTransition(unit.end, anchorMatchers[token]);
+    return unit;
   }
 }

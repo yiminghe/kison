@@ -5,7 +5,7 @@ https://github.com/yiminghe/kison
 ## usage
 
 ```js
-const regexp = require('@yiminghe/regexp');
+import * as regexp from '@yiminghe/regexp';
 
 // parse ast
 console.log(regexp.parse('(a|b)*z'));

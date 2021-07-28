@@ -158,7 +158,6 @@ module.exports = () => ({
       rhs: ["CharacterClass"]
     },
 
-
     /* Character Classes
 ------------------------------------------------------------------*/
     {
@@ -227,7 +226,7 @@ module.exports = () => ({
     },
     {
       symbol: "QuantifierType",
-      rhs: ["{", "int", ",", "int", "}"]
+      rhs: ["{", "int", ",", "int?", "}"]
     },
 
     /* Anchors

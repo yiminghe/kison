@@ -1,11 +1,13 @@
-import { StateUnit } from './state.js';
+import { StateUnit } from "./state.js";
 
 export function isWord(s) {
   const code = s.charCodeAt(0);
-  return s === '_' ||
-    (s >= 'a' && s <= 'z') ||
-    (s >= 'A' && s <= 'Z') ||
-    (code >= 0x4e00 && code <= 0x9fa5);
+  return (
+    s === "_" ||
+    (s >= "a" && s <= "z") ||
+    (s >= "A" && s <= "Z") ||
+    (code >= 0x4e00 && code <= 0x9fa5)
+  );
 }
 
 export function concatUnits(type, us) {
@@ -21,6 +23,13 @@ export function concatUnits(type, us) {
   const ret = new StateUnit(type);
   ret.start = us[0].start;
   ret.end = us[l - 1].end;
+  return ret;
+}
+
+export function wrapUnit(u) {
+  const ret = new StateUnit(type);
+  ret.start.pushTransition(u.start);
+  u.end.pushTransition(ret.end);
   return ret;
 }
 

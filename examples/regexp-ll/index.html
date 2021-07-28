@@ -30,6 +30,12 @@
     <input style="width:200px" id='pattern' value="(a|b)*z" />/);
     <br /> <br /> <button id='parseBtn'>parse</button>
     &nbsp; <button id='evaluate'>evaluate</button>
+    &nbsp; <button id='evaluate2'>js native evaluate</button>
+</div>
+
+<h2>test case</h2>
+<div>
+    &nbsp; <button id='range'>range</button>
 </div>
 
 <script type="module">
@@ -61,17 +67,45 @@
         const input = $('input');
         const parseBtn = $('parseBtn');
         const evaluate = $('evaluate');
+        const evaluate2 = $('evaluate2');
 
         evaluate.addEventListener('click', () => {
             const patternInstance = compile(pattern.value);
             const matcher = patternInstance.matcher(input.value);
             let m;
-            console.log('match ***********************');
-            console.log(input.value + '.match(/' + pattern.value + '/)');
+            console.log('*********************** ' + input.value + '.match(/' + pattern.value + '/)');
+            let ok;
             while (m = matcher.match()) {
+                ok = true;
                 console.log(m);
             }
+            if (!ok) {
+                console.log('no match!!');
+            }
             console.log('***********************');
+            console.log('');
+        });
+
+        evaluate2.addEventListener('click', () => {
+            const reg = new RegExp(pattern.value, 'g');
+            const str = input.value;
+            let m;
+            console.log('*********************** js native:' + input.value + '.match(/' + pattern.value + '/)');
+            let ok;
+            while (m = reg.exec(str)) {
+                ok = true;
+                console.log(m);
+            }
+            if (!ok) {
+                console.log('no match!!');
+            }
+            console.log('***********************');
+            console.log('');
+        });
+
+        range.addEventListener('click', () => {
+            pattern.value = '(a|b){2,4}';
+            input.value = 'ababab';
         });
 
         parseBtn.addEventListener('click', () => {

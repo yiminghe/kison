@@ -20,9 +20,6 @@ function matchInput(compiler, input, state) {
   if (!state.transitions.length) {
     return input;
   }
-  if (input.isEnd()) {
-    return false;
-  }
 
   for (const t of state.transitions) {
     let newInput = input.clone();
@@ -52,7 +49,7 @@ class Matcher {
 
   match() {
     let { input, compiler } = this;
-    while (!input.isEnd()) {
+    do {
       let matchedInput = matchInput(compiler, input, compiler.startState);
       if (matchedInput) {
         input = matchedInput;
@@ -69,7 +66,7 @@ class Matcher {
         return ret;
       }
       input.advanceStartIndex();
-    }
+    } while (!input.isEnd());
     return null;
   }
 }

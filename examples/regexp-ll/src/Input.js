@@ -12,6 +12,10 @@ export default class Input {
     this.startIndex = 0;
     this.index = 0;
     this.previousMatchIndex = 0;
+    this.resetState();
+  }
+
+  resetState() {
     this.startGroupIndex = [];
     this.groups = [];
   }
@@ -22,14 +26,15 @@ export default class Input {
 
   advanceStartIndex() {
     this.startIndex++;
-    this.groups = [];
+    this.index = this.startIndex;
+    this.resetState();
   }
 
   advanceMatch() {
     const { index } = this;
     this.previousMatchIndex = index;
     this.startIndex = index;
-    this.groups = [];
+    this.resetState();
   }
 
   getString(count = 1) {
@@ -49,10 +54,6 @@ export default class Input {
     input.startGroupIndex = this.startGroupIndex.concat();
     input.groups = this.groups.map(g => Object.assign({}, g));
     return input;
-  }
-
-  isStart() {
-    return this.index === this.startIndex;
   }
 
   isEnd() {

@@ -28,6 +28,7 @@
 <div>
     <input style="width:200px" id='input' value="abzaaz" />.match(/
     <input style="width:200px" id='pattern' value="(a|b)*z" />/);
+    &nbsp; <input type="checkbox" id='g' checked>g</button>
     <br /> <br /> <button id='parseBtn'>parse</button>
     &nbsp; <button id='evaluate'>evaluate</button>
     &nbsp; <button id='evaluate2'>js native evaluate</button>
@@ -37,6 +38,7 @@
 <div>
     &nbsp; <button id='range'>range</button>
     &nbsp; <button id='lazy'>lazy</button>
+    &nbsp; <button id='evil'>evil</button>
 </div>
 
 <script type="module">
@@ -68,6 +70,7 @@
         const input = $('input');
         const parseBtn = $('parseBtn');
         const evaluate = $('evaluate');
+        const g = $('g');
         const evaluate2 = $('evaluate2');
 
         evaluate.addEventListener('click', () => {
@@ -80,6 +83,9 @@
             while (m = matcher.match()) {
                 ok = true;
                 console.log(m);
+                if(!g.checked){
+                    break;
+                }
             }
             if (!ok) {
                 console.log('no match!!');
@@ -98,6 +104,9 @@
             while (m = reg.exec(str)) {
                 ok = true;
                 console.log(m);
+                if(!g.checked){
+                    break;
+                }
             }
             if (!ok) {
                 console.log('no match!!');
@@ -114,6 +123,11 @@
         $('lazy').addEventListener('click', () => {
             pattern.value = 'a*?a';
             input.value = 'aaa';
+        });
+
+        $('evil').addEventListener('evil', () => {
+            pattern.value = '(a*)*c';
+            input.value = 'aaaaaaaaaaaaaaaaaaaab';
         });
 
         parseBtn.addEventListener('click', () => {

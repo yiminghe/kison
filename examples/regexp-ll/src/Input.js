@@ -52,7 +52,7 @@ export default class Input {
     input.index = this.index;
     input.startIndex = this.startIndex;
     input.startGroupIndex = this.startGroupIndex.concat();
-    input.groups = this.groups.map(g => Object.assign({}, g));
+    input.groups = this.groups.concat();
     return input;
   }
 

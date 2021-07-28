@@ -71,6 +71,7 @@
         const evaluate2 = $('evaluate2');
 
         evaluate.addEventListener('click', () => {
+            const start = Date.now();
             const patternInstance = compile(pattern.value);
             const matcher = patternInstance.matcher(input.value);
             let m;
@@ -83,11 +84,12 @@
             if (!ok) {
                 console.log('no match!!');
             }
-            console.log('***********************');
+            console.log('***********************', Date.now() - start);
             console.log('');
         });
 
         evaluate2.addEventListener('click', () => {
+            const start = Date.now();
             const reg = new RegExp(pattern.value, 'g');
             const str = input.value;
             let m;
@@ -100,7 +102,7 @@
             if (!ok) {
                 console.log('no match!!');
             }
-            console.log('***********************');
+            console.log('***********************', Date.now() - start);
             console.log('');
         });
 

@@ -26,8 +26,8 @@ export function concatUnits(type, us) {
   return ret;
 }
 
-export function wrapUnit(u) {
-  const ret = new StateUnit(type);
+export function wrapUnit(u, group) {
+  const ret = new StateUnit(`${u.type}${group ? "Group" : "Wrap"}`);
   ret.start.pushTransition(u.start);
   u.end.pushTransition(ret.end);
   return ret;
@@ -35,4 +35,17 @@ export function wrapUnit(u) {
 
 export function upperCaseFirstChar(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function annotateGroupIndex(ast, index = { count: 0 }) {
+  if (ast.symbol === "Group") {
+    if (ast.children[1].text !== "?:") {
+      ast.captureGroupIndex = ++index.count;
+    }
+  }
+  if (ast.children) {
+    ast.children.forEach(c => {
+      annotateGroupIndex(c, index);
+    });
+  }
 }

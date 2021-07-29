@@ -5,7 +5,12 @@ import {
   stringMatcher,
   charGroupMatcher
 } from "./matchers.js";
-import { concatUnits, upperCaseFirstChar } from "./utils.js";
+import {
+  concatUnits,
+  upperCaseFirstChar,
+  annotateGroupIndex,
+  wrapUnit
+} from "./utils.js";
 import { StateUnit } from "./state.js";
 import parser from "./parser.js";
 
@@ -14,11 +19,12 @@ export default class Compiler {
     this.options = options || {};
     this.captureGroupStateStartMap = new Map();
     this.captureGroupStateEndMap = new Map();
-    this.captureGroupIndex = 1;
   }
 
   initWithPattern(pattern) {
-    this.unit = this.compile(parser.parse(pattern).ast);
+    const { ast } = parser.parse(pattern);
+    annotateGroupIndex(ast);
+    this.unit = this.compile(ast);
     this.startState = this.unit.start;
     return this;
   }
@@ -168,20 +174,15 @@ export default class Compiler {
   }
 
   compileGroup(node) {
-    let capture = true;
     let exp = node.children[1];
-    if (exp.text === "?:") {
-      capture = false;
+    let groupIndex = node.captureGroupIndex;
+    if (!groupIndex) {
       exp = node.children[2];
     }
-    let groupIndex = this.captureGroupIndex;
-    if (capture) {
-      this.captureGroupIndex++;
-    }
-
     const getUnit = () => {
-      const expUnit = this.compile(exp);
-      if (capture) {
+      let expUnit = this.compile(exp);
+      if (groupIndex) {
+        expUnit = wrapUnit(expUnit, true);
         this.captureGroupStateStartMap.set(expUnit.start, groupIndex);
         this.captureGroupStateEndMap.set(expUnit.end, groupIndex);
       }

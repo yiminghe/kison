@@ -6,6 +6,14 @@ const c9 = "9".charCodeAt(0);
 const my = {
   c0,
   c9,
+  charRange: [
+    [0x09],
+    [0x0a],
+    [0x0d],
+    [0x20, 0xd7ff],
+    [0xe000, 0xfffd],
+    [0x10000, 0x10ffff]
+  ],
   createMatchString(str, lexer) {
     const { input } = lexer;
     if (input.lastIndexOf(str, 0) !== 0) {
@@ -13,16 +21,24 @@ const my = {
     }
     return [str];
   },
-  createMatchCharRange(range, lexer) {
-    const char = lexer.input[0];
+  matchChar(lexer) {
+    const { input } = lexer;
+    let m = "";
+    let char = input[0];
+    m += char;
+    if (char === "\\") {
+      char = input[1];
+      m += char;
+    }
+    const range = my.charRange;
     const charCode = char.charCodeAt(0);
     for (const r of range) {
       if (r.length == 1) {
         if (r[0] === charCode) {
-          return [char];
+          return [m];
         }
       } else if (charCode >= r[0] || charCode <= r[1]) {
-        return [char];
+        return [m];
       }
     }
     return false;
@@ -69,12 +85,6 @@ function createEscapeMatchLexerRules(map) {
     token: map[k],
     regexp: createStringMatch(`\\${k}`)
   }));
-}
-
-const slashCode = "\\".charCodeAt(0);
-
-function createRangeMatch(range) {
-  return `my.createMatchCharRange.bind(undefined, ${JSON.stringify(range)})`;
 }
 
 function createStringMatch(str) {
@@ -312,15 +322,13 @@ module.exports = () => ({
         token: "int"
       },
       {
-        regexp: createRangeMatch([
-          [0x09],
-          [0x0a],
-          [0x0d],
-          [0x20, 0xd7ff],
-          [0xe000, 0xfffd],
-          [0x10000, 0x10ffff]
-        ]),
-        token: "char"
+        regexp: "my.matchChar",
+        token: "char",
+        action() {
+          if (this.text[0] === "\\") {
+            this.text = this.text.slice(1);
+          }
+        }
       }
     ]
   }

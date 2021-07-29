@@ -48,15 +48,16 @@ export const stringMatcher = (str, caseInsensitive) => {
 
 export const backreferenceMatcher = index => {
   return input => {
-    const group = input.group[index];
+    const group = input.groups[index - 1];
     if (!group) {
-      return false;
+      return null;
     }
     if (input.isEnd()) {
       return null;
     }
-    return group === input.getString(group.length)
-      ? { count: group.length }
+    const { match } = group;
+    return match === input.getString(match.length)
+      ? { count: match.length }
       : null;
   };
 };

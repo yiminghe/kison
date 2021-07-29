@@ -39,6 +39,7 @@
     &nbsp; <button id='range'>range</button>
     &nbsp; <button id='lazy'>lazy</button>
     &nbsp; <button id='evil'>evil</button>
+    &nbsp; <button id='backreference'>backreference</button>
 </div>
 
 <script type="module">
@@ -128,6 +129,11 @@
         $('evil').addEventListener('click', () => {
             pattern.value = '(a*)*c';
             input.value = 'a';
+        });
+
+        $('backreference').addEventListener('click', () => {
+            pattern.value = '(a)b\\1';
+            input.value = 'aba';
         });
 
         parseBtn.addEventListener('click', () => {

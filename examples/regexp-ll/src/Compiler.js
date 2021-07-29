@@ -80,10 +80,11 @@ export default class Compiler {
     return this.compile(node.children[0]);
   }
 
-  compileBackrefernce(node) {
+  compileBackreference(node) {
     const index = parseInt(node.text.slice(1));
     const unit = new StateUnit("Backreference" + index);
     unit.start.pushTransition(unit.end, backreferenceMatcher(index));
+    return unit;
   }
 
   _compileQuantifier(getUnit, quantifier) {

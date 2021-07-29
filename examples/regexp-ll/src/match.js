@@ -36,7 +36,9 @@ function matchInput(input, state, callSiteMap = new Map()) {
     let newInput = input.clone();
     const find = t.perform(newInput);
     if (find) {
-      newInput.advance(find.count);
+      if (find.count) {
+        newInput.advance(find.count);
+      }
       const ret = matchInput.call(this, newInput, t.to, callSiteMap);
       if (ret) {
         return ret;
@@ -66,7 +68,8 @@ export class Matcher {
   }
 
   getCacheResultIndexMap(input) {
-    const cacheMap = this.cacheResult[input.index] = this.cacheResult[input.index] || new Map();
+    const cacheMap = (this.cacheResult[input.index] =
+      this.cacheResult[input.index] || new Map());
     return cacheMap;
   }
 

@@ -40,6 +40,7 @@
     &nbsp; <button id='lazy'>lazy</button>
     &nbsp; <button id='evil'>evil</button>
     &nbsp; <button id='backreference'>backreference</button>
+    &nbsp; <button id='characterGroup'>characterGroup</button>
 </div>
 
 <script type="module">
@@ -134,6 +135,11 @@
         $('backreference').addEventListener('click', () => {
             pattern.value = '(a)b\\1';
             input.value = 'aba';
+        });
+
+        $('characterGroup').addEventListener('click',()=>{
+            pattern.value = '[1-9a.]';
+            input.value = '222accbcc';
         });
 
         parseBtn.addEventListener('click', () => {

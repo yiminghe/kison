@@ -10,6 +10,10 @@ export function isWord(s) {
   );
 }
 
+export function isNumber(s) {
+  return s >= "0" && s <= "9";
+}
+
 export function concatUnits(type, us) {
   const l = us.length;
   if (l === 1) {

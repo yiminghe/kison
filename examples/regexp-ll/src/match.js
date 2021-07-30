@@ -84,9 +84,9 @@ export class Matcher {
         const { startIndex, index } = input;
         const matchString = input.getString(startIndex - index);
         const ret = {
-          input: input.str,
           match: matchString,
           index: startIndex,
+          input: input.str,
           groups: input.groups
         };
         input.advanceMatch();

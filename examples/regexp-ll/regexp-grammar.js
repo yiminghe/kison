@@ -14,51 +14,78 @@ const my = {
     [0xe000, 0xfffd],
     [0x10000, 0x10ffff]
   ],
-  createMatchString(str, lexer) {
-    const { input } = lexer;
+  createMatchString(str, { input }) {
     if (input.lastIndexOf(str, 0) !== 0) {
       return false;
     }
     return [str];
   },
-  matchChar(lexer) {
-    const { input } = lexer;
+  matchEscapeChar({ input }) {
     let m = "";
     let char = input[0];
     m += char;
     if (char === "\\") {
       char = input[1];
       m += char;
+    } else {
+      return false;
     }
+    if (m === "\\u") {
+      const matchNumber = my.matchNumber(input.slice(2));
+      if (matchNumber && matchNumber[0].length === 4) {
+        return [
+          m + matchNumber,
+          String.fromCharCode(parseInt(matchNumber, 16))
+        ];
+      }
+    }
+    if (my.matchChar({ input: char })) {
+      return [m, char];
+    }
+    return false;
+  },
+  matchAnyChar(lexer) {
+    const char = lexer.input[0];
+    if (char === "." && !lexer.userData.insideCharacterGroup) {
+      return [char];
+    }
+    return false;
+  },
+  matchChar({ input }) {
+    let char = input[0];
     const range = my.charRange;
     const charCode = char.charCodeAt(0);
     for (const r of range) {
       if (r.length == 1) {
         if (r[0] === charCode) {
-          return [m];
+          return [char];
         }
       } else if (charCode >= r[0] || charCode <= r[1]) {
-        return [m];
+        return [char];
       }
     }
     return false;
   },
-  matchBackreference(lexer) {
-    const { input } = lexer;
+  matchBackreference({ input }) {
     if (input[0] !== "\\") {
       return false;
     }
-    const match = my.matchNumber({ input: input.slice(1) });
+    const match = my.matchNumber(input.slice(1));
     if (match === false) {
       return false;
     }
     match[0] = "\\" + match[0];
     return match;
   },
-  matchNumber(lexer) {
+  matchQuantifierNumber(lexer) {
+    if (lexer.userData.insideQuantifierRange) {
+      return my.matchNumber(lexer.input);
+    }
+    return false;
+  },
+  matchNumber(input) {
     let index = 0;
     const match = [];
-    const { input } = lexer;
     const l = input.length;
     while (index < l) {
       const char = input[index];
@@ -149,7 +176,7 @@ module.exports = () => ({
     },
     {
       symbol: "MatchItem",
-      rhs: ["."]
+      rhs: ["anyChar"]
     },
     {
       symbol: "MatchItem",
@@ -194,6 +221,10 @@ module.exports = () => ({
     {
       symbol: "CharacterClass",
       rhs: ["characterClassAnyWordInverted"]
+    },
+    {
+      symbol: "CharacterClass",
+      rhs: ["characterClassAnyWord"]
     },
     {
       symbol: "CharacterClass",
@@ -273,30 +304,20 @@ module.exports = () => ({
 
   lexer: {
     rules: [
-      ...createLiteralLexerRules([
-        "$",
-        ",",
-        "^",
-        "?:",
-        "?",
-        "(",
-        ")",
-        "{",
-        "}",
-        "[",
-        "]",
-        "-",
-        "|",
-        "*",
-        "+",
-        "."
-      ]),
-
       ...createEscapeMatchLexerRules({
         w: "characterClassAnyWord",
         W: "characterClassAnyWordInverted",
         d: "characterClassAnyDecimalDigit",
-        D: "characterClassAnyDecimalDigitInverted"
+        D: "characterClassAnyDecimalDigitInverted",
+
+        /* Anchors
+       ------------------------------------------------------------------*/
+        b: "anchorWordBoundary",
+        B: "anchorNonWordBoundary",
+        A: "anchorStartOfStringOnly",
+        z: "anchorEndOfStringOnlyNotNewline",
+        Z: "anchorEndOfStringOnly",
+        G: "anchorPreviousMatchEnd"
       }),
 
       /* Backreferences
@@ -306,29 +327,73 @@ module.exports = () => ({
         token: "backreference"
       },
 
-      /* Anchors
-      ------------------------------------------------------------------*/
-      ...createEscapeMatchLexerRules({
-        b: "anchorWordBoundary",
-        B: "anchorNonWordBoundary",
-        A: "anchorStartOfStringOnly",
-        z: "anchorEndOfStringOnlyNotNewline",
-        Z: "anchorEndOfStringOnly",
-        G: "anchorPreviousMatchEnd"
-      }),
-
       {
-        regexp: "my.matchNumber",
-        token: "int"
-      },
-      {
-        regexp: "my.matchChar",
+        regexp: "my.matchEscapeChar",
         token: "char",
         action() {
-          if (this.text[0] === "\\") {
-            this.text = this.text.slice(1);
-          }
+          this.text = this.matches[1];
         }
+      },
+
+      ...createLiteralLexerRules([
+        "$",
+        ",",
+        "^",
+        "?:",
+        "?",
+        "(",
+        ")",
+        "-",
+        "|",
+        "*",
+        "+"
+      ]),
+
+      {
+        regexp: createStringMatch("["),
+        token: "[",
+        action() {
+          this.userData.insideCharacterGroup = true;
+        }
+      },
+
+      {
+        regexp: createStringMatch("]"),
+        token: "]",
+        action() {
+          this.userData.insideCharacterGroup = false;
+        }
+      },
+
+      {
+        regexp: "my.matchAnyChar",
+        token: "anyChar"
+      },
+
+      {
+        regexp: createStringMatch("{"),
+        token: "{",
+        action() {
+          this.userData.insideQuantifierRange = true;
+        }
+      },
+
+      {
+        regexp: createStringMatch("}"),
+        token: "}",
+        action() {
+          this.userData.insideQuantifierRange = false;
+        }
+      },
+
+      {
+        regexp: "my.matchQuantifierNumber",
+        token: "int"
+      },
+
+      {
+        regexp: "my.matchChar",
+        token: "char"
       }
     ]
   }

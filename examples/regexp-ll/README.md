@@ -43,7 +43,7 @@ The backslash (<code>\\</code>) either indicates that the character that follows
 
 - <code><b>\\</b><i>keyword</i></code> – interprets the keyword literally, e.g. `\{` matches the opening bracket
 - <code><b>\\<i></b>special_character</i></code> – interprets the special character, e.g. `\b` matches word boundary (more info in "Anchors")
-
+- <code><b>\\u<i></b>hexadecimal_number</i></code> – interprets the hexadecimal number to char, e.g. `\u0061` matches character 'a'
 ### Anchors
 
 Anchors specify a position in the string where a match must occur.

@@ -3,7 +3,8 @@ import {
   backreferenceMatcher,
   anyCharMatcher,
   stringMatcher,
-  charGroupMatcher
+  charGroupMatcher,
+  characterClassMatcher
 } from "./matchers.js";
 import {
   concatUnits,
@@ -210,21 +211,35 @@ export default class Compiler {
     return this.compile(node.children[0]);
   }
 
-  compileMatchCharacterClass(node) {}
+  compileMatchCharacterClass(node) {
+    return this.compile(node.children[0]);
+  }
+
+  compileCharacterClass(node) {
+    const token = node.children[0].token;
+    const unit = new StateUnit("CharacterGroup");
+    let matcher = characterClassMatcher[token];
+    if (!matcher) {
+      throw new Error("compileCharacterClass no matcher: " + token.token);
+    }
+    unit.start.pushTransition(unit.end, matcher);
+    return unit;
+  }
 
   compileCharacterGroup(node) {
     let invert = false;
     const itemsNode = node.children[1];
-    if (itemNode.text === "^") {
+    if (itemsNode.text === "^") {
       invert = true;
       itemsNode = node.children[2];
     }
     const items = itemsNode.children;
     const unit = new StateUnit("CharacterGroup");
     unit.start.pushTransition(unit.end, charGroupMatcher(items, invert));
+    return unit;
   }
 
-  "compile."(node) {
+  compileAnyChar(node) {
     const unit = new StateUnit(".");
     unit.start.pushTransition(
       unit.end,

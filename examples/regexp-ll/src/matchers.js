@@ -1,3 +1,5 @@
+import { isWord, isNumber } from "./utils.js";
+
 export const anchorMatchers = {
   "^"(input) {
     return (
@@ -75,5 +77,53 @@ export const anyCharMatcher = includingNewline => {
 };
 
 export const charGroupMatcher = (items, invert) => {
-  return input => {};
+  return input => {
+    let ret = !!invert;
+    for (const item of items) {
+      const child = item.children[0];
+      if (child.symbol === "CharacterClass") {
+        const cls = child.children[0].token;
+        if (characterClassMatcher[cls](input)) {
+          ret = !ret;
+          break;
+        }
+      } else if (child.symbol === "CharacterRange") {
+        const chars = child.children.map(c => c.text);
+        const lower = chars[0];
+        let upper = chars[2];
+        const current = input.getString();
+        if (upper) {
+          if (current >= lower && current <= upper) {
+            ret = !ret;
+            break;
+          }
+        } else if (current === lower) {
+          ret = !ret;
+          break;
+        }
+      } else {
+        throw new Error("charGroupMatcher unmatch item:" + child.symbol);
+      }
+    }
+    return ret
+      ? {
+          count: 1
+        }
+      : false;
+  };
+};
+
+export const characterClassMatcher = {
+  characterClassAnyWord(input) {
+    return isWord(input.getString()) ? { count: 1 } : null;
+  },
+  characterClassAnyWordInverted(input) {
+    return !isWord(input.getString()) ? { count: 1 } : null;
+  },
+  characterClassAnyDecimalDigit(input) {
+    return isNumber(input.getString()) ? { count: 1 } : null;
+  },
+  characterClassAnyDecimalDigitInverted(input) {
+    return !isNumber(input.getString()) ? { count: 1 } : null;
+  }
 };

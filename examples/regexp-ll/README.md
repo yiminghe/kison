@@ -12,7 +12,12 @@ console.log(regexp.parse('(a|b)*z'));
 
 // match
 const patternInstance = regexp.compile('(a|b)*z');
-const matcher = patternInstance.matcher('abzaaz');
+const options={
+  multiline:false,
+  caseInsensitive:false,
+  dotMatchesLineSeparators:false,
+};
+const matcher = patternInstance.matcher('abzaaz', options);
 let m;
 while (m = matcher.match()) {
   console.log(m);

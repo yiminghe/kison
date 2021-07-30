@@ -16,8 +16,7 @@ import { StateUnit } from "./state.js";
 import parser from "./parser.js";
 
 export default class Compiler {
-  constructor(options) {
-    this.options = options || {};
+  constructor() {
     this.captureGroupStateStartMap = new Map();
     this.captureGroupStateEndMap = new Map();
   }
@@ -228,7 +227,7 @@ export default class Compiler {
 
   compileCharacterGroup(node) {
     let invert = false;
-    const itemsNode = node.children[1];
+    let itemsNode = node.children[1];
     if (itemsNode.text === "^") {
       invert = true;
       itemsNode = node.children[2];
@@ -241,20 +240,14 @@ export default class Compiler {
 
   compileAnyChar(node) {
     const unit = new StateUnit(".");
-    unit.start.pushTransition(
-      unit.end,
-      anyCharMatcher(this.options.includeNewLine)
-    );
+    unit.start.pushTransition(unit.end, anyCharMatcher);
     return unit;
   }
 
   compileChar(node) {
     const char = node.text;
     const unit = new StateUnit("Char");
-    unit.start.pushTransition(
-      unit.end,
-      stringMatcher(char, this.options.caseInsensitive)
-    );
+    unit.start.pushTransition(unit.end, stringMatcher(char));
     return unit;
   }
 

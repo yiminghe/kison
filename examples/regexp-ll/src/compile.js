@@ -1,10 +1,10 @@
 import Compiler from "./Compiler.js";
-import { Matcher } from './match.js';
+import { Matcher } from "./match.js";
 
-export default function compile(pattern, options = {}) {
-  const compiler = new Compiler(options).initWithPattern(pattern);
+export default function compile(pattern) {
+  const compiler = new Compiler().initWithPattern(pattern);
   return {
-    matcher(str) {
+    matcher(str, options = {}) {
       return new Matcher(compiler, str, options);
     }
   };

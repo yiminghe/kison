@@ -86,9 +86,11 @@ export class Matcher {
         const ret = {
           match: matchString,
           index: startIndex,
-          input: input.str,
-          groups: input.groups
+          input: input.str
         };
+        if (input.groups.length) {
+          ret.groups = input.groups;
+        }
         input.advanceMatch();
         return ret;
       }

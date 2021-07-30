@@ -33,13 +33,13 @@ export const anchorMatchers = {
   }
 };
 
-export const stringMatcher = (str, caseInsensitive) => {
+export const stringMatcher = str => {
   return input => {
     if (input.isEnd()) {
       return null;
     }
     let ret;
-    if (caseInsensitive) {
+    if (input.options.caseInsensitive) {
       ret = input.getString(str.length).toLowerCase() === str.toLowerCase();
     } else {
       ret = input.getString(str.length) === str;
@@ -64,20 +64,21 @@ export const backreferenceMatcher = index => {
   };
 };
 
-export const anyCharMatcher = includingNewline => {
-  return input => {
-    if (input.isEnd()) {
-      return null;
-    }
-    if (input.getString() === "\n") {
-      return includingNewline ? { count: 1 } : null;
-    }
-    return { count: 1 };
-  };
+export const anyCharMatcher = input => {
+  if (input.isEnd()) {
+    return null;
+  }
+  if (input.getString() === "\n") {
+    return input.options.dotMatchesLineSeparators ? { count: 1 } : null;
+  }
+  return { count: 1 };
 };
 
 export const charGroupMatcher = (items, invert) => {
   return input => {
+    if (input.isEnd()) {
+      return null;
+    }
     let ret = !!invert;
     for (const item of items) {
       const child = item.children[0];

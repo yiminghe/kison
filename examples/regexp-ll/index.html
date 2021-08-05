@@ -44,6 +44,10 @@
     &nbsp; <button id='evil'>evil</button>
     &nbsp; <button id='backreference'>backreference</button>
     &nbsp; <button id='characterGroup'>characterGroup</button>
+    &nbsp; <button id='lookahead'>lookahead</button>
+    &nbsp; <button id='nagativeLookahead'>nagativeLookahead</button>
+    &nbsp; <button id='lookbehind'>lookbehind</button>
+    &nbsp; <button id='nagativeLookbehind'>nagativeLookbehind</button>
 </div>
 
 <script type="module">
@@ -158,6 +162,25 @@
         $('backreference').addEventListener('click', () => {
             pattern.value = '(a)b\\1';
             input.value = 'aba';
+        });
+
+        $('lookahead').addEventListener('click', () => {
+            pattern.value = '(?=(a))(\\w)';
+            input.value = 'aba';
+        });
+        $('nagativeLookahead').addEventListener('click', () => {
+            pattern.value = '(?!(b))(\\w)';
+            input.value = 'aba';
+        });
+
+        $('lookbehind').addEventListener('click', () => {
+            pattern.value = '(?<=(b)(a))(\\w)';
+            input.value = 'dbacbac';
+        });
+
+        $('nagativeLookbehind').addEventListener('click', () => {
+            pattern.value = '(?<!(d)(b))(\\w)';
+            input.value = 'dbacbac';
         });
 
         $('characterGroup').addEventListener('click', () => {

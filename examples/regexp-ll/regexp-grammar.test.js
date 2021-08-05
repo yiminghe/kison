@@ -66,12 +66,16 @@ describe("regexp", () => {
         r.push(m.match);
         delete m.input;
         if (m.groups) {
-          m.groups.forEach(g => {
+          for (const g of m.groups) {
+            if (!g) {
+              r.push(undefined);
+              continue;
+            }
             if (!g.name) {
               delete g.name;
             }
             r.push(g.match);
-          });
+          }
         }
         if (m.namedGroups) {
           if (Object.keys(m.namedGroups).length === 0) {
@@ -550,6 +554,268 @@ describe("regexp", () => {
           ],
         }
       `);
+    });
+
+    it("assertions", () => {
+      expect(runTest("aba", "(?=(a))(\\w)")).toMatchInlineSnapshot(`
+        Object {
+          "js": Array [
+            Object {
+              "groups": Array [
+                Object {
+                  "index": 0,
+                  "match": "a",
+                },
+                Object {
+                  "index": 0,
+                  "match": "a",
+                },
+              ],
+              "index": 0,
+              "match": "a",
+            },
+            Object {
+              "groups": Array [
+                Object {
+                  "index": 2,
+                  "match": "a",
+                },
+                Object {
+                  "index": 2,
+                  "match": "a",
+                },
+              ],
+              "index": 2,
+              "match": "a",
+            },
+          ],
+          "native": Array [
+            Array [
+              "a",
+              "a",
+              "a",
+            ],
+            Array [
+              "a",
+              "a",
+              "a",
+            ],
+          ],
+        }
+      `);
+
+      expect(runTest("aba", "(?!(b))(\\w)")).toMatchInlineSnapshot(`
+Object {
+  "js": Array [
+    Object {
+      "groups": Array [
+        ,
+        Object {
+          "index": 0,
+          "match": "a",
+        },
+      ],
+      "index": 0,
+      "match": "a",
+    },
+    Object {
+      "groups": Array [
+        ,
+        Object {
+          "index": 2,
+          "match": "a",
+        },
+      ],
+      "index": 2,
+      "match": "a",
+    },
+  ],
+  "native": Array [
+    Array [
+      "a",
+      undefined,
+      "a",
+    ],
+    Array [
+      "a",
+      undefined,
+      "a",
+    ],
+  ],
+}
+`);
+      expect(runTest("dbacbac", "(?<=(b)(a))(\\w)")).toMatchInlineSnapshot(`
+Object {
+  "js": Array [
+    Object {
+      "groups": Array [
+        Object {
+          "index": 1,
+          "match": "b",
+        },
+        Object {
+          "index": 2,
+          "match": "a",
+        },
+        Object {
+          "index": 3,
+          "match": "c",
+        },
+      ],
+      "index": 3,
+      "match": "c",
+    },
+    Object {
+      "groups": Array [
+        Object {
+          "index": 4,
+          "match": "b",
+        },
+        Object {
+          "index": 5,
+          "match": "a",
+        },
+        Object {
+          "index": 6,
+          "match": "c",
+        },
+      ],
+      "index": 6,
+      "match": "c",
+    },
+  ],
+  "native": Array [
+    Array [
+      "c",
+      "b",
+      "a",
+      "c",
+    ],
+    Array [
+      "c",
+      "b",
+      "a",
+      "c",
+    ],
+  ],
+}
+`);
+      expect(runTest("dbacbac", "(?<!(d)(b))(\\w)")).toMatchInlineSnapshot(`
+Object {
+  "js": Array [
+    Object {
+      "groups": Array [
+        ,
+        ,
+        Object {
+          "index": 0,
+          "match": "d",
+        },
+      ],
+      "index": 0,
+      "match": "d",
+    },
+    Object {
+      "groups": Array [
+        ,
+        ,
+        Object {
+          "index": 1,
+          "match": "b",
+        },
+      ],
+      "index": 1,
+      "match": "b",
+    },
+    Object {
+      "groups": Array [
+        ,
+        ,
+        Object {
+          "index": 3,
+          "match": "c",
+        },
+      ],
+      "index": 3,
+      "match": "c",
+    },
+    Object {
+      "groups": Array [
+        ,
+        ,
+        Object {
+          "index": 4,
+          "match": "b",
+        },
+      ],
+      "index": 4,
+      "match": "b",
+    },
+    Object {
+      "groups": Array [
+        ,
+        ,
+        Object {
+          "index": 5,
+          "match": "a",
+        },
+      ],
+      "index": 5,
+      "match": "a",
+    },
+    Object {
+      "groups": Array [
+        ,
+        ,
+        Object {
+          "index": 6,
+          "match": "c",
+        },
+      ],
+      "index": 6,
+      "match": "c",
+    },
+  ],
+  "native": Array [
+    Array [
+      "d",
+      undefined,
+      undefined,
+      "d",
+    ],
+    Array [
+      "b",
+      undefined,
+      undefined,
+      "b",
+    ],
+    Array [
+      "c",
+      undefined,
+      undefined,
+      "c",
+    ],
+    Array [
+      "b",
+      undefined,
+      undefined,
+      "b",
+    ],
+    Array [
+      "a",
+      undefined,
+      undefined,
+      "a",
+    ],
+    Array [
+      "c",
+      undefined,
+      undefined,
+      "c",
+    ],
+  ],
+}
+`);
     });
   });
 });

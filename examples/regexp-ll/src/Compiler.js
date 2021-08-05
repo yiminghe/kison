@@ -4,7 +4,8 @@ import {
   anyCharMatcher,
   stringMatcher,
   charGroupMatcher,
-  characterClassMatcher
+  characterClassMatcher,
+  assertionMatcher
 } from "./matchers.js";
 import {
   concatUnits,
@@ -19,6 +20,7 @@ export default class Compiler {
   constructor() {
     this.captureGroupStateStartMap = new Map();
     this.captureGroupStateEndMap = new Map();
+    this.inverted = false;
   }
 
   initWithPattern(pattern) {
@@ -29,11 +31,12 @@ export default class Compiler {
     return this;
   }
 
+  setInverted(inverted) {
+    this.inverted = inverted;
+  }
+
   compile(node) {
     const m = `compile${node.symbol || upperCaseFirstChar(node.token)}`;
-    if (m === "compile$") {
-      debugger;
-    }
     if (this[m]) {
       return this[m](node);
     }
@@ -65,6 +68,9 @@ export default class Compiler {
       return subUnits[0];
     }
     const unit = new StateUnit("|");
+    if (this.inverted) {
+      subUnits.reverse();
+    }
     for (const u of subUnits) {
       unit.start.pushTransition(u.start);
       u.end.pushTransition(unit.end);
@@ -73,7 +79,11 @@ export default class Compiler {
   }
 
   compileSubExpression(node) {
-    return concatUnits("SubExpression", node.children.map(this.compile, this));
+    const subUnits = node.children.map(this.compile, this);
+    if (this.inverted) {
+      subUnits.reverse();
+    }
+    return concatUnits("SubExpression", subUnits);
   }
 
   compileExpressionItem(node) {
@@ -262,9 +272,17 @@ export default class Compiler {
   }
 
   compileAnchor(node) {
-    const token = node.children[0].token;
+    const c0 = node.children[0];
+    const token = c0.token;
     const unit = new StateUnit(token);
-    unit.start.pushTransition(unit.end, anchorMatchers[token]);
+    if (assertionMatcher[token]) {
+      const exp = node.children[1];
+      unit.start.pushTransition(unit.end, assertionMatcher[token](exp, this));
+    } else if (anchorMatchers[token]) {
+      unit.start.pushTransition(unit.end, anchorMatchers[token]);
+    } else {
+      throw new Error("unrecognized anchor token: " + token);
+    }
     return unit;
   }
 }

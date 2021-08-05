@@ -5,7 +5,12 @@ export default class Input {
     this.str = str;
     this.options = options;
     this.endIndex = str.length - 1;
+    this.inverted = false;
     this.reset();
+  }
+
+  setInverted() {
+    this.inverted = true;
   }
 
   reset() {
@@ -21,8 +26,25 @@ export default class Input {
     this.groups = [];
   }
 
+  injectGroups(match) {
+    if (match.groups) {
+      for (let i = 0; i < match.groups.length; i++) {
+        if (match.groups[i]) {
+          this.groups[i] = match.groups[i];
+        }
+      }
+    }
+    if (match.namedGroups) {
+      Object.assign(this.namedGroups, match.namedGroups);
+    }
+  }
+
   advance(count) {
-    this.index += count;
+    if (this.inverted) {
+      this.index -= count;
+    } else {
+      this.index += count;
+    }
   }
 
   advanceStartIndex() {
@@ -40,7 +62,13 @@ export default class Input {
 
   getString(count = 1) {
     let start = this.index;
-    let end = start + count;
+    let end;
+    if (this.inverted) {
+      end = this.index + 1;
+      start = Math.max(0, end - count);
+    } else {
+      end = this.index + count;
+    }
     if (start > end) {
       [start, end] = [end, start];
     }
@@ -51,6 +79,7 @@ export default class Input {
     const input = new Input(this.str, this.options);
     input.previousMatchIndex = this.previousMatchIndex;
     input.index = this.index;
+    input.inverted = this.inverted;
     input.startIndex = this.startIndex;
     input.startGroupIndex = this.startGroupIndex.concat();
     input.groups = this.groups.concat();
@@ -59,7 +88,7 @@ export default class Input {
   }
 
   isEnd() {
-    return this.index > this.endIndex;
+    return this.index < 0 || this.index > this.endIndex;
   }
 
   isAtLastIndex() {
@@ -71,7 +100,7 @@ export default class Input {
       return true;
     }
     const c = this.getString();
-    const l = this.index > this.startIndex ? this.getString(-1) : " ";
+    const l = this.index > 0 ? this.getString(-1) : " ";
     if (isWord(c)) {
       return !isWord(l);
     } else {

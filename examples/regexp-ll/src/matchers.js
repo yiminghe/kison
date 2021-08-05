@@ -1,4 +1,5 @@
 import { isWord, isNumber } from "./utils.js";
+import { Matcher } from "./match.js";
 
 export const anchorMatchers = {
   "^"(input) {
@@ -126,5 +127,54 @@ export const characterClassMatcher = {
   },
   characterClassAnyDecimalDigitInverted(input) {
     return !isNumber(input.getString()) ? { count: 1 } : null;
+  }
+};
+
+export const assertionMatcher = {
+  lookahead(exp, compiler, invert) {
+    const unit = compiler.compile(exp);
+    const matcher = new Matcher(compiler);
+    return input => {
+      matcher.input = input.clone();
+      let match = matcher.match(unit.start, true);
+      if (invert) {
+        return match ? false : { count: 0 };
+      }
+      if (match) {
+        input.injectGroups(match);
+        return {
+          count: 0
+        };
+      }
+      return false;
+    };
+  },
+  negativeLookahead(exp, compiler) {
+    return assertionMatcher.lookahead(exp, compiler, true);
+  },
+  lookbehind(exp, compiler, invert) {
+    compiler.setInverted(true);
+    const unit = compiler.compile(exp);
+    compiler.setInverted(false);
+    const matcher = new Matcher(compiler);
+    return input => {
+      matcher.input = input.clone();
+      matcher.input.setInverted();
+      matcher.input.advance(1);
+      let match = matcher.match(unit.start, true);
+      if (invert) {
+        return match ? false : { count: 0 };
+      }
+      if (match) {
+        input.injectGroups(match);
+        return {
+          count: 0
+        };
+      }
+      return false;
+    };
+  },
+  negativeLookbehind(exp, compiler) {
+    return assertionMatcher.lookbehind(exp, compiler, true);
   }
 };

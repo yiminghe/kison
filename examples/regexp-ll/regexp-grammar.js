@@ -321,6 +321,22 @@ module.exports = () => ({
     {
       symbol: "Anchor",
       rhs: ["$"]
+    },
+    {
+      symbol: "Anchor",
+      rhs: ["lookahead", "Expression", ")"]
+    },
+    {
+      symbol: "Anchor",
+      rhs: ["negativeLookahead", "Expression", ")"]
+    },
+    {
+      symbol: "Anchor",
+      rhs: ["lookbehind", "Expression", ")"]
+    },
+    {
+      symbol: "Anchor",
+      rhs: ["negativeLookbehind", "Expression", ")"]
     }
   ],
 

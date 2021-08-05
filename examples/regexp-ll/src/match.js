@@ -22,11 +22,20 @@ function matchInput(input, state, callSiteMap = new Map()) {
   }
   let groupEndIndex = this.compiler.groupEndIndex(state);
   if (groupEndIndex) {
-    const index = input.startGroupIndex[groupEndIndex.index - 1];
+    let startIndex = { ...input.startGroupIndex[groupEndIndex.index - 1] };
+    let endIndex = {
+      index: input.index,
+      name: startIndex.name
+    };
+    if (startIndex.index > endIndex.index) {
+      const s = startIndex.index;
+      startIndex.index = Math.max(0, endIndex.index + 1);
+      endIndex.index = s + 1;
+    }
     let name = groupEndIndex.name;
     let value = {
-      ...index,
-      match: input.getString(index.index - input.index)
+      ...startIndex,
+      match: input.str.slice(startIndex.index, endIndex.index)
     };
     input.groups[groupEndIndex.index - 1] = value;
     if (name) {
@@ -63,7 +72,7 @@ function matchInput(input, state, callSiteMap = new Map()) {
 
 export class Matcher {
   constructor(compiler, string, options) {
-    this.input = new Input(string, options);
+    this.input = string ? new Input(string, options) : null;
     this.compiler = compiler;
     this.cacheResult = [];
   }
@@ -79,11 +88,15 @@ export class Matcher {
     return cacheMap;
   }
 
-  match() {
+  match(startState, once) {
     let { input } = this;
     do {
       this.cacheResult = [];
-      let matchedInput = matchInput.call(this, input, this.compiler.startState);
+      let matchedInput = matchInput.call(
+        this,
+        input,
+        startState || this.compiler.startState
+      );
       if (matchedInput) {
         input = matchedInput;
         this.input = input;
@@ -96,13 +109,15 @@ export class Matcher {
         };
         if (input.groups.length) {
           ret.groups = input.groups;
-          ret.namedGroups = input.namedGroups;
+          if (Object.keys(input.namedGroups).length) {
+            ret.namedGroups = input.namedGroups;
+          }
         }
         input.advanceMatch();
         return ret;
       }
       input.advanceStartIndex();
-    } while (!input.isEnd());
+    } while (!once && !input.isEnd());
     return null;
   }
 }

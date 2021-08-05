@@ -26,9 +26,6 @@ while (m = matcher.match()) {
 
 ## Features
 
-Modified from https://github.com/kean/Regex
-
-
 ### Character Classes
 
 A character class matches any one of a set of characters.
@@ -49,6 +46,8 @@ The backslash (<code>\\</code>) either indicates that the character that follows
 - <code><b>\\</b><i>keyword</i></code> – interprets the keyword literally, e.g. `\{` matches the opening bracket
 - <code><b>\\<i></b>special_character</i></code> – interprets the special character, e.g. `\b` matches word boundary (more info in "Anchors")
 - <code><b>\\u<i></b>hexadecimal_number</i></code> – interprets the hexadecimal number to char, e.g. `\u0061` matches character 'a'
+
+
 ### Anchors
 
 Anchors specify a position in the string where a match must occur.
@@ -60,6 +59,17 @@ Anchors specify a position in the string where a match must occur.
 - <code><b>\z</b></code> – matches the end of the string (ignores `.multiline` option)
 - <code><b>\G</b></code> – match must occur at the point where the previous match ended
 - <code><b>\b</b></code> – match must occur on a boundary between a word character and a non-word character (negation: `\B`)
+
+## Assertions
+
+- <code><b>x(?=y)</b></code> – <b>Lookahead assertion</b>: Matches "x" only if "x" is followed by "y". For example, /Jack(?=Sprat)/ matches "Jack" only if it is followed by "Sprat".
+/Jack(?=Sprat|Frost)/ matches "Jack" only if it is followed by "Sprat" or "Frost". However, neither "Sprat" nor "Frost" is part of the match results.
+
+- <code><b>x(?!y)</b></code> – <b>Negative lookahead assertion</b>: Matches "x" only if "x" is not followed by "y". For example, /\d+(?!\.)/ matches a number only if it is not followed by a decimal point. /\d+(?!\.)/.exec('3.141') matches "141" but not "3".
+
+- <code><b>(?<=y)x</b></code> – <b>Lookbehind assertion</b>: Matches "x" only if "x" is preceded by "y". For example, /(?<=Jack)Sprat/ matches "Sprat" only if it is preceded by "Jack". /(?<=Jack|Tom)Sprat/ matches "Sprat" only if it is preceded by "Jack" or "Tom". However, neither "Jack" nor "Tom" is part of the match results.
+
+- <code><b>(?<!y)x</b></code> – <b>Negative lookbehind assertion</b>: Matches "x" only if "x" is not preceded by "y". For example, /(?<!-)\d+/ matches a number only if it is not preceded by a minus sign. /(?<!-)\d+/.exec('3') matches "3". /(?<!-)\d+/.exec('-3')  match is not found because the number is preceded by the minus sign.
 
 ### Grouping Constructs
 

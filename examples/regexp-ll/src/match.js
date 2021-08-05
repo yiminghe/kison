@@ -15,17 +15,23 @@ function matchInput(input, state, callSiteMap = new Map()) {
 
   let groupStartIndex = this.compiler.groupStartIndex(state);
   if (groupStartIndex) {
-    groupStartIndex--;
-    input.startGroupIndex[groupStartIndex] = input.index;
+    input.startGroupIndex[groupStartIndex.index - 1] = {
+      index: input.index,
+      name: groupStartIndex.name
+    };
   }
   let groupEndIndex = this.compiler.groupEndIndex(state);
   if (groupEndIndex) {
-    groupEndIndex--;
-    const index = input.startGroupIndex[groupEndIndex];
-    input.groups[groupEndIndex] = {
-      index,
-      match: input.getString(index - input.index)
+    const index = input.startGroupIndex[groupEndIndex.index - 1];
+    let name = groupEndIndex.name;
+    let value = {
+      ...index,
+      match: input.getString(index.index - input.index)
     };
+    input.groups[groupEndIndex.index - 1] = value;
+    if (name) {
+      input.namedGroups[name] = value;
+    }
   }
 
   if (!state.transitions.length) {
@@ -90,6 +96,7 @@ export class Matcher {
         };
         if (input.groups.length) {
           ret.groups = input.groups;
+          ret.namedGroups = input.namedGroups;
         }
         input.advanceMatch();
         return ret;

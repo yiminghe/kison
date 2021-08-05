@@ -97,6 +97,23 @@ const my = {
       index++;
     }
     return match.length ? [match.join("")] : false;
+  },
+  matchNamedGroupPrefix({ input }) {
+    const prefix = "(?<";
+    if (input.lastIndexOf(prefix, 0) !== 0) {
+      return false;
+    }
+    const remain = input.slice(prefix.length);
+    let index = 0;
+    let char = remain.charAt(index).toLowerCase();
+    while (char >= "a" && char <= "z") {
+      char = remain.charAt(++index).toLowerCase();
+    }
+    if (char === ">") {
+      const name = remain.slice(0, index);
+      return [prefix + name + ">", name];
+    }
+    return false;
   }
 };
 
@@ -166,6 +183,10 @@ module.exports = () => ({
     {
       symbol: "Group",
       rhs: ["(", "?:?", "Expression", ")", "Quantifier?"]
+    },
+    {
+      symbol: "Group",
+      rhs: ["namedGroupPrefix", "Expression", ")", "Quantifier?"]
     },
 
     /* Match
@@ -330,6 +351,33 @@ module.exports = () => ({
       {
         regexp: "my.matchEscapeChar",
         token: "char",
+        action() {
+          this.text = this.matches[1];
+        }
+      },
+
+      /* Assertions
+    ------------------------------------------------------------------ */
+      {
+        regexp: createStringMatch(`(?=`),
+        token: "lookahead"
+      },
+      {
+        regexp: createStringMatch(`(?!`),
+        token: "negativeLookahead"
+      },
+      {
+        regexp: createStringMatch(`(?<=`),
+        token: "lookbehind"
+      },
+      {
+        regexp: createStringMatch(`(?<!`),
+        token: "negativeLookbehind"
+      },
+
+      {
+        regexp: "my.matchNamedGroupPrefix",
+        token: "namedGroupPrefix",
         action() {
           this.text = this.matches[1];
         }

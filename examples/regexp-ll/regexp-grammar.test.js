@@ -11,7 +11,8 @@ describe("regexp", () => {
       "a{1,2}",
       "a{1}",
       "[a-z\b]",
-      "[^a-z]"
+      "[^a-z]",
+      "(?<a>c)b"
     ];
 
     for (const r of reg) {
@@ -49,6 +50,18 @@ describe("regexp", () => {
       let m;
       while ((m = matcher.match())) {
         delete m.input;
+        if (m.groups) {
+          m.groups.forEach(g => {
+            if (!g.name) {
+              delete g.name;
+            }
+          });
+        }
+        if (m.namedGroups) {
+          if (Object.keys(m.namedGroups).length === 0) {
+            delete m.namedGroups;
+          }
+        }
         ret.js.push(m);
       }
     }
@@ -170,7 +183,7 @@ describe("regexp", () => {
     });
 
     it("Grouping Constructs", () => {
-      expect(runTest("abzaaz", "(a|b)*z")).toMatchInlineSnapshot(`
+      expect(runTest("abzaaz", "(?<c>a|b)*(z)")).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -178,30 +191,56 @@ describe("regexp", () => {
                 Object {
                   "index": 1,
                   "match": "b",
+                  "name": "c",
+                },
+                Object {
+                  "index": 2,
+                  "match": "z",
                 },
               ],
               "index": 0,
               "match": "abz",
+              "namedGroups": Object {
+                "c": Object {
+                  "index": 1,
+                  "match": "b",
+                  "name": "c",
+                },
+              },
             },
             Object {
               "groups": Array [
                 Object {
                   "index": 4,
                   "match": "a",
+                  "name": "c",
+                },
+                Object {
+                  "index": 5,
+                  "match": "z",
                 },
               ],
               "index": 3,
               "match": "aaz",
+              "namedGroups": Object {
+                "c": Object {
+                  "index": 4,
+                  "match": "a",
+                  "name": "c",
+                },
+              },
             },
           ],
           "native": Array [
             Array [
               "abz",
               "b",
+              "z",
             ],
             Array [
               "aaz",
               "a",
+              "z",
             ],
           ],
         }

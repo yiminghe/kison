@@ -16,6 +16,7 @@ export default class Input {
   }
 
   resetState() {
+    this.namedGroups = {};
     this.startGroupIndex = [];
     this.groups = [];
   }
@@ -53,6 +54,7 @@ export default class Input {
     input.startIndex = this.startIndex;
     input.startGroupIndex = this.startGroupIndex.concat();
     input.groups = this.groups.concat();
+    input.namedGroups = { ...this.namedGroups };
     return input;
   }
 

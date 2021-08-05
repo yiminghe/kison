@@ -177,15 +177,25 @@ export default class Compiler {
   compileGroup(node) {
     let exp = node.children[1];
     let groupIndex = node.captureGroupIndex;
-    if (!groupIndex) {
+    let name;
+    if (node.children[0].token === "namedGroupPrefix") {
+      name = node.children[0].text;
+    }
+    if (!name && !groupIndex) {
       exp = node.children[2];
     }
     const getUnit = () => {
       let expUnit = this.compile(exp);
       if (groupIndex) {
         expUnit = wrapUnit(expUnit, true);
-        this.captureGroupStateStartMap.set(expUnit.start, groupIndex);
-        this.captureGroupStateEndMap.set(expUnit.end, groupIndex);
+        this.captureGroupStateStartMap.set(expUnit.start, {
+          index: groupIndex,
+          name
+        });
+        this.captureGroupStateEndMap.set(expUnit.end, {
+          name,
+          index: groupIndex
+        });
       }
       return expUnit;
     };

@@ -195,6 +195,192 @@ exports[`regexp parser works for (?:a)+? 1`] = `
 }"
 `;
 
+exports[`regexp parser works for (?<a>c)b 1`] = `
+"{
+  'symbol': 'Regexp',
+  'children': [
+    {
+      'symbol': 'Expression',
+      'children': [
+        {
+          'symbol': 'SubExpression',
+          'children': [
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Group',
+                  'children': [
+                    {
+                      'text': 'a',
+                      'token': 'namedGroupPrefix',
+                      'start': 0,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 6
+                    },
+                    {
+                      'symbol': 'Expression',
+                      'children': [
+                        {
+                          'symbol': 'SubExpression',
+                          'children': [
+                            {
+                              'symbol': 'ExpressionItem',
+                              'children': [
+                                {
+                                  'symbol': 'Match',
+                                  'children': [
+                                    {
+                                      'symbol': 'MatchItem',
+                                      'children': [
+                                        {
+                                          'text': 'c',
+                                          'token': 'char',
+                                          'start': 5,
+                                          'end': 6,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 6,
+                                          'lastColumn': 7
+                                        }
+                                      ],
+                                      'start': 5,
+                                      'end': 6,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 6,
+                                      'lastColumn': 7
+                                    }
+                                  ],
+                                  'start': 5,
+                                  'end': 6,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 6,
+                                  'lastColumn': 7
+                                }
+                              ],
+                              'start': 5,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 7
+                            }
+                          ],
+                          'start': 5,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 6,
+                          'lastColumn': 7
+                        }
+                      ],
+                      'start': 5,
+                      'end': 6,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 6,
+                      'lastColumn': 7
+                    },
+                    {
+                      'text': ')',
+                      'token': ')',
+                      'start': 6,
+                      'end': 7,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 7,
+                      'lastColumn': 8
+                    }
+                  ],
+                  'start': 0,
+                  'end': 7,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 8
+                }
+              ],
+              'start': 0,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 8
+            },
+            {
+              'symbol': 'ExpressionItem',
+              'children': [
+                {
+                  'symbol': 'Match',
+                  'children': [
+                    {
+                      'symbol': 'MatchItem',
+                      'children': [
+                        {
+                          'text': 'b',
+                          'token': 'char',
+                          'start': 7,
+                          'end': 8,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 8,
+                          'lastColumn': 9
+                        }
+                      ],
+                      'start': 7,
+                      'end': 8,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 8,
+                      'lastColumn': 9
+                    }
+                  ],
+                  'start': 7,
+                  'end': 8,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 8,
+                  'lastColumn': 9
+                }
+              ],
+              'start': 7,
+              'end': 8,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 8,
+              'lastColumn': 9
+            }
+          ],
+          'start': 0,
+          'end': 8,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 9
+        }
+      ],
+      'start': 0,
+      'end': 8,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 9
+    }
+  ],
+  'start': 0,
+  'end': 8,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 9
+}"
+`;
+
 exports[`regexp parser works for (a|b)*z 1`] = `
 "{
   'symbol': 'Regexp',

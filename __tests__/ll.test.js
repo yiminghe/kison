@@ -125,9 +125,9 @@ describe("ll", () => {
       "[
         'S => A ',
         'B => d ',
-        'A_ => c b A_ ',
-        'A => a B A_ ',
-        'A_ => '
+        '(A)1_ => c b (A)1_ ',
+        'A => a B (A)1_ ',
+        '(A)1_ => '
       ]"
     `);
   });
@@ -172,10 +172,10 @@ describe("ll", () => {
       .toMatchInlineSnapshot(`
       "[
         'S => b ',
-        '_S => C ',
-        '_S => B ',
-        '_S => A ',
-        'S => a _S '
+        '_1(S) => C ',
+        '_1(S) => B ',
+        '_1(S) => A ',
+        'S => a _1(S) '
       ]"
     `);
   });
@@ -229,20 +229,20 @@ describe("ll", () => {
     const table = grammar.visualizeTable();
 
     expect(table).toMatchInlineSnapshot(`
-"-: E ( => E -> T, E_
--: E id => E -> T, E_
-E_ + => E_ -> +, T, E_
--: E_ $EOF => E_ -> EMPTY
--: E_ ) => E_ -> EMPTY
-T ( => T -> F, T_
-T id => T -> F, T_
-T_ * => T_ -> *, F, T_
--: T_ + => T_ -> EMPTY
--: T_ $EOF => T_ -> EMPTY
--: T_ ) => T_ -> EMPTY
-F ( => F -> (, E, )
-F id => F -> id"
-`);
+      "-: E ( => E -> T, E_
+      -: E id => E -> T, E_
+      E_ + => E_ -> +, T, E_
+      -: E_ $EOF => E_ -> EMPTY
+      -: E_ ) => E_ -> EMPTY
+      T ( => T -> F, T_
+      T id => T -> F, T_
+      T_ * => T_ -> *, F, T_
+      -: T_ + => T_ -> EMPTY
+      -: T_ $EOF => T_ -> EMPTY
+      -: T_ ) => T_ -> EMPTY
+      F ( => F -> (, E, )
+      F id => F -> id"
+    `);
   });
   it("ast works", () => {
     var grammar = new LLGrammar(calGrammar());
@@ -250,161 +250,161 @@ F id => F -> id"
     const parser = Function.call(null, code + "\n return parser;")();
     const ast = parser.parse("1+2+3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'symbol': 'add',
-          'children': [
-            {
-              'symbol': 'expo',
-              'label': 'single-exp',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '1',
-                      'token': 'NUMBER',
-                      'start': 0,
-                      'end': 1,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 2
-                    }
-                  ],
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            },
-            {
-              'text': '+',
-              'token': '+',
-              'start': 1,
-              'end': 2,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 3
-            },
-            {
-              'symbol': 'expo',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ],
-              'label': 'single-exp',
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4
-            }
-          ],
-          'label': 'single-exp',
-          'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'symbol': 'expo',
-          'children': [
-            {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '3',
-                  'token': 'NUMBER',
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                }
-              ],
-              'start': 4,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 6
-            }
-          ],
-          'label': 'single-exp',
-          'start': 4,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 6
-        }
-      ],
-      'label': 'single-exp',
-      'start': 0,
-      'end': 5,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 6
-    }
-  ],
-  'start': 0,
-  'end': 5,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 6
-}"
-`);
+      "{
+        'symbol': 'exp',
+        'children': [
+          {
+            'symbol': 'add',
+            'children': [
+              {
+                'symbol': 'add',
+                'children': [
+                  {
+                    'symbol': 'expo',
+                    'label': 'single-exp',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '1',
+                            'token': 'NUMBER',
+                            'start': 0,
+                            'end': 1,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 1,
+                            'lastColumn': 2
+                          }
+                        ],
+                        'start': 0,
+                        'end': 1,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 1,
+                        'lastColumn': 2
+                      }
+                    ],
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2
+                  },
+                  {
+                    'text': '+',
+                    'token': '+',
+                    'start': 1,
+                    'end': 2,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 2,
+                    'lastColumn': 3
+                  },
+                  {
+                    'symbol': 'expo',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '2',
+                            'token': 'NUMBER',
+                            'start': 2,
+                            'end': 3,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 3,
+                            'lastColumn': 4
+                          }
+                        ],
+                        'start': 2,
+                        'end': 3,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 3,
+                        'lastColumn': 4
+                      }
+                    ],
+                    'label': 'single-exp',
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 0,
+                'end': 3,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 4
+              },
+              {
+                'text': '+',
+                'token': '+',
+                'start': 3,
+                'end': 4,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 4,
+                'lastColumn': 5
+              },
+              {
+                'symbol': 'expo',
+                'children': [
+                  {
+                    'symbol': 'atom',
+                    'children': [
+                      {
+                        'text': '3',
+                        'token': 'NUMBER',
+                        'start': 4,
+                        'end': 5,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 5,
+                        'lastColumn': 6
+                      }
+                    ],
+                    'start': 4,
+                    'end': 5,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 5,
+                    'lastColumn': 6
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 4,
+                'end': 5,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 5,
+                'lastColumn': 6
+              }
+            ],
+            'label': 'single-exp',
+            'start': 0,
+            'end': 5,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 6
+          }
+        ],
+        'start': 0,
+        'end': 5,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 6
+      }"
+    `);
   });
 
   it("ast works", () => {
@@ -413,161 +413,161 @@ F id => F -> id"
     const parser = Function.call(null, code + "\n return parser;")();
     const ast = parser.parse("1+2*3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'symbol': 'expo',
-          'label': 'single-exp',
-          'children': [
-            {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '1',
-                  'token': 'NUMBER',
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            }
-          ],
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3
-        },
-        {
-          'symbol': 'mul',
-          'children': [
-            {
-              'symbol': 'expo',
-              'label': 'single-exp',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ],
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4
-            },
-            {
-              'text': '*',
-              'token': '*',
-              'start': 3,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 4,
-              'lastColumn': 5
-            },
-            {
-              'symbol': 'expo',
-              'label': 'single-exp',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '3',
-                      'token': 'NUMBER',
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    }
-                  ],
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                }
-              ],
-              'start': 4,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 6
-            }
-          ],
-          'label': 'single-exp',
-          'start': 2,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 6
-        }
-      ],
-      'label': 'single-exp',
-      'start': 0,
-      'end': 5,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 6
-    }
-  ],
-  'start': 0,
-  'end': 5,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 6
-}"
-`);
+      "{
+        'symbol': 'exp',
+        'children': [
+          {
+            'symbol': 'add',
+            'children': [
+              {
+                'symbol': 'expo',
+                'label': 'single-exp',
+                'children': [
+                  {
+                    'symbol': 'atom',
+                    'children': [
+                      {
+                        'text': '1',
+                        'token': 'NUMBER',
+                        'start': 0,
+                        'end': 1,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 1,
+                        'lastColumn': 2
+                      }
+                    ],
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2
+                  }
+                ],
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2
+              },
+              {
+                'text': '+',
+                'token': '+',
+                'start': 1,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 2,
+                'lastColumn': 3
+              },
+              {
+                'symbol': 'mul',
+                'children': [
+                  {
+                    'symbol': 'expo',
+                    'label': 'single-exp',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '2',
+                            'token': 'NUMBER',
+                            'start': 2,
+                            'end': 3,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 3,
+                            'lastColumn': 4
+                          }
+                        ],
+                        'start': 2,
+                        'end': 3,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 3,
+                        'lastColumn': 4
+                      }
+                    ],
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4
+                  },
+                  {
+                    'text': '*',
+                    'token': '*',
+                    'start': 3,
+                    'end': 4,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 4,
+                    'lastColumn': 5
+                  },
+                  {
+                    'symbol': 'expo',
+                    'label': 'single-exp',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '3',
+                            'token': 'NUMBER',
+                            'start': 4,
+                            'end': 5,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 5,
+                            'lastColumn': 6
+                          }
+                        ],
+                        'start': 4,
+                        'end': 5,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 5,
+                        'lastColumn': 6
+                      }
+                    ],
+                    'start': 4,
+                    'end': 5,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 5,
+                    'lastColumn': 6
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 2,
+                'end': 5,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 6
+              }
+            ],
+            'label': 'single-exp',
+            'start': 0,
+            'end': 5,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 6
+          }
+        ],
+        'start': 0,
+        'end': 5,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 6
+      }"
+    `);
   });
 
   it("ast works", () => {
@@ -576,302 +576,302 @@ F id => F -> id"
     const parser = Function.call(null, code + "\n return parser;")();
     const ast = parser.parse("1+2*4-5^2^3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'symbol': 'add',
-          'children': [
-            {
-              'symbol': 'expo',
-              'label': 'single-exp',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '1',
-                      'token': 'NUMBER',
-                      'start': 0,
-                      'end': 1,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 2
-                    }
-                  ],
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            },
-            {
-              'text': '+',
-              'token': '+',
-              'start': 1,
-              'end': 2,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 3
-            },
-            {
-              'symbol': 'mul',
-              'children': [
-                {
-                  'symbol': 'expo',
-                  'label': 'single-exp',
-                  'children': [
-                    {
-                      'symbol': 'atom',
-                      'children': [
-                        {
-                          'text': '2',
-                          'token': 'NUMBER',
-                          'start': 2,
-                          'end': 3,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 3,
-                          'lastColumn': 4
-                        }
-                      ],
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                },
-                {
-                  'text': '*',
-                  'token': '*',
-                  'start': 3,
-                  'end': 4,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 4,
-                  'lastColumn': 5
-                },
-                {
-                  'symbol': 'expo',
-                  'label': 'single-exp',
-                  'children': [
-                    {
-                      'symbol': 'atom',
-                      'children': [
-                        {
-                          'text': '4',
-                          'token': 'NUMBER',
-                          'start': 4,
-                          'end': 5,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 5,
-                          'lastColumn': 6
-                        }
-                      ],
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    }
-                  ],
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                }
-              ],
-              'label': 'single-exp',
-              'start': 2,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 6
-            }
-          ],
-          'label': 'single-exp',
-          'start': 0,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 6
-        },
-        {
-          'text': '-',
-          'token': '-',
-          'start': 5,
-          'end': 6,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 6,
-          'lastColumn': 7
-        },
-        {
-          'symbol': 'expo',
-          'children': [
-            {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '5',
-                  'token': 'NUMBER',
-                  'start': 6,
-                  'end': 7,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 7,
-                  'lastColumn': 8
-                }
-              ],
-              'start': 6,
-              'end': 7,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 7,
-              'lastColumn': 8
-            },
-            {
-              'text': '^',
-              'token': '^',
-              'start': 7,
-              'end': 8,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 8,
-              'lastColumn': 9
-            },
-            {
-              'symbol': 'expo',
-              'label': 'single-exp',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 8,
-                      'end': 9,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 9,
-                      'lastColumn': 10
-                    }
-                  ],
-                  'start': 8,
-                  'end': 9,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 9,
-                  'lastColumn': 10
-                },
-                {
-                  'text': '^',
-                  'token': '^',
-                  'start': 9,
-                  'end': 10,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 10,
-                  'lastColumn': 11
-                },
-                {
-                  'symbol': 'expo',
-                  'label': 'single-exp',
-                  'children': [
-                    {
-                      'symbol': 'atom',
-                      'children': [
-                        {
-                          'text': '3',
-                          'token': 'NUMBER',
-                          'start': 10,
-                          'end': 11,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 11,
-                          'lastColumn': 12
-                        }
-                      ],
-                      'start': 10,
-                      'end': 11,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 11,
-                      'lastColumn': 12
-                    }
-                  ],
-                  'start': 10,
-                  'end': 11,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 12
-                }
-              ],
-              'start': 8,
-              'end': 11,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 9,
-              'lastColumn': 12
-            }
-          ],
-          'label': 'single-exp',
-          'start': 6,
-          'end': 11,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 7,
-          'lastColumn': 12
-        }
-      ],
-      'label': 'single-exp',
-      'start': 0,
-      'end': 11,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 12
-    }
-  ],
-  'start': 0,
-  'end': 11,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 12
-}"
-`);
+      "{
+        'symbol': 'exp',
+        'children': [
+          {
+            'symbol': 'add',
+            'children': [
+              {
+                'symbol': 'add',
+                'children': [
+                  {
+                    'symbol': 'expo',
+                    'label': 'single-exp',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '1',
+                            'token': 'NUMBER',
+                            'start': 0,
+                            'end': 1,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 1,
+                            'lastColumn': 2
+                          }
+                        ],
+                        'start': 0,
+                        'end': 1,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 1,
+                        'lastColumn': 2
+                      }
+                    ],
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2
+                  },
+                  {
+                    'text': '+',
+                    'token': '+',
+                    'start': 1,
+                    'end': 2,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 2,
+                    'lastColumn': 3
+                  },
+                  {
+                    'symbol': 'mul',
+                    'children': [
+                      {
+                        'symbol': 'expo',
+                        'label': 'single-exp',
+                        'children': [
+                          {
+                            'symbol': 'atom',
+                            'children': [
+                              {
+                                'text': '2',
+                                'token': 'NUMBER',
+                                'start': 2,
+                                'end': 3,
+                                'firstLine': 1,
+                                'lastLine': 1,
+                                'firstColumn': 3,
+                                'lastColumn': 4
+                              }
+                            ],
+                            'start': 2,
+                            'end': 3,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 3,
+                            'lastColumn': 4
+                          }
+                        ],
+                        'start': 2,
+                        'end': 3,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 3,
+                        'lastColumn': 4
+                      },
+                      {
+                        'text': '*',
+                        'token': '*',
+                        'start': 3,
+                        'end': 4,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 4,
+                        'lastColumn': 5
+                      },
+                      {
+                        'symbol': 'expo',
+                        'label': 'single-exp',
+                        'children': [
+                          {
+                            'symbol': 'atom',
+                            'children': [
+                              {
+                                'text': '4',
+                                'token': 'NUMBER',
+                                'start': 4,
+                                'end': 5,
+                                'firstLine': 1,
+                                'lastLine': 1,
+                                'firstColumn': 5,
+                                'lastColumn': 6
+                              }
+                            ],
+                            'start': 4,
+                            'end': 5,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 5,
+                            'lastColumn': 6
+                          }
+                        ],
+                        'start': 4,
+                        'end': 5,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 5,
+                        'lastColumn': 6
+                      }
+                    ],
+                    'label': 'single-exp',
+                    'start': 2,
+                    'end': 5,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 6
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 0,
+                'end': 5,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 6
+              },
+              {
+                'text': '-',
+                'token': '-',
+                'start': 5,
+                'end': 6,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 6,
+                'lastColumn': 7
+              },
+              {
+                'symbol': 'expo',
+                'children': [
+                  {
+                    'symbol': 'atom',
+                    'children': [
+                      {
+                        'text': '5',
+                        'token': 'NUMBER',
+                        'start': 6,
+                        'end': 7,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 7,
+                        'lastColumn': 8
+                      }
+                    ],
+                    'start': 6,
+                    'end': 7,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 7,
+                    'lastColumn': 8
+                  },
+                  {
+                    'text': '^',
+                    'token': '^',
+                    'start': 7,
+                    'end': 8,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 8,
+                    'lastColumn': 9
+                  },
+                  {
+                    'symbol': 'expo',
+                    'label': 'single-exp',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '2',
+                            'token': 'NUMBER',
+                            'start': 8,
+                            'end': 9,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 9,
+                            'lastColumn': 10
+                          }
+                        ],
+                        'start': 8,
+                        'end': 9,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 9,
+                        'lastColumn': 10
+                      },
+                      {
+                        'text': '^',
+                        'token': '^',
+                        'start': 9,
+                        'end': 10,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 10,
+                        'lastColumn': 11
+                      },
+                      {
+                        'symbol': 'expo',
+                        'label': 'single-exp',
+                        'children': [
+                          {
+                            'symbol': 'atom',
+                            'children': [
+                              {
+                                'text': '3',
+                                'token': 'NUMBER',
+                                'start': 10,
+                                'end': 11,
+                                'firstLine': 1,
+                                'lastLine': 1,
+                                'firstColumn': 11,
+                                'lastColumn': 12
+                              }
+                            ],
+                            'start': 10,
+                            'end': 11,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 11,
+                            'lastColumn': 12
+                          }
+                        ],
+                        'start': 10,
+                        'end': 11,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 11,
+                        'lastColumn': 12
+                      }
+                    ],
+                    'start': 8,
+                    'end': 11,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 9,
+                    'lastColumn': 12
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 6,
+                'end': 11,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 7,
+                'lastColumn': 12
+              }
+            ],
+            'label': 'single-exp',
+            'start': 0,
+            'end': 11,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 12
+          }
+        ],
+        'start': 0,
+        'end': 11,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 12
+      }"
+    `);
   });
 
   it("error detection works", () => {
@@ -880,184 +880,184 @@ F id => F -> id"
     const parser = Function.call(null, code + "\n return parser;")();
     const { ast, errorNode } = parser.parse("1+2*");
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'symbol': 'expo',
-          'label': 'single-exp',
-          'children': [
-            {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '1',
-                  'token': 'NUMBER',
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            }
-          ],
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3
-        },
-        {
-          'symbol': 'mul',
-          'children': [
-            {
-              'symbol': 'expo',
-              'label': 'single-exp',
-              'children': [
-                {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ],
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4
-            },
-            {
-              'text': '*',
-              'token': '*',
-              'start': 3,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 4,
-              'lastColumn': 5
-            },
-            {
-              'error': {
-                'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
-                'expected': [
-                  'NUMBER',
-                  '('
-                ],
+      "{
+        'symbol': 'exp',
+        'children': [
+          {
+            'symbol': 'add',
+            'children': [
+              {
                 'symbol': 'expo',
-                'lexer': {
-                  't': '$EOF',
-                  'token': '$EOF',
-                  'start': 4,
-                  'end': 4,
-                  'firstLine': 1,
-                  'firstColumn': 5,
-                  'lastLine': 1,
-                  'lastColumn': 5
-                }
+                'label': 'single-exp',
+                'children': [
+                  {
+                    'symbol': 'atom',
+                    'children': [
+                      {
+                        'text': '1',
+                        'token': 'NUMBER',
+                        'start': 0,
+                        'end': 1,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 1,
+                        'lastColumn': 2
+                      }
+                    ],
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2
+                  }
+                ],
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2
               },
-              'token': '$EOF',
-              'start': 4,
-              'end': 4,
-              'firstLine': 1,
-              'firstColumn': 5,
-              'lastLine': 1,
-              'lastColumn': 5
-            }
-          ],
-          'label': 'single-exp',
-          'start': 2,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 5
-        }
-      ],
-      'label': 'single-exp',
-      'start': 0,
-      'end': 4,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 5
-    }
-  ],
-  'start': 0,
-  'end': 4,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 5
-}"
-`);
+              {
+                'text': '+',
+                'token': '+',
+                'start': 1,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 2,
+                'lastColumn': 3
+              },
+              {
+                'symbol': 'mul',
+                'children': [
+                  {
+                    'symbol': 'expo',
+                    'label': 'single-exp',
+                    'children': [
+                      {
+                        'symbol': 'atom',
+                        'children': [
+                          {
+                            'text': '2',
+                            'token': 'NUMBER',
+                            'start': 2,
+                            'end': 3,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 3,
+                            'lastColumn': 4
+                          }
+                        ],
+                        'start': 2,
+                        'end': 3,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 3,
+                        'lastColumn': 4
+                      }
+                    ],
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4
+                  },
+                  {
+                    'text': '*',
+                    'token': '*',
+                    'start': 3,
+                    'end': 4,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 4,
+                    'lastColumn': 5
+                  },
+                  {
+                    'error': {
+                      'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
+                      'expected': [
+                        'NUMBER',
+                        '('
+                      ],
+                      'symbol': 'expo',
+                      'lexer': {
+                        't': '$EOF',
+                        'token': '$EOF',
+                        'start': 4,
+                        'end': 4,
+                        'firstLine': 1,
+                        'firstColumn': 5,
+                        'lastLine': 1,
+                        'lastColumn': 5
+                      }
+                    },
+                    'token': '$EOF',
+                    'start': 4,
+                    'end': 4,
+                    'firstLine': 1,
+                    'firstColumn': 5,
+                    'lastLine': 1,
+                    'lastColumn': 5
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 2,
+                'end': 4,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 5
+              }
+            ],
+            'label': 'single-exp',
+            'start': 0,
+            'end': 4,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 5
+          }
+        ],
+        'start': 0,
+        'end': 4,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 5
+      }"
+    `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
-"{
-  'error': {
-    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
-    'expected': [
-      'NUMBER',
-      '('
-    ],
-    'symbol': 'expo',
-    'lexer': {
-      't': '$EOF',
-      'token': '$EOF',
-      'start': 4,
-      'end': 4,
-      'firstLine': 1,
-      'firstColumn': 5,
-      'lastLine': 1,
-      'lastColumn': 5
-    }
-  },
-  'token': '$EOF',
-  'start': 4,
-  'end': 4,
-  'firstLine': 1,
-  'firstColumn': 5,
-  'lastLine': 1,
-  'lastColumn': 5
-}"
-`);
+      "{
+        'error': {
+          'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
+          'expected': [
+            'NUMBER',
+            '('
+          ],
+          'symbol': 'expo',
+          'lexer': {
+            't': '$EOF',
+            'token': '$EOF',
+            'start': 4,
+            'end': 4,
+            'firstLine': 1,
+            'firstColumn': 5,
+            'lastLine': 1,
+            'lastColumn': 5
+          }
+        },
+        'token': '$EOF',
+        'start': 4,
+        'end': 4,
+        'firstLine': 1,
+        'firstColumn': 5,
+        'lastLine': 1,
+        'lastColumn': 5
+      }"
+    `);
   });
 
   it("onAction works", () => {
@@ -1115,41 +1115,41 @@ F id => F -> id"
       }
     });
     expect(errorCalled).toMatchInlineSnapshot(`
-Object {
-  "end": 3,
-  "error": Object {
-    "errorMessage": "syntax error at line 1:
-1+/2
---^
-expect NUMBER, (
-current token is /",
-    "expected": Array [
-      "NUMBER",
-      "(",
-    ],
-    "lexer": Object {
-      "end": 3,
-      "firstColumn": 3,
-      "firstLine": 1,
-      "lastColumn": 4,
-      "lastLine": 1,
-      "start": 2,
-      "t": "/",
-      "text": "/",
-      "token": "/",
-    },
-    "recovery": true,
-    "symbol": "mul",
-  },
-  "firstColumn": 3,
-  "firstLine": 1,
-  "lastColumn": 4,
-  "lastLine": 1,
-  "start": 2,
-  "text": "/",
-  "token": "/",
-}
-`);
+      Object {
+        "end": 3,
+        "error": Object {
+          "errorMessage": "syntax error at line 1:
+      1+/2
+      --^
+      expect NUMBER, (
+      current token is /",
+          "expected": Array [
+            "NUMBER",
+            "(",
+          ],
+          "lexer": Object {
+            "end": 3,
+            "firstColumn": 3,
+            "firstLine": 1,
+            "lastColumn": 4,
+            "lastLine": 1,
+            "start": 2,
+            "t": "/",
+            "text": "/",
+            "token": "/",
+          },
+          "recovery": true,
+          "symbol": "mul",
+        },
+        "firstColumn": 3,
+        "firstLine": 1,
+        "lastColumn": 4,
+        "lastLine": 1,
+        "start": 2,
+        "text": "/",
+        "token": "/",
+      }
+    `);
   });
 
   it("add error recovery works", () => {
@@ -1171,160 +1171,160 @@ current token is /",
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'symbol': 'expo',
-          'label': 'single-exp',
-          'children': [
-            {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '1',
-                  'token': 'NUMBER',
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            }
-          ],
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3
-        },
-        {
-          'symbol': 'expo',
-          'children': [
-            {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'token': 'NUMBER',
-                  'start': 2,
-                  'end': 2,
-                  'firstLine': 1,
-                  'firstColumn': 3,
-                  'lastLine': 1,
-                  'lastColumn': 3,
-                  'text': '0'
-                }
-              ],
-              'start': 2,
-              'end': 2,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 3
-            }
-          ],
-          'label': 'single-exp',
+      "{
+        'symbol': 'exp',
+        'children': [
+          {
+            'symbol': 'add',
+            'children': [
+              {
+                'symbol': 'expo',
+                'label': 'single-exp',
+                'children': [
+                  {
+                    'symbol': 'atom',
+                    'children': [
+                      {
+                        'text': '1',
+                        'token': 'NUMBER',
+                        'start': 0,
+                        'end': 1,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 1,
+                        'lastColumn': 2
+                      }
+                    ],
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2
+                  }
+                ],
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2
+              },
+              {
+                'text': '+',
+                'token': '+',
+                'start': 1,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 2,
+                'lastColumn': 3
+              },
+              {
+                'symbol': 'expo',
+                'children': [
+                  {
+                    'symbol': 'atom',
+                    'children': [
+                      {
+                        'token': 'NUMBER',
+                        'start': 2,
+                        'end': 2,
+                        'firstLine': 1,
+                        'firstColumn': 3,
+                        'lastLine': 1,
+                        'lastColumn': 3,
+                        'text': '0'
+                      }
+                    ],
+                    'start': 2,
+                    'end': 2,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 3
+                  }
+                ],
+                'label': 'single-exp',
+                'start': 2,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 3
+              }
+            ],
+            'label': 'single-exp',
+            'start': 0,
+            'end': 2,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 3
+          }
+        ],
+        'start': 0,
+        'end': 2,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 3
+      }"
+    `);
+    expect(prettyJson(error)).toMatchInlineSnapshot(`
+      "{
+        'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
+        'expected': [
+          'NUMBER',
+          '('
+        ],
+        'symbol': 'mul',
+        'lexer': {
+          't': '$EOF',
+          'token': '$EOF',
           'start': 2,
           'end': 2,
           'firstLine': 1,
-          'lastLine': 1,
           'firstColumn': 3,
+          'lastLine': 1,
           'lastColumn': 3
-        }
-      ],
-      'label': 'single-exp',
-      'start': 0,
-      'end': 2,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 3
-    }
-  ],
-  'start': 0,
-  'end': 2,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 3
-}"
-`);
-    expect(prettyJson(error)).toMatchInlineSnapshot(`
-"{
-  'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
-  'expected': [
-    'NUMBER',
-    '('
-  ],
-  'symbol': 'mul',
-  'lexer': {
-    't': '$EOF',
-    'token': '$EOF',
-    'start': 2,
-    'end': 2,
-    'firstLine': 1,
-    'firstColumn': 3,
-    'lastLine': 1,
-    'lastColumn': 3
-  },
-  'recovery': true
-}"
-`);
+        },
+        'recovery': true
+      }"
+    `);
     expect(errorCalled).toMatchInlineSnapshot(`
-Object {
-  "end": 2,
-  "error": Object {
-    "errorMessage": "syntax error at line 1:
-1+
---^
-expect NUMBER, (
-current token is $EOF",
-    "expected": Array [
-      "NUMBER",
-      "(",
-    ],
-    "lexer": Object {
-      "end": 2,
-      "firstColumn": 3,
-      "firstLine": 1,
-      "lastColumn": 3,
-      "lastLine": 1,
-      "start": 2,
-      "t": "$EOF",
-      "token": "$EOF",
-    },
-    "recovery": true,
-    "symbol": "mul",
-  },
-  "firstColumn": 3,
-  "firstLine": 1,
-  "lastColumn": 3,
-  "lastLine": 1,
-  "start": 2,
-  "token": "$EOF",
-}
-`);
+      Object {
+        "end": 2,
+        "error": Object {
+          "errorMessage": "syntax error at line 1:
+      1+
+      --^
+      expect NUMBER, (
+      current token is $EOF",
+          "expected": Array [
+            "NUMBER",
+            "(",
+          ],
+          "lexer": Object {
+            "end": 2,
+            "firstColumn": 3,
+            "firstLine": 1,
+            "lastColumn": 3,
+            "lastLine": 1,
+            "start": 2,
+            "t": "$EOF",
+            "token": "$EOF",
+          },
+          "recovery": true,
+          "symbol": "mul",
+        },
+        "firstColumn": 3,
+        "firstLine": 1,
+        "lastColumn": 3,
+        "lastLine": 1,
+        "start": 2,
+        "token": "$EOF",
+      }
+    `);
   });
 });

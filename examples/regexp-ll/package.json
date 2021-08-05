@@ -1,10 +1,11 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"
   ],
+  "license": "MIT",
   "@pika/pack": {
     "pipeline": [
       [

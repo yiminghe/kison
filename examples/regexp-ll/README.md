@@ -46,6 +46,7 @@ The backslash (<code>\\</code>) either indicates that the character that follows
 - <code><b>\\</b><i>keyword</i></code> – interprets the keyword literally, e.g. `\{` matches the opening bracket
 - <code><b>\\<i></b>special_character</i></code> – interprets the special character, e.g. `\b` matches word boundary (more info in "Anchors")
 - <code><b>\\u<i></b>hexadecimal_number</i></code> – interprets the hexadecimal number to char, e.g. `\u0061` matches character 'a'
+- <code><b>\\x<i></b>hexadecimal_number</i></code> – interprets the hexadecimal number to char, e.g. `\x61` matches character 'a'
 
 
 ### Anchors
@@ -109,7 +110,3 @@ All quantifiers are **greedy** by default, they try to match as many occurrences
 - `caseInsensitive` – match letters in the pattern independent of case.
 - `multiline` –  control the behavior of `^` and `$` anchors. By default, these match at the start and end of the input text. If this flag is set, will match at the start and end of each line within the input text.
 - `dotMatchesLineSeparators` – allow `.` to match any character, including line separators.
-
-## License
-
-Regex is available under the MIT license. See the LICENSE file for more info.

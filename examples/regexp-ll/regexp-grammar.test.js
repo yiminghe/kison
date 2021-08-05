@@ -25,6 +25,9 @@ describe("regexp", () => {
   function runTest(input, pattern, options = {}) {
     const ret = { native: [], js: [] };
 
+    const nativeArr = [];
+    const jsArr = [];
+
     {
       let flag = "g";
       if (options.multiline) {
@@ -40,6 +43,15 @@ describe("regexp", () => {
       const str = input;
       let m;
       while ((m = reg.exec(str))) {
+        const r = [];
+        r.push(m.index);
+        for (let i = 0; i < m.length; i++) {
+          r.push(m[i]);
+        }
+        if (m.groups) {
+          r.push(m.groups);
+        }
+        nativeArr.push(r);
         ret.native.push(m);
       }
     }
@@ -49,23 +61,36 @@ describe("regexp", () => {
       const matcher = patternInstance.matcher(input, options);
       let m;
       while ((m = matcher.match())) {
+        const r = [];
+        r.push(m.index);
+        r.push(m.match);
         delete m.input;
         if (m.groups) {
           m.groups.forEach(g => {
             if (!g.name) {
               delete g.name;
             }
+            r.push(g.match);
           });
         }
         if (m.namedGroups) {
           if (Object.keys(m.namedGroups).length === 0) {
             delete m.namedGroups;
           }
+          if (m.namedGroups) {
+            let s = {};
+            for (const key of Object.keys(m.namedGroups)) {
+              s[key] = m.namedGroups[key].match;
+            }
+            r.push(s);
+          }
         }
+        jsArr.push(r);
         ret.js.push(m);
       }
     }
 
+    expect(jsArr).toEqual(nativeArr);
     return ret;
   }
 
@@ -147,17 +172,17 @@ describe("regexp", () => {
     });
 
     it("Character Escapes", () => {
-      expect(runTest("{[a", "\\{\\[\\u0061")).toMatchInlineSnapshot(`
+      expect(runTest("{[ja", "\\{\\[\\u006aa")).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
               "index": 0,
-              "match": "{[a",
+              "match": "{[ja",
             },
           ],
           "native": Array [
             Array [
-              "{[a",
+              "{[ja",
             ],
           ],
         }

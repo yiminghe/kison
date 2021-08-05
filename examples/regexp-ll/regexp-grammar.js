@@ -1,11 +1,4 @@
-// https://github.com/kean/Regex/blob/master/grammar.ebnf
-
-const c0 = "0".charCodeAt(0);
-const c9 = "9".charCodeAt(0);
-
 const my = {
-  c0,
-  c9,
   charRange: [
     [0x09],
     [0x0a],
@@ -30,9 +23,10 @@ const my = {
     } else {
       return false;
     }
-    if (m === "\\u") {
-      const matchNumber = my.matchNumber(input.slice(2));
-      if (matchNumber && matchNumber[0].length === 4) {
+    if (m === "\\u" || m === "\\x") {
+      const len = m === "\\u" ? 4 : 2;
+      const matchNumber = my.matchNumber(input.slice(2), 1, len);
+      if (matchNumber && matchNumber[0].length === len) {
         return [
           m + matchNumber,
           String.fromCharCode(parseInt(matchNumber, 16))
@@ -83,16 +77,23 @@ const my = {
     }
     return false;
   },
-  matchNumber(input) {
+  matchNumber(input, hex, max) {
     let index = 0;
     const match = [];
-    const l = input.length;
+    let l = max || input.length;
+    l = Math.min(l, input.length);
     while (index < l) {
-      const char = input[index];
-      const codeCode = input.charCodeAt(index);
-      if (codeCode < my.c0 || codeCode > my.c9) {
-        break;
+      const char = input.charAt(index);
+      if (char < "0" || char > "9") {
+        if (hex) {
+          if (char < "a" || char > "f") {
+            break;
+          }
+        } else {
+          break;
+        }
       }
+
       match.push(char);
       index++;
     }

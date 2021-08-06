@@ -115,6 +115,29 @@ export const charGroupMatcher = (items, invert) => {
   };
 };
 
+// \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff
+const whitespaceCharacters = {
+  " ": 1,
+  "\f": 1,
+  "\n": 1,
+  "\r": 1,
+  "\t": 1,
+  "\v": 1,
+  "\u00a0": 1,
+  "\u1680": 1,
+
+  "\u2028": 1,
+  "\u2029": 1,
+  "\u202f": 1,
+  "\u205f": 1,
+  "\u3000": 1,
+  "\ufeff": 1
+};
+
+for (let code = 0x2000; code < 0x200b; code++) {
+  whitespaceCharacters[String.fromCharCode(code)] = 1;
+}
+
 export const characterClassMatcher = {
   characterClassAnyWord(input) {
     return isWord(input.getString()) ? { count: 1 } : null;
@@ -127,6 +150,18 @@ export const characterClassMatcher = {
   },
   characterClassAnyDecimalDigitInverted(input) {
     return !isNumber(input.getString()) ? { count: 1 } : null;
+  },
+  whitespaceCharacter(input) {
+    if (input.isEnd()) {
+      return false;
+    }
+    return whitespaceCharacters[input.getString()] ? { count: 1 } : null;
+  },
+  whitespaceCharacterInverted(input) {
+    if (input.isEnd()) {
+      return false;
+    }
+    return !whitespaceCharacters[input.getString()] ? { count: 1 } : null;
   }
 };
 

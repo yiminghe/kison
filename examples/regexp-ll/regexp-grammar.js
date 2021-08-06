@@ -257,6 +257,14 @@ module.exports = () => ({
       rhs: ["characterClassAnyDecimalDigitInverted"]
     },
     {
+      symbol: "CharacterClass",
+      rhs: ["whitespaceCharacter"]
+    },
+    {
+      symbol: "CharacterClass",
+      rhs: ["whitespaceCharacterInverted"]
+    },
+    {
       symbol: "CharacterRange",
       rhs: ["char"]
     },
@@ -345,6 +353,8 @@ module.exports = () => ({
       ...createEscapeMatchLexerRules({
         w: "characterClassAnyWord",
         W: "characterClassAnyWordInverted",
+        s: "whitespaceCharacter",
+        S: "whitespaceCharacterInverted",
         d: "characterClassAnyDecimalDigit",
         D: "characterClassAnyDecimalDigitInverted",
 

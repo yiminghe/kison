@@ -170,8 +170,12 @@ export const assertionMatcher = {
     const unit = compiler.compile(exp);
     const matcher = new Matcher(compiler);
     return input => {
+      matcher.setOptions(input.options);
       matcher.input = input.clone();
-      let match = matcher.match(unit.start, true);
+      let match = matcher.matchInternal({
+        startState: unit.start,
+        noAdvance: true
+      });
       if (invert) {
         return match ? false : { count: 0 };
       }
@@ -193,10 +197,14 @@ export const assertionMatcher = {
     compiler.setInverted(false);
     const matcher = new Matcher(compiler);
     return input => {
+      matcher.setOptions(input.options);
       matcher.input = input.clone();
       matcher.input.setInverted();
       matcher.input.advance(1);
-      let match = matcher.match(unit.start, true);
+      let match = matcher.matchInternal({
+        startState: unit.start,
+        noAdvance: true
+      });
       if (invert) {
         return match ? false : { count: 0 };
       }

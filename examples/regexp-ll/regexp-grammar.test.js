@@ -22,7 +22,7 @@ describe("regexp", () => {
     }
   });
 
-  function runTest(input, pattern, options = {}) {
+  function runTest(input, pattern, options = {}, noCompare) {
     const ret = { native: [], js: [] };
 
     const nativeArr = [];
@@ -94,7 +94,9 @@ describe("regexp", () => {
       }
     }
 
-    expect(jsArr).toEqual(nativeArr);
+    if (!noCompare) {
+      expect(jsArr).toEqual(nativeArr);
+    }
     return ret;
   }
 
@@ -843,6 +845,57 @@ describe("regexp", () => {
               undefined,
               undefined,
               "c",
+            ],
+          ],
+        }
+      `);
+    });
+  });
+
+  describe("bfs", () => {
+    it("different from dfs", () => {
+      expect(runTest("abbb", "(a|ab)b+")).toMatchInlineSnapshot(`
+        Object {
+          "js": Array [
+            Object {
+              "groups": Array [
+                Object {
+                  "index": 0,
+                  "match": "a",
+                },
+              ],
+              "index": 0,
+              "match": "abbb",
+            },
+          ],
+          "native": Array [
+            Array [
+              "abbb",
+              "a",
+            ],
+          ],
+        }
+      `);
+
+      expect(runTest("abbb", "(a|ab)b+", { bfs: true }, true))
+        .toMatchInlineSnapshot(`
+        Object {
+          "js": Array [
+            Object {
+              "groups": Array [
+                Object {
+                  "index": 0,
+                  "match": "ab",
+                },
+              ],
+              "index": 0,
+              "match": "abbb",
+            },
+          ],
+          "native": Array [
+            Array [
+              "abbb",
+              "a",
             ],
           ],
         }

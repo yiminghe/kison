@@ -32,6 +32,7 @@
     &nbsp; <input type="checkbox" id='caseInsensitive'>caseInsensitive</button>
     &nbsp; <input type="checkbox" id='multiline'>multiline</button>
     &nbsp; <input type="checkbox" id='dotMatchesLineSeparators'>dotMatchesLineSeparators</button>
+    &nbsp; <input type="checkbox" id='bfs'>bfs</button>
     <br /> <br /> <button id='parseBtn'>parse</button>
     &nbsp; <button id='evaluate'>evaluate</button>
     &nbsp; <button id='evaluate2'>js native evaluate</button>
@@ -48,6 +49,8 @@
     &nbsp; <button id='nagativeLookahead'>nagativeLookahead</button>
     &nbsp; <button id='lookbehind'>lookbehind</button>
     &nbsp; <button id='nagativeLookbehind'>nagativeLookbehind</button>
+    &nbsp; <button id='bfs_btn'>bfs</button>
+    &nbsp; <button id='bfs_group_bug'>bfs group bug</button>
 </div>
 
 <script type="module">
@@ -84,6 +87,7 @@
 
         function getOptions() {
             return {
+                bfs: $('bfs').checked,
                 caseInsensitive: $('caseInsensitive').checked,
                 multiline: $('multiline').checked,
                 dotMatchesLineSeparators: $('dotMatchesLineSeparators').checked,
@@ -186,6 +190,17 @@
         $('characterGroup').addEventListener('click', () => {
             pattern.value = '[1-9a.]';
             input.value = '222accbcc';
+        });
+
+        $('bfs_btn').addEventListener('click', () => {
+            pattern.value = '(a|ab)b+';
+            input.value = 'abbb';
+        });
+
+
+        $('bfs_group_bug').addEventListener('click', () => {
+            pattern.value = '((x)|(x|y))y';
+            input.value = 'xy';
         });
 
         parseBtn.addEventListener('click', () => {

@@ -39,7 +39,7 @@ export default class Input {
     }
   }
 
-  advance(count) {
+  advance(count = 1) {
     if (this.inverted) {
       this.index -= count;
     } else {
@@ -109,6 +109,43 @@ export default class Input {
           ? " "
           : this.input.slice(this.index + 1, 1);
       return isWord(l) && isWord(r);
+    }
+  }
+
+  checkGroup(compiler, state) {
+    const input = this;
+    let groupStartIndex = compiler.groupStartIndex(state);
+    if (groupStartIndex) {
+      input.startGroupIndex[groupStartIndex.index - 1] = {
+        index: input.index,
+        name: groupStartIndex.name
+      };
+    }
+    let groupEndIndex = compiler.groupEndIndex(state);
+    if (groupEndIndex) {
+      let startIndex = input.startGroupIndex[groupEndIndex.index - 1];
+      let endIndex = {
+        index: input.index,
+        name: startIndex.name
+      };
+      if (startIndex.index > endIndex.index) {
+        startIndex = { ...startIndex };
+        const s = startIndex.index;
+        startIndex.index = Math.max(0, endIndex.index + 1);
+        endIndex.index = s + 1;
+      }
+      let name = groupEndIndex.name;
+      let value = {
+        index: startIndex.index,
+        match: input.str.slice(startIndex.index, endIndex.index)
+      };
+      if (startIndex.name) {
+        value.name = startIndex.name;
+      }
+      input.groups[groupEndIndex.index - 1] = value;
+      if (name) {
+        input.namedGroups[name] = value;
+      }
     }
   }
 }

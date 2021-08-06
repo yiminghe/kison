@@ -1,84 +1,19 @@
 import Input from "./Input.js";
-
-function matchInput(input, state, callSiteMap = new Map()) {
-  // avoid already failed match
-  if (this.getCacheResultIndexMap(input).get(state) === false) {
-    return false;
-  }
-
-  // endless loop
-  if (callSiteMap.get(state) === input.index) {
-    return false;
-  }
-
-  callSiteMap.set(state, input.index);
-
-  let groupStartIndex = this.compiler.groupStartIndex(state);
-  if (groupStartIndex) {
-    input.startGroupIndex[groupStartIndex.index - 1] = {
-      index: input.index,
-      name: groupStartIndex.name
-    };
-  }
-  let groupEndIndex = this.compiler.groupEndIndex(state);
-  if (groupEndIndex) {
-    let startIndex = input.startGroupIndex[groupEndIndex.index - 1];
-    let endIndex = {
-      index: input.index,
-      name: startIndex.name
-    };
-    if (startIndex.index > endIndex.index) {
-      startIndex = { ...startIndex };
-      const s = startIndex.index;
-      startIndex.index = Math.max(0, endIndex.index + 1);
-      endIndex.index = s + 1;
-    }
-    let name = groupEndIndex.name;
-    let value = {
-      index: startIndex.index,
-      match: input.str.slice(startIndex.index, endIndex.index)
-    };
-    if (startIndex.name) {
-      value.name = startIndex.name;
-    }
-    input.groups[groupEndIndex.index - 1] = value;
-    if (name) {
-      input.namedGroups[name] = value;
-    }
-  }
-
-  if (!state.transitions.length) {
-    return input;
-  }
-
-  for (const t of state.transitions) {
-    let newInput = input.clone();
-    const find = t.perform(newInput);
-    if (find) {
-      if (find.count) {
-        newInput.advance(find.count);
-      }
-      const ret = matchInput.call(this, newInput, t.to, callSiteMap);
-      if (ret) {
-        return ret;
-      }
-    } else {
-      continue;
-    }
-  }
-
-  callSiteMap.delete(state);
-
-  this.getCacheResultIndexMap(input).set(state, false);
-
-  return false;
-}
+import dfsMatch from "./dfsMatch.js";
+import bfsMatch from "./bfsMatch.js";
 
 export class Matcher {
-  constructor(compiler, string, options) {
+  constructor(compiler, string, options = {}) {
     this.input = string ? new Input(string, options) : null;
     this.compiler = compiler;
+    this.startState = this.compiler.startState;
     this.cacheResult = [];
+    this.setOptions(options);
+  }
+
+  setOptions(options) {
+    this.options = options;
+    this.matchFn = options.bfs ? bfsMatch : dfsMatch;
   }
 
   reset() {
@@ -92,14 +27,27 @@ export class Matcher {
     return cacheMap;
   }
 
-  match(startState, once) {
+  isMatched() {
+    return !!this.matchInternal({ reset: true, onlyMatch: true });
+  }
+
+  match() {
+    return this.matchInternal();
+  }
+
+  firstMatch() {
+    return this.matchInternal({ reset: true });
+  }
+
+  matchInternal({ startState, noAdvance, onlyMatch, reset } = {}) {
     let { input } = this;
+
     do {
       this.cacheResult = [];
-      let matchedInput = matchInput.call(
-        this,
+      let matchedInput = this.matchFn(
         input,
-        startState || this.compiler.startState
+        startState || this.startState,
+        onlyMatch
       );
       if (matchedInput) {
         input = matchedInput;
@@ -117,11 +65,18 @@ export class Matcher {
             ret.namedGroups = input.namedGroups;
           }
         }
-        input.advanceMatch();
+        if (reset) {
+          input.reset();
+        } else {
+          input.advanceMatch();
+        }
         return ret;
       }
       input.advanceStartIndex();
-    } while (!once && !input.isEnd());
+    } while (!noAdvance && !input.isEnd());
+    if (reset) {
+      input.reset();
+    }
     return null;
   }
 }

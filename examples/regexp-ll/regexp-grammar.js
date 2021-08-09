@@ -60,9 +60,26 @@ const my = {
     }
     return false;
   },
+  matchGroupName(input, prefix) {
+    const remain = input.slice(prefix.length);
+    let index = 0;
+    let char = remain.charAt(index).toLowerCase();
+    while (char >= "a" && char <= "z") {
+      char = remain.charAt(++index).toLowerCase();
+    }
+    if (char === ">") {
+      const name = remain.slice(0, index);
+      return [prefix + name + ">", name];
+    }
+    return false;
+  },
   matchBackreference({ input }) {
     if (input[0] !== "\\") {
       return false;
+    }
+    const prefix = "\\k<";
+    if (input.lastIndexOf(prefix, 0) === 0) {
+      return my.matchGroupName(input, prefix);
     }
     const match = my.matchNumber(input.slice(1));
     if (match === false) {
@@ -104,17 +121,7 @@ const my = {
     if (input.lastIndexOf(prefix, 0) !== 0) {
       return false;
     }
-    const remain = input.slice(prefix.length);
-    let index = 0;
-    let char = remain.charAt(index).toLowerCase();
-    while (char >= "a" && char <= "z") {
-      char = remain.charAt(++index).toLowerCase();
-    }
-    if (char === ">") {
-      const name = remain.slice(0, index);
-      return [prefix + name + ">", name];
-    }
-    return false;
+    return my.matchGroupName(input, prefix);
   }
 };
 

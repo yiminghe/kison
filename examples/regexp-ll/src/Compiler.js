@@ -91,9 +91,17 @@ export default class Compiler {
   }
 
   compileBackreference(node) {
-    const index = parseInt(node.text.slice(1));
-    const unit = new StateUnit("Backreference" + index);
-    unit.start.pushTransition(unit.end, backreferenceMatcher(index));
+    let index;
+    let named;
+    const name = node.text.slice(1);
+    if (name.lastIndexOf("k<", 0) === 0) {
+      named = true;
+      index = name.slice(2, -1);
+    } else {
+      index = parseInt(node.text.slice(1));
+    }
+    const unit = new StateUnit("Backreference_" + index);
+    unit.start.pushTransition(unit.end, backreferenceMatcher(index, named));
     return unit;
   }
 

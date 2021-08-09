@@ -104,11 +104,7 @@ export default class Input {
     if (isWord(c)) {
       return !isWord(l);
     } else {
-      const r =
-        this.index === this.endIndex
-          ? " "
-          : this.input.slice(this.index + 1, 1);
-      return isWord(l) && isWord(r);
+      return isWord(l);
     }
   }
 

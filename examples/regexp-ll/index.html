@@ -164,8 +164,8 @@
         });
 
         $('backreference').addEventListener('click', () => {
-            pattern.value = '(a)b\\1';
-            input.value = 'aba';
+            pattern.value = '(a)(?<c>b)\\1\\k<c>';
+            input.value = 'ababab';
         });
 
         $('lookahead').addEventListener('click', () => {

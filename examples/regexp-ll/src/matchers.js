@@ -49,13 +49,13 @@ export const stringMatcher = str => {
   };
 };
 
-export const backreferenceMatcher = index => {
+export const backreferenceMatcher = (index, named) => {
   return input => {
-    const group = input.groups[index - 1];
-    if (!group) {
+    if (input.isEnd()) {
       return null;
     }
-    if (input.isEnd()) {
+    const group = named ? input.namedGroups[index] : input.groups[index - 1];
+    if (!group) {
       return null;
     }
     const { match } = group;
@@ -65,11 +65,18 @@ export const backreferenceMatcher = index => {
   };
 };
 
+const linefeeds = {
+  "\n": 1,
+  "\r": 1,
+  "\u2028": 1,
+  "\u2029": 1
+};
+
 export const anyCharMatcher = input => {
   if (input.isEnd()) {
     return null;
   }
-  if (input.getString() === "\n") {
+  if (linefeeds[input.getString()]) {
     return input.options.dotMatchesLineSeparators ? { count: 1 } : null;
   }
   return { count: 1 };
@@ -117,17 +124,14 @@ export const charGroupMatcher = (items, invert) => {
 
 // \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff
 const whitespaceCharacters = {
+  ...linefeeds,
+
   " ": 1,
   "\f": 1,
-  "\n": 1,
-  "\r": 1,
   "\t": 1,
   "\v": 1,
   "\u00a0": 1,
   "\u1680": 1,
-
-  "\u2028": 1,
-  "\u2029": 1,
   "\u202f": 1,
   "\u205f": 1,
   "\u3000": 1,

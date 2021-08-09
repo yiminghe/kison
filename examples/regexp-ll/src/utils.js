@@ -3,10 +3,7 @@ import { StateUnit } from "./state.js";
 export function isWord(s) {
   const code = s.charCodeAt(0);
   return (
-    s === "_" ||
-    (s >= "a" && s <= "z") ||
-    (s >= "A" && s <= "Z") ||
-    (code >= 0x4e00 && code <= 0x9fa5)
+    s === "_" || (s >= "a" && s <= "z") || (s >= "A" && s <= "Z") || isNumber(s)
   );
 }
 

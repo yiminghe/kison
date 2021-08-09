@@ -86,6 +86,8 @@ Backreferences provide a convenient way to identify a repeated character or subs
 
 - <code><b>\\</b><i>number</i></code> – matches the capture group at the given ordinal position e.g. `\4` matches the content of the fourth group
 
+- <code><b>\\k&lt;</b><i>name</i><b>&gt;</b></code> – matches the capture group at the given name e.g. `\k<c>` matches the content of the named group `c`
+
 ### Quantifiers
 
 Quantifiers specify how many instances of a character, group, or character class must be present in the input for a match to be found.

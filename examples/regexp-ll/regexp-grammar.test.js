@@ -242,6 +242,52 @@ describe("regexp", () => {
           ],
         }
       `);
+
+      expect(runTest("w w2 w", "\\bw\\b")).toMatchInlineSnapshot(`
+        Object {
+          "js": Array [
+            Object {
+              "index": 0,
+              "match": "w",
+            },
+            Object {
+              "index": 5,
+              "match": "w",
+            },
+          ],
+          "native": Array [
+            Array [
+              "w",
+            ],
+            Array [
+              "w",
+            ],
+          ],
+        }
+      `);
+
+      expect(runTest("w w2 w\n", "\\bw\\b")).toMatchInlineSnapshot(`
+        Object {
+          "js": Array [
+            Object {
+              "index": 0,
+              "match": "w",
+            },
+            Object {
+              "index": 5,
+              "match": "w",
+            },
+          ],
+          "native": Array [
+            Array [
+              "w",
+            ],
+            Array [
+              "w",
+            ],
+          ],
+        }
+      `);
     });
 
     it("Grouping Constructs", () => {
@@ -355,6 +401,37 @@ describe("regexp", () => {
           ],
         }
       `);
+
+      expect(runTest("aa ab", "(?<n>a)\\k<n>")).toMatchInlineSnapshot(`
+Object {
+  "js": Array [
+    Object {
+      "groups": Array [
+        Object {
+          "index": 0,
+          "match": "a",
+          "name": "n",
+        },
+      ],
+      "index": 0,
+      "match": "aa",
+      "namedGroups": Object {
+        "n": Object {
+          "index": 0,
+          "match": "a",
+          "name": "n",
+        },
+      },
+    },
+  ],
+  "native": Array [
+    Array [
+      "aa",
+      "a",
+    ],
+  ],
+}
+`);
     });
 
     it("Quantifiers", () => {

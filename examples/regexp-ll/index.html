@@ -1,276 +1,286 @@
-<h1>regexp in javascript</h1>
+<html>
 
-<h2>grammar</h2>
+<head>
+    <script src="./polyfill.js"></script>
+</head>
 
-<div>
-    regexp grammar <a href="./regexp-grammar.js">definition</a> and <a href="./diagram.xhtml">diagram</a>
-</div>
+<body>
+    <h1>regexp in javascript</h1>
 
-<h2>build</h2>
-<div>
-    <pre>
-    npx kison -m ll --es -g regexp-grammar.js
-</pre>
-</div>
+    <h2>grammar</h2>
 
-<h2>install prebuild</h2>
-<div>
-    <pre>
-        npm install @yiminghe/regexp
-    </pre>
-</div>
+    <div>
+        regexp grammar <a href="./regexp-grammar.js">definition</a> and <a href="./diagram.xhtml">diagram</a>
+    </div>
 
-<div>
-    <a href="./README.md">regexp readme</a>
-</div>
+    <h2>build</h2>
+    <div>
+        <pre>
+            npx kison -m ll --es -g regexp-grammar.js
+        </pre>
+    </div>
 
-<h2>open devtools console</h2>
-<div>
-    <textarea style="width:200px" id='input'>abzaaz</textarea>.match(/
-    <input style="width:200px" id='pattern' value="(?<alternate>a|b)*(z)" />/);
-    &nbsp; <input type="checkbox" id='g' checked>g</button>
-    &nbsp; <input type="checkbox" id='caseInsensitive'>caseInsensitive</button>
-    &nbsp; <input type="checkbox" id='multiline'>multiline</button>
-    &nbsp; <input type="checkbox" id='dotMatchesLineSeparators'>dotMatchesLineSeparators</button>
-    &nbsp; <input type="checkbox" id='sticky'>sticky</button>
-    &nbsp; <input type="checkbox" id='unicode'>unicode</button>
-    &nbsp; <input type="checkbox" id='bfs'>bfs</button>
-    <br /> <br /> <button id='parseBtn'>parse</button>
-    &nbsp; <button id='evaluate'>evaluate</button>
-    &nbsp; <button id='evaluate2'>js native evaluate</button>
-</div>
+    <h2>install prebuild</h2>
+    <div>
+        <pre>
+                npm install @yiminghe/regexp
+            </pre>
+    </div>
 
-<h2>test case</h2>
-<div>
-    &nbsp; <button id='range'>range</button>
-    &nbsp; <button id='lazy'>lazy</button>
-    &nbsp; <button id='evil'>evil</button>
-    &nbsp; <button id='backreference'>backreference</button>
-    &nbsp; <button id='characterGroup'>characterGroup</button>
-    &nbsp; <button id='lookahead'>lookahead</button>
-    &nbsp; <button id='nagativeLookahead'>nagativeLookahead</button>
-    &nbsp; <button id='lookbehind'>lookbehind</button>
-    &nbsp; <button id='nagativeLookbehind'>nagativeLookbehind</button>
-    &nbsp; <button id='sticky_tc1'>sticky_tc1</button>
-    &nbsp; <button id='unicode_tc1'>unicode_tc1</button>
-    &nbsp; <button id='unicode_tc2'>unicode_tc2</button>
-    &nbsp; <button id='unicode_tc3'>unicode_tc3</button>
-    &nbsp; <button id='unicode_tc4'>unicode_tc4</button>
-    &nbsp; <button id='unicode_tc5'>unicode_tc5</button>
-    &nbsp; <button id='unicode_tc6'>unicode_tc6</button>
-    &nbsp; <button id='unicode_tc7'>unicode_tc7</button>
-    &nbsp; <button id='bfs_btn'>bfs</button>
-    &nbsp; <button id='bfs_group_bug'>bfs group bug</button>
-</div>
+    <div>
+        <a href="./README.md">regexp readme</a>
+    </div>
 
-<script type="module">
-    import { parse, compile } from './src/index.js';
-    (function () {
-        let currentText;
-        let currentAst;
+    <h2>open devtools console</h2>
+    <div>
+        <textarea style="width:200px" id='input'>abzaaz</textarea>.match(/
+        <input style="width:200px" id='pattern' value="(?<alternate>a|b)*(z)" />/);
+        &nbsp; <input type="checkbox" id='g' checked>g</button>
+        &nbsp; <input type="checkbox" id='caseInsensitive'>caseInsensitive</button>
+        &nbsp; <input type="checkbox" id='multiline'>multiline</button>
+        &nbsp; <input type="checkbox" id='dotMatchesLineSeparators'>dotMatchesLineSeparators</button>
+        &nbsp; <input type="checkbox" id='sticky'>sticky</button>
+        &nbsp; <input type="checkbox" id='unicode'>unicode</button>
+        &nbsp; <input type="checkbox" id='bfs'>bfs</button>
+        <br /> <br /> <button id='parseBtn'>parse</button>
+        &nbsp; <button id='evaluate'>evaluate</button>
+        &nbsp; <button id='evaluate2'>js native evaluate</button>
+    </div>
 
-        function getAst(value) {
-            if (currentText === value) {
+    <h2>test case</h2>
+    <div>
+        &nbsp; <button id='range'>range</button>
+        &nbsp; <button id='lazy'>lazy</button>
+        &nbsp; <button id='evil'>evil</button>
+        &nbsp; <button id='backreference'>backreference</button>
+        &nbsp; <button id='characterGroup'>characterGroup</button>
+        &nbsp; <button id='lookahead'>lookahead</button>
+        &nbsp; <button id='nagativeLookahead'>nagativeLookahead</button>
+        &nbsp; <button id='lookbehind'>lookbehind</button>
+        &nbsp; <button id='nagativeLookbehind'>nagativeLookbehind</button>
+        &nbsp; <button id='sticky_tc1'>sticky_tc1</button>
+        &nbsp; <button id='unicode_tc1'>unicode_tc1</button>
+        &nbsp; <button id='unicode_tc2'>unicode_tc2</button>
+        &nbsp; <button id='unicode_tc3'>unicode_tc3</button>
+        &nbsp; <button id='unicode_tc4'>unicode_tc4</button>
+        &nbsp; <button id='unicode_tc5'>unicode_tc5</button>
+        &nbsp; <button id='unicode_tc6'>unicode_tc6</button>
+        &nbsp; <button id='unicode_tc7'>unicode_tc7</button>
+        &nbsp; <button id='bfs_btn'>bfs</button>
+        &nbsp; <button id='bfs_group_bug'>bfs group bug</button>
+    </div>
+
+    <script type="module">
+        import { parse, compile } from './src/index.js';
+        (function () {
+            let currentText;
+            let currentAst;
+
+            function getAst(value) {
+                if (currentText === value) {
+                    return currentAst;
+                }
+                console.log('parse ***********************', value);
+                currentText = value;
+                currentAst = parse(value, {
+                    lexerOptions: { unicode: $('unicode').checked },
+                });
+                console.log(currentAst);
+                if (currentAst.error) {
+                    console.error(currentAst.error.errorMessage);
+                }
+                console.log('***********************');
                 return currentAst;
             }
-            console.log('parse ***********************', value);
-            currentText = value;
-            currentAst = parse(value, {
-                lexerOptions:{unicode: $('unicode').checked},
+
+            function $(id) {
+                return document.getElementById(id);
+            }
+
+            const pattern = $('pattern');
+            const input = $('input');
+            const parseBtn = $('parseBtn');
+            const evaluate = $('evaluate');
+            const g = $('g');
+            const evaluate2 = $('evaluate2');
+
+            function getOptions() {
+                return {
+                    bfs: $('bfs').checked,
+                    caseInsensitive: $('caseInsensitive').checked,
+                    multiline: $('multiline').checked,
+                    sticky: $('sticky').checked,
+                    unicode: $('unicode').checked,
+                    dotMatchesLineSeparators: $('dotMatchesLineSeparators').checked,
+                };
+            }
+
+            evaluate.addEventListener('click', () => {
+                const start = Date.now();
+                const options = getOptions();
+                const patternInstance = compile(pattern.value, options);
+                const matcher = patternInstance.matcher(input.value);
+                let m;
+                console.log('*********************** ' + input.value + '.match(/' + pattern.value + '/)');
+                let ok;
+                while (m = matcher.match()) {
+                    ok = true;
+                    console.log(m);
+                    if (!g.checked) {
+                        break;
+                    }
+                }
+                if (!ok) {
+                    console.log('no match!!');
+                }
+                console.log('***********************', Date.now() - start);
+                console.log('');
             });
-            console.log(currentAst);
-            if (currentAst.error) {
-                console.error(currentAst.error.errorMessage);
-            }
-            console.log('***********************');
-            return currentAst;
-        }
 
-        function $(id) {
-            return document.getElementById(id);
-        }
-
-        const pattern = $('pattern');
-        const input = $('input');
-        const parseBtn = $('parseBtn');
-        const evaluate = $('evaluate');
-        const g = $('g');
-        const evaluate2 = $('evaluate2');
-
-        function getOptions() {
-            return {
-                bfs: $('bfs').checked,
-                caseInsensitive: $('caseInsensitive').checked,
-                multiline: $('multiline').checked,
-                sticky: $('sticky').checked,
-                unicode: $('unicode').checked,
-                dotMatchesLineSeparators: $('dotMatchesLineSeparators').checked,
-            };
-        }
-
-        evaluate.addEventListener('click', () => {
-            const start = Date.now();
-            const options = getOptions();
-            const patternInstance = compile(pattern.value, options);
-            const matcher = patternInstance.matcher(input.value);
-            let m;
-            console.log('*********************** ' + input.value + '.match(/' + pattern.value + '/)');
-            let ok;
-            while (m = matcher.match()) {
-                ok = true;
-                console.log(m);
-                if (!g.checked) {
-                    break;
+            evaluate2.addEventListener('click', () => {
+                const start = Date.now();
+                let flag = 'g';
+                const options = getOptions();
+                if (options.multiline) {
+                    flag += 'm';
                 }
-            }
-            if (!ok) {
-                console.log('no match!!');
-            }
-            console.log('***********************', Date.now() - start);
-            console.log('');
-        });
-
-        evaluate2.addEventListener('click', () => {
-            const start = Date.now();
-            let flag = 'g';
-            const options = getOptions();
-            if (options.multiline) {
-                flag += 'm';
-            }
-            if (options.caseInsensitive) {
-                flag += 'i';
-            }
-            if (options.dotMatchesLineSeparators) {
-                flag += 's';
-            }
-            if (options.sticky) {
-                flag += 'y';
-            }
-            if (options.unicode) {
-                flag += 'u';
-            }
-            const reg = new RegExp(pattern.value, flag);
-            const str = input.value;
-            let m;
-            console.log('*********************** js native:' + input.value + '.match(/' + pattern.value + '/)');
-            let ok;
-            while (m = reg.exec(str)) {
-                ok = true;
-                console.log(m);
-                if (!g.checked) {
-                    break;
+                if (options.caseInsensitive) {
+                    flag += 'i';
                 }
-            }
-            if (!ok) {
-                console.log('no match!!');
-            }
-            console.log('***********************', Date.now() - start);
-            console.log('');
-        });
+                if (options.dotMatchesLineSeparators) {
+                    flag += 's';
+                }
+                if (options.sticky) {
+                    flag += 'y';
+                }
+                if (options.unicode) {
+                    flag += 'u';
+                }
+                const reg = new RegExp(pattern.value, flag);
+                const str = input.value;
+                let m;
+                console.log('*********************** js native:' + input.value + '.match(/' + pattern.value + '/)');
+                let ok;
+                while (m = reg.exec(str)) {
+                    ok = true;
+                    console.log(m);
+                    if (!g.checked) {
+                        break;
+                    }
+                }
+                if (!ok) {
+                    console.log('no match!!');
+                }
+                console.log('***********************', Date.now() - start);
+                console.log('');
+            });
 
-        range.addEventListener('click', () => {
-            pattern.value = '(a|b){2,4}';
-            input.value = 'ababab';
-        });
+            range.addEventListener('click', () => {
+                pattern.value = '(a|b){2,4}';
+                input.value = 'ababab';
+            });
 
-        $('lazy').addEventListener('click', () => {
-            pattern.value = 'a*?a';
-            input.value = 'aaa';
-        });
+            $('lazy').addEventListener('click', () => {
+                pattern.value = 'a*?a';
+                input.value = 'aaa';
+            });
 
-        $('evil').addEventListener('click', () => {
-            pattern.value = '(a*)*c';
-            input.value = 'a';
-        });
+            $('evil').addEventListener('click', () => {
+                pattern.value = '(a*)*c';
+                input.value = 'a';
+            });
 
-        $('backreference').addEventListener('click', () => {
-            pattern.value = '(a)(?<c>b)\\1\\k<c>';
-            input.value = 'ababab';
-        });
+            $('backreference').addEventListener('click', () => {
+                pattern.value = '(a)(?<c>b)\\1\\k<c>';
+                input.value = 'ababab';
+            });
 
-        $('lookahead').addEventListener('click', () => {
-            pattern.value = '(?=(a))(\\w)';
-            input.value = 'aba';
-        });
-        $('nagativeLookahead').addEventListener('click', () => {
-            pattern.value = '(?!(b))(\\w)';
-            input.value = 'aba';
-        });
+            $('lookahead').addEventListener('click', () => {
+                pattern.value = '(?=(a))(\\w)';
+                input.value = 'aba';
+            });
+            $('nagativeLookahead').addEventListener('click', () => {
+                pattern.value = '(?!(b))(\\w)';
+                input.value = 'aba';
+            });
 
-        $('lookbehind').addEventListener('click', () => {
-            pattern.value = '(?<=(b)(a))(\\w)';
-            input.value = 'dbacbac';
-        });
+            $('lookbehind').addEventListener('click', () => {
+                pattern.value = '(?<=(b)(a))(\\w)';
+                input.value = 'dbacbac';
+            });
 
-        $('nagativeLookbehind').addEventListener('click', () => {
-            pattern.value = '(?<!(d)(b))(\\w)';
-            input.value = 'dbacbac';
-        });
+            $('nagativeLookbehind').addEventListener('click', () => {
+                pattern.value = '(?<!(d)(b))(\\w)';
+                input.value = 'dbacbac';
+            });
 
-        $('characterGroup').addEventListener('click', () => {
-            pattern.value = '[1-9a.]';
-            input.value = '222accbcc';
-        });
+            $('characterGroup').addEventListener('click', () => {
+                pattern.value = '[1-9a.]';
+                input.value = '222accbcc';
+            });
 
-        $('sticky_tc1').addEventListener('click', () => {
-            pattern.value = 'a';
-            input.value = 'aaxa';
-        });
+            $('sticky_tc1').addEventListener('click', () => {
+                pattern.value = 'a';
+                input.value = 'aaxa';
+            });
 
-        $('unicode_tc1').addEventListener('click', () => {
-            pattern.value = '\\uD83D';
-            input.value = '\uD83D\uDC2A';
-        });
+            $('unicode_tc1').addEventListener('click', () => {
+                pattern.value = '\\uD83D';
+                input.value = '\uD83D\uDC2A';
+            });
 
-        $('unicode_tc2').addEventListener('click', () => {
-            pattern.value = '\uD83D';
-            input.value = '\uD83D\uDC2A \uD83D';
-        });
+            $('unicode_tc2').addEventListener('click', () => {
+                pattern.value = '\uD83D';
+                input.value = '\uD83D\uDC2A \uD83D';
+            });
 
-        $('unicode_tc3').addEventListener('click', () => {
-            pattern.value = '^[\uD83D\uDC2A]$';
-            input.value = '\uD83D\uDC2A';
-        });
+            $('unicode_tc3').addEventListener('click', () => {
+                pattern.value = '^[\uD83D\uDC2A]$';
+                input.value = '\uD83D\uDC2A';
+            });
 
-        $('unicode_tc4').addEventListener('click', () => {
-            pattern.value = '^[\\uD83D\\uDC2A]$';
-            input.value = '\uD83D';
-        });
+            $('unicode_tc4').addEventListener('click', () => {
+                pattern.value = '^[\\uD83D\\uDC2A]$';
+                input.value = '\uD83D';
+            });
 
-        $('unicode_tc5').addEventListener('click', () => {
-            pattern.value = '.';
-            input.value = '\uD83D\uDE80';
-        });
+            $('unicode_tc5').addEventListener('click', () => {
+                pattern.value = '.';
+                input.value = '\uD83D\uDE80';
+            });
 
-        $('unicode_tc6').addEventListener('click', () => {
-            pattern.value = '\uD83D\uDE80{2}';
-            input.value = '\uD83D\uDE80\uD83D\uDE80';
-        });
+            $('unicode_tc6').addEventListener('click', () => {
+                pattern.value = '\uD83D\uDE80{2}';
+                input.value = '\uD83D\uDE80\uD83D\uDE80';
+            });
 
-        $('unicode_tc7').addEventListener('click', () => {
-            pattern.value = '\\uD83D\\uDE80{2}';
-            input.value = '\uD83D\uDE80\uD83D\uDE80';
-        });
+            $('unicode_tc7').addEventListener('click', () => {
+                pattern.value = '\\uD83D\\uDE80{2}';
+                input.value = '\uD83D\uDE80\uD83D\uDE80';
+            });
 
-        $('bfs_btn').addEventListener('click', () => {
-            pattern.value = '(a|ab)b+';
-            input.value = 'abbb';
-        });
+            $('bfs_btn').addEventListener('click', () => {
+                pattern.value = '(a|ab)b+';
+                input.value = 'abbb';
+            });
 
-        $('bfs_group_bug').addEventListener('click', () => {
-            pattern.value = '((x)|(x|y))y';
-            input.value = 'xy';
-        });
+            $('bfs_group_bug').addEventListener('click', () => {
+                pattern.value = '((x)|(x|y))y';
+                input.value = 'xy';
+            });
 
-        parseBtn.addEventListener('click', () => {
-            currentText = undefined;
-            getAst(pattern.value);
-        }, false);
-    })();
-</script>
+            parseBtn.addEventListener('click', () => {
+                currentText = undefined;
+                getAst(pattern.value);
+            }, false);
+        })();
+    </script>
 
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
-<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
-    title="Fork me on GitHub">Fork me on GitHub</a>
+    <a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+        title="Fork me on GitHub">Fork me on GitHub</a>
+</body>
+
+</html>

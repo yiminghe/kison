@@ -17,14 +17,19 @@ import { StateUnit } from "./state.js";
 import parser from "./parser.js";
 
 export default class Compiler {
-  constructor() {
+  constructor(options) {
+    this.options = options;
     this.captureGroupStateStartMap = new Map();
     this.captureGroupStateEndMap = new Map();
     this.inverted = false;
   }
 
   initWithPattern(pattern) {
-    const { ast } = parser.parse(pattern);
+    let parserOptions = {};
+    if (this.options.unicode) {
+      parserOptions.lexerOptions = { unicode: true };
+    }
+    const { ast } = parser.parse(pattern, parserOptions);
     annotateGroupIndex(ast);
     this.unit = this.compile(ast);
     this.startState = this.unit.start;

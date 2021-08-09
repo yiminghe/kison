@@ -26,6 +26,60 @@ export default class Input {
     this.groups = [];
   }
 
+  getChar() {
+    const code = this.getCharCode();
+    if (isNaN(code) || code === undefined) {
+      return "";
+    }
+    return String.fromCodePoint(code);
+  }
+
+  getPrevChar() {
+    const code = this.getPrevCharCode();
+    if (isNaN(code) || code === undefined) {
+      return "";
+    }
+    return String.fromCodePoint(code);
+  }
+
+  getCharCode() {
+    return this.options.unicode
+      ? this.str.codePointAt(this.index)
+      : this.str.charCodeAt(this.index);
+  }
+
+  getPrevCharCode() {
+    if (this.options.unicode) {
+      if (this.index > 1 && this.isPartUnicode(this.index - 1, true)) {
+        return this.str.codePointAt(this.index - 2);
+      }
+      return this.str.codePointAt(this.index - 1);
+    }
+    return this.str.charCodeAt(this.index - 1);
+  }
+
+  matchString(otherStr) {
+    let index = 0;
+    let m;
+    let str = this.str;
+    if (this.options.caseInsensitive) {
+      str = str.toLowerCase();
+      otherStr = otherStr.toLowerCase();
+    }
+    if (this.options.unicode) {
+      while ((m = otherStr.codePointAt(index)) !== undefined) {
+        let strIndex = this.inverted ? this.index - index : this.index + index;
+        if (m !== str.codePointAt(strIndex)) {
+          return false;
+        }
+        index += String.fromCharCode(m).length;
+      }
+      return true;
+    } else {
+      return this.getString(otherStr.length).toLowerCase() === otherStr;
+    }
+  }
+
   injectGroups(match) {
     if (match.groups) {
       for (let i = 0; i < match.groups.length; i++) {
@@ -39,15 +93,41 @@ export default class Input {
     }
   }
 
+  isPartUnicode(index, inverted) {
+    if (inverted) {
+      return (
+        index > 0 &&
+        String.fromCodePoint(this.str.codePointAt(index - 1)).length > 1
+      );
+    }
+    return (
+      index <= this.endIndex &&
+      String.fromCodePoint(this.str.codePointAt(index)).length > 1
+    );
+  }
+
   advance(count = 1) {
     if (this.inverted) {
       this.index -= count;
+      if (
+        this.options.unicode &&
+        count === 1 &&
+        this.isPartUnicode(this.index, true)
+      ) {
+        this.index--;
+      }
     } else {
+      if (this.options.unicode && count === 1) {
+        count = this.getChar().length;
+      }
       this.index += count;
     }
   }
 
   advanceStartIndex() {
+    if (this.options.unicode && this.isPartUnicode(this.startIndex)) {
+      this.startIndex++;
+    }
     this.startIndex++;
     this.index = this.startIndex;
     this.resetState();
@@ -99,8 +179,8 @@ export default class Input {
     if (this.isEnd()) {
       return true;
     }
-    const c = this.getString();
-    const l = this.index > 0 ? this.getString(-1) : " ";
+    const c = this.getChar();
+    const l = this.index > 0 ? this.getPrevChar() : " ";
     if (isWord(c)) {
       return !isWord(l);
     } else {

@@ -255,7 +255,9 @@ var cal = (function(undefined) {
         lines,
         rules = this.getCurrentRules();
 
-      var { env = this.defaultEnv, input } = this;
+      var { input } = this;
+
+      var { env = this.defaultEnv } = this.options;
 
       this.match = this.text = "";
 

@@ -11,13 +11,13 @@ import * as regexp from '@yiminghe/regexp';
 console.log(regexp.parse('(a|b)*z'));
 
 // match
-const patternInstance = regexp.compile('(a|b)*z');
 const options={
   multiline:false,
   caseInsensitive:false,
   dotMatchesLineSeparators:false,
 };
-const matcher = patternInstance.matcher('abzaaz', options);
+const patternInstance = regexp.compile('(a|b)*z', options);
+const matcher = patternInstance.matcher('abzaaz');
 let m;
 while (m = matcher.match()) {
   console.log(m);
@@ -112,4 +112,6 @@ All quantifiers are **greedy** by default, they try to match as many occurrences
 - `caseInsensitive` – match letters in the pattern independent of case.
 - `multiline` –  control the behavior of `^` and `$` anchors. By default, these match at the start and end of the input text. If this flag is set, will match at the start and end of each line within the input text.
 - `dotMatchesLineSeparators` – allow `.` to match any character, including line separators.
+- `sticky` - match must be anchored to last matched index.
+- `unicode` - switch to [unicode mode](https://exploringjs.com/es6/ch_regexp.html#sec_regexp-flag-y) 
 - `bfs` - whether match by breadth first search strategy. Can only be used when check whether is matched);

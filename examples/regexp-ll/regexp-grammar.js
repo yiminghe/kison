@@ -13,49 +13,81 @@ const my = {
     }
     return [str];
   },
-  matchEscapeChar({ input }) {
+  matchOnlyEscapeChar(lexer, index = 0) {
     let m = "";
-    let char = input[0];
+    let char = lexer.getChar(index);
     m += char;
     if (char === "\\") {
-      char = input[1];
+      char = lexer.getChar(index + 1);
       m += char;
     } else {
-      return false;
+      return { m, r: false };
     }
     if (m === "\\u" || m === "\\x") {
       const len = m === "\\u" ? 4 : 2;
-      const matchNumber = my.matchNumber(input.slice(2), 1, len);
+      let matchNumber = my.matchNumber(lexer.input.slice(index + 2), 1, len);
       if (matchNumber && matchNumber[0].length === len) {
-        return [
-          m + matchNumber,
-          String.fromCharCode(parseInt(matchNumber, 16))
-        ];
+        matchNumber = matchNumber[0];
+        let first = parseInt(matchNumber, 16);
+        if (lexer.options.unicode && index === 0) {
+          // 检查是否开始 surrogate pair
+          if (first >= 0xd800 && first <= 0xdbff) {
+            let secondRet = my.matchOnlyEscapeChar(lexer, index + 2 + len);
+            let second = (secondRet && secondRet.r && secondRet.r[2]) || 0;
+            if (second >= 0xdc00 && second <= 0xdfff) {
+              // low surrogate
+              // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+              let totoal = (first - 0xd800) * 0x400 + second - 0xdc00 + 0x10000;
+              return {
+                m,
+                r: [
+                  m + matchNumber + secondRet.r[0],
+                  String.fromCodePoint(totoal),
+                  totoal
+                ]
+              };
+            }
+          }
+        }
+        return {
+          m,
+          r: [m + matchNumber, String.fromCharCode(first), first]
+        };
       }
     }
-    if (my.matchChar({ input: char })) {
-      return [m, char];
+    return {
+      m
+    };
+  },
+  matchEscapeChar(lexer) {
+    const ret = my.matchOnlyEscapeChar(lexer);
+    if (ret.r !== undefined) {
+      return ret.r;
+    }
+    if (my.matchCharCode(lexer.getCharCode(1))) {
+      return [ret.m, lexer.getChar(1)];
     }
     return false;
   },
   matchAnyChar(lexer) {
-    const char = lexer.input[0];
+    const char = lexer.getChar();
     if (char === "." && !lexer.userData.insideCharacterGroup) {
       return [char];
     }
     return false;
   },
-  matchChar({ input }) {
-    let char = input[0];
+  matchChar(lexer) {
+    return my.matchCharCode(lexer.getCharCode());
+  },
+  matchCharCode(charCode) {
     const range = my.charRange;
-    const charCode = char.charCodeAt(0);
     for (const r of range) {
       if (r.length == 1) {
         if (r[0] === charCode) {
-          return [char];
+          return [String.fromCodePoint(charCode)];
         }
       } else if (charCode >= r[0] || charCode <= r[1]) {
-        return [char];
+        return [String.fromCodePoint(charCode)];
       }
     }
     return false;
@@ -100,7 +132,7 @@ const my = {
     let l = max || input.length;
     l = Math.min(l, input.length);
     while (index < l) {
-      const char = input.charAt(index);
+      const char = input.charAt(index).toLowerCase();
       if (char < "0" || char > "9") {
         if (hex) {
           if (char < "a" || char > "f") {

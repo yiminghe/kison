@@ -32,14 +32,16 @@ export class Matcher {
   }
 
   match() {
-    return this.matchInternal();
+    return this.matchInternal({
+      sticky: this.options.sticky
+    });
   }
 
   firstMatch() {
     return this.matchInternal({ reset: true });
   }
 
-  matchInternal({ startState, noAdvance, onlyMatch, reset } = {}) {
+  matchInternal({ startState, sticky, onlyMatch, reset } = {}) {
     let { input } = this;
 
     do {
@@ -72,8 +74,12 @@ export class Matcher {
         }
         return ret;
       }
-      input.advanceStartIndex();
-    } while (!noAdvance && !input.isEnd());
+      if (sticky) {
+        break;
+      } else {
+        input.advanceStartIndex();
+      }
+    } while (!input.isEnd());
     if (reset) {
       input.reset();
     }

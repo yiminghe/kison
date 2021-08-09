@@ -33,8 +33,14 @@ describe("regexp", () => {
       if (options.multiline) {
         flag += "m";
       }
+      if (options.unicode) {
+        flag += "u";
+      }
       if (options.caseInsensitive) {
         flag += "i";
+      }
+      if (options.sticky) {
+        flag += "y";
       }
       if (options.dotMatchesLineSeparators) {
         flag += "s";
@@ -403,35 +409,35 @@ describe("regexp", () => {
       `);
 
       expect(runTest("aa ab", "(?<n>a)\\k<n>")).toMatchInlineSnapshot(`
-Object {
-  "js": Array [
-    Object {
-      "groups": Array [
         Object {
-          "index": 0,
-          "match": "a",
-          "name": "n",
-        },
-      ],
-      "index": 0,
-      "match": "aa",
-      "namedGroups": Object {
-        "n": Object {
-          "index": 0,
-          "match": "a",
-          "name": "n",
-        },
-      },
-    },
-  ],
-  "native": Array [
-    Array [
-      "aa",
-      "a",
-    ],
-  ],
-}
-`);
+          "js": Array [
+            Object {
+              "groups": Array [
+                Object {
+                  "index": 0,
+                  "match": "a",
+                  "name": "n",
+                },
+              ],
+              "index": 0,
+              "match": "aa",
+              "namedGroups": Object {
+                "n": Object {
+                  "index": 0,
+                  "match": "a",
+                  "name": "n",
+                },
+              },
+            },
+          ],
+          "native": Array [
+            Array [
+              "aa",
+              "a",
+            ],
+          ],
+        }
+      `);
     });
 
     it("Quantifiers", () => {
@@ -754,6 +760,7 @@ Object {
           ],
         }
       `);
+
       expect(runTest("dbacbac", "(?<=(b)(a))(\\w)")).toMatchInlineSnapshot(`
         Object {
           "js": Array [
@@ -926,6 +933,63 @@ Object {
           ],
         }
       `);
+    });
+
+    it("sticky works", () => {
+      expect(
+        runTest("aaxa", "a", {
+          sticky: true
+        })
+      ).toMatchInlineSnapshot(`
+        Object {
+          "js": Array [
+            Object {
+              "index": 0,
+              "match": "a",
+            },
+            Object {
+              "index": 1,
+              "match": "a",
+            },
+          ],
+          "native": Array [
+            Array [
+              "a",
+            ],
+            Array [
+              "a",
+            ],
+          ],
+        }
+      `);
+    });
+
+    it("unicode works", () => {
+      function unicodePair(input, pattern) {
+        const ret = [
+          runTest(input, pattern),
+          runTest(input, pattern, {
+            unicode: true
+          })
+        ];
+        expect(unicodePair("\uD83D\uDC2A", "\\uD83D")).toMatchInlineSnapshot();
+        expect(
+          unicodePair("\uD83D\uDC2A \uD83D", "\uD83D")
+        ).toMatchInlineSnapshot();
+        expect(
+          unicodePair("\uD83D\uDC2A", "^[\uD83D\uDC2A]$")
+        ).toMatchInlineSnapshot();
+        expect(
+          unicodePair("\uD83D", "^[\\uD83D\\uDC2A]$")
+        ).toMatchInlineSnapshot();
+        expect(unicodePair("\uD83D\uDE80", ".")).toMatchInlineSnapshot();
+        expect(
+          unicodePair("\uD83D\uDE80\uD83D\uDE80", "\uD83D\uDE80{2}")
+        ).toMatchInlineSnapshot();
+        expect(
+          unicodePair("\uD83D\uDE80\uD83D\uDE80", "\\uD83D\\uDE80{2}")
+        ).toMatchInlineSnapshot();
+      }
     });
   });
 

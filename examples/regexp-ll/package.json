@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"

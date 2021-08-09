@@ -4,7 +4,7 @@ import { Matcher } from "./match.js";
 export const anchorMatchers = {
   "^"(input) {
     return (
-      !input.index || (input.options.multiline && input.getString(-1) === "\n")
+      !input.index || (input.options.multiline && input.getPrevChar() === "\n")
     );
   },
   anchorWordBoundary(input) {
@@ -21,13 +21,11 @@ export const anchorMatchers = {
   },
   $(input) {
     return (
-      input.isEnd() || (input.options.multiline && input.getString() === "\n")
+      input.isEnd() || (input.options.multiline && input.getChar() === "\n")
     );
   },
   anchorEndOfStringOnly(input) {
-    return (
-      input.isEnd() || (input.isAtLastIndex() && input.getString() === "\n")
-    );
+    return input.isEnd() || (input.isAtLastIndex() && input.getChar() === "\n");
   },
   anchorPreviousMatchEnd(input) {
     return input.index === input.previousMatchIndex;
@@ -39,12 +37,7 @@ export const stringMatcher = str => {
     if (input.isEnd()) {
       return null;
     }
-    let ret;
-    if (input.options.caseInsensitive) {
-      ret = input.getString(str.length).toLowerCase() === str.toLowerCase();
-    } else {
-      ret = input.getString(str.length) === str;
-    }
+    let ret = input.matchString(str);
     return ret ? { count: str.length } : null;
   };
 };
@@ -59,9 +52,7 @@ export const backreferenceMatcher = (index, named) => {
       return null;
     }
     const { match } = group;
-    return match === input.getString(match.length)
-      ? { count: match.length }
-      : null;
+    return input.matchString(match) ? { count: match.length } : null;
   };
 };
 
@@ -76,10 +67,13 @@ export const anyCharMatcher = input => {
   if (input.isEnd()) {
     return null;
   }
-  if (linefeeds[input.getString()]) {
-    return input.options.dotMatchesLineSeparators ? { count: 1 } : null;
+  const char = input.getChar();
+  if (linefeeds[char]) {
+    return input.options.dotMatchesLineSeparators
+      ? { count: char.length }
+      : null;
   }
-  return { count: 1 };
+  return { count: char.length };
 };
 
 export const charGroupMatcher = (items, invert) => {
@@ -88,6 +82,7 @@ export const charGroupMatcher = (items, invert) => {
       return null;
     }
     let ret = !!invert;
+    const current = input.getChar();
     for (const item of items) {
       const child = item.children[0];
       if (child.symbol === "CharacterClass") {
@@ -100,7 +95,6 @@ export const charGroupMatcher = (items, invert) => {
         const chars = child.children.map(c => c.text);
         const lower = chars[0];
         let upper = chars[2];
-        const current = input.getString();
         if (upper) {
           if (current >= lower && current <= upper) {
             ret = !ret;
@@ -116,7 +110,7 @@ export const charGroupMatcher = (items, invert) => {
     }
     return ret
       ? {
-          count: 1
+          count: current.length
         }
       : false;
   };
@@ -144,28 +138,34 @@ for (let code = 0x2000; code < 0x200b; code++) {
 
 export const characterClassMatcher = {
   characterClassAnyWord(input) {
-    return isWord(input.getString()) ? { count: 1 } : null;
+    let char = input.getChar();
+    return isWord(char) ? { count: char.length } : null;
   },
   characterClassAnyWordInverted(input) {
-    return !isWord(input.getString()) ? { count: 1 } : null;
+    let char = input.getChar();
+    return !isWord(char) ? { count: char.length } : null;
   },
   characterClassAnyDecimalDigit(input) {
-    return isNumber(input.getString()) ? { count: 1 } : null;
+    let char = input.getChar();
+    return isNumber(char) ? { count: char.length } : null;
   },
   characterClassAnyDecimalDigitInverted(input) {
-    return !isNumber(input.getString()) ? { count: 1 } : null;
+    let char = input.getChar();
+    return !isNumber(char) ? { count: char.length } : null;
   },
   whitespaceCharacter(input) {
     if (input.isEnd()) {
       return false;
     }
-    return whitespaceCharacters[input.getString()] ? { count: 1 } : null;
+    let char = input.getChar();
+    return whitespaceCharacters[char] ? { count: char.length } : null;
   },
   whitespaceCharacterInverted(input) {
     if (input.isEnd()) {
       return false;
     }
-    return !whitespaceCharacters[input.getString()] ? { count: 1 } : null;
+    let char = input.getChar();
+    return !whitespaceCharacters[char] ? { count: char.length } : null;
   }
 };
 
@@ -178,7 +178,7 @@ export const assertionMatcher = {
       matcher.input = input.clone();
       let match = matcher.matchInternal({
         startState: unit.start,
-        noAdvance: true
+        sticky: true
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -204,10 +204,10 @@ export const assertionMatcher = {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       matcher.input.setInverted();
-      matcher.input.advance(1);
+      matcher.input.advance();
       let match = matcher.matchInternal({
         startState: unit.start,
-        noAdvance: true
+        sticky: true
       });
       if (invert) {
         return match ? false : { count: 0 };

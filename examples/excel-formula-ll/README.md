@@ -11,7 +11,7 @@ console.log(formula.parse('sum(a1,a2)'));
 
 // or 
 console.log(formula.parse('sum(a1;a2)',{
-  lexerEnv: 'de'
+  lexerOptions: { env:'de' }
 }));
 ```
 
@@ -22,3 +22,4 @@ console.log(formula.parse('sum(a1;a2)',{
 - union: `sum((a1:a2,b1))`
 - 3d reference: `sum(shee1:sheet2!a1:a2)`
 - structure reference: `sum(t[[#total],[y]],t[x])`
+- array formula and spilled reference: `@sum(@a1:a2 a3#)`  

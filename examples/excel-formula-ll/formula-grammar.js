@@ -312,11 +312,11 @@ module.exports = () => ({
     },
     {
       symbol: "table-this-row",
-      rhs: ["table@"]
+      rhs: ["TABLE_@"]
     },
     {
       symbol: "table-this-row",
-      rhs: ["table@", "TABLE_COLUMN_SPECIFIER"]
+      rhs: ["TABLE_@", "TABLE_COLUMN_SPECIFIER"]
     },
     {
       symbol: "table-specifier-inner",
@@ -405,8 +405,13 @@ module.exports = () => ({
       },
       {
         state: ["s", "I"],
-        regexp: new RegExp(`^\\[#${namePart}\\]`),
+        regexp: /^\[#('.|[^\]#])+\]/,
         token: "TABLE_ITEM_SPECIFIER"
+      },
+      {
+        state: ["s"],
+        regexp: /^@/,
+        token: "TABLE_@"
       },
       {
         state: ["s"],
@@ -421,11 +426,7 @@ module.exports = () => ({
           this.pushState("s");
         }
       },
-      {
-        state: ["s"],
-        regexp: /^@/,
-        token: "table@"
-      },
+
       {
         regexp: /^@/,
         token: "@"

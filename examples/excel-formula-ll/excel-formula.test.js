@@ -11,7 +11,7 @@ describe("excel-formula-parser", () => {
     expect(
       prettyJson(
         formula.parse(`sum(a1:a2;b1)`, {
-          lexerEnv: "de"
+          lexerOptions: { env: "de" }
         }).ast
       )
     ).toMatchInlineSnapshot(`
@@ -1347,6 +1347,197 @@ describe("excel-formula-parser", () => {
           'lastLine': 1,
           'firstColumn': 1,
           'lastColumn': 7
+        }"
+      `);
+    });
+  });
+
+  describe("array formula", () => {
+    it("allow @ and #", () => {
+      expect(prettyJson(parse("@sum(@a1:a2 a3#)").ast)).toMatchInlineSnapshot(`
+        "{
+          'symbol': 'formula',
+          'children': [
+            {
+              'symbol': 'prefix-exp',
+              'label': 'single-exp',
+              'children': [
+                {
+                  'text': '@',
+                  'token': '@',
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
+                },
+                {
+                  'symbol': 'atom-exp',
+                  'label': 'single-exp',
+                  'children': [
+                    {
+                      'symbol': 'function',
+                      'children': [
+                        {
+                          'text': 'sum',
+                          'token': 'FUNCTION',
+                          'start': 1,
+                          'end': 4,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 2,
+                          'lastColumn': 5
+                        },
+                        {
+                          'text': '(',
+                          'token': '(',
+                          'start': 4,
+                          'end': 5,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 6
+                        },
+                        {
+                          'symbol': 'arguments',
+                          'children': [
+                            {
+                              'symbol': 'prefix-exp',
+                              'label': 'single-exp',
+                              'children': [
+                                {
+                                  'text': '@',
+                                  'token': '@',
+                                  'start': 5,
+                                  'end': 6,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 6,
+                                  'lastColumn': 7
+                                },
+                                {
+                                  'symbol': 'atom-exp',
+                                  'label': 'single-exp',
+                                  'children': [
+                                    {
+                                      'symbol': 'reference',
+                                      'children': [
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'a1:a2',
+                                              'token': 'CELL',
+                                              'start': 6,
+                                              'end': 11,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 7,
+                                              'lastColumn': 12
+                                            }
+                                          ],
+                                          'start': 6,
+                                          'end': 11,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 7,
+                                          'lastColumn': 12
+                                        },
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'a3#',
+                                              'token': 'CELL',
+                                              'start': 12,
+                                              'end': 15,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 13,
+                                              'lastColumn': 16
+                                            }
+                                          ],
+                                          'start': 12,
+                                          'end': 15,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 13,
+                                          'lastColumn': 16
+                                        }
+                                      ],
+                                      'start': 6,
+                                      'end': 15,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 7,
+                                      'lastColumn': 16
+                                    }
+                                  ],
+                                  'start': 6,
+                                  'end': 15,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 7,
+                                  'lastColumn': 16
+                                }
+                              ],
+                              'start': 5,
+                              'end': 15,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 16
+                            }
+                          ],
+                          'start': 5,
+                          'end': 15,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 6,
+                          'lastColumn': 16
+                        },
+                        {
+                          'text': ')',
+                          'token': ')',
+                          'start': 15,
+                          'end': 16,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 16,
+                          'lastColumn': 17
+                        }
+                      ],
+                      'start': 1,
+                      'end': 16,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 17
+                    }
+                  ],
+                  'start': 1,
+                  'end': 16,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 2,
+                  'lastColumn': 17
+                }
+              ],
+              'start': 0,
+              'end': 16,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 17
+            }
+          ],
+          'start': 0,
+          'end': 16,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 17
         }"
       `);
     });

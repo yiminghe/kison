@@ -162,6 +162,12 @@ module.exports = () => ({
     },
     {
       symbol: "prefix-exp",
+      // extract single value for array value
+      rhs: ["@", "prefix-exp"],
+      label: "single-exp"
+    },
+    {
+      symbol: "prefix-exp",
       rhs: ["atom-exp"],
       label: "single-exp"
     },
@@ -306,11 +312,11 @@ module.exports = () => ({
     },
     {
       symbol: "table-this-row",
-      rhs: ["@"]
+      rhs: ["table@"]
     },
     {
       symbol: "table-this-row",
-      rhs: ["@", "TABLE_COLUMN_SPECIFIER"]
+      rhs: ["table@", "TABLE_COLUMN_SPECIFIER"]
     },
     {
       symbol: "table-specifier-inner",
@@ -418,6 +424,10 @@ module.exports = () => ({
       {
         state: ["s"],
         regexp: /^@/,
+        token: "table@"
+      },
+      {
+        regexp: /^@/,
         token: "@"
       },
       {
@@ -468,8 +478,10 @@ module.exports = () => ({
         token: "ERROR"
       },
       {
+        // @: disable array formula, allow  Implicit Intersection
+        // #: spill reference
         regexp: new RegExp(
-          `^${sheetAddress}?${cellAddressLiteral}(?:\\s*\\:\\s*${cellAddressLiteral})?`
+          `^${sheetAddress}?${cellAddressLiteral}(?:\\s*\\:\\s*${cellAddressLiteral})?#?`
         ),
         token: "CELL"
       },

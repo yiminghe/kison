@@ -179,16 +179,29 @@ export default class InspectModel {
       token = tokens[tokens.length - 2] || errorNode;
     }
 
-    const markers = [
-      {
-        severity: monaco.MarkerSeverity.Error,
-        startLineNumber: token.firstLine,
-        startColumn: token.firstColumn,
-        endLineNumber: token.lastLine,
-        endColumn: token.lastColumn,
-        message: errorNode.error.errorMessage
-      }
-    ];
+    const { expected } = errorNode.error;
+    let markers = [];
+    const info = {
+      severity: monaco.MarkerSeverity.Error,
+      startLineNumber: token.firstLine,
+      startColumn: token.firstColumn,
+      endLineNumber: token.lastLine,
+      endColumn: token.lastColumn
+    };
+
+    if (expected.length) {
+      markers = expected.map(e => {
+        return {
+          ...info,
+          message: `'${e}' expected.`
+        };
+      });
+    } else {
+      markers.push({
+        ...info,
+        message: "syntax error."
+      });
+    }
 
     this.monaco.editor.setModelMarkers(model, langId, markers);
   }

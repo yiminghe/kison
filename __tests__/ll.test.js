@@ -881,184 +881,186 @@ describe("ll", () => {
     const parser = run(code);
     const { ast, errorNode } = parser.parse("1+2*");
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'add',
-            'children': [
-              {
-                'symbol': 'expo',
-                'label': 'single-exp',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'text': '1',
-                        'token': 'NUMBER',
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ],
-                    'start': 0,
-                    'end': 1,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 1,
-                    'lastColumn': 2
-                  }
-                ],
-                'start': 0,
-                'end': 1,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 2
-              },
-              {
-                'text': '+',
-                'token': '+',
-                'start': 1,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 2,
-                'lastColumn': 3
-              },
-              {
-                'symbol': 'mul',
-                'children': [
-                  {
-                    'symbol': 'expo',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '2',
-                            'token': 'NUMBER',
-                            'start': 2,
-                            'end': 3,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 3,
-                            'lastColumn': 4
-                          }
-                        ],
-                        'start': 2,
-                        'end': 3,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 3,
-                        'lastColumn': 4
-                      }
-                    ],
-                    'start': 2,
-                    'end': 3,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 3,
-                    'lastColumn': 4
-                  },
-                  {
-                    'text': '*',
-                    'token': '*',
-                    'start': 3,
-                    'end': 4,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 4,
-                    'lastColumn': 5
-                  },
-                  {
-                    'error': {
-                      'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
-                      'expected': [
-                        'NUMBER',
-                        '('
-                      ],
-                      'symbol': 'expo',
-                      'lexer': {
-                        't': '$EOF',
-                        'token': '$EOF',
-                        'start': 4,
-                        'end': 4,
-                        'firstLine': 1,
-                        'firstColumn': 5,
-                        'lastLine': 1,
-                        'lastColumn': 5
-                      }
-                    },
-                    'token': '$EOF',
-                    'start': 4,
-                    'end': 4,
-                    'firstLine': 1,
-                    'firstColumn': 5,
-                    'lastLine': 1,
-                    'lastColumn': 5
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 2,
-                'end': 4,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 5
-              }
-            ],
-            'label': 'single-exp',
-            'start': 0,
-            'end': 4,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 5
-          }
-        ],
-        'start': 0,
-        'end': 4,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 5
-      }"
-    `);
-    expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
-      "{
-        'error': {
-          'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
-          'expected': [
-            'NUMBER',
-            '('
-          ],
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'add',
+      'children': [
+        {
           'symbol': 'expo',
-          'lexer': {
-            't': '$EOF',
-            'token': '$EOF',
-            'start': 4,
-            'end': 4,
-            'firstLine': 1,
-            'firstColumn': 5,
-            'lastLine': 1,
-            'lastColumn': 5
-          }
+          'label': 'single-exp',
+          'children': [
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '1',
+                  'token': 'NUMBER',
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
+                }
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
+            }
+          ],
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
         },
-        'token': '$EOF',
-        'start': 4,
-        'end': 4,
-        'firstLine': 1,
-        'firstColumn': 5,
-        'lastLine': 1,
-        'lastColumn': 5
-      }"
-    `);
+        {
+          'text': '+',
+          'token': '+',
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3
+        },
+        {
+          'symbol': 'mul',
+          'children': [
+            {
+              'symbol': 'expo',
+              'label': 'single-exp',
+              'children': [
+                {
+                  'symbol': 'atom',
+                  'children': [
+                    {
+                      'text': '2',
+                      'token': 'NUMBER',
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
+                    }
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
+                }
+              ],
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
+            },
+            {
+              'text': '*',
+              'token': '*',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'error': {
+                'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+                'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+                'expected': [
+                  'NUMBER',
+                  '('
+                ],
+                'symbol': 'expo',
+                'lexer': {
+                  't': '$EOF',
+                  'token': '$EOF',
+                  'start': 4,
+                  'end': 4,
+                  'firstLine': 1,
+                  'firstColumn': 5,
+                  'lastLine': 1,
+                  'lastColumn': 5
+                }
+              },
+              'token': '$EOF',
+              'start': 4,
+              'end': 4,
+              'firstLine': 1,
+              'firstColumn': 5,
+              'lastLine': 1,
+              'lastColumn': 5
+            }
+          ],
+          'label': 'single-exp',
+          'start': 2,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 5
+        }
+      ],
+      'label': 'single-exp',
+      'start': 0,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 5
+    }
+  ],
+  'start': 0,
+  'end': 4,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 5
+}"
+`);
+    expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
+"{
+  'error': {
+    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+    'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+    'expected': [
+      'NUMBER',
+      '('
+    ],
+    'symbol': 'expo',
+    'lexer': {
+      't': '$EOF',
+      'token': '$EOF',
+      'start': 4,
+      'end': 4,
+      'firstLine': 1,
+      'firstColumn': 5,
+      'lastLine': 1,
+      'lastColumn': 5
+    }
+  },
+  'token': '$EOF',
+  'start': 4,
+  'end': 4,
+  'firstLine': 1,
+  'firstColumn': 5,
+  'lastLine': 1,
+  'lastColumn': 5
+}"
+`);
   });
 
   it("onAction works", () => {
@@ -1116,41 +1118,43 @@ describe("ll", () => {
       }
     });
     expect(errorCalled).toMatchInlineSnapshot(`
-      Object {
-        "end": 3,
-        "error": Object {
-          "errorMessage": "syntax error at line 1:
-      1+/2
-      --^
-      expect NUMBER, (
-      current token is /",
-          "expected": Array [
-            "NUMBER",
-            "(",
-          ],
-          "lexer": Object {
-            "end": 3,
-            "firstColumn": 3,
-            "firstLine": 1,
-            "lastColumn": 4,
-            "lastLine": 1,
-            "start": 2,
-            "t": "/",
-            "text": "/",
-            "token": "/",
-          },
-          "recovery": true,
-          "symbol": "mul",
-        },
-        "firstColumn": 3,
-        "firstLine": 1,
-        "lastColumn": 4,
-        "lastLine": 1,
-        "start": 2,
-        "text": "/",
-        "token": "/",
-      }
-    `);
+Object {
+  "end": 3,
+  "error": Object {
+    "errorMessage": "syntax error at line 1:
+1+/2
+--^
+'NUMBER', '(' expected.
+current token: '/'.",
+    "expected": Array [
+      "NUMBER",
+      "(",
+    ],
+    "lexer": Object {
+      "end": 3,
+      "firstColumn": 3,
+      "firstLine": 1,
+      "lastColumn": 4,
+      "lastLine": 1,
+      "start": 2,
+      "t": "/",
+      "text": "/",
+      "token": "/",
+    },
+    "recovery": true,
+    "symbol": "mul",
+    "tip": "'NUMBER', '(' expected.
+current token: '/'.",
+  },
+  "firstColumn": 3,
+  "firstLine": 1,
+  "lastColumn": 4,
+  "lastLine": 1,
+  "start": 2,
+  "text": "/",
+  "token": "/",
+}
+`);
   });
 
   it("add error recovery works", () => {
@@ -1273,59 +1277,62 @@ describe("ll", () => {
       }"
     `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
-      "{
-        'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\nexpect NUMBER, (\\\\ncurrent token is $EOF',
-        'expected': [
-          'NUMBER',
-          '('
-        ],
-        'symbol': 'mul',
-        'lexer': {
-          't': '$EOF',
-          'token': '$EOF',
-          'start': 2,
-          'end': 2,
-          'firstLine': 1,
-          'firstColumn': 3,
-          'lastLine': 1,
-          'lastColumn': 3
-        },
-        'recovery': true
-      }"
-    `);
+"{
+  'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+  'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+  'expected': [
+    'NUMBER',
+    '('
+  ],
+  'symbol': 'mul',
+  'lexer': {
+    't': '$EOF',
+    'token': '$EOF',
+    'start': 2,
+    'end': 2,
+    'firstLine': 1,
+    'firstColumn': 3,
+    'lastLine': 1,
+    'lastColumn': 3
+  },
+  'recovery': true
+}"
+`);
     expect(errorCalled).toMatchInlineSnapshot(`
-      Object {
-        "end": 2,
-        "error": Object {
-          "errorMessage": "syntax error at line 1:
-      1+
-      --^
-      expect NUMBER, (
-      current token is $EOF",
-          "expected": Array [
-            "NUMBER",
-            "(",
-          ],
-          "lexer": Object {
-            "end": 2,
-            "firstColumn": 3,
-            "firstLine": 1,
-            "lastColumn": 3,
-            "lastLine": 1,
-            "start": 2,
-            "t": "$EOF",
-            "token": "$EOF",
-          },
-          "recovery": true,
-          "symbol": "mul",
-        },
-        "firstColumn": 3,
-        "firstLine": 1,
-        "lastColumn": 3,
-        "lastLine": 1,
-        "start": 2,
-        "token": "$EOF",
-      }
-    `);
+Object {
+  "end": 2,
+  "error": Object {
+    "errorMessage": "syntax error at line 1:
+1+
+--^
+'NUMBER', '(' expected.
+current token: '$EOF'.",
+    "expected": Array [
+      "NUMBER",
+      "(",
+    ],
+    "lexer": Object {
+      "end": 2,
+      "firstColumn": 3,
+      "firstLine": 1,
+      "lastColumn": 3,
+      "lastLine": 1,
+      "start": 2,
+      "t": "$EOF",
+      "token": "$EOF",
+    },
+    "recovery": true,
+    "symbol": "mul",
+    "tip": "'NUMBER', '(' expected.
+current token: '$EOF'.",
+  },
+  "firstColumn": 3,
+  "firstLine": 1,
+  "lastColumn": 3,
+  "lastLine": 1,
+  "start": 2,
+  "token": "$EOF",
+}
+`);
   });
 });

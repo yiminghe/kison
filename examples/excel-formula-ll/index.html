@@ -31,19 +31,23 @@
         <a href="./README.md">excel formula parser readme</a>
     </div>
 
-    <h2>open devtools console</h2>
-    <p>error recovery example: &nbsp;&nbsp; <b>sum(1,sum(2,</b> &nbsp; &nbsp;=> &nbsp;&nbsp;<b>sum(1,sum(2,))</b></p>
+    <h2>demo</h2>
     <div>
-        <textarea style="width:400px;height:100px" id='input'>sum(a1:a2, b2)</textarea>
         &nbsp; <button id='parse'>parse</button>
         &nbsp; <button id='fix'>error recovery</button>
         &nbsp; <button id='evaluate'>evaluate</button>
+        <br/>
+        <br/>
     </div>
-    <h2>monaco-editor</h2>
-    <div id='monaco-editor' style="height:100px"></div>
+   
+    <div id='monaco-editor'>
+        loading monaco-editor...
+    </div>
 
     <script>
-        const monacoBase = 'https://unpkg.com/monaco-editor@0.27.0/min/vs/';
+        const monacoBase = location.search === '?a' ?
+            `https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/dev/vs/` :
+            `https://unpkg.com/monaco-editor@0.27.0/dev/vs/`;
         document.writeln(` <script src="${monacoBase}loader.js"><\/script>`);
     </script>
 

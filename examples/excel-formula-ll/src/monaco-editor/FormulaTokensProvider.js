@@ -1,4 +1,4 @@
-import parser from "../parser.js";
+import { getTokens } from "./utils.js";
 
 class Cloneable {
   clone() {
@@ -17,8 +17,7 @@ export default class FormulaTokensProvider {
   }
 
   tokenize(line) {
-    const ret = parser.parse(line);
-    const tokens = ret.tokens;
+    const { tokens } = getTokens(line);
     return {
       endState: placeholder,
       tokens: tokens.map(t => {

@@ -4,6 +4,7 @@ import calGrammar from "../examples/cal-ll/cal-grammar";
 import { prettyJson } from "./utils";
 
 var LLGrammar = Kison.LLGrammar;
+const run = eval;
 
 function getGrammar() {
   var grammar = new LLGrammar({
@@ -247,7 +248,7 @@ describe("ll", () => {
   it("ast works", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     const ast = parser.parse("1+2+3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
@@ -410,7 +411,7 @@ describe("ll", () => {
   it("ast works", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     const ast = parser.parse("1+2*3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
@@ -573,7 +574,7 @@ describe("ll", () => {
   it("ast works", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     const ast = parser.parse("1+2*4-5^2^3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
@@ -877,7 +878,7 @@ describe("ll", () => {
   it("error detection works", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     const { ast, errorNode } = parser.parse("1+2*");
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
@@ -1063,7 +1064,7 @@ describe("ll", () => {
   it("onAction works", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     const astProcessor = new AstProcessor();
     parser.parse("1 + 2*3-2^1^3", {
       onAction({ action, lexer }) {
@@ -1106,7 +1107,7 @@ describe("ll", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     let errorCalled = 0;
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     parser.parse("1+/2", {
       onErrorRecovery({ errorNode }, { action }) {
         errorCalled = errorNode;
@@ -1156,7 +1157,7 @@ describe("ll", () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     let errorCalled = 0;
-    const parser = Function.call(null, code + "\n return parser;")();
+    const parser = run(code);
     const { ast, error, errorNode } = parser.parse("1+", {
       onErrorRecovery({ errorNode }, { action }) {
         errorCalled = errorNode;

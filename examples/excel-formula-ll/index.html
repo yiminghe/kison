@@ -36,18 +36,19 @@
         &nbsp; <button id='parse'>parse</button>
         &nbsp; <button id='fix'>error recovery</button>
         &nbsp; <button id='evaluate'>evaluate</button>
-        <br/>
-        <br/>
+        <br />
+        <br />
     </div>
-   
+
     <div id='monaco-editor'>
         loading monaco-editor...
     </div>
 
     <script>
-        const monacoBase = location.search === '?a' ?
-            `https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/dev/vs/` :
-            `https://unpkg.com/monaco-editor@0.27.0/dev/vs/`;
+        const monacoDev = location.search.indexOf('dev') !== -1 ? 'dev' : 'min';
+        const monacoBase = location.search.indexOf('ali') !== -1 ?
+            `https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/${monacoDev}/vs/` :
+            `https://unpkg.com/monaco-editor@0.27.0/${monacoDev}/vs/`;
         document.writeln(` <script src="${monacoBase}loader.js"><\/script>`);
     </script>
 

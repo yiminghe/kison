@@ -78,7 +78,7 @@ export default function init({ monaco, functionNames }) {
 
       languages.registerSignatureHelpProvider(
         langId,
-        new createFormulaSignatureHelpProvider()
+        createFormulaSignatureHelpProvider()
       );
 
       languages.registerHoverProvider(langId, createFormulaHoverProvider());

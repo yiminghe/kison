@@ -17,9 +17,7 @@ export default function createFormulaCompletionItemProvider(functionNames) {
           label: fnName,
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: `function: ${fnName}`,
-          insertTextRules:
-            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          insertText: fnName + "($0)",
+          insertText: fnName,
           range: range
         };
         suggestions.push(oneSuggestion);

@@ -29,6 +29,10 @@ export function getFunctionInfoFromPosition(ast, position) {
       return ret;
     }
     func = cursorNode.parent;
+    // if hover function name skip
+    if (cursorNode.token === "FUNCTION") {
+      func = func.parent;
+    }
     while (func && !insideFunction(func, position)) {
       func = func.parent;
     }
@@ -102,7 +106,7 @@ function findNodeBySymbol(nodes, symbol) {
 
 function isNodeAfterOrEq(node, position) {
   return (
-    node.firstLine > position ||
+    node.firstLine > position.lineNumber ||
     (node.firstLine === position.lineNumber &&
       node.firstColumn >= position.column)
   );

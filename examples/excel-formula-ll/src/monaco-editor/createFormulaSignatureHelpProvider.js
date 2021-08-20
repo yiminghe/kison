@@ -1,8 +1,15 @@
 import { getAst } from "../cachedParser.js";
 import { getFunctionInfoFromPosition } from "../languageService.js";
 
+const signatureHelpTriggerCharacters = ["(", ","];
+const signatureHelpRetrieveCharacters = [")"];
+
 export default function createFormulaSignatureHelpProvider() {
   return {
+    signatureHelpTriggerCharacters,
+
+    signatureHelpRetrieveCharacters,
+
     provideSignatureHelp(model, position) {
       const ast = getAst(model.getValue());
       const info = getFunctionInfoFromPosition(ast, position);
@@ -23,17 +30,23 @@ export default function createFormulaSignatureHelpProvider() {
         parameters: []
       };
 
-      [1, 2, 3, 4].forEach(p => {
-        const label = `argument ${p} label`;
+      const parameterLength = Math.max(2, info.argumentIndex);
+
+      for (let i = 1; i <= parameterLength + 1; i++) {
+        let label = `argument${i}`;
         const parameter = {
-          label: label,
-          documentation: `argument ${p} documentation`
+          label,
+          documentation: `argument${i} documentation`
         };
         signature.label += label;
         signature.parameters.push(parameter);
         signature.label += ", ";
-      });
+      }
 
+      signature.label += "...";
+      signature.parameters.push({
+        label: "..."
+      });
       signature.label += ")";
       ret.signatures.push(signature);
 

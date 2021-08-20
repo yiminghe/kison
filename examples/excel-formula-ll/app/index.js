@@ -1,6 +1,6 @@
 import initMonaco from "../src/monaco-editor/formula.contribution.js";
 import functionNames from "./functionNames.js";
-import { getAst } from "../src/monaco-editor/utils.js";
+import { getAst } from "../src/cachedParser.js";
 
 require.config({
   paths: {

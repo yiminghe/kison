@@ -1,17 +1,19 @@
-import FormulaTokensProvider from "./FormulaTokensProvider.js";
-import FormulaCompletionItemProvider from "./FormulaCompletionItemProvider.js";
-import FormulaSignatureHelpProvider from "./FormulaSignatureHelpProvider.js";
-import FormulaHoverProvider from "./FormulaHoverProvider.js";
+import createFormulaTokensProvider from "./createFormulaTokensProvider.js";
+import createFormulaCompletionItemProvider from "./createFormulaCompletionItemProvider.js";
+import createFormulaSignatureHelpProvider from "./createFormulaSignatureHelpProvider.js";
+import createFormulaHoverProvider from "./createFormulaHoverProvider.js";
 import { langId } from "./utils.js";
-import InspectModel from "./InspectModel.js";
+import observe from "./observe.js";
 
 let setupLanguaged = false;
 
-export default function init({ monaco, editor, functionNames }) {
+export default function init({ monaco, functionNames }) {
   if (!setupLanguaged) {
+    const { editor, languages } = monaco;
+
     let themeName = langId + "-theme";
 
-    monaco.editor.defineTheme(themeName, {
+    editor.defineTheme(themeName, {
       base: "vs",
       inherit: false,
       rules: [
@@ -34,8 +36,8 @@ export default function init({ monaco, editor, functionNames }) {
       ]
     });
 
-    monaco.languages.onLanguage(langId, () => {
-      monaco.languages.setLanguageConfiguration(langId, {
+    languages.onLanguage(langId, () => {
+      languages.setLanguageConfiguration(langId, {
         brackets: [
           ["{", "}"],
           ["[", "]"],
@@ -67,25 +69,27 @@ export default function init({ monaco, editor, functionNames }) {
         ]
       });
 
-      monaco.languages.setTokensProvider(langId, new FormulaTokensProvider());
-      monaco.languages.registerCompletionItemProvider(
+      languages.setTokensProvider(langId, createFormulaTokensProvider());
+
+      languages.registerCompletionItemProvider(
         langId,
-        new FormulaCompletionItemProvider(functionNames)
-      );
-      monaco.languages.registerSignatureHelpProvider(
-        langId,
-        new FormulaSignatureHelpProvider()
-      );
-      monaco.languages.registerHoverProvider(
-        langId,
-        new FormulaHoverProvider()
+        createFormulaCompletionItemProvider(functionNames)
       );
 
-      new InspectModel(monaco);
+      languages.registerSignatureHelpProvider(
+        langId,
+        createFormulaSignatureHelpProvider()
+      );
+
+      languages.registerHoverProvider(langId, createFormulaHoverProvider());
+
+      observe(monaco);
     });
-    monaco.languages.register({
+
+    languages.register({
       id: langId
     });
+
     setupLanguaged = true;
   }
 }

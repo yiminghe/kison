@@ -1,4 +1,5 @@
-import { langId, getAst } from "./utils.js";
+import { langId } from "./utils.js";
+import { getAst } from "../cachedParser.js";
 
 const colors = [
   "#0000ff",
@@ -55,47 +56,42 @@ function injectStyle() {
   }
 }
 
-export default class InspectModel {
-  constructor(monaco) {
-    injectStyle();
+export default function observe(monaco) {
+  injectStyle();
 
-    this._disposables = [];
-    this._listener = {};
-    this._decorations = [];
-    this.monaco = monaco;
+  const disposables = [];
+  const listeners = {};
+  let decorations = [];
 
-    this._disposables.push(monaco.editor.onDidCreateModel(this.onModelAdded));
-    this._disposables.push(
-      monaco.editor.onWillDisposeModel(this.onModelRemoved)
-    );
-    this._disposables.push(
-      monaco.editor.onDidChangeModelLanguage(event => {
-        this.onModelRemoved(event.model);
-        this.onModelAdded(event.model);
-      })
-    );
+  disposables.push(monaco.editor.onDidCreateModel(onModelAdded));
+  disposables.push(monaco.editor.onWillDisposeModel(onModelRemoved));
+  disposables.push(
+    monaco.editor.onDidChangeModelLanguage(event => {
+      onModelRemoved(event.model);
+      onModelAdded(event.model);
+    })
+  );
 
-    this._disposables.push({
-      dispose() {
-        monaco.editor.getModels().forEach(model => {
-          this.onModelRemoved(model);
-        });
-      }
-    });
+  disposables.push({
+    dispose() {
+      monaco.editor.getModels().forEach(model => {
+        onModelRemoved(model);
+      });
+    }
+  });
 
-    monaco.editor.getModels().forEach(this.onModelAdded);
+  monaco.editor.getModels().forEach(onModelAdded);
+
+  function onModelRemoved(model) {
+    monaco.editor.setModelMarkers(model, langId, []);
+    const key = model.uri.toString();
+    if (listeners[key]) {
+      listeners[key]();
+      delete listeners[key];
+    }
   }
 
-  onModelRemoved = model => {
-    this.monaco.editor.setModelMarkers(model, langId, []);
-    const key = model.uri.toString();
-    if (this._listener[key]) {
-      this._listener[key]();
-      delete this._listener[key];
-    }
-  };
-
-  onModelAdded = model => {
+  function onModelAdded(model) {
     if (model.getModeId() !== langId) {
       return;
     }
@@ -104,31 +100,24 @@ export default class InspectModel {
     const changeSubscription = model.onDidChangeContent(() => {
       clearTimeout(handle);
       handle = setTimeout(() => {
-        this.injectModel(model);
+        onModelChange(model);
       }, 500);
     });
 
-    this._listener[model.uri.toString()] = () => {
+    listeners[model.uri.toString()] = () => {
       changeSubscription.dispose();
       clearTimeout(handle);
     };
 
-    this.injectModel(model);
-  };
-
-  injectModel(model) {
-    this._doValidate(model);
-    this._decorateCellAddress(model);
+    onModelChange(model);
   }
 
-  dispose() {
-    this._disposables.forEach(d => {
-      d && d.dispose();
-    });
-    this._disposables = [];
+  function onModelChange(model) {
+    diagnose(model);
+    decorateCellAddress(model);
   }
 
-  _decorateCellAddress(model) {
+  function decorateCellAddress(model) {
     const { tokens } = getAst(model.getValue());
     let colorId = 1;
 
@@ -157,21 +146,25 @@ export default class InspectModel {
       }
     });
 
-    this._decorations = model.deltaDecorations(
-      this._decorations,
-      decorationRangeList
-    );
+    decorations = model.deltaDecorations(decorations, decorationRangeList);
   }
 
-  _doValidate(model) {
-    const ret = getAst(model.getValue());
+  function diagnose(model) {
+    const value = model.getValue();
+
+    if (!value.trim()) {
+      monaco.editor.setModelMarkers(model, langId, []);
+      return;
+    }
+
+    const ret = getAst(value);
     const { errorNode, tokens } = ret;
 
     let token = errorNode;
 
     if (!errorNode || model.isDisposed()) {
       // model was disposed in the meantime
-      this.monaco.editor.setModelMarkers(model, langId, []);
+      monaco.editor.setModelMarkers(model, langId, []);
       return;
     }
 
@@ -203,6 +196,6 @@ export default class InspectModel {
       });
     }
 
-    this.monaco.editor.setModelMarkers(model, langId, markers);
+    monaco.editor.setModelMarkers(model, langId, markers);
   }
 }

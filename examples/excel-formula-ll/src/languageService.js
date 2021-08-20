@@ -87,7 +87,7 @@ function insideFunction(node, { lineNumber, column }) {
     node.children[1] &&
     (lineNumber > node.children[1].firstLine ||
       lineNumber == node.children[1].firstLine ||
-        column > node.children[1].column)
+      column > node.children[1].column)
   );
 }
 

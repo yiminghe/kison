@@ -1,9 +1,30 @@
-export default function createFormulaCompletionItemProvider(functionNames) {
+import { getTableNameByPosition } from "../languageService.js";
+import { getAst } from "../cachedParser.js";
+
+export default function createFormulaCompletionItemProvider(getNames) {
   return {
-    provideCompletionItems(model, position) {
+    triggerCharacters: ["["],
+    provideCompletionItems(model, position, context) {
+      let kind = "function";
       const suggestions = [];
 
       var word = model.getWordUntilPosition(position);
+      let data;
+      if (context.triggerCharacter === "[") {
+        const table = getTableNameByPosition(
+          getAst(model.getValue()).terminalNodes,
+          position
+        );
+        if (table) {
+          kind = "table column";
+          data = getNames({
+            table,
+            kind
+          });
+        }
+      }
+
+      data = data || getNames({ kind });
 
       var range = {
         startLineNumber: position.lineNumber,
@@ -12,11 +33,11 @@ export default function createFormulaCompletionItemProvider(functionNames) {
         endColumn: word.endColumn
       };
 
-      functionNames.forEach(function(fnName) {
+      data.forEach(function(fnName) {
         let oneSuggestion = {
           label: fnName,
           kind: monaco.languages.CompletionItemKind.Function,
-          documentation: `function: ${fnName}`,
+          documentation: `${kind}: ${fnName}`,
           insertText: fnName,
           range: range
         };

@@ -7,7 +7,7 @@ import observe from "./observe.js";
 
 let setupLanguaged = false;
 
-export default function init({ monaco, functionNames }) {
+export default function init({ monaco, getNames }) {
   if (!setupLanguaged) {
     const { editor, languages } = monaco;
 
@@ -73,7 +73,7 @@ export default function init({ monaco, functionNames }) {
 
       languages.registerCompletionItemProvider(
         langId,
-        createFormulaCompletionItemProvider(functionNames)
+        createFormulaCompletionItemProvider(getNames)
       );
 
       languages.registerSignatureHelpProvider(

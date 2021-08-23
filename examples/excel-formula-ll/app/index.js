@@ -9,7 +9,15 @@ require.config({
 });
 
 require(["vs/editor/editor.main"], function() {
-  initMonaco({ monaco, functionNames });
+  initMonaco({
+    monaco,
+    getNames({ kind, table }) {
+      if (kind === "function") {
+        return functionNames;
+      }
+      return [`${table}_column_1`, `${table}_column_2`];
+    }
+  });
 
   const editorContainer = document.getElementById("monaco-editor");
   editorContainer.innerHTML = "";

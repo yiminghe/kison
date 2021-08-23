@@ -126,3 +126,22 @@ function getArgumentIndex(args, position) {
   }
   return index;
 }
+
+export function getTableNameByPosition(terminals, position) {
+  let prev;
+  for (const t of terminals) {
+    if (isNodeAfterOrEq(t, position)) {
+      break;
+    }
+    prev = t;
+  }
+
+  if (prev) {
+    while (prev && prev.symbol !== "structure-reference") {
+      prev = prev.parent;
+    }
+    if (prev) {
+      return prev.children[0].text;
+    }
+  }
+}

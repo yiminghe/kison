@@ -24,6 +24,9 @@ describe("excel-formula-parser", () => {
   it("works for intersection", () => {
     expect(prettyJson(parse(`sum(a1:a2 b1)`).ast)).toMatchSnapshot();
   });
+  it("works for named range intersection", () => {
+    expect(prettyJson(parse(`sum(a b1)`).ast)).toMatchSnapshot();
+  });
   it("works for union", () => {
     expect(prettyJson(parse(`sum((a1:a2,b1))`).ast)).toMatchSnapshot();
   });

@@ -198,17 +198,16 @@ module.exports = () => ({
     },
     {
       symbol: "atom-exp",
-      rhs: ["NAME"],
-      label: "error-exp"
-    },
-    {
-      symbol: "atom-exp",
       rhs: ["reference"],
       label: "single-exp"
     },
     {
       symbol: "reference-item",
       rhs: ["CELL"]
+    },
+    {
+      symbol: "reference-item",
+      rhs: ["NAME"]
     },
     {
       symbol: "reference-item",

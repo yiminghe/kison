@@ -1606,6 +1606,149 @@ exports[`excel-formula-parser works for intersection 1`] = `
 }"
 `;
 
+exports[`excel-formula-parser works for named range intersection 1`] = `
+"{
+  'symbol': 'formula',
+  'children': [
+    {
+      'symbol': 'atom-exp',
+      'label': 'single-exp',
+      'children': [
+        {
+          'symbol': 'function',
+          'children': [
+            {
+              'text': 'sum',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 4
+            },
+            {
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'symbol': 'arguments',
+              'children': [
+                {
+                  'symbol': 'atom-exp',
+                  'label': 'single-exp',
+                  'children': [
+                    {
+                      'symbol': 'reference',
+                      'children': [
+                        {
+                          'symbol': 'reference-item',
+                          'children': [
+                            {
+                              'text': 'a',
+                              'token': 'NAME',
+                              'start': 4,
+                              'end': 5,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 6
+                            }
+                          ],
+                          'start': 4,
+                          'end': 5,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 6
+                        },
+                        {
+                          'symbol': 'reference-item',
+                          'children': [
+                            {
+                              'text': 'b1',
+                              'token': 'CELL',
+                              'start': 6,
+                              'end': 8,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 7,
+                              'lastColumn': 9
+                            }
+                          ],
+                          'start': 6,
+                          'end': 8,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 7,
+                          'lastColumn': 9
+                        }
+                      ],
+                      'start': 4,
+                      'end': 8,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 9
+                    }
+                  ],
+                  'start': 4,
+                  'end': 8,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 9
+                }
+              ],
+              'start': 4,
+              'end': 8,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 9
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 8,
+              'end': 9,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 9,
+              'lastColumn': 10
+            }
+          ],
+          'start': 0,
+          'end': 9,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 10
+        }
+      ],
+      'start': 0,
+      'end': 9,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 10
+    }
+  ],
+  'start': 0,
+  'end': 9,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 10
+}"
+`;
+
 exports[`excel-formula-parser works for simple 1`] = `
 "{
   'symbol': 'formula',

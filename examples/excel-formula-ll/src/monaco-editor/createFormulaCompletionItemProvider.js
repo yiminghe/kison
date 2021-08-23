@@ -3,24 +3,37 @@ import { getAst } from "../cachedParser.js";
 
 export default function createFormulaCompletionItemProvider(getNames) {
   return {
-    triggerCharacters: ["["],
+    triggerCharacters: ["[", "@"],
     provideCompletionItems(model, position, context) {
       let kind = "function";
       const suggestions = [];
 
       var word = model.getWordUntilPosition(position);
-      let data;
-      if (context.triggerCharacter === "[") {
+      let data = [];
+      if (
+        context.triggerCharacter === "[" ||
+        context.triggerCharacter === "@"
+      ) {
         const table = getTableNameByPosition(
           getAst(model.getValue()).terminalNodes,
           position
         );
         if (table) {
           kind = "table column";
-          data = getNames({
-            table,
-            kind
-          });
+          if (context.triggerCharacter === "[") {
+            data = ["@"];
+          }
+          data = data.concat(
+            getNames({
+              table,
+              kind
+            })
+          );
+          if (context.triggerCharacter === "[") {
+            data = data.concat(["#All", "#Data", "#Headers", "#Totals"]);
+          }
+        } else {
+          return;
         }
       }
 

@@ -1,37 +1,39 @@
 import { getTableNameByPosition } from "../languageService.js";
 import { getAst } from "../cachedParser.js";
 
+const tableItems = [
+  ["@", "current row"],
+  ["#All", "all table data,headers,totals"],
+  ["#Data", "table data"],
+  ["#Headers", "table headers"],
+  ["#Totals", "table totals"]
+];
+
 export default function createFormulaCompletionItemProvider(getNames) {
   return {
     triggerCharacters: ["[", "@"],
     provideCompletionItems(model, position, context) {
       let kind = "function";
       const suggestions = [];
+      let table;
 
       var word = model.getWordUntilPosition(position);
-      let data = [];
+      let data;
+
       if (
         context.triggerCharacter === "[" ||
         context.triggerCharacter === "@"
       ) {
-        const table = getTableNameByPosition(
+        table = getTableNameByPosition(
           getAst(model.getValue()).terminalNodes,
           position
         );
         if (table) {
           kind = "table column";
-          if (context.triggerCharacter === "[") {
-            data = ["@"];
-          }
-          data = data.concat(
-            getNames({
-              table,
-              kind
-            })
-          );
-          if (context.triggerCharacter === "[") {
-            data = data.concat(["#All", "#Data", "#Headers", "#Totals"]);
-          }
+          data = getNames({
+            table,
+            kind
+          });
         } else {
           return;
         }
@@ -46,16 +48,30 @@ export default function createFormulaCompletionItemProvider(getNames) {
         endColumn: word.endColumn
       };
 
-      data.forEach(function(fnName) {
-        let oneSuggestion = {
+      if (context.triggerCharacter === "[") {
+        for (const item of tableItems) {
+          suggestions.push({
+            label: item[0],
+            kind: monaco.languages.CompletionItemKind.Field,
+            detail: item[1],
+            documentation: `docs: ${item[1]}`,
+            insertText: item[0],
+            range
+          });
+        }
+      }
+
+      for (const fnName of data) {
+        suggestions.push({
           label: fnName,
-          kind: monaco.languages.CompletionItemKind.Function,
-          documentation: `${kind}: ${fnName}`,
+          kind:
+            monaco.languages.CompletionItemKind[table ? "Field" : "Function"],
+          detail: `${kind}: ${fnName}`,
+          documentation: `docs: ${kind}: ${fnName}`,
           insertText: fnName,
-          range: range
-        };
-        suggestions.push(oneSuggestion);
-      });
+          range
+        });
+      }
 
       return { suggestions };
     }

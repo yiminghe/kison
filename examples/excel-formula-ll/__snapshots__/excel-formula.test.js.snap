@@ -67,14 +67,27 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                           'label': 'single-exp',
                           'children': [
                             {
-                              'symbol': 'reference',
+                              'symbol': 'intersect-reference',
+                              'label': 'reference',
                               'children': [
                                 {
-                                  'symbol': 'reference-item',
+                                  'symbol': 'expand-reference',
+                                  'label': 'reference',
                                   'children': [
                                     {
-                                      'text': 'a1:a2',
-                                      'token': 'CELL',
+                                      'symbol': 'reference-item',
+                                      'children': [
+                                        {
+                                          'text': 'a1:a2',
+                                          'token': 'CELL',
+                                          'start': 6,
+                                          'end': 11,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 7,
+                                          'lastColumn': 12
+                                        }
+                                      ],
                                       'start': 6,
                                       'end': 11,
                                       'firstLine': 1,
@@ -91,11 +104,22 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                   'lastColumn': 12
                                 },
                                 {
-                                  'symbol': 'reference-item',
+                                  'symbol': 'expand-reference',
                                   'children': [
                                     {
-                                      'text': 'a3#',
-                                      'token': 'CELL',
+                                      'symbol': 'reference-item',
+                                      'children': [
+                                        {
+                                          'text': 'a3#',
+                                          'token': 'CELL',
+                                          'start': 12,
+                                          'end': 15,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 13,
+                                          'lastColumn': 16
+                                        }
+                                      ],
                                       'start': 12,
                                       'end': 15,
                                       'firstLine': 1,
@@ -104,6 +128,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'lastColumn': 16
                                     }
                                   ],
+                                  'label': 'reference',
                                   'start': 12,
                                   'end': 15,
                                   'firstLine': 1,
@@ -226,7 +251,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -396,7 +422,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -573,7 +600,8 @@ exports[`excel-formula-parser structure reference works for space inside column 
       'label': 'single-exp',
       'children': [
         {
-          'symbol': 'reference',
+          'symbol': 'expand-reference',
+          'label': 'reference',
           'children': [
             {
               'symbol': 'reference-item',
@@ -716,7 +744,8 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
       'label': 'single-exp',
       'children': [
         {
-          'symbol': 'reference',
+          'symbol': 'expand-reference',
+          'label': 'reference',
           'children': [
             {
               'symbol': 'reference-item',
@@ -858,7 +887,8 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
       'label': 'single-exp',
       'children': [
         {
-          'symbol': 'reference',
+          'symbol': 'expand-reference',
+          'label': 'reference',
           'children': [
             {
               'symbol': 'reference-item',
@@ -1000,7 +1030,8 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
       'label': 'single-exp',
       'children': [
         {
-          'symbol': 'reference',
+          'symbol': 'expand-reference',
+          'label': 'reference',
           'children': [
             {
               'symbol': 'reference-item',
@@ -1204,7 +1235,8 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -1326,7 +1358,8 @@ exports[`excel-formula-parser works for env 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -1380,7 +1413,8 @@ exports[`excel-formula-parser works for env 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -1463,7 +1497,7 @@ exports[`excel-formula-parser works for env 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser works for intersection 1`] = `
+exports[`excel-formula-parser works for reference operation 1`] = `
 "{
   'symbol': 'formula',
   'children': [
@@ -1475,7 +1509,7 @@ exports[`excel-formula-parser works for intersection 1`] = `
           'symbol': 'function',
           'children': [
             {
-              'text': 'sum',
+              'text': 'SUM',
               'token': 'FUNCTION',
               'start': 0,
               'end': 3,
@@ -1502,111 +1536,266 @@ exports[`excel-formula-parser works for intersection 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'text': '(',
+                      'token': '(',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    },
+                    {
+                      'symbol': 'atom-exp',
                       'children': [
                         {
-                          'symbol': 'reference-item',
+                          'symbol': 'union-reference',
+                          'label': 'reference',
                           'children': [
                             {
-                              'text': 'a1:a2',
-                              'token': 'CELL',
-                              'start': 4,
-                              'end': 9,
+                              'symbol': 'expand-reference',
+                              'label': 'reference',
+                              'children': [
+                                {
+                                  'symbol': 'reference-item',
+                                  'children': [
+                                    {
+                                      'text': 'E4:H4',
+                                      'token': 'CELL',
+                                      'start': 5,
+                                      'end': 10,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 6,
+                                      'lastColumn': 11
+                                    }
+                                  ],
+                                  'start': 5,
+                                  'end': 10,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 6,
+                                  'lastColumn': 11
+                                }
+                              ],
+                              'start': 5,
+                              'end': 10,
                               'firstLine': 1,
                               'lastLine': 1,
-                              'firstColumn': 5,
-                              'lastColumn': 10
-                            }
-                          ],
-                          'start': 4,
-                          'end': 9,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 5,
-                          'lastColumn': 10
-                        },
-                        {
-                          'symbol': 'reference-item',
-                          'children': [
+                              'firstColumn': 6,
+                              'lastColumn': 11
+                            },
                             {
-                              'text': 'b1',
-                              'token': 'CELL',
+                              'text': ',',
+                              'token': 'REF_UNION_OPERATOR',
                               'start': 10,
-                              'end': 12,
+                              'end': 11,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 11,
-                              'lastColumn': 13
+                              'lastColumn': 12
+                            },
+                            {
+                              'symbol': 'intersect-reference',
+                              'children': [
+                                {
+                                  'symbol': 'expand-reference',
+                                  'label': 'reference',
+                                  'children': [
+                                    {
+                                      'symbol': 'expand-reference',
+                                      'label': 'reference',
+                                      'children': [
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'F',
+                                              'token': 'NAME',
+                                              'start': 11,
+                                              'end': 12,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 12,
+                                              'lastColumn': 13
+                                            }
+                                          ],
+                                          'start': 11,
+                                          'end': 12,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 12,
+                                          'lastColumn': 13
+                                        }
+                                      ],
+                                      'start': 11,
+                                      'end': 12,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 12,
+                                      'lastColumn': 13
+                                    },
+                                    {
+                                      'text': ':',
+                                      'token': 'REF_EXPAND_OPERATOR',
+                                      'start': 12,
+                                      'end': 13,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 13,
+                                      'lastColumn': 14
+                                    },
+                                    {
+                                      'symbol': 'reference-item',
+                                      'children': [
+                                        {
+                                          'text': 'F',
+                                          'token': 'NAME',
+                                          'start': 13,
+                                          'end': 14,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 14,
+                                          'lastColumn': 15
+                                        }
+                                      ],
+                                      'start': 13,
+                                      'end': 14,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 14,
+                                      'lastColumn': 15
+                                    }
+                                  ],
+                                  'start': 11,
+                                  'end': 14,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 12,
+                                  'lastColumn': 15
+                                },
+                                {
+                                  'symbol': 'expand-reference',
+                                  'children': [
+                                    {
+                                      'symbol': 'reference-item',
+                                      'children': [
+                                        {
+                                          'text': 'K8',
+                                          'token': 'CELL',
+                                          'start': 15,
+                                          'end': 17,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 16,
+                                          'lastColumn': 18
+                                        }
+                                      ],
+                                      'start': 15,
+                                      'end': 17,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 16,
+                                      'lastColumn': 18
+                                    }
+                                  ],
+                                  'label': 'reference',
+                                  'start': 15,
+                                  'end': 17,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 16,
+                                  'lastColumn': 18
+                                }
+                              ],
+                              'label': 'reference',
+                              'start': 11,
+                              'end': 17,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 12,
+                              'lastColumn': 18
                             }
                           ],
-                          'start': 10,
-                          'end': 12,
+                          'start': 5,
+                          'end': 17,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 11,
-                          'lastColumn': 13
+                          'firstColumn': 6,
+                          'lastColumn': 18
                         }
                       ],
-                      'start': 4,
-                      'end': 12,
+                      'label': 'single-exp',
+                      'start': 5,
+                      'end': 17,
                       'firstLine': 1,
                       'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 13
+                      'firstColumn': 6,
+                      'lastColumn': 18
+                    },
+                    {
+                      'text': ')',
+                      'token': ')',
+                      'start': 17,
+                      'end': 18,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 18,
+                      'lastColumn': 19
                     }
                   ],
                   'start': 4,
-                  'end': 12,
+                  'end': 18,
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 5,
-                  'lastColumn': 13
+                  'lastColumn': 19
                 }
               ],
               'start': 4,
-              'end': 12,
+              'end': 18,
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 5,
-              'lastColumn': 13
+              'lastColumn': 19
             },
             {
               'text': ')',
               'token': ')',
-              'start': 12,
-              'end': 13,
+              'start': 18,
+              'end': 19,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 13,
-              'lastColumn': 14
+              'firstColumn': 19,
+              'lastColumn': 20
             }
           ],
           'start': 0,
-          'end': 13,
+          'end': 19,
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 1,
-          'lastColumn': 14
+          'lastColumn': 20
         }
       ],
       'start': 0,
-      'end': 13,
+      'end': 19,
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 14
+      'lastColumn': 20
     }
   ],
   'start': 0,
-  'end': 13,
+  'end': 19,
   'firstLine': 1,
   'lastLine': 1,
   'firstColumn': 1,
-  'lastColumn': 14
+  'lastColumn': 20
 }"
 `;
 
-exports[`excel-formula-parser works for named range intersection 1`] = `
+exports[`excel-formula-parser works for row rangge 1`] = `
 "{
   'symbol': 'formula',
   'children': [
@@ -1645,107 +1834,87 @@ exports[`excel-formula-parser works for named range intersection 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
                           'children': [
                             {
-                              'text': 'a',
-                              'token': 'NAME',
+                              'text': '4:5',
+                              'token': 'CELL',
                               'start': 4,
-                              'end': 5,
+                              'end': 7,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 5,
-                              'lastColumn': 6
+                              'lastColumn': 8
                             }
                           ],
                           'start': 4,
-                          'end': 5,
+                          'end': 7,
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 5,
-                          'lastColumn': 6
-                        },
-                        {
-                          'symbol': 'reference-item',
-                          'children': [
-                            {
-                              'text': 'b1',
-                              'token': 'CELL',
-                              'start': 6,
-                              'end': 8,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 7,
-                              'lastColumn': 9
-                            }
-                          ],
-                          'start': 6,
-                          'end': 8,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 7,
-                          'lastColumn': 9
+                          'lastColumn': 8
                         }
                       ],
                       'start': 4,
-                      'end': 8,
+                      'end': 7,
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 5,
-                      'lastColumn': 9
+                      'lastColumn': 8
                     }
                   ],
                   'start': 4,
-                  'end': 8,
+                  'end': 7,
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 5,
-                  'lastColumn': 9
+                  'lastColumn': 8
                 }
               ],
               'start': 4,
-              'end': 8,
+              'end': 7,
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 5,
-              'lastColumn': 9
+              'lastColumn': 8
             },
             {
               'text': ')',
               'token': ')',
-              'start': 8,
-              'end': 9,
+              'start': 7,
+              'end': 8,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 9,
-              'lastColumn': 10
+              'firstColumn': 8,
+              'lastColumn': 9
             }
           ],
           'start': 0,
-          'end': 9,
+          'end': 8,
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 1,
-          'lastColumn': 10
+          'lastColumn': 9
         }
       ],
       'start': 0,
-      'end': 9,
+      'end': 8,
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 10
+      'lastColumn': 9
     }
   ],
   'start': 0,
-  'end': 9,
+  'end': 8,
   'firstLine': 1,
   'lastLine': 1,
   'firstColumn': 1,
-  'lastColumn': 10
+  'lastColumn': 9
 }"
 `;
 
@@ -1788,7 +1957,8 @@ exports[`excel-formula-parser works for simple 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -1842,7 +2012,8 @@ exports[`excel-formula-parser works for simple 1`] = `
                   'label': 'single-exp',
                   'children': [
                     {
-                      'symbol': 'reference',
+                      'symbol': 'expand-reference',
+                      'label': 'reference',
                       'children': [
                         {
                           'symbol': 'reference-item',
@@ -1922,190 +2093,5 @@ exports[`excel-formula-parser works for simple 1`] = `
   'lastLine': 1,
   'firstColumn': 1,
   'lastColumn': 14
-}"
-`;
-
-exports[`excel-formula-parser works for union 1`] = `
-"{
-  'symbol': 'formula',
-  'children': [
-    {
-      'symbol': 'atom-exp',
-      'label': 'single-exp',
-      'children': [
-        {
-          'symbol': 'function',
-          'children': [
-            {
-              'text': 'sum',
-              'token': 'FUNCTION',
-              'start': 0,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 4
-            },
-            {
-              'text': '(',
-              'token': '(',
-              'start': 3,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 4,
-              'lastColumn': 5
-            },
-            {
-              'symbol': 'arguments',
-              'children': [
-                {
-                  'symbol': 'atom-exp',
-                  'label': 'single-exp',
-                  'children': [
-                    {
-                      'text': '(',
-                      'token': '(',
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    },
-                    {
-                      'symbol': 'atom-exp',
-                      'children': [
-                        {
-                          'symbol': 'reference',
-                          'children': [
-                            {
-                              'symbol': 'reference-item',
-                              'children': [
-                                {
-                                  'text': 'a1:a2',
-                                  'token': 'CELL',
-                                  'start': 5,
-                                  'end': 10,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 6,
-                                  'lastColumn': 11
-                                }
-                              ],
-                              'start': 5,
-                              'end': 10,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 6,
-                              'lastColumn': 11
-                            },
-                            {
-                              'text': ',',
-                              'token': 'REF_SEPARATOR',
-                              'start': 10,
-                              'end': 11,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 11,
-                              'lastColumn': 12
-                            },
-                            {
-                              'symbol': 'reference-item',
-                              'children': [
-                                {
-                                  'text': 'b1',
-                                  'token': 'CELL',
-                                  'start': 11,
-                                  'end': 13,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 12,
-                                  'lastColumn': 14
-                                }
-                              ],
-                              'start': 11,
-                              'end': 13,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 12,
-                              'lastColumn': 14
-                            }
-                          ],
-                          'start': 5,
-                          'end': 13,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 6,
-                          'lastColumn': 14
-                        }
-                      ],
-                      'label': 'single-exp',
-                      'start': 5,
-                      'end': 13,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 6,
-                      'lastColumn': 14
-                    },
-                    {
-                      'text': ')',
-                      'token': ')',
-                      'start': 13,
-                      'end': 14,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 14,
-                      'lastColumn': 15
-                    }
-                  ],
-                  'start': 4,
-                  'end': 14,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 15
-                }
-              ],
-              'start': 4,
-              'end': 14,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 15
-            },
-            {
-              'text': ')',
-              'token': ')',
-              'start': 14,
-              'end': 15,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 15,
-              'lastColumn': 16
-            }
-          ],
-          'start': 0,
-          'end': 15,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 16
-        }
-      ],
-      'start': 0,
-      'end': 15,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 16
-    }
-  ],
-  'start': 0,
-  'end': 15,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 16
 }"
 `;

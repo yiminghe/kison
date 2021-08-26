@@ -92,6 +92,17 @@ const exponentPart = "(?:[eE][+-]?[0-9]+)";
 const namePart = "(?:[_A-Za-z\u4e00-\u9fa5]+[_A-Za-z_0-9\u4e00-\u9fa5]*)";
 const fullNamePart = `(?:${namePart}(?:\\.${namePart})*)`;
 const cellAddressLiteral = `(?:\\$?[A-Za-z]+\\$?[0-9]+)`;
+const rowRangeAddress = `(?:\\d+\\:\\d+)`;
+const cellAddress = `(?:
+  ${cellAddressLiteral}
+  (?:
+    \\s*
+    \\:
+    \\s*
+    ${cellAddressLiteral}
+    )?
+  #?
+)`.replace(/\s/g, "");
 const sheetAddress = `(?:(?:
   
   (?:'(?:''|[^'])*')
@@ -213,20 +224,43 @@ module.exports = () => ({
       symbol: "reference-item",
       rhs: ["structure-reference"]
     },
+    // reference operator: : SPACE ,
     {
       symbol: "reference",
-      rhs: ["reference-item"]
+      rhs: ["union-reference"],
+      label: "reference"
     },
     {
-      symbol: "reference",
-      rhs: ["reference", "reference-item"],
-      flat: true
+      symbol: "union-reference",
+      rhs: ["union-reference", "REF_UNION_OPERATOR", "intersect-reference"],
+      label: "reference"
     },
     {
-      symbol: "reference",
-      rhs: ["reference", "REF_SEPARATOR", "reference-item"],
-      flat: true
+      symbol: "union-reference",
+      rhs: ["intersect-reference"],
+      label: "reference"
     },
+    {
+      symbol: "intersect-reference",
+      rhs: ["intersect-reference", "expand-reference"],
+      label: "reference"
+    },
+    {
+      symbol: "intersect-reference",
+      rhs: ["expand-reference"],
+      label: "reference"
+    },
+    {
+      symbol: "expand-reference",
+      rhs: ["expand-reference", "REF_EXPAND_OPERATOR", "reference-item"],
+      label: "reference"
+    },
+    {
+      symbol: "expand-reference",
+      rhs: ["reference-item"],
+      label: "reference"
+    },
+
     {
       symbol: "atom-exp",
       rhs: ["function"],
@@ -387,7 +421,7 @@ module.exports = () => ({
           my.markType(this, "a");
         }
       },
-      ...createRules([":", ...operatorTokens]),
+      ...createRules(operatorTokens),
       {
         regexp: /^\}/,
         token: "}",
@@ -451,7 +485,11 @@ module.exports = () => ({
           return !lastItem || !lastItem.func;
         },
         regexp: /^,/,
-        token: "REF_SEPARATOR"
+        token: "REF_UNION_OPERATOR"
+      },
+      {
+        regexp: /^:/,
+        token: "REF_EXPAND_OPERATOR"
       },
       {
         regexp: { en: /^,/, de: /^;/ },
@@ -481,7 +519,7 @@ module.exports = () => ({
         // @: disable array formula, allow  Implicit Intersection
         // #: spill reference
         regexp: new RegExp(
-          `^${sheetAddress}?${cellAddressLiteral}(?:\\s*\\:\\s*${cellAddressLiteral})?#?`
+          `^${sheetAddress}?(?:${cellAddress}|${rowRangeAddress})`
         ),
         token: "CELL"
       },

@@ -1,7 +1,11 @@
 const formula = require("./index.js");
 
-console.log(
-  formula.parse("sum(a1,a2)", {
-    lexerEnv: "en"
-  })
-);
+let ret = formula.parse("sum(a1:a3,a2)", {
+  lexerEnv: "en"
+});
+
+console.log(ret);
+
+console.log("*".repeat(20));
+
+console.log(JSON.stringify(ret.ast, null, 2));

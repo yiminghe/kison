@@ -21,14 +21,12 @@ describe("excel-formula-parser", () => {
     expect(prettyJson(parse(`sum(a1:a2,b1)`).ast)).toMatchSnapshot();
   });
 
-  it("works for intersection", () => {
-    expect(prettyJson(parse(`sum(a1:a2 b1)`).ast)).toMatchSnapshot();
+  it("works for row rangge", () => {
+    expect(prettyJson(parse(`sum(4:5)`).ast)).toMatchSnapshot();
   });
-  it("works for named range intersection", () => {
-    expect(prettyJson(parse(`sum(a b1)`).ast)).toMatchSnapshot();
-  });
-  it("works for union", () => {
-    expect(prettyJson(parse(`sum((a1:a2,b1))`).ast)).toMatchSnapshot();
+
+  it("works for reference operation", () => {
+    expect(prettyJson(parse(`SUM((E4:H4,F:F K8))`).ast)).toMatchSnapshot();
   });
 
   it("works for 3d reference", () => {

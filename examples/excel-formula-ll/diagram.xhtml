@@ -792,9 +792,9 @@
       </p>
       <p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <ul>
-            <li><a href="#reference" title="reference">reference</a></li>
+            <li><a href="#expandReference" title="expandReference">expandReference</a></li>
          </ul>
-      </p><br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><a name="reference">reference:</a></p><svg xmlns="http://www.w3.org/2000/svg" width="235" height="103">
+      </p><br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><a name="reference">reference:</a></p><svg xmlns="http://www.w3.org/2000/svg" width="177" height="37">
          <defs>
             <style type="text/css">
     @namespace "http://www.w3.org/2000/svg";
@@ -824,23 +824,161 @@
     polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
   </style>
          </defs>
-         <polygon points="9 83 1 79 1 87"/>
-         <polygon points="17 83 9 79 9 87"/><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#referenceItem" xlink:title="referenceItem">
-            <rect x="51" y="69" width="110" height="32"/>
-            <rect x="49" y="67" width="110" height="32" class="nonterminal"/>
-            <text class="nonterminal" x="59" y="87">referenceItem</text></a><rect x="51" y="3" width="136" height="32" rx="10"/>
-         <rect x="49" y="1" width="136" height="32" class="terminal" rx="10"/>
-         <text class="terminal" x="59" y="21">REF_SEPARATOR</text>
-         <path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 83 h2 m20 0 h10 m110 0 h10 m0 0 h26 m-176 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -12 q0 -10 10 -10 m156 32 l20 0 m-20 0 q10 0 10 -10 l0 -12 q0 -10 -10 -10 m-156 0 h10 m0 0 h146 m-166 10 l0 -34 q0 -10 10 -10 m166 44 l0 -34 q0 -10 -10 -10 m-156 0 h10 m136 0 h10 m23 66 h-3"/>
-         <polygon points="225 83 233 79 233 87"/>
-         <polygon points="225 83 217 79 217 87"/></svg><p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <polygon points="9 17 1 13 1 21"/>
+         <polygon points="17 17 9 13 9 21"/><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#unionReference" xlink:title="unionReference">
+            <rect x="31" y="3" width="118" height="32"/>
+            <rect x="29" y="1" width="118" height="32" class="nonterminal"/>
+            <text class="nonterminal" x="39" y="21">unionReference</text></a><path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m118 0 h10 m3 0 h-3"/>
+         <polygon points="167 17 175 13 175 21"/>
+         <polygon points="167 17 159 13 159 21"/></svg><p xmlns:xhtml="http://www.w3.org/1999/xhtml">
          <div class="ebnf"><code>
                <div><a href="#reference" title="reference">reference</a></div>
-               <div>         ::= <a href="#referenceItem" title="referenceItem">referenceItem</a> ( 'REF_SEPARATOR'? <a href="#referenceItem" title="referenceItem">referenceItem</a> )*</div></code></div>
+               <div>         ::= <a href="#unionReference" title="unionReference">unionReference</a></div></code></div>
       </p>
       <p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <ul>
             <li><a href="#atomExp" title="atomExp">atomExp</a></li>
+         </ul>
+      </p><br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><a name="unionReference">unionReference:</a></p><svg xmlns="http://www.w3.org/2000/svg" width="285" height="81">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 61 1 57 1 65"/>
+         <polygon points="17 61 9 57 9 65"/><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#intersectReference" xlink:title="intersectReference">
+            <rect x="51" y="47" width="138" height="32"/>
+            <rect x="49" y="45" width="138" height="32" class="nonterminal"/>
+            <text class="nonterminal" x="59" y="65">intersectReference</text></a><rect x="51" y="3" width="186" height="32" rx="10"/>
+         <rect x="49" y="1" width="186" height="32" class="terminal" rx="10"/>
+         <text class="terminal" x="59" y="21">REF_UNION_OPERATOR</text>
+         <path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 61 h2 m20 0 h10 m138 0 h10 m0 0 h48 m-226 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -24 q0 -10 10 -10 m206 44 l20 0 m-20 0 q10 0 10 -10 l0 -24 q0 -10 -10 -10 m-206 0 h10 m186 0 h10 m23 44 h-3"/>
+         <polygon points="275 61 283 57 283 65"/>
+         <polygon points="275 61 267 57 267 65"/></svg><p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <div class="ebnf"><code>
+               <div><a href="#unionReference" title="unionReference">unionReference</a></div>
+               <div>         ::= <a href="#intersectReference" title="intersectReference">intersectReference</a> ( 'REF_UNION_OPERATOR' <a href="#intersectReference" title="intersectReference">intersectReference</a> )*</div></code></div>
+      </p>
+      <p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <ul>
+            <li><a href="#reference" title="reference">reference</a></li>
+         </ul>
+      </p><br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><a name="intersectReference">intersectReference:</a></p><svg xmlns="http://www.w3.org/2000/svg" width="229" height="53">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 33 1 29 1 37"/>
+         <polygon points="17 33 9 29 9 37"/><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expandReference" xlink:title="expandReference">
+            <rect x="51" y="19" width="130" height="32"/>
+            <rect x="49" y="17" width="130" height="32" class="nonterminal"/>
+            <text class="nonterminal" x="59" y="37">expandReference</text></a><path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 33 h2 m20 0 h10 m130 0 h10 m-170 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -12 q0 -10 10 -10 m150 32 l20 0 m-20 0 q10 0 10 -10 l0 -12 q0 -10 -10 -10 m-150 0 h10 m0 0 h140 m23 32 h-3"/>
+         <polygon points="219 33 227 29 227 37"/>
+         <polygon points="219 33 211 29 211 37"/></svg><p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <div class="ebnf"><code>
+               <div><a href="#intersectReference" title="intersectReference">intersectReference</a></div>
+               <div>         ::= <a href="#expandReference" title="expandReference">expandReference</a>+</div></code></div>
+      </p>
+      <p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <ul>
+            <li><a href="#unionReference" title="unionReference">unionReference</a></li>
+         </ul>
+      </p><br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><a name="expandReference">expandReference:</a></p><svg xmlns="http://www.w3.org/2000/svg" width="293" height="81">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 61 1 57 1 65"/>
+         <polygon points="17 61 9 57 9 65"/><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#referenceItem" xlink:title="referenceItem">
+            <rect x="51" y="47" width="110" height="32"/>
+            <rect x="49" y="45" width="110" height="32" class="nonterminal"/>
+            <text class="nonterminal" x="59" y="65">referenceItem</text></a><rect x="51" y="3" width="194" height="32" rx="10"/>
+         <rect x="49" y="1" width="194" height="32" class="terminal" rx="10"/>
+         <text class="terminal" x="59" y="21">REF_EXPAND_OPERATOR</text>
+         <path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 61 h2 m20 0 h10 m110 0 h10 m0 0 h84 m-234 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -24 q0 -10 10 -10 m214 44 l20 0 m-20 0 q10 0 10 -10 l0 -24 q0 -10 -10 -10 m-214 0 h10 m194 0 h10 m23 44 h-3"/>
+         <polygon points="283 61 291 57 291 65"/>
+         <polygon points="283 61 275 57 275 65"/></svg><p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <div class="ebnf"><code>
+               <div><a href="#expandReference" title="expandReference">expandReference</a></div>
+               <div>         ::= <a href="#referenceItem" title="referenceItem">referenceItem</a> ( 'REF_EXPAND_OPERATOR' <a href="#referenceItem" title="referenceItem">referenceItem</a> )*</div></code></div>
+      </p>
+      <p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <ul>
+            <li><a href="#intersectReference" title="intersectReference">intersectReference</a></li>
          </ul>
       </p><br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><a name="arrayElement">arrayElement:</a></p><svg xmlns="http://www.w3.org/2000/svg" width="177" height="169">
          <defs>

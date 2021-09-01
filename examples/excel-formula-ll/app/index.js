@@ -1,6 +1,9 @@
-import initMonaco from "../src/monaco-editor/formula.contribution.js";
+import { initMonaco, cachedParser, evaluate, evaluators } from "../src/index.js";
 import functionNames from "./functionNames.js";
-import { getAst } from "../src/cachedParser.js";
+
+const { getAst } = cachedParser;
+
+// console.log(evaluators);
 
 require.config({
   paths: {
@@ -8,7 +11,9 @@ require.config({
   }
 });
 
-require(["vs/editor/editor.main"], function() {
+const $=(v)=>document.getElementById(v);
+
+require(["vs/editor/editor.main"], function () {
   initMonaco({
     monaco,
     getNames({ kind, table }) {
@@ -19,7 +24,7 @@ require(["vs/editor/editor.main"], function() {
     }
   });
 
-  const editorContainer = document.getElementById("monaco-editor");
+  const editorContainer = $("monaco-editor");
   editorContainer.innerHTML = "";
   editorContainer.style.height = "200px";
 
@@ -35,7 +40,7 @@ require(["vs/editor/editor.main"], function() {
     folding: false
   });
 
-  document.getElementById("fix").addEventListener(
+  $("fix").addEventListener(
     "click",
     () => {
       let fixed = false;
@@ -71,26 +76,43 @@ require(["vs/editor/editor.main"], function() {
         editor.getModel().setValue(val);
       }
     },
-    false
   );
 
-  document.getElementById("parse").addEventListener(
+  function getCurrentAst() {
+    const value = editor
+      .getModel()
+      .getValue()
+      .trim();
+    return { value, ret: getAst(value) };
+  }
+
+  $("parse").addEventListener(
     "click",
     () => {
-      const value = editor
-        .getModel()
-        .getValue()
-        .trim();
-      console.log(getAst(value));
+      console.log(getCurrentAst().ret);
     },
-    false
   );
 
-  document.getElementById("evaluate").addEventListener(
+  $('evaluateData').addEventListener('click',()=>{
+    editor.getModel().setValue(`sum(1,2,3,{5;4})`);
+  });
+
+  $("evaluate").addEventListener(
     "click",
     () => {
-      console.log("TODO");
+    
+      const { ret: { ast, error }, value } = getCurrentAst();
+      if (error) {
+        console.error('syntax error:',error);
+      } else {
+        const calValue = evaluate(ast, {
+          // TODO
+          getCellValues(reference) {
+            return [];
+          }
+        });
+        console.log(value, ' = ', calValue);
+      }
     },
-    false
   );
 });

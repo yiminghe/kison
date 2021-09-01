@@ -1,5 +1,5 @@
 import { functions } from "../functions/index.js";
-import { toError } from '../functions/utils.js';
+import { toError } from "../functions/utils.js";
 import { evaluators } from "./evaluators.js";
 
 Object.assign(evaluators, {
@@ -15,19 +15,23 @@ Object.assign(evaluators, {
     const argsLength = argsNode.length;
     if (fnDef.argumentLength) {
       if (argsLength !== fnDef.argumentLength) {
-        return toError('unmatched argument length: ' + fnDef.argumentLength);
+        return toError("unmatched argument length: " + fnDef.argumentLength);
       }
     }
 
     if (fnDef.minArgumentLength) {
       if (argsLength < fnDef.minArgumentLength) {
-        return toError('unmatched min argument length: ' + fnDef.minArgumentLength);
+        return toError(
+          "unmatched min argument length: " + fnDef.minArgumentLength
+        );
       }
     }
 
     if (fnDef.maxArgumentLength) {
       if (argsLength < fnDef.maxArgumentLength) {
-        return toError('unmatched max argument length: ' + fnDef.maxArgumentLength);
+        return toError(
+          "unmatched max argument length: " + fnDef.maxArgumentLength
+        );
       }
     }
 
@@ -35,15 +39,18 @@ Object.assign(evaluators, {
 
     for (let i = 0; i < argsNode.length; i++) {
       const argNode = argsNode[i];
-      if (argNode.token === 'ARGUMENT_SEPARATOR') {
+      if (argNode.token === "ARGUMENT_SEPARATOR") {
         continue;
       }
       const argValue = evaluators.evaluate(argNode, context);
       if (fnDef.interceptArgument) {
-        const v = fnDef.interceptArgument({
-          value: argValue,
-          index: i,
-        }, argsNode);
+        const v = fnDef.interceptArgument(
+          {
+            value: argValue,
+            index: i
+          },
+          argsNode
+        );
         if (v) {
           return v;
         }
@@ -51,6 +58,6 @@ Object.assign(evaluators, {
       argsValue.push(argValue);
     }
 
-    return fnDef.fn(argsValue,context);
+    return fnDef.fn(argsValue, context);
   }
 });

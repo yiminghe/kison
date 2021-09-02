@@ -1,6 +1,6 @@
 import { evaluators } from "./evaluators.js";
 import "./evaluateValues.js";
-import "./evaluateFunction";
+import "./evaluateFunction.js";
 
 export const evaluate = evaluators.evaluate;
 

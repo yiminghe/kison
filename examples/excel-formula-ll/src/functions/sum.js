@@ -1,5 +1,4 @@
 import { register } from './register.js';
-import { toNumber } from './utils.js';
 
 function sumValues(values) {
   let ret = 0;
@@ -10,7 +9,9 @@ function sumValues(values) {
         value: '#error!',
       };
     }
-    ret += toNumber(d) || 0;
+    if (typeof d.value === 'number') {
+      ret += d.value;
+    }
   }
   return ret;
 }
@@ -32,13 +33,13 @@ register('sum', {
         }
         ret += v;
       } else if (a.type === 'reference') {
-        const v = sumValues(context.getCellValues(a.value));
+        const v = sumValues(context.getCellValues(a));
         if (v.type === 'error') {
           return v;
         }
         ret += v;
-      } else {
-        ret += toNumber(a) || 0;
+      } else if (a === 'number') {
+        ret += a;
       }
     }
     return {

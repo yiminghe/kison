@@ -16,3 +16,10 @@ export function toError(message) {
     message,
   };
 }
+
+export function toReference(ranges) {
+  return {
+    type: 'reference',
+    ranges,
+  };
+}

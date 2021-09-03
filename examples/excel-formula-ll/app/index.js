@@ -1,5 +1,6 @@
 import { initMonaco, cachedParser, evaluate, evaluators } from "../src/index.js";
 import functionNames from "./functionNames.js";
+import { getCellData, getCellValuesByRange } from './getCellData.js';
 
 const { getAst } = cachedParser;
 
@@ -11,7 +12,7 @@ require.config({
   }
 });
 
-const $=(v)=>document.getElementById(v);
+const $ = (v) => document.getElementById(v);
 
 require(["vs/editor/editor.main"], function () {
   initMonaco({
@@ -26,10 +27,10 @@ require(["vs/editor/editor.main"], function () {
 
   const editorContainer = $("monaco-editor");
   editorContainer.innerHTML = "";
-  editorContainer.style.height = "200px";
+  editorContainer.style.height = "100px";
 
   var editor = monaco.editor.create(editorContainer, {
-    value: 'sum(A1:B2, 10, "OK", namedRange) + \n avg(A1:A3 \n\n\n\n\n\n',
+    value: 'sum(A1:B2, 10, "OK", namedRange) + \n avg(A1:A3 \n',
     language: "lang-formula",
     theme: "lang-formula-theme",
     minimap: {
@@ -93,22 +94,26 @@ require(["vs/editor/editor.main"], function () {
     },
   );
 
-  $('evaluateData').addEventListener('click',()=>{
-    editor.getModel().setValue(`sum(1,2,3,{5;4})`);
+  $('evaluateData').addEventListener('click', () => {
+    editor.getModel().setValue(`sum(1,2,A1:B2,{5;4})`);
   });
+  $('cells').value = $('cells').value.trim().replace(/\n\s+/g, '\n');
+  $('cells').style.height = "200px";
+  $('cells').style.width = "500px";
 
   $("evaluate").addEventListener(
     "click",
     () => {
-    
+
       const { ret: { ast, error }, value } = getCurrentAst();
       if (error) {
-        console.error('syntax error:',error);
+        console.error('syntax error:', error);
       } else {
+        const cells = getCellData($('cells').value);
+        console.log('cells data: ', cells);
         const calValue = evaluate(ast, {
-          // TODO
           getCellValues(reference) {
-            return [];
+            return getCellValuesByRange(cells, reference.ranges);
           }
         });
         console.log(value, ' = ', calValue);

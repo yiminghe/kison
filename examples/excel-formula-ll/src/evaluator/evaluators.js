@@ -1,22 +1,34 @@
-export const evaluators = {
-  evaluate(ast, context) {
+export function evaluate(ast, context) {
+  const { symbol, token } = ast;
 
-    const { symbol, token } = ast;
+  const n = symbol || token;
 
-    const n = symbol || token;
+  const m = `evaluate_${n}`;
 
-    const m = `evaluate_${n}`;
-
-    if (evaluators[m]) {
-      return evaluators[m](ast, context);
-    }
-
-    if (!ast.children || ast.children.length != 1) {
-      throw new Error('unrecognized node type:' + n);
-    }
-
-    const child = ast.children[0];
-
-    return evaluators.evaluate(child, context);
+  if (evaluators[m]) {
+    return evaluators[m](ast, context);
   }
+
+  let { children } = ast;
+  if (
+    children &&
+    children.length === 3 &&
+    children[0].token === "(" &&
+    children[2].token === ")"
+  ) {
+    children = [children[1]];
+  }
+
+  if (!children || children.length != 1) {
+    console.log(ast);
+    throw new Error("unrecognized node type:" + n);
+  }
+
+  const child = children[0];
+
+  return evaluate(child, context);
+}
+
+export const evaluators = {
+  evaluate
 };

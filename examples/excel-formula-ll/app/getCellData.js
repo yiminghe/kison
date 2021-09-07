@@ -9,7 +9,7 @@ export function getCellData(str) {
   const lines = str.split(/\n/);
   for (let l of lines) {
     l = l.trim();
-    const items = l.split(':');
+    const items = l.split(":");
     const indexStr = items[0].trim();
     const value = items[1].trim();
     const { row, col } = parseCoord(indexStr);
@@ -19,7 +19,7 @@ export function getCellData(str) {
   return cells;
 }
 
-export function getCellValuesByRange(cells, ranges) {
+export function getCellValuesByRange(cells, ranges, ifEmpty) {
   const values = [];
   for (const r of ranges) {
     const { row, col, rowCount, colCount } = r;
@@ -28,13 +28,15 @@ export function getCellValuesByRange(cells, ranges) {
       for (let currentRow = row; currentRow < endRow; currentRow++) {
         const rowData = cells[currentRow];
         if (rowData) {
+          const rowValue = [];
+          values[currentRow] = rowValue;
           rowData.forEach((value, currentCol) => {
             if (value !== undefined) {
-              values.push({
-                row: currentRow,
-                col: currentCol,
-                value,
-              });
+              const type = typeof value === "number" ? "number" : "string";
+              rowValue[currentCol] = {
+                type,
+                value
+              };
             }
           });
         }
@@ -44,14 +46,17 @@ export function getCellValuesByRange(cells, ranges) {
         if (!rowData) {
           return;
         }
+        const rowValue = [];
+        values[currentRow] = rowValue;
         const endCol = Math.min(rowData.length, col + colCount);
         for (let currentCol = col; currentCol < endCol; currentCol++) {
           if (rowData && rowData[currentCol] !== undefined) {
-            values.push({
-              row: currentRow,
-              col: currentCol,
-              value: rowData[currentCol],
-            });
+            const value = rowData[currentCol];
+            const type = typeof value === "number" ? "number" : "string";
+            rowValue[currentCol] = {
+              type,
+              value
+            };
           }
         }
       });
@@ -59,16 +64,22 @@ export function getCellValuesByRange(cells, ranges) {
       const endRow = Math.min(cells.length, row + rowCount);
       for (let currentRow = row; currentRow < endRow; currentRow++) {
         const rowData = cells[currentRow];
+
         if (!rowData) {
           continue;
         }
+        const rowValue = [];
+        values[currentRow] = rowValue;
         const endCol = Math.min(rowData.length, col + colCount);
         for (let currentCol = col; currentCol < endCol; currentCol++) {
-          values.push({
-            row: currentRow,
-            col: currentCol,
-            value: rowData[currentCol],
-          });
+          const value = rowData[currentCol];
+          if (value !== undefined) {
+            const type = typeof value === "number" ? "number" : "string";
+            rowValue[currentCol] = {
+              type,
+              value
+            };
+          }
         }
       }
     }

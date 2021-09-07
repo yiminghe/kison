@@ -3,15 +3,15 @@ import { evaluators } from "./evaluators.js";
 Object.assign(evaluators, {
   evaluate_NUMBER(node) {
     return {
-      type: 'number',
-      value: Number(node.text),
-    }
+      type: "number",
+      value: Number(node.text)
+    };
   },
   evaluate_STRING(node) {
     return {
-      type: 'string',
-      value: node.text,
-    }
+      type: "string",
+      value: node.text
+    };
   },
 
   evaluate_array(node) {
@@ -21,15 +21,44 @@ Object.assign(evaluators, {
   [`evaluate_array-list`](node) {
     const { children } = node;
     const ret = [];
+    let row = [];
+    let lastRow;
+    let error = 0;
+
+    function pushRow() {
+      if (lastRow && row.length !== lastRow.length) {
+        error = 1;
+      }
+      ret.push(row);
+      lastRow = row;
+    }
+
     for (const c of children) {
-      if (c.token === 'ARRAY_SEPARATOR') {
+      if (c.token === "ARRAY_SEPARATOR") {
+        if (c.text === ";") {
+          pushRow();
+          row = [];
+        }
         continue;
       }
-      ret.push(evaluators.evaluate(c));
+      row.push(evaluators.evaluate(c));
     }
+
+    if (row.length) {
+      pushRow();
+    }
+
+    if (error) {
+      return {
+        type: "error",
+        value: "#VALUE!",
+        message: "array cols is not same!"
+      };
+    }
+
     return {
-      type: 'array',
-      value: ret,
+      type: "array",
+      value: ret
     };
   }
 });

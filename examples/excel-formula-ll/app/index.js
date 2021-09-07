@@ -1,6 +1,11 @@
-import { initMonaco, cachedParser, evaluate, evaluators } from "../src/index.js";
+import {
+  initMonaco,
+  cachedParser,
+  evaluate,
+  evaluators
+} from "../src/index.js";
 import functionNames from "./functionNames.js";
-import { getCellData, getCellValuesByRange } from './getCellData.js';
+import { getCellData, getCellValuesByRange } from "./getCellData.js";
 
 const { getAst } = cachedParser;
 
@@ -12,9 +17,16 @@ require.config({
   }
 });
 
-const $ = (v) => document.getElementById(v);
+const $ = v => document.getElementById(v);
 
-require(["vs/editor/editor.main"], function () {
+$("cells").value = $("cells")
+  .value.trim()
+  .replace(/\n\s+/g, "\n");
+$("cells").style.height = "200px";
+$("cells").style.width = "500px";
+$("cells").style.display = "block";
+
+require(["vs/editor/editor.main"], function() {
   initMonaco({
     monaco,
     getNames({ kind, table }) {
@@ -41,43 +53,40 @@ require(["vs/editor/editor.main"], function () {
     folding: false
   });
 
-  $("fix").addEventListener(
-    "click",
-    () => {
-      let fixed = false;
-      const value = editor
-        .getModel()
-        .getValue()
-        .trim();
-      const { recoveryTokens } = getAst(value, {
-        onErrorRecovery({ errorNode }, { action }) {
-          if (action === "add") {
-            let token = ")";
-            const {
-              parent: { symbol },
-              error: { expected }
-            } = errorNode;
-            const hasToken = expected.indexOf(token) !== -1;
-            if ((symbol === "arguments" || symbol === "function") && hasToken) {
-              fixed = true;
-              return {
-                action,
-                token,
-                text: token
-              };
-            }
+  $("fix").addEventListener("click", () => {
+    let fixed = false;
+    const value = editor
+      .getModel()
+      .getValue()
+      .trim();
+    const { recoveryTokens } = getAst(value, {
+      onErrorRecovery({ errorNode }, { action }) {
+        if (action === "add") {
+          let token = ")";
+          const {
+            parent: { symbol },
+            error: { expected }
+          } = errorNode;
+          const hasToken = expected.indexOf(token) !== -1;
+          if ((symbol === "arguments" || symbol === "function") && hasToken) {
+            fixed = true;
+            return {
+              action,
+              token,
+              text: token
+            };
           }
         }
-      });
-      if (fixed) {
-        const val = recoveryTokens
-          .map(t => (t.token === "STRING" ? `"${t.text}"` : t.text))
-          .join("");
-        console.log("`" + value + "` will fixed to `" + val + "`");
-        editor.getModel().setValue(val);
       }
-    },
-  );
+    });
+    if (fixed) {
+      const val = recoveryTokens
+        .map(t => (t.token === "STRING" ? `"${t.text}"` : t.text))
+        .join("");
+      console.log("`" + value + "` will fixed to `" + val + "`");
+      editor.getModel().setValue(val);
+    }
+  });
 
   function getCurrentAst() {
     const value = editor
@@ -87,37 +96,30 @@ require(["vs/editor/editor.main"], function () {
     return { value, ret: getAst(value) };
   }
 
-  $("parse").addEventListener(
-    "click",
-    () => {
-      console.log(getCurrentAst().ret);
-    },
-  );
-
-  $('evaluateData').addEventListener('click', () => {
-    editor.getModel().setValue(`sum(1,2,A1:B2,{5;4})`);
+  $("parse").addEventListener("click", () => {
+    console.log(getCurrentAst().ret);
   });
-  $('cells').value = $('cells').value.trim().replace(/\n\s+/g, '\n');
-  $('cells').style.height = "200px";
-  $('cells').style.width = "500px";
 
-  $("evaluate").addEventListener(
-    "click",
-    () => {
+  $("evaluateData").addEventListener("click", () => {
+    editor.getModel().setValue(`sum(1,2,A1:B2,{5;4}+{1,2})`);
+  });
 
-      const { ret: { ast, error }, value } = getCurrentAst();
-      if (error) {
-        console.error('syntax error:', error);
-      } else {
-        const cells = getCellData($('cells').value);
-        console.log('cells data: ', cells);
-        const calValue = evaluate(ast, {
-          getCellValues(reference) {
-            return getCellValuesByRange(cells, reference.ranges);
-          }
-        });
-        console.log(value, ' = ', calValue);
-      }
-    },
-  );
+  $("evaluate").addEventListener("click", () => {
+    const {
+      ret: { ast, error },
+      value
+    } = getCurrentAst();
+    if (error) {
+      console.error("syntax error:", error);
+    } else {
+      const cells = getCellData($("cells").value);
+      console.log("cells data: ", cells);
+      const calValue = evaluate(ast, {
+        getCellValues(reference, ifEmpty) {
+          return getCellValuesByRange(cells, reference.ranges, ifEmpty);
+        }
+      });
+      console.log(value, " = ", calValue);
+    }
+  });
 });

@@ -1,6 +1,12 @@
-import { toReference } from "../functions/utils.js";
+import { makeReference } from "../functions/utils.js";
 
 export function expandReference(ref1, ref2) {
+  if (ref1.type === "error") {
+    return ref1;
+  } else if (ref2.type === "error") {
+    return ref2;
+  }
+
   let startRow = Infinity;
   let endRow = -Infinity;
   let startCol = Infinity;
@@ -15,23 +21,111 @@ export function expandReference(ref1, ref2) {
     if (colCount === 0) {
       endCol = Infinity;
     } else {
-      endCol = Math.max(endCol, col + colCount)
+      endCol = Math.max(endCol, col + colCount);
     }
 
     if (rowCount === 0) {
       endRow = Infinity;
     } else {
-      endRow = Math.max(rowCount, row + rowCount)
+      endRow = Math.max(endRow, row + rowCount);
     }
   }
 
   const rowCount = isFinite(endRow) ? endRow - startRow : 0;
   const colCount = isFinite(endCol) ? endCol - startCol : 0;
 
-  return toReference([{
-    row: startRow,
-    col: startCol,
-    rowCount,
-    colCount,
-  }]);
+  return makeReference([
+    {
+      row: startRow,
+      col: startCol,
+      rowCount,
+      colCount
+    }
+  ]);
+}
+
+export function unionReference(ref1, ref2) {
+  if (ref1.type === "error") {
+    return ref1;
+  } else if (ref2.type === "error") {
+    return ref2;
+  }
+  return makeReference(ref1.ranges.concat(ref2.ranges));
+}
+
+export function intersectReference(ref1, ref2) {
+  if (ref1.type === "error") {
+    return ref1;
+  } else if (ref2.type === "error") {
+    return ref2;
+  }
+
+  let startRow = -Infinity;
+  let endRow = Infinity;
+  let startCol = -Infinity;
+  let endCol = Infinity;
+
+  let ranges = ref1.ranges.concat(ref2.ranges);
+
+  for (const r of ranges) {
+    const { row, col, rowCount, colCount } = r;
+    startRow = Math.max(startRow, row);
+    startCol = Math.max(startCol, col);
+    if (colCount !== 0) {
+      endCol = Math.min(endCol, col + colCount);
+    }
+    if (rowCount !== 0) {
+      endRow = Math.min(endRow, row + rowCount);
+    }
+  }
+
+  if (endRow <= startRow || endCol <= startCol) {
+    return {
+      type: "error",
+      value: "#NULL!",
+      message: "no intersect reference!"
+    };
+  }
+
+  const rowCount = isFinite(endRow) ? endRow - startRow : 0;
+  const colCount = isFinite(endCol) ? endCol - startCol : 0;
+
+  return makeReference([
+    {
+      row: startRow,
+      col: startCol,
+      rowCount,
+      colCount
+    }
+  ]);
+}
+
+export function checkError(...args) {
+  for (const a of args) {
+    if (a.type === "error") {
+      return a;
+    }
+  }
+}
+
+export function checkNumber(...args) {
+  for (const a of args) {
+    if (a.type !== "number" && a.type !== "array") {
+      return {
+        type: "error",
+        value: "#VALUE!",
+        message: "not number!"
+      };
+    }
+  }
+}
+
+export function isSingleCellReference(ref) {
+  const range = ref.ranges[0];
+  return (ref.ranges.length =
+    1 && range.rowCount === 1 && range.colCount === 1);
+}
+
+export function isSingleValueArray(array) {
+  return array.length == 1 && array[0].length === 1;
 }

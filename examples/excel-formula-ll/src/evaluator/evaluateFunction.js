@@ -1,5 +1,5 @@
 import { functions } from "../functions/index.js";
-import { toError } from "../functions/utils.js";
+import { makeError } from "../functions/utils.js";
 import { evaluators } from "./evaluators.js";
 
 Object.assign(evaluators, {
@@ -8,20 +8,20 @@ Object.assign(evaluators, {
     const fnName = children[0].text.toLowerCase();
     const fnDef = functions.get(fnName);
     if (!fnDef) {
-      return toError(`unimplemented function: ${fnName}`);
+      return makeError(`unimplemented function: ${fnName}`);
     }
 
     const argsNode = children[2].children || [];
     const argsLength = argsNode.length;
     if (fnDef.argumentLength) {
       if (argsLength !== fnDef.argumentLength) {
-        return toError("unmatched argument length: " + fnDef.argumentLength);
+        return makeError("unmatched argument length: " + fnDef.argumentLength);
       }
     }
 
     if (fnDef.minArgumentLength) {
       if (argsLength < fnDef.minArgumentLength) {
-        return toError(
+        return makeError(
           "unmatched min argument length: " + fnDef.minArgumentLength
         );
       }
@@ -29,7 +29,7 @@ Object.assign(evaluators, {
 
     if (fnDef.maxArgumentLength) {
       if (argsLength < fnDef.maxArgumentLength) {
-        return toError(
+        return makeError(
           "unmatched max argument length: " + fnDef.maxArgumentLength
         );
       }
@@ -43,6 +43,7 @@ Object.assign(evaluators, {
         continue;
       }
       const argValue = evaluators.evaluate(argNode, context);
+
       if (fnDef.interceptArgument) {
         const v = fnDef.interceptArgument(
           {
@@ -55,7 +56,12 @@ Object.assign(evaluators, {
           return v;
         }
       }
+
       argsValue.push(argValue);
+
+      if (argValue.type == "error" && !fnDef.allowErrorArgument) {
+        return argValue;
+      }
     }
 
     return fnDef.fn(argsValue, context);

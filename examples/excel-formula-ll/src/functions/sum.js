@@ -1,4 +1,5 @@
 import { register } from "./register.js";
+import { makeError } from "./utils.js";
 
 function sumValues(values) {
   let ret = 0;
@@ -7,10 +8,7 @@ function sumValues(values) {
       for (const d of line) {
         if (d) {
           if (d.type === "error") {
-            return {
-              type: "error",
-              value: "#error!"
-            };
+            return d;
           }
           if (typeof d.value === "number") {
             ret += d.value;
@@ -27,10 +25,7 @@ register("sum", {
     let ret = 0;
     for (const a of args) {
       if (a.type == "error") {
-        return {
-          type: "error",
-          value: "#error!"
-        };
+        return a;
       }
       if (a.type === "array") {
         const v = sumValues(a.value);
@@ -44,8 +39,10 @@ register("sum", {
           return v;
         }
         ret += v;
-      } else if (a === "number") {
-        ret += a;
+      } else if (typeof a.value === "number") {
+        ret += a.value;
+      } else {
+        return makeError("not number type!", "#VALUE!");
       }
     }
     return {

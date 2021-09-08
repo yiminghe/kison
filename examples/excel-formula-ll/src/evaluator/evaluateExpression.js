@@ -1,4 +1,9 @@
-import { makeError } from "../functions/utils.js";
+import {
+  DIV_ERROR,
+  makeError,
+  NA_ERROR,
+  VALUE_ERROR
+} from "../functions/utils.js";
 import { evaluators, evaluate } from "./evaluators.js";
 import { checkError, checkNumber, isSingleValueArray } from "./utils.js";
 
@@ -52,7 +57,7 @@ function getRowColPos(value, child) {
 }
 
 function fillError(row, j) {
-  row[j] = makeError("unmatch shape", "#N/A");
+  row[j] = makeError("unmatch shape", NA_ERROR);
 }
 
 function evaluateExp(node, context, fn) {
@@ -63,14 +68,14 @@ function evaluateExp(node, context, fn) {
   const rightChild = right;
   if (left.type === "reference") {
     if (left.ranges.length !== 1) {
-      return makeError("more than one range!", "#VALUE!");
+      return makeError("more than one range!", VALUE_ERROR);
     }
     const value = context.getCellValues(left);
     left = { type: "array", value };
   }
   if (right.type === "reference") {
     if (right.ranges.length !== 1) {
-      return makeError("more than one range!", "#VALUE!");
+      return makeError("more than one range!", VALUE_ERROR);
     }
     right = { type: "array", value };
   }
@@ -208,7 +213,7 @@ const opFn = {
   },
   "/"(a, b) {
     if (b === 0) {
-      return makeError("divide by 0", "#DIV/0!");
+      return makeError("divide by 0", DIV_ERROR);
     }
     return {
       type: "number",

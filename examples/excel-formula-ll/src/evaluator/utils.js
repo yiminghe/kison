@@ -1,4 +1,9 @@
-import { makeReference } from "../functions/utils.js";
+import {
+  makeError,
+  makeReference,
+  NULL_ERROR,
+  VALUE_ERROR
+} from "../functions/utils.js";
 
 export function expandReference(ref1, ref2) {
   if (ref1.type === "error") {
@@ -80,11 +85,7 @@ export function intersectReference(ref1, ref2) {
   }
 
   if (endRow <= startRow || endCol <= startCol) {
-    return {
-      type: "error",
-      value: "#NULL!",
-      message: "no intersect reference!"
-    };
+    return makeError("no intersect reference!", NULL_ERROR);
   }
 
   const rowCount = isFinite(endRow) ? endRow - startRow : 0;
@@ -111,11 +112,7 @@ export function checkError(...args) {
 export function checkNumber(...args) {
   for (const a of args) {
     if (a.type !== "number" && a.type !== "array") {
-      return {
-        type: "error",
-        value: "#VALUE!",
-        message: "not number!"
-      };
+      return makeError("not number!", VALUE_ERROR);
     }
   }
 }

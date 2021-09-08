@@ -12,7 +12,7 @@ export function toNumber(a) {
 export function makeError(message, value) {
   return {
     type: "error",
-    value: value || "#error!",
+    value: value || "#ERROR!",
     message
   };
 }
@@ -23,3 +23,8 @@ export function makeReference(ranges) {
     ranges
   };
 }
+
+export const VALUE_ERROR = "#VALUE!";
+export const NULL_ERROR = "#NULL!";
+export const DIV_ERROR = "#DIV/0!";
+export const NA_ERROR = "#N/A";

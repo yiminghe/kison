@@ -1,3 +1,4 @@
+import { makeError, VALUE_ERROR } from "../functions/utils.js";
 import { evaluators } from "./evaluators.js";
 
 Object.assign(evaluators, {
@@ -49,11 +50,7 @@ Object.assign(evaluators, {
     }
 
     if (error) {
-      return {
-        type: "error",
-        value: "#VALUE!",
-        message: "array cols is not same!"
-      };
+      return makeError("array cols is not same!", VALUE_ERROR);
     }
 
     return {

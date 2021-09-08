@@ -1,5 +1,5 @@
 import { functions } from "../functions/index.js";
-import { makeError } from "../functions/utils.js";
+import { makeError, NAME_ERROR } from "../functions/utils.js";
 import { evaluators } from "./evaluators.js";
 
 Object.assign(evaluators, {
@@ -8,11 +8,26 @@ Object.assign(evaluators, {
     const fnName = children[0].text.toLowerCase();
     const fnDef = functions.get(fnName);
     if (!fnDef) {
-      return makeError(`unimplemented function: ${fnName}`);
+      return makeError(`unimplemented function: ${fnName}`, NAME_ERROR);
     }
 
-    const argsNode = children[2].children || [];
+    let argsChildren = children[2].children || [];
+    let argsNode = [];
+    let currentArg;
+
+    for (const a of argsChildren) {
+      if (a.token === "ARGUMENT_SEPARATOR") {
+        argsNode.push(currentArg);
+        currentArg = undefined;
+      } else {
+        currentArg = a;
+      }
+    }
+
+    argsNode.push(currentArg);
+
     const argsLength = argsNode.length;
+
     if (fnDef.argumentLength) {
       if (argsLength !== fnDef.argumentLength) {
         return makeError("unmatched argument length: " + fnDef.argumentLength);
@@ -39,10 +54,8 @@ Object.assign(evaluators, {
 
     for (let i = 0; i < argsNode.length; i++) {
       const argNode = argsNode[i];
-      if (argNode.token === "ARGUMENT_SEPARATOR") {
-        continue;
-      }
-      const argValue = evaluators.evaluate(argNode, context);
+
+      const argValue = argNode && evaluators.evaluate(argNode, context);
 
       if (fnDef.interceptArgument) {
         const v = fnDef.interceptArgument(
@@ -52,14 +65,14 @@ Object.assign(evaluators, {
           },
           argsNode
         );
-        if (v) {
-          return v;
+        if (v !== undefined) {
+          return v.value;
         }
       }
 
       argsValue.push(argValue);
 
-      if (argValue.type == "error" && !fnDef.allowErrorArgument) {
+      if (argValue?.type == "error" && !fnDef.allowErrorArgument) {
         return argValue;
       }
     }

@@ -978,6 +978,7 @@ describe("ll", () => {
             },
             {
               'error': {
+                'recovery': false,
                 'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
                 'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
                 'expected': [
@@ -1034,6 +1035,7 @@ describe("ll", () => {
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
 "{
   'error': {
+    'recovery': false,
     'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
     'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
     'expected': [
@@ -1278,6 +1280,7 @@ current token: '/'.",
     `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
 "{
+  'recovery': true,
   'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
   'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
   'expected': [
@@ -1294,8 +1297,7 @@ current token: '/'.",
     'firstColumn': 3,
     'lastLine': 1,
     'lastColumn': 3
-  },
-  'recovery': true
+  }
 }"
 `);
     expect(errorCalled).toMatchInlineSnapshot(`

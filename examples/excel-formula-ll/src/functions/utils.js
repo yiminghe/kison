@@ -1,3 +1,4 @@
+// @ts-check
 export function toNumber(a) {
   const { type, value } = a;
   if (type === "string") {

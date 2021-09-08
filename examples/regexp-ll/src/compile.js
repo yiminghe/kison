@@ -1,3 +1,4 @@
+// @ts-check
 import Compiler from "./Compiler.js";
 import { Matcher } from "./match.js";
 

@@ -1,3 +1,4 @@
+// @ts-check
 import createFormulaTokensProvider from "./createFormulaTokensProvider.js";
 import createFormulaCompletionItemProvider from "./createFormulaCompletionItemProvider.js";
 import createFormulaSignatureHelpProvider from "./createFormulaSignatureHelpProvider.js";
@@ -73,7 +74,7 @@ export default function init({ monaco, getNames }) {
 
       languages.registerCompletionItemProvider(
         langId,
-        createFormulaCompletionItemProvider(getNames)
+        createFormulaCompletionItemProvider(monaco, getNames)
       );
 
       languages.registerSignatureHelpProvider(

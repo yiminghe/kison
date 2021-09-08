@@ -1,3 +1,4 @@
+// @ts-check
 export default function bfsMatch(input, startState, onlyMatch) {
   let reachableStates = [startState];
   let ret = {};

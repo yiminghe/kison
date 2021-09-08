@@ -1,3 +1,4 @@
+// @ts-check
 import { register } from "./register.js";
 import { makeError } from "./utils.js";
 

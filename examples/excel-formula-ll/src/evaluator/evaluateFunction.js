@@ -1,3 +1,4 @@
+// @ts-check
 import { functions } from "../functions/index.js";
 import { makeError, NAME_ERROR } from "../functions/utils.js";
 import { evaluators } from "./evaluators.js";

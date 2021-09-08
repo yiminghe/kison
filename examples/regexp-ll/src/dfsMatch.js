@@ -1,3 +1,4 @@
+// @ts-check
 export default function dfsMatch(input, state, callSiteMap = new Map()) {
   // avoid already failed match
   if (this.getCacheResultIndexMap(input).get(state) === false) {

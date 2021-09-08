@@ -1,3 +1,4 @@
+// @ts-check
 import { isWord } from "./utils.js";
 
 export default class Input {

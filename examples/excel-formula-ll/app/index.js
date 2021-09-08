@@ -1,3 +1,4 @@
+// @ts-check
 import {
   initMonaco,
   cachedParser,
@@ -11,22 +12,29 @@ const { getAst } = cachedParser;
 
 // console.log(evaluators);
 
+// @ts-ignore
 require.config({
   paths: {
+    // @ts-ignore
     vs: monacoBase
   }
 });
 
 const $ = v => document.getElementById(v);
 
+// @ts-ignore
 $("cells").value = $("cells")
+  // @ts-ignore
   .value.trim()
   .replace(/\n\s+/g, "\n");
 $("cells").style.height = "200px";
 $("cells").style.width = "500px";
 $("cells").style.display = "block";
 
-require(["vs/editor/editor.main"], function() {
+// @ts-ignore
+require(["vs/editor/editor.main"], () => {
+  // @ts-ignore
+  var { monaco } = window;
   initMonaco({
     monaco,
     getNames({ kind, table }) {
@@ -112,6 +120,7 @@ require(["vs/editor/editor.main"], function() {
     if (error) {
       console.error("syntax error:", error);
     } else {
+      // @ts-ignore
       const cells = getCellData($("cells").value);
       console.log("cells data: ", cells);
       const calValue = evaluate(ast, {

@@ -1,3 +1,4 @@
+// @ts-check
 import { getTableNameByPosition } from "../languageService.js";
 import { getAst } from "../cachedParser.js";
 
@@ -9,7 +10,7 @@ const tableItems = [
   ["#Totals", "table totals"]
 ];
 
-export default function createFormulaCompletionItemProvider(getNames) {
+export default function createFormulaCompletionItemProvider(monaco, getNames) {
   return {
     triggerCharacters: ["[", "@"],
     provideCompletionItems(model, position, context) {

@@ -1,9 +1,8 @@
-import { evaluators } from "./evaluators.js";
+// @ts-check
+
 import "./evaluateValues.js";
 import "./evaluateFunction.js";
 import "./evaluateReference.js";
 import "./evaluateExpression.js";
 
-export const evaluate = evaluators.evaluate;
-
-export { evaluators };
+export { evaluators, evaluate } from "./evaluators.js";

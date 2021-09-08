@@ -1,3 +1,4 @@
+// @ts-check
 import { getTokens } from "../cachedParser.js";
 
 class State {

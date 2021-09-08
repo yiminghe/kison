@@ -1,3 +1,4 @@
+// @ts-check
 import {
   makeError,
   makeReference,

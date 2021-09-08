@@ -1,3 +1,4 @@
+// @ts-check
 import { utils } from "../src/index.js";
 import { matchNumber } from "./utils.js";
 

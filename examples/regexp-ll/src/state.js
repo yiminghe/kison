@@ -1,3 +1,4 @@
+// @ts-check
 export class State {
   constructor(type) {
     this.type = type;

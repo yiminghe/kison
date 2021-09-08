@@ -1,3 +1,4 @@
+// @ts-check
 import Input from "./Input.js";
 import dfsMatch from "./dfsMatch.js";
 import bfsMatch from "./bfsMatch.js";
@@ -28,19 +29,22 @@ export class Matcher {
   }
 
   isMatched() {
+    // @ts-ignore
     return !!this.matchInternal({ reset: true, onlyMatch: true });
   }
 
   match() {
+    // @ts-ignore
     return this.matchInternal({
       sticky: this.options.sticky
     });
   }
 
   firstMatch() {
+    // @ts-ignore
     return this.matchInternal({ reset: true });
   }
-
+  // @ts-ignore
   matchInternal({ startState, sticky, onlyMatch, reset } = {}) {
     let { input } = this;
 

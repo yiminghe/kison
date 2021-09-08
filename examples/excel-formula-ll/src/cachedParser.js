@@ -1,3 +1,4 @@
+// @ts-check
 import parser from "./parser.js";
 
 let currentText;

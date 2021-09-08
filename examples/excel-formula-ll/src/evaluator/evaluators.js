@@ -1,3 +1,4 @@
+// @ts-check
 export function evaluate(ast, context) {
   const { symbol, token } = ast;
 

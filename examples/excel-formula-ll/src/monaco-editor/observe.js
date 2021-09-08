@@ -1,3 +1,4 @@
+// @ts-check
 import { langId } from "./utils.js";
 import { getAst } from "../cachedParser.js";
 
@@ -49,11 +50,7 @@ function injectStyle() {
     style = document.createElement("style");
   head.appendChild(style);
   style.type = "text/css";
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
+  style.appendChild(document.createTextNode(css));
 }
 
 export default function observe(monaco) {

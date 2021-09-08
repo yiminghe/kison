@@ -1,3 +1,4 @@
+// @ts-check
 export function getFunctionInfoFromPosition(ast, position) {
   const { lineNumber, column } = position;
   const { terminalNodes, errorNode } = ast;

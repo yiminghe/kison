@@ -1,3 +1,4 @@
+// @ts-check
 import { isWord, isNumber } from "./utils.js";
 import { Matcher } from "./match.js";
 
@@ -176,6 +177,7 @@ export const assertionMatcher = {
     return input => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
+      // @ts-ignore
       let match = matcher.matchInternal({
         startState: unit.start,
         sticky: true
@@ -205,6 +207,7 @@ export const assertionMatcher = {
       matcher.input = input.clone();
       matcher.input.setInverted();
       matcher.input.advance();
+      // @ts-ignore
       let match = matcher.matchInternal({
         startState: unit.start,
         sticky: true

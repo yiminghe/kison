@@ -1,3 +1,4 @@
+// @ts-check
 import { makeError, makeReference } from "../functions/utils.js";
 import { parseCoord } from "../utils.js";
 import { evaluators } from "./evaluators.js";

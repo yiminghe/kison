@@ -1,3 +1,4 @@
+// @ts-check
 import { getAst } from "../cachedParser.js";
 import { getFunctionInfoFromPosition } from "../languageService.js";
 

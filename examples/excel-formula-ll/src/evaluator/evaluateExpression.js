@@ -1,3 +1,4 @@
+// @ts-check
 import {
   DIV_ERROR,
   makeError,
@@ -43,9 +44,9 @@ function getRowColPos(value, child) {
 
   if (child.type === "reference") {
     startRow = child.ranges[0].row;
-    endRow = startRow + leftChild.ranges[0].rowCount + 1;
+    endRow = startRow + child.ranges[0].rowCount + 1;
     startCol = child.ranges[0].col;
-    endCol = startLeftCol + child.ranges[0].colCount + 1;
+    endCol = startCol + child.ranges[0].colCount + 1;
   }
 
   return {
@@ -77,6 +78,7 @@ function evaluateExp(node, context, fn) {
     if (right.ranges.length !== 1) {
       return makeError("more than one range!", VALUE_ERROR);
     }
+    const value = context.getCellValues(right);
     right = { type: "array", value };
   }
   if (left.type === "array" && isSingleValueArray(left.value)) {

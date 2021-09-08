@@ -142,6 +142,7 @@ function genParser() {
 
   console.info("start generate grammar module: " + modulePath + "\n");
   var start = Date.now();
+  
   const instance = new Cons(grammarObj);
 
   if (program.bnf) {

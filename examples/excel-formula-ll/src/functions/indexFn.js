@@ -1,18 +1,16 @@
-import { register } from './register.js';
+import { register } from "./register.js";
 
-register('index', {
+register("index", {
   argumentsOptions: [
     null,
     {
-      single: true,
+      single: true
     },
     {
-      single: true,
+      single: true
     }
   ],
   minArgumentLength: 2,
   maxArgumentLength: 3,
-  fn() {
-
-  }
+  fn() {}
 });

@@ -1,5 +1,5 @@
-import { register } from './register.js';
+import { register } from "./register.js";
 
-register('filter', {
-  argumentLength: 2,
+register("filter", {
+  argumentLength: 2
 });

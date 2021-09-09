@@ -1,11 +1,11 @@
-import { register } from './register.js';
+import { register } from "./register.js";
 
-register('match', {
+register("match", {
   argumentOptions: [
     {
-      single: true,
+      single: true
     }
   ],
   minArgumentLength: 2,
-  maxArgumentLength: 2,
+  maxArgumentLength: 2
 });

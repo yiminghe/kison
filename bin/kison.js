@@ -11,7 +11,7 @@ var Utils = require("../lib/utils"),
   path = require("path"),
   encoding = "utf-8";
 
-const placehoder = '__KISON___GENERATED__CODE__';
+const placehoder = "__KISON___GENERATED__CODE__";
 
 var program = require("commander");
 program
@@ -32,7 +32,7 @@ var options = program.options;
 
 var grammar = path.resolve(program.grammar);
 
-options.forEach(function (o) {
+options.forEach(function(o) {
   var name = o.name();
   if (o.required && !(name in program)) {
     program.optionMissingArgument(o);
@@ -142,7 +142,7 @@ function genParser() {
 
   console.info("start generate grammar module: " + modulePath + "\n");
   var start = Date.now();
-  
+
   const instance = new Cons(grammarObj);
 
   if (program.bnf) {
@@ -168,9 +168,9 @@ function genParser() {
 
   console.info(
     "generate grammar module: " +
-    modulePath +
-    " at " +
-    new Date().toLocaleString()
+      modulePath +
+      " at " +
+      new Date().toLocaleString()
   );
   console.log();
   console.info("duration: " + (Date.now() - start) + "ms");

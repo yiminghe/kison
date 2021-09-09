@@ -7,28 +7,28 @@ const my = {
     [0xe000, 0xfffd],
     [0x10000, 0x10ffff]
   ],
-  createMatchString(str, { input }) {
-    if (input.lastIndexOf(str, 0) !== 0) {
+  createMatchString(str, lexer) {
+    if (!lexer.nextStartsWith(str)) {
       return false;
     }
     return [str];
   },
   matchOnlyEscapeChar(lexer, index = 0) {
     let m = "";
-    let char = lexer.getChar(index);
+    let char = lexer.nextChar(index);
     m += char;
     if (char === "\\") {
-      char = lexer.getChar(index + 1);
+      char = lexer.nextChar(index + 1);
       m += char;
     } else {
       return { m, r: false };
     }
     if (m === "\\u" || m === "\\x") {
       const len = m === "\\u" ? 4 : 2;
-      let matchNumber = my.matchNumber(lexer.input.slice(index + 2), 1, len);
-      if (matchNumber && matchNumber[0].length === len) {
-        matchNumber = matchNumber[0];
-        let first = parseInt(matchNumber, 16);
+      let matchedNumber = my.matchNumber(lexer, index + 2, 1, len);
+      if (matchedNumber && matchedNumber[0].length === len) {
+        matchedNumber = matchedNumber[0];
+        let first = parseInt(matchedNumber, 16);
         if (lexer.options.unicode && index === 0) {
           // 检查是否开始 surrogate pair
           if (first >= 0xd800 && first <= 0xdbff) {
@@ -41,7 +41,7 @@ const my = {
               return {
                 m,
                 r: [
-                  m + matchNumber + secondRet.r[0],
+                  m + matchedNumber + secondRet.r[0],
                   String.fromCodePoint(totoal),
                   totoal
                 ]
@@ -51,7 +51,7 @@ const my = {
         }
         return {
           m,
-          r: [m + matchNumber, String.fromCharCode(first), first]
+          r: [m + matchedNumber, String.fromCharCode(first), first]
         };
       }
     }
@@ -64,20 +64,20 @@ const my = {
     if (ret.r !== undefined) {
       return ret.r;
     }
-    if (my.matchCharCode(lexer.getCharCode(1))) {
-      return [ret.m, lexer.getChar(1)];
+    if (my.matchCharCode(lexer.nextCharCode(1))) {
+      return [ret.m, lexer.nextChar(1)];
     }
     return false;
   },
   matchAnyChar(lexer) {
-    const char = lexer.getChar();
+    const char = lexer.nextChar();
     if (char === "." && !lexer.userData.insideCharacterGroup) {
       return [char];
     }
     return false;
   },
   matchChar(lexer) {
-    return my.matchCharCode(lexer.getCharCode());
+    return my.matchCharCode(lexer.nextCharCode());
   },
   matchCharCode(charCode) {
     const range = my.charRange;
@@ -92,28 +92,29 @@ const my = {
     }
     return false;
   },
-  matchGroupName(input, prefix) {
-    const remain = input.slice(prefix.length);
-    let index = 0;
-    let char = remain.charAt(index).toLowerCase();
-    while (char >= "a" && char <= "z") {
-      char = remain.charAt(++index).toLowerCase();
+  matchGroupName(lexer, prefix) {
+    let ret = [];
+    let index = prefix.length;
+    let char = lexer.nextChar(index++);
+    while ((char >= "a" && char <= "z") || (char >= "A" && char <= "Z")) {
+      ret.push(char);
+      char = lexer.nextChar(index++);
     }
     if (char === ">") {
-      const name = remain.slice(0, index);
+      const name = ret.join("");
       return [prefix + name + ">", name];
     }
     return false;
   },
-  matchBackreference({ input }) {
-    if (input[0] !== "\\") {
+  matchBackreference(lexer) {
+    if (lexer.nextChar() !== "\\") {
       return false;
     }
     const prefix = "\\k<";
-    if (input.lastIndexOf(prefix, 0) === 0) {
-      return my.matchGroupName(input, prefix);
+    if (lexer.nextStartsWith(prefix)) {
+      return my.matchGroupName(lexer, prefix);
     }
-    const match = my.matchNumber(input.slice(1));
+    const match = my.matchNumber(lexer, 1);
     if (match === false) {
       return false;
     }
@@ -122,17 +123,17 @@ const my = {
   },
   matchQuantifierNumber(lexer) {
     if (lexer.userData.insideQuantifierRange) {
-      return my.matchNumber(lexer.input);
+      return my.matchNumber(lexer);
     }
     return false;
   },
-  matchNumber(input, hex, max) {
+  matchNumber(lexer, start = 0, hex, max) {
     let index = 0;
     const match = [];
-    let l = max || input.length;
-    l = Math.min(l, input.length);
+    let l = max || lexer.nextLength();
+    l = Math.min(l, lexer.nextLength());
     while (index < l) {
-      const char = input.charAt(index).toLowerCase();
+      const char = lexer.nextCharAt(start + index).toLowerCase();
       if (char < "0" || char > "9") {
         if (hex) {
           if (char < "a" || char > "f") {
@@ -142,18 +143,17 @@ const my = {
           break;
         }
       }
-
       match.push(char);
       index++;
     }
     return match.length ? [match.join("")] : false;
   },
-  matchNamedGroupPrefix({ input }) {
+  matchNamedGroupPrefix(lexer) {
     const prefix = "(?<";
-    if (input.lastIndexOf(prefix, 0) !== 0) {
+    if (!lexer.nextStartsWith(prefix)) {
       return false;
     }
-    return my.matchGroupName(input, prefix);
+    return my.matchGroupName(lexer, prefix);
   }
 };
 

@@ -9,16 +9,14 @@ var Utils = Kison.Utils;
 const run = eval;
 
 /*jshint quotmark:false*/
-describe("lalr", function () {
-  it("escape correctly", function () {
+describe("lalr", function() {
+  it("escape correctly", function() {
     expect(Utils.escapeString("'\\")).toEqual("\\'\\\\");
-    expect(
-      run("'" + Utils.escapeString("'\\") + "'")
-    ).toEqual("'\\");
+    expect(run("'" + Utils.escapeString("'\\") + "'")).toEqual("'\\");
   });
 
   // 4-41 文法 GOTO 图
-  it("generate goto map ok", function () {
+  it("generate goto map ok", function() {
     var grammar = new LALRGrammar({
       productions: [
         {
@@ -75,7 +73,7 @@ describe("lalr", function () {
     expect(num).toEqual(3);
   });
 
-  it("generate table ok", function () {
+  it("generate table ok", function() {
     var grammar = new LALRGrammar({
       productions: [
         {
@@ -114,7 +112,7 @@ describe("lalr", function () {
     grammar.visualizeTable();
   });
 
-  it("parse ok", function () {
+  it("parse ok", function() {
     var grammar = new LALRGrammar({
       productions: [
         {
@@ -148,12 +146,10 @@ describe("lalr", function () {
       }
     });
     var code = grammar.genCode(true);
-    expect(
-      run(code).parse("ccdd")
-    ).not.toEqual(false);
+    expect(run(code).parse("ccdd")).not.toEqual(false);
   });
 
-  it("can not parse invalid input", function () {
+  it("can not parse invalid input", function() {
     var grammar = new LALRGrammar({
       productions: [
         {
@@ -187,16 +183,14 @@ describe("lalr", function () {
       }
     });
 
-    expect(function () {
-      run(grammar.genCode()).parse(
-        "dc"
-      );
+    expect(function() {
+      run(grammar.genCode()).parse("dc");
     }).toThrow(
       "syntax error at line 1:\ndc\n--^\n" + "expect shift:c, shift:d"
     );
   });
 
-  it("can not parse invalid input in compress mode", function () {
+  it("can not parse invalid input in compress mode", function() {
     var grammar = new LALRGrammar({
       productions: [
         {
@@ -230,10 +224,11 @@ describe("lalr", function () {
       }
     });
 
-    expect(function () {
-      const parser = run(grammar.genCode({
-        compressSymbol: 1
-      })
+    expect(function() {
+      const parser = run(
+        grammar.genCode({
+          compressSymbol: 1
+        })
       );
       parser.parse("dc");
     }).toThrow(
@@ -241,8 +236,8 @@ describe("lalr", function () {
     );
   });
 
-  describe("state", function () {
-    it("can parse", function () {
+  describe("state", function() {
+    it("can parse", function() {
       var log = [];
       var grammar = new LALRGrammar({
         productions: [
@@ -276,16 +271,17 @@ describe("lalr", function () {
         }
       });
 
-      var parser = run(grammar.genCode({
-        compressSymbol: 0
-      })
+      var parser = run(
+        grammar.genCode({
+          compressSymbol: 0
+        })
       );
 
       parser.yy = {
         log: log
       };
 
-      expect(function () {
+      expect(function() {
         parser.parse("ab");
       }).not.toThrow(undefined);
 
@@ -296,7 +292,7 @@ describe("lalr", function () {
       expect(log[1]).toEqual("b");
     });
 
-    it("can not parse", function () {
+    it("can not parse", function() {
       var log = [];
       var grammar = new LALRGrammar({
         productions: [
@@ -329,21 +325,22 @@ describe("lalr", function () {
           ]
         }
       });
-      var parser = run(grammar.genCode({
-        compressSymbol: 1
-      })
+      var parser = run(
+        grammar.genCode({
+          compressSymbol: 1
+        })
       );
 
       parser.yy = {
         log: log
       };
 
-      expect(function () {
+      expect(function() {
         parser.parse("abb");
       }).toThrow("syntax error at line 1:\n" + "abb\n" + "--^\nexpect shift:b");
     });
 
-    it("can not parse when compress", function () {
+    it("can not parse when compress", function() {
       var log = [];
       var grammar = new LALRGrammar({
         productions: [
@@ -376,22 +373,23 @@ describe("lalr", function () {
           ]
         }
       });
-      var parser = run(grammar.genCode({
-        compressSymbol: 0
-      })
+      var parser = run(
+        grammar.genCode({
+          compressSymbol: 0
+        })
       );
 
       parser.yy = {
         log: log
       };
 
-      expect(function () {
+      expect(function() {
         parser.parse("abb");
       }).toThrow("syntax error at line 1:\n" + "abb\n" + "--^\nexpect shift:b");
     });
   });
 
-  it("parse ok with action", function () {
+  it("parse ok with action", function() {
     // S.log("---------------- parse ok with action : ccdd by ");
     // S.log(" S0 => S ");
     // S.log(" S => CC ");
@@ -466,12 +464,12 @@ describe("lalr", function () {
 
     const code = grammar.genCode();
 
-    expect(function () {
+    expect(function() {
       run(code).parse("ccdd");
     }).not.toThrow(undefined);
   });
 
-  it("precedence works", function () {
+  it("precedence works", function() {
     var grammar = new LALRGrammar(getGrammar());
 
     const code = grammar.genCode();

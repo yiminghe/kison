@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.4.21",
+  "version": "0.4.22",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -13,8 +13,8 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
-    "@babel/node":"7.x",
     "@babel/core": "^7.14.3",
+    "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-standard-pkg": "^0.6.0",
@@ -42,7 +42,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
-    "perf-formula":"BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js ",
+    "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js ",
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx}\"",

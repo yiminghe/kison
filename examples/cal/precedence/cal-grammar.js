@@ -62,9 +62,11 @@ module.exports = () => ({
     }
   ],
 
-  operators: [["+", "-"], ["*", "/"], ["^"]],
-
-  rightOperators: ["^"],
+  operators: [
+    ["left", "+", "-"],
+    ["left", "*", "/"],
+    ["right", "^"]
+  ],
 
   ...lexerConfig()
 });

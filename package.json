@@ -13,6 +13,7 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
+    "fs-extra": "10.x",
     "@babel/core": "^7.14.3",
     "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",
@@ -43,6 +44,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
+    "prepare": "node scripts/link",
     "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js ",
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",

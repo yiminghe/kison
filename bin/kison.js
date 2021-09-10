@@ -33,7 +33,7 @@ var options = program.options;
 
 var grammar = path.resolve(program.grammar);
 
-options.forEach(function (o) {
+options.forEach(function(o) {
   var name = o.name();
   if (o.required && !(name in program)) {
     program.optionMissingArgument(o);
@@ -49,11 +49,13 @@ var outFile = program.output
   ? program.output
   : path.basename(grammar, "-grammar.js");
 
-var grammarBaseName = program.library || '$parser';
+var grammarBaseName = program.library || "$parser";
 
 const mode = program.mode || "lalr";
 
-var modulePath = program.output ? path.resolve(outFile) : path.resolve(grammar, "../" + outFile + ".js");
+var modulePath = program.output
+  ? path.resolve(outFile)
+  : path.resolve(grammar, "../" + outFile + ".js");
 
 const pkg = require("../package.json");
 
@@ -150,7 +152,7 @@ function genParser() {
     instance.expandOptionalSymbol();
     const bnf = instance.toBNF();
     let output = program.bnf;
-    if (typeof output === 'string') {
+    if (typeof output === "string") {
       output = path.resolve(output);
       fs.writeFileSync(output, bnf);
     } else {
@@ -176,9 +178,9 @@ function genParser() {
 
   console.info(
     "generate grammar module: " +
-    modulePath +
-    " at " +
-    new Date().toLocaleString()
+      modulePath +
+      " at " +
+      new Date().toLocaleString()
   );
   console.log();
   console.info("duration: " + (Date.now() - start) + "ms");

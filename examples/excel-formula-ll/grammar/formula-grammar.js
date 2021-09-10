@@ -387,7 +387,7 @@ module.exports = () => ({
 
     rules: [
       {
-        state: ["s", "I"],
+        state: ["inside structure reference", "I"],
         regexp: /^\s+/,
         token: "$HIDDEN"
       },
@@ -432,31 +432,31 @@ module.exports = () => ({
 
       // structure reference
       {
-        state: ["s"],
+        state: ["inside structure reference"],
         regexp: /^,/,
         token: "SPECIFIER_SEPARATOR"
       },
       {
-        state: ["s", "I"],
+        state: ["inside structure reference", "I"],
         regexp: /^\[#('.|[^\]#])+\]/,
         token: "TABLE_ITEM_SPECIFIER"
       },
       {
-        state: ["s"],
+        state: ["inside structure reference"],
         regexp: /^@/,
         token: "TABLE_@"
       },
       {
-        state: ["s"],
+        state: ["inside structure reference"],
         regexp: new RegExp(`^${tableColumnSpecifier}`),
         token: "TABLE_COLUMN_SPECIFIER"
       },
       {
-        state: ["s", "I"],
+        state: ["inside structure reference", "I"],
         regexp: /^\[/,
         token: "[",
         action() {
-          this.pushState("s");
+          this.pushState("inside structure reference");
         }
       },
 
@@ -465,7 +465,7 @@ module.exports = () => ({
         token: "@"
       },
       {
-        state: ["s"],
+        state: ["inside structure reference"],
         regexp: /^\]/,
         token: "]",
         action() {

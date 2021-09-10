@@ -1,6 +1,6 @@
 import { expect } from "@jest/globals";
-import formula from "./src/parser";
-import { prettyJson } from "../../__tests__/utils";
+import formula from "../src/parser";
+import { prettyJson } from "../../../__tests__/utils";
 
 function parse(input) {
   return formula.parse(input);

@@ -1,0 +1,11 @@
+exp ::= add
+add ::= mul
+add ::= add '+' mul
+add ::= add '-' mul
+mul ::= expo
+mul ::= mul '*' expo
+mul ::= mul '/' expo
+expo ::= atom
+expo ::= atom '^' expo
+atom ::= 'NUMBER'
+atom ::= '(' add ')'

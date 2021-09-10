@@ -31,7 +31,9 @@
     ]
   },
   "scripts": {
-    "build": "pika-pack build"
+    "build": "pika-pack build",
+    "gen": "sh scripts/gen.sh",
+    "pub": "sh scripts/pub.sh"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
-import { parse, compile } from "./src/index";
-import { prettyJson } from "../../__tests__/utils";
+import { parse, compile } from "../src/index";
+import { prettyJson } from "../../../__tests__/utils";
 
 describe("regexp", () => {
   describe("parser", () => {

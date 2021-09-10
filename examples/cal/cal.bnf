@@ -1,0 +1,11 @@
+expression ::= AddtiveExpression
+AddtiveExpression ::= multiplicativeExpression
+AddtiveExpression ::= AddtiveExpression '+' multiplicativeExpression
+AddtiveExpression ::= AddtiveExpression '-' multiplicativeExpression
+multiplicativeExpression ::= exponentExpression
+multiplicativeExpression ::= multiplicativeExpression '*' primaryExpression
+multiplicativeExpression ::= multiplicativeExpression '/' primaryExpression
+exponentExpression ::= primaryExpression '^' exponentExpression
+exponentExpression ::= primaryExpression
+primaryExpression ::= '(' expression ')'
+primaryExpression ::= 'NUMBER'

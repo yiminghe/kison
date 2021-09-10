@@ -9,5 +9,9 @@
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"
   },
+  "scripts": {
+    "gen": "sh scripts/gen.sh",
+    "pub": "sh scripts/pub.sh"
+  },
   "main": "index.js"
 }

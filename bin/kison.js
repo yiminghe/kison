@@ -16,8 +16,9 @@ const placehoder = "__KISON___GENERATED__CODE__";
 var program = require("commander");
 program
   .option("-g, --grammar <grammar>", "Set kison grammar file")
-  .option("-f, --file [file]", "Set file name")
-  .option("--bnf")
+  .option("-o, --output [file]", "output file path")
+  .option("--library [library]", "library name")
+  .option("--bnf [bnf]", "bnf file")
   .option("-m, --mode [mode]", "lalr or ll")
   .option("-b, --babel [babel]", "use babel")
   .option("-v, --visual [visual]", "visual")
@@ -25,14 +26,14 @@ program
   .option("--es [es]", "generate es module")
   // defaults bool true
   .option("--no-compressSymbol", "Set compress symbol")
-  .option("--compressLexerState", "Set compress lexer state")
+  .option("--no-compressLexerState", "Set compress lexer state")
   .parse(process.argv);
 
 var options = program.options;
 
 var grammar = path.resolve(program.grammar);
 
-options.forEach(function(o) {
+options.forEach(function (o) {
   var name = o.name();
   if (o.required && !(name in program)) {
     program.optionMissingArgument(o);
@@ -44,15 +45,15 @@ var kisonCfg = {
   compressSymbol: program.compressSymbol
 };
 
-var outFile = program.file
-  ? program.file
+var outFile = program.output
+  ? program.output
   : path.basename(grammar, "-grammar.js");
 
-var grammarBaseName = path.basename(outFile);
+var grammarBaseName = program.library || '$parser';
 
 const mode = program.mode || "lalr";
 
-var modulePath = path.resolve(grammar, "../" + outFile + ".js");
+var modulePath = program.output ? path.resolve(outFile) : path.resolve(grammar, "../" + outFile + ".js");
 
 const pkg = require("../package.json");
 
@@ -147,9 +148,16 @@ function genParser() {
 
   if (program.bnf) {
     instance.expandOptionalSymbol();
-    console.log("");
-    console.log(instance.toBNF());
-    console.log("");
+    const bnf = instance.toBNF();
+    let output = program.bnf;
+    if (typeof output === 'string') {
+      output = path.resolve(output);
+      fs.writeFileSync(output, bnf);
+    } else {
+      console.log("");
+      console.log(bnf);
+      console.log("");
+    }
   }
 
   /*jshint evil:true*/
@@ -168,9 +176,9 @@ function genParser() {
 
   console.info(
     "generate grammar module: " +
-      modulePath +
-      " at " +
-      new Date().toLocaleString()
+    modulePath +
+    " at " +
+    new Date().toLocaleString()
   );
   console.log();
   console.info("duration: " + (Date.now() - start) + "ms");

@@ -26,7 +26,7 @@ module.exports = {
     },
     {
       symbol: "multiplicativeExpression",
-      rhs: ["primaryExpression"]
+      rhs: ["exponentExpression"]
     },
     {
       symbol: "multiplicativeExpression",
@@ -41,6 +41,17 @@ module.exports = {
       action() {
         return this.$1 / this.$3;
       }
+    },
+    {
+      symbol: "exponentExpression",
+      rhs: ["primaryExpression", "^", "exponentExpression"],
+      action() {
+        return this.$1 ** this.$3;
+      }
+    },
+    {
+      symbol: "exponentExpression",
+      rhs: ["primaryExpression"]
     },
     {
       symbol: "primaryExpression",

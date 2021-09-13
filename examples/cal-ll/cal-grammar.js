@@ -77,7 +77,8 @@ module.exports = () => ({
   productions: [
     {
       symbol: "exp",
-      rhs: [startExp]
+      rhs: [startExp],
+      label: "exp"
     },
     ...generateOpProductions(),
     {
@@ -87,11 +88,13 @@ module.exports = () => ({
         function(astProcessor, lexer) {
           astProcessor.pushStack(Number(lexer.text));
         }
-      ]
+      ],
+      label: "exp"
     },
     {
       symbol: "atom",
-      rhs: ["(", startExp, ")"]
+      rhs: ["(", startExp, ")"],
+      label: "exp"
     }
   ],
 

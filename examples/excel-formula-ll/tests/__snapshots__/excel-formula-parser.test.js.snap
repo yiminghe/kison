@@ -239,11 +239,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                 }
               ],
               'start': 4,
-              'end': 19,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 20
+              'firstColumn': 5
             },
             {
               'text': ',',
@@ -311,11 +308,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                 }
               ],
               'start': 20,
-              'end': 24,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 21,
-              'lastColumn': 25
+              'firstColumn': 21
             }
           ],
           'start': 4,
@@ -410,11 +404,8 @@ exports[`excel-formula-parser structure reference works for space inside column 
         }
       ],
       'start': 0,
-      'end': 6,
       'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 7
+      'firstColumn': 1
     }
   ],
   'start': 0,
@@ -504,11 +495,8 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
         }
       ],
       'start': 0,
-      'end': 29,
       'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 30
+      'firstColumn': 1
     }
   ],
   'start': 0,
@@ -598,11 +586,8 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
         }
       ],
       'start': 0,
-      'end': 31,
       'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 32
+      'firstColumn': 1
     }
   ],
   'start': 0,
@@ -702,11 +687,8 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
         }
       ],
       'start': 0,
-      'end': 43,
       'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 44
+      'firstColumn': 1
     }
   ],
   'start': 0,
@@ -904,96 +886,91 @@ exports[`excel-formula-parser works for reference operation 1`] = `
           'lastColumn': 5
         },
         {
-          'symbol': 'atom-exp',
+          'symbol': 'union-reference',
           'children': [
             {
-              'symbol': 'union-reference',
+              'text': 'E4:H4',
+              'token': 'CELL',
+              'start': 5,
+              'end': 10,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 6,
+              'lastColumn': 11
+            },
+            {
+              'text': ',',
+              'token': 'REF_UNION_OPERATOR',
+              'start': 10,
+              'end': 11,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 11,
+              'lastColumn': 12
+            },
+            {
+              'symbol': 'intersect-reference',
               'children': [
                 {
-                  'text': 'E4:H4',
-                  'token': 'CELL',
-                  'start': 5,
-                  'end': 10,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 6,
-                  'lastColumn': 11
-                },
-                {
-                  'text': ',',
-                  'token': 'REF_UNION_OPERATOR',
-                  'start': 10,
-                  'end': 11,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 12
-                },
-                {
-                  'symbol': 'intersect-reference',
+                  'symbol': 'expand-reference',
                   'children': [
                     {
-                      'symbol': 'expand-reference',
-                      'children': [
-                        {
-                          'text': 'F',
-                          'token': 'NAME',
-                          'start': 11,
-                          'end': 12,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 12,
-                          'lastColumn': 13
-                        },
-                        {
-                          'text': ':',
-                          'token': 'REF_EXPAND_OPERATOR',
-                          'start': 12,
-                          'end': 13,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 13,
-                          'lastColumn': 14
-                        },
-                        {
-                          'text': 'F',
-                          'token': 'NAME',
-                          'start': 13,
-                          'end': 14,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 14,
-                          'lastColumn': 15
-                        }
-                      ],
+                      'text': 'F',
+                      'token': 'NAME',
                       'start': 11,
-                      'end': 14,
+                      'end': 12,
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 12,
-                      'lastColumn': 15
+                      'lastColumn': 13
                     },
                     {
-                      'text': 'K8',
-                      'token': 'CELL',
-                      'start': 15,
-                      'end': 17,
+                      'text': ':',
+                      'token': 'REF_EXPAND_OPERATOR',
+                      'start': 12,
+                      'end': 13,
                       'firstLine': 1,
                       'lastLine': 1,
-                      'firstColumn': 16,
-                      'lastColumn': 18
+                      'firstColumn': 13,
+                      'lastColumn': 14
+                    },
+                    {
+                      'text': 'F',
+                      'token': 'NAME',
+                      'start': 13,
+                      'end': 14,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 14,
+                      'lastColumn': 15
                     }
                   ],
-                  'end': 17,
+                  'start': 11,
+                  'end': 14,
+                  'firstLine': 1,
                   'lastLine': 1,
+                  'firstColumn': 12,
+                  'lastColumn': 15
+                },
+                {
+                  'text': 'K8',
+                  'token': 'CELL',
+                  'start': 15,
+                  'end': 17,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 16,
                   'lastColumn': 18
                 }
               ],
-              'start': 5,
-              'firstLine': 1,
-              'firstColumn': 6
+              'end': 17,
+              'lastLine': 1,
+              'lastColumn': 18
             }
-          ]
+          ],
+          'start': 5,
+          'firstLine': 1,
+          'firstColumn': 6
         },
         {
           'text': ')',

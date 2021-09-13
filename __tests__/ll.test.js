@@ -253,6 +253,7 @@ describe("ll", () => {
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
+  'label': 'exp',
   'children': [
     {
       'symbol': 'add',
@@ -261,19 +262,8 @@ describe("ll", () => {
           'symbol': 'add',
           'children': [
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '1',
-                  'token': 'NUMBER',
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
+              'text': '1',
+              'token': 'NUMBER',
               'start': 0,
               'end': 1,
               'firstLine': 1,
@@ -292,19 +282,8 @@ describe("ll", () => {
               'lastColumn': 3
             },
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '2',
-                  'token': 'NUMBER',
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ],
+              'text': '2',
+              'token': 'NUMBER',
               'start': 2,
               'end': 3,
               'firstLine': 1,
@@ -332,19 +311,8 @@ describe("ll", () => {
           'lastColumn': 5
         },
         {
-          'symbol': 'atom',
-          'children': [
-            {
-              'text': '3',
-              'token': 'NUMBER',
-              'start': 4,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 6
-            }
-          ],
+          'text': '3',
+          'token': 'NUMBER',
           'start': 4,
           'end': 5,
           'firstLine': 1,
@@ -371,24 +339,14 @@ describe("ll", () => {
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
+  'label': 'exp',
   'children': [
     {
       'symbol': 'add',
       'children': [
         {
-          'symbol': 'atom',
-          'children': [
-            {
-              'text': '1',
-              'token': 'NUMBER',
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            }
-          ],
+          'text': '1',
+          'token': 'NUMBER',
           'start': 0,
           'end': 1,
           'firstLine': 1,
@@ -410,19 +368,8 @@ describe("ll", () => {
           'symbol': 'mul',
           'children': [
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '2',
-                  'token': 'NUMBER',
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ],
+              'text': '2',
+              'token': 'NUMBER',
               'start': 2,
               'end': 3,
               'firstLine': 1,
@@ -441,19 +388,8 @@ describe("ll", () => {
               'lastColumn': 5
             },
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '3',
-                  'token': 'NUMBER',
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                }
-              ],
+              'text': '3',
+              'token': 'NUMBER',
               'start': 4,
               'end': 5,
               'firstLine': 1,
@@ -489,6 +425,7 @@ describe("ll", () => {
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
+  'label': 'exp',
   'children': [
     {
       'symbol': 'add',
@@ -497,19 +434,8 @@ describe("ll", () => {
           'symbol': 'add',
           'children': [
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '1',
-                  'token': 'NUMBER',
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ],
+              'text': '1',
+              'token': 'NUMBER',
               'start': 0,
               'end': 1,
               'firstLine': 1,
@@ -531,19 +457,8 @@ describe("ll", () => {
               'symbol': 'mul',
               'children': [
                 {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
+                  'text': '2',
+                  'token': 'NUMBER',
                   'start': 2,
                   'end': 3,
                   'firstLine': 1,
@@ -562,19 +477,8 @@ describe("ll", () => {
                   'lastColumn': 5
                 },
                 {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '4',
-                      'token': 'NUMBER',
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    }
-                  ],
+                  'text': '4',
+                  'token': 'NUMBER',
                   'start': 4,
                   'end': 5,
                   'firstLine': 1,
@@ -612,19 +516,8 @@ describe("ll", () => {
           'label': 'exp',
           'children': [
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '5',
-                  'token': 'NUMBER',
-                  'start': 6,
-                  'end': 7,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 7,
-                  'lastColumn': 8
-                }
-              ],
+              'text': '5',
+              'token': 'NUMBER',
               'start': 6,
               'end': 7,
               'firstLine': 1,
@@ -647,19 +540,8 @@ describe("ll", () => {
               'label': 'exp',
               'children': [
                 {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 8,
-                      'end': 9,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 9,
-                      'lastColumn': 10
-                    }
-                  ],
+                  'text': '2',
+                  'token': 'NUMBER',
                   'start': 8,
                   'end': 9,
                   'firstLine': 1,
@@ -678,19 +560,8 @@ describe("ll", () => {
                   'lastColumn': 11
                 },
                 {
-                  'symbol': 'atom',
-                  'children': [
-                    {
-                      'text': '3',
-                      'token': 'NUMBER',
-                      'start': 10,
-                      'end': 11,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 11,
-                      'lastColumn': 12
-                    }
-                  ],
+                  'text': '3',
+                  'token': 'NUMBER',
                   'start': 10,
                   'end': 11,
                   'firstLine': 1,
@@ -727,24 +598,14 @@ describe("ll", () => {
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
+  'label': 'exp',
   'children': [
     {
       'symbol': 'add',
       'children': [
         {
-          'symbol': 'atom',
-          'children': [
-            {
-              'text': '1',
-              'token': 'NUMBER',
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            }
-          ],
+          'text': '1',
+          'token': 'NUMBER',
           'start': 0,
           'end': 1,
           'firstLine': 1,
@@ -766,19 +627,8 @@ describe("ll", () => {
           'symbol': 'mul',
           'children': [
             {
-              'symbol': 'atom',
-              'children': [
-                {
-                  'text': '2',
-                  'token': 'NUMBER',
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ],
+              'text': '2',
+              'token': 'NUMBER',
               'start': 2,
               'end': 3,
               'firstLine': 1,
@@ -994,24 +844,14 @@ current token: '/'.",
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
+  'label': 'exp',
   'children': [
     {
       'symbol': 'add',
       'children': [
         {
-          'symbol': 'atom',
-          'children': [
-            {
-              'text': '1',
-              'token': 'NUMBER',
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            }
-          ],
+          'text': '1',
+          'token': 'NUMBER',
           'start': 0,
           'end': 1,
           'firstLine': 1,
@@ -1030,25 +870,14 @@ current token: '/'.",
           'lastColumn': 3
         },
         {
-          'symbol': 'atom',
-          'children': [
-            {
-              'token': 'NUMBER',
-              'start': 2,
-              'end': 2,
-              'firstLine': 1,
-              'firstColumn': 3,
-              'lastLine': 1,
-              'lastColumn': 3,
-              'text': '0'
-            }
-          ],
+          'token': 'NUMBER',
           'start': 2,
           'end': 2,
           'firstLine': 1,
-          'lastLine': 1,
           'firstColumn': 3,
-          'lastColumn': 3
+          'lastLine': 1,
+          'lastColumn': 3,
+          'text': '0'
         }
       ],
       'label': 'exp',

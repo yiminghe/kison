@@ -657,23 +657,24 @@ describe("ll", () => {
                 ],
                 'symbol': 'expo',
                 'lexer': {
-                  't': '$EOF',
-                  'token': '$EOF',
-                  'start': 4,
-                  'end': 4,
+                  'text': '',
                   'firstLine': 1,
                   'firstColumn': 5,
                   'lastLine': 1,
-                  'lastColumn': 5
+                  'lastColumn': 5,
+                  'token': '$EOF',
+                  'start': 4,
+                  'end': 4
                 }
               },
-              'token': '$EOF',
-              'start': 4,
-              'end': 4,
+              'text': '',
               'firstLine': 1,
               'firstColumn': 5,
               'lastLine': 1,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'token': '$EOF',
+              'start': 4,
+              'end': 4
             }
           ],
           'label': 'exp',
@@ -708,23 +709,24 @@ describe("ll", () => {
     ],
     'symbol': 'expo',
     'lexer': {
-      't': '$EOF',
-      'token': '$EOF',
-      'start': 4,
-      'end': 4,
+      'text': '',
       'firstLine': 1,
       'firstColumn': 5,
       'lastLine': 1,
-      'lastColumn': 5
+      'lastColumn': 5,
+      'token': '$EOF',
+      'start': 4,
+      'end': 4
     }
   },
-  'token': '$EOF',
-  'start': 4,
-  'end': 4,
+  'text': '',
   'firstLine': 1,
   'firstColumn': 5,
   'lastLine': 1,
-  'lastColumn': 5
+  'lastColumn': 5,
+  'token': '$EOF',
+  'start': 4,
+  'end': 4
 }"
 `);
   });
@@ -803,7 +805,6 @@ current token: '/'.",
       "lastColumn": 4,
       "lastLine": 1,
       "start": 2,
-      "t": "/",
       "text": "/",
       "token": "/",
     },
@@ -902,14 +903,14 @@ current token: '/'.",
   ],
   'symbol': 'mul',
   'lexer': {
-    't': '$EOF',
-    'token': '$EOF',
-    'start': 2,
-    'end': 2,
+    'text': '',
     'firstLine': 1,
     'firstColumn': 3,
     'lastLine': 1,
-    'lastColumn': 3
+    'lastColumn': 3,
+    'token': '$EOF',
+    'start': 2,
+    'end': 2
   }
 }"
 `);
@@ -933,7 +934,7 @@ current token: '$EOF'.",
       "lastColumn": 3,
       "lastLine": 1,
       "start": 2,
-      "t": "$EOF",
+      "text": "",
       "token": "$EOF",
     },
     "recovery": true,
@@ -946,6 +947,7 @@ current token: '$EOF'.",
   "lastColumn": 3,
   "lastLine": 1,
   "start": 2,
+  "text": "",
   "token": "$EOF",
 }
 `);

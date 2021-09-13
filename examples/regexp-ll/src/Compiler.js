@@ -8,6 +8,17 @@ import {
   characterClassMatcher,
   assertionMatcher
 } from "./matchers.js";
+
+import {
+  asyncAnchorMatchers,
+  asyncBackreferenceMatcher,
+  asyncAnyCharMatcher,
+  asyncStringMatcher,
+  asyncCharGroupMatcher,
+  asyncCharacterClassMatcher,
+  asyncAssertionMatcher
+} from "./asyncMatchers.js";
+
 import {
   concatUnits,
   upperCaseFirstChar,
@@ -20,6 +31,7 @@ import parser from "./parser.js";
 export default class Compiler {
   constructor(options) {
     this.options = options;
+    this.async = options.async;
     this.captureGroupStateStartMap = new Map();
     this.captureGroupStateEndMap = new Map();
     this.inverted = false;
@@ -32,7 +44,7 @@ export default class Compiler {
     }
     const { ast } = parser.parse(pattern, parserOptions);
     annotateGroupIndex(ast);
-    this.unit = this.compile(ast);
+    this.unit = this.compile(ast, this.options.async);
     this.startState = this.unit.start;
     return this;
   }
@@ -41,10 +53,10 @@ export default class Compiler {
     this.inverted = inverted;
   }
 
-  compile(node) {
+  compile(node, async) {
     const m = `compile${node.symbol || upperCaseFirstChar(node.token)}`;
     if (this[m]) {
-      return this[m](node);
+      return this[m](node, async);
     }
     throw new Error("no compile procedure for " + m);
   }
@@ -56,7 +68,11 @@ export default class Compiler {
       let expression = children[0];
       if (children[0].text === "^") {
         const unit = new StateUnit("^");
-        unit.start.pushTransition(unit.end, anchorMatchers["^"]);
+        if (this.options.async) {
+          unit.start.pushAsyncTransition(unit.end, asyncAnchorMatchers["^"]);
+        } else {
+          unit.start.pushTransition(unit.end, anchorMatchers["^"]);
+        }
         expression = children[1];
         units.push(unit);
       }
@@ -107,7 +123,8 @@ export default class Compiler {
       index = parseInt(node.text.slice(1));
     }
     const unit = new StateUnit("Backreference_" + index);
-    unit.start.pushTransition(unit.end, backreferenceMatcher(index, named));
+    const backreferenceM = this.async ? asyncBackreferenceMatcher : backreferenceMatcher;
+    this.pushTransition(unit.start, unit.end, backreferenceM(index, named));
     return unit;
   }
 
@@ -251,11 +268,12 @@ export default class Compiler {
   compileCharacterClass(node) {
     const token = node.children[0].token;
     const unit = new StateUnit("CharacterGroup");
-    let matcher = characterClassMatcher[token];
+    const characterClassM = this.async ? asyncCharacterClassMatcher : characterClassMatcher;
+    let matcher = characterClassM[token];
     if (!matcher) {
       throw new Error("compileCharacterClass no matcher: " + token.token);
     }
-    unit.start.pushTransition(unit.end, matcher);
+    this.pushTransition(unit.start, unit.end, matcher);
     return unit;
   }
 
@@ -268,35 +286,47 @@ export default class Compiler {
     }
     const items = itemsNode.children;
     const unit = new StateUnit("CharacterGroup");
-    unit.start.pushTransition(unit.end, charGroupMatcher(items, invert));
+    const charGroupM = this.async ? asyncCharGroupMatcher : charGroupMatcher;
+    this.pushTransition(unit.start, unit.end, charGroupM(items, invert));
     return unit;
   }
 
   compileAnyChar(node) {
     const unit = new StateUnit(".");
-    unit.start.pushTransition(unit.end, anyCharMatcher);
+    const anyCharM = this.async ? asyncAnyCharMatcher : anyCharMatcher;
+    this.pushTransition(unit.start, unit.end, anyCharM);
     return unit;
   }
 
   compileChar(node) {
     const char = node.text;
     const unit = new StateUnit("Char");
-    unit.start.pushTransition(unit.end, stringMatcher(char));
+    const stringM = this.async ? asyncStringMatcher : stringMatcher;
+    this.pushTransition(unit.start, unit.end, stringM(char));
     return unit;
   }
-
+  pushTransition(start, end, m) {
+    if (this.options.async) {
+      start.pushAsyncTransition(end, m);
+    } else {
+      start.pushTransition(end, m);
+    }
+  }
   compileAnchor(node) {
     const c0 = node.children[0];
     const token = c0.token;
     const unit = new StateUnit(token);
-    if (assertionMatcher[token]) {
+    const assertionM = this.options.async ? asyncAssertionMatcher : assertionMatcher;
+    const anchorM = this.options.async ? asyncAnchorMatchers : anchorMatchers;
+    if (assertionM[token]) {
       const exp = node.children[1];
-      unit.start.pushTransition(unit.end, assertionMatcher[token](exp, this));
-    } else if (anchorMatchers[token]) {
-      unit.start.pushTransition(unit.end, anchorMatchers[token]);
+      this.pushTransition(unit.start, unit.end, assertionM[token](exp, this));
+    } else if (anchorM[token]) {
+      this.pushTransition(unit.start, unit.end, anchorM[token]);
     } else {
       throw new Error("unrecognized anchor token: " + token);
     }
     return unit;
   }
 }
+

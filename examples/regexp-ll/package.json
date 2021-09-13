@@ -1,9 +1,15 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.0.17",
+  "version": "0.1.0",
   "author": "yiminghe <yiminghe@gmail.com>",
+  "description": "match regular expression asynchronously",
   "files": [
     "index.js"
+  ],
+  "keywords": [
+    "regular expression",
+    "stream",
+    "asynchronously"
   ],
   "license": "MIT",
   "@pika/pack": {

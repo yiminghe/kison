@@ -7,6 +7,9 @@ export class State {
   pushTransition(endState, condition) {
     this.transitions.push(new Transition(endState, condition));
   }
+  pushAsyncTransition(endState, condition) {
+    this.transitions.push(new AsyncTransition(endState, condition));
+  }
 }
 
 export class Transition {
@@ -17,6 +20,27 @@ export class Transition {
   perform(input) {
     if (this.condition) {
       const ret = this.condition(input);
+      if (ret === true) {
+        return {
+          count: 0
+        };
+      }
+      return ret;
+    }
+    return {
+      count: 0
+    };
+  }
+}
+
+export class AsyncTransition {
+  constructor(to, condition) {
+    this.to = to;
+    this.condition = condition;
+  }
+  async perform(input) {
+    if (this.condition) {
+      const ret = await this.condition(input);
       if (ret === true) {
         return {
           count: 0

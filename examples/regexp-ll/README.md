@@ -2,8 +2,11 @@
 
 https://github.com/yiminghe/kison
 
+Match regular expression synchronously or asynchronously ( stream ).
+
 ## usage
 
+### sync match
 ```js
 import * as regexp from '@yiminghe/regexp';
 
@@ -22,6 +25,33 @@ let m;
 while (m = matcher.match()) {
   console.log(m);
 }
+```
+
+### async match
+
+```js
+import * as regexp from '@yiminghe/regexp';
+const buffer = ["c", "a", "b", "x", "a", "a", "b"];
+const patternInstance = regexp.compile("a+b", { async: true });
+const matcher = patternInstance.matcherAsync(() => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      if (buffer.length) resolve(buffer.shift());
+    }, 100);
+  });
+});
+let ret = await matcher.match();
+expect(ret).toMatchInlineSnapshot(`
+  Object {
+    "match": "ab",
+  }
+`);
+ret = await matcher.match();
+expect(ret).toMatchInlineSnapshot(`
+  Object {
+    "match": "aab",
+  }
+`);
 ```
 
 ## Features

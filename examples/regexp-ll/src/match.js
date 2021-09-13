@@ -3,6 +3,9 @@ import Input from "./Input.js";
 import dfsMatch from "./dfsMatch.js";
 import bfsMatch from "./bfsMatch.js";
 
+import AsyncInput from "./AsyncInput.js";
+import asyncDfsMatch from "./asyncDfsMatch.js";
+
 export class Matcher {
   constructor(compiler, string, options = {}) {
     this.input = string ? new Input(string, options) : null;
@@ -88,5 +91,67 @@ export class Matcher {
       input.reset();
     }
     return null;
+  }
+}
+
+
+export class AsyncMatcher {
+  constructor(compiler, getCharAsync, options = {}) {
+    this.input = getCharAsync ? new AsyncInput(getCharAsync, options) : null;
+    this.compiler = compiler;
+    this.startState = this.compiler.startState;
+    this.setOptions(options);
+  }
+
+  setOptions(options) {
+    this.options = options;
+    this.matchFn = asyncDfsMatch
+  }
+
+  stop(){
+    this.stopped=true;
+  }
+
+  getCacheResultIndexMap(input) {
+    const cacheMap = (this.cacheResult[input.index] =
+      this.cacheResult[input.index] || new Map());
+    return cacheMap;
+  }
+
+  async match() {
+    return this.matchInternal();
+  }
+
+  // @ts-ignore
+  async matchInternal({ startState, onlyMatch } = {}) {
+    let { input } = this;
+
+    do {
+      this.cacheResult = [];
+      let matchedInput = await this.matchFn(
+        input,
+        startState || this.startState,
+        onlyMatch
+      );
+      if (matchedInput) {
+        input = matchedInput;
+        this.input = input;
+        const { index } = input;
+        const matchString = input.getString(- index);
+        const ret = {
+          match: matchString,
+        };
+        if (input.groups.length) {
+          ret.groups = input.groups;
+          if (Object.keys(input.namedGroups).length) {
+            ret.namedGroups = input.namedGroups;
+          }
+        }
+        input.advanceMatch();
+        return ret;
+      }
+
+      input.advanceStartIndex();
+    } while (!this.stopped);
   }
 }

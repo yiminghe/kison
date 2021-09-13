@@ -25,7 +25,7 @@ A LALR(1)/LL(1) parser generator for javascript originated from [KISSY XTemplate
 [![NPM downloads](https://img.shields.io/npm/dm/@yiminghe/excel-formula-parser.svg)](https://npmjs.org/package/%40yiminghe%2Fexcel-formula-parser)
 
 
-### regexp in javascript
+### async regexp in javascript
 
 [regexp](https://yiminghe.me/kison/examples/regexp-ll/):
 

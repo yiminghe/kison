@@ -11,14 +11,6 @@ export function evaluate(ast, context) {
   }
 
   let { children } = ast;
-  if (
-    children &&
-    children.length === 3 &&
-    children[0].token === "(" &&
-    children[2].token === ")"
-  ) {
-    children = [children[1]];
-  }
 
   if (!children || children.length != 1) {
     console.log(ast);

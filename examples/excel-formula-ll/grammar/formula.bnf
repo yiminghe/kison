@@ -1,5 +1,4 @@
-formula ::= expression
-expression ::= equalExp
+formula ::= equalExp
 equalExp ::= addExp
 equalExp ::= equalExp '=' addExp
 equalExp ::= equalExp '<=' addExp

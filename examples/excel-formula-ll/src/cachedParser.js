@@ -1,5 +1,5 @@
 // @ts-check
-import parser from "./parser.js";
+import * as parser from "./parserApi.js";
 
 let currentText;
 let currentAst;

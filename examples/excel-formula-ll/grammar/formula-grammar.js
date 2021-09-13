@@ -53,23 +53,20 @@ function generateOpProductions() {
     const nextExp = getExpSymbol(next);
     ret.push({
       symbol: exp,
-      rhs: [nextExp],
-      label: "single-exp"
+      rhs: [nextExp]
     });
     if (rightOperatorMap[current]) {
       for (const o of operators[index]) {
         ret.push({
           symbol: exp,
-          rhs: [nextExp, o, exp],
-          label: "single-exp"
+          rhs: [nextExp, o, exp]
         });
       }
     } else {
       for (const o of operators[index]) {
         ret.push({
           symbol: exp,
-          rhs: [exp, o, nextExp],
-          label: "single-exp"
+          rhs: [exp, o, nextExp]
         });
       }
     }
@@ -140,77 +137,59 @@ const my = {
 module.exports = () => ({
   my,
   productions: [
-    // basic
     {
       symbol: "formula",
-      rhs: ["expression"]
-    },
-    {
-      symbol: "expression",
-      rhs: [startExp],
-      label: "single-exp"
+      rhs: [startExp]
     },
     ...generateOpProductions(),
     {
       symbol: endExp,
-      rhs: [endExp, lastOp],
-      label: "single-exp"
+      rhs: [endExp, lastOp]
     },
     {
       symbol: endExp,
-      rhs: ["prefix-exp"],
-      label: "single-exp"
+      rhs: ["prefix-exp"]
     },
     {
       symbol: "prefix-exp",
-      rhs: ["-", "prefix-exp"],
-      label: "single-exp"
+      rhs: ["-", "prefix-exp"]
     },
     {
       symbol: "prefix-exp",
-      rhs: ["+", "prefix-exp"],
-      label: "single-exp"
+      rhs: ["+", "prefix-exp"]
     },
     {
       symbol: "prefix-exp",
       // extract single value for array value
-      rhs: ["@", "prefix-exp"],
-      label: "single-exp"
+      rhs: ["@", "prefix-exp"]
     },
     {
       symbol: "prefix-exp",
-      rhs: ["atom-exp"],
-      label: "single-exp"
+      rhs: ["atom-exp"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["(", startExp, ")"],
-      label: "single-exp"
+      rhs: ["(", startExp, ")"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["NUMBER"],
-      label: "number-exp"
+      rhs: ["NUMBER"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["STRING"],
-      label: "string-exp"
+      rhs: ["STRING"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["LOGIC"],
-      label: "string-exp"
+      rhs: ["LOGIC"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["ERROR"],
-      label: "error-exp"
+      rhs: ["ERROR"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["reference"],
-      label: "single-exp"
+      rhs: ["reference"]
     },
     {
       symbol: "reference-item",
@@ -227,49 +206,40 @@ module.exports = () => ({
     // reference operator: : SPACE ,
     {
       symbol: "reference",
-      rhs: ["union-reference"],
-      label: "reference"
+      rhs: ["union-reference"]
     },
     {
       symbol: "union-reference",
-      rhs: ["union-reference", "REF_UNION_OPERATOR", "intersect-reference"],
-      label: "reference"
+      rhs: ["union-reference", "REF_UNION_OPERATOR", "intersect-reference"]
     },
     {
       symbol: "union-reference",
-      rhs: ["intersect-reference"],
-      label: "reference"
+      rhs: ["intersect-reference"]
     },
     {
       symbol: "intersect-reference",
-      rhs: ["intersect-reference", "expand-reference"],
-      label: "reference"
+      rhs: ["intersect-reference", "expand-reference"]
     },
     {
       symbol: "intersect-reference",
-      rhs: ["expand-reference"],
-      label: "reference"
+      rhs: ["expand-reference"]
     },
     {
       symbol: "expand-reference",
-      rhs: ["expand-reference", "REF_EXPAND_OPERATOR", "reference-item"],
-      label: "reference"
+      rhs: ["expand-reference", "REF_EXPAND_OPERATOR", "reference-item"]
     },
     {
       symbol: "expand-reference",
-      rhs: ["reference-item"],
-      label: "reference"
+      rhs: ["reference-item"]
     },
 
     {
       symbol: "atom-exp",
-      rhs: ["function"],
-      label: "single-exp"
+      rhs: ["function"]
     },
     {
       symbol: "atom-exp",
-      rhs: ["array"],
-      label: "single-exp"
+      rhs: ["array"]
     },
     {
       symbol: "array-element",
@@ -308,12 +278,12 @@ module.exports = () => ({
     },
     {
       symbol: "argument",
-      label: "single-exp",
+
       rhs: []
     },
     {
       symbol: "argument",
-      label: "single-exp",
+
       rhs: [startExp]
     },
     {

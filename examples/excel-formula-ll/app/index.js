@@ -101,7 +101,7 @@ require(["vs/editor/editor.main"], () => {
       .getModel()
       .getValue()
       .trim();
-    return { value, ret: getAst(value) };
+    return { value, ret: getAst(value, {}) };
   }
 
   $("parse").addEventListener("click", () => {

@@ -44,6 +44,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
+    "reinstall":"rm -rf node_modules yarn.lock && ayarn",
     "prepare": "node scripts/link",
     "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js ",
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",

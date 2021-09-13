@@ -77,29 +77,11 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                                   'firstColumn': 4,
                                   'lastColumn': 5
                                 }
-                              ],
-                              'start': 3,
-                              'end': 4,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 4,
-                              'lastColumn': 5
+                              ]
                             }
-                          ],
-                          'start': 3,
-                          'end': 4,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 4,
-                          'lastColumn': 5
+                          ]
                         }
-                      ],
-                      'start': 3,
-                      'end': 4,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 4,
-                      'lastColumn': 5
+                      ]
                     },
                     {
                       'text': ')',
@@ -163,35 +145,14 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                 }
               ],
               'start': 0,
-              'end': 7,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 8
+              'firstColumn': 1
             }
-          ],
-          'start': 0,
-          'end': 7,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 8
+          ]
         }
-      ],
-      'start': 0,
-      'end': 7,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 8
+      ]
     }
-  ],
-  'start': 0,
-  'end': 7,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 8
+  ]
 }"
 `;
 
@@ -262,29 +223,11 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                                   'firstColumn': 6,
                                   'lastColumn': 7
                                 }
-                              ],
-                              'start': 5,
-                              'end': 6,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 6,
-                              'lastColumn': 7
+                              ]
                             }
-                          ],
-                          'start': 5,
-                          'end': 6,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 6,
-                          'lastColumn': 7
+                          ]
                         }
-                      ],
-                      'start': 5,
-                      'end': 6,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 6,
-                      'lastColumn': 7
+                      ]
                     },
                     {
                       'text': ')',
@@ -347,37 +290,13 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                   'firstColumn': 8,
                   'lastColumn': 9
                 }
-              ],
-              'start': 7,
-              'end': 8,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 8,
-              'lastColumn': 9
+              ]
             }
-          ],
-          'start': 0,
-          'end': 8,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 9
+          ]
         }
-      ],
-      'start': 0,
-      'end': 8,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 9
+      ]
     }
-  ],
-  'start': 0,
-  'end': 8,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 9
+  ]
 }"
 `;
 
@@ -448,21 +367,9 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                   'firstColumn': 2,
                                   'lastColumn': 3
                                 }
-                              ],
-                              'start': 1,
-                              'end': 2,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 2,
-                              'lastColumn': 3
+                              ]
                             }
-                          ],
-                          'start': 1,
-                          'end': 2,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 2,
-                          'lastColumn': 3
+                          ]
                         },
                         {
                           'text': '|',
@@ -512,29 +419,11 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                   'firstColumn': 4,
                                   'lastColumn': 5
                                 }
-                              ],
-                              'start': 3,
-                              'end': 4,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 4,
-                              'lastColumn': 5
+                              ]
                             }
-                          ],
-                          'start': 3,
-                          'end': 4,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 4,
-                          'lastColumn': 5
+                          ]
                         }
-                      ],
-                      'start': 1,
-                      'end': 4,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 2,
-                      'lastColumn': 5
+                      ]
                     },
                     {
                       'text': ')',
@@ -580,19 +469,13 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                     }
                   ],
                   'start': 0,
-                  'end': 6,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 7
+                  'firstColumn': 1
                 }
               ],
               'start': 0,
-              'end': 6,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 7
+              'firstColumn': 1
             },
             {
               'symbol': 'ExpressionItem',
@@ -629,37 +512,13 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                   'firstColumn': 7,
                   'lastColumn': 8
                 }
-              ],
-              'start': 6,
-              'end': 7,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 7,
-              'lastColumn': 8
+              ]
             }
-          ],
-          'start': 0,
-          'end': 7,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 8
+          ]
         }
-      ],
-      'start': 0,
-      'end': 7,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 8
+      ]
     }
-  ],
-  'start': 0,
-  'end': 7,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 8
+  ]
 }"
 `;
 
@@ -763,13 +622,7 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                       'firstColumn': 3,
                                       'lastColumn': 6
                                     }
-                                  ],
-                                  'start': 2,
-                                  'end': 5,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 3,
-                                  'lastColumn': 6
+                                  ]
                                 },
                                 {
                                   'text': ']',
@@ -797,53 +650,17 @@ exports[`regexp parser works for [^a-z] 1`] = `
                           'firstColumn': 1,
                           'lastColumn': 7
                         }
-                      ],
-                      'start': 0,
-                      'end': 6,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 7
+                      ]
                     }
-                  ],
-                  'start': 0,
-                  'end': 6,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 7
+                  ]
                 }
-              ],
-              'start': 0,
-              'end': 6,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 7
+              ]
             }
-          ],
-          'start': 0,
-          'end': 6,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 7
+          ]
         }
-      ],
-      'start': 0,
-      'end': 6,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 7
+      ]
     }
-  ],
-  'start': 0,
-  'end': 6,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 7
+  ]
 }"
 `;
 
@@ -969,13 +786,7 @@ exports[`regexp parser works for [a-z] 1`] = `
                                       'firstColumn': 5,
                                       'lastColumn': 6
                                     }
-                                  ],
-                                  'start': 1,
-                                  'end': 5,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 2,
-                                  'lastColumn': 6
+                                  ]
                                 },
                                 {
                                   'text': ']',
@@ -1003,53 +814,17 @@ exports[`regexp parser works for [a-z] 1`] = `
                           'firstColumn': 1,
                           'lastColumn': 7
                         }
-                      ],
-                      'start': 0,
-                      'end': 6,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 7
+                      ]
                     }
-                  ],
-                  'start': 0,
-                  'end': 6,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 7
+                  ]
                 }
-              ],
-              'start': 0,
-              'end': 6,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 7
+              ]
             }
-          ],
-          'start': 0,
-          'end': 6,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 7
+          ]
         }
-      ],
-      'start': 0,
-      'end': 6,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 7
+      ]
     }
-  ],
-  'start': 0,
-  'end': 6,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 7
+  ]
 }"
 `;
 
@@ -1118,27 +893,15 @@ exports[`regexp parser works for \\12\\b 1`] = `
             }
           ],
           'start': 0,
-          'end': 5,
           'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 6
+          'firstColumn': 1
         }
       ],
       'start': 0,
-      'end': 5,
       'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 6
+      'firstColumn': 1
     }
-  ],
-  'start': 0,
-  'end': 5,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 6
+  ]
 }"
 `;
 
@@ -1223,19 +986,13 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                     }
                   ],
                   'start': 1,
-                  'end': 3,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 2,
-                  'lastColumn': 4
+                  'firstColumn': 2
                 }
               ],
               'start': 1,
-              'end': 3,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 4
+              'firstColumn': 2
             },
             {
               'symbol': 'ExpressionItem',
@@ -1272,13 +1029,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                   'firstColumn': 4,
                   'lastColumn': 5
                 }
-              ],
-              'start': 3,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 4,
-              'lastColumn': 5
+              ]
             },
             {
               'symbol': 'ExpressionItem',
@@ -1312,29 +1063,14 @@ exports[`regexp parser works for ^a+z$ 1`] = `
               'firstColumn': 5,
               'lastColumn': 6
             }
-          ],
-          'start': 1,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 6
+          ]
         }
-      ],
-      'start': 1,
-      'end': 5,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 2,
-      'lastColumn': 6
+      ]
     }
   ],
   'start': 0,
-  'end': 5,
   'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 6
+  'firstColumn': 1
 }"
 `;
 
@@ -1449,43 +1185,19 @@ exports[`regexp parser works for a{1,2} 1`] = `
                     }
                   ],
                   'start': 0,
-                  'end': 6,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 7
+                  'firstColumn': 1
                 }
               ],
               'start': 0,
-              'end': 6,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 7
+              'firstColumn': 1
             }
-          ],
-          'start': 0,
-          'end': 6,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 7
+          ]
         }
-      ],
-      'start': 0,
-      'end': 6,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 7
+      ]
     }
-  ],
-  'start': 0,
-  'end': 6,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 7
+  ]
 }"
 `;
 
@@ -1580,42 +1292,18 @@ exports[`regexp parser works for a{1} 1`] = `
                     }
                   ],
                   'start': 0,
-                  'end': 4,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 5
+                  'firstColumn': 1
                 }
               ],
               'start': 0,
-              'end': 4,
               'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 5
+              'firstColumn': 1
             }
-          ],
-          'start': 0,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 5
+          ]
         }
-      ],
-      'start': 0,
-      'end': 4,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 5
+      ]
     }
-  ],
-  'start': 0,
-  'end': 4,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 5
+  ]
 }"
 `;

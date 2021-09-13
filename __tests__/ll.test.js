@@ -251,636 +251,6 @@ describe("ll", () => {
     const parser = run(code);
     const ast = parser.parse("1+2+3").ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'add',
-            'children': [
-              {
-                'symbol': 'add',
-                'children': [
-                  {
-                    'symbol': 'expo',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '1',
-                            'token': 'NUMBER',
-                            'start': 0,
-                            'end': 1,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 1,
-                            'lastColumn': 2
-                          }
-                        ],
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ],
-                    'start': 0,
-                    'end': 1,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 1,
-                    'lastColumn': 2
-                  },
-                  {
-                    'text': '+',
-                    'token': '+',
-                    'start': 1,
-                    'end': 2,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 2,
-                    'lastColumn': 3
-                  },
-                  {
-                    'symbol': 'expo',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '2',
-                            'token': 'NUMBER',
-                            'start': 2,
-                            'end': 3,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 3,
-                            'lastColumn': 4
-                          }
-                        ],
-                        'start': 2,
-                        'end': 3,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 3,
-                        'lastColumn': 4
-                      }
-                    ],
-                    'label': 'single-exp',
-                    'start': 2,
-                    'end': 3,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 3,
-                    'lastColumn': 4
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 0,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 4
-              },
-              {
-                'text': '+',
-                'token': '+',
-                'start': 3,
-                'end': 4,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 4,
-                'lastColumn': 5
-              },
-              {
-                'symbol': 'expo',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'text': '3',
-                        'token': 'NUMBER',
-                        'start': 4,
-                        'end': 5,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 5,
-                        'lastColumn': 6
-                      }
-                    ],
-                    'start': 4,
-                    'end': 5,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 5,
-                    'lastColumn': 6
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 4,
-                'end': 5,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 5,
-                'lastColumn': 6
-              }
-            ],
-            'label': 'single-exp',
-            'start': 0,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 6
-          }
-        ],
-        'start': 0,
-        'end': 5,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 6
-      }"
-    `);
-  });
-
-  it("ast works", () => {
-    var grammar = new LLGrammar(calGrammar());
-    const code = grammar.genCode();
-    const parser = run(code);
-    const ast = parser.parse("1+2*3").ast;
-    expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'add',
-            'children': [
-              {
-                'symbol': 'expo',
-                'label': 'single-exp',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'text': '1',
-                        'token': 'NUMBER',
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ],
-                    'start': 0,
-                    'end': 1,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 1,
-                    'lastColumn': 2
-                  }
-                ],
-                'start': 0,
-                'end': 1,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 2
-              },
-              {
-                'text': '+',
-                'token': '+',
-                'start': 1,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 2,
-                'lastColumn': 3
-              },
-              {
-                'symbol': 'mul',
-                'children': [
-                  {
-                    'symbol': 'expo',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '2',
-                            'token': 'NUMBER',
-                            'start': 2,
-                            'end': 3,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 3,
-                            'lastColumn': 4
-                          }
-                        ],
-                        'start': 2,
-                        'end': 3,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 3,
-                        'lastColumn': 4
-                      }
-                    ],
-                    'start': 2,
-                    'end': 3,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 3,
-                    'lastColumn': 4
-                  },
-                  {
-                    'text': '*',
-                    'token': '*',
-                    'start': 3,
-                    'end': 4,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 4,
-                    'lastColumn': 5
-                  },
-                  {
-                    'symbol': 'expo',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '3',
-                            'token': 'NUMBER',
-                            'start': 4,
-                            'end': 5,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 5,
-                            'lastColumn': 6
-                          }
-                        ],
-                        'start': 4,
-                        'end': 5,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 5,
-                        'lastColumn': 6
-                      }
-                    ],
-                    'start': 4,
-                    'end': 5,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 5,
-                    'lastColumn': 6
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 2,
-                'end': 5,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 6
-              }
-            ],
-            'label': 'single-exp',
-            'start': 0,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 6
-          }
-        ],
-        'start': 0,
-        'end': 5,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 6
-      }"
-    `);
-  });
-
-  it("ast works", () => {
-    var grammar = new LLGrammar(calGrammar());
-    const code = grammar.genCode();
-    const parser = run(code);
-    const ast = parser.parse("1+2*4-5^2^3").ast;
-    expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'add',
-            'children': [
-              {
-                'symbol': 'add',
-                'children': [
-                  {
-                    'symbol': 'expo',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '1',
-                            'token': 'NUMBER',
-                            'start': 0,
-                            'end': 1,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 1,
-                            'lastColumn': 2
-                          }
-                        ],
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ],
-                    'start': 0,
-                    'end': 1,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 1,
-                    'lastColumn': 2
-                  },
-                  {
-                    'text': '+',
-                    'token': '+',
-                    'start': 1,
-                    'end': 2,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 2,
-                    'lastColumn': 3
-                  },
-                  {
-                    'symbol': 'mul',
-                    'children': [
-                      {
-                        'symbol': 'expo',
-                        'label': 'single-exp',
-                        'children': [
-                          {
-                            'symbol': 'atom',
-                            'children': [
-                              {
-                                'text': '2',
-                                'token': 'NUMBER',
-                                'start': 2,
-                                'end': 3,
-                                'firstLine': 1,
-                                'lastLine': 1,
-                                'firstColumn': 3,
-                                'lastColumn': 4
-                              }
-                            ],
-                            'start': 2,
-                            'end': 3,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 3,
-                            'lastColumn': 4
-                          }
-                        ],
-                        'start': 2,
-                        'end': 3,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 3,
-                        'lastColumn': 4
-                      },
-                      {
-                        'text': '*',
-                        'token': '*',
-                        'start': 3,
-                        'end': 4,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 4,
-                        'lastColumn': 5
-                      },
-                      {
-                        'symbol': 'expo',
-                        'label': 'single-exp',
-                        'children': [
-                          {
-                            'symbol': 'atom',
-                            'children': [
-                              {
-                                'text': '4',
-                                'token': 'NUMBER',
-                                'start': 4,
-                                'end': 5,
-                                'firstLine': 1,
-                                'lastLine': 1,
-                                'firstColumn': 5,
-                                'lastColumn': 6
-                              }
-                            ],
-                            'start': 4,
-                            'end': 5,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 5,
-                            'lastColumn': 6
-                          }
-                        ],
-                        'start': 4,
-                        'end': 5,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 5,
-                        'lastColumn': 6
-                      }
-                    ],
-                    'label': 'single-exp',
-                    'start': 2,
-                    'end': 5,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 3,
-                    'lastColumn': 6
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 0,
-                'end': 5,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 6
-              },
-              {
-                'text': '-',
-                'token': '-',
-                'start': 5,
-                'end': 6,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 6,
-                'lastColumn': 7
-              },
-              {
-                'symbol': 'expo',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'text': '5',
-                        'token': 'NUMBER',
-                        'start': 6,
-                        'end': 7,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 7,
-                        'lastColumn': 8
-                      }
-                    ],
-                    'start': 6,
-                    'end': 7,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 7,
-                    'lastColumn': 8
-                  },
-                  {
-                    'text': '^',
-                    'token': '^',
-                    'start': 7,
-                    'end': 8,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 8,
-                    'lastColumn': 9
-                  },
-                  {
-                    'symbol': 'expo',
-                    'label': 'single-exp',
-                    'children': [
-                      {
-                        'symbol': 'atom',
-                        'children': [
-                          {
-                            'text': '2',
-                            'token': 'NUMBER',
-                            'start': 8,
-                            'end': 9,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 9,
-                            'lastColumn': 10
-                          }
-                        ],
-                        'start': 8,
-                        'end': 9,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 9,
-                        'lastColumn': 10
-                      },
-                      {
-                        'text': '^',
-                        'token': '^',
-                        'start': 9,
-                        'end': 10,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 10,
-                        'lastColumn': 11
-                      },
-                      {
-                        'symbol': 'expo',
-                        'label': 'single-exp',
-                        'children': [
-                          {
-                            'symbol': 'atom',
-                            'children': [
-                              {
-                                'text': '3',
-                                'token': 'NUMBER',
-                                'start': 10,
-                                'end': 11,
-                                'firstLine': 1,
-                                'lastLine': 1,
-                                'firstColumn': 11,
-                                'lastColumn': 12
-                              }
-                            ],
-                            'start': 10,
-                            'end': 11,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 11,
-                            'lastColumn': 12
-                          }
-                        ],
-                        'start': 10,
-                        'end': 11,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 11,
-                        'lastColumn': 12
-                      }
-                    ],
-                    'start': 8,
-                    'end': 11,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 9,
-                    'lastColumn': 12
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 6,
-                'end': 11,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 7,
-                'lastColumn': 12
-              }
-            ],
-            'label': 'single-exp',
-            'start': 0,
-            'end': 11,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 12
-          }
-        ],
-        'start': 0,
-        'end': 11,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 12
-      }"
-    `);
-  });
-
-  it("error detection works", () => {
-    var grammar = new LLGrammar(calGrammar());
-    const code = grammar.genCode();
-    const parser = run(code);
-    const { ast, errorNode } = parser.parse("1+2*");
-    expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
   'children': [
@@ -888,8 +258,7 @@ describe("ll", () => {
       'symbol': 'add',
       'children': [
         {
-          'symbol': 'expo',
-          'label': 'single-exp',
+          'symbol': 'add',
           'children': [
             {
               'symbol': 'atom',
@@ -905,6 +274,113 @@ describe("ll", () => {
                   'lastColumn': 2
                 }
               ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
+            },
+            {
+              'text': '+',
+              'token': '+',
+              'start': 1,
+              'end': 2,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 2,
+              'lastColumn': 3
+            },
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '2',
+                  'token': 'NUMBER',
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
+                }
+              ],
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
+            }
+          ],
+          'label': 'exp',
+          'start': 0,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 4
+        },
+        {
+          'text': '+',
+          'token': '+',
+          'start': 3,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 4,
+          'lastColumn': 5
+        },
+        {
+          'symbol': 'atom',
+          'children': [
+            {
+              'text': '3',
+              'token': 'NUMBER',
+              'start': 4,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 6
+            }
+          ],
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6
+        }
+      ],
+      'label': 'exp',
+      'end': 5,
+      'lastLine': 1,
+      'lastColumn': 6
+    }
+  ]
+}"
+`);
+  });
+
+  it("ast works", () => {
+    var grammar = new LLGrammar(calGrammar());
+    const code = grammar.genCode();
+    const parser = run(code);
+    const ast = parser.parse("1+2*3").ast;
+    expect(prettyJson(ast)).toMatchInlineSnapshot(`
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'add',
+      'children': [
+        {
+          'symbol': 'atom',
+          'children': [
+            {
+              'text': '1',
+              'token': 'NUMBER',
               'start': 0,
               'end': 1,
               'firstLine': 1,
@@ -934,8 +410,125 @@ describe("ll", () => {
           'symbol': 'mul',
           'children': [
             {
-              'symbol': 'expo',
-              'label': 'single-exp',
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '2',
+                  'token': 'NUMBER',
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
+                }
+              ],
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
+            },
+            {
+              'text': '*',
+              'token': '*',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '3',
+                  'token': 'NUMBER',
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
+                }
+              ],
+              'start': 4,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 6
+            }
+          ],
+          'label': 'exp',
+          'start': 2,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 6
+        }
+      ],
+      'label': 'exp',
+      'start': 0,
+      'firstLine': 1,
+      'firstColumn': 1
+    }
+  ]
+}"
+`);
+  });
+
+  it("ast works", () => {
+    var grammar = new LLGrammar(calGrammar());
+    const code = grammar.genCode();
+    const parser = run(code);
+    const ast = parser.parse("1+2*4-5^2^3").ast;
+    expect(prettyJson(ast)).toMatchInlineSnapshot(`
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'add',
+      'children': [
+        {
+          'symbol': 'add',
+          'children': [
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '1',
+                  'token': 'NUMBER',
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
+                }
+              ],
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
+            },
+            {
+              'text': '+',
+              'token': '+',
+              'start': 1,
+              'end': 2,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 2,
+              'lastColumn': 3
+            },
+            {
+              'symbol': 'mul',
               'children': [
                 {
                   'symbol': 'atom',
@@ -951,6 +544,233 @@ describe("ll", () => {
                       'lastColumn': 4
                     }
                   ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
+                },
+                {
+                  'text': '*',
+                  'token': '*',
+                  'start': 3,
+                  'end': 4,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 4,
+                  'lastColumn': 5
+                },
+                {
+                  'symbol': 'atom',
+                  'children': [
+                    {
+                      'text': '4',
+                      'token': 'NUMBER',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    }
+                  ],
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
+                }
+              ],
+              'label': 'exp',
+              'start': 2,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 6
+            }
+          ],
+          'label': 'exp',
+          'start': 0,
+          'firstLine': 1,
+          'firstColumn': 1
+        },
+        {
+          'text': '-',
+          'token': '-',
+          'start': 5,
+          'end': 6,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 6,
+          'lastColumn': 7
+        },
+        {
+          'symbol': 'expo',
+          'label': 'exp',
+          'children': [
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '5',
+                  'token': 'NUMBER',
+                  'start': 6,
+                  'end': 7,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 7,
+                  'lastColumn': 8
+                }
+              ],
+              'start': 6,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 7,
+              'lastColumn': 8
+            },
+            {
+              'text': '^',
+              'token': '^',
+              'start': 7,
+              'end': 8,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 8,
+              'lastColumn': 9
+            },
+            {
+              'symbol': 'expo',
+              'label': 'exp',
+              'children': [
+                {
+                  'symbol': 'atom',
+                  'children': [
+                    {
+                      'text': '2',
+                      'token': 'NUMBER',
+                      'start': 8,
+                      'end': 9,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 9,
+                      'lastColumn': 10
+                    }
+                  ],
+                  'start': 8,
+                  'end': 9,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 9,
+                  'lastColumn': 10
+                },
+                {
+                  'text': '^',
+                  'token': '^',
+                  'start': 9,
+                  'end': 10,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 10,
+                  'lastColumn': 11
+                },
+                {
+                  'symbol': 'atom',
+                  'children': [
+                    {
+                      'text': '3',
+                      'token': 'NUMBER',
+                      'start': 10,
+                      'end': 11,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 11,
+                      'lastColumn': 12
+                    }
+                  ],
+                  'start': 10,
+                  'end': 11,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 11,
+                  'lastColumn': 12
+                }
+              ],
+              'start': 8,
+              'end': 11,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 9,
+              'lastColumn': 12
+            }
+          ],
+          'start': 6,
+          'firstLine': 1,
+          'firstColumn': 7
+        }
+      ],
+      'label': 'exp'
+    }
+  ]
+}"
+`);
+  });
+
+  it("error detection works", () => {
+    var grammar = new LLGrammar(calGrammar());
+    const code = grammar.genCode();
+    const parser = run(code);
+    const { ast, errorNode } = parser.parse("1+2*");
+    expect(prettyJson(ast)).toMatchInlineSnapshot(`
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'add',
+      'children': [
+        {
+          'symbol': 'atom',
+          'children': [
+            {
+              'text': '1',
+              'token': 'NUMBER',
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
+            }
+          ],
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
+        },
+        {
+          'text': '+',
+          'token': '+',
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3
+        },
+        {
+          'symbol': 'mul',
+          'children': [
+            {
+              'symbol': 'atom',
+              'children': [
+                {
+                  'text': '2',
+                  'token': 'NUMBER',
                   'start': 2,
                   'end': 3,
                   'firstLine': 1,
@@ -1006,7 +826,7 @@ describe("ll", () => {
               'lastColumn': 5
             }
           ],
-          'label': 'single-exp',
+          'label': 'exp',
           'start': 2,
           'end': 4,
           'firstLine': 1,
@@ -1015,7 +835,7 @@ describe("ll", () => {
           'lastColumn': 5
         }
       ],
-      'label': 'single-exp',
+      'label': 'exp',
       'start': 0,
       'end': 4,
       'firstLine': 1,
@@ -1023,13 +843,7 @@ describe("ll", () => {
       'firstColumn': 1,
       'lastColumn': 5
     }
-  ],
-  'start': 0,
-  'end': 4,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 5
+  ]
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
@@ -1178,106 +992,76 @@ current token: '/'.",
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'add',
-            'children': [
-              {
-                'symbol': 'expo',
-                'label': 'single-exp',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'text': '1',
-                        'token': 'NUMBER',
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ],
-                    'start': 0,
-                    'end': 1,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 1,
-                    'lastColumn': 2
-                  }
-                ],
-                'start': 0,
-                'end': 1,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 2
-              },
-              {
-                'text': '+',
-                'token': '+',
-                'start': 1,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 2,
-                'lastColumn': 3
-              },
-              {
-                'symbol': 'expo',
-                'children': [
-                  {
-                    'symbol': 'atom',
-                    'children': [
-                      {
-                        'token': 'NUMBER',
-                        'start': 2,
-                        'end': 2,
-                        'firstLine': 1,
-                        'firstColumn': 3,
-                        'lastLine': 1,
-                        'lastColumn': 3,
-                        'text': '0'
-                      }
-                    ],
-                    'start': 2,
-                    'end': 2,
-                    'firstLine': 1,
-                    'lastLine': 1,
-                    'firstColumn': 3,
-                    'lastColumn': 3
-                  }
-                ],
-                'label': 'single-exp',
-                'start': 2,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 3
-              }
-            ],
-            'label': 'single-exp',
-            'start': 0,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 3
-          }
-        ],
-        'start': 0,
-        'end': 2,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 3
-      }"
-    `);
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'add',
+      'children': [
+        {
+          'symbol': 'atom',
+          'children': [
+            {
+              'text': '1',
+              'token': 'NUMBER',
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2
+            }
+          ],
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
+        },
+        {
+          'text': '+',
+          'token': '+',
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3
+        },
+        {
+          'symbol': 'atom',
+          'children': [
+            {
+              'token': 'NUMBER',
+              'start': 2,
+              'end': 2,
+              'firstLine': 1,
+              'firstColumn': 3,
+              'lastLine': 1,
+              'lastColumn': 3,
+              'text': '0'
+            }
+          ],
+          'start': 2,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 3
+        }
+      ],
+      'label': 'exp',
+      'start': 0,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 3
+    }
+  ]
+}"
+`);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
 "{
   'recovery': true,

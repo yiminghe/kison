@@ -28,7 +28,7 @@ function generateOpProductions() {
     ret.push({
       symbol: exp,
       rhs: [nextExp],
-      label: "single-exp"
+      label: "exp"
     });
     if (rightOperatorMap[current]) {
       for (const o of operators[index]) {
@@ -45,7 +45,7 @@ function generateOpProductions() {
               astProcessor.createOpNode();
             }
           ],
-          label: "single-exp"
+          label: "exp"
         });
       }
     } else {
@@ -63,7 +63,7 @@ function generateOpProductions() {
               astProcessor.createOpNode();
             }
           ],
-          label: "single-exp"
+          label: "exp"
         });
       }
     }

@@ -64,12 +64,12 @@ export default class Input {
     }
     while ((m = otherStr.codePointAt(index)) !== undefined) {
       let strIndex = this.inverted ? this.index - index : this.index + index;
-      if(!this.inverted){
+      if (!this.inverted) {
         await this.getChar();
       }
-      let char=buffer[strIndex];
+      let char = buffer[strIndex];
       if (this.options.caseInsensitive) {
-        char=char.toLowerCase();
+        char = char.toLowerCase();
       }
       if (m !== char.codePointAt(0)) {
         return false;
@@ -101,14 +101,14 @@ export default class Input {
   }
 
   advanceStartIndex() {
-    this.index=0;
-    this.buffer=[];
+    this.index = 0;
+    this.buffer.shift();
     this.resetState();
   }
 
   advanceMatch() {
-    this.index=0;
-    this.buffer=[];
+    this.index = 0;
+    this.buffer = [];
     this.resetState();
   }
 
@@ -124,7 +124,7 @@ export default class Input {
     if (start > end) {
       [start, end] = [end, start];
     }
-    return this.buffer.slice(start, end).join('');
+    return this.buffer.slice(start, end).join("");
   }
 
   clone() {
@@ -134,7 +134,7 @@ export default class Input {
     input.startGroupIndex = this.startGroupIndex.concat();
     input.groups = this.groups.concat();
     input.namedGroups = { ...this.namedGroups };
-    input.buffer=this.buffer;
+    input.buffer = this.buffer;
     return input;
   }
 
@@ -184,7 +184,7 @@ export default class Input {
       let name = groupEndIndex.name;
       let value = {
         index: startIndex.index,
-        match: input.buffer.slice(startIndex.index, endIndex.index).join('')
+        match: input.buffer.slice(startIndex.index, endIndex.index).join("")
       };
       if (startIndex.name) {
         value.name = startIndex.name;

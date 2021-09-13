@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "yiminghe <yiminghe@gmail.com>",
   "description": "match regular expression asynchronously",
   "files": [

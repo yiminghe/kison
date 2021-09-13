@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.4.24",
+  "version": "0.4.25",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -13,7 +13,6 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
-    "fs-extra": "10.x",
     "@babel/core": "^7.14.3",
     "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",
@@ -22,6 +21,7 @@
     "@yiminghe/rr": "1.x",
     "babel-jest": "^27.0.2",
     "benchmark": "^2.1.4",
+    "fs-extra": "10.x",
     "jest": "27.x",
     "lint-staged": "^7.2.0",
     "np": "^7.x",
@@ -44,7 +44,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
-    "reinstall":"rm -rf node_modules yarn.lock && ayarn",
+    "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "prepare": "node scripts/link",
     "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js ",
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",

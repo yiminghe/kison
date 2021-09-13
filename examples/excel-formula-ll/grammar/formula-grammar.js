@@ -35,8 +35,6 @@ const startExp = getExpSymbol(operators[0][0]);
 const lastOp = operators[operators.length - 1][0];
 const endExp = getExpSymbol(lastOp);
 
-const operatorTokens = [].concat(...operators);
-
 const rightOperatorMap = {
   // "^": 1
 };
@@ -72,15 +70,6 @@ function generateOpProductions() {
     }
   });
   return ret;
-}
-
-function createRules(tokens) {
-  return tokens.map(token => {
-    return {
-      regexp: new RegExp("^" + RegexEscape(token)),
-      token
-    };
-  });
 }
 
 const decimalFractionLiteral = "(?:[0-9][0-9]*)";
@@ -391,7 +380,7 @@ module.exports = () => ({
           my.markType(this, "a");
         }
       },
-      ...createRules(operatorTokens),
+
       {
         regexp: /^\}/,
         token: "}",
@@ -430,10 +419,6 @@ module.exports = () => ({
         }
       },
 
-      {
-        regexp: /^@/,
-        token: "@"
-      },
       {
         state: ["inside structure reference"],
         regexp: /^\]/,

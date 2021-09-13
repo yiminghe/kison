@@ -113,6 +113,17 @@ function isNodeAfterOrEq(node, position) {
   );
 }
 
+function isInsideNode(node, position) {
+  return (
+    (node.firstLine < position.lineNumber ||
+      (node.firstLine === position.lineNumber &&
+        node.firstColumn <= position.column)) &&
+    (node.lastLine > position.lineNumber ||
+      (node.lastLine === position.lineNumber &&
+        node.lastColumn >= position.column))
+  );
+}
+
 function getArgumentIndex(args, position) {
   const { children = [] } = args;
   let index = 1;
@@ -143,6 +154,15 @@ export function getTableNameByPosition(terminals, position) {
     }
     if (prev) {
       return prev.children[0].text;
+    }
+  }
+}
+
+export function getTokenByPosition(terminals, position) {
+  for (let i = 0; i < terminals.length; i++) {
+    const t = terminals[i];
+    if (isInsideNode(t, position)) {
+      return t;
     }
   }
 }

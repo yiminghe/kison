@@ -1,5 +1,8 @@
 // @ts-check
-import { getTableNameByPosition } from "../languageService.js";
+import {
+  getTableNameByPosition,
+  getTokenByPosition
+} from "../languageService.js";
 import { getAst } from "../cachedParser.js";
 
 const tableItems = [
@@ -15,7 +18,14 @@ export default function createFormulaCompletionItemProvider(monaco, getNames) {
     triggerCharacters: ["[", "@"],
     provideCompletionItems(model, position, context) {
       let kind = "function";
+      const { terminalNodes } = getAst(model.getValue());
       const suggestions = [];
+      const t = getTokenByPosition(terminalNodes, position);
+
+      if (t && t.token === "STRING") {
+        return { suggestions };
+      }
+
       let table;
 
       var word = model.getWordUntilPosition(position);
@@ -25,10 +35,7 @@ export default function createFormulaCompletionItemProvider(monaco, getNames) {
         context.triggerCharacter === "[" ||
         context.triggerCharacter === "@"
       ) {
-        table = getTableNameByPosition(
-          getAst(model.getValue()).terminalNodes,
-          position
-        );
+        table = getTableNameByPosition(terminalNodes, position);
         if (table) {
           kind = "table column";
           data = getNames({

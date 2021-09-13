@@ -7,7 +7,6 @@ function parse(input) {
 
 describe("excel-formula-evaluator", () => {
   it("array ok", () => {
-    debugger;
     expect(prettyJson(evaluate(parse(`sum(1,{1,2}+{5;4})`))))
       .toMatchInlineSnapshot(`
       "{

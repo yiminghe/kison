@@ -52,7 +52,6 @@ startAsync.addEventListener("click", async () => {
     return new Promise(resolve => {
       function r() {
         if (buffer.length) {
-          buffer.shift();
           resolve([buffer.shift()]);
         }
       }

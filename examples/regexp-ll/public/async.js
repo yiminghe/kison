@@ -17,7 +17,9 @@ function onKeyDown(e) {
     buffer.push(key);
     console.log("buffer", buffer);
     if (promise) {
-      promise.resolve();
+      const { resolve } = promise;
+      promise = null;
+      resolve();
     }
   }
 }
@@ -47,14 +49,7 @@ startAsync.addEventListener("click", async () => {
         r();
       } else {
         promise = {
-          resolve(c) {
-            promise = null;
-            if (c) {
-              resolve(c);
-            } else {
-              r();
-            }
-          }
+          resolve: r
         };
       }
     });

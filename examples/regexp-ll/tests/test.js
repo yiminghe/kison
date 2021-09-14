@@ -12,22 +12,44 @@ const regexp = require("../pkg");
 console.log("******************");
 
 (async function() {
-  let buffer = ["c", "a", "b", "x", "a", "a", "b"];
+  const fakeData = ["x", "a", "b", "c", "a", "a", "b"];
+  let index = 0;
+  let length = fakeData.length;
+
+  let promise;
+  let stream = [];
+  // push data to steam
+  setInterval(() => {
+    stream.push(fakeData[index++ % length]);
+    if (promise) {
+      const { resolve } = promise;
+      promise = null;
+      resolve();
+    }
+  }, 100);
+
   const patternInstance = regexp.compile("a+b", { async: true });
   const matcher = patternInstance.matcherAsync(() => {
     return new Promise(resolve => {
-      setTimeout(() => {
-        if (buffer.length) {
-          // or as whole:
-          // resolve(buffer);
-          // buffer=[];
-          resolve([buffer.shift()]);
+      function r() {
+        if (stream.length) {
+          resolve(stream);
+          stream = [];
         }
-      }, 100);
+      }
+      if (stream.length) {
+        r();
+      } else {
+        // waiting for data
+        promise = {
+          resolve: r
+        };
+      }
     });
   });
-  let ret = await matcher.match();
-  console.log(ret);
-  ret = await matcher.match();
-  console.log(ret);
+
+  while (true) {
+    const { match } = await matcher.match();
+    console.log("match: ", match);
+  }
 })();

@@ -1,5 +1,5 @@
 // @ts-check
-export default async function  dfsMatch(input, state, callSiteMap = new Map()) {
+export default async function dfsMatch(input, state, callSiteMap = new Map()) {
   // avoid already failed match
   if (this.getCacheResultIndexMap(input).get(state) === false) {
     return false;

@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "yiminghe <yiminghe@gmail.com>",
   "description": "match regular expression asynchronously",
   "files": [
@@ -29,7 +29,10 @@
         }
       ],
       [
-        "pika-plugin-build-web-babel"
+        "pika-plugin-build-web-babel",
+        {
+          "mjs": true
+        }
       ],
       [
         "pika-plugin-clean-dist-src"

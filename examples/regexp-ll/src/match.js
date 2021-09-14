@@ -94,7 +94,6 @@ export class Matcher {
   }
 }
 
-
 export class AsyncMatcher {
   constructor(compiler, getCharAsync, options = {}) {
     this.input = getCharAsync ? new AsyncInput(getCharAsync, options) : null;
@@ -105,11 +104,11 @@ export class AsyncMatcher {
 
   setOptions(options) {
     this.options = options;
-    this.matchFn = asyncDfsMatch
+    this.matchFn = asyncDfsMatch;
   }
 
-  stop(){
-    this.stopped=true;
+  stop() {
+    this.stopped = true;
   }
 
   getCacheResultIndexMap(input) {
@@ -137,9 +136,9 @@ export class AsyncMatcher {
         input = matchedInput;
         this.input = input;
         const { index } = input;
-        const matchString = input.getString(- index);
+        const matchString = input.getString(-index);
         const ret = {
-          match: matchString,
+          match: matchString
         };
         if (input.groups.length) {
           ret.groups = input.groups;

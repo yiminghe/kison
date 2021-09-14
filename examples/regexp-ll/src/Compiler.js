@@ -123,7 +123,9 @@ export default class Compiler {
       index = parseInt(node.text.slice(1));
     }
     const unit = new StateUnit("Backreference_" + index);
-    const backreferenceM = this.async ? asyncBackreferenceMatcher : backreferenceMatcher;
+    const backreferenceM = this.async
+      ? asyncBackreferenceMatcher
+      : backreferenceMatcher;
     this.pushTransition(unit.start, unit.end, backreferenceM(index, named));
     return unit;
   }
@@ -268,7 +270,9 @@ export default class Compiler {
   compileCharacterClass(node) {
     const token = node.children[0].token;
     const unit = new StateUnit("CharacterGroup");
-    const characterClassM = this.async ? asyncCharacterClassMatcher : characterClassMatcher;
+    const characterClassM = this.async
+      ? asyncCharacterClassMatcher
+      : characterClassMatcher;
     let matcher = characterClassM[token];
     if (!matcher) {
       throw new Error("compileCharacterClass no matcher: " + token.token);
@@ -316,7 +320,9 @@ export default class Compiler {
     const c0 = node.children[0];
     const token = c0.token;
     const unit = new StateUnit(token);
-    const assertionM = this.options.async ? asyncAssertionMatcher : assertionMatcher;
+    const assertionM = this.options.async
+      ? asyncAssertionMatcher
+      : assertionMatcher;
     const anchorM = this.options.async ? asyncAnchorMatchers : anchorMatchers;
     if (assertionM[token]) {
       const exp = node.children[1];
@@ -329,4 +335,3 @@ export default class Compiler {
     return unit;
   }
 }
-

@@ -9,9 +9,9 @@ const regexp = require("../pkg");
   }
 }
 
-console.log('******************');
+console.log("******************");
 
-(async function () {
+(async function() {
   const buffer = ["c", "a", "b", "x", "a", "a", "b"];
   const patternInstance = regexp.compile("a+b", { async: true });
   const matcher = patternInstance.matcherAsync(() => {

@@ -7,7 +7,7 @@ export default function compile(pattern, compilerOptions = {}) {
   return {
     matcher(str, options = {}) {
       if (compilerOptions.async) {
-        throw new Error('Can only call matcherStream');
+        throw new Error("Can only call matcherStream");
       }
       return new Matcher(compiler, str, {
         ...compilerOptions,
@@ -17,7 +17,7 @@ export default function compile(pattern, compilerOptions = {}) {
     // TODO match infinite stream ...
     matcherAsync(getCharAsync, options = {}) {
       if (!compilerOptions.async) {
-        throw new Error('Can only call matcher');
+        throw new Error("Can only call matcher");
       }
       return new AsyncMatcher(compiler, getCharAsync, {
         ...compilerOptions,

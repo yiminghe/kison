@@ -19,12 +19,10 @@ export const asyncAnchorMatchers = {
     return false;
   },
   async $(input) {
-    return (
-       (input.options.multiline && (await input.getChar()) === "\n")
-    );
+    return input.options.multiline && (await input.getChar()) === "\n";
   },
- async anchorEndOfStringOnly(input) {
-    return  (input.isAtLastIndex() && (await input.getChar()) === "\n");
+  async anchorEndOfStringOnly(input) {
+    return input.isAtLastIndex() && (await input.getChar()) === "\n";
   },
   anchorPreviousMatchEnd(input) {
     return false;
@@ -32,7 +30,7 @@ export const asyncAnchorMatchers = {
 };
 
 export const asyncStringMatcher = str => {
-  return async (input) => {
+  return async input => {
     if (input.isEnd()) {
       return null;
     }
@@ -42,7 +40,7 @@ export const asyncStringMatcher = str => {
 };
 
 export const asyncBackreferenceMatcher = (index, named) => {
-  return async (input) => {
+  return async input => {
     if (input.isEnd()) {
       return null;
     }
@@ -62,7 +60,7 @@ const linefeeds = {
   "\u2029": 1
 };
 
-export const asyncAnyCharMatcher = async (input) => {
+export const asyncAnyCharMatcher = async input => {
   if (input.isEnd()) {
     return null;
   }
@@ -76,7 +74,7 @@ export const asyncAnyCharMatcher = async (input) => {
 };
 
 export const asyncCharGroupMatcher = (items, invert) => {
-  return async (input) => {
+  return async input => {
     if (input.isEnd()) {
       return null;
     }
@@ -172,12 +170,12 @@ export const asyncAssertionMatcher = {
   lookahead(exp, compiler, invert) {
     const unit = compiler.compile(exp);
     const matcher = new AsyncMatcher(compiler);
-    return async (input) => {
+    return async input => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       // @ts-ignore
       let match = await matcher.matchInternal({
-        startState: unit.start,
+        startState: unit.start
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -199,14 +197,14 @@ export const asyncAssertionMatcher = {
     const unit = compiler.compile(exp);
     compiler.setInverted(false);
     const matcher = new Matcher(compiler);
-    return async (input) => {
+    return async input => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       matcher.input.setInverted();
       matcher.input.advance();
       // @ts-ignore
       let match = await matcher.matchInternal({
-        startState: unit.start,
+        startState: unit.start
       });
       if (invert) {
         return match ? false : { count: 0 };

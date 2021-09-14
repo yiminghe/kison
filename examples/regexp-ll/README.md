@@ -31,27 +31,33 @@ while (m = matcher.match()) {
 
 ```js
 import * as regexp from '@yiminghe/regexp';
-const buffer = ["c", "a", "b", "x", "a", "a", "b"];
-const patternInstance = regexp.compile("a+b", { async: true });
-const matcher = patternInstance.matcherAsync(() => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      if (buffer.length) resolve(buffer.shift());
-    }, 100);
+(async function(){
+  let buffer = ["c", "a", "b", "x", "a", "a", "b"];
+  const patternInstance = regexp.compile("a+b", { async: true });
+  const matcher = patternInstance.matcherAsync(() => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        if (buffer.length) {
+          // or as whole
+          // resolve(buffer); buffer=[];
+          resolve([buffer.shift()]);
+        }
+      }, 100);
+    });
   });
-});
-let ret = await matcher.match();
-expect(ret).toMatchInlineSnapshot(`
-  Object {
-    "match": "ab",
-  }
-`);
-ret = await matcher.match();
-expect(ret).toMatchInlineSnapshot(`
-  Object {
-    "match": "aab",
-  }
-`);
+  let ret = await matcher.match();
+  expect(ret).toMatchInlineSnapshot(`
+    Object {
+      "match": "ab",
+    }
+  `);
+  ret = await matcher.match();
+  expect(ret).toMatchInlineSnapshot(`
+    Object {
+      "match": "aab",
+    }
+  `);
+})();
 ```
 
 ## Features

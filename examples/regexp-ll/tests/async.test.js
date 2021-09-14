@@ -7,7 +7,7 @@ describe("regexp", () => {
     const matcher = patternInstance.matcherAsync(() => {
       return new Promise(resolve => {
         setTimeout(() => {
-          if (buffer.length) resolve(buffer.shift());
+          if (buffer.length) resolve([buffer.shift()]);
         }, 100);
       });
     });

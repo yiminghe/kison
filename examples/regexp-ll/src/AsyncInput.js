@@ -45,8 +45,11 @@ export default class Input {
 
   async getCharCode() {
     if (this.index >= this.buffer.length) {
-      const char = await this.getCharAsync(1);
-      this.buffer.push(char);
+      const chars = await this.getCharAsync();
+      if (!Array.isArray(chars)) {
+        throw new Error("async getChar must resolve array of chars");
+      }
+      this.buffer.push(...chars);
     }
     return this.buffer[this.index].codePointAt(0);
   }
@@ -107,8 +110,8 @@ export default class Input {
   }
 
   advanceMatch() {
+    this.buffer = this.buffer.slice(this.index);
     this.index = 0;
-    this.buffer = [];
     this.resetState();
   }
 

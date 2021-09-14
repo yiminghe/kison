@@ -50,10 +50,14 @@ startAsync.addEventListener("click", async () => {
   const patternInstance = compile(asyncPattern.value, { async: true });
   const matcher = patternInstance.matcherAsync(() => {
     return new Promise(resolve => {
-      if (buffer.length >= 1) {
-        const b = buffer[0];
-        buffer.shift();
-        resolve(b);
+      function r() {
+        if (buffer.length) {
+          buffer.shift();
+          resolve([buffer.shift()]);
+        }
+      }
+      if (buffer.length) {
+        r();
       } else {
         promise = {
           resolve(c) {
@@ -61,9 +65,7 @@ startAsync.addEventListener("click", async () => {
             if (c) {
               resolve(c);
             } else {
-              const b = buffer[0];
-              buffer.shift();
-              resolve(b);
+              r();
             }
           }
         };

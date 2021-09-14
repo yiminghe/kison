@@ -12,12 +12,17 @@ const regexp = require("../pkg");
 console.log("******************");
 
 (async function() {
-  const buffer = ["c", "a", "b", "x", "a", "a", "b"];
+  let buffer = ["c", "a", "b", "x", "a", "a", "b"];
   const patternInstance = regexp.compile("a+b", { async: true });
   const matcher = patternInstance.matcherAsync(() => {
     return new Promise(resolve => {
       setTimeout(() => {
-        if (buffer.length) resolve(buffer.shift());
+        if (buffer.length) {
+          // or as whole:
+          // resolve(buffer);
+          // buffer=[];
+          resolve([buffer.shift()]);
+        }
       }, 100);
     });
   });

@@ -1,9 +1,11 @@
-// import { parse, compile } from "@yiminghe/regexp";
-import { parse, compile } from "../src/index.js";
+// import { compile } from "@yiminghe/regexp";
+import { compile } from "../src/index.js";
 
 const asyncPattern = document.getElementById("asyncPattern");
 const startAsync = document.getElementById("startAsync");
 const stopAsync = document.getElementById("stopAsync");
+
+asyncPattern.value = `a{2}b`;
 
 let promise;
 

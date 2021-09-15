@@ -1,6 +1,6 @@
 {
-  "name": "@yiminghe/excel-formula-parser",
-  "version": "0.0.12",
+  "name": "@yiminghe/excel-formula",
+  "version": "0.0.1",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"
@@ -9,7 +9,35 @@
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"
   },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg",
+        {
+          "exclude": [
+            "__tests__/**/*"
+          ]
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "format": "cjs"
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "mjs": true
+        }
+      ],
+      [
+        "pika-plugin-clean-dist-src"
+      ]
+    ]
+  },
   "scripts": {
+    "build": "pika-pack build",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh"
   },

@@ -20,7 +20,7 @@ export function getCellData(str) {
   return cells;
 }
 
-export function getCellValuesByRange(cells, ranges, ifEmpty) {
+export function getCellValuesByRange(cells, ranges) {
   const values = [];
   for (const r of ranges) {
     const { row, col, rowCount, colCount } = r;

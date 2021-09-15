@@ -1,10 +1,5 @@
 // @ts-check
-import {
-  initMonaco,
-  cachedParser,
-  evaluate,
-  evaluators
-} from "../src/index.js";
+import { initMonaco, cachedParser, evaluate } from "../src/index.js";
 import functionNames from "./functionNames.js";
 import { getCellData, getCellValuesByRange } from "./getCellData.js";
 
@@ -124,8 +119,8 @@ require(["vs/editor/editor.main"], () => {
       const cells = getCellData($("cells").value);
       console.log("cells data: ", cells);
       const calValue = evaluate(ast, {
-        getCellValues(reference, ifEmpty) {
-          return getCellValuesByRange(cells, reference.ranges, ifEmpty);
+        getCellValues(reference) {
+          return getCellValuesByRange(cells, reference.ranges);
         }
       });
       console.log(value, " = ", calValue);

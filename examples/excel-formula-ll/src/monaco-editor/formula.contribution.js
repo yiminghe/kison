@@ -7,7 +7,7 @@ import { langId } from "./utils.js";
 import observe from "./observe.js";
 
 let setupLanguaged = false;
-
+// https://tomassetti.me/writing-a-browser-based-editor-using-monaco-and-antlr/
 export default function init({ monaco, getNames }) {
   if (!setupLanguaged) {
     const { editor, languages } = monaco;
@@ -18,6 +18,14 @@ export default function init({ monaco, getNames }) {
       base: "vs",
       inherit: false,
       rules: [
+        {
+          token: "$UNKNOWN",
+          foreground: "#ff0000"
+        },
+        {
+          token: "REF_UNION_OPERATOR",
+          foreground: "#808080"
+        },
         {
           token: "FUNCTION",
           foreground: "0000FF"
@@ -34,7 +42,10 @@ export default function init({ monaco, getNames }) {
           token: "STRING",
           foreground: "A31515"
         }
-      ]
+      ].map(t => {
+        t.token = t.token + ".formula";
+        return t;
+      })
     });
 
     languages.onLanguage(langId, () => {

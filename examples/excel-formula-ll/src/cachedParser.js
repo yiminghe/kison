@@ -21,12 +21,12 @@ export function getAst(text, options) {
 let currentTokenText;
 let currentTokens;
 
-export function getTokens(text) {
+export function getTokens(text,options) {
   text = trimEmptyLine(text);
   if (currentTokenText === text) {
     return currentTokens;
   }
   currentTokenText = text;
-  currentTokens = parser.lex(text);
+  currentTokens = parser.lex(text,options);
   return currentTokens;
 }

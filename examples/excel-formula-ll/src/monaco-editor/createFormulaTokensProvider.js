@@ -1,27 +1,41 @@
 // @ts-check
 import { getTokens } from "../cachedParser.js";
 
-class State {
-  clone() {
-    return new State();
+class LexerState {
+  state = {};
+  constructor(state = {}) {
+    this.state = state;
   }
-  equals() {
+  clone() {
+    return new LexerState(this.state);
+  }
+  equals(other) {
+    const keys = Object.keys(this.state);
+    const otherKeys = Object.keys(other.state);
+    if (keys.length !== otherKeys.length) {
+      return false;
+    }
+    for (const k of keys) {
+      if (other.state[k] !== this.state[k]) {
+        return false
+      }
+    }
     return true;
   }
 }
 
-const placeholderState = new State();
-
 export default function createFormulaTokensProvider() {
   return {
     getInitialState() {
-      return placeholderState;
+      return new LexerState();
     },
-    tokenize(line) {
-      const { tokens } = getTokens(line);
+    tokenize(line, currentState) {
+      const { tokens, state } = getTokens(line, {
+        state: currentState.state,
+      });
       return {
-        endState: placeholderState,
-        tokens: tokens.map(t => {
+        endState: new LexerState(state),
+        tokens: tokens.map((t) => {
           return {
             startIndex: t.start,
             scopes: t.token + ".formula"

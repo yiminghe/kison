@@ -1,81 +1,100 @@
-function RegexEscape(input) {
-  return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
-
 const operators = [
-  ["=", "<=", ">=", "<>", ">", "<"],
-  ["+", "-"],
-  ["*", "/"],
-  ["^"],
-  ["&"],
-  ["%"]
+  ['binary', '=', '<=', '>=', '<>', '>', '<'],
+  ['binary', '&'],
+  ['binary', '+', '-'],
+  ['binary', '*', '/'],
+  ['binary', '^'],
+  ['unary', '%'],
+  ['unary', '+', '-'],
+  ['unary', '@'],
+  ['atom'],
 ];
 
 const nameMap = {
-  "=": "equal",
-  "<=": "lessEqual",
-  ">=": "greaterEqual",
-  "<>": "notEqual",
-  "<": "less",
-  ">": "greater",
-  "+": "add",
-  "-": "minus",
-  "*": "mul",
-  "/": "divide",
-  "^": "expo",
-  "&": "concat",
-  "%": "percent"
+  '=': 'equal',
+  '<=': 'lessEqual',
+  '>=': 'greaterEqual',
+  '<>': 'notEqual',
+  '<': 'less',
+  '>': 'greater',
+  '+': 'add',
+  '-': 'minus',
+  '*': 'mul',
+  '/': 'divide',
+  '^': 'expo',
+  '&': 'concat',
+  '%': 'percent',
+  '@': 'clip',
 };
 
-function getExpSymbol(op) {
-  return `${nameMap[op]}Exp`;
+function getExpSymbol([type, op]) {
+  if (nameMap[op]) {
+    return `${type}-${nameMap[op]}-exp`;
+  }
+  return `${type}-exp`;
 }
 
-const startExp = getExpSymbol(operators[0][0]);
-const lastOp = operators[operators.length - 1][0];
-const endExp = getExpSymbol(lastOp);
+const startExp = getExpSymbol(operators[0]);
 
-const rightOperatorMap = {
+const rightBinaryOperatorMap = {
   // "^": 1
+};
+
+const rightUnaryOperatorMap = {
+  '%': 1,
 };
 
 function generateOpProductions() {
   const ret = [];
-  operators.forEach((o, operatorIndex) => {
-    if (operatorIndex === operators.length - 1) {
-      return;
-    }
-    const next = operators[operatorIndex + 1][0];
-    const current = operators[operatorIndex][0];
-    const exp = getExpSymbol(current);
-    const nextExp = getExpSymbol(next);
+  operators.slice(0, -1).forEach((o, operatorIndex) => {
+    const type = operators[operatorIndex][0];
+    const ops = operators[operatorIndex].slice(1);
+    const current = ops[0];
+    const exp = getExpSymbol(operators[operatorIndex]);
+    const nextExp = getExpSymbol(operators[operatorIndex + 1]);
     ret.push({
       symbol: exp,
-      rhs: [nextExp]
+      rhs: [nextExp],
     });
-    if (rightOperatorMap[current]) {
-      for (const o of operators[operatorIndex]) {
-        ret.push({
-          symbol: exp,
-          rhs: [nextExp, o, exp]
-        });
+    if (type === 'unary') {
+      for (const o of ops) {
+        if (rightUnaryOperatorMap[o]) {
+          ret.push({
+            symbol: exp,
+            rhs: [exp, o],
+          });
+        } else {
+          ret.push({
+            symbol: exp,
+            rhs: [o, exp],
+          });
+        }
       }
     } else {
-      for (const o of operators[operatorIndex]) {
-        ret.push({
-          symbol: exp,
-          rhs: [exp, o, nextExp]
-        });
+      if (rightBinaryOperatorMap[current]) {
+        for (const o of ops) {
+          ret.push({
+            symbol: exp,
+            rhs: [nextExp, o, exp],
+          });
+        }
+      } else {
+        for (const o of ops) {
+          ret.push({
+            symbol: exp,
+            rhs: [exp, o, nextExp],
+          });
+        }
       }
     }
   });
   return ret;
 }
 
-const decimalFractionLiteral = "(?:[0-9][0-9]*)";
-const decimalIntegerLiteral = "(?:0|[1-9][0-9]*)";
-const exponentPart = "(?:[eE][+-]?[0-9]+)";
-const namePart = "(?:[_A-Za-z\u4e00-\u9fa5]+[_A-Za-z_0-9\u4e00-\u9fa5]*)";
+const decimalFractionLiteral = '(?:[0-9][0-9]*)';
+const decimalIntegerLiteral = '(?:0|[1-9][0-9]*)';
+const exponentPart = '(?:[eE][+-]?[0-9]+)';
+const namePart = '(?:[_A-Za-z\u4e00-\u9fa5]+[_A-Za-z_0-9\u4e00-\u9fa5]*)';
 const fullNamePart = `(?:${namePart}(?:\\.${namePart})*)`;
 const cellAddressLiteral = `(?:\\$?[A-Za-z]+\\$?[0-9]+)`;
 const rowRangeAddress = `(?:\\d+\\:\\d+)`;
@@ -88,7 +107,7 @@ const cellAddress = `(?:
     ${cellAddressLiteral}
     )?
   #?
-)`.replace(/\s/g, "");
+)`.replace(/\s/g, '');
 const sheetAddress = `(?:(?:
   
   (?:'(?:''|[^'])*')
@@ -97,14 +116,14 @@ const sheetAddress = `(?:(?:
 
 (?:${namePart}(?:\\:${namePart})?)
 
-)!)`.replace(/\s/g, "");
+)!)`.replace(/\s/g, '');
 const tableColumnSpecifierLiteral = `(?:
   \\[
     (?:
       '.|[^\\]'#]
       )+
     \\]
-  )`.replace(/\s/g, "");
+  )`.replace(/\s/g, '');
 const tableColumnRange = `(?:${tableColumnSpecifierLiteral}(?:\\:${tableColumnSpecifierLiteral})?)`;
 const tableColumnSpecifier = `(?:${tableColumnRange}|(?:'.|[^\\]#'])+)`;
 
@@ -120,316 +139,291 @@ const my = {
   },
   last(arr) {
     return arr && arr[arr.length - 1];
-  }
+  },
 };
 
 module.exports = () => ({
   my,
   productions: [
     {
-      symbol: "formula",
-      rhs: [startExp]
+      symbol: 'formula',
+      rhs: [startExp],
     },
     ...generateOpProductions(),
     {
-      symbol: endExp,
-      rhs: [endExp, lastOp]
+      symbol: 'atom-exp',
+      rhs: ['(', startExp, ')'],
     },
     {
-      symbol: endExp,
-      rhs: ["prefix-exp"]
+      symbol: 'atom-exp',
+      rhs: ['NUMBER'],
     },
     {
-      symbol: "prefix-exp",
-      rhs: ["-", "prefix-exp"]
+      symbol: 'atom-exp',
+      rhs: ['STRING'],
     },
     {
-      symbol: "prefix-exp",
-      rhs: ["+", "prefix-exp"]
+      symbol: 'atom-exp',
+      rhs: ['LOGIC'],
     },
     {
-      symbol: "prefix-exp",
-      // extract single value for array value
-      rhs: ["@", "prefix-exp"]
+      symbol: 'atom-exp',
+      rhs: ['ERROR'],
     },
     {
-      symbol: "prefix-exp",
-      rhs: ["atom-exp"]
+      symbol: 'atom-exp',
+      rhs: ['reference'],
     },
     {
-      symbol: "atom-exp",
-      rhs: ["(", startExp, ")"]
+      symbol: 'reference-item',
+      rhs: ['CELL'],
     },
     {
-      symbol: "atom-exp",
-      rhs: ["NUMBER"]
+      symbol: 'reference-item',
+      rhs: ['NAME'],
     },
     {
-      symbol: "atom-exp",
-      rhs: ["STRING"]
-    },
-    {
-      symbol: "atom-exp",
-      rhs: ["LOGIC"]
-    },
-    {
-      symbol: "atom-exp",
-      rhs: ["ERROR"]
-    },
-    {
-      symbol: "atom-exp",
-      rhs: ["reference"]
-    },
-    {
-      symbol: "reference-item",
-      rhs: ["CELL"]
-    },
-    {
-      symbol: "reference-item",
-      rhs: ["NAME"]
-    },
-    {
-      symbol: "reference-item",
-      rhs: ["structure-reference"]
+      symbol: 'reference-item',
+      rhs: ['structure-reference'],
     },
     // reference operator: : SPACE ,
     {
-      symbol: "reference",
-      rhs: ["union-reference"]
+      symbol: 'reference',
+      rhs: ['union-reference'],
     },
     {
-      symbol: "union-reference",
-      rhs: ["union-reference", "REF_UNION_OPERATOR", "intersect-reference"]
+      symbol: 'union-reference',
+      rhs: ['union-reference', 'REF_UNION_OPERATOR', 'intersect-reference'],
     },
     {
-      symbol: "union-reference",
-      rhs: ["intersect-reference"]
+      symbol: 'union-reference',
+      rhs: ['intersect-reference'],
     },
     {
-      symbol: "intersect-reference",
-      rhs: ["intersect-reference", "expand-reference"]
+      symbol: 'intersect-reference',
+      rhs: ['intersect-reference', 'expand-reference'],
     },
     {
-      symbol: "intersect-reference",
-      rhs: ["expand-reference"]
+      symbol: 'intersect-reference',
+      rhs: ['expand-reference'],
     },
     {
-      symbol: "expand-reference",
-      rhs: ["expand-reference", "REF_EXPAND_OPERATOR", "reference-item"]
+      symbol: 'expand-reference',
+      rhs: ['expand-reference', 'REF_EXPAND_OPERATOR', 'reference-item'],
     },
     {
-      symbol: "expand-reference",
-      rhs: ["reference-item"]
+      symbol: 'expand-reference',
+      rhs: ['reference-item'],
     },
 
     {
-      symbol: "atom-exp",
-      rhs: ["function"]
+      symbol: 'atom-exp',
+      rhs: ['function'],
     },
     {
-      symbol: "atom-exp",
-      rhs: ["array"]
+      symbol: 'atom-exp',
+      rhs: ['array'],
     },
     {
-      symbol: "array-element",
-      rhs: ["STRING"]
+      symbol: 'array-element',
+      rhs: ['STRING'],
     },
     {
-      symbol: "array-element",
-      rhs: ["NUMBER"]
+      symbol: 'array-element',
+      rhs: ['NUMBER'],
     },
     {
-      symbol: "array-element",
-      rhs: ["LOGIC"]
+      symbol: 'array-element',
+      rhs: ['LOGIC'],
     },
     {
-      symbol: "array-element",
-      rhs: ["ERROR"]
+      symbol: 'array-element',
+      rhs: ['ERROR'],
     },
     {
-      symbol: "array-list",
-      rhs: ["array-element"]
+      symbol: 'array-list',
+      rhs: ['array-element'],
     },
     {
-      symbol: "array-list",
-      rhs: ["array-list", "ARRAY_SEPARATOR", "array-element"],
-      flat: true
+      symbol: 'array-list',
+      rhs: ['array-list', 'ARRAY_SEPARATOR', 'array-element'],
+      flat: true,
     },
     {
-      symbol: "array",
-      rhs: ["{", "array-list", "}"]
+      symbol: 'array',
+      rhs: ['{', 'array-list', '}'],
     },
 
     // function
     {
-      symbol: "function",
-      rhs: ["FUNCTION", "(", "arguments", ")"]
+      symbol: 'function',
+      rhs: ['FUNCTION', '(', 'arguments', ')'],
     },
     {
-      symbol: "argument",
+      symbol: 'argument',
 
-      rhs: []
+      rhs: [],
     },
     {
-      symbol: "argument",
+      symbol: 'argument',
 
-      rhs: [startExp]
+      rhs: [startExp],
     },
     {
-      symbol: "arguments",
-      rhs: ["argument"]
+      symbol: 'arguments',
+      rhs: ['argument'],
     },
     {
-      symbol: "arguments",
-      rhs: ["arguments", "ARGUMENT_SEPARATOR", "argument"],
-      flat: true // arguments => (argument,)*
+      symbol: 'arguments',
+      rhs: ['arguments', 'ARGUMENT_SEPARATOR', 'argument'],
+      flat: true, // arguments => (argument,)*
     },
 
     // structure reference
     {
-      symbol: "structure-reference",
-      rhs: ["TABLE_NAME", "table-specifier"]
+      symbol: 'structure-reference',
+      rhs: ['TABLE_NAME', 'table-specifier'],
     },
     {
-      symbol: "structure-reference",
-      rhs: ["table-specifier"]
+      symbol: 'structure-reference',
+      rhs: ['table-specifier'],
     },
     {
-      symbol: "table-specifier",
-      rhs: ["TABLE_ITEM_SPECIFIER"]
+      symbol: 'table-specifier',
+      rhs: ['TABLE_ITEM_SPECIFIER'],
     },
     {
-      symbol: "table-specifier",
-      rhs: ["[", "table-specifier-inner", "]"]
+      symbol: 'table-specifier',
+      rhs: ['[', 'table-specifier-inner', ']'],
     },
     {
-      symbol: "table-this-row",
-      rhs: ["TABLE_@"]
+      symbol: 'table-this-row',
+      rhs: ['TABLE_@'],
     },
     {
-      symbol: "table-this-row",
-      rhs: ["TABLE_@", "TABLE_COLUMN_SPECIFIER"]
+      symbol: 'table-this-row',
+      rhs: ['TABLE_@', 'TABLE_COLUMN_SPECIFIER'],
     },
     {
-      symbol: "table-specifier-inner",
-      rhs: ["table-this-row"]
+      symbol: 'table-specifier-inner',
+      rhs: ['table-this-row'],
     },
     {
-      symbol: "table-specifier-inner",
-      rhs: ["table-column-specifier"]
+      symbol: 'table-specifier-inner',
+      rhs: ['table-column-specifier'],
     },
     {
-      symbol: "table-specifier-item",
-      rhs: ["TABLE_COLUMN_SPECIFIER"]
+      symbol: 'table-specifier-item',
+      rhs: ['TABLE_COLUMN_SPECIFIER'],
     },
     {
-      symbol: "table-specifier-item",
-      rhs: ["TABLE_ITEM_SPECIFIER"]
+      symbol: 'table-specifier-item',
+      rhs: ['TABLE_ITEM_SPECIFIER'],
     },
     {
-      symbol: "table-column-specifier",
-      rhs: ["table-specifier-item"]
+      symbol: 'table-column-specifier',
+      rhs: ['table-specifier-item'],
     },
     {
-      symbol: "table-column-specifier",
+      symbol: 'table-column-specifier',
       rhs: [
-        "table-column-specifier",
-        "SPECIFIER_SEPARATOR",
-        "table-specifier-item"
+        'table-column-specifier',
+        'SPECIFIER_SEPARATOR',
+        'table-specifier-item',
       ],
-      flat: true
-    }
+      flat: true,
+    },
   ],
 
   lexer: {
-    defaultEnv: "en",
+    defaultEnv: 'en',
 
     rules: [
       {
-        state: ["inside structure reference", "I"],
+        state: ['inside structure reference', 'I'],
         regexp: /^\s+/,
-        token: "$HIDDEN"
+        token: '$HIDDEN',
       },
       {
         regexp: /^\(/,
-        token: "(",
+        token: '(',
         action() {
-          if(this.tokens[this.tokens.length-1]?.token==='FUNCTION'){
+          if (this.tokens[this.tokens.length - 1]?.token === 'FUNCTION') {
             return;
           }
           this.userData.markParen.push({ func: false });
-        }
+        },
       },
       {
         regexp: /^\)/,
-        token: ")",
+        token: ')',
         action() {
           const { userData } = this;
           userData.markParen = userData.markParen || [];
           userData.markParen.pop();
-        }
+        },
       },
       {
         regexp: /^\{/,
-        token: "{",
+        token: '{',
         action() {
           // array constants
-          my.markType(this, "a");
-        }
+          my.markType(this, 'a');
+        },
       },
 
       {
         regexp: /^\}/,
-        token: "}",
+        token: '}',
         action() {
-          my.markType(this, "a", false);
-        }
+          my.markType(this, 'a', false);
+        },
       },
 
       // structure reference
       {
-        state: ["inside structure reference"],
+        state: ['inside structure reference'],
         regexp: /^,/,
-        token: "SPECIFIER_SEPARATOR"
+        token: 'SPECIFIER_SEPARATOR',
       },
       {
-        state: ["inside structure reference", "I"],
+        state: ['inside structure reference', 'I'],
         regexp: /^\[#('.|[^\]#])+\]/,
-        token: "TABLE_ITEM_SPECIFIER"
+        token: 'TABLE_ITEM_SPECIFIER',
       },
       {
-        state: ["inside structure reference"],
+        state: ['inside structure reference'],
         regexp: /^@/,
-        token: "TABLE_@"
+        token: 'TABLE_@',
       },
       {
-        state: ["inside structure reference"],
+        state: ['inside structure reference'],
         regexp: new RegExp(`^${tableColumnSpecifier}`),
-        token: "TABLE_COLUMN_SPECIFIER"
+        token: 'TABLE_COLUMN_SPECIFIER',
       },
       {
-        state: ["inside structure reference", "I"],
+        state: ['inside structure reference', 'I'],
         regexp: /^\[/,
-        token: "[",
+        token: '[',
         action() {
-          this.pushState("inside structure reference");
-        }
+          this.pushState('inside structure reference');
+        },
       },
 
       {
-        state: ["inside structure reference"],
+        state: ['inside structure reference'],
         regexp: /^\]/,
-        token: "]",
+        token: ']',
         action() {
           this.popState();
-        }
+        },
       },
       {
         filter() {
           return !!this.userData.a;
         },
         regexp: { en: /^[,;]/, de: /^[\\;]/ },
-        token: "ARRAY_SEPARATOR"
+        token: 'ARRAY_SEPARATOR',
       },
       {
         filter() {
@@ -437,71 +431,71 @@ module.exports = () => ({
           return !lastItem || !lastItem.func;
         },
         regexp: /^,/,
-        token: "REF_UNION_OPERATOR"
+        token: 'REF_UNION_OPERATOR',
       },
       {
         regexp: /^:/,
-        token: "REF_EXPAND_OPERATOR"
+        token: 'REF_EXPAND_OPERATOR',
       },
       {
         regexp: { en: /^,/, de: /^;/ },
-        token: "ARGUMENT_SEPARATOR"
+        token: 'ARGUMENT_SEPARATOR',
       },
       {
         regexp: /^"(?:""|[^"])*"/,
-        token: "STRING",
+        token: 'STRING',
         action() {
           this.text = this.text.slice(1, -1).replace(/""/g, '"');
-        }
+        },
       },
       {
         regexp: new RegExp(`^${fullNamePart}(?=[(])`),
-        token: "FUNCTION",
+        token: 'FUNCTION',
         action() {
           const { userData } = this;
           userData.markParen = userData.markParen || [];
           userData.markParen.push({ func: true });
-        }
+        },
       },
       {
         regexp: /^#[A-Z0-9\/]+(!|\?)? /,
-        token: "ERROR"
+        token: 'ERROR',
       },
       {
         // @: disable array formula, allow  Implicit Intersection
         // #: spill reference
         regexp: new RegExp(
-          `^${sheetAddress}?(?:${cellAddress}|${rowRangeAddress})`
+          `^${sheetAddress}?(?:${cellAddress}|${rowRangeAddress})`,
         ),
-        token: "CELL"
+        token: 'CELL',
       },
       {
         regexp: /^(TRUE|FALSE)(?=\b)/i,
-        token: "LOGIC"
+        token: 'LOGIC',
       },
       {
         regexp: new RegExp(`^${fullNamePart}(?=[\\[])`),
-        token: "TABLE_NAME"
+        token: 'TABLE_NAME',
       },
       {
         regexp: new RegExp(`^${fullNamePart}`),
-        token: "NAME"
+        token: 'NAME',
       },
       {
         regexp: {
           en: new RegExp(
-            `^${decimalIntegerLiteral}?\\.${decimalFractionLiteral}${exponentPart}?`
+            `^${decimalIntegerLiteral}?\\.${decimalFractionLiteral}${exponentPart}?`,
           ),
           de: new RegExp(
-            `^${decimalIntegerLiteral}?,${decimalFractionLiteral}${exponentPart}?`
-          )
+            `^${decimalIntegerLiteral}?,${decimalFractionLiteral}${exponentPart}?`,
+          ),
         },
-        token: "NUMBER"
+        token: 'NUMBER',
       },
       {
         regexp: new RegExp(`^${decimalIntegerLiteral}${exponentPart}?`),
-        token: "NUMBER"
-      }
-    ]
-  }
+        token: 'NUMBER',
+      },
+    ],
+  },
 });

@@ -13,8 +13,8 @@ export function evaluate(ast, context) {
   let { children } = ast;
 
   if (!children || children.length != 1) {
-    console.log(ast);
-    throw new Error("unrecognized node type:" + n);
+    console.error(ast);
+    throw new Error('unrecognized node type:' + n);
   }
 
   const child = children[0];
@@ -23,5 +23,5 @@ export function evaluate(ast, context) {
 }
 
 export const evaluators = {
-  evaluate
+  evaluate,
 };

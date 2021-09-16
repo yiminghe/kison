@@ -1,28 +1,29 @@
-formula ::= equalExp
-equalExp ::= addExp
-equalExp ::= equalExp '=' addExp
-equalExp ::= equalExp '<=' addExp
-equalExp ::= equalExp '>=' addExp
-equalExp ::= equalExp '<>' addExp
-equalExp ::= equalExp '>' addExp
-equalExp ::= equalExp '<' addExp
-addExp ::= mulExp
-addExp ::= addExp '+' mulExp
-addExp ::= addExp '-' mulExp
-mulExp ::= expoExp
-mulExp ::= mulExp '*' expoExp
-mulExp ::= mulExp '/' expoExp
-expoExp ::= concatExp
-expoExp ::= expoExp '^' concatExp
-concatExp ::= percentExp
-concatExp ::= concatExp '&' percentExp
-percentExp ::= percentExp '%'
-percentExp ::= prefixExp
-prefixExp ::= '-' prefixExp
-prefixExp ::= '+' prefixExp
-prefixExp ::= '@' prefixExp
-prefixExp ::= atomExp
-atomExp ::= '(' equalExp ')'
+formula ::= binaryEqualExp
+binaryEqualExp ::= binaryConcatExp
+binaryEqualExp ::= binaryEqualExp '=' binaryConcatExp
+binaryEqualExp ::= binaryEqualExp '<=' binaryConcatExp
+binaryEqualExp ::= binaryEqualExp '>=' binaryConcatExp
+binaryEqualExp ::= binaryEqualExp '<>' binaryConcatExp
+binaryEqualExp ::= binaryEqualExp '>' binaryConcatExp
+binaryEqualExp ::= binaryEqualExp '<' binaryConcatExp
+binaryConcatExp ::= binaryAddExp
+binaryConcatExp ::= binaryConcatExp '&' binaryAddExp
+binaryAddExp ::= binaryMulExp
+binaryAddExp ::= binaryAddExp '+' binaryMulExp
+binaryAddExp ::= binaryAddExp '-' binaryMulExp
+binaryMulExp ::= binaryExpoExp
+binaryMulExp ::= binaryMulExp '*' binaryExpoExp
+binaryMulExp ::= binaryMulExp '/' binaryExpoExp
+binaryExpoExp ::= unaryPercentExp
+binaryExpoExp ::= binaryExpoExp '^' unaryPercentExp
+unaryPercentExp ::= unaryAddExp
+unaryPercentExp ::= unaryPercentExp '%'
+unaryAddExp ::= unaryClipExp
+unaryAddExp ::= '+' unaryAddExp
+unaryAddExp ::= '-' unaryAddExp
+unaryClipExp ::= atomExp
+unaryClipExp ::= '@' unaryClipExp
+atomExp ::= '(' binaryEqualExp ')'
 atomExp ::= 'NUMBER'
 atomExp ::= 'STRING'
 atomExp ::= 'LOGIC'
@@ -49,7 +50,7 @@ arrayList ::= arrayList 'ARRAY_SEPARATOR' arrayElement
 array ::= '{' arrayList '}'
 function ::= 'FUNCTION' '(' arguments ')'
 argument ::=
-argument ::= equalExp
+argument ::= binaryEqualExp
 arguments ::= argument
 arguments ::= arguments 'ARGUMENT_SEPARATOR' argument
 structureReference ::= 'TABLE_NAME' tableSpecifier

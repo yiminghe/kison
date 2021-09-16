@@ -3,14 +3,14 @@ import {
   DIV_ERROR,
   makeError,
   NA_ERROR,
-  VALUE_ERROR
-} from "../functions/utils.js";
-import { evaluators, evaluate } from "./evaluators.js";
-import { checkError, checkNumber, isSingleValueArray } from "./utils.js";
+  VALUE_ERROR,
+} from '../functions/utils.js';
+import { evaluators, evaluate } from './evaluators.js';
+import { checkError, checkNumber, isSingleValueArray } from './utils.js';
 
 function opOneAndMany(left, right, fn) {
-  let n = left.type === "number" ? left : right;
-  let a = left.type === "array" ? left : right;
+  let n = left.type === 'number' ? left : right;
+  let a = left.type === 'array' ? left : right;
   n = n.value;
   a = a.value;
   let ret = a.concat();
@@ -31,8 +31,8 @@ function opOneAndMany(left, right, fn) {
     }
   }
   return {
-    type: "array",
-    value: ret
+    type: 'array',
+    value: ret,
   };
 }
 
@@ -42,7 +42,7 @@ function getRowColPos(value, child) {
   let startCol = 0;
   let endCol = value[0].length;
 
-  if (child.type === "reference") {
+  if (child.type === 'reference') {
     startRow = child.ranges[0].row;
     endRow = startRow + child.ranges[0].rowCount + 1;
     startCol = child.ranges[0].col;
@@ -53,12 +53,12 @@ function getRowColPos(value, child) {
     startRow,
     endRow,
     startCol,
-    endCol
+    endCol,
   };
 }
 
 function fillError(row, j) {
-  row[j] = makeError("unmatch shape", NA_ERROR);
+  row[j] = makeError('unmatch shape', NA_ERROR);
 }
 
 function evaluateExp(node, context, fn) {
@@ -67,24 +67,24 @@ function evaluateExp(node, context, fn) {
   let right = evaluate(children[2]);
   const leftChild = left;
   const rightChild = right;
-  if (left.type === "reference") {
+  if (left.type === 'reference') {
     if (left.ranges.length !== 1) {
-      return makeError("more than one range!", VALUE_ERROR);
+      return makeError('more than one range!', VALUE_ERROR);
     }
     const value = context.getCellValues(left);
-    left = { type: "array", value };
+    left = { type: 'array', value };
   }
-  if (right.type === "reference") {
+  if (right.type === 'reference') {
     if (right.ranges.length !== 1) {
-      return makeError("more than one range!", VALUE_ERROR);
+      return makeError('more than one range!', VALUE_ERROR);
     }
     const value = context.getCellValues(right);
-    right = { type: "array", value };
+    right = { type: 'array', value };
   }
-  if (left.type === "array" && isSingleValueArray(left.value)) {
+  if (left.type === 'array' && isSingleValueArray(left.value)) {
     left = left.value;
   }
-  if (right.type === "array" && isSingleValueArray(right.value)) {
+  if (right.type === 'array' && isSingleValueArray(right.value)) {
     right = right.value;
   }
 
@@ -98,11 +98,11 @@ function evaluateExp(node, context, fn) {
     return e;
   }
 
-  if (left.type === "number" && right.type === "number") {
+  if (left.type === 'number' && right.type === 'number') {
     return fn(left.value, right.value);
   }
 
-  if (left.type === "number" || right.type === "number") {
+  if (left.type === 'number' || right.type === 'number') {
     return opOneAndMany(left, right, fn);
   }
 
@@ -113,13 +113,13 @@ function evaluateExp(node, context, fn) {
     startRow: startLeftRow,
     endRow: endLeftRow,
     startCol: startLeftCol,
-    endCol: endLeftCol
+    endCol: endLeftCol,
   } = getRowColPos(leftValue, leftChild);
   let {
     startRow: startRightRow,
     endRow: endRightRow,
     startCol: startRightCol,
-    endCol: endRightCol
+    endCol: endRightCol,
   } = getRowColPos(rightValue, rightChild);
 
   let rightRowCount = endRightRow - startRightRow;
@@ -189,39 +189,39 @@ function evaluateExp(node, context, fn) {
   }
 
   return {
-    type: "array",
-    value: ret
+    type: 'array',
+    value: ret,
   };
 }
 
 const opFn = {
-  "+"(a, b) {
+  '+'(a, b) {
     return {
-      type: "number",
-      value: a + b
+      type: 'number',
+      value: a + b,
     };
   },
-  "-"(a, b) {
+  '-'(a, b) {
     return {
-      type: "number",
-      value: a - b
+      type: 'number',
+      value: a - b,
     };
   },
-  "*"(a, b) {
+  '*'(a, b) {
     return {
-      type: "number",
-      value: a * b
+      type: 'number',
+      value: a * b,
     };
   },
-  "/"(a, b) {
+  '/'(a, b) {
     if (b === 0) {
-      return makeError("divide by 0", DIV_ERROR);
+      return makeError('divide by 0', DIV_ERROR);
     }
     return {
-      type: "number",
-      value: a / b
+      type: 'number',
+      value: a / b,
     };
-  }
+  },
 };
 
 function evaluate_exp(node, context) {
@@ -229,6 +229,6 @@ function evaluate_exp(node, context) {
 }
 
 Object.assign(evaluators, {
-  evaluate_addExp: evaluate_exp,
-  evaluate_mulExp: evaluate_exp
+  ['evaluate_binary-add-exp']: evaluate_exp,
+  ['evaluate_binary-mul-exp']: evaluate_exp,
 });

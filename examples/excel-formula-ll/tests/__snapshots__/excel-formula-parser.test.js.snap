@@ -5,7 +5,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'prefix-exp',
+      'symbol': 'unary-clip-exp',
       'children': [
         {
           'text': '@',
@@ -41,7 +41,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
               'lastColumn': 6
             },
             {
-              'symbol': 'prefix-exp',
+              'symbol': 'unary-clip-exp',
               'children': [
                 {
                   'text': '@',

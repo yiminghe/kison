@@ -41,12 +41,12 @@ const rightOperatorMap = {
 
 function generateOpProductions() {
   const ret = [];
-  operators.forEach((o, index) => {
-    if (index === operators.length - 1) {
+  operators.forEach((o, operatorIndex) => {
+    if (operatorIndex === operators.length - 1) {
       return;
     }
-    const next = operators[index + 1][0];
-    const current = operators[index][0];
+    const next = operators[operatorIndex + 1][0];
+    const current = operators[operatorIndex][0];
     const exp = getExpSymbol(current);
     const nextExp = getExpSymbol(next);
     ret.push({
@@ -54,14 +54,14 @@ function generateOpProductions() {
       rhs: [nextExp]
     });
     if (rightOperatorMap[current]) {
-      for (const o of operators[index]) {
+      for (const o of operators[operatorIndex]) {
         ret.push({
           symbol: exp,
           rhs: [nextExp, o, exp]
         });
       }
     } else {
-      for (const o of operators[index]) {
+      for (const o of operators[operatorIndex]) {
         ret.push({
           symbol: exp,
           rhs: [exp, o, nextExp]
@@ -354,13 +354,10 @@ module.exports = () => ({
         regexp: /^\(/,
         token: "(",
         action() {
-          const { userData } = this;
-          userData.markParen = userData.markParen || [];
-          const lastItem = my.last(userData.markParen);
-          if (lastItem && lastItem.index === this.start) {
+          if(this.tokens[this.tokens.length-1]?.token==='FUNCTION'){
             return;
           }
-          userData.markParen.push({ index: this.end, func: false });
+          this.userData.markParen.push({ func: false });
         }
       },
       {
@@ -463,7 +460,7 @@ module.exports = () => ({
         action() {
           const { userData } = this;
           userData.markParen = userData.markParen || [];
-          userData.markParen.push({ index: this.end, func: true });
+          userData.markParen.push({ func: true });
         }
       },
       {

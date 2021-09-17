@@ -1,13 +1,17 @@
 // @ts-check
 export function evaluate(ast, context) {
-  const { symbol, token } = ast;
+  const { symbol, token, label } = ast;
 
-  const n = symbol || token;
+  const n1 = symbol || token;
+  const n2 = label || n1;
 
-  const m = `evaluate_${n}`;
+  const m1 = `evaluate_${n1}`;
+  const m2 = `evaluate_${n2}`;
 
-  if (evaluators[m]) {
-    return evaluators[m](ast, context);
+  const fn = evaluators[m1] || evaluators[m2];
+
+  if (fn) {
+    return fn(ast, context);
   }
 
   let { children } = ast;

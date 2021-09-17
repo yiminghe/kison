@@ -61,7 +61,7 @@ function fillError(row, j) {
   row[j] = makeError('unmatch shape', NA_ERROR);
 }
 
-function evaluateExp(node, context, fn) {
+function evaluateBinaryExp(node, context, fn) {
   const { children } = node;
   let left = evaluate(children[0]);
   let right = evaluate(children[2]);
@@ -224,11 +224,10 @@ const opFn = {
   },
 };
 
-function evaluate_exp(node, context) {
-  return evaluateExp(node, context, opFn[node.children[1].text]);
+function evaluate_binary_exp(node, context) {
+  return evaluateBinaryExp(node, context, opFn[node.children[1].text]);
 }
 
 Object.assign(evaluators, {
-  ['evaluate_binary-add-exp']: evaluate_exp,
-  ['evaluate_binary-mul-exp']: evaluate_exp,
+  ['evaluate_binary-exp']: evaluate_binary_exp,
 });

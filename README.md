@@ -197,21 +197,19 @@ npx kison -m ll -g cal-grammar.js
 
 ## changelog
 
-### 0.4.2 - 2021/06/24
+### 0.4.x - 2021/06/24
 
-* COMMON
+* LL & LALR
   * add $HIDDEN token type 
   * use js config file
   * add excel formula demo
   * support filter for lexer config
+  * support operator precedence
 
 * LL
   * support LL parser
   * support direct left recursive elimination and extract common prefix for LL
   * support parser tree auto return even if partly error
- 
-* LALR
-  * support operator priority for LALR parser
 
 ### 0.3.0 - 2014/08/25
 

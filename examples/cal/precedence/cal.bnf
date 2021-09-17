@@ -1,8 +1,0 @@
-Exp ::= primaryExpression
-Exp ::= Exp '+' Exp
-Exp ::= Exp '^' Exp
-Exp ::= Exp '-' Exp
-Exp ::= Exp '*' Exp
-Exp ::= Exp '/' Exp
-primaryExpression ::= '(' Exp ')'
-primaryExpression ::= 'NUMBER'

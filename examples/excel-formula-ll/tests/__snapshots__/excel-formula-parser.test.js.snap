@@ -5,7 +5,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'unary-clip-exp',
+      'symbol': 'exp_p_8',
+      'label': 'clip-exp',
       'children': [
         {
           'text': '@',
@@ -41,7 +42,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
               'lastColumn': 6
             },
             {
-              'symbol': 'unary-clip-exp',
+              'symbol': 'exp_p_8',
+              'label': 'clip-exp',
               'children': [
                 {
                   'text': '@',
@@ -54,7 +56,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                   'lastColumn': 7
                 },
                 {
-                  'symbol': 'intersect-reference',
+                  'symbol': 'reference_p_10',
                   'children': [
                     {
                       'text': 'a1:a2',
@@ -77,6 +79,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                       'lastColumn': 16
                     }
                   ],
+                  'label': 'intersect-reference',
                   'start': 6,
                   'end': 15,
                   'firstLine': 1,
@@ -886,7 +889,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
           'lastColumn': 5
         },
         {
-          'symbol': 'union-reference',
+          'symbol': 'reference',
           'children': [
             {
               'text': 'E4:H4',
@@ -909,10 +912,10 @@ exports[`excel-formula-parser works for reference operation 1`] = `
               'lastColumn': 12
             },
             {
-              'symbol': 'intersect-reference',
+              'symbol': 'reference_p_10',
               'children': [
                 {
-                  'symbol': 'expand-reference',
+                  'symbol': 'reference_p_11',
                   'children': [
                     {
                       'text': 'F',
@@ -945,6 +948,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                       'lastColumn': 15
                     }
                   ],
+                  'label': 'expand-reference',
                   'start': 11,
                   'end': 14,
                   'firstLine': 1,
@@ -963,11 +967,13 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                   'lastColumn': 18
                 }
               ],
+              'label': 'intersect-reference',
               'end': 17,
               'lastLine': 1,
               'lastColumn': 18
             }
           ],
+          'label': 'union-reference',
           'start': 5,
           'firstLine': 1,
           'firstColumn': 6

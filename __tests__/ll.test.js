@@ -1,7 +1,7 @@
-import Kison from "../lib";
-import AstProcessor from "../examples/cal-ll/AstProcessor";
-import calGrammar from "../examples/cal-ll/cal-grammar";
-import { prettyJson } from "./utils";
+import Kison from '../lib';
+import AstProcessor from '../examples/cal-ll/AstProcessor';
+import calGrammar from '../examples/cal-ll/cal-grammar';
+import { prettyJson } from './utils';
 
 var LLGrammar = Kison.LLGrammar;
 const run = eval;
@@ -10,113 +10,113 @@ function getGrammar() {
   var grammar = new LLGrammar({
     productions: [
       {
-        symbol: "E",
-        rhs: ["T", "E_"]
+        symbol: 'E',
+        rhs: ['T', 'E_'],
       },
       {
-        symbol: "E_",
-        rhs: ["+", "T", "E_"]
+        symbol: 'E_',
+        rhs: ['+', 'T', 'E_'],
       },
       {
-        symbol: "E_",
-        rhs: []
+        symbol: 'E_',
+        rhs: [],
       },
       {
-        symbol: "T",
-        rhs: ["F", "T_"]
+        symbol: 'T',
+        rhs: ['F', 'T_'],
       },
       {
-        symbol: "T_",
-        rhs: ["*", "F", "T_"]
+        symbol: 'T_',
+        rhs: ['*', 'F', 'T_'],
       },
       {
-        symbol: "T_",
-        rhs: []
+        symbol: 'T_',
+        rhs: [],
       },
       {
-        symbol: "F",
-        rhs: ["(", "E", ")"]
+        symbol: 'F',
+        rhs: ['(', 'E', ')'],
       },
       {
-        symbol: "F",
-        rhs: ["id"]
-      }
+        symbol: 'F',
+        rhs: ['id'],
+      },
     ],
     lexer: {
       rules: [
         {
           regexp: /^\+/,
-          token: "+"
+          token: '+',
         },
         {
           regexp: /^\*/,
-          token: "*"
+          token: '*',
         },
         {
           regexp: /^\(/,
-          token: "("
+          token: '(',
         },
         {
           regexp: /^\)/,
-          token: ")"
+          token: ')',
         },
         {
           regexp: /^\*/,
-          token: "*"
+          token: '*',
         },
         {
           regexp: /^\w+/,
-          token: "id"
-        }
-      ]
-    }
+          token: 'id',
+        },
+      ],
+    },
   });
 
   grammar.build();
   return grammar;
 }
 
-describe("ll", () => {
-  it("eliminate left recursive works", () => {
+describe('ll', () => {
+  it('eliminate left recursive works', () => {
     var grammar = new LLGrammar({
       productions: [
         {
-          symbol: "S",
-          rhs: ["A"]
+          symbol: 'S',
+          rhs: ['A'],
         },
         {
-          symbol: "B",
-          rhs: ["d"]
+          symbol: 'B',
+          rhs: ['d'],
         },
         {
-          symbol: "A",
-          rhs: ["a", "B"]
+          symbol: 'A',
+          rhs: ['a', 'B'],
         },
         {
-          symbol: "A",
-          rhs: ["A", "c", "b"]
-        }
+          symbol: 'A',
+          rhs: ['A', 'c', 'b'],
+        },
       ],
       lexer: {
         rules: [
           {
             regexp: /^a/,
-            token: "a"
+            token: 'a',
           },
           {
             regexp: /^b/,
-            token: "b"
+            token: 'b',
           },
           {
             regexp: /^c/,
-            token: "c"
+            token: 'c',
           },
           {
             regexp: /^d/,
-            token: "d"
-          }
-        ]
-      }
+            token: 'd',
+          },
+        ],
+      },
     });
 
     grammar.build();
@@ -124,6 +124,7 @@ describe("ll", () => {
     expect(prettyJson(grammar.productions.map(p => p.toString())))
       .toMatchInlineSnapshot(`
       "[
+        '$START => S ',
         'S => A ',
         'B => d ',
         '(A)1_ => c b (A)1_ ',
@@ -133,45 +134,46 @@ describe("ll", () => {
     `);
   });
 
-  it("extract common prefix works", () => {
+  it('extract common prefix works', () => {
     var grammar = new LLGrammar({
       productions: [
         {
-          symbol: "S",
-          rhs: ["b"]
+          symbol: 'S',
+          rhs: ['b'],
         },
         {
-          symbol: "S",
-          rhs: ["a", "A"]
+          symbol: 'S',
+          rhs: ['a', 'A'],
         },
         {
-          symbol: "S",
-          rhs: ["a", "B"]
+          symbol: 'S',
+          rhs: ['a', 'B'],
         },
         {
-          symbol: "S",
-          rhs: ["a", "C"]
-        }
+          symbol: 'S',
+          rhs: ['a', 'C'],
+        },
       ],
       lexer: {
         rules: [
           {
             regexp: /^a/,
-            token: "a"
+            token: 'a',
           },
           {
             regexp: /^b/,
-            token: "b"
-          }
-        ]
-      }
+            token: 'b',
+          },
+        ],
+      },
     });
 
     grammar.build();
 
-    expect(prettyJson(grammar.productions.map(p => p + "")))
+    expect(prettyJson(grammar.productions.map(p => p + '')))
       .toMatchInlineSnapshot(`
       "[
+        '$START => S ',
         'S => b ',
         '_1(S) => C ',
         '_1(S) => B ',
@@ -181,32 +183,24 @@ describe("ll", () => {
     `);
   });
 
-  it("find follows works", () => {
+  it('find follows works', () => {
     const grammar = getGrammar();
 
-    expect(grammar.findFollows("E")).toMatchInlineSnapshot(`
+    expect(grammar.findFollows('E')).toMatchInlineSnapshot(`
       Object {
         "$EOF": 1,
         ")": 1,
       }
     `);
 
-    expect(grammar.findFollows("E_")).toMatchInlineSnapshot(`
+    expect(grammar.findFollows('E_')).toMatchInlineSnapshot(`
       Object {
         "$EOF": 1,
         ")": 1,
       }
     `);
 
-    expect(grammar.findFollows("T")).toMatchInlineSnapshot(`
-      Object {
-        "$EOF": 1,
-        ")": 1,
-        "+": 1,
-      }
-    `);
-
-    expect(grammar.findFollows("T_")).toMatchInlineSnapshot(`
+    expect(grammar.findFollows('T')).toMatchInlineSnapshot(`
       Object {
         "$EOF": 1,
         ")": 1,
@@ -214,7 +208,15 @@ describe("ll", () => {
       }
     `);
 
-    expect(grammar.findFollows("F")).toMatchInlineSnapshot(`
+    expect(grammar.findFollows('T_')).toMatchInlineSnapshot(`
+      Object {
+        "$EOF": 1,
+        ")": 1,
+        "+": 1,
+      }
+    `);
+
+    expect(grammar.findFollows('F')).toMatchInlineSnapshot(`
       Object {
         "$EOF": 1,
         ")": 1,
@@ -224,14 +226,16 @@ describe("ll", () => {
     `);
   });
 
-  it("buildTable ok", () => {
+  it('buildTable ok', () => {
     const grammar = getGrammar();
 
     const table = grammar.visualizeTable();
 
     expect(table).toMatchInlineSnapshot(`
-      "-: E ( => E -> T, E_
-      -: E id => E -> T, E_
+      "-: $START ( => $START -> E
+      -: $START id => $START -> E
+      E ( => E -> T, E_
+      E id => E -> T, E_
       E_ + => E_ -> +, T, E_
       -: E_ $EOF => E_ -> EMPTY
       -: E_ ) => E_ -> EMPTY
@@ -245,114 +249,53 @@ describe("ll", () => {
       F id => F -> id"
     `);
   });
-  it("ast works", () => {
+  it('ast works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse("1+2+3").ast;
+    const ast = parser.parse('1+2+3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
-  'label': 'exp',
   'children': [
     {
-      'symbol': 'add',
+      'symbol': 'exp',
       'children': [
         {
-          'symbol': 'add',
+          'symbol': 'exp_p_2',
           'children': [
             {
-              'text': '1',
-              'token': 'NUMBER',
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            },
-            {
-              'text': '+',
-              'token': '+',
-              'start': 1,
-              'end': 2,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 3
-            },
-            {
-              'text': '2',
-              'token': 'NUMBER',
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4
+              'symbol': 'exp_p_3',
+              'children': [
+                {
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '1',
+                          'token': 'NUMBER',
+                          'start': 0,
+                          'end': 1,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 2
+                        }
+                      ],
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    }
+                  ]
+                }
+              ]
             }
-          ],
-          'label': 'exp',
-          'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'text': '3',
-          'token': 'NUMBER',
-          'start': 4,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 6
-        }
-      ],
-      'label': 'exp',
-      'end': 5,
-      'lastLine': 1,
-      'lastColumn': 6
-    }
-  ]
-}"
-`);
-  });
-
-  it("ast works", () => {
-    var grammar = new LLGrammar(calGrammar());
-    const code = grammar.genCode();
-    const parser = run(code);
-    const ast = parser.parse("1+2*3").ast;
-    expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'label': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'text': '1',
-          'token': 'NUMBER',
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
+          ]
         },
         {
           'text': '+',
@@ -365,17 +308,325 @@ describe("ll", () => {
           'lastColumn': 3
         },
         {
-          'symbol': 'mul',
+          'symbol': 'exp_p_2',
           'children': [
             {
-              'text': '2',
-              'token': 'NUMBER',
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4
+              'symbol': 'exp_p_3',
+              'children': [
+                {
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '2',
+                          'token': 'NUMBER',
+                          'start': 2,
+                          'end': 3,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 3,
+                          'lastColumn': 4
+                        }
+                      ],
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      'label': 'add-exp'
+    },
+    {
+      'text': '+',
+      'token': '+',
+      'start': 3,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 4,
+      'lastColumn': 5
+    },
+    {
+      'symbol': 'exp_p_2',
+      'children': [
+        {
+          'symbol': 'exp_p_3',
+          'children': [
+            {
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '3',
+                      'token': 'NUMBER',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    }
+                  ],
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  'label': 'add-exp'
+}"
+`);
+  });
+
+  it('ast works', () => {
+    var grammar = new LLGrammar(calGrammar());
+    const code = grammar.genCode();
+    const parser = run(code);
+    const ast = parser.parse('1+2*3').ast;
+    expect(prettyJson(ast)).toMatchInlineSnapshot(`
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'exp_p_2',
+      'children': [
+        {
+          'symbol': 'exp_p_3',
+          'children': [
+            {
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '1',
+                      'token': 'NUMBER',
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    }
+                  ],
+                  'start': 0,
+                  'end': 1,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 1,
+                  'lastColumn': 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      'text': '+',
+      'token': '+',
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3
+    },
+    {
+      'symbol': 'exp_p_2',
+      'children': [
+        {
+          'symbol': 'exp_p_3',
+          'children': [
+            {
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '2',
+                      'token': 'NUMBER',
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
+                    }
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'text': '*',
+          'token': '*',
+          'start': 3,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 4,
+          'lastColumn': 5
+        },
+        {
+          'symbol': 'exp_p_3',
+          'children': [
+            {
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '3',
+                      'token': 'NUMBER',
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    }
+                  ],
+                  'start': 4,
+                  'end': 5,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 5,
+                  'lastColumn': 6
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  'label': 'add-exp'
+}"
+`);
+  });
+
+  it('ast works', () => {
+    var grammar = new LLGrammar(calGrammar());
+    const code = grammar.genCode();
+    const parser = run(code);
+    const ast = parser.parse('1+2*4-5^2^3').ast;
+    expect(prettyJson(ast)).toMatchInlineSnapshot(`
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'symbol': 'exp',
+      'children': [
+        {
+          'symbol': 'exp_p_2',
+          'children': [
+            {
+              'symbol': 'exp_p_3',
+              'children': [
+                {
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '1',
+                          'token': 'NUMBER',
+                          'start': 0,
+                          'end': 1,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 2
+                        }
+                      ],
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'text': '+',
+          'token': '+',
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3
+        },
+        {
+          'symbol': 'exp_p_2',
+          'children': [
+            {
+              'symbol': 'exp_p_3',
+              'children': [
+                {
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '2',
+                          'token': 'NUMBER',
+                          'start': 2,
+                          'end': 3,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 3,
+                          'lastColumn': 4
+                        }
+                      ],
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
+                    }
+                  ]
+                }
+              ]
             },
             {
               'text': '*',
@@ -388,142 +639,82 @@ describe("ll", () => {
               'lastColumn': 5
             },
             {
-              'text': '3',
-              'token': 'NUMBER',
-              'start': 4,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 6
-            }
-          ],
-          'label': 'exp',
-          'start': 2,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 6
-        }
-      ],
-      'label': 'exp',
-      'start': 0,
-      'firstLine': 1,
-      'firstColumn': 1
-    }
-  ]
-}"
-`);
-  });
-
-  it("ast works", () => {
-    var grammar = new LLGrammar(calGrammar());
-    const code = grammar.genCode();
-    const parser = run(code);
-    const ast = parser.parse("1+2*4-5^2^3").ast;
-    expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'label': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'symbol': 'add',
-          'children': [
-            {
-              'text': '1',
-              'token': 'NUMBER',
-              'start': 0,
-              'end': 1,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 2
-            },
-            {
-              'text': '+',
-              'token': '+',
-              'start': 1,
-              'end': 2,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 3
-            },
-            {
-              'symbol': 'mul',
+              'symbol': 'exp_p_3',
               'children': [
                 {
-                  'text': '2',
-                  'token': 'NUMBER',
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                },
-                {
-                  'text': '*',
-                  'token': '*',
-                  'start': 3,
-                  'end': 4,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 4,
-                  'lastColumn': 5
-                },
-                {
-                  'text': '4',
-                  'token': 'NUMBER',
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '4',
+                          'token': 'NUMBER',
+                          'start': 4,
+                          'end': 5,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 6
+                        }
+                      ],
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6
+                    }
+                  ]
                 }
-              ],
-              'label': 'exp',
-              'start': 2,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 6
+              ]
             }
-          ],
-          'label': 'exp',
-          'start': 0,
-          'firstLine': 1,
-          'firstColumn': 1
-        },
+          ]
+        }
+      ],
+      'label': 'add-exp'
+    },
+    {
+      'text': '-',
+      'token': '-',
+      'start': 5,
+      'end': 6,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 6,
+      'lastColumn': 7
+    },
+    {
+      'symbol': 'exp_p_2',
+      'children': [
         {
-          'text': '-',
-          'token': '-',
-          'start': 5,
-          'end': 6,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 6,
-          'lastColumn': 7
-        },
-        {
-          'symbol': 'expo',
-          'label': 'exp',
+          'symbol': 'exp_p_3',
           'children': [
             {
-              'text': '5',
-              'token': 'NUMBER',
-              'start': 6,
-              'end': 7,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 7,
-              'lastColumn': 8
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '5',
+                      'token': 'NUMBER',
+                      'start': 6,
+                      'end': 7,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 7,
+                      'lastColumn': 8
+                    }
+                  ],
+                  'start': 6,
+                  'end': 7,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 7,
+                  'lastColumn': 8
+                }
+              ]
             },
             {
               'text': '^',
@@ -536,18 +727,33 @@ describe("ll", () => {
               'lastColumn': 9
             },
             {
-              'symbol': 'expo',
-              'label': 'exp',
+              'symbol': 'exp_p_3',
               'children': [
                 {
-                  'text': '2',
-                  'token': 'NUMBER',
-                  'start': 8,
-                  'end': 9,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 9,
-                  'lastColumn': 10
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '2',
+                          'token': 'NUMBER',
+                          'start': 8,
+                          'end': 9,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 9,
+                          'lastColumn': 10
+                        }
+                      ],
+                      'start': 8,
+                      'end': 9,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 9,
+                      'lastColumn': 10
+                    }
+                  ]
                 },
                 {
                   'text': '^',
@@ -560,113 +766,154 @@ describe("ll", () => {
                   'lastColumn': 11
                 },
                 {
-                  'text': '3',
-                  'token': 'NUMBER',
-                  'start': 10,
-                  'end': 11,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 12
+                  'symbol': 'exp_p_4',
+                  'children': [
+                    {
+                      'symbol': 'exp_p_end',
+                      'children': [
+                        {
+                          'text': '3',
+                          'token': 'NUMBER',
+                          'start': 10,
+                          'end': 11,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 11,
+                          'lastColumn': 12
+                        }
+                      ],
+                      'start': 10,
+                      'end': 11,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 11,
+                      'lastColumn': 12
+                    }
+                  ]
                 }
-              ],
-              'start': 8,
-              'end': 11,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 9,
-              'lastColumn': 12
+              ]
             }
-          ],
-          'start': 6,
-          'firstLine': 1,
-          'firstColumn': 7
+          ]
         }
-      ],
-      'label': 'exp'
+      ]
     }
-  ]
+  ],
+  'label': 'add-exp'
 }"
 `);
   });
 
-  it("error detection works", () => {
+  it('error detection works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const { ast, errorNode } = parser.parse("1+2*");
+    const { ast, errorNode } = parser.parse('1+2*');
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
   'symbol': 'exp',
-  'label': 'exp',
   'children': [
     {
-      'symbol': 'add',
+      'symbol': 'exp_p_2',
       'children': [
         {
-          'text': '1',
-          'token': 'NUMBER',
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3
-        },
-        {
-          'symbol': 'mul',
+          'symbol': 'exp_p_3',
           'children': [
             {
-              'text': '2',
-              'token': 'NUMBER',
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4
-            },
-            {
-              'text': '*',
-              'token': '*',
-              'start': 3,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 4,
-              'lastColumn': 5
-            },
-            {
-              'error': {
-                'recovery': false,
-                'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-                'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-                'expected': [
-                  'NUMBER',
-                  '('
-                ],
-                'symbol': 'expo',
-                'lexer': {
-                  'text': '',
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '1',
+                      'token': 'NUMBER',
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    }
+                  ],
+                  'start': 0,
+                  'end': 1,
                   'firstLine': 1,
-                  'firstColumn': 5,
                   'lastLine': 1,
-                  'lastColumn': 5,
-                  'token': '$EOF',
-                  'start': 4,
-                  'end': 4
+                  'firstColumn': 1,
+                  'lastColumn': 2
                 }
-              },
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      'text': '+',
+      'token': '+',
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3
+    },
+    {
+      'symbol': 'exp_p_2',
+      'children': [
+        {
+          'symbol': 'exp_p_3',
+          'children': [
+            {
+              'symbol': 'exp_p_4',
+              'children': [
+                {
+                  'symbol': 'exp_p_end',
+                  'children': [
+                    {
+                      'text': '2',
+                      'token': 'NUMBER',
+                      'start': 2,
+                      'end': 3,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 3,
+                      'lastColumn': 4
+                    }
+                  ],
+                  'start': 2,
+                  'end': 3,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 3,
+                  'lastColumn': 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          'text': '*',
+          'token': '*',
+          'start': 3,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 4,
+          'lastColumn': 5
+        },
+        {
+          'error': {
+            'recovery': false,
+            'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+            'tip': ''NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+            'expected': [
+              'NUMBER',
+              '(',
+              '-'
+            ],
+            'symbol': 'exp_p_3',
+            'lexer': {
               'text': '',
               'firstLine': 1,
               'firstColumn': 5,
@@ -676,38 +923,40 @@ describe("ll", () => {
               'start': 4,
               'end': 4
             }
-          ],
-          'label': 'exp',
-          'start': 2,
-          'end': 4,
+          },
+          'text': '',
           'firstLine': 1,
+          'firstColumn': 5,
           'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 5
+          'lastColumn': 5,
+          'token': '$EOF',
+          'start': 4,
+          'end': 4
         }
       ],
-      'label': 'exp',
-      'start': 0,
       'end': 4,
-      'firstLine': 1,
       'lastLine': 1,
-      'firstColumn': 1,
       'lastColumn': 5
     }
-  ]
+  ],
+  'label': 'add-exp',
+  'end': 4,
+  'lastLine': 1,
+  'lastColumn': 5
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
 "{
   'error': {
     'recovery': false,
-    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-    'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+    'tip': ''NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
     'expected': [
       'NUMBER',
-      '('
+      '(',
+      '-'
     ],
-    'symbol': 'expo',
+    'symbol': 'exp_p_3',
     'lexer': {
       'text': '',
       'firstLine': 1,
@@ -731,59 +980,59 @@ describe("ll", () => {
 `);
   });
 
-  it("onAction works", () => {
+  it.only('onAction works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
     const astProcessor = new AstProcessor();
-    parser.parse("1 + 2*3-2^1^3", {
+    parser.parse('1 + 2*3-2^1^3', {
       onAction({ action, lexer }) {
         action(astProcessor, lexer);
-      }
+      },
     });
     expect(astProcessor.stack).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "left": Object {
-            "left": 1,
-            "op": "+",
-            "right": Object {
-              "left": 2,
-              "op": "*",
-              "right": 3,
-              "v": 6,
-            },
-            "v": 7,
-          },
-          "op": "-",
-          "right": Object {
-            "left": 2,
-            "op": "^",
-            "right": Object {
-              "left": 1,
-              "op": "^",
-              "right": 3,
-              "v": 1,
-            },
-            "v": 2,
-          },
-          "v": 5,
-        },
-      ]
-    `);
+Array [
+  Object {
+    "left": Object {
+      "left": 1,
+      "op": "+",
+      "right": Object {
+        "left": 2,
+        "op": "*",
+        "right": 3,
+        "v": 6,
+      },
+      "v": 7,
+    },
+    "op": "-",
+    "right": Object {
+      "left": 2,
+      "op": "^",
+      "right": Object {
+        "left": 1,
+        "op": "^",
+        "right": 3,
+        "v": 1,
+      },
+      "v": 2,
+    },
+    "v": 5,
+  },
+]
+`);
   });
 
-  it("del error recovery works", () => {
+  it('del error recovery works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     let errorCalled = 0;
     const parser = run(code);
-    parser.parse("1+/2", {
+    parser.parse('1+/2', {
       onErrorRecovery({ errorNode }, { action }) {
         errorCalled = errorNode;
-        expect(action).toBe("del");
+        expect(action).toBe('del');
         return { action };
-      }
+      },
     });
     expect(errorCalled).toMatchInlineSnapshot(`
 Object {
@@ -792,11 +1041,12 @@ Object {
     "errorMessage": "syntax error at line 1:
 1+/2
 --^
-'NUMBER', '(' expected.
+'NUMBER', '(', '-' expected.
 current token: '/'.",
     "expected": Array [
       "NUMBER",
       "(",
+      "-",
     ],
     "lexer": Object {
       "end": 3,
@@ -809,8 +1059,8 @@ current token: '/'.",
       "token": "/",
     },
     "recovery": true,
-    "symbol": "mul",
-    "tip": "'NUMBER', '(' expected.
+    "symbol": "exp_p_2",
+    "tip": "'NUMBER', '(', '-' expected.
 current token: '/'.",
   },
   "firstColumn": 3,
@@ -824,132 +1074,174 @@ current token: '/'.",
 `);
   });
 
-  it("add error recovery works", () => {
+  it('add error recovery works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     let errorCalled = 0;
     const parser = run(code);
-    const { ast, error, errorNode } = parser.parse("1+", {
+    const { ast, error, errorNode } = parser.parse('1+', {
       onErrorRecovery({ errorNode }, { action }) {
         errorCalled = errorNode;
-        if (action === "add" && errorNode.error.expected[0] === "NUMBER") {
+        if (action === 'add' && errorNode.error.expected[0] === 'NUMBER') {
           return {
             action,
-            token: "NUMBER",
-            text: "0"
+            token: 'NUMBER',
+            text: '0',
           };
         }
-      }
+      },
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'symbol': 'exp',
-  'label': 'exp',
-  'children': [
-    {
-      'symbol': 'add',
-      'children': [
-        {
-          'text': '1',
-          'token': 'NUMBER',
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
-        },
-        {
-          'text': '+',
-          'token': '+',
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3
-        },
-        {
-          'token': 'NUMBER',
-          'start': 2,
-          'end': 2,
+      "{
+        'symbol': 'exp',
+        'children': [
+          {
+            'symbol': 'exp_p_2',
+            'children': [
+              {
+                'symbol': 'exp_p_3',
+                'children': [
+                  {
+                    'symbol': 'exp_p_4',
+                    'children': [
+                      {
+                        'symbol': 'exp_p_end',
+                        'children': [
+                          {
+                            'text': '1',
+                            'token': 'NUMBER',
+                            'start': 0,
+                            'end': 1,
+                            'firstLine': 1,
+                            'lastLine': 1,
+                            'firstColumn': 1,
+                            'lastColumn': 2
+                          }
+                        ],
+                        'start': 0,
+                        'end': 1,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 1,
+                        'lastColumn': 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            'text': '+',
+            'token': '+',
+            'start': 1,
+            'end': 2,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 2,
+            'lastColumn': 3
+          },
+          {
+            'symbol': 'exp_p_2',
+            'children': [
+              {
+                'symbol': 'exp_p_3',
+                'children': [
+                  {
+                    'symbol': 'exp_p_4',
+                    'children': [
+                      {
+                        'symbol': 'exp_p_end',
+                        'children': [
+                          {
+                            'token': 'NUMBER',
+                            'start': 2,
+                            'end': 2,
+                            'firstLine': 1,
+                            'firstColumn': 3,
+                            'lastLine': 1,
+                            'lastColumn': 3,
+                            'text': '0'
+                          }
+                        ],
+                        'start': 2,
+                        'end': 2,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 3,
+                        'lastColumn': 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        'label': 'add-exp'
+      }"
+    `);
+    expect(prettyJson(error)).toMatchInlineSnapshot(`
+      "{
+        'recovery': true,
+        'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+        'tip': ''NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+        'expected': [
+          'NUMBER',
+          '(',
+          '-'
+        ],
+        'symbol': 'exp_p_2',
+        'lexer': {
+          'text': '',
           'firstLine': 1,
           'firstColumn': 3,
           'lastLine': 1,
           'lastColumn': 3,
-          'text': '0'
+          'token': '$EOF',
+          'start': 2,
+          'end': 2
         }
-      ],
-      'label': 'exp',
-      'start': 0,
-      'end': 2,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 3
-    }
-  ]
-}"
-`);
-    expect(prettyJson(error)).toMatchInlineSnapshot(`
-"{
-  'recovery': true,
-  'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-  'tip': ''NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-  'expected': [
-    'NUMBER',
-    '('
-  ],
-  'symbol': 'mul',
-  'lexer': {
-    'text': '',
-    'firstLine': 1,
-    'firstColumn': 3,
-    'lastLine': 1,
-    'lastColumn': 3,
-    'token': '$EOF',
-    'start': 2,
-    'end': 2
-  }
-}"
-`);
+      }"
+    `);
     expect(errorCalled).toMatchInlineSnapshot(`
-Object {
-  "end": 2,
-  "error": Object {
-    "errorMessage": "syntax error at line 1:
-1+
---^
-'NUMBER', '(' expected.
-current token: '$EOF'.",
-    "expected": Array [
-      "NUMBER",
-      "(",
-    ],
-    "lexer": Object {
-      "end": 2,
-      "firstColumn": 3,
-      "firstLine": 1,
-      "lastColumn": 3,
-      "lastLine": 1,
-      "start": 2,
-      "text": "",
-      "token": "$EOF",
-    },
-    "recovery": true,
-    "symbol": "mul",
-    "tip": "'NUMBER', '(' expected.
-current token: '$EOF'.",
-  },
-  "firstColumn": 3,
-  "firstLine": 1,
-  "lastColumn": 3,
-  "lastLine": 1,
-  "start": 2,
-  "text": "",
-  "token": "$EOF",
-}
-`);
+      Object {
+        "end": 2,
+        "error": Object {
+          "errorMessage": "syntax error at line 1:
+      1+
+      --^
+      'NUMBER', '(', '-' expected.
+      current token: '$EOF'.",
+          "expected": Array [
+            "NUMBER",
+            "(",
+            "-",
+          ],
+          "lexer": Object {
+            "end": 2,
+            "firstColumn": 3,
+            "firstLine": 1,
+            "lastColumn": 3,
+            "lastLine": 1,
+            "start": 2,
+            "text": "",
+            "token": "$EOF",
+          },
+          "recovery": true,
+          "symbol": "exp_p_2",
+          "tip": "'NUMBER', '(', '-' expected.
+      current token: '$EOF'.",
+        },
+        "firstColumn": 3,
+        "firstLine": 1,
+        "lastColumn": 3,
+        "lastLine": 1,
+        "start": 2,
+        "text": "",
+        "token": "$EOF",
+      }
+    `);
   });
 });

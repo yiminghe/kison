@@ -1,73 +1,82 @@
-const lexerConfig = require("../common/cal-lexer");
+const lexerConfig = require('../common/cal-lexer');
 
-module.exports = {
+module.exports = () => ({
   productions: [
     {
-      symbol: "expression",
-      rhs: ["AddtiveExpression"]
+      symbol: 'Exp',
+      rhs: ['primaryExpression'],
     },
+
     {
-      symbol: "AddtiveExpression",
-      rhs: ["multiplicativeExpression"]
-    },
-    {
-      symbol: "AddtiveExpression",
-      rhs: ["AddtiveExpression", "+", "multiplicativeExpression"],
+      symbol: 'Exp',
+      rhs: ['Exp', '^', 'Exp'],
       action() {
-        return this.$1 + this.$3;
-      }
+        return {
+          v: Math.pow(this.$1.v, this.$3.v),
+          l: this.$1,
+          r: this.$3,
+          op: '^',
+        };
+      },
     },
     {
-      symbol: "AddtiveExpression",
-      rhs: ["AddtiveExpression", "-", "multiplicativeExpression"],
+      symbol: 'Exp',
+      rhs: ['Exp', '-', 'Exp'],
       action() {
-        return this.$1 - this.$3;
-      }
+        return { v: this.$1.v - this.$3.v, l: this.$1, r: this.$3, op: '-' };
+      },
     },
     {
-      symbol: "multiplicativeExpression",
-      rhs: ["exponentExpression"]
-    },
-    {
-      symbol: "multiplicativeExpression",
-      rhs: ["multiplicativeExpression", "*", "primaryExpression"],
+      symbol: 'Exp',
+      rhs: ['Exp', '*', 'Exp'],
       action() {
-        return this.$1 * this.$3;
-      }
+        return { v: this.$1.v * this.$3.v, l: this.$1, r: this.$3, op: '*' };
+      },
     },
     {
-      symbol: "multiplicativeExpression",
-      rhs: ["multiplicativeExpression", "/", "primaryExpression"],
+      symbol: 'Exp',
+      rhs: ['Exp', '/', 'Exp'],
       action() {
-        return this.$1 / this.$3;
-      }
+        return { v: this.$1.v / this.$3.v, l: this.$1, r: this.$3, op: '/' };
+      },
     },
     {
-      symbol: "exponentExpression",
-      rhs: ["primaryExpression", "^", "exponentExpression"],
+      symbol: 'Exp',
+      precedence: 'UMINUS',
+      rhs: ['-', 'Exp'],
       action() {
-        return this.$1 ** this.$3;
-      }
+        return { v: -this.$2.v, op: 'UMINUS' };
+      },
     },
     {
-      symbol: "exponentExpression",
-      rhs: ["primaryExpression"]
+      symbol: 'Exp',
+      rhs: ['Exp', '+', 'Exp'],
+      action() {
+        return { v: this.$1.v + this.$3.v, l: this.$1, r: this.$3, op: '+' };
+      },
     },
     {
-      symbol: "primaryExpression",
-      rhs: ["(", "expression", ")"],
+      symbol: 'primaryExpression',
+      rhs: ['(', 'Exp', ')'],
       action() {
         return this.$2;
-      }
+      },
     },
     {
-      symbol: "primaryExpression",
-      rhs: ["NUMBER"],
+      symbol: 'primaryExpression',
+      rhs: ['NUMBER'],
       action() {
-        return Number(this.$1);
-      }
-    }
+        return { v: Number(this.$1) };
+      },
+    },
   ],
 
-  ...lexerConfig()
-};
+  operators: [
+    ['left', '+', '-'],
+    ['left', '*', '/'],
+    ['right', '^'],
+    ['right', 'UMINUS'],
+  ],
+
+  ...lexerConfig(),
+});

@@ -1,95 +1,20 @@
 const operators = [
-  ['binary', '=', '<=', '>=', '<>', '>', '<'],
-  ['binary', '&'],
-  ['binary', '+', '-'],
-  ['binary', '*', '/'],
-  ['binary', '^'],
-  ['unary', '%'],
-  ['unary', '+', '-'],
-  ['unary', '@'],
-  ['atom'],
+  ['left', '=', '<=', '>=', '<>', '>', '<'],
+  ['left', '&'],
+  ['left', '+', '-'],
+  ['left', '*', '/'],
+  ['left', '^'],
+  ['precedence', '%'],
+  ['precedence', 'UMINUS', 'UPLUS'],
+  ['precedence', '@'],
+  ['left', 'REF_UNION_OPERATOR'],
+  ['left', 'REF_INTERSECT_OPERATOR'],
+  ['left', 'REF_EXPAND_OPERATOR'],
 ];
 
-const nameMap = {
-  '=': 'equal',
-  '<=': 'lessEqual',
-  '>=': 'greaterEqual',
-  '<>': 'notEqual',
-  '<': 'less',
-  '>': 'greater',
-  '+': 'add',
-  '-': 'minus',
-  '*': 'mul',
-  '/': 'divide',
-  '^': 'expo',
-  '&': 'concat',
-  '%': 'percent',
-  '@': 'clip',
-};
-
-function getExpSymbol([type, op]) {
-  if (nameMap[op]) {
-    return `${type}-${nameMap[op]}-exp`;
-  }
-  return `${type}-exp`;
-}
-
-const startExp = getExpSymbol(operators[0]);
-
-const rightBinaryOperatorMap = {
-  // "^": 1
-};
-
-const rightUnaryOperatorMap = {
-  '%': 1,
-};
-
-function generateOpProductions() {
-  const ret = [];
-  operators.slice(0, -1).forEach((o, operatorIndex) => {
-    const type = operators[operatorIndex][0];
-    const ops = operators[operatorIndex].slice(1);
-    const current = ops[0];
-    const exp = getExpSymbol(operators[operatorIndex]);
-    const nextExp = getExpSymbol(operators[operatorIndex + 1]);
-    ret.push({
-      symbol: exp,
-      rhs: [nextExp],
-    });
-    if (type === 'unary') {
-      for (const o of ops) {
-        if (rightUnaryOperatorMap[o]) {
-          ret.push({
-            symbol: exp,
-            rhs: [exp, o],
-          });
-        } else {
-          ret.push({
-            symbol: exp,
-            rhs: [o, exp],
-          });
-        }
-      }
-    } else {
-      if (rightBinaryOperatorMap[current]) {
-        for (const o of ops) {
-          ret.push({
-            symbol: exp,
-            rhs: [nextExp, o, exp],
-          });
-        }
-      } else {
-        for (const o of ops) {
-          ret.push({
-            symbol: exp,
-            rhs: [exp, o, nextExp],
-          });
-        }
-      }
-    }
-  });
-  return ret;
-}
+const binaryOperators = [].concat(
+  ...operators.slice(0, 5).map(a => a.slice(1)),
+);
 
 const decimalFractionLiteral = '(?:[0-9][0-9]*)';
 const decimalIntegerLiteral = '(?:0|[1-9][0-9]*)';
@@ -144,34 +69,61 @@ const my = {
 
 module.exports = () => ({
   my,
+  operators,
   productions: [
     {
       symbol: 'formula',
-      rhs: [startExp],
+      rhs: ['exp'],
     },
-    ...generateOpProductions(),
+    ...binaryOperators.map(op => ({
+      symbol: 'exp',
+      rhs: ['exp', op, 'exp'],
+      label: 'binary-exp',
+    })),
     {
-      symbol: 'atom-exp',
-      rhs: ['(', startExp, ')'],
+      symbol: 'exp',
+      rhs: ['+', 'exp'],
+      precedence: 'UPLUS',
+      label: 'prefix-exp',
     },
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
+      rhs: ['-', 'exp'],
+      precedence: 'UMINUS',
+      label: 'prefix-exp',
+    },
+    {
+      symbol: 'exp',
+      rhs: ['@', 'exp'],
+      label: 'clip-exp',
+    },
+    {
+      symbol: 'exp',
+      rhs: ['exp', '%'],
+      label: 'percentage-exp',
+    },
+    {
+      symbol: 'exp',
+      rhs: ['(', 'exp', ')'],
+    },
+    {
+      symbol: 'exp',
       rhs: ['NUMBER'],
     },
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
       rhs: ['STRING'],
     },
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
       rhs: ['LOGIC'],
     },
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
       rhs: ['ERROR'],
     },
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
       rhs: ['reference'],
     },
     {
@@ -189,39 +141,30 @@ module.exports = () => ({
     // reference operator: : SPACE ,
     {
       symbol: 'reference',
-      rhs: ['union-reference'],
+      rhs: ['reference', 'REF_UNION_OPERATOR', 'reference'],
+      label: 'union-reference',
     },
     {
-      symbol: 'union-reference',
-      rhs: ['union-reference', 'REF_UNION_OPERATOR', 'intersect-reference'],
+      symbol: 'reference',
+      rhs: ['reference', 'reference'],
+      precedence: 'REF_INTERSECT_OPERATOR',
+      label: 'intersect-reference',
     },
     {
-      symbol: 'union-reference',
-      rhs: ['intersect-reference'],
+      symbol: 'reference',
+      rhs: ['reference', 'REF_EXPAND_OPERATOR', 'reference'],
+      label: 'expand-reference',
     },
     {
-      symbol: 'intersect-reference',
-      rhs: ['intersect-reference', 'expand-reference'],
-    },
-    {
-      symbol: 'intersect-reference',
-      rhs: ['expand-reference'],
-    },
-    {
-      symbol: 'expand-reference',
-      rhs: ['expand-reference', 'REF_EXPAND_OPERATOR', 'reference-item'],
-    },
-    {
-      symbol: 'expand-reference',
+      symbol: 'reference',
       rhs: ['reference-item'],
     },
-
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
       rhs: ['function'],
     },
     {
-      symbol: 'atom-exp',
+      symbol: 'exp',
       rhs: ['array'],
     },
     {
@@ -267,7 +210,7 @@ module.exports = () => ({
     {
       symbol: 'argument',
 
-      rhs: [startExp],
+      rhs: ['exp'],
     },
     {
       symbol: 'arguments',

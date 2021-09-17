@@ -43,131 +43,165 @@ npx kison -g xx-grammar.js
 
 ### LALR
 
-cal-grammar.js:
+cal-grammar.js: support operator precedence
 
 ``` javascript
 module.exports = {
-    productions: [
-        {
-            symbol: 'expressions',
-            rhs: ['e']
-        },
-
-        {
-            symbol: 'e',
-            rhs: ['e', '-', 'e'],
-            action() {
-                return this.$1 - this.$3;
-            }
-        },
-        {
-            symbol: 'e',
-            rhs: ['e', '+', 'e'],
-            action() {
-                return this.$1 + this.$3;
-            }
-        },
-        {
-            symbol: 'e',
-            rhs: ['NUMBER'],
-            action() {
-                return Number(this.$1);
-            }
-        }
-    ],
-
-    lexer: {
-        rules: [
-            {
-                regexp: /^\s+/
-            },
-            {
-                regexp: /^[0-9]+(\.[0-9]+)?\b/,
-                token: 'NUMBER'
-            },
-            {
-                regexp: /^\+/,
-                token: '+'
-            },
-            {
-                regexp: /^-/,
-                token: '-'
-            }
-        ]
-    }
-};
-```
-### LL
-
-cal-grammar.js: support direct left recursive.
-
-``` javascript
-module.exports = () => ({
   productions: [
     {
-      symbol: "Exp",
-      rhs: ["AddExp"]
+      symbol: 'Exp',
+      rhs: ['primaryExpression'],
+    },
+
+    {
+      symbol: 'Exp',
+      rhs: ['Exp', '^', 'Exp'],
+      action() {
+        return {
+          v: Math.pow(this.$1.v, this.$3.v),
+          l: this.$1,
+          r: this.$3,
+          op: '^',
+        };
+      },
     },
     {
-      symbol: "AddExp",
-      rhs: ["MulExp"]
+      symbol: 'Exp',
+      rhs: ['Exp', '-', 'Exp'],
+      action() {
+        return { v: this.$1.v - this.$3.v, l: this.$1, r: this.$3, op: '-' };
+      },
     },
     {
-      symbol: "AddExp",
-      rhs: [
-        "AddExp",
-        "+",
-        "MulExp",
-      ]
+      symbol: 'Exp',
+      rhs: ['Exp', '*', 'Exp'],
+      action() {
+        return { v: this.$1.v * this.$3.v, l: this.$1, r: this.$3, op: '*' };
+      },
     },
     {
-      symbol: "MulExp",
-      rhs: ["PrimExp"]
+      symbol: 'Exp',
+      rhs: ['Exp', '/', 'Exp'],
+      action() {
+        return { v: this.$1.v / this.$3.v, l: this.$1, r: this.$3, op: '/' };
+      },
     },
     {
-      symbol: "MulExp",
-      rhs: [
-        "MulExp",
-        "*",
-        "PrimExp",
-      ]
+      symbol: 'Exp',
+      precedence: 'UMINUS',
+      rhs: ['-', 'Exp'],
+      action() {
+        return { v: -this.$2.v, op: 'UMINUS' };
+      },
     },
     {
-      symbol: "PrimExp",
-      rhs: [
-        "NUMBER",
-      ]
+      symbol: 'Exp',
+      rhs: ['Exp', '+', 'Exp'],
+      action() {
+        return { v: this.$1.v + this.$3.v, l: this.$1, r: this.$3, op: '+' };
+      },
     },
     {
-      symbol: "PrimExp",
-      rhs: ["(", "AddExp", ")"]
-    }
+      symbol: 'primaryExpression',
+      rhs: ['(', 'Exp', ')'],
+      action() {
+        return this.$2;
+      },
+    },
+    {
+      symbol: 'primaryExpression',
+      rhs: ['NUMBER'],
+      action() {
+        return { v: Number(this.$1) };
+      },
+    },
+  ],
+
+  operators: [
+    ['left', '+', '-'],
+    ['left', '*', '/'],
+    ['right', '^'],
+    ['right', 'UMINUS'],
   ],
 
   lexer: {
     rules: [
       {
-        regexp: /^\s+/
+        regexp: /^\s+/,
+        token: '$HIDDEN',
+      },
+      {
+        regexp: /^[0-9]+(\.[0-9]+)?\b/,
+        token: 'NUMBER'
+      }
+    ]
+  }
+};
+```
+### LL
+
+cal-grammar.js: support direct left recursive and operator precedence. 
+
+``` javascript
+module.exports = () => ({
+  productions: [
+    {
+      symbol: 'exp',
+      rhs: ['exp', '+', 'exp'],
+      label: 'add-exp',
+    },
+    {
+      symbol: 'exp',
+      rhs: ['exp', '-', 'exp'],
+    },
+    {
+      symbol: 'exp',
+      rhs: ['exp', '*', 'exp'],
+    },
+    {
+      symbol: 'exp',
+      rhs: ['exp', '/', 'exp'],
+    },
+    {
+      symbol: 'exp',
+      rhs: ['exp', '^', 'exp'],
+    },
+    {
+      symbol: 'exp',
+      rhs: [
+        '-',
+        'exp',
+      ],
+      precedence: 'UMINUS',
+    },
+    {
+      symbol: 'exp',
+      rhs: [
+        'NUMBER',
+      ],
+    },
+    {
+      symbol: 'exp',
+      rhs: ['(', 'exp', ')'],
+    },
+  ],
+
+  operators: [
+    ['left', '+', '-'],
+    ['left', '*', '/'],
+    ['right', '^'],
+    ['right', 'UMINUS'],
+  ],
+
+  lexer: {
+    rules: [
+      {
+        regexp: /^\s+/,
+        token: '$HIDDEN',
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,
         token: "NUMBER"
-      },
-      {
-        regexp: /^\+/,
-        token: "+"
-      },
-      {
-        regexp: /^\(/,
-        token: "("
-      },
-      {
-        regexp: /^\)/,
-        token: ")"
-      },
-      {
-        regexp: /^\*/,
-        token: "*"
       },
     ]
   }

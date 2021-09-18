@@ -6,7 +6,6 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
   'children': [
     {
       'symbol': 'exp',
-      'label': 'clip-exp',
       'children': [
         {
           'text': '@',
@@ -19,87 +18,151 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
           'lastColumn': 2
         },
         {
-          'symbol': 'function',
+          'symbol': 'exp',
           'children': [
             {
-              'text': 'sum',
-              'token': 'FUNCTION',
-              'start': 1,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 5
-            },
-            {
-              'text': '(',
-              'token': '(',
-              'start': 4,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 6
-            },
-            {
-              'symbol': 'exp',
-              'label': 'clip-exp',
+              'symbol': 'function',
               'children': [
                 {
-                  'text': '@',
-                  'token': '@',
-                  'start': 5,
-                  'end': 6,
+                  'text': 'sum',
+                  'token': 'FUNCTION',
+                  'start': 1,
+                  'end': 4,
                   'firstLine': 1,
                   'lastLine': 1,
-                  'firstColumn': 6,
-                  'lastColumn': 7
+                  'firstColumn': 2,
+                  'lastColumn': 5
                 },
                 {
-                  'symbol': 'reference',
-                  'children': [
-                    {
-                      'text': 'a1:a2',
-                      'token': 'CELL',
-                      'start': 6,
-                      'end': 11,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 7,
-                      'lastColumn': 12
-                    },
-                    {
-                      'text': 'a3#',
-                      'token': 'CELL',
-                      'start': 12,
-                      'end': 15,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 13,
-                      'lastColumn': 16
-                    }
-                  ],
-                  'label': 'intersect-reference',
-                  'start': 6,
-                  'end': 15,
+                  'text': '(',
+                  'token': '(',
+                  'start': 4,
+                  'end': 5,
                   'firstLine': 1,
                   'lastLine': 1,
-                  'firstColumn': 7,
-                  'lastColumn': 16
+                  'firstColumn': 5,
+                  'lastColumn': 6
+                },
+                {
+                  'symbol': 'arguments',
+                  'children': [
+                    {
+                      'symbol': 'argument',
+                      'children': [
+                        {
+                          'symbol': 'exp',
+                          'children': [
+                            {
+                              'text': '@',
+                              'token': '@',
+                              'start': 5,
+                              'end': 6,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 7
+                            },
+                            {
+                              'symbol': 'exp',
+                              'children': [
+                                {
+                                  'symbol': 'reference',
+                                  'children': [
+                                    {
+                                      'symbol': 'reference',
+                                      'children': [
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'a1:a2',
+                                              'token': 'CELL',
+                                              'start': 6,
+                                              'end': 11,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 7,
+                                              'lastColumn': 12
+                                            }
+                                          ],
+                                          'start': 6,
+                                          'end': 11,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 7,
+                                          'lastColumn': 12
+                                        }
+                                      ],
+                                      'start': 6,
+                                      'end': 11,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 7,
+                                      'lastColumn': 12
+                                    },
+                                    {
+                                      'symbol': 'reference',
+                                      'children': [
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'a3#',
+                                              'token': 'CELL',
+                                              'start': 12,
+                                              'end': 15,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 13,
+                                              'lastColumn': 16
+                                            }
+                                          ],
+                                          'start': 12,
+                                          'end': 15,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 13,
+                                          'lastColumn': 16
+                                        }
+                                      ],
+                                      'start': 12,
+                                      'end': 15,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 13,
+                                      'lastColumn': 16
+                                    }
+                                  ],
+                                  'label': 'intersect-reference'
+                                }
+                              ]
+                            }
+                          ],
+                          'label': 'clip-exp',
+                          'start': 5,
+                          'firstLine': 1,
+                          'firstColumn': 6
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  'text': ')',
+                  'token': ')',
+                  'start': 15,
+                  'end': 16,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 16,
+                  'lastColumn': 17
                 }
               ],
-              'start': 5,
-              'firstLine': 1,
-              'firstColumn': 6
-            },
-            {
-              'text': ')',
-              'token': ')',
-              'start': 15,
+              'start': 1,
               'end': 16,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 16,
+              'firstColumn': 2,
               'lastColumn': 17
             }
           ],
@@ -111,17 +174,12 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
           'lastColumn': 17
         }
       ],
+      'label': 'clip-exp',
       'start': 0,
-      'end': 16,
       'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 17
+      'firstColumn': 1
     }
-  ],
-  'start': 0,
-  'firstLine': 1,
-  'firstColumn': 1
+  ]
 }"
 `;
 
@@ -130,203 +188,296 @@ exports[`excel-formula-parser structure reference works 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'function',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'sum',
-          'token': 'FUNCTION',
-          'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '(',
-          'token': '(',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'symbol': 'arguments',
+          'symbol': 'function',
           'children': [
             {
-              'symbol': 'structure-reference',
-              'children': [
-                {
-                  'text': 't',
-                  'token': 'TABLE_NAME',
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                },
-                {
-                  'symbol': 'table-specifier',
-                  'children': [
-                    {
-                      'text': '[',
-                      'token': '[',
-                      'start': 5,
-                      'end': 6,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 6,
-                      'lastColumn': 7
-                    },
-                    {
-                      'symbol': 'table-column-specifier',
-                      'children': [
-                        {
-                          'text': '[#total]',
-                          'token': 'TABLE_ITEM_SPECIFIER',
-                          'start': 6,
-                          'end': 14,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 7,
-                          'lastColumn': 15
-                        },
-                        {
-                          'text': ',',
-                          'token': 'SPECIFIER_SEPARATOR',
-                          'start': 14,
-                          'end': 15,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 15,
-                          'lastColumn': 16
-                        },
-                        {
-                          'text': '[y]',
-                          'token': 'TABLE_COLUMN_SPECIFIER',
-                          'start': 15,
-                          'end': 18,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 16,
-                          'lastColumn': 19
-                        }
-                      ],
-                      'start': 6,
-                      'end': 18,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 7,
-                      'lastColumn': 19
-                    },
-                    {
-                      'text': ']',
-                      'token': ']',
-                      'start': 18,
-                      'end': 19,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 19,
-                      'lastColumn': 20
-                    }
-                  ],
-                  'start': 5,
-                  'end': 19,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 6,
-                  'lastColumn': 20
-                }
-              ],
-              'start': 4,
-              'firstLine': 1,
-              'firstColumn': 5
-            },
-            {
-              'text': ',',
-              'token': 'ARGUMENT_SEPARATOR',
-              'start': 19,
-              'end': 20,
+              'text': 'sum',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 20,
-              'lastColumn': 21
+              'firstColumn': 1,
+              'lastColumn': 4
             },
             {
-              'symbol': 'structure-reference',
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'symbol': 'arguments',
               'children': [
                 {
-                  'text': 't',
-                  'token': 'TABLE_NAME',
-                  'start': 20,
-                  'end': 21,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 21,
-                  'lastColumn': 22
-                },
-                {
-                  'symbol': 'table-specifier',
+                  'symbol': 'argument',
                   'children': [
                     {
-                      'text': '[',
-                      'token': '[',
-                      'start': 21,
-                      'end': 22,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 22,
-                      'lastColumn': 23
-                    },
-                    {
-                      'text': 'x',
-                      'token': 'TABLE_COLUMN_SPECIFIER',
-                      'start': 22,
-                      'end': 23,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 23,
-                      'lastColumn': 24
-                    },
-                    {
-                      'text': ']',
-                      'token': ']',
-                      'start': 23,
-                      'end': 24,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 24,
-                      'lastColumn': 25
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'symbol': 'structure-reference',
+                                  'children': [
+                                    {
+                                      'text': 't',
+                                      'token': 'TABLE_NAME',
+                                      'start': 4,
+                                      'end': 5,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 5,
+                                      'lastColumn': 6
+                                    },
+                                    {
+                                      'symbol': 'table-specifier',
+                                      'children': [
+                                        {
+                                          'text': '[',
+                                          'token': '[',
+                                          'start': 5,
+                                          'end': 6,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 6,
+                                          'lastColumn': 7
+                                        },
+                                        {
+                                          'symbol': 'table-specifier-inner',
+                                          'children': [
+                                            {
+                                              'symbol': 'table-column-specifier',
+                                              'children': [
+                                                {
+                                                  'symbol': 'table-specifier-item',
+                                                  'children': [
+                                                    {
+                                                      'text': '[#total]',
+                                                      'token': 'TABLE_ITEM_SPECIFIER',
+                                                      'start': 6,
+                                                      'end': 14,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 7,
+                                                      'lastColumn': 15
+                                                    }
+                                                  ],
+                                                  'start': 6,
+                                                  'end': 14,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 7,
+                                                  'lastColumn': 15
+                                                },
+                                                {
+                                                  'text': ',',
+                                                  'token': 'SPECIFIER_SEPARATOR',
+                                                  'start': 14,
+                                                  'end': 15,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 15,
+                                                  'lastColumn': 16
+                                                },
+                                                {
+                                                  'symbol': 'table-specifier-item',
+                                                  'children': [
+                                                    {
+                                                      'text': '[y]',
+                                                      'token': 'TABLE_COLUMN_SPECIFIER',
+                                                      'start': 15,
+                                                      'end': 18,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 16,
+                                                      'lastColumn': 19
+                                                    }
+                                                  ],
+                                                  'start': 15,
+                                                  'end': 18,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 16,
+                                                  'lastColumn': 19
+                                                }
+                                              ],
+                                              'start': 6,
+                                              'firstLine': 1,
+                                              'firstColumn': 7
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          'text': ']',
+                                          'token': ']',
+                                          'start': 18,
+                                          'end': 19,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 19,
+                                          'lastColumn': 20
+                                        }
+                                      ],
+                                      'start': 5,
+                                      'end': 19,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 6,
+                                      'lastColumn': 20
+                                    }
+                                  ],
+                                  'start': 4,
+                                  'firstLine': 1,
+                                  'firstColumn': 5
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
-                  ],
-                  'start': 21,
-                  'end': 24,
+                  ]
+                },
+                {
+                  'text': ',',
+                  'token': 'ARGUMENT_SEPARATOR',
+                  'start': 19,
+                  'end': 20,
                   'firstLine': 1,
                   'lastLine': 1,
-                  'firstColumn': 22,
-                  'lastColumn': 25
+                  'firstColumn': 20,
+                  'lastColumn': 21
+                },
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'symbol': 'structure-reference',
+                                  'children': [
+                                    {
+                                      'text': 't',
+                                      'token': 'TABLE_NAME',
+                                      'start': 20,
+                                      'end': 21,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 21,
+                                      'lastColumn': 22
+                                    },
+                                    {
+                                      'symbol': 'table-specifier',
+                                      'children': [
+                                        {
+                                          'text': '[',
+                                          'token': '[',
+                                          'start': 21,
+                                          'end': 22,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 22,
+                                          'lastColumn': 23
+                                        },
+                                        {
+                                          'symbol': 'table-specifier-inner',
+                                          'children': [
+                                            {
+                                              'symbol': 'table-column-specifier',
+                                              'children': [
+                                                {
+                                                  'symbol': 'table-specifier-item',
+                                                  'children': [
+                                                    {
+                                                      'text': 'x',
+                                                      'token': 'TABLE_COLUMN_SPECIFIER',
+                                                      'start': 22,
+                                                      'end': 23,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 23,
+                                                      'lastColumn': 24
+                                                    }
+                                                  ],
+                                                  'start': 22,
+                                                  'end': 23,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 23,
+                                                  'lastColumn': 24
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          'text': ']',
+                                          'token': ']',
+                                          'start': 23,
+                                          'end': 24,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 24,
+                                          'lastColumn': 25
+                                        }
+                                      ],
+                                      'start': 21,
+                                      'end': 24,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 22,
+                                      'lastColumn': 25
+                                    }
+                                  ],
+                                  'start': 20,
+                                  'firstLine': 1,
+                                  'firstColumn': 21
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
-              ],
-              'start': 20,
+              ]
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 24,
+              'end': 25,
               'firstLine': 1,
-              'firstColumn': 21
+              'lastLine': 1,
+              'firstColumn': 25,
+              'lastColumn': 26
             }
           ],
-          'start': 4,
-          'firstLine': 1,
-          'firstColumn': 5
-        },
-        {
-          'text': ')',
-          'token': ')',
-          'start': 24,
+          'start': 0,
           'end': 25,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 25,
+          'firstColumn': 1,
           'lastColumn': 26
         }
       ],
@@ -337,13 +488,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
       'firstColumn': 1,
       'lastColumn': 26
     }
-  ],
-  'start': 0,
-  'end': 25,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 26
+  ]
 }"
 `;
 
@@ -352,68 +497,101 @@ exports[`excel-formula-parser structure reference works for space inside column 
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'structure-reference',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 't',
-          'token': 'TABLE_NAME',
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2
-        },
-        {
-          'symbol': 'table-specifier',
+          'symbol': 'reference',
           'children': [
             {
-              'text': '[',
-              'token': '[',
-              'start': 1,
-              'end': 2,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 3
-            },
-            {
-              'text': 'a b',
-              'token': 'TABLE_COLUMN_SPECIFIER',
-              'start': 2,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 6
-            },
-            {
-              'text': ']',
-              'token': ']',
-              'start': 5,
-              'end': 6,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 6,
-              'lastColumn': 7
+              'symbol': 'reference-item',
+              'children': [
+                {
+                  'symbol': 'structure-reference',
+                  'children': [
+                    {
+                      'text': 't',
+                      'token': 'TABLE_NAME',
+                      'start': 0,
+                      'end': 1,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 2
+                    },
+                    {
+                      'symbol': 'table-specifier',
+                      'children': [
+                        {
+                          'text': '[',
+                          'token': '[',
+                          'start': 1,
+                          'end': 2,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 2,
+                          'lastColumn': 3
+                        },
+                        {
+                          'symbol': 'table-specifier-inner',
+                          'children': [
+                            {
+                              'symbol': 'table-column-specifier',
+                              'children': [
+                                {
+                                  'symbol': 'table-specifier-item',
+                                  'children': [
+                                    {
+                                      'text': 'a b',
+                                      'token': 'TABLE_COLUMN_SPECIFIER',
+                                      'start': 2,
+                                      'end': 5,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 3,
+                                      'lastColumn': 6
+                                    }
+                                  ],
+                                  'start': 2,
+                                  'end': 5,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 3,
+                                  'lastColumn': 6
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          'text': ']',
+                          'token': ']',
+                          'start': 5,
+                          'end': 6,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 6,
+                          'lastColumn': 7
+                        }
+                      ],
+                      'start': 1,
+                      'end': 6,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 7
+                    }
+                  ],
+                  'start': 0,
+                  'firstLine': 1,
+                  'firstColumn': 1
+                }
+              ]
             }
-          ],
-          'start': 1,
-          'end': 6,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 7
+          ]
         }
-      ],
-      'start': 0,
-      'firstLine': 1,
-      'firstColumn': 1
+      ]
     }
-  ],
-  'start': 0,
-  'firstLine': 1,
-  'firstColumn': 1
+  ]
 }"
 `;
 
@@ -422,89 +600,106 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'structure-reference',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'DeptSales',
-          'token': 'TABLE_NAME',
-          'start': 0,
-          'end': 9,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 10
-        },
-        {
-          'symbol': 'table-specifier',
+          'symbol': 'reference',
           'children': [
             {
-              'text': '[',
-              'token': '[',
-              'start': 9,
-              'end': 10,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 10,
-              'lastColumn': 11
-            },
-            {
-              'symbol': 'table-this-row',
+              'symbol': 'reference-item',
               'children': [
                 {
-                  'text': '@',
-                  'token': 'TABLE_@',
-                  'start': 10,
-                  'end': 11,
+                  'symbol': 'structure-reference',
+                  'children': [
+                    {
+                      'text': 'DeptSales',
+                      'token': 'TABLE_NAME',
+                      'start': 0,
+                      'end': 9,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 10
+                    },
+                    {
+                      'symbol': 'table-specifier',
+                      'children': [
+                        {
+                          'text': '[',
+                          'token': '[',
+                          'start': 9,
+                          'end': 10,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 10,
+                          'lastColumn': 11
+                        },
+                        {
+                          'symbol': 'table-specifier-inner',
+                          'children': [
+                            {
+                              'symbol': 'table-this-row',
+                              'children': [
+                                {
+                                  'text': '@',
+                                  'token': 'TABLE_@',
+                                  'start': 10,
+                                  'end': 11,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 11,
+                                  'lastColumn': 12
+                                },
+                                {
+                                  'text': 'Commission Amount',
+                                  'token': 'TABLE_COLUMN_SPECIFIER',
+                                  'start': 11,
+                                  'end': 28,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 12,
+                                  'lastColumn': 29
+                                }
+                              ],
+                              'start': 10,
+                              'end': 28,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 11,
+                              'lastColumn': 29
+                            }
+                          ]
+                        },
+                        {
+                          'text': ']',
+                          'token': ']',
+                          'start': 28,
+                          'end': 29,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 29,
+                          'lastColumn': 30
+                        }
+                      ],
+                      'start': 9,
+                      'end': 29,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 10,
+                      'lastColumn': 30
+                    }
+                  ],
+                  'start': 0,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 12
-                },
-                {
-                  'text': 'Commission Amount',
-                  'token': 'TABLE_COLUMN_SPECIFIER',
-                  'start': 11,
-                  'end': 28,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 12,
-                  'lastColumn': 29
+                  'firstColumn': 1
                 }
-              ],
-              'start': 10,
-              'end': 28,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 29
-            },
-            {
-              'text': ']',
-              'token': ']',
-              'start': 28,
-              'end': 29,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 29,
-              'lastColumn': 30
+              ]
             }
-          ],
-          'start': 9,
-          'end': 29,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 10,
-          'lastColumn': 30
+          ]
         }
-      ],
-      'start': 0,
-      'firstLine': 1,
-      'firstColumn': 1
+      ]
     }
-  ],
-  'start': 0,
-  'firstLine': 1,
-  'firstColumn': 1
+  ]
 }"
 `;
 
@@ -513,89 +708,106 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'structure-reference',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'DeptSales',
-          'token': 'TABLE_NAME',
-          'start': 0,
-          'end': 9,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 10
-        },
-        {
-          'symbol': 'table-specifier',
+          'symbol': 'reference',
           'children': [
             {
-              'text': '[',
-              'token': '[',
-              'start': 9,
-              'end': 10,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 10,
-              'lastColumn': 11
-            },
-            {
-              'symbol': 'table-this-row',
+              'symbol': 'reference-item',
               'children': [
                 {
-                  'text': '@',
-                  'token': 'TABLE_@',
-                  'start': 10,
-                  'end': 11,
+                  'symbol': 'structure-reference',
+                  'children': [
+                    {
+                      'text': 'DeptSales',
+                      'token': 'TABLE_NAME',
+                      'start': 0,
+                      'end': 9,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 10
+                    },
+                    {
+                      'symbol': 'table-specifier',
+                      'children': [
+                        {
+                          'text': '[',
+                          'token': '[',
+                          'start': 9,
+                          'end': 10,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 10,
+                          'lastColumn': 11
+                        },
+                        {
+                          'symbol': 'table-specifier-inner',
+                          'children': [
+                            {
+                              'symbol': 'table-this-row',
+                              'children': [
+                                {
+                                  'text': '@',
+                                  'token': 'TABLE_@',
+                                  'start': 10,
+                                  'end': 11,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 11,
+                                  'lastColumn': 12
+                                },
+                                {
+                                  'text': '[Commission Amount]',
+                                  'token': 'TABLE_COLUMN_SPECIFIER',
+                                  'start': 11,
+                                  'end': 30,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 12,
+                                  'lastColumn': 31
+                                }
+                              ],
+                              'start': 10,
+                              'end': 30,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 11,
+                              'lastColumn': 31
+                            }
+                          ]
+                        },
+                        {
+                          'text': ']',
+                          'token': ']',
+                          'start': 30,
+                          'end': 31,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 31,
+                          'lastColumn': 32
+                        }
+                      ],
+                      'start': 9,
+                      'end': 31,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 10,
+                      'lastColumn': 32
+                    }
+                  ],
+                  'start': 0,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 12
-                },
-                {
-                  'text': '[Commission Amount]',
-                  'token': 'TABLE_COLUMN_SPECIFIER',
-                  'start': 11,
-                  'end': 30,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 12,
-                  'lastColumn': 31
+                  'firstColumn': 1
                 }
-              ],
-              'start': 10,
-              'end': 30,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 31
-            },
-            {
-              'text': ']',
-              'token': ']',
-              'start': 30,
-              'end': 31,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 31,
-              'lastColumn': 32
+              ]
             }
-          ],
-          'start': 9,
-          'end': 31,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 10,
-          'lastColumn': 32
+          ]
         }
-      ],
-      'start': 0,
-      'firstLine': 1,
-      'firstColumn': 1
+      ]
     }
-  ],
-  'start': 0,
-  'firstLine': 1,
-  'firstColumn': 1
+  ]
 }"
 `;
 
@@ -604,99 +816,135 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'structure-reference',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'DeptSales',
-          'token': 'TABLE_NAME',
-          'start': 0,
-          'end': 9,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 10
-        },
-        {
-          'symbol': 'table-specifier',
+          'symbol': 'reference',
           'children': [
             {
-              'text': '[',
-              'token': '[',
-              'start': 9,
-              'end': 10,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 10,
-              'lastColumn': 11
-            },
-            {
-              'symbol': 'table-column-specifier',
+              'symbol': 'reference-item',
               'children': [
                 {
-                  'text': '[#This Row]',
-                  'token': 'TABLE_ITEM_SPECIFIER',
-                  'start': 10,
-                  'end': 21,
+                  'symbol': 'structure-reference',
+                  'children': [
+                    {
+                      'text': 'DeptSales',
+                      'token': 'TABLE_NAME',
+                      'start': 0,
+                      'end': 9,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 10
+                    },
+                    {
+                      'symbol': 'table-specifier',
+                      'children': [
+                        {
+                          'text': '[',
+                          'token': '[',
+                          'start': 9,
+                          'end': 10,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 10,
+                          'lastColumn': 11
+                        },
+                        {
+                          'symbol': 'table-specifier-inner',
+                          'children': [
+                            {
+                              'symbol': 'table-column-specifier',
+                              'children': [
+                                {
+                                  'symbol': 'table-specifier-item',
+                                  'children': [
+                                    {
+                                      'text': '[#This Row]',
+                                      'token': 'TABLE_ITEM_SPECIFIER',
+                                      'start': 10,
+                                      'end': 21,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 11,
+                                      'lastColumn': 22
+                                    }
+                                  ],
+                                  'start': 10,
+                                  'end': 21,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 11,
+                                  'lastColumn': 22
+                                },
+                                {
+                                  'text': ',',
+                                  'token': 'SPECIFIER_SEPARATOR',
+                                  'start': 21,
+                                  'end': 22,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 22,
+                                  'lastColumn': 23
+                                },
+                                {
+                                  'symbol': 'table-specifier-item',
+                                  'children': [
+                                    {
+                                      'text': '[Commission Amount]',
+                                      'token': 'TABLE_COLUMN_SPECIFIER',
+                                      'start': 23,
+                                      'end': 42,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 24,
+                                      'lastColumn': 43
+                                    }
+                                  ],
+                                  'start': 23,
+                                  'end': 42,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 24,
+                                  'lastColumn': 43
+                                }
+                              ],
+                              'start': 10,
+                              'firstLine': 1,
+                              'firstColumn': 11
+                            }
+                          ]
+                        },
+                        {
+                          'text': ']',
+                          'token': ']',
+                          'start': 42,
+                          'end': 43,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 43,
+                          'lastColumn': 44
+                        }
+                      ],
+                      'start': 9,
+                      'end': 43,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 10,
+                      'lastColumn': 44
+                    }
+                  ],
+                  'start': 0,
                   'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 22
-                },
-                {
-                  'text': ',',
-                  'token': 'SPECIFIER_SEPARATOR',
-                  'start': 21,
-                  'end': 22,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 22,
-                  'lastColumn': 23
-                },
-                {
-                  'text': '[Commission Amount]',
-                  'token': 'TABLE_COLUMN_SPECIFIER',
-                  'start': 23,
-                  'end': 42,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 24,
-                  'lastColumn': 43
+                  'firstColumn': 1
                 }
-              ],
-              'start': 10,
-              'end': 42,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 43
-            },
-            {
-              'text': ']',
-              'token': ']',
-              'start': 42,
-              'end': 43,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 43,
-              'lastColumn': 44
+              ]
             }
-          ],
-          'start': 9,
-          'end': 43,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 10,
-          'lastColumn': 44
+          ]
         }
-      ],
-      'start': 0,
-      'firstLine': 1,
-      'firstColumn': 1
+      ]
     }
-  ],
-  'start': 0,
-  'firstLine': 1,
-  'firstColumn': 1
+  ]
 }"
 `;
 
@@ -705,46 +953,94 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'function',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'sum',
-          'token': 'FUNCTION',
+          'symbol': 'function',
+          'children': [
+            {
+              'text': 'sum',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 4
+            },
+            {
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'symbol': 'arguments',
+              'children': [
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'text': 'shee1:sheet2!a1:a2',
+                                  'token': 'CELL',
+                                  'start': 4,
+                                  'end': 22,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 5,
+                                  'lastColumn': 23
+                                }
+                              ],
+                              'start': 4,
+                              'end': 22,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 23
+                            }
+                          ],
+                          'start': 4,
+                          'end': 22,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 23
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 22,
+              'end': 23,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 23,
+              'lastColumn': 24
+            }
+          ],
           'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '(',
-          'token': '(',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'text': 'shee1:sheet2!a1:a2',
-          'token': 'CELL',
-          'start': 4,
-          'end': 22,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 23
-        },
-        {
-          'text': ')',
-          'token': ')',
-          'start': 22,
           'end': 23,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 23,
+          'firstColumn': 1,
           'lastColumn': 24
         }
       ],
@@ -755,13 +1051,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
       'firstColumn': 1,
       'lastColumn': 24
     }
-  ],
-  'start': 0,
-  'end': 23,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 24
+  ]
 }"
 `;
 
@@ -770,77 +1060,146 @@ exports[`excel-formula-parser works for env 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'function',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'sum',
-          'token': 'FUNCTION',
-          'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '(',
-          'token': '(',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'symbol': 'arguments',
+          'symbol': 'function',
           'children': [
             {
-              'text': 'a1:a2',
-              'token': 'CELL',
-              'start': 4,
-              'end': 9,
+              'text': 'sum',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 10
+              'firstColumn': 1,
+              'lastColumn': 4
             },
             {
-              'text': ';',
-              'token': 'ARGUMENT_SEPARATOR',
-              'start': 9,
-              'end': 10,
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 10,
-              'lastColumn': 11
+              'firstColumn': 4,
+              'lastColumn': 5
             },
             {
-              'text': 'b1',
-              'token': 'CELL',
-              'start': 10,
-              'end': 12,
+              'symbol': 'arguments',
+              'children': [
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'text': 'a1:a2',
+                                  'token': 'CELL',
+                                  'start': 4,
+                                  'end': 9,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 5,
+                                  'lastColumn': 10
+                                }
+                              ],
+                              'start': 4,
+                              'end': 9,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 10
+                            }
+                          ],
+                          'start': 4,
+                          'end': 9,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 10
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  'text': ';',
+                  'token': 'ARGUMENT_SEPARATOR',
+                  'start': 9,
+                  'end': 10,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 10,
+                  'lastColumn': 11
+                },
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'text': 'b1',
+                                  'token': 'CELL',
+                                  'start': 10,
+                                  'end': 12,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 11,
+                                  'lastColumn': 13
+                                }
+                              ],
+                              'start': 10,
+                              'end': 12,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 11,
+                              'lastColumn': 13
+                            }
+                          ],
+                          'start': 10,
+                          'end': 12,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 11,
+                          'lastColumn': 13
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 12,
+              'end': 13,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 13
+              'firstColumn': 13,
+              'lastColumn': 14
             }
           ],
-          'start': 4,
-          'end': 12,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 13
-        },
-        {
-          'text': ')',
-          'token': ')',
-          'start': 12,
+          'start': 0,
           'end': 13,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 13,
+          'firstColumn': 1,
           'lastColumn': 14
         }
       ],
@@ -851,13 +1210,7 @@ exports[`excel-formula-parser works for env 1`] = `
       'firstColumn': 1,
       'lastColumn': 14
     }
-  ],
-  'start': 0,
-  'end': 13,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 14
+  ]
 }"
 `;
 
@@ -866,126 +1219,216 @@ exports[`excel-formula-parser works for reference operation 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'function',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'SUM',
-          'token': 'FUNCTION',
-          'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '(',
-          'token': '(',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'symbol': 'reference',
+          'symbol': 'function',
           'children': [
             {
-              'text': 'E4:H4',
-              'token': 'CELL',
-              'start': 5,
-              'end': 10,
+              'text': 'SUM',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 6,
-              'lastColumn': 11
+              'firstColumn': 1,
+              'lastColumn': 4
             },
             {
-              'text': ',',
-              'token': 'REF_UNION_OPERATOR',
-              'start': 10,
-              'end': 11,
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 12
+              'firstColumn': 4,
+              'lastColumn': 5
             },
             {
-              'symbol': 'reference',
+              'symbol': 'arguments',
               'children': [
                 {
-                  'symbol': 'reference',
+                  'symbol': 'argument',
                   'children': [
                     {
-                      'text': 'F',
-                      'token': 'NAME',
-                      'start': 11,
-                      'end': 12,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 12,
-                      'lastColumn': 13
-                    },
-                    {
-                      'text': ':',
-                      'token': 'REF_EXPAND_OPERATOR',
-                      'start': 12,
-                      'end': 13,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 13,
-                      'lastColumn': 14
-                    },
-                    {
-                      'text': 'F',
-                      'token': 'NAME',
-                      'start': 13,
-                      'end': 14,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 14,
-                      'lastColumn': 15
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference',
+                              'children': [
+                                {
+                                  'symbol': 'reference-item',
+                                  'children': [
+                                    {
+                                      'text': 'E4:H4',
+                                      'token': 'CELL',
+                                      'start': 5,
+                                      'end': 10,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 6,
+                                      'lastColumn': 11
+                                    }
+                                  ],
+                                  'start': 5,
+                                  'end': 10,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 6,
+                                  'lastColumn': 11
+                                }
+                              ],
+                              'start': 5,
+                              'end': 10,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 6,
+                              'lastColumn': 11
+                            },
+                            {
+                              'text': ',',
+                              'token': 'REF_UNION_OPERATOR',
+                              'start': 10,
+                              'end': 11,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 11,
+                              'lastColumn': 12
+                            },
+                            {
+                              'symbol': 'reference',
+                              'children': [
+                                {
+                                  'symbol': 'reference',
+                                  'children': [
+                                    {
+                                      'symbol': 'reference',
+                                      'children': [
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'F',
+                                              'token': 'NAME',
+                                              'start': 11,
+                                              'end': 12,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 12,
+                                              'lastColumn': 13
+                                            }
+                                          ],
+                                          'start': 11,
+                                          'end': 12,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 12,
+                                          'lastColumn': 13
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      'text': ':',
+                                      'token': 'REF_EXPAND_OPERATOR',
+                                      'start': 12,
+                                      'end': 13,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 13,
+                                      'lastColumn': 14
+                                    },
+                                    {
+                                      'symbol': 'reference',
+                                      'children': [
+                                        {
+                                          'symbol': 'reference-item',
+                                          'children': [
+                                            {
+                                              'text': 'F',
+                                              'token': 'NAME',
+                                              'start': 13,
+                                              'end': 14,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 14,
+                                              'lastColumn': 15
+                                            }
+                                          ],
+                                          'start': 13,
+                                          'end': 14,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 14,
+                                          'lastColumn': 15
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  'label': 'expand-reference'
+                                },
+                                {
+                                  'symbol': 'reference',
+                                  'children': [
+                                    {
+                                      'symbol': 'reference-item',
+                                      'children': [
+                                        {
+                                          'text': 'K8',
+                                          'token': 'CELL',
+                                          'start': 15,
+                                          'end': 17,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 16,
+                                          'lastColumn': 18
+                                        }
+                                      ],
+                                      'start': 15,
+                                      'end': 17,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 16,
+                                      'lastColumn': 18
+                                    }
+                                  ],
+                                  'start': 15,
+                                  'end': 17,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 16,
+                                  'lastColumn': 18
+                                }
+                              ],
+                              'label': 'intersect-reference'
+                            }
+                          ],
+                          'label': 'union-reference'
+                        }
+                      ]
                     }
-                  ],
-                  'label': 'expand-reference',
-                  'start': 11,
-                  'end': 14,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 12,
-                  'lastColumn': 15
-                },
-                {
-                  'text': 'K8',
-                  'token': 'CELL',
-                  'start': 15,
-                  'end': 17,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 16,
-                  'lastColumn': 18
+                  ]
                 }
-              ],
-              'label': 'intersect-reference',
-              'end': 17,
+              ]
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 18,
+              'end': 19,
+              'firstLine': 1,
               'lastLine': 1,
-              'lastColumn': 18
+              'firstColumn': 19,
+              'lastColumn': 20
             }
           ],
-          'label': 'union-reference',
-          'start': 5,
-          'firstLine': 1,
-          'firstColumn': 6
-        },
-        {
-          'text': ')',
-          'token': ')',
-          'start': 18,
+          'start': 0,
           'end': 19,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 19,
+          'firstColumn': 1,
           'lastColumn': 20
         }
       ],
@@ -996,13 +1439,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
       'firstColumn': 1,
       'lastColumn': 20
     }
-  ],
-  'start': 0,
-  'end': 19,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 20
+  ]
 }"
 `;
 
@@ -1011,46 +1448,94 @@ exports[`excel-formula-parser works for row rangge 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'function',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'sum',
-          'token': 'FUNCTION',
+          'symbol': 'function',
+          'children': [
+            {
+              'text': 'sum',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 4
+            },
+            {
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 4,
+              'lastColumn': 5
+            },
+            {
+              'symbol': 'arguments',
+              'children': [
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'text': '4:5',
+                                  'token': 'CELL',
+                                  'start': 4,
+                                  'end': 7,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 5,
+                                  'lastColumn': 8
+                                }
+                              ],
+                              'start': 4,
+                              'end': 7,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 8
+                            }
+                          ],
+                          'start': 4,
+                          'end': 7,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 8
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 7,
+              'end': 8,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 8,
+              'lastColumn': 9
+            }
+          ],
           'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '(',
-          'token': '(',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'text': '4:5',
-          'token': 'CELL',
-          'start': 4,
-          'end': 7,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 8
-        },
-        {
-          'text': ')',
-          'token': ')',
-          'start': 7,
           'end': 8,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 8,
+          'firstColumn': 1,
           'lastColumn': 9
         }
       ],
@@ -1061,13 +1546,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
       'firstColumn': 1,
       'lastColumn': 9
     }
-  ],
-  'start': 0,
-  'end': 8,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 9
+  ]
 }"
 `;
 
@@ -1076,77 +1555,146 @@ exports[`excel-formula-parser works for simple 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'function',
+      'symbol': 'exp',
       'children': [
         {
-          'text': 'sum',
-          'token': 'FUNCTION',
-          'start': 0,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 4
-        },
-        {
-          'text': '(',
-          'token': '(',
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5
-        },
-        {
-          'symbol': 'arguments',
+          'symbol': 'function',
           'children': [
             {
-              'text': 'a1:a2',
-              'token': 'CELL',
-              'start': 4,
-              'end': 9,
+              'text': 'sum',
+              'token': 'FUNCTION',
+              'start': 0,
+              'end': 3,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 10
+              'firstColumn': 1,
+              'lastColumn': 4
             },
             {
-              'text': ',',
-              'token': 'ARGUMENT_SEPARATOR',
-              'start': 9,
-              'end': 10,
+              'text': '(',
+              'token': '(',
+              'start': 3,
+              'end': 4,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 10,
-              'lastColumn': 11
+              'firstColumn': 4,
+              'lastColumn': 5
             },
             {
-              'text': 'b1',
-              'token': 'CELL',
-              'start': 10,
-              'end': 12,
+              'symbol': 'arguments',
+              'children': [
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'text': 'a1:a2',
+                                  'token': 'CELL',
+                                  'start': 4,
+                                  'end': 9,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 5,
+                                  'lastColumn': 10
+                                }
+                              ],
+                              'start': 4,
+                              'end': 9,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 5,
+                              'lastColumn': 10
+                            }
+                          ],
+                          'start': 4,
+                          'end': 9,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 5,
+                          'lastColumn': 10
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  'text': ',',
+                  'token': 'ARGUMENT_SEPARATOR',
+                  'start': 9,
+                  'end': 10,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 10,
+                  'lastColumn': 11
+                },
+                {
+                  'symbol': 'argument',
+                  'children': [
+                    {
+                      'symbol': 'exp',
+                      'children': [
+                        {
+                          'symbol': 'reference',
+                          'children': [
+                            {
+                              'symbol': 'reference-item',
+                              'children': [
+                                {
+                                  'text': 'b1',
+                                  'token': 'CELL',
+                                  'start': 10,
+                                  'end': 12,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 11,
+                                  'lastColumn': 13
+                                }
+                              ],
+                              'start': 10,
+                              'end': 12,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 11,
+                              'lastColumn': 13
+                            }
+                          ],
+                          'start': 10,
+                          'end': 12,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 11,
+                          'lastColumn': 13
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'text': ')',
+              'token': ')',
+              'start': 12,
+              'end': 13,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 13
+              'firstColumn': 13,
+              'lastColumn': 14
             }
           ],
-          'start': 4,
-          'end': 12,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 13
-        },
-        {
-          'text': ')',
-          'token': ')',
-          'start': 12,
+          'start': 0,
           'end': 13,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 13,
+          'firstColumn': 1,
           'lastColumn': 14
         }
       ],
@@ -1157,12 +1705,6 @@ exports[`excel-formula-parser works for simple 1`] = `
       'firstColumn': 1,
       'lastColumn': 14
     }
-  ],
-  'start': 0,
-  'end': 13,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 14
+  ]
 }"
 `;

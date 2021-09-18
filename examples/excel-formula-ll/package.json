@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/excel-formula",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"

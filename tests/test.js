@@ -1,4 +1,4 @@
-var exp = '1+1*2';
+var exp = '1';
 
 const ll = require('./ll');
 const lr = require('./lr');

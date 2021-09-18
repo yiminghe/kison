@@ -5,7 +5,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
   'symbol': 'formula',
   'children': [
     {
-      'symbol': 'exp_p_8',
+      'symbol': 'exp',
       'label': 'clip-exp',
       'children': [
         {
@@ -42,7 +42,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
               'lastColumn': 6
             },
             {
-              'symbol': 'exp_p_8',
+              'symbol': 'exp',
               'label': 'clip-exp',
               'children': [
                 {
@@ -56,7 +56,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                   'lastColumn': 7
                 },
                 {
-                  'symbol': 'reference_p_10',
+                  'symbol': 'reference',
                   'children': [
                     {
                       'text': 'a1:a2',
@@ -912,10 +912,10 @@ exports[`excel-formula-parser works for reference operation 1`] = `
               'lastColumn': 12
             },
             {
-              'symbol': 'reference_p_10',
+              'symbol': 'reference',
               'children': [
                 {
-                  'symbol': 'reference_p_11',
+                  'symbol': 'reference',
                   'children': [
                     {
                       'text': 'F',

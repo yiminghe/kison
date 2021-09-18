@@ -1,9 +1,9 @@
-Exp ::= primaryExpression
-Exp ::= Exp '^' Exp
-Exp ::= Exp '-' Exp
-Exp ::= Exp '*' Exp
-Exp ::= Exp '/' Exp
-Exp ::= '-' Exp
-Exp ::= Exp '+' Exp
-primaryExpression ::= '(' Exp ')'
+exp ::= primaryExpression
+exp ::= exp '^' exp
+exp ::= exp '-' exp
+exp ::= exp '*' exp
+exp ::= exp '/' exp
+exp ::= '-' exp
+exp ::= exp '+' exp
+primaryExpression ::= '(' exp ')'
 primaryExpression ::= 'NUMBER'

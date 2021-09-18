@@ -49,13 +49,13 @@ cal-grammar.js: support operator precedence
 module.exports = {
   productions: [
     {
-      symbol: 'Exp',
+      symbol: 'exp',
       rhs: ['primaryExpression'],
     },
 
     {
-      symbol: 'Exp',
-      rhs: ['Exp', '^', 'Exp'],
+      symbol: 'exp',
+      rhs: ['exp', '^', 'exp'],
       action() {
         return {
           v: Math.pow(this.$1.v, this.$3.v),
@@ -66,44 +66,44 @@ module.exports = {
       },
     },
     {
-      symbol: 'Exp',
-      rhs: ['Exp', '-', 'Exp'],
+      symbol: 'exp',
+      rhs: ['exp', '-', 'exp'],
       action() {
         return { v: this.$1.v - this.$3.v, l: this.$1, r: this.$3, op: '-' };
       },
     },
     {
-      symbol: 'Exp',
-      rhs: ['Exp', '*', 'Exp'],
+      symbol: 'exp',
+      rhs: ['exp', '*', 'exp'],
       action() {
         return { v: this.$1.v * this.$3.v, l: this.$1, r: this.$3, op: '*' };
       },
     },
     {
-      symbol: 'Exp',
-      rhs: ['Exp', '/', 'Exp'],
+      symbol: 'exp',
+      rhs: ['exp', '/', 'exp'],
       action() {
         return { v: this.$1.v / this.$3.v, l: this.$1, r: this.$3, op: '/' };
       },
     },
     {
-      symbol: 'Exp',
+      symbol: 'exp',
       precedence: 'UMINUS',
-      rhs: ['-', 'Exp'],
+      rhs: ['-', 'exp'],
       action() {
         return { v: -this.$2.v, op: 'UMINUS' };
       },
     },
     {
-      symbol: 'Exp',
-      rhs: ['Exp', '+', 'Exp'],
+      symbol: 'exp',
+      rhs: ['exp', '+', 'exp'],
       action() {
         return { v: this.$1.v + this.$3.v, l: this.$1, r: this.$3, op: '+' };
       },
     },
     {
       symbol: 'primaryExpression',
-      rhs: ['(', 'Exp', ')'],
+      rhs: ['(', 'exp', ')'],
       action() {
         return this.$2;
       },
@@ -148,23 +148,27 @@ module.exports = () => ({
     {
       symbol: 'exp',
       rhs: ['exp', '+', 'exp'],
-      label: 'add-exp',
+      label: 'binary-exp',
     },
     {
       symbol: 'exp',
       rhs: ['exp', '-', 'exp'],
+      label: 'binary-exp',
     },
     {
       symbol: 'exp',
       rhs: ['exp', '*', 'exp'],
+      label: 'binary-exp',
     },
     {
       symbol: 'exp',
       rhs: ['exp', '/', 'exp'],
+      label: 'binary-exp',
     },
     {
       symbol: 'exp',
       rhs: ['exp', '^', 'exp'],
+      label: 'binary-exp',
     },
     {
       symbol: 'exp',

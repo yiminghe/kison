@@ -262,40 +262,14 @@ describe('ll', () => {
       'symbol': 'exp',
       'children': [
         {
-          'symbol': 'exp_p_2',
-          'children': [
-            {
-              'symbol': 'exp_p_3',
-              'children': [
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '1',
-                          'token': 'NUMBER',
-                          'start': 0,
-                          'end': 1,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 1,
-                          'lastColumn': 2
-                        }
-                      ],
-                      'start': 0,
-                      'end': 1,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 2
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          'text': '1',
+          'token': 'NUMBER',
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
         },
         {
           'text': '+',
@@ -308,43 +282,22 @@ describe('ll', () => {
           'lastColumn': 3
         },
         {
-          'symbol': 'exp_p_2',
-          'children': [
-            {
-              'symbol': 'exp_p_3',
-              'children': [
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '2',
-                          'token': 'NUMBER',
-                          'start': 2,
-                          'end': 3,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 3,
-                          'lastColumn': 4
-                        }
-                      ],
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          'text': '2',
+          'token': 'NUMBER',
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4
         }
       ],
-      'label': 'add-exp'
+      'start': 0,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 4
     },
     {
       'text': '+',
@@ -357,43 +310,19 @@ describe('ll', () => {
       'lastColumn': 5
     },
     {
-      'symbol': 'exp_p_2',
-      'children': [
-        {
-          'symbol': 'exp_p_3',
-          'children': [
-            {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '3',
-                      'token': 'NUMBER',
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    }
-                  ],
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      'text': '3',
+      'token': 'NUMBER',
+      'start': 4,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 6
     }
   ],
-  'label': 'add-exp'
+  'end': 5,
+  'lastLine': 1,
+  'lastColumn': 6
 }"
 `);
   });
@@ -408,40 +337,14 @@ describe('ll', () => {
   'symbol': 'exp',
   'children': [
     {
-      'symbol': 'exp_p_2',
-      'children': [
-        {
-          'symbol': 'exp_p_3',
-          'children': [
-            {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '1',
-                      'token': 'NUMBER',
-                      'start': 0,
-                      'end': 1,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 2
-                    }
-                  ],
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      'text': '1',
+      'token': 'NUMBER',
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2
     },
     {
       'text': '+',
@@ -454,38 +357,17 @@ describe('ll', () => {
       'lastColumn': 3
     },
     {
-      'symbol': 'exp_p_2',
+      'symbol': 'exp',
       'children': [
         {
-          'symbol': 'exp_p_3',
-          'children': [
-            {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ]
-            }
-          ]
+          'text': '2',
+          'token': 'NUMBER',
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4
         },
         {
           'text': '*',
@@ -498,40 +380,27 @@ describe('ll', () => {
           'lastColumn': 5
         },
         {
-          'symbol': 'exp_p_3',
-          'children': [
-            {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '3',
-                      'token': 'NUMBER',
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    }
-                  ],
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6
-                }
-              ]
-            }
-          ]
+          'text': '3',
+          'token': 'NUMBER',
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6
         }
-      ]
+      ],
+      'start': 2,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 6
     }
   ],
-  'label': 'add-exp'
+  'start': 0,
+  'firstLine': 1,
+  'firstColumn': 1
 }"
 `);
   });
@@ -549,40 +418,14 @@ describe('ll', () => {
       'symbol': 'exp',
       'children': [
         {
-          'symbol': 'exp_p_2',
-          'children': [
-            {
-              'symbol': 'exp_p_3',
-              'children': [
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '1',
-                          'token': 'NUMBER',
-                          'start': 0,
-                          'end': 1,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 1,
-                          'lastColumn': 2
-                        }
-                      ],
-                      'start': 0,
-                      'end': 1,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 2
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          'text': '1',
+          'token': 'NUMBER',
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
         },
         {
           'text': '+',
@@ -595,38 +438,17 @@ describe('ll', () => {
           'lastColumn': 3
         },
         {
-          'symbol': 'exp_p_2',
+          'symbol': 'exp',
           'children': [
             {
-              'symbol': 'exp_p_3',
-              'children': [
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '2',
-                          'token': 'NUMBER',
-                          'start': 2,
-                          'end': 3,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 3,
-                          'lastColumn': 4
-                        }
-                      ],
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ]
-                }
-              ]
+              'text': '2',
+              'token': 'NUMBER',
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4
             },
             {
               'text': '*',
@@ -639,40 +461,27 @@ describe('ll', () => {
               'lastColumn': 5
             },
             {
-              'symbol': 'exp_p_3',
-              'children': [
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '4',
-                          'token': 'NUMBER',
-                          'start': 4,
-                          'end': 5,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 5,
-                          'lastColumn': 6
-                        }
-                      ],
-                      'start': 4,
-                      'end': 5,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 5,
-                      'lastColumn': 6
-                    }
-                  ]
-                }
-              ]
+              'text': '4',
+              'token': 'NUMBER',
+              'start': 4,
+              'end': 5,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 5,
+              'lastColumn': 6
             }
-          ]
+          ],
+          'start': 2,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 6
         }
       ],
-      'label': 'add-exp'
+      'start': 0,
+      'firstLine': 1,
+      'firstColumn': 1
     },
     {
       'text': '-',
@@ -685,120 +494,75 @@ describe('ll', () => {
       'lastColumn': 7
     },
     {
-      'symbol': 'exp_p_2',
+      'symbol': 'exp',
       'children': [
         {
-          'symbol': 'exp_p_3',
+          'text': '5',
+          'token': 'NUMBER',
+          'start': 6,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 8
+        },
+        {
+          'text': '^',
+          'token': '^',
+          'start': 7,
+          'end': 8,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 8,
+          'lastColumn': 9
+        },
+        {
+          'symbol': 'exp',
           'children': [
             {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '5',
-                      'token': 'NUMBER',
-                      'start': 6,
-                      'end': 7,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 7,
-                      'lastColumn': 8
-                    }
-                  ],
-                  'start': 6,
-                  'end': 7,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 7,
-                  'lastColumn': 8
-                }
-              ]
+              'text': '2',
+              'token': 'NUMBER',
+              'start': 8,
+              'end': 9,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 9,
+              'lastColumn': 10
             },
             {
               'text': '^',
               'token': '^',
-              'start': 7,
-              'end': 8,
+              'start': 9,
+              'end': 10,
               'firstLine': 1,
               'lastLine': 1,
-              'firstColumn': 8,
-              'lastColumn': 9
+              'firstColumn': 10,
+              'lastColumn': 11
             },
             {
-              'symbol': 'exp_p_3',
-              'children': [
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '2',
-                          'token': 'NUMBER',
-                          'start': 8,
-                          'end': 9,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 9,
-                          'lastColumn': 10
-                        }
-                      ],
-                      'start': 8,
-                      'end': 9,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 9,
-                      'lastColumn': 10
-                    }
-                  ]
-                },
-                {
-                  'text': '^',
-                  'token': '^',
-                  'start': 9,
-                  'end': 10,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 10,
-                  'lastColumn': 11
-                },
-                {
-                  'symbol': 'exp_p_4',
-                  'children': [
-                    {
-                      'symbol': 'exp_p_end',
-                      'children': [
-                        {
-                          'text': '3',
-                          'token': 'NUMBER',
-                          'start': 10,
-                          'end': 11,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 11,
-                          'lastColumn': 12
-                        }
-                      ],
-                      'start': 10,
-                      'end': 11,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 11,
-                      'lastColumn': 12
-                    }
-                  ]
-                }
-              ]
+              'text': '3',
+              'token': 'NUMBER',
+              'start': 10,
+              'end': 11,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 11,
+              'lastColumn': 12
             }
-          ]
+          ],
+          'start': 8,
+          'end': 11,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 9,
+          'lastColumn': 12
         }
-      ]
+      ],
+      'start': 6,
+      'firstLine': 1,
+      'firstColumn': 7
     }
-  ],
-  'label': 'add-exp'
+  ]
 }"
 `);
   });
@@ -813,40 +577,14 @@ describe('ll', () => {
   'symbol': 'exp',
   'children': [
     {
-      'symbol': 'exp_p_2',
-      'children': [
-        {
-          'symbol': 'exp_p_3',
-          'children': [
-            {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '1',
-                      'token': 'NUMBER',
-                      'start': 0,
-                      'end': 1,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 1,
-                      'lastColumn': 2
-                    }
-                  ],
-                  'start': 0,
-                  'end': 1,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 1,
-                  'lastColumn': 2
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      'text': '1',
+      'token': 'NUMBER',
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2
     },
     {
       'text': '+',
@@ -859,38 +597,17 @@ describe('ll', () => {
       'lastColumn': 3
     },
     {
-      'symbol': 'exp_p_2',
+      'symbol': 'exp',
       'children': [
         {
-          'symbol': 'exp_p_3',
-          'children': [
-            {
-              'symbol': 'exp_p_4',
-              'children': [
-                {
-                  'symbol': 'exp_p_end',
-                  'children': [
-                    {
-                      'text': '2',
-                      'token': 'NUMBER',
-                      'start': 2,
-                      'end': 3,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 3,
-                      'lastColumn': 4
-                    }
-                  ],
-                  'start': 2,
-                  'end': 3,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 3,
-                  'lastColumn': 4
-                }
-              ]
-            }
-          ]
+          'text': '2',
+          'token': 'NUMBER',
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4
         },
         {
           'text': '*',
@@ -934,14 +651,19 @@ describe('ll', () => {
           'end': 4
         }
       ],
+      'start': 2,
       'end': 4,
+      'firstLine': 1,
       'lastLine': 1,
+      'firstColumn': 3,
       'lastColumn': 5
     }
   ],
-  'label': 'add-exp',
+  'start': 0,
   'end': 4,
+  'firstLine': 1,
   'lastLine': 1,
+  'firstColumn': 1,
   'lastColumn': 5
 }"
 `);
@@ -980,7 +702,7 @@ describe('ll', () => {
 `);
   });
 
-  it.only('onAction works', () => {
+  it('onAction works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
@@ -1093,95 +815,48 @@ current token: '/'.",
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 'exp',
-        'children': [
-          {
-            'symbol': 'exp_p_2',
-            'children': [
-              {
-                'symbol': 'exp_p_3',
-                'children': [
-                  {
-                    'symbol': 'exp_p_4',
-                    'children': [
-                      {
-                        'symbol': 'exp_p_end',
-                        'children': [
-                          {
-                            'text': '1',
-                            'token': 'NUMBER',
-                            'start': 0,
-                            'end': 1,
-                            'firstLine': 1,
-                            'lastLine': 1,
-                            'firstColumn': 1,
-                            'lastColumn': 2
-                          }
-                        ],
-                        'start': 0,
-                        'end': 1,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 1,
-                        'lastColumn': 2
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            'text': '+',
-            'token': '+',
-            'start': 1,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 2,
-            'lastColumn': 3
-          },
-          {
-            'symbol': 'exp_p_2',
-            'children': [
-              {
-                'symbol': 'exp_p_3',
-                'children': [
-                  {
-                    'symbol': 'exp_p_4',
-                    'children': [
-                      {
-                        'symbol': 'exp_p_end',
-                        'children': [
-                          {
-                            'token': 'NUMBER',
-                            'start': 2,
-                            'end': 2,
-                            'firstLine': 1,
-                            'firstColumn': 3,
-                            'lastLine': 1,
-                            'lastColumn': 3,
-                            'text': '0'
-                          }
-                        ],
-                        'start': 2,
-                        'end': 2,
-                        'firstLine': 1,
-                        'lastLine': 1,
-                        'firstColumn': 3,
-                        'lastColumn': 3
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        'label': 'add-exp'
-      }"
-    `);
+"{
+  'symbol': 'exp',
+  'children': [
+    {
+      'text': '1',
+      'token': 'NUMBER',
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2
+    },
+    {
+      'text': '+',
+      'token': '+',
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3
+    },
+    {
+      'token': 'NUMBER',
+      'start': 2,
+      'end': 2,
+      'firstLine': 1,
+      'firstColumn': 3,
+      'lastLine': 1,
+      'lastColumn': 3,
+      'text': '0'
+    }
+  ],
+  'start': 0,
+  'end': 2,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 3
+}"
+`);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
       "{
         'recovery': true,

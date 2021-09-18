@@ -1,6 +1,4 @@
-const lexerConfig = require('../common/cal-lexer');
-
-module.exports = () => ({
+module.exports = {
   productions: [
     {
       symbol: 'exp',
@@ -78,5 +76,16 @@ module.exports = () => ({
     ['right', 'UMINUS'],
   ],
 
-  ...lexerConfig(),
-});
+  lexer: {
+    rules: [
+      {
+        regexp: /^\s+/,
+        token: '$HIDDEN',
+      },
+      {
+        regexp: /^[0-9]+(\.[0-9]+)?\b/,
+        token: 'NUMBER',
+      },
+    ],
+  },
+};

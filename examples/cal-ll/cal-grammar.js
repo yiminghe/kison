@@ -13,7 +13,6 @@ module.exports = () => ({
     {
       symbol: 'exp',
       rhs: ['exp', '+', s, 'exp', c],
-      label: 'add-exp',
     },
     {
       symbol: 'exp',

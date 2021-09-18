@@ -1,9 +1,9 @@
 // import { compile } from "@yiminghe/regexp";
-import { compile } from "../src/index.js";
+import { compile } from '../src/index.js';
 
-const asyncPattern = document.getElementById("asyncPattern");
-const startAsync = document.getElementById("startAsync");
-const stopAsync = document.getElementById("stopAsync");
+const asyncPattern = document.getElementById('asyncPattern');
+const startAsync = document.getElementById('startAsync');
+const stopAsync = document.getElementById('stopAsync');
 
 asyncPattern.value = `a{2}b`;
 
@@ -15,7 +15,7 @@ function onKeyDown(e) {
   const key = e.key;
   if (key.length == 1) {
     buffer.push(key);
-    console.log("buffer", buffer);
+    console.log('buffer', buffer);
     if (promise) {
       const { resolve } = promise;
       promise = null;
@@ -24,19 +24,17 @@ function onKeyDown(e) {
   }
 }
 
-document.addEventListener("keyup", onKeyDown);
-
 function stopListen() {
-  document.removeEventListener("keyup", onKeyDown);
+  document.removeEventListener('keyup', onKeyDown);
   buffer = [];
   promise = null;
 }
 
-stopAsync.addEventListener("click", stopListen);
+stopAsync.addEventListener('click', stopListen);
 
-startAsync.addEventListener("click", async () => {
+startAsync.addEventListener('click', async () => {
   stopListen();
-  document.addEventListener("keyup", onKeyDown);
+  document.addEventListener('keyup', onKeyDown);
   const patternInstance = compile(asyncPattern.value, { async: true });
   const matcher = patternInstance.matcherAsync(() => {
     return new Promise(resolve => {
@@ -49,7 +47,7 @@ startAsync.addEventListener("click", async () => {
         r();
       } else {
         promise = {
-          resolve: r
+          resolve: r,
         };
       }
     });
@@ -57,7 +55,7 @@ startAsync.addEventListener("click", async () => {
 
   while (true) {
     const ret = await matcher.match();
-    const msg = "catch async match: " + ret.match;
+    const msg = 'catch async match: ' + ret.match;
     console.log(msg);
     alert(msg);
   }

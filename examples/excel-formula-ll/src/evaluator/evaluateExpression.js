@@ -6,9 +6,14 @@ import {
   VALUE_ERROR,
 } from '../functions/utils.js';
 import { evaluators, evaluate } from './evaluators.js';
-import { checkError, checkNumber, isSingleValueArray } from './utils.js';
+import {
+  checkError,
+  checkNumber,
+  isSingleValueArray,
+  mapArray,
+} from './utils.js';
 
-function opOneAndMany(left, right, fn) {
+function opOneAndMany(left, right, { fn, check }) {
   let n = left.type === 'number' ? left : right;
   let a = left.type === 'array' ? left : right;
   n = n.value;
@@ -21,7 +26,7 @@ function opOneAndMany(left, right, fn) {
       for (let j = 0; j < row.length; j++) {
         const d = row[j];
         if (d) {
-          const e = checkNumber(n, d);
+          const e = check && check(n, d);
           if (e) {
             return e;
           }
@@ -61,7 +66,22 @@ function fillError(row, j) {
   row[j] = makeError('unmatch shape', NA_ERROR);
 }
 
-function evaluateBinaryExp(node, context, fn) {
+function transformToArray(node, context) {
+  let left = evaluate(node);
+  if (left.type === 'reference') {
+    if (left.ranges.length !== 1) {
+      return makeError('more than one range!', VALUE_ERROR);
+    }
+    const value = context.getCellValues(left);
+    left = { type: 'array', value };
+  }
+  if (left.type === 'array' && isSingleValueArray(left.value)) {
+    left = left.value;
+  }
+  return left;
+}
+
+function evaluateBinaryExp(node, context, { fn, check }) {
   const { children } = node;
   let left = evaluate(children[0]);
   let right = evaluate(children[2]);
@@ -93,17 +113,17 @@ function evaluateBinaryExp(node, context, fn) {
     return e;
   }
 
-  e = checkNumber(left, right);
+  e = check && check(left, right);
   if (e) {
     return e;
   }
 
-  if (left.type === 'number' && right.type === 'number') {
+  if (left.type !== 'array' && right.type !== 'array') {
     return fn(left.value, right.value);
   }
 
-  if (left.type === 'number' || right.type === 'number') {
-    return opOneAndMany(left, right, fn);
+  if (left.type !== 'array' || right.type !== 'array') {
+    return opOneAndMany(left, right, { check, fn });
   }
 
   const leftValue = left.value;
@@ -134,11 +154,11 @@ function evaluateBinaryExp(node, context, fn) {
   const ret = [];
 
   function getLeftValue(row, col) {
-    return leftValue[startLeftRow + row][startLeftCol + col]?.value || 0;
+    return leftValue[startLeftRow + row][startLeftCol + col];
   }
 
   function getRightValue(row, col) {
-    return rightValue[startRightRow + row][startRightCol + col]?.value || 0;
+    return rightValue[startRightRow + row][startRightCol + col];
   }
 
   for (let i = 0; i < rowCount; i++) {
@@ -147,6 +167,8 @@ function evaluateBinaryExp(node, context, fn) {
     for (let j = 0; j < colCount; j++) {
       let li = i;
       let lj = j;
+      let lv = null,
+        rv = null;
       if (rightColCount === 1) {
         if (leftRowCount === 1) {
           li = 0;
@@ -154,7 +176,8 @@ function evaluateBinaryExp(node, context, fn) {
           fillError(row, j);
           continue;
         }
-        row[j] = fn(getLeftValue(li, lj), getRightValue(i, 0));
+        lv = getLeftValue(li, lj);
+        rv = getRightValue(i, 0);
       } else if (leftColCount === 1) {
         if (rightRowCount === 1) {
           li = 0;
@@ -162,18 +185,21 @@ function evaluateBinaryExp(node, context, fn) {
           fillError(row, j);
           continue;
         }
-        row[j] = fn(getLeftValue(i, 0), getRightValue(li, lj));
+        lv = getLeftValue(i, 0);
+        rv = getRightValue(li, lj);
       } else if (leftRowCount === 1) {
         if (lj >= rightColCount || lj >= leftColCount) {
           fillError(row, j);
         } else {
-          row[j] = fn(getLeftValue(0, lj), getRightValue(li, lj));
+          lv = getLeftValue(0, lj);
+          rv = getRightValue(li, lj);
         }
       } else if (rightRowCount === 1) {
         if (lj >= rightColCount || lj >= leftColCount) {
           fillError(row, j);
         } else {
-          row[j] = fn(getLeftValue(li, lj), getRightValue(0, lj));
+          lv = getLeftValue(li, lj);
+          rv = getRightValue(0, lj);
         }
       } else if (
         li >= rightRowCount ||
@@ -183,7 +209,16 @@ function evaluateBinaryExp(node, context, fn) {
       ) {
         fillError(row, j);
       } else {
-        row[j] = fn(getLeftValue(i, 0), getRightValue(li, lj));
+        lv = getLeftValue(i, 0);
+        rv = getRightValue(li, lj);
+      }
+      if (lv !== null || rv !== null) {
+        const r = check && check(lv, rv);
+        if (r) {
+          row[j] = r;
+        } else {
+          row[j] = fn(lv?.value || 0, rv?.value || 0);
+        }
       }
     }
   }
@@ -195,32 +230,109 @@ function evaluateBinaryExp(node, context, fn) {
 }
 
 const opFn = {
-  '+'(a, b) {
-    return {
-      type: 'number',
-      value: a + b,
-    };
+  '+': {
+    fn(a, b) {
+      return {
+        type: 'number',
+        value: a + b,
+      };
+    },
+    check: checkNumber,
   },
-  '-'(a, b) {
-    return {
-      type: 'number',
-      value: a - b,
-    };
+  '-': {
+    fn(a, b) {
+      return {
+        type: 'number',
+        value: a - b,
+      };
+    },
+    check: checkNumber,
   },
-  '*'(a, b) {
-    return {
-      type: 'number',
-      value: a * b,
-    };
+  '*': {
+    fn(a, b) {
+      return {
+        type: 'number',
+        value: a * b,
+      };
+    },
+    check: checkNumber,
   },
-  '/'(a, b) {
-    if (b === 0) {
-      return makeError('divide by 0', DIV_ERROR);
-    }
-    return {
-      type: 'number',
-      value: a / b,
-    };
+  '^': {
+    fn(a, b) {
+      return {
+        type: 'number',
+        value: a ** b,
+      };
+    },
+    check: checkNumber,
+  },
+  '/': {
+    fn(a, b) {
+      if (b === 0) {
+        return makeError('divide by 0', DIV_ERROR);
+      }
+      return {
+        type: 'number',
+        value: a / b,
+      };
+    },
+    check: checkNumber,
+  },
+  '=': {
+    fn(a, b) {
+      return {
+        type: 'boolean',
+        value: a === b,
+      };
+    },
+  },
+  '>=': {
+    fn(a, b) {
+      return {
+        type: 'boolean',
+        value: a >= b,
+      };
+    },
+  },
+  '<=': {
+    fn(a, b) {
+      return {
+        type: 'boolean',
+        value: a <= b,
+      };
+    },
+  },
+  '>': {
+    fn(a, b) {
+      return {
+        type: 'boolean',
+        value: a > b,
+      };
+    },
+  },
+  '<': {
+    fn(a, b) {
+      return {
+        type: 'boolean',
+        value: a < b,
+      };
+    },
+  },
+  '<>': {
+    fn(a, b) {
+      return {
+        type: 'boolean',
+        value: a !== b,
+      };
+    },
+  },
+  '&': {
+    fn(a, b) {
+      return {
+        type: 'string',
+        value: a + '' + b,
+      };
+    },
   },
 };
 
@@ -228,6 +340,95 @@ function evaluate_binary_exp(node, context) {
   return evaluateBinaryExp(node, context, opFn[node.children[1].text]);
 }
 
+const unaryOp = {
+  '-': {
+    fn(a) {
+      const value = Number(a.value);
+      if (isNaN(value)) {
+        return makeError('no number', VALUE_ERROR);
+      }
+      return {
+        type: 'number',
+        value: -value,
+      };
+    },
+  },
+  '+': {
+    fn(a) {
+      const value = Number(a.value);
+      if (isNaN(value)) {
+        return makeError('no number', VALUE_ERROR);
+      }
+      return {
+        type: 'number',
+        value,
+      };
+    },
+  },
+};
+function evaluateUnaryExp(node, context, { check, fn }) {
+  const a = transformToArray(node.children[1], context);
+
+  function one(b) {
+    let e = checkError(b) || (check && check(b));
+    if (e) {
+      return e;
+    }
+    return fn(b);
+  }
+
+  if (a.type === 'array') {
+    return mapArray(a.value, one);
+  }
+  return one(a);
+}
+
 Object.assign(evaluators, {
   ['evaluate_binary-exp']: evaluate_binary_exp,
+  ['evaluate_percentage-exp'](node, context) {
+    const a = transformToArray(node.children[0], context);
+
+    function one(b) {
+      let e = checkError(b);
+      if (e) {
+        return e;
+      }
+      const v = Number(b.value);
+      if (isNaN(v)) {
+        return makeError('not number', '#VALUE!');
+      }
+      return {
+        type: 'number',
+        value: v / 100,
+      };
+    }
+
+    if (a.type === 'array') {
+      return mapArray(a.value, one);
+    }
+    return one(a);
+  },
+  ['evaluate_prefix-exp'](node, context) {
+    return evaluateUnaryExp(node, context, unaryOp[node.children[0].text]);
+  },
+  ['evaluate_clip-exp'](node, context) {
+    // TODO: implicit intersection
+    const a = evaluate(node.children[1]);
+    if (a.type === 'array') {
+      return a.value[0]?.[0];
+    } else if (a.type === 'reference') {
+      const range = a.ranges[0];
+      return {
+        type: a.type,
+        ranges: [
+          {
+            ...range,
+            rowCount: 1,
+            colCount: 1,
+          },
+        ],
+      };
+    }
+    return a;
+  },
 });

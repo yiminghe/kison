@@ -3,13 +3,13 @@ import {
   makeError,
   makeReference,
   NULL_ERROR,
-  VALUE_ERROR
-} from "../functions/utils.js";
+  VALUE_ERROR,
+} from '../functions/utils.js';
 
 export function expandReference(ref1, ref2) {
-  if (ref1.type === "error") {
+  if (ref1.type === 'error') {
     return ref1;
-  } else if (ref2.type === "error") {
+  } else if (ref2.type === 'error') {
     return ref2;
   }
 
@@ -45,24 +45,24 @@ export function expandReference(ref1, ref2) {
       row: startRow,
       col: startCol,
       rowCount,
-      colCount
-    }
+      colCount,
+    },
   ]);
 }
 
 export function unionReference(ref1, ref2) {
-  if (ref1.type === "error") {
+  if (ref1.type === 'error') {
     return ref1;
-  } else if (ref2.type === "error") {
+  } else if (ref2.type === 'error') {
     return ref2;
   }
   return makeReference(ref1.ranges.concat(ref2.ranges));
 }
 
 export function intersectReference(ref1, ref2) {
-  if (ref1.type === "error") {
+  if (ref1.type === 'error') {
     return ref1;
-  } else if (ref2.type === "error") {
+  } else if (ref2.type === 'error') {
     return ref2;
   }
 
@@ -86,7 +86,7 @@ export function intersectReference(ref1, ref2) {
   }
 
   if (endRow <= startRow || endCol <= startCol) {
-    return makeError("no intersect reference!", NULL_ERROR);
+    return makeError('no intersect reference!', NULL_ERROR);
   }
 
   const rowCount = isFinite(endRow) ? endRow - startRow : 0;
@@ -97,14 +97,14 @@ export function intersectReference(ref1, ref2) {
       row: startRow,
       col: startCol,
       rowCount,
-      colCount
-    }
+      colCount,
+    },
   ]);
 }
 
 export function checkError(...args) {
   for (const a of args) {
-    if (a.type === "error") {
+    if (a.type === 'error') {
       return a;
     }
   }
@@ -112,8 +112,8 @@ export function checkError(...args) {
 
 export function checkNumber(...args) {
   for (const a of args) {
-    if (a.type !== "number" && a.type !== "array") {
-      return makeError("not number!", VALUE_ERROR);
+    if (a && a.type !== 'number' && a.type !== 'array') {
+      return makeError('not number!', VALUE_ERROR);
     }
   }
 }
@@ -126,4 +126,19 @@ export function isSingleCellReference(ref) {
 
 export function isSingleValueArray(array) {
   return array.length == 1 && array[0].length === 1;
+}
+
+export function mapArray(arr, fn) {
+  const ret = [];
+  for (let rowIndex = 0; rowIndex < arr.length; rowIndex++) {
+    const row = arr[rowIndex];
+    const newRow = [];
+    if (row) {
+      for (let colIndex = 0; colIndex < row.length; colIndex++) {
+        newRow[colIndex] = fn(row[colIndex]);
+      }
+    }
+    ret[rowIndex] = newRow;
+  }
+  return ret;
 }

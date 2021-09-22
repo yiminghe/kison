@@ -18,8 +18,8 @@
             let ret;
             try {
                 ret = cal.parse(input, {
-                    onAction({ action, lexer }) {
-                        action(ast, lexer);
+                    onAction({ action, token }) {
+                        action(ast, token);
                     },
                     ...options,
                 });

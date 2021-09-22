@@ -218,6 +218,7 @@ module.exports = () => ({
 - g: grammar file
 - m: ll or lalr
 - babel: use babel to transform code. need install @babel/core@7.x and @babel/preset-env manually
+- declaration: generate d.ts type file for LL parser
 
 ### LALR
 
@@ -234,6 +235,10 @@ npx kison -m ll -g cal-grammar.js
 ```
 
 ## changelog
+
+### 0.4.35 - 2021/09/22
+
+- support `--declaration` to generate d.ts type for LL
 
 ### 0.4.x - 2021/06/24
 

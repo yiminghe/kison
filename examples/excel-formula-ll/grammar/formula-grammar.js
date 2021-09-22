@@ -1,3 +1,5 @@
+// https://docs.oasis-open.org/office/OpenDocument/v1.3/OpenDocument-v1.3-part4-formula.html
+
 const operators = [
   ['left', '=', '<=', '>=', '<>', '>', '<'],
   ['left', '&'],

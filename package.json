@@ -16,6 +16,7 @@
     "@babel/core": "^7.14.3",
     "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",
+    "@babel/preset-typescript": "^7.15.0",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-standard-pkg": "^0.6.0",
     "@yiminghe/rr": "1.x",
@@ -46,7 +47,8 @@
   "scripts": {
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "prepare": "node scripts/link",
-    "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js ",
+    "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js",
+    "ts-formula": "BABEL_ENV=test npx babel-node -x '.js,.ts' examples/excel-formula-ll/tests/testTs.ts",
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx}\"",

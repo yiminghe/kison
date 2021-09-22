@@ -2,6 +2,7 @@
 
 exports[`excel-formula-parser array formula allow @ and # 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
@@ -15,12 +16,15 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 1,
-          'lastColumn': 2
+          'lastColumn': 2,
+          'type': 'token'
         },
         {
+          'type': 'symbol',
           'symbol': 'exp',
           'children': [
             {
+              'type': 'symbol',
               'symbol': 'function',
               'children': [
                 {
@@ -31,7 +35,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 2,
-                  'lastColumn': 5
+                  'lastColumn': 5,
+                  'type': 'token'
                 },
                 {
                   'text': '(',
@@ -41,12 +46,15 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 5,
-                  'lastColumn': 6
+                  'lastColumn': 6,
+                  'type': 'token'
                 },
                 {
+                  'type': 'symbol',
                   'symbol': 'arguments',
                   'children': [
                     {
+                      'type': 'symbol',
                       'symbol': 'argument',
                       'children': [
                         {
@@ -60,9 +68,11 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 6,
-                              'lastColumn': 7
+                              'lastColumn': 7,
+                              'type': 'token'
                             },
                             {
+                              'type': 'symbol',
                               'symbol': 'exp',
                               'children': [
                                 {
@@ -72,6 +82,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'symbol': 'reference',
                                       'children': [
                                         {
+                                          'type': 'symbol',
                                           'symbol': 'reference-item',
                                           'children': [
                                             {
@@ -82,7 +93,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 7,
-                                              'lastColumn': 12
+                                              'lastColumn': 12,
+                                              'type': 'token'
                                             }
                                           ],
                                           'start': 6,
@@ -104,6 +116,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'symbol': 'reference',
                                       'children': [
                                         {
+                                          'type': 'symbol',
                                           'symbol': 'reference-item',
                                           'children': [
                                             {
@@ -114,7 +127,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 13,
-                                              'lastColumn': 16
+                                              'lastColumn': 16,
+                                              'type': 'token'
                                             }
                                           ],
                                           'start': 12,
@@ -155,7 +169,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 16,
-                  'lastColumn': 17
+                  'lastColumn': 17,
+                  'type': 'token'
                 }
               ],
               'start': 1,
@@ -185,12 +200,14 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
 
 exports[`excel-formula-parser structure reference works 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
       'symbol': 'exp',
       'children': [
         {
+          'type': 'symbol',
           'symbol': 'function',
           'children': [
             {
@@ -201,7 +218,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '(',
@@ -211,12 +229,15 @@ exports[`excel-formula-parser structure reference works 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
+              'type': 'symbol',
               'symbol': 'arguments',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -226,9 +247,11 @@ exports[`excel-formula-parser structure reference works 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
+                                  'type': 'symbol',
                                   'symbol': 'structure-reference',
                                   'children': [
                                     {
@@ -239,9 +262,11 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 5,
-                                      'lastColumn': 6
+                                      'lastColumn': 6,
+                                      'type': 'token'
                                     },
                                     {
+                                      'type': 'symbol',
                                       'symbol': 'table-specifier',
                                       'children': [
                                         {
@@ -252,15 +277,19 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 6,
-                                          'lastColumn': 7
+                                          'lastColumn': 7,
+                                          'type': 'token'
                                         },
                                         {
+                                          'type': 'symbol',
                                           'symbol': 'table-specifier-inner',
                                           'children': [
                                             {
+                                              'type': 'symbol',
                                               'symbol': 'table-column-specifier',
                                               'children': [
                                                 {
+                                                  'type': 'symbol',
                                                   'symbol': 'table-specifier-item',
                                                   'children': [
                                                     {
@@ -271,7 +300,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                       'firstLine': 1,
                                                       'lastLine': 1,
                                                       'firstColumn': 7,
-                                                      'lastColumn': 15
+                                                      'lastColumn': 15,
+                                                      'type': 'token'
                                                     }
                                                   ],
                                                   'start': 6,
@@ -289,9 +319,11 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                   'firstLine': 1,
                                                   'lastLine': 1,
                                                   'firstColumn': 15,
-                                                  'lastColumn': 16
+                                                  'lastColumn': 16,
+                                                  'type': 'token'
                                                 },
                                                 {
+                                                  'type': 'symbol',
                                                   'symbol': 'table-specifier-item',
                                                   'children': [
                                                     {
@@ -302,7 +334,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                       'firstLine': 1,
                                                       'lastLine': 1,
                                                       'firstColumn': 16,
-                                                      'lastColumn': 19
+                                                      'lastColumn': 19,
+                                                      'type': 'token'
                                                     }
                                                   ],
                                                   'start': 15,
@@ -327,7 +360,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 19,
-                                          'lastColumn': 20
+                                          'lastColumn': 20,
+                                          'type': 'token'
                                         }
                                       ],
                                       'start': 5,
@@ -358,9 +392,11 @@ exports[`excel-formula-parser structure reference works 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 20,
-                  'lastColumn': 21
+                  'lastColumn': 21,
+                  'type': 'token'
                 },
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -370,9 +406,11 @@ exports[`excel-formula-parser structure reference works 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
+                                  'type': 'symbol',
                                   'symbol': 'structure-reference',
                                   'children': [
                                     {
@@ -383,9 +421,11 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 21,
-                                      'lastColumn': 22
+                                      'lastColumn': 22,
+                                      'type': 'token'
                                     },
                                     {
+                                      'type': 'symbol',
                                       'symbol': 'table-specifier',
                                       'children': [
                                         {
@@ -396,15 +436,19 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 22,
-                                          'lastColumn': 23
+                                          'lastColumn': 23,
+                                          'type': 'token'
                                         },
                                         {
+                                          'type': 'symbol',
                                           'symbol': 'table-specifier-inner',
                                           'children': [
                                             {
+                                              'type': 'symbol',
                                               'symbol': 'table-column-specifier',
                                               'children': [
                                                 {
+                                                  'type': 'symbol',
                                                   'symbol': 'table-specifier-item',
                                                   'children': [
                                                     {
@@ -415,7 +459,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                       'firstLine': 1,
                                                       'lastLine': 1,
                                                       'firstColumn': 23,
-                                                      'lastColumn': 24
+                                                      'lastColumn': 24,
+                                                      'type': 'token'
                                                     }
                                                   ],
                                                   'start': 22,
@@ -437,7 +482,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 24,
-                                          'lastColumn': 25
+                                          'lastColumn': 25,
+                                          'type': 'token'
                                         }
                                       ],
                                       'start': 21,
@@ -470,7 +516,8 @@ exports[`excel-formula-parser structure reference works 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 25,
-              'lastColumn': 26
+              'lastColumn': 26,
+              'type': 'token'
             }
           ],
           'start': 0,
@@ -494,6 +541,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
 
 exports[`excel-formula-parser structure reference works for space inside column name 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
@@ -503,9 +551,11 @@ exports[`excel-formula-parser structure reference works for space inside column 
           'symbol': 'reference',
           'children': [
             {
+              'type': 'symbol',
               'symbol': 'reference-item',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'structure-reference',
                   'children': [
                     {
@@ -516,9 +566,11 @@ exports[`excel-formula-parser structure reference works for space inside column 
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 2
+                      'lastColumn': 2,
+                      'type': 'token'
                     },
                     {
+                      'type': 'symbol',
                       'symbol': 'table-specifier',
                       'children': [
                         {
@@ -529,15 +581,19 @@ exports[`excel-formula-parser structure reference works for space inside column 
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 2,
-                          'lastColumn': 3
+                          'lastColumn': 3,
+                          'type': 'token'
                         },
                         {
+                          'type': 'symbol',
                           'symbol': 'table-specifier-inner',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'table-column-specifier',
                               'children': [
                                 {
+                                  'type': 'symbol',
                                   'symbol': 'table-specifier-item',
                                   'children': [
                                     {
@@ -548,7 +604,8 @@ exports[`excel-formula-parser structure reference works for space inside column 
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 3,
-                                      'lastColumn': 6
+                                      'lastColumn': 6,
+                                      'type': 'token'
                                     }
                                   ],
                                   'start': 2,
@@ -570,7 +627,8 @@ exports[`excel-formula-parser structure reference works for space inside column 
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 6,
-                          'lastColumn': 7
+                          'lastColumn': 7,
+                          'type': 'token'
                         }
                       ],
                       'start': 1,
@@ -597,6 +655,7 @@ exports[`excel-formula-parser structure reference works for space inside column 
 
 exports[`excel-formula-parser structure reference works for thisRow 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
@@ -606,9 +665,11 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
           'symbol': 'reference',
           'children': [
             {
+              'type': 'symbol',
               'symbol': 'reference-item',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'structure-reference',
                   'children': [
                     {
@@ -619,9 +680,11 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 10
+                      'lastColumn': 10,
+                      'type': 'token'
                     },
                     {
+                      'type': 'symbol',
                       'symbol': 'table-specifier',
                       'children': [
                         {
@@ -632,12 +695,15 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 10,
-                          'lastColumn': 11
+                          'lastColumn': 11,
+                          'type': 'token'
                         },
                         {
+                          'type': 'symbol',
                           'symbol': 'table-specifier-inner',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'table-this-row',
                               'children': [
                                 {
@@ -648,7 +714,8 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 11,
-                                  'lastColumn': 12
+                                  'lastColumn': 12,
+                                  'type': 'token'
                                 },
                                 {
                                   'text': 'Commission Amount',
@@ -658,7 +725,8 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 12,
-                                  'lastColumn': 29
+                                  'lastColumn': 29,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 10,
@@ -678,7 +746,8 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 29,
-                          'lastColumn': 30
+                          'lastColumn': 30,
+                          'type': 'token'
                         }
                       ],
                       'start': 9,
@@ -705,6 +774,7 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
 
 exports[`excel-formula-parser structure reference works for thisRow 2`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
@@ -714,9 +784,11 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
           'symbol': 'reference',
           'children': [
             {
+              'type': 'symbol',
               'symbol': 'reference-item',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'structure-reference',
                   'children': [
                     {
@@ -727,9 +799,11 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 10
+                      'lastColumn': 10,
+                      'type': 'token'
                     },
                     {
+                      'type': 'symbol',
                       'symbol': 'table-specifier',
                       'children': [
                         {
@@ -740,12 +814,15 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 10,
-                          'lastColumn': 11
+                          'lastColumn': 11,
+                          'type': 'token'
                         },
                         {
+                          'type': 'symbol',
                           'symbol': 'table-specifier-inner',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'table-this-row',
                               'children': [
                                 {
@@ -756,7 +833,8 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 11,
-                                  'lastColumn': 12
+                                  'lastColumn': 12,
+                                  'type': 'token'
                                 },
                                 {
                                   'text': '[Commission Amount]',
@@ -766,7 +844,8 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 12,
-                                  'lastColumn': 31
+                                  'lastColumn': 31,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 10,
@@ -786,7 +865,8 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 31,
-                          'lastColumn': 32
+                          'lastColumn': 32,
+                          'type': 'token'
                         }
                       ],
                       'start': 9,
@@ -813,6 +893,7 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
 
 exports[`excel-formula-parser structure reference works for thisRow 3`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
@@ -822,9 +903,11 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
           'symbol': 'reference',
           'children': [
             {
+              'type': 'symbol',
               'symbol': 'reference-item',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'structure-reference',
                   'children': [
                     {
@@ -835,9 +918,11 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 10
+                      'lastColumn': 10,
+                      'type': 'token'
                     },
                     {
+                      'type': 'symbol',
                       'symbol': 'table-specifier',
                       'children': [
                         {
@@ -848,15 +933,19 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 10,
-                          'lastColumn': 11
+                          'lastColumn': 11,
+                          'type': 'token'
                         },
                         {
+                          'type': 'symbol',
                           'symbol': 'table-specifier-inner',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'table-column-specifier',
                               'children': [
                                 {
+                                  'type': 'symbol',
                                   'symbol': 'table-specifier-item',
                                   'children': [
                                     {
@@ -867,7 +956,8 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 11,
-                                      'lastColumn': 22
+                                      'lastColumn': 22,
+                                      'type': 'token'
                                     }
                                   ],
                                   'start': 10,
@@ -885,9 +975,11 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 22,
-                                  'lastColumn': 23
+                                  'lastColumn': 23,
+                                  'type': 'token'
                                 },
                                 {
+                                  'type': 'symbol',
                                   'symbol': 'table-specifier-item',
                                   'children': [
                                     {
@@ -898,7 +990,8 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 24,
-                                      'lastColumn': 43
+                                      'lastColumn': 43,
+                                      'type': 'token'
                                     }
                                   ],
                                   'start': 23,
@@ -923,7 +1016,8 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 43,
-                          'lastColumn': 44
+                          'lastColumn': 44,
+                          'type': 'token'
                         }
                       ],
                       'start': 9,
@@ -950,12 +1044,14 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
 
 exports[`excel-formula-parser works for 3d reference 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
       'symbol': 'exp',
       'children': [
         {
+          'type': 'symbol',
           'symbol': 'function',
           'children': [
             {
@@ -966,7 +1062,8 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '(',
@@ -976,12 +1073,15 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
+              'type': 'symbol',
               'symbol': 'arguments',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -991,6 +1091,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
@@ -1001,7 +1102,8 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 5,
-                                  'lastColumn': 23
+                                  'lastColumn': 23,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 4,
@@ -1033,7 +1135,8 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 23,
-              'lastColumn': 24
+              'lastColumn': 24,
+              'type': 'token'
             }
           ],
           'start': 0,
@@ -1057,12 +1160,14 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
 
 exports[`excel-formula-parser works for env 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
       'symbol': 'exp',
       'children': [
         {
+          'type': 'symbol',
           'symbol': 'function',
           'children': [
             {
@@ -1073,7 +1178,8 @@ exports[`excel-formula-parser works for env 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '(',
@@ -1083,12 +1189,15 @@ exports[`excel-formula-parser works for env 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
+              'type': 'symbol',
               'symbol': 'arguments',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -1098,6 +1207,7 @@ exports[`excel-formula-parser works for env 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
@@ -1108,7 +1218,8 @@ exports[`excel-formula-parser works for env 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 5,
-                                  'lastColumn': 10
+                                  'lastColumn': 10,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 4,
@@ -1138,9 +1249,11 @@ exports[`excel-formula-parser works for env 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 10,
-                  'lastColumn': 11
+                  'lastColumn': 11,
+                  'type': 'token'
                 },
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -1150,6 +1263,7 @@ exports[`excel-formula-parser works for env 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
@@ -1160,7 +1274,8 @@ exports[`excel-formula-parser works for env 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 11,
-                                  'lastColumn': 13
+                                  'lastColumn': 13,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 10,
@@ -1192,7 +1307,8 @@ exports[`excel-formula-parser works for env 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 13,
-              'lastColumn': 14
+              'lastColumn': 14,
+              'type': 'token'
             }
           ],
           'start': 0,
@@ -1216,12 +1332,14 @@ exports[`excel-formula-parser works for env 1`] = `
 
 exports[`excel-formula-parser works for reference operation 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
       'symbol': 'exp',
       'children': [
         {
+          'type': 'symbol',
           'symbol': 'function',
           'children': [
             {
@@ -1232,7 +1350,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '(',
@@ -1242,12 +1361,15 @@ exports[`excel-formula-parser works for reference operation 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
+              'type': 'symbol',
               'symbol': 'arguments',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -1260,6 +1382,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                               'symbol': 'reference',
                               'children': [
                                 {
+                                  'type': 'symbol',
                                   'symbol': 'reference-item',
                                   'children': [
                                     {
@@ -1270,7 +1393,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 6,
-                                      'lastColumn': 11
+                                      'lastColumn': 11,
+                                      'type': 'token'
                                     }
                                   ],
                                   'start': 5,
@@ -1296,7 +1420,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 11,
-                              'lastColumn': 12
+                              'lastColumn': 12,
+                              'type': 'token'
                             },
                             {
                               'symbol': 'reference',
@@ -1305,9 +1430,11 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                   'symbol': 'reference',
                                   'children': [
                                     {
+                                      'type': 'symbol',
                                       'symbol': 'reference',
                                       'children': [
                                         {
+                                          'type': 'symbol',
                                           'symbol': 'reference-item',
                                           'children': [
                                             {
@@ -1318,7 +1445,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 12,
-                                              'lastColumn': 13
+                                              'lastColumn': 13,
+                                              'type': 'token'
                                             }
                                           ],
                                           'start': 11,
@@ -1338,12 +1466,15 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                       'firstLine': 1,
                                       'lastLine': 1,
                                       'firstColumn': 13,
-                                      'lastColumn': 14
+                                      'lastColumn': 14,
+                                      'type': 'token'
                                     },
                                     {
+                                      'type': 'symbol',
                                       'symbol': 'reference',
                                       'children': [
                                         {
+                                          'type': 'symbol',
                                           'symbol': 'reference-item',
                                           'children': [
                                             {
@@ -1354,7 +1485,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 14,
-                                              'lastColumn': 15
+                                              'lastColumn': 15,
+                                              'type': 'token'
                                             }
                                           ],
                                           'start': 13,
@@ -1373,6 +1505,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                   'symbol': 'reference',
                                   'children': [
                                     {
+                                      'type': 'symbol',
                                       'symbol': 'reference-item',
                                       'children': [
                                         {
@@ -1383,7 +1516,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 16,
-                                          'lastColumn': 18
+                                          'lastColumn': 18,
+                                          'type': 'token'
                                         }
                                       ],
                                       'start': 15,
@@ -1421,7 +1555,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 19,
-              'lastColumn': 20
+              'lastColumn': 20,
+              'type': 'token'
             }
           ],
           'start': 0,
@@ -1445,12 +1580,14 @@ exports[`excel-formula-parser works for reference operation 1`] = `
 
 exports[`excel-formula-parser works for row rangge 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
       'symbol': 'exp',
       'children': [
         {
+          'type': 'symbol',
           'symbol': 'function',
           'children': [
             {
@@ -1461,7 +1598,8 @@ exports[`excel-formula-parser works for row rangge 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '(',
@@ -1471,12 +1609,15 @@ exports[`excel-formula-parser works for row rangge 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
+              'type': 'symbol',
               'symbol': 'arguments',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -1486,6 +1627,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
@@ -1496,7 +1638,8 @@ exports[`excel-formula-parser works for row rangge 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 5,
-                                  'lastColumn': 8
+                                  'lastColumn': 8,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 4,
@@ -1528,7 +1671,8 @@ exports[`excel-formula-parser works for row rangge 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 8,
-              'lastColumn': 9
+              'lastColumn': 9,
+              'type': 'token'
             }
           ],
           'start': 0,
@@ -1552,12 +1696,14 @@ exports[`excel-formula-parser works for row rangge 1`] = `
 
 exports[`excel-formula-parser works for simple 1`] = `
 "{
+  'type': 'symbol',
   'symbol': 'formula',
   'children': [
     {
       'symbol': 'exp',
       'children': [
         {
+          'type': 'symbol',
           'symbol': 'function',
           'children': [
             {
@@ -1568,7 +1714,8 @@ exports[`excel-formula-parser works for simple 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 1,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '(',
@@ -1578,12 +1725,15 @@ exports[`excel-formula-parser works for simple 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
+              'type': 'symbol',
               'symbol': 'arguments',
               'children': [
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -1593,6 +1743,7 @@ exports[`excel-formula-parser works for simple 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
@@ -1603,7 +1754,8 @@ exports[`excel-formula-parser works for simple 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 5,
-                                  'lastColumn': 10
+                                  'lastColumn': 10,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 4,
@@ -1633,9 +1785,11 @@ exports[`excel-formula-parser works for simple 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 10,
-                  'lastColumn': 11
+                  'lastColumn': 11,
+                  'type': 'token'
                 },
                 {
+                  'type': 'symbol',
                   'symbol': 'argument',
                   'children': [
                     {
@@ -1645,6 +1799,7 @@ exports[`excel-formula-parser works for simple 1`] = `
                           'symbol': 'reference',
                           'children': [
                             {
+                              'type': 'symbol',
                               'symbol': 'reference-item',
                               'children': [
                                 {
@@ -1655,7 +1810,8 @@ exports[`excel-formula-parser works for simple 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 11,
-                                  'lastColumn': 13
+                                  'lastColumn': 13,
+                                  'type': 'token'
                                 }
                               ],
                               'start': 10,
@@ -1687,7 +1843,8 @@ exports[`excel-formula-parser works for simple 1`] = `
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 13,
-              'lastColumn': 14
+              'lastColumn': 14,
+              'type': 'token'
             }
           ],
           'start': 0,

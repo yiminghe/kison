@@ -269,7 +269,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 1,
-          'lastColumn': 2
+          'lastColumn': 2,
+          'type': 'token'
         },
         {
           'text': '+',
@@ -279,7 +280,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 2,
-          'lastColumn': 3
+          'lastColumn': 3,
+          'type': 'token'
         },
         {
           'text': '2',
@@ -289,7 +291,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 3,
-          'lastColumn': 4
+          'lastColumn': 4,
+          'type': 'token'
         }
       ],
       'start': 0,
@@ -307,7 +310,8 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 4,
-      'lastColumn': 5
+      'lastColumn': 5,
+      'type': 'token'
     },
     {
       'text': '3',
@@ -317,7 +321,8 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 5,
-      'lastColumn': 6
+      'lastColumn': 6,
+      'type': 'token'
     }
   ],
   'end': 5,
@@ -344,7 +349,8 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 2
+      'lastColumn': 2,
+      'type': 'token'
     },
     {
       'text': '+',
@@ -354,7 +360,8 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 2,
-      'lastColumn': 3
+      'lastColumn': 3,
+      'type': 'token'
     },
     {
       'symbol': 'exp',
@@ -367,7 +374,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 3,
-          'lastColumn': 4
+          'lastColumn': 4,
+          'type': 'token'
         },
         {
           'text': '*',
@@ -377,7 +385,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 4,
-          'lastColumn': 5
+          'lastColumn': 5,
+          'type': 'token'
         },
         {
           'text': '3',
@@ -387,7 +396,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 5,
-          'lastColumn': 6
+          'lastColumn': 6,
+          'type': 'token'
         }
       ],
       'start': 2,
@@ -425,7 +435,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 1,
-          'lastColumn': 2
+          'lastColumn': 2,
+          'type': 'token'
         },
         {
           'text': '+',
@@ -435,7 +446,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 2,
-          'lastColumn': 3
+          'lastColumn': 3,
+          'type': 'token'
         },
         {
           'symbol': 'exp',
@@ -448,7 +460,8 @@ describe('ll', () => {
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 3,
-              'lastColumn': 4
+              'lastColumn': 4,
+              'type': 'token'
             },
             {
               'text': '*',
@@ -458,7 +471,8 @@ describe('ll', () => {
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 4,
-              'lastColumn': 5
+              'lastColumn': 5,
+              'type': 'token'
             },
             {
               'text': '4',
@@ -468,7 +482,8 @@ describe('ll', () => {
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 5,
-              'lastColumn': 6
+              'lastColumn': 6,
+              'type': 'token'
             }
           ],
           'start': 2,
@@ -491,9 +506,11 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 6,
-      'lastColumn': 7
+      'lastColumn': 7,
+      'type': 'token'
     },
     {
+      'type': 'symbol',
       'symbol': 'exp',
       'children': [
         {
@@ -504,7 +521,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 7,
-          'lastColumn': 8
+          'lastColumn': 8,
+          'type': 'token'
         },
         {
           'text': '^',
@@ -514,9 +532,11 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 8,
-          'lastColumn': 9
+          'lastColumn': 9,
+          'type': 'token'
         },
         {
+          'type': 'symbol',
           'symbol': 'exp',
           'children': [
             {
@@ -527,7 +547,8 @@ describe('ll', () => {
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 9,
-              'lastColumn': 10
+              'lastColumn': 10,
+              'type': 'token'
             },
             {
               'text': '^',
@@ -537,7 +558,8 @@ describe('ll', () => {
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 10,
-              'lastColumn': 11
+              'lastColumn': 11,
+              'type': 'token'
             },
             {
               'text': '3',
@@ -547,7 +569,8 @@ describe('ll', () => {
               'firstLine': 1,
               'lastLine': 1,
               'firstColumn': 11,
-              'lastColumn': 12
+              'lastColumn': 12,
+              'type': 'token'
             }
           ],
           'start': 8,
@@ -584,7 +607,8 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 2
+      'lastColumn': 2,
+      'type': 'token'
     },
     {
       'text': '+',
@@ -594,7 +618,8 @@ describe('ll', () => {
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 2,
-      'lastColumn': 3
+      'lastColumn': 3,
+      'type': 'token'
     },
     {
       'symbol': 'exp',
@@ -607,7 +632,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 3,
-          'lastColumn': 4
+          'lastColumn': 4,
+          'type': 'token'
         },
         {
           'text': '*',
@@ -617,7 +643,8 @@ describe('ll', () => {
           'firstLine': 1,
           'lastLine': 1,
           'firstColumn': 4,
-          'lastColumn': 5
+          'lastColumn': 5,
+          'type': 'token'
         },
         {
           'error': {
@@ -708,8 +735,8 @@ describe('ll', () => {
     const parser = run(code);
     const astProcessor = new AstProcessor();
     parser.parse('1 + 2*3-2^1^3', {
-      onAction({ action, lexer }) {
-        action(astProcessor, lexer);
+      onAction({ action, token }) {
+        action(astProcessor, token);
       },
     });
     expect(astProcessor.stack).toMatchInlineSnapshot(`
@@ -826,7 +853,8 @@ current token: '/'.",
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 2
+      'lastColumn': 2,
+      'type': 'token'
     },
     {
       'text': '+',
@@ -836,7 +864,8 @@ current token: '/'.",
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 2,
-      'lastColumn': 3
+      'lastColumn': 3,
+      'type': 'token'
     },
     {
       'token': 'NUMBER',
@@ -846,7 +875,8 @@ current token: '/'.",
       'firstColumn': 3,
       'lastLine': 1,
       'lastColumn': 3,
-      'text': '0'
+      'text': '0',
+      'type': 'token'
     }
   ],
   'start': 0,

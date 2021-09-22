@@ -19,6 +19,8 @@ program
   .option('-o, --output [file]', 'output file path')
   .option('--library [library]', 'library name')
   .option('--bnf [bnf]', 'bnf file')
+  .option('--declaration [declaration]', 'declaration')
+  .option('--declarationDir [declarationDir]', 'declarationDir')
   .option('-m, --mode [mode]', 'lalr or ll')
   .option('-b, --babel [babel]', 'use babel')
   .option('-v, --visual [visual]', 'visual')
@@ -148,8 +150,23 @@ function genParser() {
 
   const instance = new Cons(grammarObj);
 
+  if (program.declaration && instance.genDTs) {
+    let output = program.declarationDir;
+    output = typeof output === 'string' ? output : path.dirname(outFile);
+    output = path.resolve(output);
+    const file = path.join(
+      output,
+      path.basename(outFile, path.extname(outFile)) + '.d.ts',
+    );
+    const baseDts = fs.readFileSync(
+      path.join(__dirname, '../lib/ll/parser.d.ts'),
+      'utf-8',
+    );
+    const dts = instance.genDTs(baseDts);
+    fs.writeFileSync(file, dts);
+  }
+
   if (program.bnf) {
-    instance.expandProductions();
     const bnf = instance.toBNF();
     let output = program.bnf;
     if (typeof output === 'string') {

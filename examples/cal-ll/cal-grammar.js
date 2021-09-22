@@ -1,7 +1,7 @@
 const lexerConfig = require('../common/cal-lexer');
 
-function s(astProcessor, lexer) {
-  astProcessor.pushStack(lexer.text);
+function s(astProcessor, token) {
+  astProcessor.pushStack(token.text);
 }
 
 function c(astProcessor) {

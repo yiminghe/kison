@@ -1,15 +1,15 @@
 // @ts-check
-import { StateUnit } from "./state.js";
+import { StateUnit } from './state.js';
 
 export function isWord(s) {
   const code = s.charCodeAt(0);
   return (
-    s === "_" || (s >= "a" && s <= "z") || (s >= "A" && s <= "Z") || isNumber(s)
+    s === '_' || (s >= 'a' && s <= 'z') || (s >= 'A' && s <= 'Z') || isNumber(s)
   );
 }
 
 export function isNumber(s) {
-  return s >= "0" && s <= "9";
+  return s >= '0' && s <= '9';
 }
 
 export function concatUnits(type, us) {
@@ -29,7 +29,7 @@ export function concatUnits(type, us) {
 }
 
 export function wrapUnit(u, group) {
-  const ret = new StateUnit(`${u.type}${group ? "Group" : "Wrap"}`);
+  const ret = new StateUnit(`${u.type}${group ? 'Group' : 'Wrap'}`);
   ret.start.pushTransition(u.start);
   u.end.pushTransition(ret.end);
   return ret;
@@ -40,13 +40,13 @@ export function upperCaseFirstChar(str) {
 }
 
 export function annotateGroupIndex(ast, index = { count: 0 }) {
-  if (ast.symbol === "Group") {
-    if (ast.children[1].text !== "?:") {
+  if (ast.symbol === 'Group') {
+    if (ast.children[1].text !== '?:') {
       ast.captureGroupIndex = ++index.count;
     }
   }
   if (ast.children) {
-    ast.children.forEach(c => {
+    ast.children.forEach((c) => {
       annotateGroupIndex(c, index);
     });
   }

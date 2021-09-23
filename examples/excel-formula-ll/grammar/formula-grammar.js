@@ -15,7 +15,7 @@ const operators = [
 ];
 
 const binaryOperators = [].concat(
-  ...operators.slice(0, 5).map(a => a.slice(1)),
+  ...operators.slice(0, 5).map((a) => a.slice(1)),
 );
 
 const decimalFractionLiteral = '(?:[0-9][0-9]*)';
@@ -77,7 +77,7 @@ module.exports = () => ({
       symbol: 'formula',
       rhs: ['exp'],
     },
-    ...binaryOperators.map(op => ({
+    ...binaryOperators.map((op) => ({
       symbol: 'exp',
       rhs: ['exp', op, 'exp'],
       label: 'binary-exp',

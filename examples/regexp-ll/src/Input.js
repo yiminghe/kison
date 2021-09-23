@@ -1,5 +1,5 @@
 // @ts-check
-import { isWord } from "./utils.js";
+import { isWord } from './utils.js';
 
 export default class Input {
   constructor(str, options) {
@@ -30,7 +30,7 @@ export default class Input {
   getChar() {
     const code = this.getCharCode();
     if (isNaN(code) || code === undefined) {
-      return "";
+      return '';
     }
     return String.fromCodePoint(code);
   }
@@ -38,7 +38,7 @@ export default class Input {
   getPrevChar() {
     const code = this.getPrevCharCode();
     if (isNaN(code) || code === undefined) {
-      return "";
+      return '';
     }
     return String.fromCodePoint(code);
   }
@@ -181,7 +181,7 @@ export default class Input {
       return true;
     }
     const c = this.getChar();
-    const l = this.index > 0 ? this.getPrevChar() : " ";
+    const l = this.index > 0 ? this.getPrevChar() : ' ';
     if (isWord(c)) {
       return !isWord(l);
     } else {
@@ -195,7 +195,7 @@ export default class Input {
     if (groupStartIndex) {
       input.startGroupIndex[groupStartIndex.index - 1] = {
         index: input.index,
-        name: groupStartIndex.name
+        name: groupStartIndex.name,
       };
     }
     let groupEndIndex = compiler.groupEndIndex(state);
@@ -203,7 +203,7 @@ export default class Input {
       let startIndex = input.startGroupIndex[groupEndIndex.index - 1];
       let endIndex = {
         index: input.index,
-        name: startIndex.name
+        name: startIndex.name,
       };
       if (startIndex.index > endIndex.index) {
         startIndex = { ...startIndex };
@@ -214,7 +214,7 @@ export default class Input {
       let name = groupEndIndex.name;
       let value = {
         index: startIndex.index,
-        match: input.str.slice(startIndex.index, endIndex.index)
+        match: input.str.slice(startIndex.index, endIndex.index),
       };
       if (startIndex.name) {
         value.name = startIndex.name;

@@ -1,9 +1,9 @@
 // @ts-check
-import { isWord, isNumber } from "./utils.js";
-import { AsyncMatcher, Matcher } from "./match.js";
+import { isWord, isNumber } from './utils.js';
+import { AsyncMatcher, Matcher } from './match.js';
 
 export const asyncAnchorMatchers = {
-  "^"(input) {
+  '^'(input) {
     return true;
   },
   anchorWordBoundary(input) {
@@ -19,18 +19,18 @@ export const asyncAnchorMatchers = {
     return false;
   },
   async $(input) {
-    return input.options.multiline && (await input.getChar()) === "\n";
+    return input.options.multiline && (await input.getChar()) === '\n';
   },
   async anchorEndOfStringOnly(input) {
-    return input.isAtLastIndex() && (await input.getChar()) === "\n";
+    return input.isAtLastIndex() && (await input.getChar()) === '\n';
   },
   anchorPreviousMatchEnd(input) {
     return false;
-  }
+  },
 };
 
-export const asyncStringMatcher = str => {
-  return async input => {
+export const asyncStringMatcher = (str) => {
+  return async (input) => {
     if (input.isEnd()) {
       return null;
     }
@@ -40,7 +40,7 @@ export const asyncStringMatcher = str => {
 };
 
 export const asyncBackreferenceMatcher = (index, named) => {
-  return async input => {
+  return async (input) => {
     if (input.isEnd()) {
       return null;
     }
@@ -54,13 +54,13 @@ export const asyncBackreferenceMatcher = (index, named) => {
 };
 
 const linefeeds = {
-  "\n": 1,
-  "\r": 1,
-  "\u2028": 1,
-  "\u2029": 1
+  '\n': 1,
+  '\r': 1,
+  '\u2028': 1,
+  '\u2029': 1,
 };
 
-export const asyncAnyCharMatcher = async input => {
+export const asyncAnyCharMatcher = async (input) => {
   if (input.isEnd()) {
     return null;
   }
@@ -74,7 +74,7 @@ export const asyncAnyCharMatcher = async input => {
 };
 
 export const asyncCharGroupMatcher = (items, invert) => {
-  return async input => {
+  return async (input) => {
     if (input.isEnd()) {
       return null;
     }
@@ -82,14 +82,14 @@ export const asyncCharGroupMatcher = (items, invert) => {
     const current = await input.getChar();
     for (const item of items) {
       const child = item.children[0];
-      if (child.symbol === "CharacterClass") {
+      if (child.symbol === 'CharacterClass') {
         const cls = child.children[0].token;
         if (await characterClassMatcher[cls](input)) {
           ret = !ret;
           break;
         }
-      } else if (child.symbol === "CharacterRange") {
-        const chars = child.children.map(c => c.text);
+      } else if (child.symbol === 'CharacterRange') {
+        const chars = child.children.map((c) => c.text);
         const lower = chars[0];
         let upper = chars[2];
         if (upper) {
@@ -102,12 +102,12 @@ export const asyncCharGroupMatcher = (items, invert) => {
           break;
         }
       } else {
-        throw new Error("charGroupMatcher unmatch item:" + child.symbol);
+        throw new Error('charGroupMatcher unmatch item:' + child.symbol);
       }
     }
     return ret
       ? {
-          count: current.length
+          count: current.length,
         }
       : false;
   };
@@ -117,16 +117,16 @@ export const asyncCharGroupMatcher = (items, invert) => {
 const whitespaceCharacters = {
   ...linefeeds,
 
-  " ": 1,
-  "\f": 1,
-  "\t": 1,
-  "\v": 1,
-  "\u00a0": 1,
-  "\u1680": 1,
-  "\u202f": 1,
-  "\u205f": 1,
-  "\u3000": 1,
-  "\ufeff": 1
+  ' ': 1,
+  '\f': 1,
+  '\t': 1,
+  '\v': 1,
+  '\u00a0': 1,
+  '\u1680': 1,
+  '\u202f': 1,
+  '\u205f': 1,
+  '\u3000': 1,
+  '\ufeff': 1,
 };
 
 for (let code = 0x2000; code < 0x200b; code++) {
@@ -163,19 +163,19 @@ export const asyncCharacterClassMatcher = {
     }
     let char = await input.getChar();
     return !whitespaceCharacters[char] ? { count: char.length } : null;
-  }
+  },
 };
 
 export const asyncAssertionMatcher = {
   lookahead(exp, compiler, invert) {
     const unit = compiler.compile(exp);
     const matcher = new AsyncMatcher(compiler);
-    return async input => {
+    return async (input) => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       // @ts-ignore
       let match = await matcher.matchInternal({
-        startState: unit.start
+        startState: unit.start,
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -183,7 +183,7 @@ export const asyncAssertionMatcher = {
       if (match) {
         input.injectGroups(match);
         return {
-          count: 0
+          count: 0,
         };
       }
       return false;
@@ -197,14 +197,14 @@ export const asyncAssertionMatcher = {
     const unit = compiler.compile(exp);
     compiler.setInverted(false);
     const matcher = new Matcher(compiler);
-    return async input => {
+    return async (input) => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       matcher.input.setInverted();
       matcher.input.advance();
       // @ts-ignore
       let match = await matcher.matchInternal({
-        startState: unit.start
+        startState: unit.start,
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -212,7 +212,7 @@ export const asyncAssertionMatcher = {
       if (match) {
         input.injectGroups(match);
         return {
-          count: 0
+          count: 0,
         };
       }
       return false;
@@ -220,5 +220,5 @@ export const asyncAssertionMatcher = {
   },
   negativeLookbehind(exp, compiler) {
     return asyncAssertionMatcher.lookbehind(exp, compiler, true);
-  }
+  },
 };

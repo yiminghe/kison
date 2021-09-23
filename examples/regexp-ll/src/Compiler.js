@@ -6,8 +6,8 @@ import {
   stringMatcher,
   charGroupMatcher,
   characterClassMatcher,
-  assertionMatcher
-} from "./matchers.js";
+  assertionMatcher,
+} from './matchers.js';
 
 import {
   asyncAnchorMatchers,
@@ -16,17 +16,17 @@ import {
   asyncStringMatcher,
   asyncCharGroupMatcher,
   asyncCharacterClassMatcher,
-  asyncAssertionMatcher
-} from "./asyncMatchers.js";
+  asyncAssertionMatcher,
+} from './asyncMatchers.js';
 
 import {
   concatUnits,
   upperCaseFirstChar,
   annotateGroupIndex,
-  wrapUnit
-} from "./utils.js";
-import { StateUnit } from "./state.js";
-import parser from "./parser.js";
+  wrapUnit,
+} from './utils.js';
+import { StateUnit } from './state.js';
+import parser from './parser.js';
 
 export default class Compiler {
   constructor(options) {
@@ -58,7 +58,7 @@ export default class Compiler {
     if (this[m]) {
       return this[m](node, async);
     }
-    throw new Error("no compile procedure for " + m);
+    throw new Error('no compile procedure for ' + m);
   }
 
   compileRegexp(node) {
@@ -66,30 +66,30 @@ export default class Compiler {
     let units = [];
     if (children[0]) {
       let expression = children[0];
-      if (children[0].text === "^") {
-        const unit = new StateUnit("^");
+      if (children[0].text === '^') {
+        const unit = new StateUnit('^');
         if (this.options.async) {
-          unit.start.pushAsyncTransition(unit.end, asyncAnchorMatchers["^"]);
+          unit.start.pushAsyncTransition(unit.end, asyncAnchorMatchers['^']);
         } else {
-          unit.start.pushTransition(unit.end, anchorMatchers["^"]);
+          unit.start.pushTransition(unit.end, anchorMatchers['^']);
         }
         expression = children[1];
         units.push(unit);
       }
       const expressionUnit = this.compile(expression);
       units.push(expressionUnit);
-      return concatUnits("RegExp", units);
+      return concatUnits('RegExp', units);
     }
   }
 
   compileExpression(node) {
     const subUnits = node.children
-      .filter(s => s.text !== "|")
+      .filter((s) => s.text !== '|')
       .map(this.compile, this);
     if (subUnits.length === 1) {
       return subUnits[0];
     }
-    const unit = new StateUnit("|");
+    const unit = new StateUnit('|');
     if (this.inverted) {
       subUnits.reverse();
     }
@@ -105,7 +105,7 @@ export default class Compiler {
     if (this.inverted) {
       subUnits.reverse();
     }
-    return concatUnits("SubExpression", subUnits);
+    return concatUnits('SubExpression', subUnits);
   }
 
   compileExpressionItem(node) {
@@ -116,13 +116,13 @@ export default class Compiler {
     let index;
     let named;
     const name = node.text.slice(1);
-    if (name.lastIndexOf("k<", 0) === 0) {
+    if (name.lastIndexOf('k<', 0) === 0) {
       named = true;
       index = name.slice(2, -1);
     } else {
       index = parseInt(node.text.slice(1));
     }
-    const unit = new StateUnit("Backreference_" + index);
+    const unit = new StateUnit('Backreference_' + index);
     const backreferenceM = this.async
       ? asyncBackreferenceMatcher
       : backreferenceMatcher;
@@ -131,20 +131,20 @@ export default class Compiler {
   }
 
   _compileQuantifier(getUnit, quantifier) {
-    const lazy = quantifier.children[1]?.text === "?";
+    const lazy = quantifier.children[1]?.text === '?';
     const typeNodes = quantifier.children[0].children;
     const type = typeNodes[0].text;
     switch (type) {
-      case "*":
+      case '*':
         return this._zeroOrMore(getUnit, lazy);
-      case "+":
+      case '+':
         return this._oneOrMore(getUnit, lazy);
-      case "?":
+      case '?':
         return this._zeroOrOne(getUnit, lazy);
-      case "{":
+      case '{':
         return this._range(getUnit, typeNodes, lazy);
     }
-    throw new Error("unsupported quantifier for " + type);
+    throw new Error('unsupported quantifier for ' + type);
   }
 
   _range(getUnit, range, lazy) {
@@ -160,7 +160,7 @@ export default class Compiler {
       let nest;
       if (upper > lower) {
         for (let i = lower; i < upper; i++) {
-          nest = nest ? concatUnits("nest", [getUnit(), nest]) : getUnit();
+          nest = nest ? concatUnits('nest', [getUnit(), nest]) : getUnit();
           nest = this._zeroOrOne(() => nest, lazy);
         }
       }
@@ -170,12 +170,12 @@ export default class Compiler {
     } else if (hasMore) {
       units.push(this._zeroOrMore(getUnit, lazy));
     }
-    return concatUnits("range", units);
+    return concatUnits('range', units);
   }
 
   _zeroOrOne(getUnit, lazy) {
     const unit = getUnit();
-    const qUnit = new StateUnit("?");
+    const qUnit = new StateUnit('?');
     qUnit.start.pushTransition(unit.start);
     qUnit.start.pushTransition(qUnit.end);
     unit.end.pushTransition(qUnit.end);
@@ -187,7 +187,7 @@ export default class Compiler {
 
   _oneOrMore(getUnit, lazy) {
     const unit = getUnit();
-    const qUnit = new StateUnit("+");
+    const qUnit = new StateUnit('+');
     qUnit.start.pushTransition(unit.start);
     unit.end.pushTransition(unit.start);
     unit.end.pushTransition(qUnit.end);
@@ -199,7 +199,7 @@ export default class Compiler {
 
   _zeroOrMore(getUnit, lazy) {
     const unit = getUnit();
-    const qUnit = new StateUnit("*");
+    const qUnit = new StateUnit('*');
     qUnit.start.pushTransition(unit.start);
     unit.start.pushTransition(qUnit.end);
     unit.end.pushTransition(unit.start);
@@ -221,7 +221,7 @@ export default class Compiler {
     let exp = node.children[1];
     let groupIndex = node.captureGroupIndex;
     let name;
-    if (node.children[0].token === "namedGroupPrefix") {
+    if (node.children[0].token === 'namedGroupPrefix') {
       name = node.children[0].text;
     }
     if (!name && !groupIndex) {
@@ -233,18 +233,18 @@ export default class Compiler {
         expUnit = wrapUnit(expUnit, true);
         this.captureGroupStateStartMap.set(expUnit.start, {
           index: groupIndex,
-          name
+          name,
         });
         this.captureGroupStateEndMap.set(expUnit.end, {
           name,
-          index: groupIndex
+          index: groupIndex,
         });
       }
       return expUnit;
     };
 
     const lastChild = node.children[node.children.length - 1];
-    if (lastChild.symbol === "Quantifier") {
+    if (lastChild.symbol === 'Quantifier') {
       return this._compileQuantifier(getUnit, lastChild);
     }
     return getUnit();
@@ -253,7 +253,7 @@ export default class Compiler {
   compileMatch(node) {
     const getUnit = () => this.compile(node.children[0]);
     const lastChild = node.children[node.children.length - 1];
-    if (lastChild.symbol === "Quantifier") {
+    if (lastChild.symbol === 'Quantifier') {
       return this._compileQuantifier(getUnit, lastChild);
     }
     return getUnit();
@@ -269,13 +269,13 @@ export default class Compiler {
 
   compileCharacterClass(node) {
     const token = node.children[0].token;
-    const unit = new StateUnit("CharacterGroup");
+    const unit = new StateUnit('CharacterGroup');
     const characterClassM = this.async
       ? asyncCharacterClassMatcher
       : characterClassMatcher;
     let matcher = characterClassM[token];
     if (!matcher) {
-      throw new Error("compileCharacterClass no matcher: " + token.token);
+      throw new Error('compileCharacterClass no matcher: ' + token.token);
     }
     this.pushTransition(unit.start, unit.end, matcher);
     return unit;
@@ -284,19 +284,19 @@ export default class Compiler {
   compileCharacterGroup(node) {
     let invert = false;
     let itemsNode = node.children[1];
-    if (itemsNode.text === "^") {
+    if (itemsNode.text === '^') {
       invert = true;
       itemsNode = node.children[2];
     }
     const items = itemsNode.children;
-    const unit = new StateUnit("CharacterGroup");
+    const unit = new StateUnit('CharacterGroup');
     const charGroupM = this.async ? asyncCharGroupMatcher : charGroupMatcher;
     this.pushTransition(unit.start, unit.end, charGroupM(items, invert));
     return unit;
   }
 
   compileAnyChar(node) {
-    const unit = new StateUnit(".");
+    const unit = new StateUnit('.');
     const anyCharM = this.async ? asyncAnyCharMatcher : anyCharMatcher;
     this.pushTransition(unit.start, unit.end, anyCharM);
     return unit;
@@ -304,7 +304,7 @@ export default class Compiler {
 
   compileChar(node) {
     const char = node.text;
-    const unit = new StateUnit("Char");
+    const unit = new StateUnit('Char');
     const stringM = this.async ? asyncStringMatcher : stringMatcher;
     this.pushTransition(unit.start, unit.end, stringM(char));
     return unit;
@@ -330,7 +330,7 @@ export default class Compiler {
     } else if (anchorM[token]) {
       this.pushTransition(unit.start, unit.end, anchorM[token]);
     } else {
-      throw new Error("unrecognized anchor token: " + token);
+      throw new Error('unrecognized anchor token: ' + token);
     }
     return unit;
   }

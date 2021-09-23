@@ -121,7 +121,7 @@ describe('ll', () => {
 
     grammar.build();
 
-    expect(prettyJson(grammar.productions.map(p => p.toString())))
+    expect(prettyJson(grammar.productions.map((p) => p.toString())))
       .toMatchInlineSnapshot(`
       "[
         '$START => S ',
@@ -170,7 +170,7 @@ describe('ll', () => {
 
     grammar.build();
 
-    expect(prettyJson(grammar.productions.map(p => p + '')))
+    expect(prettyJson(grammar.productions.map((p) => p + '')))
       .toMatchInlineSnapshot(`
       "[
         '$START => S ',
@@ -256,9 +256,11 @@ describe('ll', () => {
     const ast = parser.parse('1+2+3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
+  'type': 'symbol',
   'symbol': 'exp',
   'children': [
     {
+      'type': 'symbol',
       'symbol': 'exp',
       'children': [
         {
@@ -339,6 +341,7 @@ describe('ll', () => {
     const ast = parser.parse('1+2*3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
+  'type': 'symbol',
   'symbol': 'exp',
   'children': [
     {
@@ -364,6 +367,7 @@ describe('ll', () => {
       'type': 'token'
     },
     {
+      'type': 'symbol',
       'symbol': 'exp',
       'children': [
         {
@@ -422,9 +426,11 @@ describe('ll', () => {
     const ast = parser.parse('1+2*4-5^2^3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
+  'type': 'symbol',
   'symbol': 'exp',
   'children': [
     {
+      'type': 'symbol',
       'symbol': 'exp',
       'children': [
         {
@@ -450,6 +456,7 @@ describe('ll', () => {
           'type': 'token'
         },
         {
+          'type': 'symbol',
           'symbol': 'exp',
           'children': [
             {
@@ -597,6 +604,7 @@ describe('ll', () => {
     const { ast, errorNode } = parser.parse('1+2*');
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
+  'type': 'symbol',
   'symbol': 'exp',
   'children': [
     {
@@ -622,6 +630,7 @@ describe('ll', () => {
       'type': 'token'
     },
     {
+      'type': 'symbol',
       'symbol': 'exp',
       'children': [
         {
@@ -647,6 +656,7 @@ describe('ll', () => {
           'type': 'token'
         },
         {
+          'type': 'token',
           'error': {
             'recovery': false,
             'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
@@ -696,6 +706,7 @@ describe('ll', () => {
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
 "{
+  'type': 'token',
   'error': {
     'recovery': false,
     'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
@@ -819,6 +830,7 @@ current token: '/'.",
   "start": 2,
   "text": "/",
   "token": "/",
+  "type": "token",
 }
 `);
   });
@@ -843,6 +855,7 @@ current token: '/'.",
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
 "{
+  'type': 'symbol',
   'symbol': 'exp',
   'children': [
     {
@@ -911,42 +924,43 @@ current token: '/'.",
       }"
     `);
     expect(errorCalled).toMatchInlineSnapshot(`
-      Object {
-        "end": 2,
-        "error": Object {
-          "errorMessage": "syntax error at line 1:
-      1+
-      --^
-      'NUMBER', '(', '-' expected.
-      current token: '$EOF'.",
-          "expected": Array [
-            "NUMBER",
-            "(",
-            "-",
-          ],
-          "lexer": Object {
-            "end": 2,
-            "firstColumn": 3,
-            "firstLine": 1,
-            "lastColumn": 3,
-            "lastLine": 1,
-            "start": 2,
-            "text": "",
-            "token": "$EOF",
-          },
-          "recovery": true,
-          "symbol": "exp_p_2",
-          "tip": "'NUMBER', '(', '-' expected.
-      current token: '$EOF'.",
-        },
-        "firstColumn": 3,
-        "firstLine": 1,
-        "lastColumn": 3,
-        "lastLine": 1,
-        "start": 2,
-        "text": "",
-        "token": "$EOF",
-      }
-    `);
+Object {
+  "end": 2,
+  "error": Object {
+    "errorMessage": "syntax error at line 1:
+1+
+--^
+'NUMBER', '(', '-' expected.
+current token: '$EOF'.",
+    "expected": Array [
+      "NUMBER",
+      "(",
+      "-",
+    ],
+    "lexer": Object {
+      "end": 2,
+      "firstColumn": 3,
+      "firstLine": 1,
+      "lastColumn": 3,
+      "lastLine": 1,
+      "start": 2,
+      "text": "",
+      "token": "$EOF",
+    },
+    "recovery": true,
+    "symbol": "exp_p_2",
+    "tip": "'NUMBER', '(', '-' expected.
+current token: '$EOF'.",
+  },
+  "firstColumn": 3,
+  "firstLine": 1,
+  "lastColumn": 3,
+  "lastLine": 1,
+  "start": 2,
+  "text": "",
+  "token": "$EOF",
+  "type": "token",
+}
+`);
   });
 });

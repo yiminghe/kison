@@ -22,14 +22,16 @@
     "@yiminghe/rr": "1.x",
     "babel-jest": "^27.0.2",
     "benchmark": "^2.1.4",
+    "@types/jest":"27.x",
     "fs-extra": "10.x",
     "jest": "27.x",
     "lint-staged": "^7.2.0",
+    "monaco-editor": "^0.28.0",
     "np": "^7.x",
     "pika-plugin-build-web-babel": "0.11.x",
     "pika-plugin-clean-dist-src": "^0.1.1",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.11.1"
+    "prettier": "2.x"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -45,13 +47,14 @@
     "modulex-util": "1.x"
   },
   "scripts": {
+    "start":"http-server --mimetypes examples/mime.types",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "prepare": "node scripts/link",
     "perf-formula": "BABEL_ENV=test npx babel-node examples/excel-formula-ll/benchmark/index.js",
     "ts-formula": "BABEL_ENV=test npx babel-node -x '.js,.ts' examples/excel-formula-ll/tests/testTs.ts",
     "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
-    "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx}\"",
+    "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
     "test": "jest",
     "test-debug": "jest -i"
   },

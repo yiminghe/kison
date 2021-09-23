@@ -35,7 +35,7 @@ module.exports = () => ({
       rhs: [
         '-',
         'exp',
-        astProcessor => {
+        (astProcessor) => {
           astProcessor.createUnaryNode('-');
         },
       ],
@@ -45,7 +45,7 @@ module.exports = () => ({
       symbol: 'exp',
       rhs: [
         'NUMBER',
-        function(astProcessor, lexer) {
+        function (astProcessor, lexer) {
           astProcessor.pushStack(Number(lexer.text));
         },
       ],

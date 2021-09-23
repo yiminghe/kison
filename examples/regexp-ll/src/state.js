@@ -22,13 +22,13 @@ export class Transition {
       const ret = this.condition(input);
       if (ret === true) {
         return {
-          count: 0
+          count: 0,
         };
       }
       return ret;
     }
     return {
-      count: 0
+      count: 0,
     };
   }
 }
@@ -43,13 +43,13 @@ export class AsyncTransition {
       const ret = await this.condition(input);
       if (ret === true) {
         return {
-          count: 0
+          count: 0,
         };
       }
       return ret;
     }
     return {
-      count: 0
+      count: 0,
     };
   }
 }

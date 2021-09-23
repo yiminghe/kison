@@ -1,8 +1,8 @@
 /*! http://mths.be/codepointat v0.1.0 by @mathias */
 if (!String.prototype.codePointAt) {
-  (function() {
-    "use strict"; // 严格模式，needed to support `apply`/`call` with `undefined`/`null`
-    var codePointAt = function(position) {
+  (function () {
+    'use strict'; // 严格模式，needed to support `apply`/`call` with `undefined`/`null`
+    var codePointAt = function (position) {
       if (this == null) {
         throw TypeError();
       }
@@ -37,10 +37,10 @@ if (!String.prototype.codePointAt) {
       return first;
     };
     if (Object.defineProperty) {
-      Object.defineProperty(String.prototype, "codePointAt", {
+      Object.defineProperty(String.prototype, 'codePointAt', {
         value: codePointAt,
         configurable: true,
-        writable: true
+        writable: true,
       });
     } else {
       String.prototype.codePointAt = codePointAt;
@@ -49,18 +49,18 @@ if (!String.prototype.codePointAt) {
 }
 
 if (!String.fromCodePoint)
-  (function(stringFromCharCode) {
-    var fromCodePoint = function(_) {
+  (function (stringFromCharCode) {
+    var fromCodePoint = function (_) {
       var codeUnits = [],
         codeLen = 0,
-        result = "";
+        result = '';
       for (var index = 0, len = arguments.length; index !== len; ++index) {
         var codePoint = +arguments[index];
         // correctly handles all cases including `NaN`, `-Infinity`, `+Infinity`
         // The surrounding `!(...)` is required to correctly handle `NaN` cases
         // The (codePoint>>>0) === codePoint clause handles decimals and negatives
         if (!(codePoint < 0x10ffff && codePoint >>> 0 === codePoint))
-          throw RangeError("Invalid code point: " + codePoint);
+          throw RangeError('Invalid code point: ' + codePoint);
         if (codePoint <= 0xffff) {
           // BMP code point
           codeLen = codeUnits.push(codePoint);
@@ -70,7 +70,7 @@ if (!String.fromCodePoint)
           codePoint -= 0x10000;
           codeLen = codeUnits.push(
             (codePoint >> 10) + 0xd800, // highSurrogate
-            (codePoint % 0x400) + 0xdc00 // lowSurrogate
+            (codePoint % 0x400) + 0xdc00, // lowSurrogate
           );
         }
         if (codeLen >= 0x3fff) {
@@ -82,10 +82,10 @@ if (!String.fromCodePoint)
     };
     try {
       // IE 8 only supports `Object.defineProperty` on DOM elements
-      Object.defineProperty(String, "fromCodePoint", {
+      Object.defineProperty(String, 'fromCodePoint', {
         value: fromCodePoint,
         configurable: true,
-        writable: true
+        writable: true,
       });
     } catch (e) {
       String.fromCodePoint = fromCodePoint;

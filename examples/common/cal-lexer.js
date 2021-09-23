@@ -3,12 +3,12 @@ module.exports = () => ({
     rules: [
       {
         regexp: /^\s+/,
-        token: "$HIDDEN"
+        token: '$HIDDEN',
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,
-        token: "NUMBER"
-      }
-    ]
-  }
+        token: 'NUMBER',
+      },
+    ],
+  },
 });

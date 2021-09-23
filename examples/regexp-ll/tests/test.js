@@ -1,18 +1,18 @@
-const regexp = require("../pkg");
+const regexp = require('../pkg');
 
 {
-  const patternInstance = regexp.compile("(a|b)*z");
-  const matcher = patternInstance.matcher("abzaaz");
+  const patternInstance = regexp.compile('(a|b)*z');
+  const matcher = patternInstance.matcher('abzaaz');
   let m;
   while ((m = matcher.match())) {
     console.log(m);
   }
 }
 
-console.log("******************");
+console.log('******************');
 
-(async function() {
-  const fakeData = ["x", "a", "b", "c", "a", "a", "b"];
+(async function () {
+  const fakeData = ['x', 'a', 'b', 'c', 'a', 'a', 'b'];
   let index = 0;
   let length = fakeData.length;
 
@@ -28,9 +28,9 @@ console.log("******************");
     }
   }, 100);
 
-  const patternInstance = regexp.compile("a+b", { async: true });
+  const patternInstance = regexp.compile('a+b', { async: true });
   const matcher = patternInstance.matcherAsync(() => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       function r() {
         if (stream.length) {
           resolve(stream);
@@ -42,7 +42,7 @@ console.log("******************");
       } else {
         // waiting for data
         promise = {
-          resolve: r
+          resolve: r,
         };
       }
     });
@@ -50,6 +50,6 @@ console.log("******************");
 
   while (true) {
     const { match } = await matcher.match();
-    console.log("match: ", match);
+    console.log('match: ', match);
   }
 })();

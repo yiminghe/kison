@@ -35,7 +35,7 @@ var options = program.options;
 
 var grammar = path.resolve(program.grammar);
 
-options.forEach(function(o) {
+options.forEach(function (o) {
   var name = o.name();
   if (o.required && !(name in program)) {
     program.optionMissingArgument(o);

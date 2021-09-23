@@ -1,3 +1,3 @@
-import "./polyfill.js";
-import "./async.js";
-import "./sync.js";
+import './polyfill.js';
+import './async.js';
+import './sync.js';

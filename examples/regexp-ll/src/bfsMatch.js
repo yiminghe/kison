@@ -8,7 +8,7 @@ export default function bfsMatch(input, startState, onlyMatch) {
       input,
       reachableStates,
       ret,
-      onlyMatch
+      onlyMatch,
     );
     if (reachableStates.length) {
       input.advance();

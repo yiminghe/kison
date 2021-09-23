@@ -1,10 +1,10 @@
 // @ts-check
-import Input from "./Input.js";
-import dfsMatch from "./dfsMatch.js";
-import bfsMatch from "./bfsMatch.js";
+import Input from './Input.js';
+import dfsMatch from './dfsMatch.js';
+import bfsMatch from './bfsMatch.js';
 
-import AsyncInput from "./AsyncInput.js";
-import asyncDfsMatch from "./asyncDfsMatch.js";
+import AsyncInput from './AsyncInput.js';
+import asyncDfsMatch from './asyncDfsMatch.js';
 
 export class Matcher {
   constructor(compiler, string, options = {}) {
@@ -39,7 +39,7 @@ export class Matcher {
   match() {
     // @ts-ignore
     return this.matchInternal({
-      sticky: this.options.sticky
+      sticky: this.options.sticky,
     });
   }
 
@@ -56,7 +56,7 @@ export class Matcher {
       let matchedInput = this.matchFn(
         input,
         startState || this.startState,
-        onlyMatch
+        onlyMatch,
       );
       if (matchedInput) {
         input = matchedInput;
@@ -66,7 +66,7 @@ export class Matcher {
         const ret = {
           match: matchString,
           index: startIndex,
-          input: input.str
+          input: input.str,
         };
         if (input.groups.length) {
           ret.groups = input.groups;
@@ -130,7 +130,7 @@ export class AsyncMatcher {
       let matchedInput = await this.matchFn(
         input,
         startState || this.startState,
-        onlyMatch
+        onlyMatch,
       );
       if (matchedInput) {
         input = matchedInput;
@@ -138,7 +138,7 @@ export class AsyncMatcher {
         const { index } = input;
         const matchString = input.getString(-index);
         const ret = {
-          match: matchString
+          match: matchString,
         };
         if (input.groups.length) {
           ret.groups = input.groups;

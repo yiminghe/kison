@@ -5,7 +5,7 @@ const my = {
     [0x0d],
     [0x20, 0xd7ff],
     [0xe000, 0xfffd],
-    [0x10000, 0x10ffff]
+    [0x10000, 0x10ffff],
   ],
   createMatchString(str, lexer) {
     if (!lexer.nextStartsWith(str)) {
@@ -14,17 +14,17 @@ const my = {
     return [str];
   },
   matchOnlyEscapeChar(lexer, index = 0) {
-    let m = "";
+    let m = '';
     let char = lexer.nextChar(index);
     m += char;
-    if (char === "\\") {
+    if (char === '\\') {
       char = lexer.nextChar(index + 1);
       m += char;
     } else {
       return { m, r: false };
     }
-    if (m === "\\u" || m === "\\x") {
-      const len = m === "\\u" ? 4 : 2;
+    if (m === '\\u' || m === '\\x') {
+      const len = m === '\\u' ? 4 : 2;
       let matchedNumber = my.matchNumber(lexer, index + 2, 1, len);
       if (matchedNumber && matchedNumber[0].length === len) {
         matchedNumber = matchedNumber[0];
@@ -43,20 +43,20 @@ const my = {
                 r: [
                   m + matchedNumber + secondRet.r[0],
                   String.fromCodePoint(totoal),
-                  totoal
-                ]
+                  totoal,
+                ],
               };
             }
           }
         }
         return {
           m,
-          r: [m + matchedNumber, String.fromCharCode(first), first]
+          r: [m + matchedNumber, String.fromCharCode(first), first],
         };
       }
     }
     return {
-      m
+      m,
     };
   },
   matchEscapeChar(lexer) {
@@ -71,7 +71,7 @@ const my = {
   },
   matchAnyChar(lexer) {
     const char = lexer.nextChar();
-    if (char === "." && !lexer.userData.insideCharacterGroup) {
+    if (char === '.' && !lexer.userData.insideCharacterGroup) {
       return [char];
     }
     return false;
@@ -96,21 +96,21 @@ const my = {
     let ret = [];
     let index = prefix.length;
     let char = lexer.nextChar(index++);
-    while ((char >= "a" && char <= "z") || (char >= "A" && char <= "Z")) {
+    while ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
       ret.push(char);
       char = lexer.nextChar(index++);
     }
-    if (char === ">") {
-      const name = ret.join("");
-      return [prefix + name + ">", name];
+    if (char === '>') {
+      const name = ret.join('');
+      return [prefix + name + '>', name];
     }
     return false;
   },
   matchBackreference(lexer) {
-    if (lexer.nextChar() !== "\\") {
+    if (lexer.nextChar() !== '\\') {
       return false;
     }
-    const prefix = "\\k<";
+    const prefix = '\\k<';
     if (lexer.nextStartsWith(prefix)) {
       return my.matchGroupName(lexer, prefix);
     }
@@ -118,7 +118,7 @@ const my = {
     if (match === false) {
       return false;
     }
-    match[0] = "\\" + match[0];
+    match[0] = '\\' + match[0];
     return match;
   },
   matchQuantifierNumber(lexer) {
@@ -134,9 +134,9 @@ const my = {
     l = Math.min(l, lexer.nextLength());
     while (index < l) {
       const char = lexer.nextCharAt(start + index).toLowerCase();
-      if (char < "0" || char > "9") {
+      if (char < '0' || char > '9') {
         if (hex) {
-          if (char < "a" || char > "f") {
+          if (char < 'a' || char > 'f') {
             break;
           }
         } else {
@@ -146,28 +146,28 @@ const my = {
       match.push(char);
       index++;
     }
-    return match.length ? [match.join("")] : false;
+    return match.length ? [match.join('')] : false;
   },
   matchNamedGroupPrefix(lexer) {
-    const prefix = "(?<";
+    const prefix = '(?<';
     if (!lexer.nextStartsWith(prefix)) {
       return false;
     }
     return my.matchGroupName(lexer, prefix);
-  }
+  },
 };
 
 function createLiteralLexerRules(chars) {
-  return chars.map(c => ({
+  return chars.map((c) => ({
     token: c,
-    regexp: createStringMatch(c)
+    regexp: createStringMatch(c),
   }));
 }
 
 function createEscapeMatchLexerRules(map) {
-  return Object.keys(map).map(k => ({
+  return Object.keys(map).map((k) => ({
     token: map[k],
-    regexp: createStringMatch(`\\${k}`)
+    regexp: createStringMatch(`\\${k}`),
   }));
 }
 
@@ -179,336 +179,336 @@ module.exports = () => ({
   my,
   productions: [
     {
-      symbol: "Regexp",
-      rhs: ["^?", "Expression"]
+      symbol: 'Regexp',
+      rhs: ['^?', 'Expression'],
     },
     {
-      symbol: "Expression",
-      rhs: ["SubExpression"]
+      symbol: 'Expression',
+      rhs: ['SubExpression'],
     },
     {
-      symbol: "Expression",
-      rhs: ["Expression", "|", "SubExpression"],
-      flat: true
+      symbol: 'Expression',
+      rhs: ['Expression', '|', 'SubExpression'],
+      flat: true,
     },
     {
-      symbol: "SubExpression",
-      rhs: ["ExpressionItem"]
+      symbol: 'SubExpression',
+      rhs: ['ExpressionItem'],
     },
     {
-      symbol: "SubExpression",
-      rhs: ["SubExpression", "ExpressionItem"],
-      flat: true
+      symbol: 'SubExpression',
+      rhs: ['SubExpression', 'ExpressionItem'],
+      flat: true,
     },
     {
-      symbol: "ExpressionItem",
-      rhs: ["Match"]
+      symbol: 'ExpressionItem',
+      rhs: ['Match'],
     },
     {
-      symbol: "ExpressionItem",
-      rhs: ["Group"]
+      symbol: 'ExpressionItem',
+      rhs: ['Group'],
     },
     {
-      symbol: "ExpressionItem",
-      rhs: ["Anchor"]
+      symbol: 'ExpressionItem',
+      rhs: ['Anchor'],
     },
     {
-      symbol: "ExpressionItem",
-      rhs: ["backreference"]
+      symbol: 'ExpressionItem',
+      rhs: ['backreference'],
     },
 
     /* Grouping Constructs 
     ------------------------------------------------------------------*/
 
     {
-      symbol: "Group",
-      rhs: ["(", "?:?", "Expression", ")", "Quantifier?"]
+      symbol: 'Group',
+      rhs: ['(', '?:?', 'Expression', ')', 'Quantifier?'],
     },
     {
-      symbol: "Group",
-      rhs: ["namedGroupPrefix", "Expression", ")", "Quantifier?"]
+      symbol: 'Group',
+      rhs: ['namedGroupPrefix', 'Expression', ')', 'Quantifier?'],
     },
 
     /* Match
 ------------------------------------------------------------------*/
     {
-      symbol: "Match",
-      rhs: ["MatchItem", "Quantifier?"]
+      symbol: 'Match',
+      rhs: ['MatchItem', 'Quantifier?'],
     },
     {
-      symbol: "MatchItem",
-      rhs: ["anyChar"]
+      symbol: 'MatchItem',
+      rhs: ['anyChar'],
     },
     {
-      symbol: "MatchItem",
-      rhs: ["MatchCharacterClass"]
+      symbol: 'MatchItem',
+      rhs: ['MatchCharacterClass'],
     },
     {
-      symbol: "MatchItem",
-      rhs: ["char"]
+      symbol: 'MatchItem',
+      rhs: ['char'],
     },
     {
-      symbol: "MatchCharacterClass",
-      rhs: ["CharacterGroup"]
+      symbol: 'MatchCharacterClass',
+      rhs: ['CharacterGroup'],
     },
     {
-      symbol: "MatchCharacterClass",
-      rhs: ["CharacterClass"]
+      symbol: 'MatchCharacterClass',
+      rhs: ['CharacterClass'],
     },
 
     /* Character Classes
 ------------------------------------------------------------------*/
     {
-      symbol: "CharacterGroup",
-      rhs: ["[", "^?", "CharacterGroupInner", "]"]
+      symbol: 'CharacterGroup',
+      rhs: ['[', '^?', 'CharacterGroupInner', ']'],
     },
     {
-      symbol: "CharacterGroupInner",
-      rhs: ["CharacterGroupItem"]
+      symbol: 'CharacterGroupInner',
+      rhs: ['CharacterGroupItem'],
     },
     {
-      symbol: "CharacterGroupInner",
-      rhs: ["CharacterGroupInner", "CharacterGroupItem"],
-      flat: true
+      symbol: 'CharacterGroupInner',
+      rhs: ['CharacterGroupInner', 'CharacterGroupItem'],
+      flat: true,
     },
     {
-      symbol: "CharacterGroupItem",
-      rhs: ["CharacterClass"]
+      symbol: 'CharacterGroupItem',
+      rhs: ['CharacterClass'],
     },
     {
-      symbol: "CharacterGroupItem",
-      rhs: ["CharacterRange"]
+      symbol: 'CharacterGroupItem',
+      rhs: ['CharacterRange'],
     },
     {
-      symbol: "CharacterClass",
-      rhs: ["characterClassAnyWordInverted"]
+      symbol: 'CharacterClass',
+      rhs: ['characterClassAnyWordInverted'],
     },
     {
-      symbol: "CharacterClass",
-      rhs: ["characterClassAnyWord"]
+      symbol: 'CharacterClass',
+      rhs: ['characterClassAnyWord'],
     },
     {
-      symbol: "CharacterClass",
-      rhs: ["characterClassAnyDecimalDigit"]
+      symbol: 'CharacterClass',
+      rhs: ['characterClassAnyDecimalDigit'],
     },
     {
-      symbol: "CharacterClass",
-      rhs: ["characterClassAnyDecimalDigitInverted"]
+      symbol: 'CharacterClass',
+      rhs: ['characterClassAnyDecimalDigitInverted'],
     },
     {
-      symbol: "CharacterClass",
-      rhs: ["whitespaceCharacter"]
+      symbol: 'CharacterClass',
+      rhs: ['whitespaceCharacter'],
     },
     {
-      symbol: "CharacterClass",
-      rhs: ["whitespaceCharacterInverted"]
+      symbol: 'CharacterClass',
+      rhs: ['whitespaceCharacterInverted'],
     },
     {
-      symbol: "CharacterRange",
-      rhs: ["char"]
+      symbol: 'CharacterRange',
+      rhs: ['char'],
     },
     {
-      symbol: "CharacterRange",
-      rhs: ["char", "-", "char"]
+      symbol: 'CharacterRange',
+      rhs: ['char', '-', 'char'],
     },
 
     /* Quantifiers 
     ------------------------------------------------------------------*/
     {
-      symbol: "Quantifier",
-      rhs: ["QuantifierType", "??"]
+      symbol: 'Quantifier',
+      rhs: ['QuantifierType', '??'],
     },
     {
-      symbol: "QuantifierType",
-      rhs: ["*"]
+      symbol: 'QuantifierType',
+      rhs: ['*'],
     },
     {
-      symbol: "QuantifierType",
-      rhs: ["+"]
+      symbol: 'QuantifierType',
+      rhs: ['+'],
     },
     {
-      symbol: "QuantifierType",
-      rhs: ["?"]
+      symbol: 'QuantifierType',
+      rhs: ['?'],
     },
     {
-      symbol: "QuantifierType",
-      rhs: ["{", "int", "}"]
+      symbol: 'QuantifierType',
+      rhs: ['{', 'int', '}'],
     },
     {
-      symbol: "QuantifierType",
-      rhs: ["{", "int", ",", "int?", "}"]
+      symbol: 'QuantifierType',
+      rhs: ['{', 'int', ',', 'int?', '}'],
     },
 
     /* Anchors
     ------------------------------------------------------------------*/
     {
-      symbol: "Anchor",
-      rhs: ["anchorWordBoundary"]
+      symbol: 'Anchor',
+      rhs: ['anchorWordBoundary'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["anchorNonWordBoundary"]
+      symbol: 'Anchor',
+      rhs: ['anchorNonWordBoundary'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["anchorStartOfStringOnly"]
+      symbol: 'Anchor',
+      rhs: ['anchorStartOfStringOnly'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["anchorEndOfStringOnlyNotNewline"]
+      symbol: 'Anchor',
+      rhs: ['anchorEndOfStringOnlyNotNewline'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["anchorEndOfStringOnly"]
+      symbol: 'Anchor',
+      rhs: ['anchorEndOfStringOnly'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["anchorPreviousMatchEnd"]
+      symbol: 'Anchor',
+      rhs: ['anchorPreviousMatchEnd'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["$"]
+      symbol: 'Anchor',
+      rhs: ['$'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["lookahead", "Expression", ")"]
+      symbol: 'Anchor',
+      rhs: ['lookahead', 'Expression', ')'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["negativeLookahead", "Expression", ")"]
+      symbol: 'Anchor',
+      rhs: ['negativeLookahead', 'Expression', ')'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["lookbehind", "Expression", ")"]
+      symbol: 'Anchor',
+      rhs: ['lookbehind', 'Expression', ')'],
     },
     {
-      symbol: "Anchor",
-      rhs: ["negativeLookbehind", "Expression", ")"]
-    }
+      symbol: 'Anchor',
+      rhs: ['negativeLookbehind', 'Expression', ')'],
+    },
   ],
 
   lexer: {
     rules: [
       ...createEscapeMatchLexerRules({
-        w: "characterClassAnyWord",
-        W: "characterClassAnyWordInverted",
-        s: "whitespaceCharacter",
-        S: "whitespaceCharacterInverted",
-        d: "characterClassAnyDecimalDigit",
-        D: "characterClassAnyDecimalDigitInverted",
+        w: 'characterClassAnyWord',
+        W: 'characterClassAnyWordInverted',
+        s: 'whitespaceCharacter',
+        S: 'whitespaceCharacterInverted',
+        d: 'characterClassAnyDecimalDigit',
+        D: 'characterClassAnyDecimalDigitInverted',
 
         /* Anchors
        ------------------------------------------------------------------*/
-        b: "anchorWordBoundary",
-        B: "anchorNonWordBoundary",
-        A: "anchorStartOfStringOnly",
-        z: "anchorEndOfStringOnlyNotNewline",
-        Z: "anchorEndOfStringOnly",
-        G: "anchorPreviousMatchEnd"
+        b: 'anchorWordBoundary',
+        B: 'anchorNonWordBoundary',
+        A: 'anchorStartOfStringOnly',
+        z: 'anchorEndOfStringOnlyNotNewline',
+        Z: 'anchorEndOfStringOnly',
+        G: 'anchorPreviousMatchEnd',
       }),
 
       /* Backreferences
 ------------------------------------------------------------------*/
       {
         regexp: `my.matchBackreference`,
-        token: "backreference"
+        token: 'backreference',
       },
 
       {
-        regexp: "my.matchEscapeChar",
-        token: "char",
+        regexp: 'my.matchEscapeChar',
+        token: 'char',
         action() {
           this.text = this.matches[1];
-        }
+        },
       },
 
       /* Assertions
     ------------------------------------------------------------------ */
       {
         regexp: createStringMatch(`(?=`),
-        token: "lookahead"
+        token: 'lookahead',
       },
       {
         regexp: createStringMatch(`(?!`),
-        token: "negativeLookahead"
+        token: 'negativeLookahead',
       },
       {
         regexp: createStringMatch(`(?<=`),
-        token: "lookbehind"
+        token: 'lookbehind',
       },
       {
         regexp: createStringMatch(`(?<!`),
-        token: "negativeLookbehind"
+        token: 'negativeLookbehind',
       },
 
       {
-        regexp: "my.matchNamedGroupPrefix",
-        token: "namedGroupPrefix",
+        regexp: 'my.matchNamedGroupPrefix',
+        token: 'namedGroupPrefix',
         action() {
           this.text = this.matches[1];
-        }
+        },
       },
 
       ...createLiteralLexerRules([
-        "$",
-        ",",
-        "^",
-        "?:",
-        "?",
-        "(",
-        ")",
-        "-",
-        "|",
-        "*",
-        "+"
+        '$',
+        ',',
+        '^',
+        '?:',
+        '?',
+        '(',
+        ')',
+        '-',
+        '|',
+        '*',
+        '+',
       ]),
 
       {
-        regexp: createStringMatch("["),
-        token: "[",
+        regexp: createStringMatch('['),
+        token: '[',
         action() {
           this.userData.insideCharacterGroup = true;
-        }
+        },
       },
 
       {
-        regexp: createStringMatch("]"),
-        token: "]",
+        regexp: createStringMatch(']'),
+        token: ']',
         action() {
           this.userData.insideCharacterGroup = false;
-        }
+        },
       },
 
       {
-        regexp: "my.matchAnyChar",
-        token: "anyChar"
+        regexp: 'my.matchAnyChar',
+        token: 'anyChar',
       },
 
       {
-        regexp: createStringMatch("{"),
-        token: "{",
+        regexp: createStringMatch('{'),
+        token: '{',
         action() {
           this.userData.insideQuantifierRange = true;
-        }
+        },
       },
 
       {
-        regexp: createStringMatch("}"),
-        token: "}",
+        regexp: createStringMatch('}'),
+        token: '}',
         action() {
           this.userData.insideQuantifierRange = false;
-        }
+        },
       },
 
       {
-        regexp: "my.matchQuantifierNumber",
-        token: "int"
+        regexp: 'my.matchQuantifierNumber',
+        token: 'int',
       },
 
       {
-        regexp: "my.matchChar",
-        token: "char"
-      }
-    ]
-  }
+        regexp: 'my.matchChar',
+        token: 'char',
+      },
+    ],
+  },
 });

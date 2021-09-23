@@ -2,40 +2,44 @@ type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
 type AstSymbolNode = Formula_Node|Exp_Node|ReferenceItem_Node|Reference_Node|ArrayElement_Node|ArrayList_Node|Array_Node|Function_Node|Argument_Node|Arguments_Node|StructureReference_Node|TableSpecifier_Node|TableThisRow_Node|TableSpecifierInner_Node|TableSpecifierItem_Node|TableColumnSpecifier_Node;
-type AstTokenNode = TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|TOKEN_7_Node|TOKEN_8_Node|TOKEN_9_Node|TOKEN_10_Node|TOKEN_11_Node|TOKEN_12_Node|TOKEN_13_Node|TOKEN_14_Node|TOKEN_15_Node|NUMBER_Node|STRING_Node|LOGIC_Node|ERROR_Node|CELL_Node|NAME_Node|REF_UNION_OPERATOR_Node|REF_EXPAND_OPERATOR_Node|ARRAY_SEPARATOR_Node|TOKEN_16_Node|TOKEN_17_Node|FUNCTION_Node|ARGUMENT_SEPARATOR_Node|TABLE_NAME_Node|TABLE_ITEM_SPECIFIER_Node|TOKEN_18_Node|TOKEN_19_Node|TOKEN_20_Node|TABLE_COLUMN_SPECIFIER_Node|SPECIFIER_SEPARATOR_Node;
-type LiteralToken = "SPECIFIER_SEPARATOR"|"TABLE_ITEM_SPECIFIER"|"TABLE_COLUMN_SPECIFIER"|"ARRAY_SEPARATOR"|"REF_UNION_OPERATOR"|"REF_EXPAND_OPERATOR"|"ARGUMENT_SEPARATOR"|"STRING"|"FUNCTION"|"ERROR"|"CELL"|"LOGIC"|"TABLE_NAME"|"NAME"|"NUMBER"|"NUMBER"|"="|"<="|">="|"<>"|">"|"<"|"&"|"+"|"-"|"*"|"/"|"^"|"@"|"%"|"("|")"|"{"|"}"|"["|"]"|"TABLE_@";
+type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|TOKEN_7_Node|TOKEN_8_Node|TOKEN_9_Node|TOKEN_10_Node|TOKEN_11_Node|TOKEN_12_Node|TOKEN_13_Node|TOKEN_14_Node|TOKEN_15_Node|NUMBER_Node|STRING_Node|LOGIC_Node|ERROR_Node|CELL_Node|NAME_Node|REF_UNION_OPERATOR_Node|REF_EXPAND_OPERATOR_Node|ARRAY_SEPARATOR_Node|TOKEN_16_Node|TOKEN_17_Node|FUNCTION_Node|ARGUMENT_SEPARATOR_Node|TABLE_NAME_Node|TABLE_ITEM_SPECIFIER_Node|TOKEN_18_Node|TOKEN_19_Node|TOKEN_20_Node|TABLE_COLUMN_SPECIFIER_Node|SPECIFIER_SEPARATOR_Node;
+type LiteralToken = "$HIDDEN"|"SPECIFIER_SEPARATOR"|"TABLE_ITEM_SPECIFIER"|"TABLE_COLUMN_SPECIFIER"|"ARRAY_SEPARATOR"|"REF_UNION_OPERATOR"|"REF_EXPAND_OPERATOR"|"ARGUMENT_SEPARATOR"|"STRING"|"FUNCTION"|"ERROR"|"CELL"|"LOGIC"|"TABLE_NAME"|"NAME"|"NUMBER"|"NUMBER"|"$EOF"|"$UNKOWN"|"="|"<="|">="|"<>"|">"|"<"|"&"|"+"|"-"|"*"|"/"|"^"|"@"|"%"|"("|")"|"{"|"}"|"["|"]"|"TABLE_@";
+type AstRootNode = Formula_Node;
 // replace end
 
-interface NodeLocation {
+type AstErrorNode = AstTokenNode & {
+  error: ParseError;
+}
+
+interface Position {
   start: number;
   end: number;
   firstLine: number;
-  endLine: number;
+  lastLine: number;
   firstColumn: number;
-  endColumn: number;
+  lastColumn: number;
 }
 
-interface BaseSymbolNode extends NodeLocation {
-  type: 'symbol',
-  label: string;
+interface BaseSymbolNode extends Position {
+  type: 'symbol';
+  parent?: AstSymbolNode;
+  label: '';
 }
 
-interface BaseTokenNode extends NodeLocation {
-  type: 'token',
+interface BaseTokenNode extends Position {
+  type: 'token';
   text: string;
+  parent: AstSymbolNode;
 }
-
-type AstErrorNode = AstNode & {
-  error: ParseError;
-};
 
 type TransformNode = (arg: {
+  index: number;
   node: AstNode;
-  parent: AstNode;
+  parent: AstSymbolNode;
   defaultTransformNode: TransformNode;
 }) => AstNode | null;
 
-interface Token extends NodeLocation {
+interface Token extends Position {
   text: string;
   token: LiteralToken;
 }
@@ -49,42 +53,57 @@ interface ParseError {
   tip: string;
 }
 
-interface LexerOptions {
+interface LexerOptions<T = any> {
   env?: string;
+  state?: {
+    userData?: T,
+    stateStack?: string[];
+  }
 }
 
 interface ParserOptions {
-  lexerOptions: LexerOptions;
-  transformNode?: TransformNode;
+  lexerOptions?: LexerOptions;
+  transformNode?: TransformNode | false;
   onErrorRecovery?: (args: {
     parseTree: AstNode;
-    action: () => void;
-    token: Token;
+    errorNode: AstErrorNode;
+  }, recommendedAction: {
+    action?: 'del' | 'add'
   }) => void;
 }
 
 interface ParseResult {
-  ast: AstSymbolNode;
-  error: ParseError;
-  errorNode: AstErrorNode;
+  ast: AstRootNode;
+  error?: ParseError;
+  errorNode?: AstErrorNode;
   recoveryTokens: Token[];
   terminalNodes: AstTokenNode[];
   tokens: Token[];
 }
 
-interface LexResult {
+interface LexResult<T = any> {
   tokens: Token[];
+  state: {
+    userData: T,
+    stateStack: string[];
+  }
 }
 
 declare function parse(input: string, options?: ParserOptions): ParseResult;
 
-declare function lex(input: string, options?: LexerOptions): LexResult;
+declare function lex<T = any>(input: string, options?: LexerOptions<T>): LexResult<T>;
 
 declare const parser: { parse: typeof parse, lex: typeof lex };
 
 export default parser;
 
-export type { ParseResult, LexResult, ParserOptions, LexerOptions }
+export type {
+  ParseResult, LexResult, ParserOptions,
+  TransformNode,
+  AstRootNode,
+  Position,
+  LexerOptions, AstTokenNode, Token, AstNode, AstSymbolNode
+}
 
 interface Formula_Node extends BaseSymbolNode {
         symbol:"formula";
@@ -435,6 +454,14 @@ interface TableColumnSpecifier_Node_56 extends BaseSymbolNode {
         parent:TableSpecifierInner_Node_52 | TableColumnSpecifier_Node_56;
       }
 type TableColumnSpecifier_Node = TableColumnSpecifier_Node_0 | TableColumnSpecifier_Node_56;
+interface $EOF_Node extends BaseTokenNode {
+        token:"$EOF";
+        parent:AstSymbolNode;
+      }
+interface $UNKNOWN_Node extends BaseTokenNode {
+        token:"$UNKNOWN";
+        parent:AstSymbolNode;
+      }
 interface TOKEN_0_Node extends BaseTokenNode {
             token:"=";
             parent:Exp_Node;
@@ -579,3 +606,4 @@ interface SPECIFIER_SEPARATOR_Node extends BaseTokenNode {
             token:"SPECIFIER_SEPARATOR";
             parent:TableColumnSpecifier_Node_56;
           }
+export type { Formula_Node,Exp_Node,ReferenceItem_Node,Reference_Node,ArrayElement_Node,ArrayList_Node,Array_Node,Function_Node,Argument_Node,Arguments_Node,StructureReference_Node,TableSpecifier_Node,TableThisRow_Node,TableSpecifierInner_Node,TableSpecifierItem_Node,TableColumnSpecifier_Node,$EOF_Node,$UNKNOWN_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,TOKEN_5_Node,TOKEN_6_Node,TOKEN_7_Node,TOKEN_8_Node,TOKEN_9_Node,TOKEN_10_Node,TOKEN_11_Node,TOKEN_12_Node,TOKEN_13_Node,TOKEN_14_Node,TOKEN_15_Node,NUMBER_Node,STRING_Node,LOGIC_Node,ERROR_Node,CELL_Node,NAME_Node,REF_UNION_OPERATOR_Node,REF_EXPAND_OPERATOR_Node,ARRAY_SEPARATOR_Node,TOKEN_16_Node,TOKEN_17_Node,FUNCTION_Node,ARGUMENT_SEPARATOR_Node,TABLE_NAME_Node,TABLE_ITEM_SPECIFIER_Node,TOKEN_18_Node,TOKEN_19_Node,TOKEN_20_Node,TABLE_COLUMN_SPECIFIER_Node,SPECIFIER_SEPARATOR_Node }

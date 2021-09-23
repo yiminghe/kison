@@ -37,7 +37,7 @@ startAsync.addEventListener('click', async () => {
   document.addEventListener('keyup', onKeyDown);
   const patternInstance = compile(asyncPattern.value, { async: true });
   const matcher = patternInstance.matcherAsync(() => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       function r() {
         if (buffer.length) {
           resolve([buffer.shift()]);

@@ -2,7 +2,10 @@
 <html>
 
 <head>
-    <link rel="icon" type="image/jpg" href="../favicon.ico"/>
+    <link rel="icon" type="image/jpg" href="../favicon.ico" />
+    <script src="../common/system.js" crossorigin="anonymous"></script>
+    <script src="../common/resolve.js" crossorigin="anonymous"></script>
+    <script src="../common/systemjs-babel.js" crossorigin="anonymous"></script>
     <style>
         #loading .spinner {
             margin: 100px auto;
@@ -37,6 +40,7 @@
         }
 
         @keyframes sk-stretchdelay {
+
             0%,
             100%,
             40% {
@@ -61,87 +65,90 @@
     <h2>grammar</h2>
 
     <div>
-        excel formula grammar <a href="./grammar/formula-grammar.js">definition</a> and <a href="./grammar/formula.xhtml">diagram</a>
+        excel formula grammar <a href="./grammar/formula-grammar.js">definition</a> and <a
+            href="./grammar/formula.xhtml">diagram</a>
     </div>
 
     <h3>build</h2>
-    <div>
-        <pre>
+        <div>
+            <pre>
     npx kison -m ll --es -g formula-grammar.js
 </pre>
-    </div>
+        </div>
 
-    <h3>install prebuild</h2>
-    <div>
-        <pre>
+        <h3>install prebuild</h2>
+            <div>
+                <pre>
         npm install @yiminghe/excel-formula
     </pre>
-    </div>
-
-    <div>
-        <a href="./README.md">excel formula readme</a>
-    </div>
-    <br/>
-    <hr/>
-
-    <h2>demo</h2>
-    <div>
-        &nbsp; <button id='parse'>parse</button>
-        &nbsp; <button id='fix'>error recovery</button>
-        &nbsp; <button id='evaluate'>evaluate to console</button>
-        &nbsp; <button id='evaluateData'>prepare evaluate test data</button>
-        <br />
-        <br />
-    </div>
-
-    <div id='monaco-editor'>
-        <div>
-            loading monaco-editor....
-        </div>
-        <div id="loading">
-            <div class="spinner">
-                <div class="rect1"></div>
-                <div class="rect2"></div>
-                <div class="rect3"></div>
-                <div class="rect4"></div>
-                <div class="rect5"></div>
             </div>
-        </div>
-    </div>
 
-    <div>
-        <h3>cell data:</h3>
-        <textarea id='cells'>
+            <div>
+                <a href="./README.md">excel formula readme</a>
+            </div>
+            <br />
+            <hr />
+
+            <h2>demo</h2>
+            <div>
+                &nbsp; <button id='parse'>parse</button>
+                &nbsp; <button id='fix'>error recovery</button>
+                &nbsp; <button id='evaluate'>evaluate to console</button>
+                &nbsp; <button id='evaluateData'>prepare evaluate test data</button>
+                <br />
+                <br />
+            </div>
+
+            <div id='monaco-editor'>
+                <div>
+                    loading monaco-editor....
+                </div>
+                <div id="loading">
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>cell data:</h3>
+                <textarea id='cells'>
             A1: 2
             A2: 3
             B1: 4
             B2: 5
             c1: a
         </textarea>
-    </div>
+            </div>
 
-    <script>
-        const monacoDev = location.search.indexOf('dev') !== -1 ? 'dev' : 'min';
-        const monacoBase = location.search.indexOf('ali') !== -1 ?
-            `https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/${monacoDev}/vs/` :
-            `https://unpkg.com/monaco-editor@0.27.0/${monacoDev}/vs/`;
-        document.writeln(` <script src="${monacoBase}loader.js"><\/script>`);
-    </script>
+            <script>
+                const monacoDev = location.search.indexOf('dev') !== -1 ? 'dev' : 'min';
+                const monacoBase = location.search.indexOf('ali') !== -1 ?
+                    `https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/${monacoDev}/vs/` :
+                    `https://unpkg.com/monaco-editor@0.27.0/${monacoDev}/vs/`;
+                document.writeln(` <script src="${monacoBase}loader.js"><\/script>`);
+            </script>
 
-    <script type="module" src="./app/index.js"></script>
-    <script>
-        setTimeout(()=>{
-            document.getElementById('footer').innerHTML=`
+            <script>
+                System.import('./app/index');
+            </script>
+            <script>
+                setTimeout(() => {
+                    document.getElementById('footer').innerHTML = `
             <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
     <a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
         title="Fork me on GitHub">Fork me on GitHub</a>
             `;
-        },1000);
-    </script>
-    <div id="footer"></div>
-    
+                }, 1000);
+            </script>
+            <div id="footer"></div>
+
 </body>
 
 </html>

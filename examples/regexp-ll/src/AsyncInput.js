@@ -1,5 +1,5 @@
 // @ts-check
-import { isWord } from "./utils.js";
+import { isWord } from './utils.js';
 
 export default class Input {
   constructor(getCharAsync, options) {
@@ -30,7 +30,7 @@ export default class Input {
   async getChar() {
     const code = await this.getCharCode();
     if (isNaN(code) || code === undefined) {
-      return "";
+      return '';
     }
     return String.fromCodePoint(code);
   }
@@ -38,7 +38,7 @@ export default class Input {
   getPrevChar() {
     const code = this.getPrevCharCode();
     if (isNaN(code) || code === undefined) {
-      return "";
+      return '';
     }
     return String.fromCodePoint(code);
   }
@@ -47,7 +47,7 @@ export default class Input {
     if (this.index >= this.buffer.length) {
       const chars = await this.getCharAsync();
       if (!Array.isArray(chars)) {
-        throw new Error("async getChar must resolve array of chars");
+        throw new Error('async getChar must resolve array of chars');
       }
       this.buffer.push(...chars);
     }
@@ -127,7 +127,7 @@ export default class Input {
     if (start > end) {
       [start, end] = [end, start];
     }
-    return this.buffer.slice(start, end).join("");
+    return this.buffer.slice(start, end).join('');
   }
 
   clone() {
@@ -154,7 +154,7 @@ export default class Input {
       return true;
     }
     const c = await this.getChar();
-    const l = this.index > 0 ? this.getPrevChar() : " ";
+    const l = this.index > 0 ? this.getPrevChar() : ' ';
     if (isWord(c)) {
       return !isWord(l);
     } else {
@@ -168,7 +168,7 @@ export default class Input {
     if (groupStartIndex) {
       input.startGroupIndex[groupStartIndex.index - 1] = {
         index: input.index,
-        name: groupStartIndex.name
+        name: groupStartIndex.name,
       };
     }
     let groupEndIndex = compiler.groupEndIndex(state);
@@ -176,7 +176,7 @@ export default class Input {
       let startIndex = input.startGroupIndex[groupEndIndex.index - 1];
       let endIndex = {
         index: input.index,
-        name: startIndex.name
+        name: startIndex.name,
       };
       if (startIndex.index > endIndex.index) {
         startIndex = { ...startIndex };
@@ -187,7 +187,7 @@ export default class Input {
       let name = groupEndIndex.name;
       let value = {
         index: startIndex.index,
-        match: input.buffer.slice(startIndex.index, endIndex.index).join("")
+        match: input.buffer.slice(startIndex.index, endIndex.index).join(''),
       };
       if (startIndex.name) {
         value.name = startIndex.name;

@@ -1,11 +1,11 @@
 // @ts-check
-import { isWord, isNumber } from "./utils.js";
-import { Matcher } from "./match.js";
+import { isWord, isNumber } from './utils.js';
+import { Matcher } from './match.js';
 
 export const anchorMatchers = {
-  "^"(input) {
+  '^'(input) {
     return (
-      !input.index || (input.options.multiline && input.getPrevChar() === "\n")
+      !input.index || (input.options.multiline && input.getPrevChar() === '\n')
     );
   },
   anchorWordBoundary(input) {
@@ -22,19 +22,19 @@ export const anchorMatchers = {
   },
   $(input) {
     return (
-      input.isEnd() || (input.options.multiline && input.getChar() === "\n")
+      input.isEnd() || (input.options.multiline && input.getChar() === '\n')
     );
   },
   anchorEndOfStringOnly(input) {
-    return input.isEnd() || (input.isAtLastIndex() && input.getChar() === "\n");
+    return input.isEnd() || (input.isAtLastIndex() && input.getChar() === '\n');
   },
   anchorPreviousMatchEnd(input) {
     return input.index === input.previousMatchIndex;
-  }
+  },
 };
 
-export const stringMatcher = str => {
-  return input => {
+export const stringMatcher = (str) => {
+  return (input) => {
     if (input.isEnd()) {
       return null;
     }
@@ -44,7 +44,7 @@ export const stringMatcher = str => {
 };
 
 export const backreferenceMatcher = (index, named) => {
-  return input => {
+  return (input) => {
     if (input.isEnd()) {
       return null;
     }
@@ -58,13 +58,13 @@ export const backreferenceMatcher = (index, named) => {
 };
 
 const linefeeds = {
-  "\n": 1,
-  "\r": 1,
-  "\u2028": 1,
-  "\u2029": 1
+  '\n': 1,
+  '\r': 1,
+  '\u2028': 1,
+  '\u2029': 1,
 };
 
-export const anyCharMatcher = input => {
+export const anyCharMatcher = (input) => {
   if (input.isEnd()) {
     return null;
   }
@@ -78,7 +78,7 @@ export const anyCharMatcher = input => {
 };
 
 export const charGroupMatcher = (items, invert) => {
-  return input => {
+  return (input) => {
     if (input.isEnd()) {
       return null;
     }
@@ -86,14 +86,14 @@ export const charGroupMatcher = (items, invert) => {
     const current = input.getChar();
     for (const item of items) {
       const child = item.children[0];
-      if (child.symbol === "CharacterClass") {
+      if (child.symbol === 'CharacterClass') {
         const cls = child.children[0].token;
         if (characterClassMatcher[cls](input)) {
           ret = !ret;
           break;
         }
-      } else if (child.symbol === "CharacterRange") {
-        const chars = child.children.map(c => c.text);
+      } else if (child.symbol === 'CharacterRange') {
+        const chars = child.children.map((c) => c.text);
         const lower = chars[0];
         let upper = chars[2];
         if (upper) {
@@ -106,12 +106,12 @@ export const charGroupMatcher = (items, invert) => {
           break;
         }
       } else {
-        throw new Error("charGroupMatcher unmatch item:" + child.symbol);
+        throw new Error('charGroupMatcher unmatch item:' + child.symbol);
       }
     }
     return ret
       ? {
-          count: current.length
+          count: current.length,
         }
       : false;
   };
@@ -121,16 +121,16 @@ export const charGroupMatcher = (items, invert) => {
 const whitespaceCharacters = {
   ...linefeeds,
 
-  " ": 1,
-  "\f": 1,
-  "\t": 1,
-  "\v": 1,
-  "\u00a0": 1,
-  "\u1680": 1,
-  "\u202f": 1,
-  "\u205f": 1,
-  "\u3000": 1,
-  "\ufeff": 1
+  ' ': 1,
+  '\f': 1,
+  '\t': 1,
+  '\v': 1,
+  '\u00a0': 1,
+  '\u1680': 1,
+  '\u202f': 1,
+  '\u205f': 1,
+  '\u3000': 1,
+  '\ufeff': 1,
 };
 
 for (let code = 0x2000; code < 0x200b; code++) {
@@ -167,20 +167,20 @@ export const characterClassMatcher = {
     }
     let char = input.getChar();
     return !whitespaceCharacters[char] ? { count: char.length } : null;
-  }
+  },
 };
 
 export const assertionMatcher = {
   lookahead(exp, compiler, invert) {
     const unit = compiler.compile(exp);
     const matcher = new Matcher(compiler);
-    return input => {
+    return (input) => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       // @ts-ignore
       let match = matcher.matchInternal({
         startState: unit.start,
-        sticky: true
+        sticky: true,
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -188,7 +188,7 @@ export const assertionMatcher = {
       if (match) {
         input.injectGroups(match);
         return {
-          count: 0
+          count: 0,
         };
       }
       return false;
@@ -202,7 +202,7 @@ export const assertionMatcher = {
     const unit = compiler.compile(exp);
     compiler.setInverted(false);
     const matcher = new Matcher(compiler);
-    return input => {
+    return (input) => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       matcher.input.setInverted();
@@ -210,7 +210,7 @@ export const assertionMatcher = {
       // @ts-ignore
       let match = matcher.matchInternal({
         startState: unit.start,
-        sticky: true
+        sticky: true,
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -218,7 +218,7 @@ export const assertionMatcher = {
       if (match) {
         input.injectGroups(match);
         return {
-          count: 0
+          count: 0,
         };
       }
       return false;
@@ -226,5 +226,5 @@ export const assertionMatcher = {
   },
   negativeLookbehind(exp, compiler) {
     return assertionMatcher.lookbehind(exp, compiler, true);
-  }
+  },
 };

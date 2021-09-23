@@ -1,18 +1,18 @@
-import { parse, compile } from "../src/index";
-import { prettyJson } from "../../../__tests__/utils";
+import { parse, compile } from '../src/index';
+import { prettyJson } from '../../../__tests__/utils';
 
-describe("regexp", () => {
-  describe("parser", () => {
+describe('regexp', () => {
+  describe('parser', () => {
     const reg = [
-      "(a|b)*z",
-      "^a+z$",
-      "\\12\\b",
-      "(?:a)+?",
-      "a{1,2}",
-      "a{1}",
-      "[a-z\b]",
-      "[^a-z]",
-      "(?<a>c)b"
+      '(a|b)*z',
+      '^a+z$',
+      '\\12\\b',
+      '(?:a)+?',
+      'a{1,2}',
+      'a{1}',
+      '[a-z\b]',
+      '[^a-z]',
+      '(?<a>c)b',
     ];
 
     for (const r of reg) {
@@ -29,21 +29,21 @@ describe("regexp", () => {
     const jsArr = [];
 
     {
-      let flag = "g";
+      let flag = 'g';
       if (options.multiline) {
-        flag += "m";
+        flag += 'm';
       }
       if (options.unicode) {
-        flag += "u";
+        flag += 'u';
       }
       if (options.caseInsensitive) {
-        flag += "i";
+        flag += 'i';
       }
       if (options.sticky) {
-        flag += "y";
+        flag += 'y';
       }
       if (options.dotMatchesLineSeparators) {
-        flag += "s";
+        flag += 's';
       }
       const reg = new RegExp(pattern, flag);
       const str = input;
@@ -106,9 +106,9 @@ describe("regexp", () => {
     return ret;
   }
 
-  describe("evaluate", () => {
-    it("character class", () => {
-      expect(runTest("2ab.-3cd", "[1-9\\w.]")).toMatchInlineSnapshot(`
+  describe('evaluate', () => {
+    it('character class', () => {
+      expect(runTest('2ab.-3cd', '[1-9\\w.]')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -166,7 +166,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("2ab.-3cd", "[^1-9\\w.]")).toMatchInlineSnapshot(`
+      expect(runTest('2ab.-3cd', '[^1-9\\w.]')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -182,7 +182,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("a  b accb", "a\\s+b")).toMatchInlineSnapshot(`
+      expect(runTest('a  b accb', 'a\\s+b')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -197,7 +197,7 @@ describe("regexp", () => {
           ],
         }
       `);
-      expect(runTest("a  b accb", "a\\S+b")).toMatchInlineSnapshot(`
+      expect(runTest('a  b accb', 'a\\S+b')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -214,8 +214,8 @@ describe("regexp", () => {
       `);
     });
 
-    it("Character Escapes", () => {
-      expect(runTest("{[ja", "\\{\\[\\u006aa")).toMatchInlineSnapshot(`
+    it('Character Escapes', () => {
+      expect(runTest('{[ja', '\\{\\[\\u006aa')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -232,8 +232,8 @@ describe("regexp", () => {
       `);
     });
 
-    it("Anchors", () => {
-      expect(runTest("aaa", "^a+$")).toMatchInlineSnapshot(`
+    it('Anchors', () => {
+      expect(runTest('aaa', '^a+$')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -249,7 +249,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("w w2 w", "\\bw\\b")).toMatchInlineSnapshot(`
+      expect(runTest('w w2 w', '\\bw\\b')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -272,7 +272,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("w w2 w\n", "\\bw\\b")).toMatchInlineSnapshot(`
+      expect(runTest('w w2 w\n', '\\bw\\b')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -296,8 +296,8 @@ describe("regexp", () => {
       `);
     });
 
-    it("Grouping Constructs", () => {
-      expect(runTest("abzaaz", "(?<c>a|b)*(z)")).toMatchInlineSnapshot(`
+    it('Grouping Constructs', () => {
+      expect(runTest('abzaaz', '(?<c>a|b)*(z)')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -360,7 +360,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("abzaaz", "(?:a|b)*z")).toMatchInlineSnapshot(`
+      expect(runTest('abzaaz', '(?:a|b)*z')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -384,8 +384,8 @@ describe("regexp", () => {
       `);
     });
 
-    it("Backreferences", () => {
-      expect(runTest("aba", "(a)b\\1")).toMatchInlineSnapshot(`
+    it('Backreferences', () => {
+      expect(runTest('aba', '(a)b\\1')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -408,7 +408,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("aa ab", "(?<n>a)\\k<n>")).toMatchInlineSnapshot(`
+      expect(runTest('aa ab', '(?<n>a)\\k<n>')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -440,8 +440,8 @@ describe("regexp", () => {
       `);
     });
 
-    it("Quantifiers", () => {
-      expect(runTest("aaa", "a*?a")).toMatchInlineSnapshot(`
+    it('Quantifiers', () => {
+      expect(runTest('aaa', 'a*?a')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -471,7 +471,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("ababab", "(a|b){2,4}")).toMatchInlineSnapshot(`
+      expect(runTest('ababab', '(a|b){2,4}')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -508,7 +508,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("ababab", "(a|b){2,}")).toMatchInlineSnapshot(`
+      expect(runTest('ababab', '(a|b){2,}')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -531,7 +531,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("ababab", "(a|b){2}")).toMatchInlineSnapshot(`
+      expect(runTest('ababab', '(a|b){2}')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -583,17 +583,17 @@ describe("regexp", () => {
       `);
     });
 
-    it("Flags", () => {
-      expect(runTest("a\na", "^.+$")).toMatchInlineSnapshot(`
+    it('Flags', () => {
+      expect(runTest('a\na', '^.+$')).toMatchInlineSnapshot(`
         Object {
           "js": Array [],
           "native": Array [],
         }
       `);
       expect(
-        runTest("a\na", "^.+$", {
-          dotMatchesLineSeparators: true
-        })
+        runTest('a\na', '^.+$', {
+          dotMatchesLineSeparators: true,
+        }),
       ).toMatchInlineSnapshot(`
         Object {
           "js": Array [
@@ -612,16 +612,16 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("a\na", "^.+$")).toMatchInlineSnapshot(`
+      expect(runTest('a\na', '^.+$')).toMatchInlineSnapshot(`
         Object {
           "js": Array [],
           "native": Array [],
         }
       `);
       expect(
-        runTest("a\na", "^.+$", {
-          multiline: true
-        })
+        runTest('a\na', '^.+$', {
+          multiline: true,
+        }),
       ).toMatchInlineSnapshot(`
         Object {
           "js": Array [
@@ -645,16 +645,16 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("a", "A")).toMatchInlineSnapshot(`
+      expect(runTest('a', 'A')).toMatchInlineSnapshot(`
         Object {
           "js": Array [],
           "native": Array [],
         }
       `);
       expect(
-        runTest("a", "A", {
-          caseInsensitive: true
-        })
+        runTest('a', 'A', {
+          caseInsensitive: true,
+        }),
       ).toMatchInlineSnapshot(`
         Object {
           "js": Array [
@@ -672,8 +672,8 @@ describe("regexp", () => {
       `);
     });
 
-    it("assertions", () => {
-      expect(runTest("aba", "(?=(a))(\\w)")).toMatchInlineSnapshot(`
+    it('assertions', () => {
+      expect(runTest('aba', '(?=(a))(\\w)')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -720,7 +720,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("aba", "(?!(b))(\\w)")).toMatchInlineSnapshot(`
+      expect(runTest('aba', '(?!(b))(\\w)')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -761,7 +761,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("dbacbac", "(?<=(b)(a))(\\w)")).toMatchInlineSnapshot(`
+      expect(runTest('dbacbac', '(?<=(b)(a))(\\w)')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -817,7 +817,7 @@ describe("regexp", () => {
           ],
         }
       `);
-      expect(runTest("dbacbac", "(?<!(d)(b))(\\w)")).toMatchInlineSnapshot(`
+      expect(runTest('dbacbac', '(?<!(d)(b))(\\w)')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -935,11 +935,11 @@ describe("regexp", () => {
       `);
     });
 
-    it("sticky works", () => {
+    it('sticky works', () => {
       expect(
-        runTest("aaxa", "a", {
-          sticky: true
-        })
+        runTest('aaxa', 'a', {
+          sticky: true,
+        }),
       ).toMatchInlineSnapshot(`
         Object {
           "js": Array [
@@ -964,38 +964,38 @@ describe("regexp", () => {
       `);
     });
 
-    it("unicode works", () => {
+    it('unicode works', () => {
       function unicodePair(input, pattern) {
         const ret = [
           runTest(input, pattern),
           runTest(input, pattern, {
-            unicode: true
-          })
+            unicode: true,
+          }),
         ];
-        expect(unicodePair("\uD83D\uDC2A", "\\uD83D")).toMatchInlineSnapshot();
+        expect(unicodePair('\uD83D\uDC2A', '\\uD83D')).toMatchInlineSnapshot();
         expect(
-          unicodePair("\uD83D\uDC2A \uD83D", "\uD83D")
+          unicodePair('\uD83D\uDC2A \uD83D', '\uD83D'),
         ).toMatchInlineSnapshot();
         expect(
-          unicodePair("\uD83D\uDC2A", "^[\uD83D\uDC2A]$")
+          unicodePair('\uD83D\uDC2A', '^[\uD83D\uDC2A]$'),
         ).toMatchInlineSnapshot();
         expect(
-          unicodePair("\uD83D", "^[\\uD83D\\uDC2A]$")
+          unicodePair('\uD83D', '^[\\uD83D\\uDC2A]$'),
         ).toMatchInlineSnapshot();
-        expect(unicodePair("\uD83D\uDE80", ".")).toMatchInlineSnapshot();
+        expect(unicodePair('\uD83D\uDE80', '.')).toMatchInlineSnapshot();
         expect(
-          unicodePair("\uD83D\uDE80\uD83D\uDE80", "\uD83D\uDE80{2}")
+          unicodePair('\uD83D\uDE80\uD83D\uDE80', '\uD83D\uDE80{2}'),
         ).toMatchInlineSnapshot();
         expect(
-          unicodePair("\uD83D\uDE80\uD83D\uDE80", "\\uD83D\\uDE80{2}")
+          unicodePair('\uD83D\uDE80\uD83D\uDE80', '\\uD83D\\uDE80{2}'),
         ).toMatchInlineSnapshot();
       }
     });
   });
 
-  describe("bfs", () => {
-    it("different from dfs", () => {
-      expect(runTest("abbb", "(a|ab)b+")).toMatchInlineSnapshot(`
+  describe('bfs', () => {
+    it('different from dfs', () => {
+      expect(runTest('abbb', '(a|ab)b+')).toMatchInlineSnapshot(`
         Object {
           "js": Array [
             Object {
@@ -1018,7 +1018,7 @@ describe("regexp", () => {
         }
       `);
 
-      expect(runTest("abbb", "(a|ab)b+", { bfs: true }, true))
+      expect(runTest('abbb', '(a|ab)b+', { bfs: true }, true))
         .toMatchInlineSnapshot(`
         Object {
           "js": Array [

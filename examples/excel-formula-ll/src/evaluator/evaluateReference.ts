@@ -1,7 +1,6 @@
-
 import { makeError, makeReference } from '../functions/utils';
 
-import type { CELL_Node, NAME_Node, Reference_Node } from '../parser.js';
+import type { CELL_Node, NAME_Node, Reference_Node } from '../parser';
 import { parseCoord } from '../utils';
 
 import { evaluators, evaluate } from './evaluators';

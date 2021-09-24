@@ -3,7 +3,7 @@ import type {
   AstSymbolNode,
   AstTokenNode,
   ParseResult,
-} from './parser.js';
+} from './parser';
 import type { Position } from 'monaco-editor';
 
 export function getFunctionInfoFromPosition(

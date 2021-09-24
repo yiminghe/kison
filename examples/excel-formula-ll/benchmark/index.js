@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import formula from '../src/parser.js';
+import formula from '../src/parser';
 
 var code = 'sum(A1:B2, 10, "OK", namedRange) + avg(A1:A3,{1,2;3,4})';
 var codes = [];

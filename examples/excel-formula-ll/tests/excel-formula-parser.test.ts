@@ -5,7 +5,7 @@ function parse(input: string) {
   return formula.parse(input);
 }
 
-describe('excel-formula-parser.js', () => {
+describe('excel-formula-parser', () => {
   it('works for env', () => {
     expect(
       prettyJson(

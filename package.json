@@ -13,6 +13,7 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
+    "typescript":"4.x",
     "@babel/core": "^7.14.3",
     "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",
@@ -28,8 +29,9 @@
     "lint-staged": "^7.2.0",
     "monaco-editor": "^0.28.0",
     "np": "^7.x",
-    "pika-plugin-build-web-babel": "0.11.x",
+    "pika-plugin-build-web-babel": "^0.11.2",
     "pika-plugin-clean-dist-src": "^0.1.1",
+    "pika-plugin-ts-types": "^0.1.4",
     "pre-commit": "^1.2.2",
     "prettier": "2.x"
   },

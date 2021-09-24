@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`excel-formula-parser.js array formula allow @ and # 1`] = `
+exports[`excel-formula-parser array formula allow @ and # 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -203,7 +203,7 @@ exports[`excel-formula-parser.js array formula allow @ and # 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js structure reference works 1`] = `
+exports[`excel-formula-parser structure reference works 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -549,7 +549,7 @@ exports[`excel-formula-parser.js structure reference works 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js structure reference works for space inside column name 1`] = `
+exports[`excel-formula-parser structure reference works for space inside column name 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -665,7 +665,7 @@ exports[`excel-formula-parser.js structure reference works for space inside colu
 }"
 `;
 
-exports[`excel-formula-parser.js structure reference works for thisRow 1`] = `
+exports[`excel-formula-parser structure reference works for thisRow 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -786,7 +786,7 @@ exports[`excel-formula-parser.js structure reference works for thisRow 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js structure reference works for thisRow 2`] = `
+exports[`excel-formula-parser structure reference works for thisRow 2`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -907,7 +907,7 @@ exports[`excel-formula-parser.js structure reference works for thisRow 2`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js structure reference works for thisRow 3`] = `
+exports[`excel-formula-parser structure reference works for thisRow 3`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -1060,7 +1060,7 @@ exports[`excel-formula-parser.js structure reference works for thisRow 3`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js works for 3d reference 1`] = `
+exports[`excel-formula-parser works for 3d reference 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -1179,7 +1179,7 @@ exports[`excel-formula-parser.js works for 3d reference 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js works for env 1`] = `
+exports[`excel-formula-parser works for env 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -1356,7 +1356,7 @@ exports[`excel-formula-parser.js works for env 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js works for reference operation 1`] = `
+exports[`excel-formula-parser works for reference operation 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -1639,7 +1639,7 @@ exports[`excel-formula-parser.js works for reference operation 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js works for row rangge 1`] = `
+exports[`excel-formula-parser works for row rangge 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',
@@ -1758,7 +1758,7 @@ exports[`excel-formula-parser.js works for row rangge 1`] = `
 }"
 `;
 
-exports[`excel-formula-parser.js works for simple 1`] = `
+exports[`excel-formula-parser works for simple 1`] = `
 "{
   'type': 'symbol',
   'symbol': 'formula',

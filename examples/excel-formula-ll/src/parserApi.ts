@@ -1,5 +1,5 @@
-import parser, { TransformNode } from './parser.js';
-import type { AstSymbolNode, ParserOptions } from './parser.js';
+import parser, { TransformNode } from './parser';
+import type { AstSymbolNode, ParserOptions } from './parser';
 
 export const lex = parser.lex;
 

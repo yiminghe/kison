@@ -1,16 +1,15 @@
-
 import { functions } from '../functions/index';
 
 import { makeError, NAME_ERROR } from '../functions/utils';
 
-import type { Function_Node } from '../parser.js';
+import type { Function_Node } from '../parser';
 
-import { evaluators,evaluate } from './evaluators';
+import { evaluators, evaluate } from './evaluators';
 
 import type { Context } from './types';
 
 Object.assign(evaluators, {
-  evaluate_function(node:Function_Node, context:Context) {
+  evaluate_function(node: Function_Node, context: Context) {
     const { children } = node;
     const fnName = children[0].text.toLowerCase();
     const fnDef = functions.get(fnName);
@@ -23,7 +22,7 @@ Object.assign(evaluators, {
     let currentArg;
 
     for (const a of argsChildren) {
-      if (a.type ==='token' && a.token === 'ARGUMENT_SEPARATOR') {
+      if (a.type === 'token' && a.token === 'ARGUMENT_SEPARATOR') {
         argsNode.push(currentArg);
         currentArg = undefined;
       } else {

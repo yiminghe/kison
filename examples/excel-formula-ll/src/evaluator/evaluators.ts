@@ -1,11 +1,17 @@
+import type { AstNode } from '../parser.js';
 
-import type { AstNode } from "../parser.js";
-
-import type { All_Type, Context } from "./types";
+import type { All_Type, Context } from './types';
 
 // @ts-check
-export function evaluate(ast: AstNode, context: Context={}): All_Type {
-  let symbol = '', token = '', label = '';
+export function evaluate(
+  ast: AstNode,
+  context: Context = {
+    getCellValues: () => [],
+  },
+): All_Type {
+  let symbol = '',
+    token = '',
+    label = '';
 
   if (ast.type === 'symbol') {
     symbol = ast.symbol;
@@ -42,6 +48,9 @@ export function evaluate(ast: AstNode, context: Context={}): All_Type {
   return evaluate(child, context);
 }
 
-export const evaluators: Record<string, (node: AstNode, context: Context) => All_Type> = {
+export const evaluators: Record<
+  string,
+  (node: AstNode, context: Context) => All_Type
+> = {
   evaluate,
 };

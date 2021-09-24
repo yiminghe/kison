@@ -1,9 +1,8 @@
-
 import { makeError, VALUE_ERROR } from '../functions/utils';
 
-import type { ArrayList_Node, Array_Node, AstTokenNode } from '../parser.js';
+import type { ArrayList_Node, Array_Node, AstTokenNode } from '../parser';
 
-import { evaluators,evaluate } from './evaluators';
+import { evaluators, evaluate } from './evaluators';
 import type {
   Array_Type,
   Atom_Value_Type,
@@ -11,7 +10,6 @@ import type {
   Error_Type,
   Number_Type,
   String_Type,
-  
 } from './types';
 
 Object.assign(evaluators, {
@@ -32,7 +30,10 @@ Object.assign(evaluators, {
     return evaluate(node.children[1], context);
   },
 
-  [`evaluate_array-list`](node: ArrayList_Node, context: Context): Array_Type|Error_Type {
+  [`evaluate_array-list`](
+    node: ArrayList_Node,
+    context: Context,
+  ): Array_Type | Error_Type {
     const { children } = node;
     const ret: Atom_Value_Type[][] = [];
     let row: Atom_Value_Type[] = [];
@@ -55,9 +56,9 @@ Object.assign(evaluators, {
         }
         continue;
       }
-      const t=evaluate(c, context);
-      if(t.type==='array'||t.type==='reference'){
-        return makeError('error array format',VALUE_ERROR);
+      const t = evaluate(c, context);
+      if (t.type === 'array' || t.type === 'reference') {
+        return makeError('error array format', VALUE_ERROR);
       }
       row.push(t);
     }

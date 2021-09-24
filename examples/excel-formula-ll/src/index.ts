@@ -1,4 +1,3 @@
-
 import * as parser from './parserApi';
 
 import * as cachedParser from './cachedParser';
@@ -21,5 +20,5 @@ export {
   register as registerFunction,
 };
 
-export * from './parser.js';
+export * from './parser';
 export * from './evaluator/types';

@@ -1,4 +1,3 @@
-
 import type {
   VALUE_ERROR,
   NULL_ERROR,
@@ -7,7 +6,6 @@ import type {
   REF_ERROR,
   NUM_ERROR,
   NAME_ERROR,
-  
 } from '../common/constants';
 
 export interface String_Type {
@@ -72,5 +70,5 @@ export type All_Type = Atom_Type | Array_Type;
 export type Atom_Value_Type = Exclude<Atom_Type, Ref_Type>;
 
 export interface Context {
-  getCellValues?: (ref: Ref_Type) => Atom_Value_Type[][];
+  getCellValues: (ref: Ref_Type) => Atom_Value_Type[][];
 }

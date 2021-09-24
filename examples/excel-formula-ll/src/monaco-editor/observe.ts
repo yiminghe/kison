@@ -2,7 +2,7 @@
 import { langId } from './utils';
 import { getAst } from '../cachedParser';
 import type * as Monaco from 'monaco-editor';
-import { Position } from '../parser.js';
+import { Position } from '../parser';
 
 const colors = [
   '#0000ff',

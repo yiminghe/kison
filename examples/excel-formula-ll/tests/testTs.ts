@@ -1,4 +1,4 @@
-import parser from '../src/parser.js';
+import { parser } from '../pkg';
 
 const ret = parser.parse('1');
 

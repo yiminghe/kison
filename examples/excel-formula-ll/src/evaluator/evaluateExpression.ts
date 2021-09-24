@@ -5,18 +5,21 @@ import {
   makeError,
   NA_ERROR,
   VALUE_ERROR,
-  
 } from '../functions/utils';
 
-import type { AstSymbolNode, Exp_Node } from '../parser.js';
+import type { AstSymbolNode, Exp_Node } from '../parser';
 
 import { evaluators, evaluate } from './evaluators';
 import type {
-  All_Type, Array_Type,
+  All_Type,
+  Array_Type,
   Atom_Value_Type,
-  Atom_Type, Context, 
-  Error_Type, Number_Type, Primary_Type, Ref_Type
-
+  Atom_Type,
+  Context,
+  Error_Type,
+  Number_Type,
+  Primary_Type,
+  Ref_Type,
 } from './types';
 import {
   assertType,
@@ -24,10 +27,13 @@ import {
   checkNumber,
   isSingleValueArray,
   mapArray,
- 
 } from './utils';
 
-function opOneAndMany(n: Atom_Value_Type, a: Array_Type, { fn, check }: BinaryDef) {
+function opOneAndMany(
+  n: Atom_Value_Type,
+  a: Array_Type,
+  { fn, check }: BinaryDef,
+) {
   let ret: Array_Type['value'] = [];
   const { value } = a;
   for (let i = 0; i < value.length; i++) {
@@ -132,7 +138,6 @@ function evaluateBinaryExp(node: Exp_Node, context: Context, def: BinaryDef) {
   } else {
     right = rightRet;
   }
-
 
   if (left.type === 'array' && isSingleValueArray(left.value)) {
     left = left.value[0][0];
@@ -398,9 +403,12 @@ function evaluate_binary_exp(node: Exp_Node, context: Context) {
   }
 }
 
-const unaryOp: Record<'+' | '-', {
-  fn: (arg: Atom_Type) => Number_Type | Error_Type;
-}> = {
+const unaryOp: Record<
+  '+' | '-',
+  {
+    fn: (arg: Atom_Type) => Number_Type | Error_Type;
+  }
+> = {
   '-': {
     fn(a) {
       const value = Number(a.value);
@@ -426,7 +434,11 @@ const unaryOp: Record<'+' | '-', {
     },
   },
 };
-function evaluatePrefixExp(node: Exp_Node, context: Context, { fn }: { fn: (arg: Atom_Type) => Number_Type | Error_Type; }) {
+function evaluatePrefixExp(
+  node: Exp_Node,
+  context: Context,
+  { fn }: { fn: (arg: Atom_Type) => Number_Type | Error_Type },
+) {
   if (node.label !== 'prefix-exp') {
     return;
   }

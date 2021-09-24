@@ -1,11 +1,10 @@
-
 import * as parser from './parserApi';
 import type {
   ParserOptions,
   ParseResult,
   LexResult,
   LexerOptions,
-} from './parser.js';
+} from './parser';
 
 let currentText: string;
 let currentAst: ParseResult;

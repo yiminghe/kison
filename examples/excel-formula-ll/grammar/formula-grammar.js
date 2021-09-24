@@ -296,7 +296,9 @@ module.exports = () => ({
           if (this.tokens[this.tokens.length - 1]?.token === 'FUNCTION') {
             return;
           }
-          this.userData.markParen.push({ func: false });
+          const { userData } = this;
+          userData.markParen = userData.markParen || [];
+          userData.markParen.push({ func: false });
         },
       },
       {

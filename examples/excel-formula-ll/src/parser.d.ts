@@ -329,13 +329,13 @@ interface ArrayList_Node_0 extends BaseSymbolNode {
         symbol:"array-list";
         
         children:[ArrayElement_Node];
-        parent:ArrayList_Node_38 | Array_Node;
+        parent:Array_Node;
       }
 interface ArrayList_Node_38 extends BaseSymbolNode {
         symbol:"array-list";
         
-        children:[ArrayList_Node,ARRAY_SEPARATOR_Node,ArrayElement_Node];
-        parent:ArrayList_Node_38 | Array_Node;
+        children:Array<ARRAY_SEPARATOR_Node | ArrayElement_Node>;
+        parent:Array_Node;
       }
 type ArrayList_Node = ArrayList_Node_0 | ArrayList_Node_38;
 interface Array_Node extends BaseSymbolNode {
@@ -367,13 +367,13 @@ interface Arguments_Node_0 extends BaseSymbolNode {
         symbol:"arguments";
         
         children:[Argument_Node];
-        parent:Function_Node | Arguments_Node_44;
+        parent:Function_Node;
       }
 interface Arguments_Node_44 extends BaseSymbolNode {
         symbol:"arguments";
         
-        children:[Arguments_Node,ARGUMENT_SEPARATOR_Node,Argument_Node];
-        parent:Function_Node | Arguments_Node_44;
+        children:Array<ARGUMENT_SEPARATOR_Node | Argument_Node>;
+        parent:Function_Node;
       }
 type Arguments_Node = Arguments_Node_0 | Arguments_Node_44;
 interface StructureReference_Node_0 extends BaseSymbolNode {
@@ -445,13 +445,13 @@ interface TableColumnSpecifier_Node_0 extends BaseSymbolNode {
         symbol:"table-column-specifier";
         
         children:[TableSpecifierItem_Node];
-        parent:TableSpecifierInner_Node_52 | TableColumnSpecifier_Node_56;
+        parent:TableSpecifierInner_Node_52;
       }
 interface TableColumnSpecifier_Node_56 extends BaseSymbolNode {
         symbol:"table-column-specifier";
         
-        children:[TableColumnSpecifier_Node,SPECIFIER_SEPARATOR_Node,TableSpecifierItem_Node];
-        parent:TableSpecifierInner_Node_52 | TableColumnSpecifier_Node_56;
+        children:Array<SPECIFIER_SEPARATOR_Node | TableSpecifierItem_Node>;
+        parent:TableSpecifierInner_Node_52;
       }
 type TableColumnSpecifier_Node = TableColumnSpecifier_Node_0 | TableColumnSpecifier_Node_56;
 interface $EOF_Node extends BaseTokenNode {

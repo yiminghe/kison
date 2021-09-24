@@ -2,11 +2,11 @@ import { functions } from '../functions/index';
 
 import { makeError, NAME_ERROR } from '../functions/utils';
 
-import type { Function_Node } from '../parser';
+import type { Function_Node, Argument_Node } from '../parser';
 
 import { evaluators, evaluate } from './evaluators';
 
-import type { Context } from './types';
+import type { Context, All_Type } from './types';
 
 Object.assign(evaluators, {
   evaluate_function(node: Function_Node, context: Context) {
@@ -18,14 +18,14 @@ Object.assign(evaluators, {
     }
 
     let argsChildren = children[2].children || [];
-    let argsNode = [];
-    let currentArg;
+    let argsNode: Array<Argument_Node | null> = [];
+    let currentArg: Argument_Node | null = null;
 
     for (const a of argsChildren) {
       if (a.type === 'token' && a.token === 'ARGUMENT_SEPARATOR') {
         argsNode.push(currentArg);
-        currentArg = undefined;
-      } else {
+        currentArg = null;
+      } else if (a.type == 'symbol') {
         currentArg = a;
       }
     }
@@ -56,7 +56,7 @@ Object.assign(evaluators, {
       }
     }
 
-    let argsValue = [];
+    let argsValue: (All_Type | null)[] = [];
 
     for (let i = 0; i < argsNode.length; i++) {
       const argNode = argsNode[i];

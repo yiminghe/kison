@@ -25,6 +25,10 @@ describe('excel-formula-parser', () => {
   });
 
   it('works for reference operation', () => {
+    expect(prettyJson(parse(`(E4:H4,F:F K8)`).ast)).toMatchSnapshot();
+  });
+
+  it('works for reference operation as argument', () => {
     expect(prettyJson(parse(`SUM((E4:H4,F:F K8))`).ast)).toMatchSnapshot();
   });
 

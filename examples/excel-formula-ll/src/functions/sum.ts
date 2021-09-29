@@ -1,4 +1,3 @@
-// @ts-check
 import { Atom_Value_Type, Error_Type } from '../evaluator/types';
 import { register } from './register';
 import { makeError } from './utils';

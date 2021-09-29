@@ -1,4 +1,3 @@
-// @ts-check
 import createFormulaTokensProvider from './createFormulaTokensProvider';
 import createFormulaCompletionItemProvider from './createFormulaCompletionItemProvider';
 import createFormulaSignatureHelpProvider from './createFormulaSignatureHelpProvider';

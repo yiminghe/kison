@@ -1,8 +1,4 @@
-// @ts-check
-import {
-  getTableNameByPosition,
-  getTokenByPosition,
-} from '../languageService';
+import { getTableNameByPosition, getTokenByPosition } from '../languageService';
 import { getAst } from '../cachedParser';
 import type { languages } from 'monaco-editor';
 import type * as Monaco from 'monaco-editor';

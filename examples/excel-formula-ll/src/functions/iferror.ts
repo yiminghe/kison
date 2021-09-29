@@ -1,4 +1,3 @@
-// @ts-check
 import { register } from './register';
 
 register('iferror', {

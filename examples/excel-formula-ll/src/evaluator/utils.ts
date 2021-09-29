@@ -1,46 +1,43 @@
-// @ts-check
 import {
   makeError,
   makeReference,
   NULL_ERROR,
   VALUE_ERROR,
-  
 } from '../functions/utils';
 
 import type { All_Type, Atom_Type, Error_Type, Ref_Type } from './types';
 
-
 export function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {
-    throw new Error(
-      `Expected 'val' to be defined, but received ${val}`
-    );
+    throw new Error(`Expected 'val' to be defined, but received ${val}`);
   }
 }
 
 export function assertTrue(val: boolean): asserts val is true {
   if (val !== true) {
-    throw new Error(
-      `Expected 'val' to be defined, but received ${val}`
-    );
+    throw new Error(`Expected 'val' to be defined, but received ${val}`);
   }
 }
 
 type TypeMap = {
-  'boolean': boolean;
-  'string': string;
-  'number': number;
+  boolean: boolean;
+  string: string;
+  number: number;
 };
 
-export function assertType<T, S extends 'string' | 'number' | 'boolean'>(val: T, t: S): asserts val is (TypeMap[S] extends T ? TypeMap[S] : never) {
+export function assertType<T, S extends 'string' | 'number' | 'boolean'>(
+  val: T,
+  t: S,
+): asserts val is TypeMap[S] extends T ? TypeMap[S] : never {
   if (typeof val !== t) {
-    throw new Error(
-      `Expected 'val' to be defined, but received ${val}`
-    );
+    throw new Error(`Expected 'val' to be defined, but received ${val}`);
   }
 }
 
-export function expandReference(ref1: Error_Type | Ref_Type, ref2: Error_Type | Ref_Type) {
+export function expandReference(
+  ref1: Error_Type | Ref_Type,
+  ref2: Error_Type | Ref_Type,
+) {
   if (ref1.type === 'error') {
     return ref1;
   } else if (ref2.type === 'error') {
@@ -84,7 +81,10 @@ export function expandReference(ref1: Error_Type | Ref_Type, ref2: Error_Type | 
   ]);
 }
 
-export function unionReference(ref1: Error_Type | Ref_Type, ref2: Error_Type | Ref_Type) {
+export function unionReference(
+  ref1: Error_Type | Ref_Type,
+  ref2: Error_Type | Ref_Type,
+) {
   if (ref1.type === 'error') {
     return ref1;
   } else if (ref2.type === 'error') {
@@ -93,7 +93,10 @@ export function unionReference(ref1: Error_Type | Ref_Type, ref2: Error_Type | R
   return makeReference(ref1.value.concat(ref2.value));
 }
 
-export function intersectReference(ref1: Error_Type | Ref_Type, ref2: Error_Type | Ref_Type) {
+export function intersectReference(
+  ref1: Error_Type | Ref_Type,
+  ref2: Error_Type | Ref_Type,
+) {
   if (ref1.type === 'error') {
     return ref1;
   } else if (ref2.type === 'error') {
@@ -154,15 +157,17 @@ export function checkNumber(...args: (All_Type | null)[]) {
 
 export function isSingleCellReference(ref: Ref_Type) {
   const range = ref.value[0];
-  return (ref.value.length ===
-    1 && range.rowCount === 1 && range.colCount === 1);
+  return ref.value.length === 1 && range.rowCount === 1 && range.colCount === 1;
 }
 
 export function isSingleValueArray(array: Atom_Type[][]) {
   return array.length == 1 && array[0].length === 1;
 }
 
-export function mapArray(arr: Atom_Type[][], fn: (arg: Atom_Type) => Atom_Type) {
+export function mapArray(
+  arr: Atom_Type[][],
+  fn: (arg: Atom_Type) => Atom_Type,
+) {
   const ret = [];
   for (let rowIndex = 0; rowIndex < arr.length; rowIndex++) {
     const row = arr[rowIndex];

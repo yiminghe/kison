@@ -1,4 +1,3 @@
-// @ts-check
 import { Primary_Type, utils, Range, Atom_Value_Type } from '../src/index';
 import { matchNumber } from './utils';
 
@@ -24,12 +23,12 @@ function fillCell(row: Atom_Value_Type[], index: number, value: Primary_Type) {
     row[index] = {
       type: 'number',
       value,
-    }
+    };
   } else if (typeof value === 'string') {
     row[index] = {
       type: 'string',
       value,
-    }
+    };
   }
 }
 export function getCellValuesByRange(cells: Primary_Type[][], ranges: Range[]) {

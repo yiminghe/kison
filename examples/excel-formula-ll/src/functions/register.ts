@@ -1,16 +1,17 @@
+import type { All_Type, Context } from '../evaluator/types';
 
-import type { All_Type, Context } from "../evaluator/types";
-
-// @ts-check
 export const functions = new Map();
 
 interface Def {
   argumentLength?: number;
   allowErrorArgument?: boolean;
-  interceptArgument?: (arg: {
-    index: number;
-    value?: All_Type;
-  }, args: All_Type[]) => {
+  interceptArgument?: (
+    arg: {
+      index: number;
+      value?: All_Type;
+    },
+    args: All_Type[],
+  ) => {
     value: All_Type | undefined;
   } | null;
   fn: (args: All_Type[], context: Context) => All_Type;

@@ -1,4 +1,3 @@
-// @ts-check
 import { getTokens } from '../cachedParser';
 import type { languages } from 'monaco-editor';
 

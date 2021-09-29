@@ -2,7 +2,6 @@ import type { AstNode } from '../parser.js';
 
 import type { All_Type, Context } from './types';
 
-// @ts-check
 export function evaluate(
   ast: AstNode,
   context: Context = {

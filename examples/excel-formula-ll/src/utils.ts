@@ -1,6 +1,4 @@
-// @ts-check
-
-import { assertIsDefined } from "./evaluator/utils";
+import { assertIsDefined } from './evaluator/utils';
 
 const A = 'A'.charCodeAt(0);
 

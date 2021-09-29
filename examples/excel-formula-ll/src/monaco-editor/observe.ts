@@ -1,4 +1,3 @@
-// @ts-check
 import { langId } from './utils';
 import { getAst } from '../cachedParser';
 import type * as Monaco from 'monaco-editor';

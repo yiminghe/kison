@@ -1,4 +1,3 @@
-// @ts-check
 import { getFunctionInfoFromPosition } from '../languageService';
 import { getAst } from '../cachedParser';
 import type { languages } from 'monaco-editor';

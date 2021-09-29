@@ -1,4 +1,3 @@
-// @ts-check
 import {
   DIV_ERROR,
   makeArray,

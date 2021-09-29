@@ -6,10 +6,8 @@ import type {
   Range,
   Array_Type,
   Atom_Value_Type,
-  
 } from '../evaluator/types';
 
-// @ts-check
 export function toNumber(a: Atom_Type) {
   const { type, value } = a;
   if (type === 'string') {
@@ -36,7 +34,7 @@ export function makeReference(ranges: Range[]): Ref_Type {
   };
 }
 
-export function makeArray(value:Atom_Value_Type[][]):Array_Type {
+export function makeArray(value: Atom_Value_Type[][]): Array_Type {
   return {
     type: 'array',
     value,

@@ -46,7 +46,7 @@ interface Token extends Position {
 
 interface ParseError {
   errorMessage: string;
-  expected: Token[];
+  expected: LiteralToken[];
   token: Token;
   recovery: Boolean;
   symbol: Symbol;
@@ -102,5 +102,6 @@ export type {
   TransformNode,
   AstRootNode,
   Position,
+  LiteralToken,
   LexerOptions, AstTokenNode, Token, AstNode, AstSymbolNode
 }

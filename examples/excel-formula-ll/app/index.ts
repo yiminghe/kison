@@ -1,5 +1,5 @@
-
 import { initMonaco, cachedParser, evaluate } from '../src/index';
+import type { LiteralToken } from '../src/index';
 import functionNames from './functionNames';
 import { getCellData, getCellValuesByRange } from './getCellData';
 import type * as Manaco from 'monaco-editor';
@@ -20,7 +20,6 @@ require.config({
 
 const $ = (v: string) => document.getElementById(v)!;
 
-
 // @ts-ignore
 $('cells').value = $('cells')
   // @ts-ignore
@@ -29,7 +28,6 @@ $('cells').value = $('cells')
 $('cells').style.height = '200px';
 $('cells').style.width = '500px';
 $('cells').style.display = 'block';
-
 
 require(['vs/editor/editor.main'], () => {
   initMonaco({
@@ -64,7 +62,7 @@ require(['vs/editor/editor.main'], () => {
     const { recoveryTokens } = getAst(value, {
       onErrorRecovery({ errorNode }, { action }) {
         if (action === 'add') {
-          let token = ')';
+          let token: LiteralToken = ')';
           const {
             parent: { symbol },
             error: { expected },

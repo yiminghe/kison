@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/excel-formula",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"
@@ -17,7 +17,8 @@
           "args": [
             "--rootDir",
             "src"
-          ]
+          ],
+          "tsconfig":"tsconfig.build.json"
         }
       ],
       [
@@ -38,7 +39,8 @@
     ]
   },
   "scripts": {
-    "build": "pika-pack build && cp src/parser.d.ts pkg/dist-types/",
+    "check":"tsc --noEmit",
+    "build": "npm run check && pika-pack build && cp src/parser.d.ts pkg/dist-types/",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh"
   },

@@ -38,12 +38,24 @@ export default function init({ monaco, getNames }: InitOptions) {
           foreground: '0000FF',
         },
         {
+          token: 'TABLE_ITEM_SPECIFIER',
+          foreground: '0451A5',
+        },
+        {
+          token: 'TABLE_COLUMN_SPECIFIER',
+          foreground: '4864AA',
+        },
+        {
+          token: 'TABLE_NAME',
+          foreground: 'AF00DB',
+        },
+        {
           token: 'NAME',
           foreground: '001188',
         },
         {
           token: 'NUMBER',
-          foreground: '09885A',
+          foreground: '098658',
         },
         {
           token: 'STRING',

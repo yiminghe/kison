@@ -152,7 +152,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'lastColumn': 16
                                     }
                                   ],
-                                  'label': 'intersect-reference'
+                                  'label': 'intersection-reference'
                                 }
                               ]
                             }
@@ -549,6 +549,581 @@ exports[`excel-formula-parser structure reference works 1`] = `
 }"
 `;
 
+exports[`excel-formula-parser structure reference works for Reference operators 1`] = `
+"{
+  'type': 'symbol',
+  'symbol': 'formula',
+  'children': [
+    {
+      'type': 'symbol',
+      'symbol': 'exp',
+      'children': [
+        {
+          'type': 'symbol',
+          'symbol': 'reference',
+          'children': [
+            {
+              'type': 'symbol',
+              'symbol': 'reference-item',
+              'children': [
+                {
+                  'type': 'symbol',
+                  'symbol': 'structure-reference',
+                  'children': [
+                    {
+                      'text': 'DeptSales',
+                      'token': 'TABLE_NAME',
+                      'start': 0,
+                      'end': 9,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 1,
+                      'lastColumn': 10,
+                      'type': 'token'
+                    },
+                    {
+                      'type': 'symbol',
+                      'symbol': 'table-specifier',
+                      'children': [
+                        {
+                          'text': '[',
+                          'token': '[',
+                          'start': 9,
+                          'end': 10,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 10,
+                          'lastColumn': 11,
+                          'type': 'token'
+                        },
+                        {
+                          'type': 'symbol',
+                          'symbol': 'table-specifier-inner',
+                          'children': [
+                            {
+                              'type': 'symbol',
+                              'symbol': 'table-column-specifier',
+                              'children': [
+                                {
+                                  'type': 'symbol',
+                                  'symbol': 'table-specifier-item',
+                                  'children': [
+                                    {
+                                      'text': '[Sales Person]:[Region]',
+                                      'token': 'TABLE_COLUMN_SPECIFIER',
+                                      'start': 10,
+                                      'end': 33,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 11,
+                                      'lastColumn': 34,
+                                      'type': 'token'
+                                    }
+                                  ],
+                                  'start': 10,
+                                  'end': 33,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 11,
+                                  'lastColumn': 34
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          'text': ']',
+                          'token': ']',
+                          'start': 33,
+                          'end': 34,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 34,
+                          'lastColumn': 35,
+                          'type': 'token'
+                        }
+                      ],
+                      'start': 9,
+                      'end': 34,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 10,
+                      'lastColumn': 35
+                    }
+                  ],
+                  'start': 0,
+                  'firstLine': 1,
+                  'firstColumn': 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`excel-formula-parser structure reference works for Reference operators 2`] = `
+"{
+  'type': 'symbol',
+  'symbol': 'formula',
+  'children': [
+    {
+      'type': 'symbol',
+      'symbol': 'exp',
+      'children': [
+        {
+          'type': 'symbol',
+          'symbol': 'reference',
+          'children': [
+            {
+              'type': 'symbol',
+              'symbol': 'reference',
+              'children': [
+                {
+                  'type': 'symbol',
+                  'symbol': 'reference-item',
+                  'children': [
+                    {
+                      'type': 'symbol',
+                      'symbol': 'structure-reference',
+                      'children': [
+                        {
+                          'text': 'DeptSales',
+                          'token': 'TABLE_NAME',
+                          'start': 0,
+                          'end': 9,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 10,
+                          'type': 'token'
+                        },
+                        {
+                          'type': 'symbol',
+                          'symbol': 'table-specifier',
+                          'children': [
+                            {
+                              'text': '[',
+                              'token': '[',
+                              'start': 9,
+                              'end': 10,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 10,
+                              'lastColumn': 11,
+                              'type': 'token'
+                            },
+                            {
+                              'type': 'symbol',
+                              'symbol': 'table-specifier-inner',
+                              'children': [
+                                {
+                                  'type': 'symbol',
+                                  'symbol': 'table-column-specifier',
+                                  'children': [
+                                    {
+                                      'type': 'symbol',
+                                      'symbol': 'table-specifier-item',
+                                      'children': [
+                                        {
+                                          'text': 'Sales Amount',
+                                          'token': 'TABLE_COLUMN_SPECIFIER',
+                                          'start': 10,
+                                          'end': 22,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 11,
+                                          'lastColumn': 23,
+                                          'type': 'token'
+                                        }
+                                      ],
+                                      'start': 10,
+                                      'end': 22,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 11,
+                                      'lastColumn': 23
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              'text': ']',
+                              'token': ']',
+                              'start': 22,
+                              'end': 23,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 23,
+                              'lastColumn': 24,
+                              'type': 'token'
+                            }
+                          ],
+                          'start': 9,
+                          'end': 23,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 10,
+                          'lastColumn': 24
+                        }
+                      ],
+                      'start': 0,
+                      'firstLine': 1,
+                      'firstColumn': 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'text': ',',
+              'token': 'REF_UNION_OPERATOR',
+              'start': 23,
+              'end': 24,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 24,
+              'lastColumn': 25,
+              'type': 'token'
+            },
+            {
+              'type': 'symbol',
+              'symbol': 'reference',
+              'children': [
+                {
+                  'type': 'symbol',
+                  'symbol': 'reference-item',
+                  'children': [
+                    {
+                      'type': 'symbol',
+                      'symbol': 'structure-reference',
+                      'children': [
+                        {
+                          'text': 'DeptSales',
+                          'token': 'TABLE_NAME',
+                          'start': 24,
+                          'end': 33,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 25,
+                          'lastColumn': 34,
+                          'type': 'token'
+                        },
+                        {
+                          'type': 'symbol',
+                          'symbol': 'table-specifier',
+                          'children': [
+                            {
+                              'text': '[',
+                              'token': '[',
+                              'start': 33,
+                              'end': 34,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 34,
+                              'lastColumn': 35,
+                              'type': 'token'
+                            },
+                            {
+                              'type': 'symbol',
+                              'symbol': 'table-specifier-inner',
+                              'children': [
+                                {
+                                  'type': 'symbol',
+                                  'symbol': 'table-column-specifier',
+                                  'children': [
+                                    {
+                                      'type': 'symbol',
+                                      'symbol': 'table-specifier-item',
+                                      'children': [
+                                        {
+                                          'text': 'Commission Amount',
+                                          'token': 'TABLE_COLUMN_SPECIFIER',
+                                          'start': 34,
+                                          'end': 51,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 35,
+                                          'lastColumn': 52,
+                                          'type': 'token'
+                                        }
+                                      ],
+                                      'start': 34,
+                                      'end': 51,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 35,
+                                      'lastColumn': 52
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              'text': ']',
+                              'token': ']',
+                              'start': 51,
+                              'end': 52,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 52,
+                              'lastColumn': 53,
+                              'type': 'token'
+                            }
+                          ],
+                          'start': 33,
+                          'end': 52,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 34,
+                          'lastColumn': 53
+                        }
+                      ],
+                      'start': 24,
+                      'firstLine': 1,
+                      'firstColumn': 25
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          'label': 'union-reference'
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`excel-formula-parser structure reference works for Reference operators 3`] = `
+"{
+  'type': 'symbol',
+  'symbol': 'formula',
+  'children': [
+    {
+      'type': 'symbol',
+      'symbol': 'exp',
+      'children': [
+        {
+          'type': 'symbol',
+          'symbol': 'reference',
+          'children': [
+            {
+              'type': 'symbol',
+              'symbol': 'reference',
+              'children': [
+                {
+                  'type': 'symbol',
+                  'symbol': 'reference-item',
+                  'children': [
+                    {
+                      'type': 'symbol',
+                      'symbol': 'structure-reference',
+                      'children': [
+                        {
+                          'text': 'DeptSales',
+                          'token': 'TABLE_NAME',
+                          'start': 0,
+                          'end': 9,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 1,
+                          'lastColumn': 10,
+                          'type': 'token'
+                        },
+                        {
+                          'type': 'symbol',
+                          'symbol': 'table-specifier',
+                          'children': [
+                            {
+                              'text': '[',
+                              'token': '[',
+                              'start': 9,
+                              'end': 10,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 10,
+                              'lastColumn': 11,
+                              'type': 'token'
+                            },
+                            {
+                              'type': 'symbol',
+                              'symbol': 'table-specifier-inner',
+                              'children': [
+                                {
+                                  'type': 'symbol',
+                                  'symbol': 'table-column-specifier',
+                                  'children': [
+                                    {
+                                      'type': 'symbol',
+                                      'symbol': 'table-specifier-item',
+                                      'children': [
+                                        {
+                                          'text': '[Sales Person]:[Sales Amount]',
+                                          'token': 'TABLE_COLUMN_SPECIFIER',
+                                          'start': 10,
+                                          'end': 39,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 11,
+                                          'lastColumn': 40,
+                                          'type': 'token'
+                                        }
+                                      ],
+                                      'start': 10,
+                                      'end': 39,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 11,
+                                      'lastColumn': 40
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              'text': ']',
+                              'token': ']',
+                              'start': 39,
+                              'end': 40,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 40,
+                              'lastColumn': 41,
+                              'type': 'token'
+                            }
+                          ],
+                          'start': 9,
+                          'end': 40,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 10,
+                          'lastColumn': 41
+                        }
+                      ],
+                      'start': 0,
+                      'firstLine': 1,
+                      'firstColumn': 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'type': 'symbol',
+              'symbol': 'reference',
+              'children': [
+                {
+                  'type': 'symbol',
+                  'symbol': 'reference-item',
+                  'children': [
+                    {
+                      'type': 'symbol',
+                      'symbol': 'structure-reference',
+                      'children': [
+                        {
+                          'text': 'DeptSales',
+                          'token': 'TABLE_NAME',
+                          'start': 41,
+                          'end': 50,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 42,
+                          'lastColumn': 51,
+                          'type': 'token'
+                        },
+                        {
+                          'type': 'symbol',
+                          'symbol': 'table-specifier',
+                          'children': [
+                            {
+                              'text': '[',
+                              'token': '[',
+                              'start': 50,
+                              'end': 51,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 51,
+                              'lastColumn': 52,
+                              'type': 'token'
+                            },
+                            {
+                              'type': 'symbol',
+                              'symbol': 'table-specifier-inner',
+                              'children': [
+                                {
+                                  'type': 'symbol',
+                                  'symbol': 'table-column-specifier',
+                                  'children': [
+                                    {
+                                      'type': 'symbol',
+                                      'symbol': 'table-specifier-item',
+                                      'children': [
+                                        {
+                                          'text': '[Region]:[% Commission]',
+                                          'token': 'TABLE_COLUMN_SPECIFIER',
+                                          'start': 51,
+                                          'end': 74,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 52,
+                                          'lastColumn': 75,
+                                          'type': 'token'
+                                        }
+                                      ],
+                                      'start': 51,
+                                      'end': 74,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 52,
+                                      'lastColumn': 75
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              'text': ']',
+                              'token': ']',
+                              'start': 74,
+                              'end': 75,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 75,
+                              'lastColumn': 76,
+                              'type': 'token'
+                            }
+                          ],
+                          'start': 50,
+                          'end': 75,
+                          'firstLine': 1,
+                          'lastLine': 1,
+                          'firstColumn': 51,
+                          'lastColumn': 76
+                        }
+                      ],
+                      'start': 41,
+                      'firstLine': 1,
+                      'firstColumn': 42
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          'label': 'intersection-reference'
+        }
+      ]
+    }
+  ]
+}"
+`;
+
 exports[`excel-formula-parser structure reference works for space inside column name 1`] = `
 "{
   'type': 'symbol',
@@ -571,14 +1146,14 @@ exports[`excel-formula-parser structure reference works for space inside column 
                   'symbol': 'structure-reference',
                   'children': [
                     {
-                      'text': 't',
+                      'text': 't2',
                       'token': 'TABLE_NAME',
                       'start': 0,
-                      'end': 1,
+                      'end': 2,
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 2,
+                      'lastColumn': 3,
                       'type': 'token'
                     },
                     {
@@ -588,12 +1163,12 @@ exports[`excel-formula-parser structure reference works for space inside column 
                         {
                           'text': '[',
                           'token': '[',
-                          'start': 1,
-                          'end': 2,
+                          'start': 2,
+                          'end': 3,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 2,
-                          'lastColumn': 3,
+                          'firstColumn': 3,
+                          'lastColumn': 4,
                           'type': 'token'
                         },
                         {
@@ -611,21 +1186,21 @@ exports[`excel-formula-parser structure reference works for space inside column 
                                     {
                                       'text': 'a b',
                                       'token': 'TABLE_COLUMN_SPECIFIER',
-                                      'start': 2,
-                                      'end': 5,
+                                      'start': 3,
+                                      'end': 6,
                                       'firstLine': 1,
                                       'lastLine': 1,
-                                      'firstColumn': 3,
-                                      'lastColumn': 6,
+                                      'firstColumn': 4,
+                                      'lastColumn': 7,
                                       'type': 'token'
                                     }
                                   ],
-                                  'start': 2,
-                                  'end': 5,
+                                  'start': 3,
+                                  'end': 6,
                                   'firstLine': 1,
                                   'lastLine': 1,
-                                  'firstColumn': 3,
-                                  'lastColumn': 6
+                                  'firstColumn': 4,
+                                  'lastColumn': 7
                                 }
                               ]
                             }
@@ -634,21 +1209,21 @@ exports[`excel-formula-parser structure reference works for space inside column 
                         {
                           'text': ']',
                           'token': ']',
-                          'start': 5,
-                          'end': 6,
+                          'start': 6,
+                          'end': 7,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 6,
-                          'lastColumn': 7,
+                          'firstColumn': 7,
+                          'lastColumn': 8,
                           'type': 'token'
                         }
                       ],
-                      'start': 1,
-                      'end': 6,
+                      'start': 2,
+                      'end': 7,
                       'firstLine': 1,
                       'lastLine': 1,
-                      'firstColumn': 2,
-                      'lastColumn': 7
+                      'firstColumn': 3,
+                      'lastColumn': 8
                     }
                   ],
                   'start': 0,
@@ -1465,7 +2040,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                     },
                     {
                       'text': ':',
-                      'token': 'REF_EXPAND_OPERATOR',
+                      'token': 'REF_RANGE_OPERATOR',
                       'start': 8,
                       'end': 9,
                       'firstLine': 1,
@@ -1504,7 +2079,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                       ]
                     }
                   ],
-                  'label': 'expand-reference'
+                  'label': 'range-reference'
                 },
                 {
                   'type': 'symbol',
@@ -1542,7 +2117,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                   'lastColumn': 14
                 }
               ],
-              'label': 'intersect-reference'
+              'label': 'intersection-reference'
             }
           ],
           'label': 'union-reference'
@@ -1717,7 +2292,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                     },
                                     {
                                       'text': ':',
-                                      'token': 'REF_EXPAND_OPERATOR',
+                                      'token': 'REF_RANGE_OPERATOR',
                                       'start': 12,
                                       'end': 13,
                                       'firstLine': 1,
@@ -1756,7 +2331,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                       ]
                                     }
                                   ],
-                                  'label': 'expand-reference'
+                                  'label': 'range-reference'
                                 },
                                 {
                                   'type': 'symbol',
@@ -1794,7 +2369,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                   'lastColumn': 18
                                 }
                               ],
-                              'label': 'intersect-reference'
+                              'label': 'intersection-reference'
                             }
                           ],
                           'label': 'union-reference'

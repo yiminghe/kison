@@ -171,8 +171,8 @@ export function getTableNameByPosition(nodes: AstNode[], position: Position) {
   if (prev) {
     while (
       prev &&
-      prev.type === 'symbol' &&
-      prev.symbol !== 'structure-reference'
+      ((prev.type === 'symbol' && prev.symbol !== 'structure-reference') ||
+        prev.type === 'token')
     ) {
       prev = prev.parent;
     }

@@ -19,7 +19,8 @@ export default function createFormulaCompletionItemProvider(
     triggerCharacters: ['[', '@'],
     provideCompletionItems(model, position, context) {
       let kind = 'function';
-      const { terminalNodes } = getAst(model.getValue());
+      const parserRet = getAst(model.getValue());
+      const { terminalNodes } = parserRet;
       const suggestions: languages.CompletionItem[] = [];
       const t = getTokenByPosition(terminalNodes, position);
 

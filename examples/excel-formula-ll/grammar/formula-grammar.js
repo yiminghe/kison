@@ -10,8 +10,8 @@ const operators = [
   ['precedence', 'UMINUS', 'UPLUS'],
   ['precedence', '@'],
   ['left', 'REF_UNION_OPERATOR'],
-  ['left', 'REF_INTERSECT_OPERATOR'],
-  ['left', 'REF_EXPAND_OPERATOR'],
+  ['left', 'REF_INTERSECTION_OPERATOR'],
+  ['left', 'REF_RANGE_OPERATOR'],
 ];
 
 const binaryOperators = [].concat(
@@ -149,13 +149,13 @@ module.exports = () => ({
     {
       symbol: 'reference',
       rhs: ['reference', 'reference'],
-      precedence: 'REF_INTERSECT_OPERATOR',
-      label: 'intersect-reference',
+      precedence: 'REF_INTERSECTION_OPERATOR',
+      label: 'intersection-reference',
     },
     {
       symbol: 'reference',
-      rhs: ['reference', 'REF_EXPAND_OPERATOR', 'reference'],
-      label: 'expand-reference',
+      rhs: ['reference', 'REF_RANGE_OPERATOR', 'reference'],
+      label: 'range-reference',
     },
     {
       symbol: 'reference',
@@ -382,7 +382,7 @@ module.exports = () => ({
       },
       {
         regexp: /^:/,
-        token: 'REF_EXPAND_OPERATOR',
+        token: 'REF_RANGE_OPERATOR',
       },
       {
         regexp: { en: /^,/, de: /^;/ },
@@ -405,6 +405,10 @@ module.exports = () => ({
         },
       },
       {
+        regexp: new RegExp(`^${fullNamePart}(?=[\\[])`),
+        token: 'TABLE_NAME',
+      },
+      {
         regexp: /^#[A-Z0-9\/]+(!|\?)? /,
         token: 'ERROR',
       },
@@ -419,10 +423,6 @@ module.exports = () => ({
       {
         regexp: /^(TRUE|FALSE)(?=\b)/i,
         token: 'LOGIC',
-      },
-      {
-        regexp: new RegExp(`^${fullNamePart}(?=[\\[])`),
-        token: 'TABLE_NAME',
       },
       {
         regexp: new RegExp(`^${fullNamePart}`),

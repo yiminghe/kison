@@ -2,8 +2,8 @@ type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
 type AstSymbolNode = Formula_Node|Exp_Node|ReferenceItem_Node|Reference_Node|ArrayElement_Node|ArrayList_Node|Array_Node|Function_Node|Argument_Node|Arguments_Node|StructureReference_Node|TableSpecifier_Node|TableThisRow_Node|TableSpecifierInner_Node|TableSpecifierItem_Node|TableColumnSpecifier_Node;
-type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|TOKEN_7_Node|TOKEN_8_Node|TOKEN_9_Node|TOKEN_10_Node|TOKEN_11_Node|TOKEN_12_Node|TOKEN_13_Node|TOKEN_14_Node|TOKEN_15_Node|NUMBER_Node|STRING_Node|LOGIC_Node|ERROR_Node|CELL_Node|NAME_Node|REF_UNION_OPERATOR_Node|REF_EXPAND_OPERATOR_Node|ARRAY_SEPARATOR_Node|TOKEN_16_Node|TOKEN_17_Node|FUNCTION_Node|ARGUMENT_SEPARATOR_Node|TABLE_NAME_Node|TABLE_ITEM_SPECIFIER_Node|TOKEN_18_Node|TOKEN_19_Node|TOKEN_20_Node|TABLE_COLUMN_SPECIFIER_Node|SPECIFIER_SEPARATOR_Node;
-type LiteralToken = "$HIDDEN"|"SPECIFIER_SEPARATOR"|"TABLE_ITEM_SPECIFIER"|"TABLE_COLUMN_SPECIFIER"|"ARRAY_SEPARATOR"|"REF_UNION_OPERATOR"|"REF_EXPAND_OPERATOR"|"ARGUMENT_SEPARATOR"|"STRING"|"FUNCTION"|"ERROR"|"CELL"|"LOGIC"|"TABLE_NAME"|"NAME"|"NUMBER"|"NUMBER"|"$EOF"|"$UNKOWN"|"="|"<="|">="|"<>"|">"|"<"|"&"|"+"|"-"|"*"|"/"|"^"|"@"|"%"|"("|")"|"{"|"}"|"["|"]"|"TABLE_@";
+type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|TOKEN_7_Node|TOKEN_8_Node|TOKEN_9_Node|TOKEN_10_Node|TOKEN_11_Node|TOKEN_12_Node|TOKEN_13_Node|TOKEN_14_Node|TOKEN_15_Node|NUMBER_Node|STRING_Node|LOGIC_Node|ERROR_Node|CELL_Node|NAME_Node|REF_UNION_OPERATOR_Node|REF_RANGE_OPERATOR_Node|ARRAY_SEPARATOR_Node|TOKEN_16_Node|TOKEN_17_Node|FUNCTION_Node|ARGUMENT_SEPARATOR_Node|TABLE_NAME_Node|TABLE_ITEM_SPECIFIER_Node|TOKEN_18_Node|TOKEN_19_Node|TOKEN_20_Node|TABLE_COLUMN_SPECIFIER_Node|SPECIFIER_SEPARATOR_Node;
+type LiteralToken = "$HIDDEN"|"SPECIFIER_SEPARATOR"|"TABLE_ITEM_SPECIFIER"|"TABLE_COLUMN_SPECIFIER"|"ARRAY_SEPARATOR"|"REF_UNION_OPERATOR"|"REF_RANGE_OPERATOR"|"ARGUMENT_SEPARATOR"|"STRING"|"FUNCTION"|"TABLE_NAME"|"ERROR"|"CELL"|"LOGIC"|"NAME"|"NUMBER"|"NUMBER"|"$EOF"|"$UNKOWN"|"="|"<="|">="|"<>"|">"|"<"|"&"|"+"|"-"|"*"|"/"|"^"|"@"|"%"|"("|")"|"{"|"}"|"["|"]"|"TABLE_@";
 type AstRootNode = Formula_Node;
 // replace end
 
@@ -284,14 +284,14 @@ interface Reference_Node_0 extends BaseSymbolNode {
       }
 interface Reference_Node_28 extends BaseSymbolNode {
         symbol:"reference";
-        label:"intersect-reference";
+        label:"intersection-reference";
         children:[Reference_Node,Reference_Node];
         parent:Exp_Node_23 | Reference_Node | Reference_Node_28 | Reference_Node_29;
       }
 interface Reference_Node_29 extends BaseSymbolNode {
         symbol:"reference";
-        label:"expand-reference";
-        children:[Reference_Node,REF_EXPAND_OPERATOR_Node,Reference_Node];
+        label:"range-reference";
+        children:[Reference_Node,REF_RANGE_OPERATOR_Node,Reference_Node];
         parent:Exp_Node_23 | Reference_Node | Reference_Node_28 | Reference_Node_29;
       }
 interface Reference_Node_30 extends BaseSymbolNode {
@@ -555,8 +555,8 @@ interface REF_UNION_OPERATOR_Node extends BaseTokenNode {
             token:"REF_UNION_OPERATOR";
             parent:Reference_Node;
           }
-interface REF_EXPAND_OPERATOR_Node extends BaseTokenNode {
-            token:"REF_EXPAND_OPERATOR";
+interface REF_RANGE_OPERATOR_Node extends BaseTokenNode {
+            token:"REF_RANGE_OPERATOR";
             parent:Reference_Node_29;
           }
 interface ARRAY_SEPARATOR_Node extends BaseTokenNode {
@@ -607,4 +607,4 @@ interface SPECIFIER_SEPARATOR_Node extends BaseTokenNode {
             token:"SPECIFIER_SEPARATOR";
             parent:TableColumnSpecifier_Node_56;
           }
-export type { Formula_Node,Exp_Node,ReferenceItem_Node,Reference_Node,ArrayElement_Node,ArrayList_Node,Array_Node,Function_Node,Argument_Node,Arguments_Node,StructureReference_Node,TableSpecifier_Node,TableThisRow_Node,TableSpecifierInner_Node,TableSpecifierItem_Node,TableColumnSpecifier_Node,$EOF_Node,$UNKNOWN_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,TOKEN_5_Node,TOKEN_6_Node,TOKEN_7_Node,TOKEN_8_Node,TOKEN_9_Node,TOKEN_10_Node,TOKEN_11_Node,TOKEN_12_Node,TOKEN_13_Node,TOKEN_14_Node,TOKEN_15_Node,NUMBER_Node,STRING_Node,LOGIC_Node,ERROR_Node,CELL_Node,NAME_Node,REF_UNION_OPERATOR_Node,REF_EXPAND_OPERATOR_Node,ARRAY_SEPARATOR_Node,TOKEN_16_Node,TOKEN_17_Node,FUNCTION_Node,ARGUMENT_SEPARATOR_Node,TABLE_NAME_Node,TABLE_ITEM_SPECIFIER_Node,TOKEN_18_Node,TOKEN_19_Node,TOKEN_20_Node,TABLE_COLUMN_SPECIFIER_Node,SPECIFIER_SEPARATOR_Node }
+export type { Formula_Node,Exp_Node,ReferenceItem_Node,Reference_Node,ArrayElement_Node,ArrayList_Node,Array_Node,Function_Node,Argument_Node,Arguments_Node,StructureReference_Node,TableSpecifier_Node,TableThisRow_Node,TableSpecifierInner_Node,TableSpecifierItem_Node,TableColumnSpecifier_Node,$EOF_Node,$UNKNOWN_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,TOKEN_5_Node,TOKEN_6_Node,TOKEN_7_Node,TOKEN_8_Node,TOKEN_9_Node,TOKEN_10_Node,TOKEN_11_Node,TOKEN_12_Node,TOKEN_13_Node,TOKEN_14_Node,TOKEN_15_Node,NUMBER_Node,STRING_Node,LOGIC_Node,ERROR_Node,CELL_Node,NAME_Node,REF_UNION_OPERATOR_Node,REF_RANGE_OPERATOR_Node,ARRAY_SEPARATOR_Node,TOKEN_16_Node,TOKEN_17_Node,FUNCTION_Node,ARGUMENT_SEPARATOR_Node,TABLE_NAME_Node,TABLE_ITEM_SPECIFIER_Node,TOKEN_18_Node,TOKEN_19_Node,TOKEN_20_Node,TABLE_COLUMN_SPECIFIER_Node,SPECIFIER_SEPARATOR_Node }

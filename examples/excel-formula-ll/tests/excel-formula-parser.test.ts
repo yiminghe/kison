@@ -44,7 +44,25 @@ describe('excel-formula-parser', () => {
     });
 
     it('works for space inside column name', () => {
-      expect(prettyJson(parse('t[a b]').ast)).toMatchSnapshot();
+      expect(prettyJson(parse('t2[a b]').ast)).toMatchSnapshot();
+    });
+
+    it('works for Reference operators', () => {
+      expect(
+        prettyJson(parse('DeptSales[[Sales Person]:[Region]]').ast),
+      ).toMatchSnapshot();
+      expect(
+        prettyJson(
+          parse('DeptSales[Sales Amount],DeptSales[Commission Amount]').ast,
+        ),
+      ).toMatchSnapshot();
+      expect(
+        prettyJson(
+          parse(
+            'DeptSales[[Sales Person]:[Sales Amount]] DeptSales[[Region]:[% Commission]]',
+          ).ast,
+        ),
+      ).toMatchSnapshot();
     });
 
     it('works for thisRow', () => {

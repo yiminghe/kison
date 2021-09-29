@@ -64,4 +64,4 @@ reference ::= reference 'REF_UNION_OPERATOR' reference_p_10
 reference_p_10 ::= reference_p_11
 reference_p_10 ::= reference_p_10 reference_p_11
 reference_p_11 ::= reference_p_end
-reference_p_11 ::= reference_p_11 'REF_EXPAND_OPERATOR' reference_p_end
+reference_p_11 ::= reference_p_11 'REF_RANGE_OPERATOR' reference_p_end

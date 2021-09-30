@@ -2,7 +2,7 @@ import { functions } from '../functions/index';
 
 import { makeError, NAME_ERROR } from '../functions/utils';
 
-import type { Function_Node, Argument_Node } from '../parser';
+import type { Function_Node, Exp_Node } from '../parser';
 
 import { evaluators, evaluate } from './evaluators';
 
@@ -18,8 +18,8 @@ Object.assign(evaluators, {
     }
 
     let argsChildren = children[2].children || [];
-    let argsNode: Array<Argument_Node | null> = [];
-    let currentArg: Argument_Node | null = null;
+    let argsNode: Array<Exp_Node | null> = [];
+    let currentArg: Exp_Node | null = null;
 
     for (const a of argsChildren) {
       if (a.type === 'token' && a.token === 'ARGUMENT_SEPARATOR') {

@@ -1,4 +1,4 @@
-var exp = '1+';
+var exp = '1+2+3';
 const ll = require('./ll');
 const lr = require('./lr');
 const llk = require('./llk');
@@ -6,7 +6,6 @@ const llk = require('./llk');
 (function () {
   if (1) {
     console.log('llk:' + '*'.repeat(10));
-    debugger;
     const ret = llk.parse(exp);
     if (ret.error) {
       console.log(ret);

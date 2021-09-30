@@ -184,21 +184,16 @@ module.exports = () => ({
     },
     {
       symbol: 'Expression',
-      rhs: ['SubExpression'],
+      rhs: ['SubExpression', 'SubExpressionPart*'],
     },
     {
-      symbol: 'Expression',
-      rhs: ['Expression', '|', 'SubExpression'],
-      flat: true,
-    },
-    {
-      symbol: 'SubExpression',
-      rhs: ['ExpressionItem'],
+      symbol: 'SubExpressionPart',
+      rhs: ['|', 'SubExpression'],
+      skipAstNode: true,
     },
     {
       symbol: 'SubExpression',
-      rhs: ['SubExpression', 'ExpressionItem'],
-      flat: true,
+      rhs: ['ExpressionItem*'],
     },
     {
       symbol: 'ExpressionItem',
@@ -264,12 +259,7 @@ module.exports = () => ({
     },
     {
       symbol: 'CharacterGroupInner',
-      rhs: ['CharacterGroupItem'],
-    },
-    {
-      symbol: 'CharacterGroupInner',
-      rhs: ['CharacterGroupInner', 'CharacterGroupItem'],
-      flat: true,
+      rhs: ['CharacterGroupItem*'],
     },
     {
       symbol: 'CharacterGroupItem',

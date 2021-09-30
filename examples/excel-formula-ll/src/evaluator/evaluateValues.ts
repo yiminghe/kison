@@ -1,6 +1,6 @@
 import { makeError, VALUE_ERROR } from '../functions/utils';
 
-import type { ArrayList_Node, Array_Node, AstTokenNode } from '../parser';
+import type { Array_Node, AstTokenNode } from '../parser';
 
 import { evaluators, evaluate } from './evaluators';
 import type {
@@ -26,15 +26,12 @@ Object.assign(evaluators, {
     };
   },
 
-  evaluate_array(node: Array_Node, context: Context) {
-    return evaluate(node.children[1], context);
-  },
-
-  [`evaluate_array-list`](
-    node: ArrayList_Node,
+  [`evaluate_array`](
+    node: Array_Node,
     context: Context,
   ): Array_Type | Error_Type {
-    const { children } = node;
+    const { children: raw } = node;
+    const children = raw.slice(1, -1);
     const ret: Atom_Value_Type[][] = [];
     let row: Atom_Value_Type[] = [];
     let lastRow: Atom_Value_Type[];

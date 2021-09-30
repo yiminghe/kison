@@ -1,7 +1,7 @@
 type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
-type AstSymbolNode = Formula_Node|Exp_Node|ReferenceItem_Node|Reference_Node|ArrayElement_Node|ArrayList_Node|Array_Node|Function_Node|Argument_Node|Arguments_Node|StructureReference_Node|TableSpecifier_Node|TableThisRow_Node|TableSpecifierInner_Node|TableSpecifierItem_Node|TableColumnSpecifier_Node;
+type AstSymbolNode = Formula_Node|Exp_Node|ReferenceItem_Node|Reference_Node|ArrayElement_Node|ArrayElementPart_Node|ZeroMore_arrayElementPart_1_Node|Array_Node|Function_Node|ZeroMore_argumentPart_2_Node|Arguments_Node|ArgumentPart_Node|StructureReference_Node|TableSpecifier_Node|TableThisRow_Node|TableSpecifierInner_Node|TableSpecifierItem_Node|ZeroMore_tableSpecifierItemPart_3_Node|TableColumnSpecifier_Node|TableSpecifierItemPart_Node;
 type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|TOKEN_7_Node|TOKEN_8_Node|TOKEN_9_Node|TOKEN_10_Node|TOKEN_11_Node|TOKEN_12_Node|TOKEN_13_Node|TOKEN_14_Node|TOKEN_15_Node|NUMBER_Node|STRING_Node|LOGIC_Node|ERROR_Node|CELL_Node|NAME_Node|REF_UNION_OPERATOR_Node|REF_RANGE_OPERATOR_Node|ARRAY_SEPARATOR_Node|TOKEN_16_Node|TOKEN_17_Node|FUNCTION_Node|ARGUMENT_SEPARATOR_Node|TABLE_NAME_Node|TABLE_ITEM_SPECIFIER_Node|TOKEN_18_Node|TOKEN_19_Node|TOKEN_20_Node|TABLE_COLUMN_SPECIFIER_Node|SPECIFIER_SEPARATOR_Node;
 type LiteralToken = "$HIDDEN"|"SPECIFIER_SEPARATOR"|"TABLE_ITEM_SPECIFIER"|"TABLE_COLUMN_SPECIFIER"|"ARRAY_SEPARATOR"|"REF_UNION_OPERATOR"|"REF_RANGE_OPERATOR"|"ARGUMENT_SEPARATOR"|"STRING"|"FUNCTION"|"TABLE_NAME"|"ERROR"|"CELL"|"LOGIC"|"NAME"|"NUMBER"|"NUMBER"|"$EOF"|"$UNKOWN"|"="|"<="|">="|"<>"|">"|"<"|"&"|"+"|"-"|"*"|"/"|"^"|"@"|"%"|"("|")"|"{"|"}"|"["|"]"|"TABLE_@";
 type AstRootNode = Formula_Node;
@@ -116,145 +116,145 @@ interface Exp_Node_0 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_0_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_3 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_1_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_4 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_2_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_5 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_3_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_6 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_4_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_7 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_5_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_8 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_6_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_9 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_7_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_10 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_8_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_11 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_9_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_12 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_10_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_13 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_11_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_14 extends BaseSymbolNode {
         symbol:"exp";
         label:"prefix-exp";
         children:[TOKEN_7_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_15 extends BaseSymbolNode {
         symbol:"exp";
         label:"prefix-exp";
         children:[TOKEN_8_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_16 extends BaseSymbolNode {
         symbol:"exp";
         label:"clip-exp";
         children:[TOKEN_12_Node,Exp_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_17 extends BaseSymbolNode {
         symbol:"exp";
         label:"percentage-exp";
         children:[Exp_Node,TOKEN_13_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_18 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[TOKEN_14_Node,Exp_Node,TOKEN_15_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_19 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[NUMBER_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_20 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[STRING_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_21 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[LOGIC_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_22 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[ERROR_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_23 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[Reference_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_31 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[Function_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 interface Exp_Node_32 extends BaseSymbolNode {
         symbol:"exp";
         
         children:[Array_Node];
-        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Argument_Node_42;
+        parent:Formula_Node | Exp_Node | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Arguments_Node | ArgumentPart_Node;
       }
 type Exp_Node = Exp_Node_0 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13 | Exp_Node_14 | Exp_Node_15 | Exp_Node_16 | Exp_Node_17 | Exp_Node_18 | Exp_Node_19 | Exp_Node_20 | Exp_Node_21 | Exp_Node_22 | Exp_Node_23 | Exp_Node_31 | Exp_Node_32;
 interface ReferenceItem_Node_0 extends BaseSymbolNode {
@@ -305,44 +305,50 @@ interface ArrayElement_Node_0 extends BaseSymbolNode {
         symbol:"array-element";
         
         children:[STRING_Node];
-        parent:ArrayList_Node | ArrayList_Node_38;
+        parent:ArrayElementPart_Node | Array_Node;
       }
 interface ArrayElement_Node_34 extends BaseSymbolNode {
         symbol:"array-element";
         
         children:[NUMBER_Node];
-        parent:ArrayList_Node | ArrayList_Node_38;
+        parent:ArrayElementPart_Node | Array_Node;
       }
 interface ArrayElement_Node_35 extends BaseSymbolNode {
         symbol:"array-element";
         
         children:[LOGIC_Node];
-        parent:ArrayList_Node | ArrayList_Node_38;
+        parent:ArrayElementPart_Node | Array_Node;
       }
 interface ArrayElement_Node_36 extends BaseSymbolNode {
         symbol:"array-element";
         
         children:[ERROR_Node];
-        parent:ArrayList_Node | ArrayList_Node_38;
+        parent:ArrayElementPart_Node | Array_Node;
       }
 type ArrayElement_Node = ArrayElement_Node_0 | ArrayElement_Node_34 | ArrayElement_Node_35 | ArrayElement_Node_36;
-interface ArrayList_Node_0 extends BaseSymbolNode {
-        symbol:"array-list";
+interface ArrayElementPart_Node extends BaseSymbolNode {
+        symbol:"array-element-part";
         
-        children:[ArrayElement_Node];
-        parent:Array_Node;
+        children:[ARRAY_SEPARATOR_Node,ArrayElement_Node];
+        parent:ZeroMore_arrayElementPart_1_Node;
       }
-interface ArrayList_Node_38 extends BaseSymbolNode {
-        symbol:"array-list";
+interface ZeroMore_arrayElementPart_1_Node_0 extends BaseSymbolNode {
+        symbol:"zeroMore_array-element-part_1";
         
         children:Array<ARRAY_SEPARATOR_Node | ArrayElement_Node>;
         parent:Array_Node;
       }
-type ArrayList_Node = ArrayList_Node_0 | ArrayList_Node_38;
+interface ZeroMore_arrayElementPart_1_Node_39 extends BaseSymbolNode {
+        symbol:"zeroMore_array-element-part_1";
+        
+        children:[];
+        parent:Array_Node;
+      }
+type ZeroMore_arrayElementPart_1_Node = ZeroMore_arrayElementPart_1_Node_0 | ZeroMore_arrayElementPart_1_Node_39;
 interface Array_Node extends BaseSymbolNode {
         symbol:"array";
         
-        children:[TOKEN_16_Node,ArrayList_Node,TOKEN_17_Node];
+        children:Array<TOKEN_16_Node | ArrayElement_Node | ARRAY_SEPARATOR_Node | ArrayElement_Node | TOKEN_17_Node>;
         parent:Exp_Node_32;
       }
 interface Function_Node extends BaseSymbolNode {
@@ -351,110 +357,135 @@ interface Function_Node extends BaseSymbolNode {
         children:[FUNCTION_Node,TOKEN_14_Node,Arguments_Node,TOKEN_15_Node];
         parent:Exp_Node_31;
       }
-interface Argument_Node_0 extends BaseSymbolNode {
-        symbol:"argument";
+interface ZeroMore_argumentPart_2_Node_0 extends BaseSymbolNode {
+        symbol:"zeroMore_argumentPart_2";
+        
+        children:Array<Exp_Node | ARGUMENT_SEPARATOR_Node>;
+        parent:Arguments_Node | Arguments_Node_45;
+      }
+interface ZeroMore_argumentPart_2_Node_43 extends BaseSymbolNode {
+        symbol:"zeroMore_argumentPart_2";
         
         children:[];
-        parent:Arguments_Node | Arguments_Node_44;
+        parent:Arguments_Node | Arguments_Node_45;
       }
-interface Argument_Node_42 extends BaseSymbolNode {
-        symbol:"argument";
-        
-        children:[Exp_Node];
-        parent:Arguments_Node | Arguments_Node_44;
-      }
-type Argument_Node = Argument_Node_0 | Argument_Node_42;
+type ZeroMore_argumentPart_2_Node = ZeroMore_argumentPart_2_Node_0 | ZeroMore_argumentPart_2_Node_43;
 interface Arguments_Node_0 extends BaseSymbolNode {
         symbol:"arguments";
         
-        children:[Argument_Node];
+        children:Array<Exp_Node | ARGUMENT_SEPARATOR_Node | Exp_Node>;
         parent:Function_Node;
       }
-interface Arguments_Node_44 extends BaseSymbolNode {
+interface Arguments_Node_45 extends BaseSymbolNode {
         symbol:"arguments";
         
-        children:Array<ARGUMENT_SEPARATOR_Node | Argument_Node>;
+        children:Array<ARGUMENT_SEPARATOR_Node | Exp_Node>;
         parent:Function_Node;
       }
-type Arguments_Node = Arguments_Node_0 | Arguments_Node_44;
+type Arguments_Node = Arguments_Node_0 | Arguments_Node_45;
+interface ArgumentPart_Node_0 extends BaseSymbolNode {
+        symbol:"argumentPart";
+        
+        children:[ARGUMENT_SEPARATOR_Node,Exp_Node];
+        parent:ZeroMore_argumentPart_2_Node;
+      }
+interface ArgumentPart_Node_47 extends BaseSymbolNode {
+        symbol:"argumentPart";
+        
+        children:[ARGUMENT_SEPARATOR_Node];
+        parent:ZeroMore_argumentPart_2_Node;
+      }
+type ArgumentPart_Node = ArgumentPart_Node_0 | ArgumentPart_Node_47;
 interface StructureReference_Node_0 extends BaseSymbolNode {
         symbol:"structure-reference";
         
         children:[TABLE_NAME_Node,TableSpecifier_Node];
         parent:ReferenceItem_Node_26;
       }
-interface StructureReference_Node_46 extends BaseSymbolNode {
+interface StructureReference_Node_49 extends BaseSymbolNode {
         symbol:"structure-reference";
         
         children:[TableSpecifier_Node];
         parent:ReferenceItem_Node_26;
       }
-type StructureReference_Node = StructureReference_Node_0 | StructureReference_Node_46;
+type StructureReference_Node = StructureReference_Node_0 | StructureReference_Node_49;
 interface TableSpecifier_Node_0 extends BaseSymbolNode {
         symbol:"table-specifier";
         
         children:[TABLE_ITEM_SPECIFIER_Node];
-        parent:StructureReference_Node | StructureReference_Node_46;
+        parent:StructureReference_Node | StructureReference_Node_49;
       }
-interface TableSpecifier_Node_48 extends BaseSymbolNode {
+interface TableSpecifier_Node_51 extends BaseSymbolNode {
         symbol:"table-specifier";
         
         children:[TOKEN_18_Node,TableSpecifierInner_Node,TOKEN_19_Node];
-        parent:StructureReference_Node | StructureReference_Node_46;
+        parent:StructureReference_Node | StructureReference_Node_49;
       }
-type TableSpecifier_Node = TableSpecifier_Node_0 | TableSpecifier_Node_48;
+type TableSpecifier_Node = TableSpecifier_Node_0 | TableSpecifier_Node_51;
 interface TableThisRow_Node_0 extends BaseSymbolNode {
         symbol:"table-this-row";
         
         children:[TOKEN_20_Node];
         parent:TableSpecifierInner_Node;
       }
-interface TableThisRow_Node_50 extends BaseSymbolNode {
+interface TableThisRow_Node_53 extends BaseSymbolNode {
         symbol:"table-this-row";
         
         children:[TOKEN_20_Node,TABLE_COLUMN_SPECIFIER_Node];
         parent:TableSpecifierInner_Node;
       }
-type TableThisRow_Node = TableThisRow_Node_0 | TableThisRow_Node_50;
+type TableThisRow_Node = TableThisRow_Node_0 | TableThisRow_Node_53;
 interface TableSpecifierInner_Node_0 extends BaseSymbolNode {
         symbol:"table-specifier-inner";
         
         children:[TableThisRow_Node];
-        parent:TableSpecifier_Node_48;
+        parent:TableSpecifier_Node_51;
       }
-interface TableSpecifierInner_Node_52 extends BaseSymbolNode {
+interface TableSpecifierInner_Node_55 extends BaseSymbolNode {
         symbol:"table-specifier-inner";
         
         children:[TableColumnSpecifier_Node];
-        parent:TableSpecifier_Node_48;
+        parent:TableSpecifier_Node_51;
       }
-type TableSpecifierInner_Node = TableSpecifierInner_Node_0 | TableSpecifierInner_Node_52;
+type TableSpecifierInner_Node = TableSpecifierInner_Node_0 | TableSpecifierInner_Node_55;
 interface TableSpecifierItem_Node_0 extends BaseSymbolNode {
         symbol:"table-specifier-item";
         
         children:[TABLE_COLUMN_SPECIFIER_Node];
-        parent:TableColumnSpecifier_Node | TableColumnSpecifier_Node_56;
+        parent:TableColumnSpecifier_Node | TableSpecifierItemPart_Node;
       }
-interface TableSpecifierItem_Node_54 extends BaseSymbolNode {
+interface TableSpecifierItem_Node_57 extends BaseSymbolNode {
         symbol:"table-specifier-item";
         
         children:[TABLE_ITEM_SPECIFIER_Node];
-        parent:TableColumnSpecifier_Node | TableColumnSpecifier_Node_56;
+        parent:TableColumnSpecifier_Node | TableSpecifierItemPart_Node;
       }
-type TableSpecifierItem_Node = TableSpecifierItem_Node_0 | TableSpecifierItem_Node_54;
-interface TableColumnSpecifier_Node_0 extends BaseSymbolNode {
+type TableSpecifierItem_Node = TableSpecifierItem_Node_0 | TableSpecifierItem_Node_57;
+interface ZeroMore_tableSpecifierItemPart_3_Node_0 extends BaseSymbolNode {
+        symbol:"zeroMore_table-specifier-item-part_3";
+        
+        children:Array<TableSpecifierItem_Node | SPECIFIER_SEPARATOR_Node>;
+        parent:TableColumnSpecifier_Node;
+      }
+interface ZeroMore_tableSpecifierItemPart_3_Node_59 extends BaseSymbolNode {
+        symbol:"zeroMore_table-specifier-item-part_3";
+        
+        children:[];
+        parent:TableColumnSpecifier_Node;
+      }
+type ZeroMore_tableSpecifierItemPart_3_Node = ZeroMore_tableSpecifierItemPart_3_Node_0 | ZeroMore_tableSpecifierItemPart_3_Node_59;
+interface TableColumnSpecifier_Node extends BaseSymbolNode {
         symbol:"table-column-specifier";
         
-        children:[TableSpecifierItem_Node];
-        parent:TableSpecifierInner_Node_52;
+        children:Array<TableSpecifierItem_Node | TableSpecifierItem_Node | SPECIFIER_SEPARATOR_Node>;
+        parent:TableSpecifierInner_Node_55;
       }
-interface TableColumnSpecifier_Node_56 extends BaseSymbolNode {
-        symbol:"table-column-specifier";
+interface TableSpecifierItemPart_Node extends BaseSymbolNode {
+        symbol:"table-specifier-item-part";
         
-        children:Array<SPECIFIER_SEPARATOR_Node | TableSpecifierItem_Node>;
-        parent:TableSpecifierInner_Node_52;
+        children:[SPECIFIER_SEPARATOR_Node,TableSpecifierItem_Node];
+        parent:ZeroMore_tableSpecifierItemPart_3_Node;
       }
-type TableColumnSpecifier_Node = TableColumnSpecifier_Node_0 | TableColumnSpecifier_Node_56;
 interface $EOF_Node extends BaseTokenNode {
         token:"$EOF";
         parent:AstSymbolNode;
@@ -561,7 +592,7 @@ interface REF_RANGE_OPERATOR_Node extends BaseTokenNode {
           }
 interface ARRAY_SEPARATOR_Node extends BaseTokenNode {
             token:"ARRAY_SEPARATOR";
-            parent:ArrayList_Node_38;
+            parent:Array_Node;
           }
 interface TOKEN_16_Node extends BaseTokenNode {
             token:"{";
@@ -577,7 +608,7 @@ interface FUNCTION_Node extends BaseTokenNode {
           }
 interface ARGUMENT_SEPARATOR_Node extends BaseTokenNode {
             token:"ARGUMENT_SEPARATOR";
-            parent:Arguments_Node_44;
+            parent:Arguments_Node | Arguments_Node_45;
           }
 interface TABLE_NAME_Node extends BaseTokenNode {
             token:"TABLE_NAME";
@@ -585,26 +616,26 @@ interface TABLE_NAME_Node extends BaseTokenNode {
           }
 interface TABLE_ITEM_SPECIFIER_Node extends BaseTokenNode {
             token:"TABLE_ITEM_SPECIFIER";
-            parent:TableSpecifier_Node | TableSpecifierItem_Node_54;
+            parent:TableSpecifier_Node | TableSpecifierItem_Node_57;
           }
 interface TOKEN_18_Node extends BaseTokenNode {
             token:"[";
-            parent:TableSpecifier_Node_48;
+            parent:TableSpecifier_Node_51;
           }
 interface TOKEN_19_Node extends BaseTokenNode {
             token:"]";
-            parent:TableSpecifier_Node_48;
+            parent:TableSpecifier_Node_51;
           }
 interface TOKEN_20_Node extends BaseTokenNode {
             token:"TABLE_@";
-            parent:TableThisRow_Node | TableThisRow_Node_50;
+            parent:TableThisRow_Node | TableThisRow_Node_53;
           }
 interface TABLE_COLUMN_SPECIFIER_Node extends BaseTokenNode {
             token:"TABLE_COLUMN_SPECIFIER";
-            parent:TableThisRow_Node_50 | TableSpecifierItem_Node;
+            parent:TableThisRow_Node_53 | TableSpecifierItem_Node;
           }
 interface SPECIFIER_SEPARATOR_Node extends BaseTokenNode {
             token:"SPECIFIER_SEPARATOR";
-            parent:TableColumnSpecifier_Node_56;
+            parent:TableColumnSpecifier_Node;
           }
-export type { Formula_Node,Exp_Node,ReferenceItem_Node,Reference_Node,ArrayElement_Node,ArrayList_Node,Array_Node,Function_Node,Argument_Node,Arguments_Node,StructureReference_Node,TableSpecifier_Node,TableThisRow_Node,TableSpecifierInner_Node,TableSpecifierItem_Node,TableColumnSpecifier_Node,$EOF_Node,$UNKNOWN_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,TOKEN_5_Node,TOKEN_6_Node,TOKEN_7_Node,TOKEN_8_Node,TOKEN_9_Node,TOKEN_10_Node,TOKEN_11_Node,TOKEN_12_Node,TOKEN_13_Node,TOKEN_14_Node,TOKEN_15_Node,NUMBER_Node,STRING_Node,LOGIC_Node,ERROR_Node,CELL_Node,NAME_Node,REF_UNION_OPERATOR_Node,REF_RANGE_OPERATOR_Node,ARRAY_SEPARATOR_Node,TOKEN_16_Node,TOKEN_17_Node,FUNCTION_Node,ARGUMENT_SEPARATOR_Node,TABLE_NAME_Node,TABLE_ITEM_SPECIFIER_Node,TOKEN_18_Node,TOKEN_19_Node,TOKEN_20_Node,TABLE_COLUMN_SPECIFIER_Node,SPECIFIER_SEPARATOR_Node }
+export type { Formula_Node,Exp_Node,ReferenceItem_Node,Reference_Node,ArrayElement_Node,ArrayElementPart_Node,ZeroMore_arrayElementPart_1_Node,Array_Node,Function_Node,ZeroMore_argumentPart_2_Node,Arguments_Node,ArgumentPart_Node,StructureReference_Node,TableSpecifier_Node,TableThisRow_Node,TableSpecifierInner_Node,TableSpecifierItem_Node,ZeroMore_tableSpecifierItemPart_3_Node,TableColumnSpecifier_Node,TableSpecifierItemPart_Node,$EOF_Node,$UNKNOWN_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,TOKEN_5_Node,TOKEN_6_Node,TOKEN_7_Node,TOKEN_8_Node,TOKEN_9_Node,TOKEN_10_Node,TOKEN_11_Node,TOKEN_12_Node,TOKEN_13_Node,TOKEN_14_Node,TOKEN_15_Node,NUMBER_Node,STRING_Node,LOGIC_Node,ERROR_Node,CELL_Node,NAME_Node,REF_UNION_OPERATOR_Node,REF_RANGE_OPERATOR_Node,ARRAY_SEPARATOR_Node,TOKEN_16_Node,TOKEN_17_Node,FUNCTION_Node,ARGUMENT_SEPARATOR_Node,TABLE_NAME_Node,TABLE_ITEM_SPECIFIER_Node,TOKEN_18_Node,TOKEN_19_Node,TOKEN_20_Node,TABLE_COLUMN_SPECIFIER_Node,SPECIFIER_SEPARATOR_Node }

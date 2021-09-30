@@ -186,17 +186,14 @@ module.exports = () => ({
       rhs: ['ERROR'],
     },
     {
-      symbol: 'array-list',
-      rhs: ['array-element'],
+      symbol: 'array-element-part',
+      rhs: ['ARRAY_SEPARATOR', 'array-element'],
+      skipAstNode: true,
     },
-    {
-      symbol: 'array-list',
-      rhs: ['array-list', 'ARRAY_SEPARATOR', 'array-element'],
-      flat: true,
-    },
+    // array = '{', array-element, array-element-part*, '}'
     {
       symbol: 'array',
-      rhs: ['{', 'array-list', '}'],
+      rhs: ['{', 'array-element', 'array-element-part*', '}'],
     },
 
     // function
@@ -204,24 +201,15 @@ module.exports = () => ({
       symbol: 'function',
       rhs: ['FUNCTION', '(', 'arguments', ')'],
     },
-    {
-      symbol: 'argument',
-
-      rhs: [],
-    },
-    {
-      symbol: 'argument',
-
-      rhs: ['exp'],
-    },
+    // arguments => exp?(,exp?)*
     {
       symbol: 'arguments',
-      rhs: ['argument'],
+      rhs: ['exp?', 'argumentPart*'],
     },
     {
-      symbol: 'arguments',
-      rhs: ['arguments', 'ARGUMENT_SEPARATOR', 'argument'],
-      flat: true, // arguments => (argument,)*
+      symbol: 'argumentPart',
+      rhs: ['ARGUMENT_SEPARATOR', 'exp?'],
+      skipAstNode: true,
     },
 
     // structure reference
@@ -265,18 +253,15 @@ module.exports = () => ({
       symbol: 'table-specifier-item',
       rhs: ['TABLE_ITEM_SPECIFIER'],
     },
+    // table-column-specifier = table-specifier-item (,table-specifier-item)*
     {
       symbol: 'table-column-specifier',
-      rhs: ['table-specifier-item'],
+      rhs: ['table-specifier-item', 'table-specifier-item-part*'],
     },
     {
-      symbol: 'table-column-specifier',
-      rhs: [
-        'table-column-specifier',
-        'SPECIFIER_SEPARATOR',
-        'table-specifier-item',
-      ],
-      flat: true,
+      symbol: 'table-specifier-item-part',
+      rhs: ['SPECIFIER_SEPARATOR', 'table-specifier-item'],
+      skipAstNode: true,
     },
   ],
 

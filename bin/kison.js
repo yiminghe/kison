@@ -11,6 +11,11 @@ var Utils = require('../lib/utils'),
   path = require('path'),
   encoding = 'utf-8';
 
+const ConsMap = {
+  ll: KISON.LLGrammar,
+  lalr: KISON.LALRGrammar,
+  llk: KISON.LLKGrammar,
+};
 const placehoder = '__KISON___GENERATED__CODE__';
 
 var program = require('commander');
@@ -54,6 +59,10 @@ var outFile = program.output
 var grammarBaseName = program.library || '$parser';
 
 const mode = program.mode || 'lalr';
+
+if (!ConsMap[mode]) {
+  throw new Error('Unsupported mode: ' + mode);
+}
 
 var modulePath = program.output
   ? path.resolve(outFile)
@@ -143,7 +152,7 @@ function genParser() {
     grammarObj = grammarObj();
   }
 
-  const Cons = mode === 'lalr' ? KISON.LALRGrammar : KISON.LLGrammar;
+  const Cons = ConsMap[mode];
 
   console.info('start generate grammar module: ' + modulePath + '\n');
   var start = Date.now();
@@ -166,7 +175,7 @@ function genParser() {
     fs.writeFileSync(file, dts);
   }
 
-  if (program.bnf) {
+  if (program.bnf && instance.toBNF) {
     const bnf = instance.toBNF();
     let output = program.bnf;
     if (typeof output === 'string') {

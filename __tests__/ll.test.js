@@ -881,6 +881,7 @@ current token: '/'.",
       'type': 'token'
     },
     {
+      'text': '0',
       'token': 'NUMBER',
       'start': 2,
       'end': 2,
@@ -888,7 +889,6 @@ current token: '/'.",
       'firstColumn': 3,
       'lastLine': 1,
       'lastColumn': 3,
-      'text': '0',
       'type': 'token'
     }
   ],

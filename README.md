@@ -9,7 +9,7 @@
 
 [https://github.com/yiminghe/kison](https://github.com/yiminghe/kison)
 
-A LALR(1)/LL(1) parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate)
+A LALR(1)/LL(1)/LL(K) parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate)
 
 ## examples
 
@@ -27,7 +27,7 @@ A LALR(1)/LL(1) parser generator for javascript originated from [KISSY XTemplate
 
 ### async regexp in javascript
 
-[regexp](https://yiminghe.me/kison/examples/regexp-ll/):
+[regexp](https://yiminghe.me/kison/examples/regexp-ll/): [match-stream-data-using-regular-expression](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
 
 [![regexp](https://nodei.co/npm/@yiminghe/regexp.png)](https://npmjs.org/package/%40yiminghe%2Fregexp)
 [![npm version](https://badge.fury.io/js/%40yiminghe%2Fregexp.svg)](https://badge.fury.io/js/%40yiminghe%2Fregexp)
@@ -216,7 +216,7 @@ module.exports = () => ({
 
 - es: generate es module `npx kison --es -g cal-grammar.js`
 - g: grammar file
-- m: ll or lalr
+- m: ll or lalr or llk
 - babel: use babel to transform code. need install @babel/core@7.x and @babel/preset-env manually
 - declaration: generate d.ts type file for LL parser
 
@@ -235,6 +235,10 @@ npx kison -m ll -g cal-grammar.js
 ```
 
 ## changelog
+
+### 0.5.0 - 2021/09/30
+
+- support '-m llk' support LL(K)
 
 ### 0.4.35 - 2021/09/22
 

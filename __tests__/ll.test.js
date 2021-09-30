@@ -666,7 +666,7 @@ describe('ll', () => {
               '(',
               '-'
             ],
-            'symbol': 'exp_p_3',
+            'symbol': 'exp',
             'lexer': {
               'text': '',
               'firstLine': 1,
@@ -716,7 +716,7 @@ describe('ll', () => {
       '(',
       '-'
     ],
-    'symbol': 'exp_p_3',
+    'symbol': 'exp',
     'lexer': {
       'text': '',
       'firstLine': 1,
@@ -819,7 +819,7 @@ current token: '/'.",
       "token": "/",
     },
     "recovery": true,
-    "symbol": "exp_p_2",
+    "symbol": "exp",
     "tip": "'NUMBER', '(', '-' expected.
 current token: '/'.",
   },
@@ -901,28 +901,28 @@ current token: '/'.",
 }"
 `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
-      "{
-        'recovery': true,
-        'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
-        'tip': ''NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
-        'expected': [
-          'NUMBER',
-          '(',
-          '-'
-        ],
-        'symbol': 'exp_p_2',
-        'lexer': {
-          'text': '',
-          'firstLine': 1,
-          'firstColumn': 3,
-          'lastLine': 1,
-          'lastColumn': 3,
-          'token': '$EOF',
-          'start': 2,
-          'end': 2
-        }
-      }"
-    `);
+"{
+  'recovery': true,
+  'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+  'tip': ''NUMBER', '(', '-' expected.\\\\ncurrent token: '$EOF'.',
+  'expected': [
+    'NUMBER',
+    '(',
+    '-'
+  ],
+  'symbol': 'exp',
+  'lexer': {
+    'text': '',
+    'firstLine': 1,
+    'firstColumn': 3,
+    'lastLine': 1,
+    'lastColumn': 3,
+    'token': '$EOF',
+    'start': 2,
+    'end': 2
+  }
+}"
+`);
     expect(errorCalled).toMatchInlineSnapshot(`
 Object {
   "end": 2,
@@ -948,7 +948,7 @@ current token: '$EOF'.",
       "token": "$EOF",
     },
     "recovery": true,
-    "symbol": "exp_p_2",
+    "symbol": "exp",
     "tip": "'NUMBER', '(', '-' expected.
 current token: '$EOF'.",
   },

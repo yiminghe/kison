@@ -8,7 +8,7 @@ register('match', {
   // ],
   // minArgumentLength: 2,
   // maxArgumentLength: 2,
-  fn(a){
+  fn(a) {
     return a[0];
-  }
+  },
 });

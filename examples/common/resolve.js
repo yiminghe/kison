@@ -5,6 +5,6 @@
     // apply original resolve to make sure importmaps are resolved first
     const url = originalResolve.apply(this, arguments);
     // append .js file extension if url is missing a file extension
-    return endsWithFileExtension.test(url) ? url : url + ".ts";
+    return endsWithFileExtension.test(url) ? url : url + '.ts';
   };
 })();

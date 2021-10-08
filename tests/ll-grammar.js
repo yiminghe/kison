@@ -1,6 +1,19 @@
 module.exports = () => ({
   productions: [
     {
+      symbol: 'program',
+      rhs: ['statements'],
+    },
+    {
+      symbol: 'statements',
+      rhs: ['statement*'],
+    },
+    {
+      symbol: 'statement',
+      rhs: ['exp', 'NEW_LINE'],
+      skipAstNode: true,
+    },
+    {
       symbol: 'exp',
       rhs: ['exp', '+', 'exp'],
       label: 'binary-exp',
@@ -49,6 +62,10 @@ module.exports = () => ({
 
   lexer: {
     rules: [
+      {
+        regexp: /^\n/,
+        token: 'NEW_LINE',
+      },
       {
         regexp: /^\s+/,
         token: '$HIDDEN',

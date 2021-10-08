@@ -14,5 +14,5 @@ register('index', {
   // maxArgumentLength: 3,
   fn(a) {
     return a[0];
-  }
+  },
 });

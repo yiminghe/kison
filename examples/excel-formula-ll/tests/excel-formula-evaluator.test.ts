@@ -1,7 +1,7 @@
 import { parser as formula, evaluate } from '../src';
 import { prettyJson } from '../../../__tests__/utils';
 
-function parse(input:string) {
+function parse(input: string) {
   return formula.parse(input).ast;
 }
 

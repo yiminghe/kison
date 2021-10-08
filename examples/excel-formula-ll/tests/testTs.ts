@@ -2,9 +2,11 @@ import { parser } from '../src/';
 
 const ret = parser.parse('sum(1,2)');
 
+console.log(ret);
+
 const root = ret.ast;
 
-console.log(JSON.stringify(root));
+console.log(JSON.stringify(root, null, 2));
 
 const exps = root.children;
 const node = exps[0].children[0];

@@ -28,7 +28,7 @@ program
   .option('--declarationDir [declarationDir]', 'declarationDir')
   .option('-m, --mode [mode]', 'lalr or ll')
   .option('-b, --babel [babel]', 'use babel')
-  .option('-v, --visual [visual]', 'visual')
+  .option('-v, --verbose [verbose]', 'verbose')
   .option('-w, --watch [watch]', 'Watch grammar file change')
   .option('--es [es]', 'generate es module')
   // defaults bool true
@@ -172,7 +172,9 @@ function genParser() {
       'utf-8',
     );
     const dts = instance.genDTs(baseDts);
-    fs.writeFileSync(file, dts);
+    if (dts) {
+      fs.writeFileSync(file, dts);
+    }
   }
 
   if (program.bnf && instance.toBNF) {
@@ -210,7 +212,7 @@ function genParser() {
   );
   console.log();
   console.info('duration: ' + (Date.now() - start) + 'ms');
-  if (program.visual) {
+  if (program.verbose) {
     console.log();
     console.log();
     console.log();

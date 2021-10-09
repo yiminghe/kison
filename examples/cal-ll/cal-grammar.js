@@ -12,6 +12,10 @@ module.exports = () => ({
   productions: [
     {
       symbol: 'exp',
+      rhs: ['(', 'exp', ')'],
+    },
+    {
+      symbol: 'exp',
       rhs: ['exp', '+', s, 'exp', c],
     },
     {
@@ -28,10 +32,6 @@ module.exports = () => ({
     },
     {
       symbol: 'exp',
-      rhs: ['exp', '^', s, 'exp', c],
-    },
-    {
-      symbol: 'exp',
       rhs: [
         '-',
         'exp',
@@ -43,16 +43,17 @@ module.exports = () => ({
     },
     {
       symbol: 'exp',
+      rhs: ['exp', '^', s, 'exp', c],
+    },
+
+    {
+      symbol: 'exp',
       rhs: [
         'NUMBER',
         function (astProcessor, lexer) {
           astProcessor.pushStack(Number(lexer.text));
         },
       ],
-    },
-    {
-      symbol: 'exp',
-      rhs: ['(', 'exp', ')'],
     },
   ],
 

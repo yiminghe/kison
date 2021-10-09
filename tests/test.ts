@@ -3,34 +3,40 @@ import ll from './ll';
 import lr from './lr';
 import llk from './llk';
 
-const exp = '1+2*4\n2+3\n';
+const exp = '1+3\n';
 
 (function () {
+  let e;
   if (1) {
     console.log('llk:' + '*'.repeat(10));
-    debugger;
     const ret = llk.parse(exp);
     if (ret.error) {
+      e = ret.error;
+      // console.log(JSON.stringify(ret.ast, null, 2));
       console.log(ret.error.errorMessage);
-      throw new Error('llk error!');
     } else {
       console.log(JSON.stringify(ret.ast, null, 2));
     }
   }
 
-  if (0) {
+  if (1) {
     console.log('ll:' + '*'.repeat(10));
     const ret = ll.parse(exp);
     if (ret.error) {
-      console.log(ret);
-      throw new Error('ll error!');
+      e = ret.error;
+      console.log(JSON.stringify(ret.ast, null, 2));
+      console.log(ret.error.errorMessage);
     } else {
       console.log(JSON.stringify(ret.ast, null, 2));
     }
   }
-  if (0) {
+  if (1) {
     console.log();
     console.log('lr:' + '*'.repeat(10));
     console.log(lr.parse('1+2*3'));
+  }
+
+  if (e) {
+    throw e;
   }
 })();

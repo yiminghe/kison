@@ -138,13 +138,26 @@ module.exports = {
   }
 };
 ```
-### LL
+### LL/LL(K)
 
-cal-grammar.js: support direct left recursive and operator precedence. 
+cal-grammar.js: support direct left recursive, operator precedence, repeat notation(*/+), optional notation(?). 
 
 ``` javascript
 module.exports = () => ({
   productions: [
+    {
+      symbol: 'program',
+      rhs: ['statements'],
+    },
+    {
+      symbol: 'statements',
+      rhs: ['statement+'],
+    },
+    {
+      symbol: 'statement',
+      rhs: ['exp', 'NEW_LINE'],
+      skipAstNode: true,
+    },
     {
       symbol: 'exp',
       rhs: ['exp', '+', 'exp'],
@@ -172,17 +185,12 @@ module.exports = () => ({
     },
     {
       symbol: 'exp',
-      rhs: [
-        '-',
-        'exp',
-      ],
+      rhs: ['-', 'exp'],
       precedence: 'UMINUS',
     },
     {
       symbol: 'exp',
-      rhs: [
-        'NUMBER',
-      ],
+      rhs: ['NUMBER'],
     },
     {
       symbol: 'exp',
@@ -200,23 +208,28 @@ module.exports = () => ({
   lexer: {
     rules: [
       {
+        regexp: /^\n/,
+        token: 'NEW_LINE',
+      },
+      {
         regexp: /^\s+/,
         token: '$HIDDEN',
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,
-        token: "NUMBER"
+        token: 'NUMBER',
       },
-    ]
-  }
+    ],
+  },
 });
+
 ```
 
 ## command options
 
 - es: generate es module `npx kison --es -g cal-grammar.js`
 - g: grammar file
-- m: ll or lalr or llk
+- m: ll or lalr or llk **(llk is powerful than ll but less performant!)**
 - babel: use babel to transform code. need install @babel/core@7.x and @babel/preset-env manually
 - declaration: generate d.ts type file for LL parser
 

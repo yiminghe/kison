@@ -1,69 +1,80 @@
 <!DOCTYPE html>
-<link rel="icon" type="image/jpg" href="../favicon.ico"/>
+<link rel="icon" type="image/jpg" href="../favicon.ico" />
 <div>
     cal ll grammar <a href="./cal-grammar.js">definition</a> and <a href="./cal.xhtml">diagram</a>
 </div>
 <h2>open devtools console</h2>
 <script type="module">
-    import cal from './cal.js';
+    import calLL from './calLL.js';
+    import calLLK from './calLLK.js';
     import AstProcessor from './AstProcessor.js';
 
+    const calMap = {
+        calLL,
+        calLLK,
+    };
 
     (function () {
         function parseResult(input, options = {}, callback) {
-            console.log('');
-            console.log('***********************start ' + input);
-
-            const ast = new AstProcessor();
-            let ret;
-            try {
-                ret = cal.parse(input, {
-                    onAction({ action, token }) {
-                        action(ast, token);
-                    },
-                    ...options,
-                });
-            } catch (e) {
-                console.error(e);
-                console.log('***********************end ' + input);
+            let rets = [];
+            for (const k of Object.keys(calMap)) {
+                const cal = calMap[k];
                 console.log('');
-                return;
-            }
+                console.log(`*********************** ${k} start: ` + input);
 
-            console.log('user ast stack', ast.stack);
-            console.log('parse result', ret);
-            if (ret.errorNode) {
-                console.error(ret.errorNode.error.errorMessage);
+                const ast = new AstProcessor();
+                let ret;
+                try {
+                    ret = cal.parse(input, {
+                        onAction({ action, token }) {
+                            action(ast, token);
+                        },
+                        ...options,
+                    });
+                } catch (e) {
+                    console.error(e);
+                    console.log(`*********************** ${k} end: ` + input);
+                    console.log('');
+                    return;
+                }
+
+                console.log('user ast stack', ast.stack);
+                console.log('user ast stack[0]', ast.stack?.[0]);
+                console.log('parse result', ret);
+                if (ret.errorNode) {
+                    console.error(ret.errorNode.error.errorMessage);
+                }
+                console.log('parse tree', JSON.parse(JSON.stringify(ret.ast, null, 2)));
+                callback && callback(ret);
+                console.log(`*********************** ${k} end: ` + input);
+                console.log('');
+                rets.push(ret);
             }
-            console.log('parse tree', JSON.parse(JSON.stringify(ret.ast, null, 2)));
-            callback && callback(ret);
-            console.log('***********************end ' + input);
-            console.log('');
-            return ret;
+            return rets;
         }
 
-        parseResult('1+2+3');
+        parseResult('1+', {
+            onErrorRecovery({ errorNode }, {action}) {
+                if (action === 'add' && errorNode.error.expected.indexOf('NUMBER') !== -1) {
+                    return {
+                        action,
+                        token: 'NUMBER',
+                        text: '0',
+                    };
+                }
+            }
+        }, ({ recoveryTokens }) => {
+            // error recovery: 2+*3*+5 => 2+3*5
+            console.log(`after error recovery: ${recoveryTokens.map(t => t.text).join('')}`);
+        });
 
-        parseResult('2*5+1');
+        return;
 
-        parseResult('1+2*5');
+        const errorInput = '2+*3*+5';
 
-
-
-
-        parseResult('2^1^3');
-
-        parseResult('(1+2)*5');
-        parseResult('11+2*5');
-
-        let input = '2+*3*+5';
-
-        parseResult(input);
-
-        let o = input;
-
-        parseResult(input, {
+        parseResult(errorInput, {
             onErrorRecovery({ errorNode }, recommendAction) {
+
                 if (recommendAction.action === 'add') {
                     return {
                         action: 'add',
@@ -81,10 +92,26 @@
             console.log(`after error recovery: ${recoveryTokens.map(t => t.text).join('')}`);
         });
 
+       
+
+        parseResult('2^1^3');
+
+        parseResult('1+2+3');
+        parseResult('2*5+1');
+        parseResult('1+2*5');
+
+        parseResult('(1+2)*5');
+        parseResult('11+2*5');
+
+        parseResult(errorInput);
+
+
         parseResult('1+2*');
     })();
 </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
-<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+    title="Fork me on GitHub">Fork me on GitHub</a>

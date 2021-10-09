@@ -3,11 +3,11 @@ import AstProcessor from '../examples/cal-ll/AstProcessor';
 import calGrammar from '../examples/cal-ll/cal-grammar';
 import { prettyJson } from './utils';
 
-var LLGrammar = Kison.LLGrammar;
+var LLKGrammar = Kison.LLKGrammar;
 const run = eval;
 
 function getGrammar() {
-  var grammar = new LLGrammar({
+  var grammar = new LLKGrammar({
     productions: [
       {
         symbol: 'E',
@@ -76,9 +76,9 @@ function getGrammar() {
   return grammar;
 }
 
-describe('ll', () => {
+describe('llk', () => {
   it('eliminate left recursive works', () => {
-    var grammar = new LLGrammar({
+    var grammar = new LLKGrammar({
       productions: [
         {
           symbol: 'S',
@@ -134,136 +134,24 @@ describe('ll', () => {
     `);
   });
 
-  it('extract common prefix works', () => {
-    var grammar = new LLGrammar({
-      productions: [
-        {
-          symbol: 'S',
-          rhs: ['b'],
-        },
-        {
-          symbol: 'S',
-          rhs: ['a', 'A'],
-        },
-        {
-          symbol: 'S',
-          rhs: ['a', 'B'],
-        },
-        {
-          symbol: 'S',
-          rhs: ['a', 'C'],
-        },
-      ],
-      lexer: {
-        rules: [
-          {
-            regexp: /^a/,
-            token: 'a',
-          },
-          {
-            regexp: /^b/,
-            token: 'b',
-          },
-        ],
-      },
-    });
-
-    grammar.build();
-
-    expect(prettyJson(grammar.productions.map((p) => p + '')))
-      .toMatchInlineSnapshot(`
-      "[
-        '$START => S ',
-        'S => b ',
-        '_1(S) => C ',
-        '_1(S) => B ',
-        '_1(S) => A ',
-        'S => a _1(S) '
-      ]"
-    `);
-  });
-
-  it('find follows works', () => {
-    const grammar = getGrammar();
-
-    expect(grammar.findFollows('E')).toMatchInlineSnapshot(`
-      Object {
-        "$EOF": 1,
-        ")": 1,
-      }
-    `);
-
-    expect(grammar.findFollows('E_')).toMatchInlineSnapshot(`
-      Object {
-        "$EOF": 1,
-        ")": 1,
-      }
-    `);
-
-    expect(grammar.findFollows('T')).toMatchInlineSnapshot(`
-      Object {
-        "$EOF": 1,
-        ")": 1,
-        "+": 1,
-      }
-    `);
-
-    expect(grammar.findFollows('T_')).toMatchInlineSnapshot(`
-      Object {
-        "$EOF": 1,
-        ")": 1,
-        "+": 1,
-      }
-    `);
-
-    expect(grammar.findFollows('F')).toMatchInlineSnapshot(`
-      Object {
-        "$EOF": 1,
-        ")": 1,
-        "*": 1,
-        "+": 1,
-      }
-    `);
-  });
-
-  it('buildTable ok', () => {
-    const grammar = getGrammar();
-
-    const table = grammar.visualizeTable();
-
-    expect(table).toMatchInlineSnapshot(`
-      "-: $START ( => $START -> E
-      -: $START id => $START -> E
-      E ( => E -> T, E_
-      E id => E -> T, E_
-      E_ + => E_ -> +, T, E_
-      -: E_ $EOF => E_ -> EMPTY
-      -: E_ ) => E_ -> EMPTY
-      T ( => T -> F, T_
-      T id => T -> F, T_
-      T_ * => T_ -> *, F, T_
-      -: T_ + => T_ -> EMPTY
-      -: T_ $EOF => T_ -> EMPTY
-      -: T_ ) => T_ -> EMPTY
-      F ( => F -> (, E, )
-      F id => F -> id"
-    `);
-  });
   it('ast works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
     const ast = parser.parse('1+2+3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
-        'type': 'symbol',
         'symbol': 'exp',
+        'type': 'symbol',
         'children': [
           {
-            'type': 'symbol',
             'symbol': 'exp',
+            'type': 'symbol',
             'children': [
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '1',
                 'token': 'NUMBER',
                 'start': 0,
@@ -271,10 +159,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 1,
-                'lastColumn': 2,
-                'type': 'token'
+                'lastColumn': 2
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '+',
                 'token': '+',
                 'start': 1,
@@ -282,10 +172,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 2,
-                'lastColumn': 3,
-                'type': 'token'
+                'lastColumn': 3
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '2',
                 'token': 'NUMBER',
                 'start': 2,
@@ -293,8 +185,7 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 3,
-                'lastColumn': 4,
-                'type': 'token'
+                'lastColumn': 4
               }
             ],
             'start': 0,
@@ -305,6 +196,9 @@ describe('ll', () => {
             'lastColumn': 4
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '+',
             'token': '+',
             'start': 3,
@@ -312,10 +206,12 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 4,
-            'lastColumn': 5,
-            'type': 'token'
+            'lastColumn': 5
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '3',
             'token': 'NUMBER',
             'start': 4,
@@ -323,8 +219,7 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 5,
-            'lastColumn': 6,
-            'type': 'token'
+            'lastColumn': 6
           }
         ],
         'end': 5,
@@ -335,16 +230,19 @@ describe('ll', () => {
   });
 
   it('ast works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
     const ast = parser.parse('1+2*3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
-        'type': 'symbol',
         'symbol': 'exp',
+        'type': 'symbol',
         'children': [
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '1',
             'token': 'NUMBER',
             'start': 0,
@@ -352,10 +250,12 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 1,
-            'lastColumn': 2,
-            'type': 'token'
+            'lastColumn': 2
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '+',
             'token': '+',
             'start': 1,
@@ -363,14 +263,16 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 2,
-            'lastColumn': 3,
-            'type': 'token'
+            'lastColumn': 3
           },
           {
-            'type': 'symbol',
             'symbol': 'exp',
+            'type': 'symbol',
             'children': [
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '2',
                 'token': 'NUMBER',
                 'start': 2,
@@ -378,10 +280,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 3,
-                'lastColumn': 4,
-                'type': 'token'
+                'lastColumn': 4
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '*',
                 'token': '*',
                 'start': 3,
@@ -389,10 +293,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 4,
-                'lastColumn': 5,
-                'type': 'token'
+                'lastColumn': 5
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '3',
                 'token': 'NUMBER',
                 'start': 4,
@@ -400,8 +306,7 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 5,
-                'lastColumn': 6,
-                'type': 'token'
+                'lastColumn': 6
               }
             ],
             'start': 2,
@@ -420,20 +325,23 @@ describe('ll', () => {
   });
 
   it('ast works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
     const ast = parser.parse('1+2*4-5^2^3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
-        'type': 'symbol',
         'symbol': 'exp',
+        'type': 'symbol',
         'children': [
           {
-            'type': 'symbol',
             'symbol': 'exp',
+            'type': 'symbol',
             'children': [
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '1',
                 'token': 'NUMBER',
                 'start': 0,
@@ -441,10 +349,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 1,
-                'lastColumn': 2,
-                'type': 'token'
+                'lastColumn': 2
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '+',
                 'token': '+',
                 'start': 1,
@@ -452,14 +362,16 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 2,
-                'lastColumn': 3,
-                'type': 'token'
+                'lastColumn': 3
               },
               {
-                'type': 'symbol',
                 'symbol': 'exp',
+                'type': 'symbol',
                 'children': [
                   {
+                    'symbol': '',
+                    'label': '',
+                    'type': 'token',
                     'text': '2',
                     'token': 'NUMBER',
                     'start': 2,
@@ -467,10 +379,12 @@ describe('ll', () => {
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 3,
-                    'lastColumn': 4,
-                    'type': 'token'
+                    'lastColumn': 4
                   },
                   {
+                    'symbol': '',
+                    'label': '',
+                    'type': 'token',
                     'text': '*',
                     'token': '*',
                     'start': 3,
@@ -478,10 +392,12 @@ describe('ll', () => {
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 4,
-                    'lastColumn': 5,
-                    'type': 'token'
+                    'lastColumn': 5
                   },
                   {
+                    'symbol': '',
+                    'label': '',
+                    'type': 'token',
                     'text': '4',
                     'token': 'NUMBER',
                     'start': 4,
@@ -489,8 +405,7 @@ describe('ll', () => {
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 5,
-                    'lastColumn': 6,
-                    'type': 'token'
+                    'lastColumn': 6
                   }
                 ],
                 'start': 2,
@@ -506,6 +421,9 @@ describe('ll', () => {
             'firstColumn': 1
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '-',
             'token': '-',
             'start': 5,
@@ -513,14 +431,16 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 6,
-            'lastColumn': 7,
-            'type': 'token'
+            'lastColumn': 7
           },
           {
-            'type': 'symbol',
             'symbol': 'exp',
+            'type': 'symbol',
             'children': [
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '5',
                 'token': 'NUMBER',
                 'start': 6,
@@ -528,10 +448,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 7,
-                'lastColumn': 8,
-                'type': 'token'
+                'lastColumn': 8
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '^',
                 'token': '^',
                 'start': 7,
@@ -539,14 +461,16 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 8,
-                'lastColumn': 9,
-                'type': 'token'
+                'lastColumn': 9
               },
               {
-                'type': 'symbol',
                 'symbol': 'exp',
+                'type': 'symbol',
                 'children': [
                   {
+                    'symbol': '',
+                    'label': '',
+                    'type': 'token',
                     'text': '2',
                     'token': 'NUMBER',
                     'start': 8,
@@ -554,10 +478,12 @@ describe('ll', () => {
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 9,
-                    'lastColumn': 10,
-                    'type': 'token'
+                    'lastColumn': 10
                   },
                   {
+                    'symbol': '',
+                    'label': '',
+                    'type': 'token',
                     'text': '^',
                     'token': '^',
                     'start': 9,
@@ -565,10 +491,12 @@ describe('ll', () => {
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 10,
-                    'lastColumn': 11,
-                    'type': 'token'
+                    'lastColumn': 11
                   },
                   {
+                    'symbol': '',
+                    'label': '',
+                    'type': 'token',
                     'text': '3',
                     'token': 'NUMBER',
                     'start': 10,
@@ -576,8 +504,7 @@ describe('ll', () => {
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 11,
-                    'lastColumn': 12,
-                    'type': 'token'
+                    'lastColumn': 12
                   }
                 ],
                 'start': 8,
@@ -598,16 +525,19 @@ describe('ll', () => {
   });
 
   it('error detection works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
     const { ast, errorNode } = parser.parse('1+2*');
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
-        'type': 'symbol',
         'symbol': 'exp',
+        'type': 'symbol',
         'children': [
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '1',
             'token': 'NUMBER',
             'start': 0,
@@ -615,10 +545,12 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 1,
-            'lastColumn': 2,
-            'type': 'token'
+            'lastColumn': 2
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '+',
             'token': '+',
             'start': 1,
@@ -626,14 +558,16 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 2,
-            'lastColumn': 3,
-            'type': 'token'
+            'lastColumn': 3
           },
           {
-            'type': 'symbol',
             'symbol': 'exp',
+            'type': 'symbol',
             'children': [
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '2',
                 'token': 'NUMBER',
                 'start': 2,
@@ -641,10 +575,12 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 3,
-                'lastColumn': 4,
-                'type': 'token'
+                'lastColumn': 4
               },
               {
+                'symbol': '',
+                'label': '',
+                'type': 'token',
                 'text': '*',
                 'token': '*',
                 'start': 3,
@@ -652,19 +588,20 @@ describe('ll', () => {
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 4,
-                'lastColumn': 5,
-                'type': 'token'
+                'lastColumn': 5
               },
               {
+                'symbol': '',
+                'label': '',
                 'type': 'token',
                 'error': {
                   'recovery': false,
-                  'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-                  'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+                  'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+                  'tip': ''-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
                   'expected': [
-                    '(',
+                    '-',
                     'NUMBER',
-                    '-'
+                    '('
                   ],
                   'symbol': 'exp',
                   'lexer': {
@@ -706,15 +643,17 @@ describe('ll', () => {
     `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
       "{
+        'symbol': '',
+        'label': '',
         'type': 'token',
         'error': {
           'recovery': false,
-          'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-          'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+          'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+          'tip': ''-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
           'expected': [
-            '(',
+            '-',
             'NUMBER',
-            '-'
+            '('
           ],
           'symbol': 'exp',
           'lexer': {
@@ -741,7 +680,7 @@ describe('ll', () => {
   });
 
   it('onAction works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
     const astProcessor = new AstProcessor();
@@ -783,7 +722,7 @@ describe('ll', () => {
   });
 
   it('del error recovery works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     let errorCalled = 0;
     const parser = run(code);
@@ -801,12 +740,12 @@ describe('ll', () => {
           "errorMessage": "syntax error at line 1:
       1+/2
       --^
-      '(', 'NUMBER', '-' expected.
+      '-', 'NUMBER', '(' expected.
       current token: '/'.",
           "expected": Array [
-            "(",
-            "NUMBER",
             "-",
+            "NUMBER",
+            "(",
           ],
           "lexer": Object {
             "end": 3,
@@ -820,14 +759,16 @@ describe('ll', () => {
           },
           "recovery": true,
           "symbol": "exp",
-          "tip": "'(', 'NUMBER', '-' expected.
+          "tip": "'-', 'NUMBER', '(' expected.
       current token: '/'.",
         },
         "firstColumn": 3,
         "firstLine": 1,
+        "label": "",
         "lastColumn": 4,
         "lastLine": 1,
         "start": 2,
+        "symbol": "",
         "text": "/",
         "token": "/",
         "type": "token",
@@ -836,7 +777,7 @@ describe('ll', () => {
   });
 
   it('add error recovery works', () => {
-    var grammar = new LLGrammar(calGrammar());
+    var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     let errorCalled = 0;
     const parser = run(code);
@@ -858,10 +799,13 @@ describe('ll', () => {
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
-        'type': 'symbol',
         'symbol': 'exp',
+        'type': 'symbol',
         'children': [
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '1',
             'token': 'NUMBER',
             'start': 0,
@@ -869,10 +813,12 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 1,
-            'lastColumn': 2,
-            'type': 'token'
+            'lastColumn': 2
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '+',
             'token': '+',
             'start': 1,
@@ -880,10 +826,12 @@ describe('ll', () => {
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 2,
-            'lastColumn': 3,
-            'type': 'token'
+            'lastColumn': 3
           },
           {
+            'symbol': '',
+            'label': '',
+            'type': 'token',
             'text': '0',
             'token': 'NUMBER',
             'start': 2,
@@ -892,8 +840,7 @@ describe('ll', () => {
             'firstColumn': 3,
             'lastLine': 1,
             'lastColumn': 3,
-            'recovery': 'add',
-            'type': 'token'
+            'recovery': 'add'
           }
         ],
         'start': 0,
@@ -907,12 +854,12 @@ describe('ll', () => {
     expect(prettyJson(error)).toMatchInlineSnapshot(`
       "{
         'recovery': true,
-        'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-        'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+        'errorMessage': 'syntax error at line 1:\\\\n1+\\\\n--^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+        'tip': ''-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
         'expected': [
-          '(',
+          '-',
           'NUMBER',
-          '-'
+          '('
         ],
         'symbol': 'exp',
         'lexer': {
@@ -934,12 +881,12 @@ describe('ll', () => {
           "errorMessage": "syntax error at line 1:
       1+
       --^
-      '(', 'NUMBER', '-' expected.
+      '-', 'NUMBER', '(' expected.
       current token: '$EOF'.",
           "expected": Array [
-            "(",
-            "NUMBER",
             "-",
+            "NUMBER",
+            "(",
           ],
           "lexer": Object {
             "end": 2,
@@ -953,14 +900,16 @@ describe('ll', () => {
           },
           "recovery": true,
           "symbol": "exp",
-          "tip": "'(', 'NUMBER', '-' expected.
+          "tip": "'-', 'NUMBER', '(' expected.
       current token: '$EOF'.",
         },
         "firstColumn": 3,
         "firstLine": 1,
+        "label": "",
         "lastColumn": 3,
         "lastLine": 1,
         "start": 2,
+        "symbol": "",
         "text": "",
         "token": "$EOF",
         "type": "token",

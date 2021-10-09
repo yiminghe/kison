@@ -1,5 +1,6 @@
 import Benchmark from 'benchmark';
-import formula from '../src/parser';
+import formulaLL from '../src/parserLL';
+import formulaLLK from '../src/parserLLK';
 
 var code = 'sum(A1:B2, 10, "OK", namedRange) + avg(A1:A3,{1,2;3,4})';
 var codes = [];
@@ -13,8 +14,11 @@ code = codes.join(' + ');
 var suite = new Benchmark.Suite();
 
 suite
-  .add('formula#test', function () {
-    formula.parse(code);
+  .add('formula#LL(1)', function () {
+    formulaLL.parse(code);
+  })
+  .add('formula#LL(K)', function () {
+    formulaLLK.parse(code);
   })
   // add listeners
   .on('cycle', function (event) {

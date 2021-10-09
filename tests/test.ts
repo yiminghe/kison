@@ -3,15 +3,15 @@ import ll from './ll';
 import lr from './lr';
 import llk from './llk';
 
-const exp = '1+2\n3+4\n';
+const exp = '1+2*4\n2+3\n';
 
 (function () {
   if (1) {
     console.log('llk:' + '*'.repeat(10));
-
+    debugger;
     const ret = llk.parse(exp);
     if (ret.error) {
-      console.log(ret);
+      console.log(ret.error.errorMessage);
       throw new Error('llk error!');
     } else {
       console.log(JSON.stringify(ret.ast, null, 2));

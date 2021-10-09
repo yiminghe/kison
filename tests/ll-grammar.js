@@ -6,7 +6,7 @@ module.exports = () => ({
     },
     {
       symbol: 'statements',
-      rhs: ['statement*'],
+      rhs: ['statement+'],
     },
     {
       symbol: 'statement',

@@ -3,7 +3,7 @@ import ll from './ll';
 import lr from './lr';
 import llk from './llk';
 
-const exp = '1+3\n';
+const exp = '1+3+4\n1+3*4\n';
 
 (function () {
   let e;

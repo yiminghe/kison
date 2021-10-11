@@ -2,26 +2,27 @@
 
 exports[`regexp parser works for (?:a)+? 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Group',
+                  'type': 'symbol',
                   'children': [
                     {
+                      'type': 'token',
                       'text': '(',
                       'token': '(',
                       'start': 0,
@@ -29,10 +30,10 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 2,
-                      'type': 'token'
+                      'lastColumn': 2
                     },
                     {
+                      'type': 'token',
                       'text': '?:',
                       'token': '?:',
                       'start': 1,
@@ -40,30 +41,30 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 2,
-                      'lastColumn': 4,
-                      'type': 'token'
+                      'lastColumn': 4
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Expression',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'SubExpression',
+                          'type': 'symbol',
                           'children': [
                             {
-                              'type': 'symbol',
                               'symbol': 'ExpressionItem',
+                              'type': 'symbol',
                               'children': [
                                 {
-                                  'type': 'symbol',
                                   'symbol': 'Match',
+                                  'type': 'symbol',
                                   'children': [
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'MatchItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
+                                          'type': 'token',
                                           'text': 'a',
                                           'token': 'char',
                                           'start': 3,
@@ -71,8 +72,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 4,
-                                          'lastColumn': 5,
-                                          'type': 'token'
+                                          'lastColumn': 5
                                         }
                                       ],
                                       'start': 3,
@@ -91,6 +91,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                       ]
                     },
                     {
+                      'type': 'token',
                       'text': ')',
                       'token': ')',
                       'start': 4,
@@ -98,18 +99,18 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 5,
-                      'lastColumn': 6,
-                      'type': 'token'
+                      'lastColumn': 6
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Quantifier',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'QuantifierType',
+                          'type': 'symbol',
                           'children': [
                             {
+                              'type': 'token',
                               'text': '+',
                               'token': '+',
                               'start': 5,
@@ -117,8 +118,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 6,
-                              'lastColumn': 7,
-                              'type': 'token'
+                              'lastColumn': 7
                             }
                           ],
                           'start': 5,
@@ -129,6 +129,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                           'lastColumn': 7
                         },
                         {
+                          'type': 'token',
                           'text': '?',
                           'token': '?',
                           'start': 6,
@@ -136,8 +137,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 7,
-                          'lastColumn': 8,
-                          'type': 'token'
+                          'lastColumn': 8
                         }
                       ],
                       'start': 5,
@@ -164,26 +164,27 @@ exports[`regexp parser works for (?:a)+? 1`] = `
 
 exports[`regexp parser works for (?<a>c)b 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Group',
+                  'type': 'symbol',
                   'children': [
                     {
+                      'type': 'token',
                       'text': 'a',
                       'token': 'namedGroupPrefix',
                       'start': 0,
@@ -191,30 +192,30 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 6,
-                      'type': 'token'
+                      'lastColumn': 6
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Expression',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'SubExpression',
+                          'type': 'symbol',
                           'children': [
                             {
-                              'type': 'symbol',
                               'symbol': 'ExpressionItem',
+                              'type': 'symbol',
                               'children': [
                                 {
-                                  'type': 'symbol',
                                   'symbol': 'Match',
+                                  'type': 'symbol',
                                   'children': [
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'MatchItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
+                                          'type': 'token',
                                           'text': 'c',
                                           'token': 'char',
                                           'start': 5,
@@ -222,8 +223,7 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 6,
-                                          'lastColumn': 7,
-                                          'type': 'token'
+                                          'lastColumn': 7
                                         }
                                       ],
                                       'start': 5,
@@ -242,6 +242,7 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                       ]
                     },
                     {
+                      'type': 'token',
                       'text': ')',
                       'token': ')',
                       'start': 6,
@@ -249,8 +250,7 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 7,
-                      'lastColumn': 8,
-                      'type': 'token'
+                      'lastColumn': 8
                     }
                   ],
                   'start': 0,
@@ -263,18 +263,19 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
               ]
             },
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
+                          'type': 'token',
                           'text': 'b',
                           'token': 'char',
                           'start': 7,
@@ -282,8 +283,7 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 8,
-                          'lastColumn': 9,
-                          'type': 'token'
+                          'lastColumn': 9
                         }
                       ],
                       'start': 7,
@@ -307,26 +307,27 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
 
 exports[`regexp parser works for (a|b)*z 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Group',
+                  'type': 'symbol',
                   'children': [
                     {
+                      'type': 'token',
                       'text': '(',
                       'token': '(',
                       'start': 0,
@@ -334,30 +335,30 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 1,
-                      'lastColumn': 2,
-                      'type': 'token'
+                      'lastColumn': 2
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Expression',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'SubExpression',
+                          'type': 'symbol',
                           'children': [
                             {
-                              'type': 'symbol',
                               'symbol': 'ExpressionItem',
+                              'type': 'symbol',
                               'children': [
                                 {
-                                  'type': 'symbol',
                                   'symbol': 'Match',
+                                  'type': 'symbol',
                                   'children': [
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'MatchItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
+                                          'type': 'token',
                                           'text': 'a',
                                           'token': 'char',
                                           'start': 1,
@@ -365,8 +366,7 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 2,
-                                          'lastColumn': 3,
-                                          'type': 'token'
+                                          'lastColumn': 3
                                         }
                                       ],
                                       'start': 1,
@@ -383,6 +383,7 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                           ]
                         },
                         {
+                          'type': 'token',
                           'text': '|',
                           'token': '|',
                           'start': 2,
@@ -390,26 +391,26 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 3,
-                          'lastColumn': 4,
-                          'type': 'token'
+                          'lastColumn': 4
                         },
                         {
-                          'type': 'symbol',
                           'symbol': 'SubExpression',
+                          'type': 'symbol',
                           'children': [
                             {
-                              'type': 'symbol',
                               'symbol': 'ExpressionItem',
+                              'type': 'symbol',
                               'children': [
                                 {
-                                  'type': 'symbol',
                                   'symbol': 'Match',
+                                  'type': 'symbol',
                                   'children': [
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'MatchItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
+                                          'type': 'token',
                                           'text': 'b',
                                           'token': 'char',
                                           'start': 3,
@@ -417,8 +418,7 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                           'firstLine': 1,
                                           'lastLine': 1,
                                           'firstColumn': 4,
-                                          'lastColumn': 5,
-                                          'type': 'token'
+                                          'lastColumn': 5
                                         }
                                       ],
                                       'start': 3,
@@ -437,6 +437,7 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                       ]
                     },
                     {
+                      'type': 'token',
                       'text': ')',
                       'token': ')',
                       'start': 4,
@@ -444,18 +445,18 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 5,
-                      'lastColumn': 6,
-                      'type': 'token'
+                      'lastColumn': 6
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Quantifier',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'QuantifierType',
+                          'type': 'symbol',
                           'children': [
                             {
+                              'type': 'token',
                               'text': '*',
                               'token': '*',
                               'start': 5,
@@ -463,8 +464,7 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 6,
-                              'lastColumn': 7,
-                              'type': 'token'
+                              'lastColumn': 7
                             }
                           ],
                           'start': 5,
@@ -484,18 +484,19 @@ exports[`regexp parser works for (a|b)*z 1`] = `
               ]
             },
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
+                          'type': 'token',
                           'text': 'z',
                           'token': 'char',
                           'start': 6,
@@ -503,8 +504,7 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 7,
-                          'lastColumn': 8,
-                          'type': 'token'
+                          'lastColumn': 8
                         }
                       ],
                       'start': 6,
@@ -528,38 +528,39 @@ exports[`regexp parser works for (a|b)*z 1`] = `
 
 exports[`regexp parser works for [^a-z] 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'MatchCharacterClass',
+                          'type': 'symbol',
                           'children': [
                             {
-                              'type': 'symbol',
                               'symbol': 'CharacterGroup',
+                              'type': 'symbol',
                               'children': [
                                 {
+                                  'type': 'token',
                                   'text': '[',
                                   'token': '[',
                                   'start': 0,
@@ -567,10 +568,10 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 1,
-                                  'lastColumn': 2,
-                                  'type': 'token'
+                                  'lastColumn': 2
                                 },
                                 {
+                                  'type': 'token',
                                   'text': '^',
                                   'token': '^',
                                   'start': 1,
@@ -578,22 +579,22 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 2,
-                                  'lastColumn': 3,
-                                  'type': 'token'
+                                  'lastColumn': 3
                                 },
                                 {
-                                  'type': 'symbol',
                                   'symbol': 'CharacterGroupInner',
+                                  'type': 'symbol',
                                   'children': [
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'CharacterGroupItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
-                                          'type': 'symbol',
                                           'symbol': 'CharacterRange',
+                                          'type': 'symbol',
                                           'children': [
                                             {
+                                              'type': 'token',
                                               'text': 'a',
                                               'token': 'char',
                                               'start': 2,
@@ -601,10 +602,10 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 3,
-                                              'lastColumn': 4,
-                                              'type': 'token'
+                                              'lastColumn': 4
                                             },
                                             {
+                                              'type': 'token',
                                               'text': '-',
                                               'token': '-',
                                               'start': 3,
@@ -612,10 +613,10 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 4,
-                                              'lastColumn': 5,
-                                              'type': 'token'
+                                              'lastColumn': 5
                                             },
                                             {
+                                              'type': 'token',
                                               'text': 'z',
                                               'token': 'char',
                                               'start': 4,
@@ -623,8 +624,7 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 5,
-                                              'lastColumn': 6,
-                                              'type': 'token'
+                                              'lastColumn': 6
                                             }
                                           ],
                                           'start': 2,
@@ -639,6 +639,7 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                   ]
                                 },
                                 {
+                                  'type': 'token',
                                   'text': ']',
                                   'token': ']',
                                   'start': 5,
@@ -646,8 +647,7 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 6,
-                                  'lastColumn': 7,
-                                  'type': 'token'
+                                  'lastColumn': 7
                                 }
                               ],
                               'start': 0,
@@ -675,38 +675,39 @@ exports[`regexp parser works for [^a-z] 1`] = `
 
 exports[`regexp parser works for [a-z] 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'MatchCharacterClass',
+                          'type': 'symbol',
                           'children': [
                             {
-                              'type': 'symbol',
                               'symbol': 'CharacterGroup',
+                              'type': 'symbol',
                               'children': [
                                 {
+                                  'type': 'token',
                                   'text': '[',
                                   'token': '[',
                                   'start': 0,
@@ -714,22 +715,22 @@ exports[`regexp parser works for [a-z] 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 1,
-                                  'lastColumn': 2,
-                                  'type': 'token'
+                                  'lastColumn': 2
                                 },
                                 {
-                                  'type': 'symbol',
                                   'symbol': 'CharacterGroupInner',
+                                  'type': 'symbol',
                                   'children': [
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'CharacterGroupItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
-                                          'type': 'symbol',
                                           'symbol': 'CharacterRange',
+                                          'type': 'symbol',
                                           'children': [
                                             {
+                                              'type': 'token',
                                               'text': 'a',
                                               'token': 'char',
                                               'start': 1,
@@ -737,10 +738,10 @@ exports[`regexp parser works for [a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 2,
-                                              'lastColumn': 3,
-                                              'type': 'token'
+                                              'lastColumn': 3
                                             },
                                             {
+                                              'type': 'token',
                                               'text': '-',
                                               'token': '-',
                                               'start': 2,
@@ -748,10 +749,10 @@ exports[`regexp parser works for [a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 3,
-                                              'lastColumn': 4,
-                                              'type': 'token'
+                                              'lastColumn': 4
                                             },
                                             {
+                                              'type': 'token',
                                               'text': 'z',
                                               'token': 'char',
                                               'start': 3,
@@ -759,8 +760,7 @@ exports[`regexp parser works for [a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 4,
-                                              'lastColumn': 5,
-                                              'type': 'token'
+                                              'lastColumn': 5
                                             }
                                           ],
                                           'start': 1,
@@ -773,14 +773,15 @@ exports[`regexp parser works for [a-z] 1`] = `
                                       ]
                                     },
                                     {
-                                      'type': 'symbol',
                                       'symbol': 'CharacterGroupItem',
+                                      'type': 'symbol',
                                       'children': [
                                         {
-                                          'type': 'symbol',
                                           'symbol': 'CharacterRange',
+                                          'type': 'symbol',
                                           'children': [
                                             {
+                                              'type': 'token',
                                               'text': '\\\\b',
                                               'token': 'char',
                                               'start': 4,
@@ -788,8 +789,7 @@ exports[`regexp parser works for [a-z] 1`] = `
                                               'firstLine': 1,
                                               'lastLine': 1,
                                               'firstColumn': 5,
-                                              'lastColumn': 6,
-                                              'type': 'token'
+                                              'lastColumn': 6
                                             }
                                           ],
                                           'start': 4,
@@ -804,6 +804,7 @@ exports[`regexp parser works for [a-z] 1`] = `
                                   ]
                                 },
                                 {
+                                  'type': 'token',
                                   'text': ']',
                                   'token': ']',
                                   'start': 5,
@@ -811,8 +812,7 @@ exports[`regexp parser works for [a-z] 1`] = `
                                   'firstLine': 1,
                                   'lastLine': 1,
                                   'firstColumn': 6,
-                                  'lastColumn': 7,
-                                  'type': 'token'
+                                  'lastColumn': 7
                                 }
                               ],
                               'start': 0,
@@ -840,22 +840,23 @@ exports[`regexp parser works for [a-z] 1`] = `
 
 exports[`regexp parser works for \\12\\b 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
+                  'type': 'token',
                   'text': '\\\\\\\\12',
                   'token': 'backreference',
                   'start': 0,
@@ -863,8 +864,7 @@ exports[`regexp parser works for \\12\\b 1`] = `
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 1,
-                  'lastColumn': 4,
-                  'type': 'token'
+                  'lastColumn': 4
                 }
               ],
               'start': 0,
@@ -875,14 +875,15 @@ exports[`regexp parser works for \\12\\b 1`] = `
               'lastColumn': 4
             },
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Anchor',
+                  'type': 'symbol',
                   'children': [
                     {
+                      'type': 'token',
                       'text': '\\\\\\\\b',
                       'token': 'anchorWordBoundary',
                       'start': 3,
@@ -890,8 +891,7 @@ exports[`regexp parser works for \\12\\b 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 4,
-                      'lastColumn': 6,
-                      'type': 'token'
+                      'lastColumn': 6
                     }
                   ],
                   'start': 3,
@@ -916,10 +916,11 @@ exports[`regexp parser works for \\12\\b 1`] = `
 
 exports[`regexp parser works for ^a+z$ 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
+      'type': 'token',
       'text': '^',
       'token': '^',
       'start': 0,
@@ -927,30 +928,30 @@ exports[`regexp parser works for ^a+z$ 1`] = `
       'firstLine': 1,
       'lastLine': 1,
       'firstColumn': 1,
-      'lastColumn': 2,
-      'type': 'token'
+      'lastColumn': 2
     },
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
+                          'type': 'token',
                           'text': 'a',
                           'token': 'char',
                           'start': 1,
@@ -958,8 +959,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 2,
-                          'lastColumn': 3,
-                          'type': 'token'
+                          'lastColumn': 3
                         }
                       ],
                       'start': 1,
@@ -970,14 +970,15 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                       'lastColumn': 3
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Quantifier',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'QuantifierType',
+                          'type': 'symbol',
                           'children': [
                             {
+                              'type': 'token',
                               'text': '+',
                               'token': '+',
                               'start': 2,
@@ -985,8 +986,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 3,
-                              'lastColumn': 4,
-                              'type': 'token'
+                              'lastColumn': 4
                             }
                           ],
                           'start': 2,
@@ -1006,18 +1006,19 @@ exports[`regexp parser works for ^a+z$ 1`] = `
               ]
             },
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
+                          'type': 'token',
                           'text': 'z',
                           'token': 'char',
                           'start': 3,
@@ -1025,8 +1026,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 4,
-                          'lastColumn': 5,
-                          'type': 'token'
+                          'lastColumn': 5
                         }
                       ],
                       'start': 3,
@@ -1041,14 +1041,15 @@ exports[`regexp parser works for ^a+z$ 1`] = `
               ]
             },
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Anchor',
+                  'type': 'symbol',
                   'children': [
                     {
+                      'type': 'token',
                       'text': '$',
                       'token': '$',
                       'start': 4,
@@ -1056,8 +1057,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                       'firstLine': 1,
                       'lastLine': 1,
                       'firstColumn': 5,
-                      'lastColumn': 6,
-                      'type': 'token'
+                      'lastColumn': 6
                     }
                   ],
                   'start': 4,
@@ -1082,30 +1082,31 @@ exports[`regexp parser works for ^a+z$ 1`] = `
 
 exports[`regexp parser works for a{1,2} 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
+                          'type': 'token',
                           'text': 'a',
                           'token': 'char',
                           'start': 0,
@@ -1113,8 +1114,7 @@ exports[`regexp parser works for a{1,2} 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 1,
-                          'lastColumn': 2,
-                          'type': 'token'
+                          'lastColumn': 2
                         }
                       ],
                       'start': 0,
@@ -1125,14 +1125,15 @@ exports[`regexp parser works for a{1,2} 1`] = `
                       'lastColumn': 2
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Quantifier',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'QuantifierType',
+                          'type': 'symbol',
                           'children': [
                             {
+                              'type': 'token',
                               'text': '{',
                               'token': '{',
                               'start': 1,
@@ -1140,10 +1141,10 @@ exports[`regexp parser works for a{1,2} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 2,
-                              'lastColumn': 3,
-                              'type': 'token'
+                              'lastColumn': 3
                             },
                             {
+                              'type': 'token',
                               'text': '1',
                               'token': 'int',
                               'start': 2,
@@ -1151,10 +1152,10 @@ exports[`regexp parser works for a{1,2} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 3,
-                              'lastColumn': 4,
-                              'type': 'token'
+                              'lastColumn': 4
                             },
                             {
+                              'type': 'token',
                               'text': ',',
                               'token': ',',
                               'start': 3,
@@ -1162,10 +1163,10 @@ exports[`regexp parser works for a{1,2} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 4,
-                              'lastColumn': 5,
-                              'type': 'token'
+                              'lastColumn': 5
                             },
                             {
+                              'type': 'token',
                               'text': '2',
                               'token': 'int',
                               'start': 4,
@@ -1173,10 +1174,10 @@ exports[`regexp parser works for a{1,2} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 5,
-                              'lastColumn': 6,
-                              'type': 'token'
+                              'lastColumn': 6
                             },
                             {
+                              'type': 'token',
                               'text': '}',
                               'token': '}',
                               'start': 5,
@@ -1184,8 +1185,7 @@ exports[`regexp parser works for a{1,2} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 6,
-                              'lastColumn': 7,
-                              'type': 'token'
+                              'lastColumn': 7
                             }
                           ],
                           'start': 1,
@@ -1214,30 +1214,31 @@ exports[`regexp parser works for a{1,2} 1`] = `
 
 exports[`regexp parser works for a{1} 1`] = `
 "{
-  'type': 'symbol',
   'symbol': 'Regexp',
+  'type': 'symbol',
   'children': [
     {
-      'type': 'symbol',
       'symbol': 'Expression',
+      'type': 'symbol',
       'children': [
         {
-          'type': 'symbol',
           'symbol': 'SubExpression',
+          'type': 'symbol',
           'children': [
             {
-              'type': 'symbol',
               'symbol': 'ExpressionItem',
+              'type': 'symbol',
               'children': [
                 {
-                  'type': 'symbol',
                   'symbol': 'Match',
+                  'type': 'symbol',
                   'children': [
                     {
-                      'type': 'symbol',
                       'symbol': 'MatchItem',
+                      'type': 'symbol',
                       'children': [
                         {
+                          'type': 'token',
                           'text': 'a',
                           'token': 'char',
                           'start': 0,
@@ -1245,8 +1246,7 @@ exports[`regexp parser works for a{1} 1`] = `
                           'firstLine': 1,
                           'lastLine': 1,
                           'firstColumn': 1,
-                          'lastColumn': 2,
-                          'type': 'token'
+                          'lastColumn': 2
                         }
                       ],
                       'start': 0,
@@ -1257,14 +1257,15 @@ exports[`regexp parser works for a{1} 1`] = `
                       'lastColumn': 2
                     },
                     {
-                      'type': 'symbol',
                       'symbol': 'Quantifier',
+                      'type': 'symbol',
                       'children': [
                         {
-                          'type': 'symbol',
                           'symbol': 'QuantifierType',
+                          'type': 'symbol',
                           'children': [
                             {
+                              'type': 'token',
                               'text': '{',
                               'token': '{',
                               'start': 1,
@@ -1272,10 +1273,10 @@ exports[`regexp parser works for a{1} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 2,
-                              'lastColumn': 3,
-                              'type': 'token'
+                              'lastColumn': 3
                             },
                             {
+                              'type': 'token',
                               'text': '1',
                               'token': 'int',
                               'start': 2,
@@ -1283,10 +1284,10 @@ exports[`regexp parser works for a{1} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 3,
-                              'lastColumn': 4,
-                              'type': 'token'
+                              'lastColumn': 4
                             },
                             {
+                              'type': 'token',
                               'text': '}',
                               'token': '}',
                               'start': 3,
@@ -1294,8 +1295,7 @@ exports[`regexp parser works for a{1} 1`] = `
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 4,
-                              'lastColumn': 5,
-                              'type': 'token'
+                              'lastColumn': 5
                             }
                           ],
                           'start': 1,

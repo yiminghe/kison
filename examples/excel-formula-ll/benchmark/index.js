@@ -3,6 +3,7 @@ import formulaLL from '../src/parserLL';
 import formulaLLK from '../src/parserLLK';
 
 var code = 'sum(A1:B2, 10, "OK", namedRange) + avg(A1:A3,{1,2;3,4})';
+var oneCode = code;
 var codes = [];
 
 for (var i = 0; i < 1000; i++) {
@@ -10,6 +11,8 @@ for (var i = 0; i < 1000; i++) {
 }
 
 code = codes.join(' + ');
+
+console.log('code: `' + oneCode + "` (100 times)");
 
 var suite = new Benchmark.Suite();
 

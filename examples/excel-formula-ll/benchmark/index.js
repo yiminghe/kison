@@ -12,7 +12,7 @@ for (var i = 0; i < 1000; i++) {
 
 code = codes.join(' + ');
 
-console.log('code: `' + oneCode + "` (100 times)");
+console.log('code: `' + oneCode + '` (100 times)');
 
 var suite = new Benchmark.Suite();
 

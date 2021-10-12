@@ -5,7 +5,7 @@
  * @author yiminghe@gmail.com
  */
 
-var Utils = require('../lib/utils'),
+var Utils = require('modulex-util'),
   KISON = require('../lib/'),
   fs = require('fs'),
   path = require('path'),

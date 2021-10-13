@@ -71,32 +71,32 @@
 </head>
 
 <body>
-    <h1>excel formula engine</h1>
+    <h1>vba js runtime</h1>
 
     <h2>grammar</h2>
 
     <div>
-        excel formula grammar: <a href="./grammar/formula-grammar.js">definition</a>, <a
-        href="./grammar/formula.xhtml">diagram</a>, <a
-        href="./grammar/formula.bnf">BNF</a>
+        vba grammar: <a href="./grammar/es/vba-grammar.js">definition</a>, <a
+            href="./grammar/vba.xhtml">diagram</a>, <a
+            href="./grammar/vba.bnf">BNF</a>
     </div>
 
     <h3>build</h2>
         <div>
             <pre>
-    npx kison -m ll --es -g formula-grammar.js
+    npx kison -m ll --es -g vba-grammar.js
 </pre>
         </div>
 
         <h3>install prebuild</h2>
             <div>
                 <pre>
-        npm install @yiminghe/excel-formula
+        npm install vba
     </pre>
             </div>
 
             <div>
-                <a href="./README.md">excel formula readme</a>
+                <a href="./README.md">vba readme</a>
             </div>
             <br />
             <hr />
@@ -104,9 +104,7 @@
             <h2>demo</h2>
             <div>
                 &nbsp; <button id='parse'>parse</button>
-                &nbsp; <button id='fix'>error recovery</button>
-                &nbsp; <button id='evaluate'>evaluate to console</button>
-                &nbsp; <button id='evaluateData'>prepare evaluate test data</button>
+                &nbsp; <button id='evaluate'>evaluate sub name:</button> <input id='sub'/>
                 <br />
                 <br />
             </div>
@@ -124,17 +122,6 @@
                         <div class="rect5"></div>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <h3>cell data:</h3>
-                <textarea id='cells'>
-            A1: 2
-            A2: 3
-            B1: 4
-            B2: 5
-            c1: a
-        </textarea>
             </div>
 
             <script>

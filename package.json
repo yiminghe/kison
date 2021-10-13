@@ -13,6 +13,7 @@
     "url": "git@github.com:yiminghe/kison.git"
   },
   "devDependencies": {
+    "@babel/cli":"7.x",
     "@babel/core": "^7.14.3",
     "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",

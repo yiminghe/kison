@@ -1,0 +1,47 @@
+{
+  "name": "vba",
+  "version": "0.0.1",
+  "description": "vba js runtime",
+  "author": "yiminghe <yiminghe@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yiminghe/kison.git"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "pika-plugin-ts-types",
+        {
+          "args": [
+            "--rootDir",
+            "src"
+          ],
+          "tsconfig":"tsconfig.build.json"
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "format": "cjs"
+        }
+      ],
+      [
+        "pika-plugin-build-web-babel",
+        {
+          "mjs": true
+        }
+      ],
+      [
+        "pika-plugin-clean-dist-src"
+      ]
+    ]
+  },
+  "scripts": {
+    "test": "jest",
+    "test-debug": "jest -i",
+    "check":"tsc --noEmit",
+    "build": "npm run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
+    "gen": "sh scripts/gen.sh",
+    "pub": "sh scripts/pub.sh"
+  }
+}

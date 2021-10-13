@@ -2,11 +2,23 @@ import Grammar from '../lib/Grammar';
 import { prettyJson } from './utils';
 
 describe('common', () => {
-  it.only('expand group and alteration', () => {
-    const startGroupMark = `'('`;
-    const endGroupMark = `')'`;
-    const alterMark = `'|'`;
-    debugger;
+  const groupStartMark = `'('`;
+  const groupEndMark = `')'`;
+  const alternationMark = `'|'`;
+  const groupEndZeroOrMoreMark = groupEndMark + '*';
+  const groupEndOneOrMoreMark = groupEndMark + '+';
+  const groupEndOptionalMark = groupEndMark + '?';
+
+  const n = {
+    groupStartMark,
+    groupEndMark,
+    groupEndOneOrMoreMark,
+    groupEndOptionalMark,
+    groupEndZeroOrMoreMark,
+    alternationMark,
+  };
+
+  it('expand group and alteration', () => {
     const grammar = new Grammar({
       productions: [
         {
@@ -14,22 +26,22 @@ describe('common', () => {
           rhs: [
             '1',
             '2',
-            alterMark,
+            alternationMark,
             '3',
             '4',
-            startGroupMark,
+            groupStartMark,
             '5',
             '6',
-            startGroupMark,
+            groupStartMark,
             '7',
             '8',
-            alterMark,
+            alternationMark,
             '9',
-            endGroupMark,
+            groupEndMark,
             '10',
-            alterMark,
+            alternationMark,
             '11',
-            `${endGroupMark}*`,
+            `${groupEndMark}*`,
           ],
         },
       ],
@@ -40,128 +52,177 @@ describe('common', () => {
 
     grammar.expandProductionAlternation();
 
-    expect(prettyJson(grammar.productions)).toMatchInlineSnapshot(`
-      "[
-        {
-          'symbol': '$START',
-          'rhs': [
-            'start'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '1',
-            '2'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '3',
-            '4',
-            ''('',
-            '5',
-            '6',
-            ''('',
-            '7',
-            '8',
-            '')'',
-            '10',
-            '')'*'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '3',
-            '4',
-            ''('',
-            '5',
-            '6',
-            ''('',
-            '9',
-            '')'',
-            '10',
-            '')'*'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '3',
-            '4',
-            ''('',
-            '11',
-            '')'*'
-          ]
-        }
-      ]"
-    `);
+    expect(prettyJson(grammar.productions.slice(1))).toMatchInlineSnapshot(`
+"[
+  {
+    'symbol': 'start',
+    'rhs': [
+      '1',
+      '2'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      '3',
+      '4',
+      ''('',
+      '5',
+      '6',
+      ''('',
+      '7',
+      '8',
+      '')'',
+      '10',
+      '')'*'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      '3',
+      '4',
+      ''('',
+      '5',
+      '6',
+      ''('',
+      '9',
+      '')'',
+      '10',
+      '')'*'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      '3',
+      '4',
+      ''('',
+      '11',
+      '')'*'
+    ]
+  }
+]"
+`);
 
     grammar.expandProductions();
 
-    expect(prettyJson(grammar.productions)).toMatchInlineSnapshot(`
-      "[
+    expect(prettyJson(grammar.productions.slice(1))).toMatchInlineSnapshot(`
+"[
+  {
+    'symbol': 'start',
+    'rhs': [
+      '1',
+      '2'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      '3',
+      '4',
+      'start_3_group_2*'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      '3',
+      '4',
+      'start_4_group_2*'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      '3',
+      '4',
+      '11*'
+    ]
+  },
+  {
+    'symbol': 'start_3_group_2',
+    'rhs': [
+      '5',
+      '6',
+      '7',
+      '8',
+      '10'
+    ],
+    'skipAstNode': true
+  },
+  {
+    'symbol': 'start_4_group_2',
+    'rhs': [
+      '5',
+      '6',
+      '9',
+      '10'
+    ],
+    'skipAstNode': true
+  }
+]"
+`);
+  });
+
+  it('expand group and alteration-2', () => {
+    const grammar = new Grammar({
+      productions: [
         {
-          'symbol': '$START',
-          'rhs': [
-            'start'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '1',
-            '2'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '3',
-            '4',
-            'start_3_group_2*'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '3',
-            '4',
-            'start_4_group_2*'
-          ]
-        },
-        {
-          'symbol': 'start',
-          'rhs': [
-            '3',
-            '4',
-            '11*'
-          ]
-        },
-        {
-          'symbol': 'start_3_group_2',
-          'rhs': [
-            '5',
-            '6',
-            '7',
-            '8',
-            '10'
+          symbol: 'start',
+          rhs: [
+            n.groupStartMark,
+            '1?',
+            n.groupStartMark,
+            ',',
+            n.alternationMark,
+            ';',
+            n.groupEndMark,
+            n.groupEndZeroOrMoreMark,
+            // '1',
+            // n.groupStartMark,
+            // n.groupStartMark,
+            // ',',
+            // n.alternationMark,
+            // ';',
+            // n.groupEndMark,
+            // '1?',
+            // n.groupEndZeroOrMoreMark,
           ],
-          'skipAstNode': true
         },
-        {
-          'symbol': 'start_4_group_2',
-          'rhs': [
-            '5',
-            '6',
-            '9',
-            '10'
-          ],
-          'skipAstNode': true
-        }
-      ]"
-    `);
+      ],
+      lexer: {
+        rules: [],
+      },
+    });
+
+    grammar.expandProductionAlternation();
+
+    expect(prettyJson(grammar.productions.slice(1))).toMatchInlineSnapshot(`
+"[
+  {
+    'symbol': 'start',
+    'rhs': [
+      ''('',
+      '1?',
+      ''('',
+      ',',
+      '')'',
+      '')'*'
+    ]
+  },
+  {
+    'symbol': 'start',
+    'rhs': [
+      ''('',
+      '1?',
+      ''('',
+      ';',
+      '')'',
+      '')'*'
+    ]
+  }
+]"
+`);
   });
 });

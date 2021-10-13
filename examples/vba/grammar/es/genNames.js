@@ -229,13 +229,42 @@ const symbols = [
   'type_',
   'baseType',
   'fieldLength',
+  'subscripts',
+  'subscript_',
+  'literal',
+  'implicitCallStmt_InBlock',
+  'iCS_B_ProcedureCall',
+  'argsCall',
+  'argCall',
+  'dictionaryCallStmt',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  'implicitCallStmt_InBlock',
+  '',
 ];
 
-const names = keywords.concat(lexer).concat(symbols);
+const names = Array.from(new Set(keywords.concat(lexer).concat(symbols)));
 
 const code = [];
 
 for (const k of names) {
+  if (!k) {
+    continue;
+  }
   code.push(`export const ${k} = '${k}';`);
   code.push(`export const ${k}Optional = '${k}?';`);
   code.push(`export const ${k}ZeroOrMore = '${k}*';`);
@@ -249,6 +278,6 @@ code.push(`export const groupEndZeroOrMoreMark = "')'*";`);
 code.push(`export const groupEndOneOrMoreMark = "')'+";`);
 code.push(`export const alternationMark = "'|'";`);
 
-code.push(`export const keywors=${JSON.stringify(keywords)};`);
+code.push(`export const KEYWORDS=${JSON.stringify(keywords)};`);
 
 require('fs').writeFileSync(__dirname + '/names.js', code.join('\n'));

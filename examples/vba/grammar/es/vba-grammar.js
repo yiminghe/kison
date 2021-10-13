@@ -21,10 +21,11 @@ function generateLexerRulesByMap(map) {
   return rules;
 }
 
-function generateLexerRulesByArray(arr) {
+function generateLexerRulesByKeywords(arr) {
   const rules = [];
   for (const token of arr) {
-    const regexp = new RegExp(RegexEscape(token), 'i');
+    const reg = token.replace(/^macro_/i, '#').replace(/_/g, ' ');
+    const regexp = new RegExp(RegexEscape(reg), 'i');
     rules.push({
       token,
       regexp,
@@ -67,7 +68,7 @@ module.exports = {
       rhs: [
         n.visibilityOptional,
         n.STATICOptional,
-        n.SUBOptional,
+        n.SUB,
         n.IDENTIFIER,
         n.argListOptional,
         n.blockOptional,
@@ -80,7 +81,64 @@ module.exports = {
     },
     {
       symbol: n.blockStmt,
-      rhs: [n.variableStmt],
+      rhs: [n.variableStmt, n.alternationMark, n.implicitCallStmt_InBlock],
+    },
+    {
+      symbol: n.implicitCallStmt_InBlock,
+      rhs: [n.iCS_B_ProcedureCall],
+    },
+    {
+      symbol: n.iCS_B_ProcedureCall,
+      rhs: [
+        n.IDENTIFIER,
+        n.argsCallOptional,
+        n.groupStartMark,
+        n.LPAREN,
+        n.subscripts,
+        n.RPAREN,
+        n.groupEndZeroOrMoreMark,
+      ],
+    },
+    {
+      symbol: n.argsCall,
+      rhs: [
+        n.groupStartMark,
+        n.argCallOptional,
+        n.groupStartMark,
+        ',',
+        n.alternationMark,
+        ';',
+        n.groupEndMark,
+        n.groupEndZeroOrMoreMark,
+        n.argCall,
+        n.groupStartMark,
+        n.groupStartMark,
+        ',',
+        n.alternationMark,
+        ';',
+        n.groupEndMark,
+        n.argCallOptional,
+        n.groupEndZeroOrMoreMark,
+      ],
+    },
+    {
+      symbol: n.argCall,
+      rhs: [
+        n.LPARENOptional,
+        n.groupStartMark,
+        n.BYREF,
+        n.alternationMark,
+        n.BYVAL,
+        n.alternationMark,
+        n.PARAMARRAY,
+        n.groupEndOptionalMark,
+        n.RPARENOptional,
+        n.valueStmt,
+      ],
+    },
+    {
+      symbol: n.dictionaryCallStmt,
+      rhs: ['!', n.IDENTIFIER, n.typeHintOptional],
     },
     {
       symbol: n.variableStmt,
@@ -107,16 +165,62 @@ module.exports = {
     },
 
     {
+      symbol: n.variableSubStmt,
+      rhs: [
+        n.IDENTIFIER,
+        n.groupStartMark,
+        n.LPAREN,
+        n.subscriptsOptional,
+        n.RPAREN,
+        n.groupEndOptionalMark,
+        n.typeHintOptional,
+        n.asTypeClauseOptional,
+      ],
+    },
+
+    {
+      symbol: n.subscripts,
+      rhs: [
+        n.subscript_,
+        n.groupStartMark,
+        ',',
+        n.subscript_,
+        n.groupEndZeroOrMoreMark,
+      ],
+    },
+
+    {
+      symbol: n.subscript_,
+      rhs: [
+        n.groupStartMark,
+        n.valueStmt,
+        n.TO,
+        n.groupEndOptionalMark,
+        n.valueStmt,
+      ],
+    },
+
+    {
       symbol: n.argList,
       rhs: [
         n.LPAREN,
+        n.groupStartMark,
         n.arg,
         n.groupStartMark,
         ',',
         n.arg,
         n.groupEndZeroOrMoreMark,
+        n.groupEndOptionalMark,
         n.RPAREN,
       ],
+    },
+    {
+      symbol: n.valueStmt,
+      rhs: [n.literal],
+    },
+    {
+      symbol: n.literal,
+      rhs: [n.INTEGERLITERAL, n.alternationMark, n.STRINGLITERAL],
     },
     {
       symbol: n.typeHint,
@@ -207,7 +311,7 @@ module.exports = {
   ],
   lexer: {
     rules: [
-      ...generateLexerRulesByArray(n.keywords),
+      ...generateLexerRulesByKeywords(n.KEYWORDS),
       ...generateLexerRulesByMap({
         AMPERSAND: '&',
         ASSIGN: ':=',
@@ -243,11 +347,11 @@ module.exports = {
       },
       {
         token: 'INTEGERLITERAL',
-        regexp: /(+|-)?[0-9]+/,
+        regexp: /(\+|-)?[0-9]+/,
       },
       {
         token: 'IDENTIFIER',
-        regepx: /[^\]\(\)\r\n\t.,'"\|!@#$%^&*\\-+:=;]+|\[[^!\]\r\n]+\]/,
+        regexp: /\w[\w\d]*/,
       },
     ],
   },

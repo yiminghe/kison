@@ -1,6 +1,5 @@
 # kison
 
-[![kison For Nodejs](https://nodei.co/npm/kison.png)](https://npmjs.org/package/kison)
 [![NPM version](https://badge.fury.io/js/kison.png)](http://badge.fury.io/js/kison)
 [![NPM downloads](http://img.shields.io/npm/dm/kison.svg)](https://npmjs.org/package/kison)
 [![Build Status](https://travis-ci.com/yiminghe/kison.svg?branch=master)](https://travis-ci.com/yiminghe/kison)
@@ -15,23 +14,21 @@ A LALR(1)/LL(1)/LL(K) parser generator for javascript originated from [KISSY XTe
 
 [https://yiminghe.me/kison/examples/](https://yiminghe.me/kison/examples/)
 
+- [excel-formula](https://yiminghe.me/kison/examples/excel-formula-ll/): excel formula engine
 
-### excel-formula
-
-[excel-formula](https://yiminghe.me/kison/examples/excel-formula-ll/):
-
-[![excel-formula](https://nodei.co/npm/@yiminghe/excel-formula.png)](https://npmjs.org/package/%40yiminghe%2Fexcel-formula)
 [![npm version](https://badge.fury.io/js/%40yiminghe%2Fexcel-formula.svg)](https://badge.fury.io/js/%40yiminghe%2Fexcel-formula)
 [![NPM downloads](https://img.shields.io/npm/dm/@yiminghe/excel-formula.svg)](https://npmjs.org/package/%40yiminghe%2Fexcel-formula)
 
 
-### async regexp in javascript
+- [regexp](https://yiminghe.me/kison/examples/regexp-ll/): [match-stream-data-using-regular-expression](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
 
-[regexp](https://yiminghe.me/kison/examples/regexp-ll/): [match-stream-data-using-regular-expression](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
-
-[![regexp](https://nodei.co/npm/@yiminghe/regexp.png)](https://npmjs.org/package/%40yiminghe%2Fregexp)
 [![npm version](https://badge.fury.io/js/%40yiminghe%2Fregexp.svg)](https://badge.fury.io/js/%40yiminghe%2Fregexp)
 [![NPM downloads](https://img.shields.io/npm/dm/@yiminghe/regexp.svg)](https://npmjs.org/package/%40yiminghe%2Fregexp)
+
+- [vba](https://yiminghe.me/kison/examples/vba/): vba js runtime
+
+[![npm version](https://badge.fury.io/js/vba.svg)](https://badge.fury.io/js/vba)
+[![NPM downloads](https://img.shields.io/npm/dm/vba.svg)](https://npmjs.org/package/vba)
 
 ## run command
 

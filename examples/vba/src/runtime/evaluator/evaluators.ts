@@ -1,13 +1,7 @@
-import type { AstNode } from '../parser';
+import type { AstNode } from '../../parser';
+import type { Runtime } from '../runtime';
 
-import type { All_Type, Context } from './types';
-
-export function evaluate(
-  ast: AstNode,
-  context: Context = {
-    getCellValues: () => [],
-  },
-): All_Type {
+export function evaluate(ast: AstNode, runtime: Runtime): any {
   let symbol = '',
     token = '',
     label = '';
@@ -28,7 +22,7 @@ export function evaluate(
   const fn = evaluators[m2] || evaluators[m1];
 
   if (fn) {
-    return fn(ast, context);
+    return fn(ast, runtime);
   }
 
   let children;
@@ -37,19 +31,21 @@ export function evaluate(
     children = ast.children;
   }
 
-  if (!children || children.length != 1) {
+  if (!children) {
     console.error(ast);
     throw new Error('unrecognized node type:' + n1 || n2);
   }
 
-  const child = children[0];
-
-  return evaluate(child, context);
+  let ret;
+  for (const c of children) {
+    ret = evaluate(c, runtime);
+  }
+  return ret;
 }
 
 export const evaluators: Record<
   string,
-  (node: AstNode, context: Context) => All_Type
+  (node: AstNode, context: Runtime) => any
 > = {
   evaluate,
 };

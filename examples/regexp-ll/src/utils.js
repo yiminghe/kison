@@ -1,5 +1,6 @@
 // @ts-check
 import { StateUnit } from './state.js';
+import * as n from './names';
 
 export function isWord(s) {
   const code = s.charCodeAt(0);
@@ -40,7 +41,7 @@ export function upperCaseFirstChar(str) {
 }
 
 export function annotateGroupIndex(ast, index = { count: 0 }) {
-  if (ast.symbol === 'Group') {
+  if (ast.symbol === n.Group) {
     if (ast.children[1].text !== '?:') {
       ast.captureGroupIndex = ++index.count;
     }

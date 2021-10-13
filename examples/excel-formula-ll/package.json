@@ -39,6 +39,8 @@
     ]
   },
   "scripts": {
+    "test": "jest",
+    "test-debug": "jest -i",
     "check":"tsc --noEmit",
     "build": "npm run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
     "gen": "sh scripts/gen.sh",

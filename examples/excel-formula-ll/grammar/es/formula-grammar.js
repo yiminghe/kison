@@ -1,3 +1,6 @@
+// @ts-check
+
+import * as n from './names';
 // https://docs.oasis-open.org/office/OpenDocument/v1.3/OpenDocument-v1.3-part4-formula.html
 
 const operators = [
@@ -7,11 +10,11 @@ const operators = [
   ['left', '*', '/'],
   ['left', '^'],
   ['precedence', '%'],
-  ['precedence', 'UMINUS', 'UPLUS'],
+  ['precedence', n.UMINUS, n.UPLUS],
   ['precedence', '@'],
-  ['left', 'REF_UNION_OPERATOR'],
-  ['left', 'REF_INTERSECTION_OPERATOR'],
-  ['left', 'REF_RANGE_OPERATOR'],
+  ['left', n.REF_UNION_OPERATOR],
+  ['left', n.REF_INTERSECTION_OPERATOR],
+  ['left', n.REF_RANGE_OPERATOR],
 ];
 
 const binaryOperators = [].concat(
@@ -55,6 +58,7 @@ const tableColumnRange = `(?:${tableColumnSpecifierLiteral}(?:\\:${tableColumnSp
 const tableColumnSpecifier = `(?:${tableColumnRange}|(?:'.|[^\\]#'])+)`;
 
 const my = {
+  insideStructureRef: 'inside structure reference',
   markType(self, type, enter = true) {
     const { userData } = self;
     userData[type] = userData[type] || 0;
@@ -74,194 +78,200 @@ module.exports = () => ({
   operators,
   productions: [
     {
-      symbol: 'formula',
-      rhs: ['exp'],
+      symbol: n.formula,
+      rhs: [n.exp],
     },
     ...binaryOperators.map((op) => ({
-      symbol: 'exp',
-      rhs: ['exp', op, 'exp'],
-      label: 'binary-exp',
+      symbol: n.exp,
+      rhs: [n.exp, op, n.exp],
+      label: n.binaryExp,
     })),
     {
-      symbol: 'exp',
-      rhs: ['+', 'exp'],
-      precedence: 'UPLUS',
-      label: 'prefix-exp',
+      symbol: n.exp,
+      rhs: ['+', n.exp],
+      precedence: n.UPLUS,
+      label: n.prefixExp,
     },
     {
-      symbol: 'exp',
-      rhs: ['-', 'exp'],
-      precedence: 'UMINUS',
-      label: 'prefix-exp',
+      symbol: n.exp,
+      rhs: ['-', n.exp],
+      precedence: n.UMINUS,
+      label: n.prefixExp,
     },
     {
-      symbol: 'exp',
-      rhs: ['@', 'exp'],
-      label: 'clip-exp',
+      symbol: n.exp,
+      rhs: ['@', n.exp],
+      label: n.clipExp,
     },
     {
-      symbol: 'exp',
-      rhs: ['exp', '%'],
-      label: 'percentage-exp',
+      symbol: n.exp,
+      rhs: [n.exp, '%'],
+      label: n.percentageExp,
     },
     {
-      symbol: 'exp',
-      rhs: ['(', 'exp', ')'],
+      symbol: n.exp,
+      rhs: ['(', n.exp, ')'],
     },
     {
-      symbol: 'exp',
-      rhs: ['NUMBER'],
+      symbol: n.exp,
+      rhs: [n.NUMBER],
     },
     {
-      symbol: 'exp',
-      rhs: ['STRING'],
+      symbol: n.exp,
+      rhs: [n.STRING],
     },
     {
-      symbol: 'exp',
-      rhs: ['LOGIC'],
+      symbol: n.exp,
+      rhs: [n.LOGIC],
     },
     {
-      symbol: 'exp',
-      rhs: ['ERROR'],
+      symbol: n.exp,
+      rhs: [n.ERROR],
     },
     {
-      symbol: 'exp',
-      rhs: ['reference'],
+      symbol: n.exp,
+      rhs: [n.reference],
     },
     {
-      symbol: 'reference-item',
-      rhs: ['CELL'],
+      symbol: n.referenceItem,
+      rhs: [n.CELL],
     },
     {
-      symbol: 'reference-item',
-      rhs: ['NAME'],
+      symbol: n.referenceItem,
+      rhs: [n.NAME],
     },
     {
-      symbol: 'reference-item',
-      rhs: ['structure-reference'],
+      symbol: n.referenceItem,
+      rhs: [n.structureReference],
     },
     // reference operator: : SPACE ,
     {
-      symbol: 'reference',
-      rhs: ['reference', 'REF_UNION_OPERATOR', 'reference'],
-      label: 'union-reference',
+      symbol: n.reference,
+      rhs: [n.reference, n.REF_UNION_OPERATOR, n.reference],
+      label: n.unionReference,
     },
     {
-      symbol: 'reference',
-      rhs: ['reference', 'reference'],
-      precedence: 'REF_INTERSECTION_OPERATOR',
-      label: 'intersection-reference',
+      symbol: n.reference,
+      rhs: [n.reference, n.reference],
+      precedence: n.REF_INTERSECTION_OPERATOR,
+      label: n.intersectionReference,
     },
     {
-      symbol: 'reference',
-      rhs: ['reference', 'REF_RANGE_OPERATOR', 'reference'],
-      label: 'range-reference',
+      symbol: n.reference,
+      rhs: [n.reference, n.REF_RANGE_OPERATOR, n.reference],
+      label: n.rangeReference,
     },
     {
-      symbol: 'reference',
-      rhs: ['reference-item'],
+      symbol: n.reference,
+      rhs: [n.referenceItem],
     },
     {
-      symbol: 'exp',
-      rhs: ['function'],
+      symbol: n.exp,
+      rhs: [n.functionExp],
     },
     {
-      symbol: 'exp',
-      rhs: ['array'],
+      symbol: n.exp,
+      rhs: [n.array],
     },
     {
-      symbol: 'array-element',
-      rhs: ['STRING'],
+      symbol: n.arrayElement,
+      rhs: [n.STRING],
     },
     {
-      symbol: 'array-element',
-      rhs: ['NUMBER'],
+      symbol: n.arrayElement,
+      rhs: [n.NUMBER],
     },
     {
-      symbol: 'array-element',
-      rhs: ['LOGIC'],
+      symbol: n.arrayElement,
+      rhs: [n.LOGIC],
     },
     {
-      symbol: 'array-element',
-      rhs: ['ERROR'],
-    },
-    {
-      symbol: 'array-element-part',
-      rhs: ['ARRAY_SEPARATOR', 'array-element'],
-      skipAstNode: true,
+      symbol: n.arrayElement,
+      rhs: [n.ERROR],
     },
     // array = '{', array-element, array-element-part*, '}'
     {
-      symbol: 'array',
-      rhs: ['{', 'array-element', 'array-element-part*', '}'],
+      symbol: n.array,
+      rhs: [
+        '{',
+        n.arrayElement,
+        n.groupStartMark,
+        n.ARRAY_SEPARATOR,
+        n.arrayElement,
+        n.groupEndZeroOrMoreMark,
+        '}',
+      ],
     },
 
     // function
     {
-      symbol: 'function',
-      rhs: ['FUNCTION', '(', 'arguments', ')'],
+      symbol: n.functionExp,
+      rhs: [n.FUNCTION, '(', n.argumentsList, ')'],
     },
     // arguments => exp?(,exp?)*
     {
-      symbol: 'arguments',
-      rhs: ['exp?', 'argumentPart*'],
-    },
-    {
-      symbol: 'argumentPart',
-      rhs: ['ARGUMENT_SEPARATOR', 'exp?'],
-      skipAstNode: true,
+      symbol: n.argumentsList,
+      rhs: [
+        n.expOptional,
+        n.groupStartMark,
+        n.ARGUMENT_SEPARATOR,
+        n.expOptional,
+        n.groupEndZeroOrMoreMark,
+      ],
     },
 
     // structure reference
     {
-      symbol: 'structure-reference',
-      rhs: ['TABLE_NAME', 'table-specifier'],
+      symbol: n.structureReference,
+      rhs: [n.TABLE_NAME, n.tableSpecifier],
     },
     {
-      symbol: 'structure-reference',
-      rhs: ['table-specifier'],
+      symbol: n.structureReference,
+      rhs: [n.tableSpecifier],
     },
     {
-      symbol: 'table-specifier',
-      rhs: ['TABLE_ITEM_SPECIFIER'],
+      symbol: n.tableSpecifier,
+      rhs: [n.TABLE_ITEM_SPECIFIER],
     },
     {
-      symbol: 'table-specifier',
-      rhs: ['[', 'table-specifier-inner', ']'],
+      symbol: n.tableSpecifier,
+      rhs: ['[', n.tableSpecifierInner, ']'],
     },
     {
-      symbol: 'table-this-row',
-      rhs: ['TABLE_@'],
+      symbol: n.tableThisRow,
+      rhs: [n.TABLE_AT],
     },
     {
-      symbol: 'table-this-row',
-      rhs: ['TABLE_@', 'TABLE_COLUMN_SPECIFIER'],
+      symbol: n.tableThisRow,
+      rhs: [n.TABLE_AT, n.TABLE_COLUMN_SPECIFIER],
     },
     {
-      symbol: 'table-specifier-inner',
-      rhs: ['table-this-row'],
+      symbol: n.tableSpecifierInner,
+      rhs: [n.tableThisRow],
     },
     {
-      symbol: 'table-specifier-inner',
-      rhs: ['table-column-specifier'],
+      symbol: n.tableSpecifierInner,
+      rhs: [n.tableColumnSpecifier],
     },
     {
-      symbol: 'table-specifier-item',
-      rhs: ['TABLE_COLUMN_SPECIFIER'],
+      symbol: n.tableSpecifierItem,
+      rhs: [n.TABLE_COLUMN_SPECIFIER],
     },
     {
-      symbol: 'table-specifier-item',
-      rhs: ['TABLE_ITEM_SPECIFIER'],
+      symbol: n.tableSpecifierItem,
+      rhs: [n.TABLE_ITEM_SPECIFIER],
     },
     // table-column-specifier = table-specifier-item (,table-specifier-item)*
     {
-      symbol: 'table-column-specifier',
-      rhs: ['table-specifier-item', 'table-specifier-item-part*'],
-    },
-    {
-      symbol: 'table-specifier-item-part',
-      rhs: ['SPECIFIER_SEPARATOR', 'table-specifier-item'],
-      skipAstNode: true,
+      symbol: n.tableColumnSpecifier,
+      rhs: [
+        n.tableSpecifierItem,
+
+        n.groupStartMark,
+        n.SPECIFIER_SEPARATOR,
+        n.tableSpecifierItem,
+        n.groupEndZeroOrMoreMark,
+      ],
     },
   ],
 
@@ -270,7 +280,7 @@ module.exports = () => ({
 
     rules: [
       {
-        state: ['inside structure reference', 'I'],
+        state: [my.insideStructureRef, 'I'],
         regexp: /^\s+/,
         token: '$HIDDEN',
       },
@@ -314,36 +324,36 @@ module.exports = () => ({
 
       // structure reference
       {
-        state: ['inside structure reference'],
+        state: [my.insideStructureRef],
         regexp: /^,/,
-        token: 'SPECIFIER_SEPARATOR',
+        token: n.SPECIFIER_SEPARATOR,
       },
       {
-        state: ['inside structure reference', 'I'],
+        state: [my.insideStructureRef, 'I'],
         regexp: /^\[#('.|[^\]#])+\]/,
-        token: 'TABLE_ITEM_SPECIFIER',
+        token: n.TABLE_ITEM_SPECIFIER,
       },
       {
-        state: ['inside structure reference'],
+        state: [my.insideStructureRef],
         regexp: /^@/,
-        token: 'TABLE_@',
+        token: n.TABLE_AT,
       },
       {
-        state: ['inside structure reference'],
+        state: [my.insideStructureRef],
         regexp: new RegExp(`^${tableColumnSpecifier}`),
-        token: 'TABLE_COLUMN_SPECIFIER',
+        token: n.TABLE_COLUMN_SPECIFIER,
       },
       {
-        state: ['inside structure reference', 'I'],
+        state: [my.insideStructureRef, 'I'],
         regexp: /^\[/,
         token: '[',
         action() {
-          this.pushState('inside structure reference');
+          this.pushState(my.insideStructureRef);
         },
       },
 
       {
-        state: ['inside structure reference'],
+        state: [my.insideStructureRef],
         regexp: /^\]/,
         token: ']',
         action() {
@@ -355,7 +365,7 @@ module.exports = () => ({
           return !!this.userData.a;
         },
         regexp: { en: /^[,;]/, de: /^[\\;]/ },
-        token: 'ARRAY_SEPARATOR',
+        token: n.ARRAY_SEPARATOR,
       },
       {
         filter() {
@@ -363,26 +373,26 @@ module.exports = () => ({
           return !lastItem || !lastItem.func;
         },
         regexp: /^,/,
-        token: 'REF_UNION_OPERATOR',
+        token: n.REF_UNION_OPERATOR,
       },
       {
         regexp: /^:/,
-        token: 'REF_RANGE_OPERATOR',
+        token: n.REF_RANGE_OPERATOR,
       },
       {
         regexp: { en: /^,/, de: /^;/ },
-        token: 'ARGUMENT_SEPARATOR',
+        token: n.ARGUMENT_SEPARATOR,
       },
       {
         regexp: /^"(?:""|[^"])*"/,
-        token: 'STRING',
+        token: n.STRING,
         action() {
           this.text = this.text.slice(1, -1).replace(/""/g, '"');
         },
       },
       {
         regexp: new RegExp(`^${fullNamePart}(?=[(])`),
-        token: 'FUNCTION',
+        token: n.FUNCTION,
         action() {
           const { userData } = this;
           userData.markParen = userData.markParen || [];
@@ -391,11 +401,11 @@ module.exports = () => ({
       },
       {
         regexp: new RegExp(`^${fullNamePart}(?=[\\[])`),
-        token: 'TABLE_NAME',
+        token: n.TABLE_NAME,
       },
       {
         regexp: /^#[A-Z0-9\/]+(!|\?)? /,
-        token: 'ERROR',
+        token: n.ERROR,
       },
       {
         // @: disable array formula, allow  Implicit Intersection
@@ -403,15 +413,15 @@ module.exports = () => ({
         regexp: new RegExp(
           `^${sheetAddress}?(?:${cellAddress}|${rowRangeAddress})`,
         ),
-        token: 'CELL',
+        token: n.CELL,
       },
       {
         regexp: /^(TRUE|FALSE)(?=\b)/i,
-        token: 'LOGIC',
+        token: n.LOGIC,
       },
       {
         regexp: new RegExp(`^${fullNamePart}`),
-        token: 'NAME',
+        token: n.NAME,
       },
       {
         regexp: {
@@ -422,11 +432,11 @@ module.exports = () => ({
             `^${decimalIntegerLiteral}?,${decimalFractionLiteral}${exponentPart}?`,
           ),
         },
-        token: 'NUMBER',
+        token: n.NUMBER,
       },
       {
         regexp: new RegExp(`^${decimalIntegerLiteral}${exponentPart}?`),
-        token: 'NUMBER',
+        token: n.NUMBER,
       },
     ],
   },

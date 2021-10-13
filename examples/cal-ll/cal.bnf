@@ -1,8 +1,8 @@
-exp ::= '('  exp  ')' 
-exp ::= exp  '+'  exp 
-exp ::= exp  '-'  exp 
-exp ::= exp  '*'  exp 
-exp ::= exp  '/'  exp 
-exp ::= '-'  exp 
-exp ::= exp  '^'  exp 
-exp ::= 'NUMBER' 
+exp ::= '(' exp ')'
+exp ::= exp '+' exp
+exp ::= exp '-' exp
+exp ::= exp '*' exp
+exp ::= exp '/' exp
+exp ::= '-' exp
+exp ::= exp '^' exp
+exp ::= 'NUMBER'

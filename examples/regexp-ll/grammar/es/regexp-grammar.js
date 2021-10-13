@@ -1,3 +1,5 @@
+import * as n from './names';
+
 const my = {
   charRange: [
     [0x09],
@@ -179,234 +181,235 @@ module.exports = () => ({
   my,
   productions: [
     {
-      symbol: 'Regexp',
-      rhs: ['^?', 'Expression'],
+      symbol: n.Regexp,
+      rhs: ['^?', n.Expression],
     },
     {
-      symbol: 'Expression',
-      rhs: ['SubExpression', 'SubExpressionPart*'],
+      symbol: n.Expression,
+      rhs: [
+        n.SubExpression,
+        n.groupStartMark,
+        '|',
+        n.SubExpression,
+        n.groupEndZeroOrMoreMark,
+      ],
     },
     {
-      symbol: 'SubExpressionPart',
-      rhs: ['|', 'SubExpression'],
-      skipAstNode: true,
-    },
-    {
-      symbol: 'SubExpression',
+      symbol: n.SubExpression,
       rhs: ['ExpressionItem*'],
     },
     {
-      symbol: 'ExpressionItem',
-      rhs: ['Match'],
+      symbol: n.ExpressionItem,
+      rhs: [n.Match],
     },
     {
-      symbol: 'ExpressionItem',
-      rhs: ['Group'],
+      symbol: n.ExpressionItem,
+      rhs: [n.Group],
     },
     {
-      symbol: 'ExpressionItem',
-      rhs: ['Anchor'],
+      symbol: n.ExpressionItem,
+      rhs: [n.Anchor],
     },
     {
-      symbol: 'ExpressionItem',
-      rhs: ['backreference'],
+      symbol: n.ExpressionItem,
+      rhs: [n.backreference],
     },
 
     /* Grouping Constructs 
     ------------------------------------------------------------------*/
 
     {
-      symbol: 'Group',
-      rhs: ['(', '?:?', 'Expression', ')', 'Quantifier?'],
+      symbol: n.Group,
+      rhs: ['(', '?:?', n.Expression, ')', n.QuantifierOptional],
     },
     {
-      symbol: 'Group',
-      rhs: ['namedGroupPrefix', 'Expression', ')', 'Quantifier?'],
+      symbol: n.Group,
+      rhs: [n.namedGroupPrefix, n.Expression, ')', n.QuantifierOptional],
     },
 
     /* Match
 ------------------------------------------------------------------*/
     {
-      symbol: 'Match',
-      rhs: ['MatchItem', 'Quantifier?'],
+      symbol: n.Match,
+      rhs: [n.MatchItem, n.QuantifierOptional],
     },
     {
-      symbol: 'MatchItem',
-      rhs: ['anyChar'],
+      symbol: n.MatchItem,
+      rhs: [n.anyChar],
     },
     {
-      symbol: 'MatchItem',
-      rhs: ['MatchCharacterClass'],
+      symbol: n.MatchItem,
+      rhs: [n.MatchCharacterClass],
     },
     {
-      symbol: 'MatchItem',
-      rhs: ['char'],
+      symbol: n.MatchItem,
+      rhs: [n.char],
     },
     {
-      symbol: 'MatchCharacterClass',
-      rhs: ['CharacterGroup'],
+      symbol: n.MatchCharacterClass,
+      rhs: [n.CharacterGroup],
     },
     {
-      symbol: 'MatchCharacterClass',
-      rhs: ['CharacterClass'],
+      symbol: n.MatchCharacterClass,
+      rhs: [n.CharacterClass],
     },
 
     /* Character Classes
 ------------------------------------------------------------------*/
     {
-      symbol: 'CharacterGroup',
-      rhs: ['[', '^?', 'CharacterGroupInner', ']'],
+      symbol: n.CharacterGroup,
+      rhs: ['[', '^?', n.CharacterGroupInner, ']'],
     },
     {
-      symbol: 'CharacterGroupInner',
-      rhs: ['CharacterGroupItem*'],
+      symbol: n.CharacterGroupInner,
+      rhs: [n.CharacterGroupItemZeroOrMore],
     },
     {
-      symbol: 'CharacterGroupItem',
-      rhs: ['CharacterClass'],
+      symbol: n.CharacterGroupItem,
+      rhs: [n.CharacterClass],
     },
     {
-      symbol: 'CharacterGroupItem',
-      rhs: ['CharacterRange'],
+      symbol: n.CharacterGroupItem,
+      rhs: [n.CharacterRange],
     },
     {
-      symbol: 'CharacterClass',
-      rhs: ['characterClassAnyWordInverted'],
+      symbol: n.CharacterClass,
+      rhs: [n.characterClassAnyWordInverted],
     },
     {
-      symbol: 'CharacterClass',
-      rhs: ['characterClassAnyWord'],
+      symbol: n.CharacterClass,
+      rhs: [n.characterClassAnyWord],
     },
     {
-      symbol: 'CharacterClass',
-      rhs: ['characterClassAnyDecimalDigit'],
+      symbol: n.CharacterClass,
+      rhs: [n.characterClassAnyDecimalDigit],
     },
     {
-      symbol: 'CharacterClass',
-      rhs: ['characterClassAnyDecimalDigitInverted'],
+      symbol: n.CharacterClass,
+      rhs: [n.characterClassAnyDecimalDigitInverted],
     },
     {
-      symbol: 'CharacterClass',
-      rhs: ['whitespaceCharacter'],
+      symbol: n.CharacterClass,
+      rhs: [n.whitespaceCharacter],
     },
     {
-      symbol: 'CharacterClass',
-      rhs: ['whitespaceCharacterInverted'],
+      symbol: n.CharacterClass,
+      rhs: [n.whitespaceCharacterInverted],
     },
     {
-      symbol: 'CharacterRange',
-      rhs: ['char'],
+      symbol: n.CharacterRange,
+      rhs: [n.char],
     },
     {
-      symbol: 'CharacterRange',
-      rhs: ['char', '-', 'char'],
+      symbol: n.CharacterRange,
+      rhs: [n.char, '-', n.char],
     },
 
     /* Quantifiers 
     ------------------------------------------------------------------*/
     {
-      symbol: 'Quantifier',
-      rhs: ['QuantifierType', '??'],
+      symbol: n.Quantifier,
+      rhs: [n.QuantifierType, '??'],
     },
     {
-      symbol: 'QuantifierType',
+      symbol: n.QuantifierType,
       rhs: ['*'],
     },
     {
-      symbol: 'QuantifierType',
+      symbol: n.QuantifierType,
       rhs: ['+'],
     },
     {
-      symbol: 'QuantifierType',
+      symbol: n.QuantifierType,
       rhs: ['?'],
     },
     {
-      symbol: 'QuantifierType',
-      rhs: ['{', 'int', '}'],
+      symbol: n.QuantifierType,
+      rhs: ['{', n.int, '}'],
     },
     {
-      symbol: 'QuantifierType',
-      rhs: ['{', 'int', ',', 'int?', '}'],
+      symbol: n.QuantifierType,
+      rhs: ['{', n.int, ',', n.intOptional, '}'],
     },
 
     /* Anchors
     ------------------------------------------------------------------*/
     {
-      symbol: 'Anchor',
-      rhs: ['anchorWordBoundary'],
+      symbol: n.Anchor,
+      rhs: [n.anchorWordBoundary],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['anchorNonWordBoundary'],
+      symbol: n.Anchor,
+      rhs: [n.anchorNonWordBoundary],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['anchorStartOfStringOnly'],
+      symbol: n.Anchor,
+      rhs: [n.anchorStartOfStringOnly],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['anchorEndOfStringOnlyNotNewline'],
+      symbol: n.Anchor,
+      rhs: [n.anchorEndOfStringOnlyNotNewline],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['anchorEndOfStringOnly'],
+      symbol: n.Anchor,
+      rhs: [n.anchorEndOfStringOnly],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['anchorPreviousMatchEnd'],
+      symbol: n.Anchor,
+      rhs: [n.anchorPreviousMatchEnd],
     },
     {
-      symbol: 'Anchor',
+      symbol: n.Anchor,
       rhs: ['$'],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['lookahead', 'Expression', ')'],
+      symbol: n.Anchor,
+      rhs: [n.lookahead, n.Expression, ')'],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['negativeLookahead', 'Expression', ')'],
+      symbol: n.Anchor,
+      rhs: [n.negativeLookahead, n.Expression, ')'],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['lookbehind', 'Expression', ')'],
+      symbol: n.Anchor,
+      rhs: [n.lookbehind, n.Expression, ')'],
     },
     {
-      symbol: 'Anchor',
-      rhs: ['negativeLookbehind', 'Expression', ')'],
+      symbol: n.Anchor,
+      rhs: [n.negativeLookbehind, n.Expression, ')'],
     },
   ],
 
   lexer: {
     rules: [
       ...createEscapeMatchLexerRules({
-        w: 'characterClassAnyWord',
-        W: 'characterClassAnyWordInverted',
-        s: 'whitespaceCharacter',
-        S: 'whitespaceCharacterInverted',
-        d: 'characterClassAnyDecimalDigit',
-        D: 'characterClassAnyDecimalDigitInverted',
+        w: n.characterClassAnyWord,
+        W: n.characterClassAnyWordInverted,
+        s: n.whitespaceCharacter,
+        S: n.whitespaceCharacterInverted,
+        d: n.characterClassAnyDecimalDigit,
+        D: n.characterClassAnyDecimalDigitInverted,
 
         /* Anchors
        ------------------------------------------------------------------*/
-        b: 'anchorWordBoundary',
-        B: 'anchorNonWordBoundary',
-        A: 'anchorStartOfStringOnly',
-        z: 'anchorEndOfStringOnlyNotNewline',
-        Z: 'anchorEndOfStringOnly',
-        G: 'anchorPreviousMatchEnd',
+        b: n.anchorWordBoundary,
+        B: n.anchorNonWordBoundary,
+        A: n.anchorStartOfStringOnly,
+        z: n.anchorEndOfStringOnlyNotNewline,
+        Z: n.anchorEndOfStringOnly,
+        G: n.anchorPreviousMatchEnd,
       }),
 
       /* Backreferences
 ------------------------------------------------------------------*/
       {
         regexp: `my.matchBackreference`,
-        token: 'backreference',
+        token: n.backreference,
       },
 
       {
         regexp: 'my.matchEscapeChar',
-        token: 'char',
+        token: n.char,
         action() {
           this.text = this.matches[1];
         },
@@ -416,24 +419,24 @@ module.exports = () => ({
     ------------------------------------------------------------------ */
       {
         regexp: createStringMatch(`(?=`),
-        token: 'lookahead',
+        token: n.lookahead,
       },
       {
         regexp: createStringMatch(`(?!`),
-        token: 'negativeLookahead',
+        token: n.negativeLookahead,
       },
       {
         regexp: createStringMatch(`(?<=`),
-        token: 'lookbehind',
+        token: n.lookbehind,
       },
       {
         regexp: createStringMatch(`(?<!`),
-        token: 'negativeLookbehind',
+        token: n.negativeLookbehind,
       },
 
       {
         regexp: 'my.matchNamedGroupPrefix',
-        token: 'namedGroupPrefix',
+        token: n.namedGroupPrefix,
         action() {
           this.text = this.matches[1];
         },
@@ -471,7 +474,7 @@ module.exports = () => ({
 
       {
         regexp: 'my.matchAnyChar',
-        token: 'anyChar',
+        token: n.anyChar,
       },
 
       {
@@ -492,12 +495,12 @@ module.exports = () => ({
 
       {
         regexp: 'my.matchQuantifierNumber',
-        token: 'int',
+        token: n.int,
       },
 
       {
         regexp: 'my.matchChar',
-        token: 'char',
+        token: n.char,
       },
     ],
   },

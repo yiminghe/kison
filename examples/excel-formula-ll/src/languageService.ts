@@ -42,7 +42,7 @@ export function getFunctionInfoFromPosition(
   if (cursorNode) {
     {
       let func = getTopCursorTokenFunction(cursorNode, position);
-      if (func && func.symbol === 'function') {
+      if (func && func.symbol === 'functionExp') {
         ret.functionName = func.children[0].text;
         return ret;
       }
@@ -55,8 +55,8 @@ export function getFunctionInfoFromPosition(
     while (func && !insideFunction(func, position)) {
       func = func.parent;
     }
-    if (func && func.symbol === 'function') {
-      let args = findNodeBySymbol(func.children, 'arguments');
+    if (func && func.symbol === 'functionExp') {
+      let args = findNodeBySymbol(func.children, 'argumentsList');
       if (args) {
         let argumentIndex = getArgumentIndex(args, position);
         ret = {
@@ -84,7 +84,7 @@ function getTopCursorTokenFunction(
 
   const parent = node.parent;
 
-  if (parent && parent.symbol === 'function') {
+  if (parent && parent.symbol === 'functionExp') {
     if (node.token === 'FUNCTION') {
       if (lineNumber !== node.firstLine || column !== node.firstColumn) {
         return returnIfTopFn(parent);
@@ -99,14 +99,14 @@ function getTopCursorTokenFunction(
 
 function returnIfTopFn(n: AstSymbolNode) {
   let topFn = n.parent;
-  while (topFn && topFn.symbol !== 'function') {
+  while (topFn && topFn.symbol !== 'functionExp') {
     topFn = topFn.parent;
   }
   return (!topFn && n) || null;
 }
 
 function insideFunction(node: AstSymbolNode, { lineNumber, column }: Position) {
-  if (node.symbol !== 'function') {
+  if (node.symbol !== 'functionExp') {
     return false;
   }
   return (
@@ -171,7 +171,7 @@ export function getTableNameByPosition(nodes: AstNode[], position: Position) {
   if (prev) {
     while (
       prev &&
-      ((prev.type === 'symbol' && prev.symbol !== 'structure-reference') ||
+      ((prev.type === 'symbol' && prev.symbol !== 'structureReference') ||
         prev.type === 'token')
     ) {
       prev = prev.parent;

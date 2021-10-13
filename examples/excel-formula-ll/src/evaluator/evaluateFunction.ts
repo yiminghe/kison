@@ -2,14 +2,14 @@ import { functions } from '../functions/index';
 
 import { makeError, NAME_ERROR } from '../functions/utils';
 
-import type { Function_Node, Exp_Node } from '../parser';
+import type { FunctionSmt_Node, Exp_Node } from '../parser';
 
 import { evaluators, evaluate } from './evaluators';
 
 import type { Context, All_Type } from './types';
 
 Object.assign(evaluators, {
-  evaluate_function(node: Function_Node, context: Context) {
+  evaluate_functionExp(node: FunctionSmt_Node, context: Context) {
     const { children } = node;
     const fnName = children[0].text.toLowerCase();
     const fnDef = functions.get(fnName);

@@ -8,7 +8,7 @@ import {
   characterClassMatcher,
   assertionMatcher,
 } from './matchers.js';
-
+import * as n from './names';
 import {
   asyncAnchorMatchers,
   asyncBackreferenceMatcher,
@@ -244,7 +244,7 @@ export default class Compiler {
     };
 
     const lastChild = node.children[node.children.length - 1];
-    if (lastChild.symbol === 'Quantifier') {
+    if (lastChild.symbol === n.Quantifier) {
       return this._compileQuantifier(getUnit, lastChild);
     }
     return getUnit();
@@ -253,7 +253,7 @@ export default class Compiler {
   compileMatch(node) {
     const getUnit = () => this.compile(node.children[0]);
     const lastChild = node.children[node.children.length - 1];
-    if (lastChild.symbol === 'Quantifier') {
+    if (lastChild.symbol === n.Quantifier) {
       return this._compileQuantifier(getUnit, lastChild);
     }
     return getUnit();

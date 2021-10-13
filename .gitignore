@@ -23,4 +23,3 @@ reports/
 yarn.lock
 .vscode/
 pkg/
-examples/vba/grammar/lib

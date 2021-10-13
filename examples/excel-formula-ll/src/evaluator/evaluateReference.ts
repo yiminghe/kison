@@ -28,7 +28,7 @@ const cellAddress = `(?:
 )`.replace(/\s/g, '');
 
 Object.assign(evaluators, {
-  ['evaluate_range-reference'](node: Reference_Node, context: Context) {
+  ['evaluate_rangeReference'](node: Reference_Node, context: Context) {
     const { children } = node;
     const left = evaluate(children[0], context);
     if (left.type === 'error') {
@@ -47,7 +47,7 @@ Object.assign(evaluators, {
     }
   },
 
-  ['evaluate_union-reference'](node: Reference_Node, context: Context) {
+  ['evaluate_unionReference'](node: Reference_Node, context: Context) {
     const { children } = node;
     const left = evaluate(children[0], context);
     if (left.type === 'error') {
@@ -66,7 +66,7 @@ Object.assign(evaluators, {
     }
   },
 
-  ['evaluate_intersection-reference'](node: Reference_Node, context: Context) {
+  ['evaluate_intersectionReference'](node: Reference_Node, context: Context) {
     const { children } = node;
     const left = evaluate(children[0], context);
     if (left.type === 'error') {

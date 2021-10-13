@@ -103,7 +103,7 @@ type BinaryDef = {
 };
 
 function evaluateBinaryExp(node: Exp_Node, context: Context, def: BinaryDef) {
-  if (node.label !== 'binary-exp') {
+  if (node.label !== 'binaryExp') {
     return;
   }
   const { fn } = def;
@@ -396,7 +396,7 @@ const opFn: Record<string, BinaryDef> = {
 };
 
 function evaluate_binary_exp(node: Exp_Node, context: Context) {
-  if (node.label === 'binary-exp') {
+  if (node.label === 'binaryExp') {
     const op = node.children[1].token;
     return evaluateBinaryExp(node, context, opFn[op]);
   }
@@ -438,7 +438,7 @@ function evaluatePrefixExp(
   context: Context,
   { fn }: { fn: (arg: Atom_Type) => Number_Type | Error_Type },
 ) {
-  if (node.label !== 'prefix-exp') {
+  if (node.label !== 'prefixExp') {
     return;
   }
   const a = transformToArray(node.children[1], context);
@@ -458,9 +458,9 @@ function evaluatePrefixExp(
 }
 
 Object.assign(evaluators, {
-  ['evaluate_binary-exp']: evaluate_binary_exp,
-  ['evaluate_percentage-exp'](node: Exp_Node, context: Context) {
-    if (node.label !== 'percentage-exp') {
+  ['evaluate_binaryExp']: evaluate_binary_exp,
+  ['evaluate_percentageExp'](node: Exp_Node, context: Context) {
+    if (node.label !== 'percentageExp') {
       return;
     }
     const a = transformToArray(node.children[0], context);
@@ -485,14 +485,14 @@ Object.assign(evaluators, {
     }
     return one(a);
   },
-  ['evaluate_prefix-exp'](node: Exp_Node, context: Context) {
-    if (node.label === 'prefix-exp') {
+  ['evaluate_prefixExp'](node: Exp_Node, context: Context) {
+    if (node.label === 'prefixExp') {
       const op = node.children[0].token;
       return evaluatePrefixExp(node, context, unaryOp[op]);
     }
   },
-  ['evaluate_clip-exp'](node: Exp_Node, context: Context) {
-    if (node.label !== 'clip-exp') {
+  ['evaluate_clipExp'](node: Exp_Node, context: Context) {
+    if (node.label !== 'clipExp') {
       return;
     }
     // TODO: implicit intersection

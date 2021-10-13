@@ -40,6 +40,8 @@
     ]
   },
   "scripts": {
+    "test": "jest",
+    "test-debug": "jest -i",
     "build": "pika-pack build",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh"

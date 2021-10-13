@@ -1,6 +1,7 @@
 // @ts-check
 import { isWord, isNumber } from './utils.js';
 import { Matcher } from './match.js';
+import * as n from './names';
 
 export const anchorMatchers = {
   '^'(input) {
@@ -86,13 +87,13 @@ export const charGroupMatcher = (items, invert) => {
     const current = input.getChar();
     for (const item of items) {
       const child = item.children[0];
-      if (child.symbol === 'CharacterClass') {
+      if (child.symbol === n.CharacterClass) {
         const cls = child.children[0].token;
         if (characterClassMatcher[cls](input)) {
           ret = !ret;
           break;
         }
-      } else if (child.symbol === 'CharacterRange') {
+      } else if (child.symbol === n.CharacterRange) {
         const chars = child.children.map((c) => c.text);
         const lower = chars[0];
         let upper = chars[2];

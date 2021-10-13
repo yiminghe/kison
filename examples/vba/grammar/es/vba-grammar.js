@@ -7,8 +7,6 @@ function RegexEscape(input) {
   return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-const skipAstNode = true;
-
 function generateLexerRulesByMap(map) {
   const rules = [];
   for (const token of Object.keys(map)) {
@@ -238,12 +236,6 @@ module.exports = {
         '$',
       ],
     },
-
-    {
-      symbol: '_paren',
-      skipAstNode,
-      rhs: [n.LPAREN, n.RPAREN],
-    },
     {
       symbol: n.arg,
       rhs: [
@@ -256,7 +248,10 @@ module.exports = {
         n.PARAMARRAYOptional,
         n.IDENTIFIER,
         n.typeHintOptional,
-        '_paren?',
+        n.groupStartMark,
+        n.LPAREN,
+        n.RPAREN,
+        n.groupEndOptionalMark,
         n.asTypeClauseOptional,
         n.argDefaultValueOptional,
       ],
@@ -271,7 +266,13 @@ module.exports = {
     },
     {
       symbol: n.type_,
-      rhs: [n.baseType, '_paren?'],
+      rhs: [
+        n.baseType,
+        n.groupStartMark,
+        n.LPAREN,
+        n.RPAREN,
+        n.groupEndOptionalMark,
+      ],
     },
 
     {

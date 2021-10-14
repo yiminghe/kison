@@ -131,7 +131,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                         {
                           'type': 'token',
                           'text': '?',
-                          'token': '?',
+                          'token': 'OPTIONAL',
                           'start': 6,
                           'end': 7,
                           'firstLine': 1,

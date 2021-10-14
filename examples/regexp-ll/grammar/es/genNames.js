@@ -40,6 +40,7 @@ const tokens = [
   'namedGroupPrefix',
   'anyChar',
   'int',
+  'OPTIONAL',
 ];
 
 const names = Array.from(new Set(tokens.concat(symbols)));

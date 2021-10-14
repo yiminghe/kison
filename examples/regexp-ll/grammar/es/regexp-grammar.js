@@ -309,7 +309,7 @@ module.exports = () => ({
     ------------------------------------------------------------------*/
     {
       symbol: n.Quantifier,
-      rhs: [n.QuantifierType, '??'],
+      rhs: [n.QuantifierType, n.OPTIONALOptional],
     },
     {
       symbol: n.QuantifierType,
@@ -321,7 +321,7 @@ module.exports = () => ({
     },
     {
       symbol: n.QuantifierType,
-      rhs: ['?'],
+      rhs: [n.OPTIONAL],
     },
     {
       symbol: n.QuantifierType,
@@ -447,7 +447,6 @@ module.exports = () => ({
         ',',
         '^',
         '?:',
-        '?',
         '(',
         ')',
         '-',
@@ -455,6 +454,14 @@ module.exports = () => ({
         '*',
         '+',
       ]),
+
+      {
+        regexp: createStringMatch('?'),
+        token: n.OPTIONAL,
+        action() {
+          this.userData.insideCharacterGroup = true;
+        },
+      },
 
       {
         regexp: createStringMatch('['),

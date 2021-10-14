@@ -137,7 +137,10 @@ module.exports = {
 ```
 ### LL/LL(K)
 
-cal-grammar.js: support direct left recursive, operator precedence, repeat notation(*/+), optional notation(?). 
+cal-grammar.js: 
+
+- LL(1) and LL(K) support direct left recursive, operator precedence, repeat notation(*/+), optional notation(?). 
+- LL(K) support lazy repeat notation(*?/+?), lazy optional notation(??). 
 
 ``` javascript
 module.exports = () => ({
@@ -153,7 +156,6 @@ module.exports = () => ({
     {
       symbol: 'statement',
       rhs: ['exp', 'NEW_LINE'],
-      skipAstNode: true,
     },
     {
       symbol: 'exp',

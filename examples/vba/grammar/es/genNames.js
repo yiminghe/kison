@@ -280,4 +280,30 @@ code.push(`export const alternationMark = "'|'";`);
 
 code.push(`export const KEYWORDS=${JSON.stringify(keywords)};`);
 
+code.push(`
+export const makeProductions = (arr)=>{
+  return arr.map(a=>{
+    if(Array.isArray(a)) {
+       return {
+         symbol: a[0],
+         rhs: a.slice(1)
+       };
+    }
+    return a;
+  });
+};
+
+export const makeLexerRules = (arr)=>{
+  return arr.map(a=>{
+    if(Array.isArray(a)) {
+       return {
+         token: a[0],
+         regexp: a[1]
+       };
+    }
+    return a;
+  });
+};
+`);
+
 require('fs').writeFileSync(__dirname + '/names.js', code.join('\n'));

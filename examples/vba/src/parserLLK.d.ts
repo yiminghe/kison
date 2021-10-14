@@ -2,7 +2,7 @@ type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
 type AstSymbolNode = Progam_Node|ModuleBody_Node|ModuleBodyElement_Node|Visibility_Node|SubStmt_Node|Block_Node|BlockStmt_Node|ImplicitCallStmt_InBlock_Node|ICS_B_ProcedureCall_Node|ArgsCall_Node|ArgCall_Node|DictionaryCallStmt_Node|VariableStmt_Node|VariableListStmt_Node|VariableSubStmt_Node|Subscripts_Node|Subscript__Node|ArgList_Node|ValueStmt_Node|Literal_Node|TypeHint_Node|Arg_Node|ArgDefaultValue_Node|AsTypeClause_Node|Type__Node|BaseType_Node|FieldLength_Node;
-type AstTokenNode = $EOF_Node|$UNKNOWN_Node|PRIVATE_Node|PUBLIC_Node|FRIEND_Node|GLOBAL_Node|STATIC_Node|SUB_Node|IDENTIFIER_Node|END_SUB_Node|LPAREN_Node|BYREF_Node|RPAREN_Node|BYVAL_Node|PARAMARRAY_Node|TOKEN_0_Node|DIM_Node|WITHEVENTS_Node|INTEGERLITERAL_Node|STRINGLITERAL_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|$_Node|OPTIONAL_Node|EQ_Node|AS_Node|NEW_Node|BOOLEAN_Node|BYTE_Node|COLLECTION_Node|DATE_Node|DOUBLE_Node|INTEGER_Node|LONG_Node|SINGLE_Node|VARIANT_Node|MULT_Node|TOKEN_5_Node|TOKEN_6_Node|TO_Node;
+type AstTokenNode = $EOF_Node|$UNKNOWN_Node|PRIVATE_Node|PUBLIC_Node|FRIEND_Node|GLOBAL_Node|STATIC_Node|SUB_Node|IDENTIFIER_Node|END_SUB_Node|LPAREN_Node|BYREF_Node|RPAREN_Node|BYVAL_Node|PARAMARRAY_Node|TOKEN_0_Node|DIM_Node|WITHEVENTS_Node|INTEGERLITERAL_Node|STRINGLITERAL_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|$_Node|OPTIONAL_Node|EQ_Node|AS_Node|NEW_Node|BOOLEAN_Node|BYTE_Node|COLLECTION_Node|DATE_Node|DOUBLE_Node|INTEGER_Node|LONG_Node|SINGLE_Node|VARIANT_Node|STRING_Node|MULT_Node|TOKEN_5_Node|TOKEN_6_Node|TO_Node;
 type LiteralToken = "ACCESS"|"ADDRESSOF"|"ALIAS"|"AND"|"ATTRIBUTE"|"APPACTIVATE"|"APPEND"|"AS"|"BEGIN"|"BEEP"|"BINARY"|"BOOLEAN"|"BYVAL"|"BYREF"|"BYTE"|"CALL"|"CASE"|"CHDIR"|"CHDRIVE"|"CLASS"|"CLOSE"|"COLLECTION"|"CONST"|"DATABASE"|"DATE"|"DECLARE"|"DEFBOOL"|"DEFBYTE"|"DEFDATE"|"DEFDBL"|"DEFDEC"|"DEFCUR"|"DEFINT"|"DEFLNG"|"DEFOBJ"|"DEFSNG"|"DEFSTR"|"DEFVAR"|"DELETESETTING"|"DIM"|"DO"|"DOUBLE"|"EACH"|"ELSE"|"ELSEIF"|"END_ENUM"|"END_FUNCTION"|"END_IF"|"END_PROPERTY"|"END_SELECT"|"END_SUB"|"END_TYPE"|"END_WITH"|"END"|"ENUM"|"EQV"|"ERASE"|"ERROR"|"EVENT"|"EXIT_DO"|"EXIT_FOR"|"EXIT_FUNCTION"|"EXIT_PROPERTY"|"EXIT_SUB"|"FALSE"|"FILECOPY"|"FRIEND"|"FOR"|"FUNCTION"|"GET"|"GLOBAL"|"GOSUB"|"GOTO"|"IF"|"IMP"|"IMPLEMENTS"|"IN"|"INPUT"|"IS"|"INTEGER"|"KILL"|"LOAD"|"LOCK"|"LONG"|"LOOP"|"LEN"|"LET"|"LIB"|"LIKE"|"LINE_INPUT"|"LOCK_READ"|"LOCK_WRITE"|"LOCK_READ_WRITE"|"LSET"|"MACRO_CONST"|"MACRO_IF"|"MACRO_ELSEIF"|"MACRO_ELSE"|"MACRO_END_IF"|"ME"|"MID"|"MKDIR"|"MOD"|"NAME"|"NEXT"|"NEW"|"NOT"|"NOTHING"|"NULL"|"ON"|"ON_ERROR"|"ON_LOCAL_ERROR"|"OPEN"|"OPTIONAL"|"OPTION_BASE"|"OPTION_EXPLICIT"|"OPTION_COMPARE"|"OPTION_PRIVATE_MODULE"|"OR"|"OUTPUT"|"PARAMARRAY"|"PRESERVE"|"PRINT"|"PRIVATE"|"PROPERTY_GET"|"PROPERTY_LET"|"PROPERTY_SET"|"PTRSAFE"|"PUBLIC"|"PUT"|"RANDOM"|"RANDOMIZE"|"RAISEEVENT"|"READ"|"READ_WRITE"|"REDIM"|"REM"|"RESET"|"RESUME"|"RETURN"|"RMDIR"|"RSET"|"SAVEPICTURE"|"SAVESETTING"|"SEEK"|"SELECT"|"SENDKEYS"|"SET"|"SETATTR"|"SHARED"|"SINGLE"|"SPC"|"STATIC"|"STEP"|"STOP"|"STRING"|"SUB"|"TAB"|"TEXT"|"THEN"|"TIME"|"TO"|"TRUE"|"TYPE"|"TYPEOF"|"UNLOAD"|"UNLOCK"|"UNTIL"|"VARIANT"|"VERSION"|"WEND"|"WHILE"|"WIDTH"|"WITH"|"WITHEVENTS"|"WRITE"|"XOR"|"AMPERSAND"|"ASSIGN"|"DIV"|"EQ"|"GEQ"|"GT"|"LEQ"|"LPAREN"|"LT"|"MINUS"|"MINUS_EQ"|"MULT"|"NEQ"|"PLUS"|"PLUS_EQ"|"POW"|"RPAREN"|"L_SQUARE_BRACKET"|"R_SQUARE_BRACKET"|"$HIDDEN"|"STRINGLITERAL"|"INTEGERLITERAL"|"IDENTIFIER"|"$"|"$EOF"|"$UNKOWN"|"!"|"&"|"%"|"#"|"@"|","|";";
 type AstRootNode = Progam_Node;
 // replace end
@@ -578,7 +578,7 @@ interface ValueStmt_Node extends BaseSymbolNode {
         symbol:"valueStmt";
         
         children:[Literal_Node];
-        parent:ArgCall_Node | Subscript__Node | ArgDefaultValue_Node | Subscript__Node;
+        parent:ArgCall_Node | Subscript__Node | ArgDefaultValue_Node | Subscript__Node | BaseType_Node_384;
       }
 interface Literal_Node_0 extends BaseSymbolNode {
         symbol:"literal";
@@ -2268,23 +2268,29 @@ interface BaseType_Node_383 extends BaseSymbolNode {
 interface BaseType_Node_384 extends BaseSymbolNode {
         symbol:"baseType";
         
-        children:[];
+        children:Array<STRING_Node | ValueStmt_Node | MULT_Node>;
         parent:Type__Node;
       }
-type BaseType_Node = BaseType_Node_0 | BaseType_Node_376 | BaseType_Node_377 | BaseType_Node_378 | BaseType_Node_379 | BaseType_Node_380 | BaseType_Node_381 | BaseType_Node_382 | BaseType_Node_383 | BaseType_Node_384;
+interface BaseType_Node_385 extends BaseSymbolNode {
+        symbol:"baseType";
+        
+        children:[STRING_Node];
+        parent:Type__Node;
+      }
+type BaseType_Node = BaseType_Node_0 | BaseType_Node_376 | BaseType_Node_377 | BaseType_Node_378 | BaseType_Node_379 | BaseType_Node_380 | BaseType_Node_381 | BaseType_Node_382 | BaseType_Node_383 | BaseType_Node_384 | BaseType_Node_385;
 interface FieldLength_Node_0 extends BaseSymbolNode {
         symbol:"fieldLength";
         
         children:[MULT_Node,INTEGERLITERAL_Node];
         parent:AsTypeClause_Node;
       }
-interface FieldLength_Node_386 extends BaseSymbolNode {
+interface FieldLength_Node_387 extends BaseSymbolNode {
         symbol:"fieldLength";
         
         children:[MULT_Node,IDENTIFIER_Node];
         parent:AsTypeClause_Node;
       }
-type FieldLength_Node = FieldLength_Node_0 | FieldLength_Node_386;
+type FieldLength_Node = FieldLength_Node_0 | FieldLength_Node_387;
 interface $EOF_Node extends BaseTokenNode {
         token:"$EOF";
         parent:AstSymbolNode;
@@ -2319,7 +2325,7 @@ interface SUB_Node extends BaseTokenNode {
           }
 interface IDENTIFIER_Node extends BaseTokenNode {
             token:"IDENTIFIER";
-            parent:SubStmt_Node | ICS_B_ProcedureCall_Node | DictionaryCallStmt_Node | VariableSubStmt_Node | Arg_Node | FieldLength_Node_386;
+            parent:SubStmt_Node | ICS_B_ProcedureCall_Node | DictionaryCallStmt_Node | VariableSubStmt_Node | Arg_Node | FieldLength_Node_387;
           }
 interface END_SUB_Node extends BaseTokenNode {
             token:"END_SUB";
@@ -2437,9 +2443,13 @@ interface VARIANT_Node extends BaseTokenNode {
             token:"VARIANT";
             parent:BaseType_Node_383;
           }
+interface STRING_Node extends BaseTokenNode {
+            token:"STRING";
+            parent:BaseType_Node_384 | BaseType_Node_385;
+          }
 interface MULT_Node extends BaseTokenNode {
             token:"MULT";
-            parent:FieldLength_Node;
+            parent:FieldLength_Node | BaseType_Node_384;
           }
 interface TOKEN_5_Node extends BaseTokenNode {
             token:",";
@@ -2453,4 +2463,4 @@ interface TO_Node extends BaseTokenNode {
             token:"TO";
             parent:Subscript__Node;
           }
-export type { Progam_Node,ModuleBody_Node,ModuleBodyElement_Node,Visibility_Node,SubStmt_Node,Block_Node,BlockStmt_Node,ImplicitCallStmt_InBlock_Node,ICS_B_ProcedureCall_Node,ArgsCall_Node,ArgCall_Node,DictionaryCallStmt_Node,VariableStmt_Node,VariableListStmt_Node,VariableSubStmt_Node,Subscripts_Node,Subscript__Node,ArgList_Node,ValueStmt_Node,Literal_Node,TypeHint_Node,Arg_Node,ArgDefaultValue_Node,AsTypeClause_Node,Type__Node,BaseType_Node,FieldLength_Node,$EOF_Node,$UNKNOWN_Node,PRIVATE_Node,PUBLIC_Node,FRIEND_Node,GLOBAL_Node,STATIC_Node,SUB_Node,IDENTIFIER_Node,END_SUB_Node,LPAREN_Node,BYREF_Node,RPAREN_Node,BYVAL_Node,PARAMARRAY_Node,TOKEN_0_Node,DIM_Node,WITHEVENTS_Node,INTEGERLITERAL_Node,STRINGLITERAL_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,$_Node,OPTIONAL_Node,EQ_Node,AS_Node,NEW_Node,BOOLEAN_Node,BYTE_Node,COLLECTION_Node,DATE_Node,DOUBLE_Node,INTEGER_Node,LONG_Node,SINGLE_Node,VARIANT_Node,MULT_Node,TOKEN_5_Node,TOKEN_6_Node,TO_Node }
+export type { Progam_Node,ModuleBody_Node,ModuleBodyElement_Node,Visibility_Node,SubStmt_Node,Block_Node,BlockStmt_Node,ImplicitCallStmt_InBlock_Node,ICS_B_ProcedureCall_Node,ArgsCall_Node,ArgCall_Node,DictionaryCallStmt_Node,VariableStmt_Node,VariableListStmt_Node,VariableSubStmt_Node,Subscripts_Node,Subscript__Node,ArgList_Node,ValueStmt_Node,Literal_Node,TypeHint_Node,Arg_Node,ArgDefaultValue_Node,AsTypeClause_Node,Type__Node,BaseType_Node,FieldLength_Node,$EOF_Node,$UNKNOWN_Node,PRIVATE_Node,PUBLIC_Node,FRIEND_Node,GLOBAL_Node,STATIC_Node,SUB_Node,IDENTIFIER_Node,END_SUB_Node,LPAREN_Node,BYREF_Node,RPAREN_Node,BYVAL_Node,PARAMARRAY_Node,TOKEN_0_Node,DIM_Node,WITHEVENTS_Node,INTEGERLITERAL_Node,STRINGLITERAL_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,$_Node,OPTIONAL_Node,EQ_Node,AS_Node,NEW_Node,BOOLEAN_Node,BYTE_Node,COLLECTION_Node,DATE_Node,DOUBLE_Node,INTEGER_Node,LONG_Node,SINGLE_Node,VARIANT_Node,STRING_Node,MULT_Node,TOKEN_5_Node,TOKEN_6_Node,TO_Node }

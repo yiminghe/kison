@@ -1111,3 +1111,27 @@ export const KEYWORDS = [
   'WRITE',
   'XOR',
 ];
+
+export const makeProductions = (arr) => {
+  return arr.map((a) => {
+    if (Array.isArray(a)) {
+      return {
+        symbol: a[0],
+        rhs: a.slice(1),
+      };
+    }
+    return a;
+  });
+};
+
+export const makeLexerRules = (arr) => {
+  return arr.map((a) => {
+    if (Array.isArray(a)) {
+      return {
+        token: a[0],
+        regexp: a[1],
+      };
+    }
+    return a;
+  });
+};

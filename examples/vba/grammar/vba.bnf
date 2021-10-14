@@ -23,5 +23,5 @@ arg ::= 'OPTIONAL'? ( 'BYVAL' | 'BYREF' )? 'PARAMARRAY'? 'IDENTIFIER' typeHint? 
 argDefaultValue ::= 'EQ' valueStmt
 asTypeClause ::= 'AS' 'NEW'? type_ fieldLength?
 type_ ::= baseType ( 'LPAREN' 'RPAREN' )?
-baseType ::= 'BOOLEAN' | 'BYTE' | 'COLLECTION' | 'DATE' | 'DOUBLE' | 'INTEGER' | 'LONG' | 'SINGLE' | 'VARIANT' |
+baseType ::= 'BOOLEAN' | 'BYTE' | 'COLLECTION' | 'DATE' | 'DOUBLE' | 'INTEGER' | 'LONG' | 'SINGLE' | 'VARIANT' | 'STRING' ( 'MULT' valueStmt )?
 fieldLength ::= 'MULT' 'INTEGERLITERAL' | 'MULT' 'IDENTIFIER'

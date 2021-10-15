@@ -4,6 +4,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -24,10 +25,12 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
         {
           'symbol': 'exp',
           'type': 'symbol',
+          'ruleIndex': 76,
           'children': [
             {
               'symbol': 'functionExp',
               'type': 'symbol',
+              'ruleIndex': 22,
               'children': [
                 {
                   'type': 'token',
@@ -54,6 +57,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                 {
                   'symbol': 'argumentsList',
                   'type': 'symbol',
+                  'ruleIndex': 26,
                   'children': [
                     {
                       'symbol': 'exp',
@@ -74,6 +78,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                         {
                           'symbol': 'exp',
                           'type': 'symbol',
+                          'ruleIndex': 76,
                           'children': [
                             {
                               'symbol': 'reference',
@@ -87,6 +92,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                     {
                                       'symbol': 'referenceItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 10,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -122,6 +128,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                     {
                                       'symbol': 'referenceItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 10,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -201,6 +208,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -209,6 +217,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
         {
           'symbol': 'functionExp',
           'type': 'symbol',
+          'ruleIndex': 22,
           'children': [
             {
               'type': 'token',
@@ -235,6 +244,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
             {
               'symbol': 'argumentsList',
               'type': 'symbol',
+              'ruleIndex': 26,
               'children': [
                 {
                   'symbol': 'exp',
@@ -247,10 +257,12 @@ exports[`excel-formula-parser structure reference works 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 12,
                           'children': [
                             {
                               'symbol': 'structureReference',
                               'type': 'symbol',
+                              'ruleIndex': 28,
                               'children': [
                                 {
                                   'type': 'token',
@@ -266,6 +278,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                 {
                                   'symbol': 'tableSpecifier',
                                   'type': 'symbol',
+                                  'ruleIndex': 31,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -281,14 +294,17 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                     {
                                       'symbol': 'tableSpecifierInner',
                                       'type': 'symbol',
+                                      'ruleIndex': 36,
                                       'children': [
                                         {
                                           'symbol': 'tableColumnSpecifier',
                                           'type': 'symbol',
+                                          'ruleIndex': 42,
                                           'children': [
                                             {
                                               'symbol': 'tableSpecifierItem',
                                               'type': 'symbol',
+                                              'ruleIndex': 38,
                                               'children': [
                                                 {
                                                   'type': 'token',
@@ -323,6 +339,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                             {
                                               'symbol': 'tableSpecifierItem',
                                               'type': 'symbol',
+                                              'ruleIndex': 37,
                                               'children': [
                                                 {
                                                   'type': 'token',
@@ -402,10 +419,12 @@ exports[`excel-formula-parser structure reference works 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 12,
                           'children': [
                             {
                               'symbol': 'structureReference',
                               'type': 'symbol',
+                              'ruleIndex': 28,
                               'children': [
                                 {
                                   'type': 'token',
@@ -421,6 +440,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                 {
                                   'symbol': 'tableSpecifier',
                                   'type': 'symbol',
+                                  'ruleIndex': 31,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -436,14 +456,17 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                     {
                                       'symbol': 'tableSpecifierInner',
                                       'type': 'symbol',
+                                      'ruleIndex': 36,
                                       'children': [
                                         {
                                           'symbol': 'tableColumnSpecifier',
                                           'type': 'symbol',
+                                          'ruleIndex': 42,
                                           'children': [
                                             {
                                               'symbol': 'tableSpecifierItem',
                                               'type': 'symbol',
+                                              'ruleIndex': 37,
                                               'children': [
                                                 {
                                                   'type': 'token',
@@ -535,6 +558,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -547,10 +571,12 @@ exports[`excel-formula-parser structure reference works for Reference operators 
             {
               'symbol': 'referenceItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'structureReference',
                   'type': 'symbol',
+                  'ruleIndex': 28,
                   'children': [
                     {
                       'type': 'token',
@@ -566,6 +592,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                     {
                       'symbol': 'tableSpecifier',
                       'type': 'symbol',
+                      'ruleIndex': 31,
                       'children': [
                         {
                           'type': 'token',
@@ -581,14 +608,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                         {
                           'symbol': 'tableSpecifierInner',
                           'type': 'symbol',
+                          'ruleIndex': 36,
                           'children': [
                             {
                               'symbol': 'tableColumnSpecifier',
                               'type': 'symbol',
+                              'ruleIndex': 42,
                               'children': [
                                 {
                                   'symbol': 'tableSpecifierItem',
                                   'type': 'symbol',
+                                  'ruleIndex': 37,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -651,6 +681,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -668,10 +699,12 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                 {
                   'symbol': 'referenceItem',
                   'type': 'symbol',
+                  'ruleIndex': 12,
                   'children': [
                     {
                       'symbol': 'structureReference',
                       'type': 'symbol',
+                      'ruleIndex': 28,
                       'children': [
                         {
                           'type': 'token',
@@ -687,6 +720,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                         {
                           'symbol': 'tableSpecifier',
                           'type': 'symbol',
+                          'ruleIndex': 31,
                           'children': [
                             {
                               'type': 'token',
@@ -702,14 +736,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                             {
                               'symbol': 'tableSpecifierInner',
                               'type': 'symbol',
+                              'ruleIndex': 36,
                               'children': [
                                 {
                                   'symbol': 'tableColumnSpecifier',
                                   'type': 'symbol',
+                                  'ruleIndex': 42,
                                   'children': [
                                     {
                                       'symbol': 'tableSpecifierItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 37,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -780,10 +817,12 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                 {
                   'symbol': 'referenceItem',
                   'type': 'symbol',
+                  'ruleIndex': 12,
                   'children': [
                     {
                       'symbol': 'structureReference',
                       'type': 'symbol',
+                      'ruleIndex': 28,
                       'children': [
                         {
                           'type': 'token',
@@ -799,6 +838,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                         {
                           'symbol': 'tableSpecifier',
                           'type': 'symbol',
+                          'ruleIndex': 31,
                           'children': [
                             {
                               'type': 'token',
@@ -814,14 +854,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                             {
                               'symbol': 'tableSpecifierInner',
                               'type': 'symbol',
+                              'ruleIndex': 36,
                               'children': [
                                 {
                                   'symbol': 'tableColumnSpecifier',
                                   'type': 'symbol',
+                                  'ruleIndex': 42,
                                   'children': [
                                     {
                                       'symbol': 'tableSpecifierItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 37,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -886,6 +929,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -903,10 +947,12 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                 {
                   'symbol': 'referenceItem',
                   'type': 'symbol',
+                  'ruleIndex': 12,
                   'children': [
                     {
                       'symbol': 'structureReference',
                       'type': 'symbol',
+                      'ruleIndex': 28,
                       'children': [
                         {
                           'type': 'token',
@@ -922,6 +968,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                         {
                           'symbol': 'tableSpecifier',
                           'type': 'symbol',
+                          'ruleIndex': 31,
                           'children': [
                             {
                               'type': 'token',
@@ -937,14 +984,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                             {
                               'symbol': 'tableSpecifierInner',
                               'type': 'symbol',
+                              'ruleIndex': 36,
                               'children': [
                                 {
                                   'symbol': 'tableColumnSpecifier',
                                   'type': 'symbol',
+                                  'ruleIndex': 42,
                                   'children': [
                                     {
                                       'symbol': 'tableSpecifierItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 37,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -1004,10 +1054,12 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                 {
                   'symbol': 'referenceItem',
                   'type': 'symbol',
+                  'ruleIndex': 12,
                   'children': [
                     {
                       'symbol': 'structureReference',
                       'type': 'symbol',
+                      'ruleIndex': 28,
                       'children': [
                         {
                           'type': 'token',
@@ -1023,6 +1075,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                         {
                           'symbol': 'tableSpecifier',
                           'type': 'symbol',
+                          'ruleIndex': 31,
                           'children': [
                             {
                               'type': 'token',
@@ -1038,14 +1091,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                             {
                               'symbol': 'tableSpecifierInner',
                               'type': 'symbol',
+                              'ruleIndex': 36,
                               'children': [
                                 {
                                   'symbol': 'tableColumnSpecifier',
                                   'type': 'symbol',
+                                  'ruleIndex': 42,
                                   'children': [
                                     {
                                       'symbol': 'tableSpecifierItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 37,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -1110,6 +1166,7 @@ exports[`excel-formula-parser structure reference works for space inside column 
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1122,10 +1179,12 @@ exports[`excel-formula-parser structure reference works for space inside column 
             {
               'symbol': 'referenceItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'structureReference',
                   'type': 'symbol',
+                  'ruleIndex': 28,
                   'children': [
                     {
                       'type': 'token',
@@ -1141,6 +1200,7 @@ exports[`excel-formula-parser structure reference works for space inside column 
                     {
                       'symbol': 'tableSpecifier',
                       'type': 'symbol',
+                      'ruleIndex': 31,
                       'children': [
                         {
                           'type': 'token',
@@ -1156,14 +1216,17 @@ exports[`excel-formula-parser structure reference works for space inside column 
                         {
                           'symbol': 'tableSpecifierInner',
                           'type': 'symbol',
+                          'ruleIndex': 36,
                           'children': [
                             {
                               'symbol': 'tableColumnSpecifier',
                               'type': 'symbol',
+                              'ruleIndex': 42,
                               'children': [
                                 {
                                   'symbol': 'tableSpecifierItem',
                                   'type': 'symbol',
+                                  'ruleIndex': 37,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -1226,6 +1289,7 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1238,10 +1302,12 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
             {
               'symbol': 'referenceItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'structureReference',
                   'type': 'symbol',
+                  'ruleIndex': 28,
                   'children': [
                     {
                       'type': 'token',
@@ -1257,6 +1323,7 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                     {
                       'symbol': 'tableSpecifier',
                       'type': 'symbol',
+                      'ruleIndex': 31,
                       'children': [
                         {
                           'type': 'token',
@@ -1272,10 +1339,12 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                         {
                           'symbol': 'tableSpecifierInner',
                           'type': 'symbol',
+                          'ruleIndex': 35,
                           'children': [
                             {
                               'symbol': 'tableThisRow',
                               'type': 'symbol',
+                              'ruleIndex': 34,
                               'children': [
                                 {
                                   'type': 'token',
@@ -1347,6 +1416,7 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1359,10 +1429,12 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
             {
               'symbol': 'referenceItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'structureReference',
                   'type': 'symbol',
+                  'ruleIndex': 28,
                   'children': [
                     {
                       'type': 'token',
@@ -1378,6 +1450,7 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                     {
                       'symbol': 'tableSpecifier',
                       'type': 'symbol',
+                      'ruleIndex': 31,
                       'children': [
                         {
                           'type': 'token',
@@ -1393,10 +1466,12 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                         {
                           'symbol': 'tableSpecifierInner',
                           'type': 'symbol',
+                          'ruleIndex': 35,
                           'children': [
                             {
                               'symbol': 'tableThisRow',
                               'type': 'symbol',
+                              'ruleIndex': 34,
                               'children': [
                                 {
                                   'type': 'token',
@@ -1468,6 +1543,7 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1480,10 +1556,12 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
             {
               'symbol': 'referenceItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'structureReference',
                   'type': 'symbol',
+                  'ruleIndex': 28,
                   'children': [
                     {
                       'type': 'token',
@@ -1499,6 +1577,7 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                     {
                       'symbol': 'tableSpecifier',
                       'type': 'symbol',
+                      'ruleIndex': 31,
                       'children': [
                         {
                           'type': 'token',
@@ -1514,14 +1593,17 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                         {
                           'symbol': 'tableSpecifierInner',
                           'type': 'symbol',
+                          'ruleIndex': 36,
                           'children': [
                             {
                               'symbol': 'tableColumnSpecifier',
                               'type': 'symbol',
+                              'ruleIndex': 42,
                               'children': [
                                 {
                                   'symbol': 'tableSpecifierItem',
                                   'type': 'symbol',
+                                  'ruleIndex': 38,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -1556,6 +1638,7 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                                 {
                                   'symbol': 'tableSpecifierItem',
                                   'type': 'symbol',
+                                  'ruleIndex': 37,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -1621,6 +1704,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1629,6 +1713,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
         {
           'symbol': 'functionExp',
           'type': 'symbol',
+          'ruleIndex': 22,
           'children': [
             {
               'type': 'token',
@@ -1655,6 +1740,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
             {
               'symbol': 'argumentsList',
               'type': 'symbol',
+              'ruleIndex': 26,
               'children': [
                 {
                   'symbol': 'exp',
@@ -1667,6 +1753,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'type': 'token',
@@ -1734,6 +1821,7 @@ exports[`excel-formula-parser works for env 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1742,6 +1830,7 @@ exports[`excel-formula-parser works for env 1`] = `
         {
           'symbol': 'functionExp',
           'type': 'symbol',
+          'ruleIndex': 22,
           'children': [
             {
               'type': 'token',
@@ -1768,6 +1857,7 @@ exports[`excel-formula-parser works for env 1`] = `
             {
               'symbol': 'argumentsList',
               'type': 'symbol',
+              'ruleIndex': 26,
               'children': [
                 {
                   'symbol': 'exp',
@@ -1780,6 +1870,7 @@ exports[`excel-formula-parser works for env 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'type': 'token',
@@ -1832,6 +1923,7 @@ exports[`excel-formula-parser works for env 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'type': 'token',
@@ -1899,6 +1991,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -1927,6 +2020,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                 {
                   'symbol': 'referenceItem',
                   'type': 'symbol',
+                  'ruleIndex': 10,
                   'children': [
                     {
                       'type': 'token',
@@ -1979,10 +2073,12 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                     {
                       'symbol': 'reference',
                       'type': 'symbol',
+                      'ruleIndex': 13,
                       'children': [
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 11,
                           'children': [
                             {
                               'type': 'token',
@@ -2019,10 +2115,12 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                     {
                       'symbol': 'reference',
                       'type': 'symbol',
+                      'ruleIndex': 13,
                       'children': [
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 11,
                           'children': [
                             {
                               'type': 'token',
@@ -2054,6 +2152,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                     {
                       'symbol': 'referenceItem',
                       'type': 'symbol',
+                      'ruleIndex': 10,
                       'children': [
                         {
                           'type': 'token',
@@ -2113,6 +2212,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -2121,6 +2221,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
         {
           'symbol': 'functionExp',
           'type': 'symbol',
+          'ruleIndex': 22,
           'children': [
             {
               'type': 'token',
@@ -2147,6 +2248,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
             {
               'symbol': 'argumentsList',
               'type': 'symbol',
+              'ruleIndex': 26,
               'children': [
                 {
                   'symbol': 'exp',
@@ -2175,6 +2277,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                             {
                               'symbol': 'referenceItem',
                               'type': 'symbol',
+                              'ruleIndex': 10,
                               'children': [
                                 {
                                   'type': 'token',
@@ -2227,10 +2330,12 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                 {
                                   'symbol': 'reference',
                                   'type': 'symbol',
+                                  'ruleIndex': 13,
                                   'children': [
                                     {
                                       'symbol': 'referenceItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 11,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -2267,10 +2372,12 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                 {
                                   'symbol': 'reference',
                                   'type': 'symbol',
+                                  'ruleIndex': 13,
                                   'children': [
                                     {
                                       'symbol': 'referenceItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 11,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -2302,6 +2409,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                 {
                                   'symbol': 'referenceItem',
                                   'type': 'symbol',
+                                  'ruleIndex': 10,
                                   'children': [
                                     {
                                       'type': 'token',
@@ -2390,6 +2498,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -2398,6 +2507,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
         {
           'symbol': 'functionExp',
           'type': 'symbol',
+          'ruleIndex': 22,
           'children': [
             {
               'type': 'token',
@@ -2424,6 +2534,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
             {
               'symbol': 'argumentsList',
               'type': 'symbol',
+              'ruleIndex': 26,
               'children': [
                 {
                   'symbol': 'exp',
@@ -2436,6 +2547,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'type': 'token',
@@ -2503,6 +2615,7 @@ exports[`excel-formula-parser works for simple 1`] = `
 "{
   'symbol': 'formula',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'symbol': 'exp',
@@ -2511,6 +2624,7 @@ exports[`excel-formula-parser works for simple 1`] = `
         {
           'symbol': 'functionExp',
           'type': 'symbol',
+          'ruleIndex': 22,
           'children': [
             {
               'type': 'token',
@@ -2537,6 +2651,7 @@ exports[`excel-formula-parser works for simple 1`] = `
             {
               'symbol': 'argumentsList',
               'type': 'symbol',
+              'ruleIndex': 26,
               'children': [
                 {
                   'symbol': 'exp',
@@ -2549,6 +2664,7 @@ exports[`excel-formula-parser works for simple 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'type': 'token',
@@ -2601,6 +2717,7 @@ exports[`excel-formula-parser works for simple 1`] = `
                         {
                           'symbol': 'referenceItem',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'type': 'token',

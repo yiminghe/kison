@@ -4,22 +4,27 @@ exports[`regexp parser works for (?:a)+? 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'Group',
                   'type': 'symbol',
+                  'ruleIndex': 15,
                   'children': [
                     {
                       'type': 'token',
@@ -46,22 +51,27 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                     {
                       'symbol': 'Expression',
                       'type': 'symbol',
+                      'ruleIndex': 6,
                       'children': [
                         {
                           'symbol': 'SubExpression',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'symbol': 'ExpressionItem',
                               'type': 'symbol',
+                              'ruleIndex': 11,
                               'children': [
                                 {
                                   'symbol': 'Match',
                                   'type': 'symbol',
+                                  'ruleIndex': 27,
                                   'children': [
                                     {
                                       'symbol': 'MatchItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 30,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -104,10 +114,12 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                     {
                       'symbol': 'Quantifier',
                       'type': 'symbol',
+                      'ruleIndex': 53,
                       'children': [
                         {
                           'symbol': 'QuantifierType',
                           'type': 'symbol',
+                          'ruleIndex': 55,
                           'children': [
                             {
                               'type': 'token',
@@ -166,22 +178,27 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'Group',
                   'type': 'symbol',
+                  'ruleIndex': 18,
                   'children': [
                     {
                       'type': 'token',
@@ -197,22 +214,27 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                     {
                       'symbol': 'Expression',
                       'type': 'symbol',
+                      'ruleIndex': 6,
                       'children': [
                         {
                           'symbol': 'SubExpression',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'symbol': 'ExpressionItem',
                               'type': 'symbol',
+                              'ruleIndex': 11,
                               'children': [
                                 {
                                   'symbol': 'Match',
                                   'type': 'symbol',
+                                  'ruleIndex': 27,
                                   'children': [
                                     {
                                       'symbol': 'MatchItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 30,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -265,14 +287,17 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 30,
                       'children': [
                         {
                           'type': 'token',
@@ -309,22 +334,27 @@ exports[`regexp parser works for (a|b)*z 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 12,
               'children': [
                 {
                   'symbol': 'Group',
                   'type': 'symbol',
+                  'ruleIndex': 15,
                   'children': [
                     {
                       'type': 'token',
@@ -340,22 +370,27 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                     {
                       'symbol': 'Expression',
                       'type': 'symbol',
+                      'ruleIndex': 6,
                       'children': [
                         {
                           'symbol': 'SubExpression',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'symbol': 'ExpressionItem',
                               'type': 'symbol',
+                              'ruleIndex': 11,
                               'children': [
                                 {
                                   'symbol': 'Match',
                                   'type': 'symbol',
+                                  'ruleIndex': 27,
                                   'children': [
                                     {
                                       'symbol': 'MatchItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 30,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -396,18 +431,22 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                         {
                           'symbol': 'SubExpression',
                           'type': 'symbol',
+                          'ruleIndex': 10,
                           'children': [
                             {
                               'symbol': 'ExpressionItem',
                               'type': 'symbol',
+                              'ruleIndex': 11,
                               'children': [
                                 {
                                   'symbol': 'Match',
                                   'type': 'symbol',
+                                  'ruleIndex': 27,
                                   'children': [
                                     {
                                       'symbol': 'MatchItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 30,
                                       'children': [
                                         {
                                           'type': 'token',
@@ -450,10 +489,12 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                     {
                       'symbol': 'Quantifier',
                       'type': 'symbol',
+                      'ruleIndex': 53,
                       'children': [
                         {
                           'symbol': 'QuantifierType',
                           'type': 'symbol',
+                          'ruleIndex': 54,
                           'children': [
                             {
                               'type': 'token',
@@ -486,14 +527,17 @@ exports[`regexp parser works for (a|b)*z 1`] = `
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 30,
                       'children': [
                         {
                           'type': 'token',
@@ -530,34 +574,42 @@ exports[`regexp parser works for [^a-z] 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 29,
                       'children': [
                         {
                           'symbol': 'MatchCharacterClass',
                           'type': 'symbol',
+                          'ruleIndex': 31,
                           'children': [
                             {
                               'symbol': 'CharacterGroup',
                               'type': 'symbol',
+                              'ruleIndex': 35,
                               'children': [
                                 {
                                   'type': 'token',
@@ -584,14 +636,17 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                 {
                                   'symbol': 'CharacterGroupInner',
                                   'type': 'symbol',
+                                  'ruleIndex': 39,
                                   'children': [
                                     {
                                       'symbol': 'CharacterGroupItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 41,
                                       'children': [
                                         {
                                           'symbol': 'CharacterRange',
                                           'type': 'symbol',
+                                          'ruleIndex': 50,
                                           'children': [
                                             {
                                               'type': 'token',
@@ -677,34 +732,42 @@ exports[`regexp parser works for [a-z] 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 29,
                       'children': [
                         {
                           'symbol': 'MatchCharacterClass',
                           'type': 'symbol',
+                          'ruleIndex': 31,
                           'children': [
                             {
                               'symbol': 'CharacterGroup',
                               'type': 'symbol',
+                              'ruleIndex': 35,
                               'children': [
                                 {
                                   'type': 'token',
@@ -720,14 +783,17 @@ exports[`regexp parser works for [a-z] 1`] = `
                                 {
                                   'symbol': 'CharacterGroupInner',
                                   'type': 'symbol',
+                                  'ruleIndex': 39,
                                   'children': [
                                     {
                                       'symbol': 'CharacterGroupItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 41,
                                       'children': [
                                         {
                                           'symbol': 'CharacterRange',
                                           'type': 'symbol',
+                                          'ruleIndex': 50,
                                           'children': [
                                             {
                                               'type': 'token',
@@ -775,10 +841,12 @@ exports[`regexp parser works for [a-z] 1`] = `
                                     {
                                       'symbol': 'CharacterGroupItem',
                                       'type': 'symbol',
+                                      'ruleIndex': 41,
                                       'children': [
                                         {
                                           'symbol': 'CharacterRange',
                                           'type': 'symbol',
+                                          'ruleIndex': 50,
                                           'children': [
                                             {
                                               'type': 'token',
@@ -842,18 +910,22 @@ exports[`regexp parser works for \\12\\b 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 14,
               'children': [
                 {
                   'type': 'token',
@@ -877,10 +949,12 @@ exports[`regexp parser works for \\12\\b 1`] = `
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 13,
               'children': [
                 {
                   'symbol': 'Anchor',
                   'type': 'symbol',
+                  'ruleIndex': 62,
                   'children': [
                     {
                       'type': 'token',
@@ -918,6 +992,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 1,
   'children': [
     {
       'type': 'token',
@@ -933,22 +1008,27 @@ exports[`regexp parser works for ^a+z$ 1`] = `
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 30,
                       'children': [
                         {
                           'type': 'token',
@@ -972,10 +1052,12 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                     {
                       'symbol': 'Quantifier',
                       'type': 'symbol',
+                      'ruleIndex': 53,
                       'children': [
                         {
                           'symbol': 'QuantifierType',
                           'type': 'symbol',
+                          'ruleIndex': 55,
                           'children': [
                             {
                               'type': 'token',
@@ -1008,14 +1090,17 @@ exports[`regexp parser works for ^a+z$ 1`] = `
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 30,
                       'children': [
                         {
                           'type': 'token',
@@ -1043,10 +1128,12 @@ exports[`regexp parser works for ^a+z$ 1`] = `
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 13,
               'children': [
                 {
                   'symbol': 'Anchor',
                   'type': 'symbol',
+                  'ruleIndex': 68,
                   'children': [
                     {
                       'type': 'token',
@@ -1084,26 +1171,32 @@ exports[`regexp parser works for a{1,2} 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 30,
                       'children': [
                         {
                           'type': 'token',
@@ -1127,10 +1220,12 @@ exports[`regexp parser works for a{1,2} 1`] = `
                     {
                       'symbol': 'Quantifier',
                       'type': 'symbol',
+                      'ruleIndex': 53,
                       'children': [
                         {
                           'symbol': 'QuantifierType',
                           'type': 'symbol',
+                          'ruleIndex': 58,
                           'children': [
                             {
                               'type': 'token',
@@ -1216,26 +1311,32 @@ exports[`regexp parser works for a{1} 1`] = `
 "{
   'symbol': 'Regexp',
   'type': 'symbol',
+  'ruleIndex': 2,
   'children': [
     {
       'symbol': 'Expression',
       'type': 'symbol',
+      'ruleIndex': 6,
       'children': [
         {
           'symbol': 'SubExpression',
           'type': 'symbol',
+          'ruleIndex': 10,
           'children': [
             {
               'symbol': 'ExpressionItem',
               'type': 'symbol',
+              'ruleIndex': 11,
               'children': [
                 {
                   'symbol': 'Match',
                   'type': 'symbol',
+                  'ruleIndex': 27,
                   'children': [
                     {
                       'symbol': 'MatchItem',
                       'type': 'symbol',
+                      'ruleIndex': 30,
                       'children': [
                         {
                           'type': 'token',
@@ -1259,10 +1360,12 @@ exports[`regexp parser works for a{1} 1`] = `
                     {
                       'symbol': 'Quantifier',
                       'type': 'symbol',
+                      'ruleIndex': 53,
                       'children': [
                         {
                           'symbol': 'QuantifierType',
                           'type': 'symbol',
+                          'ruleIndex': 58,
                           'children': [
                             {
                               'type': 'token',

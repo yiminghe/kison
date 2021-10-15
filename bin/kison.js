@@ -168,7 +168,7 @@ function genParser() {
       path.basename(outFile, path.extname(outFile)) + '.d.ts',
     );
     const baseDts = fs.readFileSync(
-      path.join(__dirname, '../lib/ll/parser.d.ts'),
+      path.join(__dirname, '../lib/parser.d.ts'),
       'utf-8',
     );
     const dts = instance.genDTs(baseDts);

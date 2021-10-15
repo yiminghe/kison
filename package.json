@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -51,7 +51,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
-    "compile":"babel -x '.js,.ts' src --out-dir lib && cp src/*.d.ts lib/",
+    "compile": "babel -x '.js,.ts' src --out-dir lib && cp src/*.d.ts lib/",
     "check": "tsc --noEmit",
     "start": "http-server --mimetypes examples/mime.types",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",

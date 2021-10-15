@@ -404,88 +404,88 @@ describe('ll', () => {
     const parser = run(code);
     const ast = parser.parse('1+2+3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 5,
-        'firstLine': 0,
-        'lastLine': 1,
-        'firstColumn': 0,
-        'lastColumn': 6,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 3,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 4,
-            'symbol': 'exp',
-            'type': 'symbol',
-            'children': [
-              {
-                'start': 0,
-                'end': 1,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 2,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '1'
-              },
-              {
-                'start': 1,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 2,
-                'lastColumn': 3,
-                'token': '+',
-                'type': 'token',
-                'text': '+'
-              },
-              {
-                'start': 2,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 4,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '2'
-              }
-            ],
-            'ruleIndex': -1
-          },
-          {
-            'start': 3,
-            'end': 4,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 4,
-            'lastColumn': 5,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 4,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 5,
-            'lastColumn': 6,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '3'
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+"{
+  'start': 0,
+  'end': 5,
+  'firstLine': 0,
+  'lastLine': 1,
+  'firstColumn': 0,
+  'lastColumn': 6,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 4,
+      'symbol': 'exp',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '1'
+        },
+        {
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3,
+          'token': '+',
+          'type': 'token',
+          'text': '+'
+        },
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        }
+      ],
+      'ruleIndex': 6
+    },
+    {
+      'start': 3,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 4,
+      'lastColumn': 5,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 4,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 6,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '3'
+    }
+  ],
+  'ruleIndex': 6
+}"
+`);
   });
 
   it('ast works', () => {
@@ -494,88 +494,88 @@ describe('ll', () => {
     const parser = run(code);
     const ast = parser.parse('1+2*3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 0,
-        'firstLine': 1,
-        'lastLine': 0,
-        'firstColumn': 1,
-        'lastColumn': 0,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 1,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 2,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '1'
-          },
-          {
-            'start': 1,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 2,
-            'lastColumn': 3,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 2,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 3,
-            'lastColumn': 6,
-            'symbol': 'exp',
-            'type': 'symbol',
-            'children': [
-              {
-                'start': 2,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 4,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '2'
-              },
-              {
-                'start': 3,
-                'end': 4,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 4,
-                'lastColumn': 5,
-                'token': '*',
-                'type': 'token',
-                'text': '*'
-              },
-              {
-                'start': 4,
-                'end': 5,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 5,
-                'lastColumn': 6,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '3'
-              }
-            ],
-            'ruleIndex': -1
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+"{
+  'start': 0,
+  'end': 0,
+  'firstLine': 1,
+  'lastLine': 0,
+  'firstColumn': 1,
+  'lastColumn': 0,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '1'
+    },
+    {
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 2,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 6,
+      'symbol': 'exp',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        },
+        {
+          'start': 3,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 4,
+          'lastColumn': 5,
+          'token': '*',
+          'type': 'token',
+          'text': '*'
+        },
+        {
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '3'
+        }
+      ],
+      'ruleIndex': 10
+    }
+  ],
+  'ruleIndex': 6
+}"
+`);
   });
 
   it('ast works', () => {
@@ -670,10 +670,10 @@ describe('ll', () => {
               'text': '4'
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 10
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 6
     },
     {
       'start': 5,
@@ -768,7 +768,7 @@ describe('ll', () => {
       'ruleIndex': 13
     }
   ],
-  'ruleIndex': -1
+  'ruleIndex': 6
 }"
 `);
   });
@@ -877,10 +877,10 @@ describe('ll', () => {
           'text': ''
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 10
     }
   ],
-  'ruleIndex': -1
+  'ruleIndex': 6
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
@@ -1038,54 +1038,54 @@ describe('ll', () => {
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 2,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 3,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 1,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 2,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '1'
-          },
-          {
-            'start': 1,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 2,
-            'lastColumn': 3,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 2,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 3,
-            'lastColumn': 3,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '0',
-            'recovery': 'add'
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+"{
+  'start': 0,
+  'end': 2,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 3,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '1'
+    },
+    {
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 2,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 3,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '0',
+      'recovery': 'add'
+    }
+  ],
+  'ruleIndex': 6
+}"
+`);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
       "{
         'recovery': true,

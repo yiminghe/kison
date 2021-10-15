@@ -1,5 +1,3 @@
-
-
 import data from '../data';
 import utils from '../utils';
 import type { AstTokenNode as AstTokenNodeType } from '../AstNode';
@@ -182,6 +180,7 @@ function parse(input: string, options: any) {
           symbol: ast.symbol,
           children: [ast],
           label: ast.label,
+          ruleIndex: ast.ruleIndex,
         });
         stackTop.children.pop();
         stackTop.addChild(wrap);

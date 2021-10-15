@@ -1,4 +1,3 @@
-// @ts-check
 import { Token } from '../parser';
 import Production from '../Production';
 import Utils from '../utils';
@@ -106,6 +105,7 @@ export default function parse(input: string, options: any) {
           symbol: ast.symbol,
           children: [ast],
           label: ast.label,
+          ruleIndex: ast.ruleIndex,
         });
         stackTop.children.pop();
         stackTop.addChild(wrap);

@@ -1,5 +1,3 @@
-// @ts-check
-
 import data from '../data';
 let { parser, productionsBySymbol } = data;
 

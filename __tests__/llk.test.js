@@ -1128,88 +1128,88 @@ describe('llk', () => {
     const parser = run(code);
     const ast = parser.parse('1+2+3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 5,
-        'firstLine': 0,
-        'lastLine': 1,
-        'firstColumn': 0,
-        'lastColumn': 6,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 3,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 4,
-            'symbol': 'exp',
-            'type': 'symbol',
-            'children': [
-              {
-                'start': 0,
-                'end': 1,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 2,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '1'
-              },
-              {
-                'start': 1,
-                'end': 2,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 2,
-                'lastColumn': 3,
-                'token': '+',
-                'type': 'token',
-                'text': '+'
-              },
-              {
-                'start': 2,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 4,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '2'
-              }
-            ],
-            'ruleIndex': -1
-          },
-          {
-            'start': 3,
-            'end': 4,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 4,
-            'lastColumn': 5,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 4,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 5,
-            'lastColumn': 6,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '3'
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+"{
+  'start': 0,
+  'end': 5,
+  'firstLine': 0,
+  'lastLine': 1,
+  'firstColumn': 0,
+  'lastColumn': 6,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 4,
+      'symbol': 'exp',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '1'
+        },
+        {
+          'start': 1,
+          'end': 2,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 2,
+          'lastColumn': 3,
+          'token': '+',
+          'type': 'token',
+          'text': '+'
+        },
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        }
+      ],
+      'ruleIndex': 4
+    },
+    {
+      'start': 3,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 4,
+      'lastColumn': 5,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 4,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 6,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '3'
+    }
+  ],
+  'ruleIndex': 4
+}"
+`);
   });
 
   it('ast works', () => {
@@ -1218,88 +1218,88 @@ describe('llk', () => {
     const parser = run(code);
     const ast = parser.parse('1+2*3').ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 0,
-        'firstLine': 1,
-        'lastLine': 0,
-        'firstColumn': 1,
-        'lastColumn': 0,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 1,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 2,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '1'
-          },
-          {
-            'start': 1,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 2,
-            'lastColumn': 3,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 2,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 3,
-            'lastColumn': 6,
-            'symbol': 'exp',
-            'type': 'symbol',
-            'children': [
-              {
-                'start': 2,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 4,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '2'
-              },
-              {
-                'start': 3,
-                'end': 4,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 4,
-                'lastColumn': 5,
-                'token': '*',
-                'type': 'token',
-                'text': '*'
-              },
-              {
-                'start': 4,
-                'end': 5,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 5,
-                'lastColumn': 6,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '3'
-              }
-            ],
-            'ruleIndex': -1
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+"{
+  'start': 0,
+  'end': 0,
+  'firstLine': 1,
+  'lastLine': 0,
+  'firstColumn': 1,
+  'lastColumn': 0,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '1'
+    },
+    {
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 2,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 6,
+      'symbol': 'exp',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        },
+        {
+          'start': 3,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 4,
+          'lastColumn': 5,
+          'token': '*',
+          'type': 'token',
+          'text': '*'
+        },
+        {
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '3'
+        }
+      ],
+      'ruleIndex': 7
+    }
+  ],
+  'ruleIndex': 4
+}"
+`);
   });
 
   it('ast works', () => {
@@ -1394,10 +1394,10 @@ describe('llk', () => {
               'text': '4'
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 7
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 4
     },
     {
       'start': 5,
@@ -1492,7 +1492,7 @@ describe('llk', () => {
       'ruleIndex': 10
     }
   ],
-  'ruleIndex': -1
+  'ruleIndex': 4
 }"
 `);
   });
@@ -1503,110 +1503,110 @@ describe('llk', () => {
     const parser = run(code);
     const { ast, errorNode } = parser.parse('1+2*');
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 4,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 5,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 1,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 2,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '1'
-          },
-          {
-            'start': 1,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 2,
-            'lastColumn': 3,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 2,
-            'end': 4,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 3,
-            'lastColumn': 5,
-            'symbol': 'exp',
-            'type': 'symbol',
-            'children': [
-              {
-                'start': 2,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 4,
-                'token': 'NUMBER',
-                'type': 'token',
-                'text': '2'
-              },
-              {
-                'start': 3,
-                'end': 4,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 4,
-                'lastColumn': 5,
-                'token': '*',
-                'type': 'token',
-                'text': '*'
-              },
-              {
-                'start': 4,
-                'end': 4,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 5,
-                'lastColumn': 5,
-                'token': '$EOF',
-                'type': 'token',
-                'error': {
-                  'recovery': false,
-                  'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-                  'tip': ''-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
-                  'expected': [
-                    '-',
-                    'NUMBER',
-                    '('
-                  ],
-                  'symbol': 'exp',
-                  'lexer': {
-                    't': '$EOF',
-                    'text': '',
-                    'firstLine': 1,
-                    'firstColumn': 5,
-                    'lastLine': 1,
-                    'lastColumn': 5,
-                    'token': '$EOF',
-                    'start': 4,
-                    'end': 4
-                  }
-                },
-                'text': ''
-              }
+"{
+  'start': 0,
+  'end': 4,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 5,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '1'
+    },
+    {
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 2,
+      'end': 4,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 5,
+      'symbol': 'exp',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        },
+        {
+          'start': 3,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 4,
+          'lastColumn': 5,
+          'token': '*',
+          'type': 'token',
+          'text': '*'
+        },
+        {
+          'start': 4,
+          'end': 4,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 5,
+          'token': '$EOF',
+          'type': 'token',
+          'error': {
+            'recovery': false,
+            'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+            'tip': ''-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
+            'expected': [
+              '-',
+              'NUMBER',
+              '('
             ],
-            'ruleIndex': -1
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+            'symbol': 'exp',
+            'lexer': {
+              't': '$EOF',
+              'text': '',
+              'firstLine': 1,
+              'firstColumn': 5,
+              'lastLine': 1,
+              'lastColumn': 5,
+              'token': '$EOF',
+              'start': 4,
+              'end': 4
+            }
+          },
+          'text': ''
+        }
+      ],
+      'ruleIndex': 7
+    }
+  ],
+  'ruleIndex': 4
+}"
+`);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
       "{
         'start': 4,
@@ -1762,54 +1762,54 @@ describe('llk', () => {
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-      "{
-        'start': 0,
-        'end': 2,
-        'firstLine': 1,
-        'lastLine': 1,
-        'firstColumn': 1,
-        'lastColumn': 3,
-        'symbol': 'exp',
-        'type': 'symbol',
-        'children': [
-          {
-            'start': 0,
-            'end': 1,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 2,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '1'
-          },
-          {
-            'start': 1,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 2,
-            'lastColumn': 3,
-            'token': '+',
-            'type': 'token',
-            'text': '+'
-          },
-          {
-            'start': 2,
-            'end': 2,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 3,
-            'lastColumn': 3,
-            'token': 'NUMBER',
-            'type': 'token',
-            'text': '0',
-            'recovery': 'add'
-          }
-        ],
-        'ruleIndex': -1
-      }"
-    `);
+"{
+  'start': 0,
+  'end': 2,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 3,
+  'symbol': 'exp',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '1'
+    },
+    {
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 2,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 3,
+      'token': 'NUMBER',
+      'type': 'token',
+      'text': '0',
+      'recovery': 'add'
+    }
+  ],
+  'ruleIndex': 4
+}"
+`);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
       "{
         'recovery': true,

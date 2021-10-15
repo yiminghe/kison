@@ -2,7 +2,7 @@ type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
 type AstSymbolNode = Program_Node|Statements_Node|Exp_Node;
-type AstTokenNode = $EOF_Node|$UNKNOWN_Node|NEW_LINE_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|NUMBER_Node|TOKEN_5_Node|TOKEN_6_Node;
+type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|NUMBER_Node|TOKEN_5_Node|TOKEN_6_Node|NEW_LINE_Node;
 type LiteralToken = "NEW_LINE"|"$HIDDEN"|"NUMBER"|"$EOF"|"$UNKOWN"|"+"|"-"|"*"|"/"|"^"|"("|")";
 type AstRootNode = Program_Node;
 // replace end
@@ -115,58 +115,58 @@ interface Program_Node extends BaseSymbolNode {
 interface Statements_Node extends BaseSymbolNode {
         symbol:"statements";
         
-        children:Array<Exp_Node | NEW_LINE_Node | Exp_Node | NEW_LINE_Node>;
+        children:Array<Exp_Node | NEW_LINE_Node>;
         parent:Program_Node;
       }
 interface Exp_Node_0 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
         children:[Exp_Node,TOKEN_0_Node,Exp_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        parent:Exp_Node | Statements_Node;
+      }
+interface Exp_Node_6 extends BaseSymbolNode {
+        symbol:"exp";
+        label:"binary-exp";
+        children:[Exp_Node,TOKEN_1_Node,Exp_Node];
+        parent:Exp_Node | Statements_Node;
       }
 interface Exp_Node_7 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
-        children:[Exp_Node,TOKEN_1_Node,Exp_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        children:[Exp_Node,TOKEN_2_Node,Exp_Node];
+        parent:Exp_Node | Statements_Node;
       }
 interface Exp_Node_8 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
-        children:[Exp_Node,TOKEN_2_Node,Exp_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        children:[Exp_Node,TOKEN_3_Node,Exp_Node];
+        parent:Exp_Node | Statements_Node;
       }
 interface Exp_Node_9 extends BaseSymbolNode {
         symbol:"exp";
         label:"binary-exp";
-        children:[Exp_Node,TOKEN_3_Node,Exp_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        children:[Exp_Node,TOKEN_4_Node,Exp_Node];
+        parent:Exp_Node | Statements_Node;
       }
 interface Exp_Node_10 extends BaseSymbolNode {
         symbol:"exp";
-        label:"binary-exp";
-        children:[Exp_Node,TOKEN_4_Node,Exp_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        
+        children:[TOKEN_1_Node,Exp_Node];
+        parent:Exp_Node | Statements_Node;
       }
 interface Exp_Node_11 extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[TOKEN_1_Node,Exp_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        children:[NUMBER_Node];
+        parent:Exp_Node | Statements_Node;
       }
 interface Exp_Node_12 extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[NUMBER_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
-      }
-interface Exp_Node_13 extends BaseSymbolNode {
-        symbol:"exp";
-        
         children:[TOKEN_5_Node,Exp_Node,TOKEN_6_Node];
-        parent:Exp_Node | Statements_Node | Statements_Node;
+        parent:Exp_Node | Statements_Node;
       }
-type Exp_Node = Exp_Node_0 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12 | Exp_Node_13;
+type Exp_Node = Exp_Node_0 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12;
 interface $EOF_Node extends BaseTokenNode {
         token:"$EOF";
         parent:AstSymbolNode;
@@ -175,40 +175,40 @@ interface $UNKNOWN_Node extends BaseTokenNode {
         token:"$UNKNOWN";
         parent:AstSymbolNode;
       }
-interface NEW_LINE_Node extends BaseTokenNode {
-            token:"NEW_LINE";
-            parent:Statements_Node | Statements_Node;
-          }
 interface TOKEN_0_Node extends BaseTokenNode {
             token:"+";
             parent:Exp_Node;
           }
 interface TOKEN_1_Node extends BaseTokenNode {
             token:"-";
-            parent:Exp_Node_7 | Exp_Node_11;
+            parent:Exp_Node_6 | Exp_Node_10;
           }
 interface TOKEN_2_Node extends BaseTokenNode {
             token:"*";
-            parent:Exp_Node_8;
+            parent:Exp_Node_7;
           }
 interface TOKEN_3_Node extends BaseTokenNode {
             token:"/";
-            parent:Exp_Node_9;
+            parent:Exp_Node_8;
           }
 interface TOKEN_4_Node extends BaseTokenNode {
             token:"^";
-            parent:Exp_Node_10;
+            parent:Exp_Node_9;
           }
 interface NUMBER_Node extends BaseTokenNode {
             token:"NUMBER";
-            parent:Exp_Node_12;
+            parent:Exp_Node_11;
           }
 interface TOKEN_5_Node extends BaseTokenNode {
             token:"(";
-            parent:Exp_Node_13;
+            parent:Exp_Node_12;
           }
 interface TOKEN_6_Node extends BaseTokenNode {
             token:")";
-            parent:Exp_Node_13;
+            parent:Exp_Node_12;
           }
-export type { Program_Node,Statements_Node,Exp_Node,$EOF_Node,$UNKNOWN_Node,NEW_LINE_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,NUMBER_Node,TOKEN_5_Node,TOKEN_6_Node }
+interface NEW_LINE_Node extends BaseTokenNode {
+            token:"NEW_LINE";
+            parent:Statements_Node;
+          }
+export type { Program_Node,Statements_Node,Exp_Node,$EOF_Node,$UNKNOWN_Node,TOKEN_0_Node,TOKEN_1_Node,TOKEN_2_Node,TOKEN_3_Node,TOKEN_4_Node,NUMBER_Node,TOKEN_5_Node,TOKEN_6_Node,NEW_LINE_Node }

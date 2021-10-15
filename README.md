@@ -139,10 +139,22 @@ module.exports = {
 
 cal-grammar.js: 
 
-- LL(1) and LL(K) support direct left recursive, operator precedence, repeat notation(*/+), optional notation(?). 
-- LL(K) support lazy repeat notation(*?/+?), lazy optional notation(??). 
+- LL(1) and LL(K) support:
+  - direct left recursive 
+  - operator precedence 
+  - repeat notation(*/+) 
+  - optional notation(?)
+  - group notation('('/')')
+  - alternative natation('|')
+- LL(K) extra support:
+  - lazy repeat notation(*?/+?)
+  - lazy optional notation(??). 
 
 ``` javascript
+const startGroup = `'('`;
+const endGroup = `')'`;
+const alternative = `'|'`;
+
 module.exports = () => ({
   productions: [
     {
@@ -151,35 +163,21 @@ module.exports = () => ({
     },
     {
       symbol: 'statements',
-      rhs: ['statement+'],
-    },
-    {
-      symbol: 'statement',
-      rhs: ['exp', 'NEW_LINE'],
+      rhs: [startGroup, 'exp', 'NEW_LINE', endGroup + '*'],
     },
     {
       symbol: 'exp',
-      rhs: ['exp', '+', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '-', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '*', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '/', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '^', 'exp'],
+      rhs: [
+        'exp', '+', 'exp',
+        alternative,
+        'exp', '-', 'exp',
+        alternative,
+        'exp', '*', 'exp',
+        alternative,
+        'exp', '/', 'exp',
+        alternative,
+        'exp', '^', 'exp',
+      ],
       label: 'binary-exp',
     },
     {
@@ -221,7 +219,6 @@ module.exports = () => ({
     ],
   },
 });
-
 ```
 
 ## command options

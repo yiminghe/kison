@@ -1,3 +1,7 @@
+const startGroup = `'('`;
+const endGroup = `')'`;
+const alternative = `'|'`;
+
 module.exports = () => ({
   productions: [
     {
@@ -6,36 +10,21 @@ module.exports = () => ({
     },
     {
       symbol: 'statements',
-      rhs: ['statement+'],
-    },
-    {
-      symbol: 'statement',
-      rhs: ['exp', 'NEW_LINE'],
-      skipAstNode: true,
+      rhs: [startGroup, 'exp', 'NEW_LINE', endGroup + '*'],
     },
     {
       symbol: 'exp',
-      rhs: ['exp', '+', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '-', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '*', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '/', 'exp'],
-      label: 'binary-exp',
-    },
-    {
-      symbol: 'exp',
-      rhs: ['exp', '^', 'exp'],
+      rhs: [
+        'exp', '+', 'exp',
+        alternative,
+        'exp', '-', 'exp',
+        alternative,
+        'exp', '*', 'exp',
+        alternative,
+        'exp', '/', 'exp',
+        alternative,
+        'exp', '^', 'exp',
+      ],
       label: 'binary-exp',
     },
     {

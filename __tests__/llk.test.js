@@ -20,6 +20,10 @@ describe('llk', () => {
           rhs: ['exp2+'],
         },
         {
+          symbol: 's2',
+          rhs: ['5'],
+        },
+        {
           symbol: 'exp',
           rhs: ['1'],
         },
@@ -52,7 +56,7 @@ describe('llk', () => {
     {
       'symbol': 'exp2',
       'type': 'symbol',
-      'ruleIndex': 5,
+      'ruleIndex': 6,
       'children': [
         {
           'type': 'token',
@@ -76,7 +80,7 @@ describe('llk', () => {
     {
       'symbol': 'exp2',
       'type': 'symbol',
-      'ruleIndex': 5,
+      'ruleIndex': 6,
       'children': [
         {
           'type': 'token',
@@ -100,7 +104,7 @@ describe('llk', () => {
     {
       'symbol': 'exp2',
       'type': 'symbol',
-      'ruleIndex': 5,
+      'ruleIndex': 6,
       'children': [
         {
           'type': 'token',
@@ -124,7 +128,7 @@ describe('llk', () => {
     {
       'symbol': 'exp2',
       'type': 'symbol',
-      'ruleIndex': 5,
+      'ruleIndex': 6,
       'children': [
         {
           'type': 'token',

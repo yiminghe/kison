@@ -90,6 +90,10 @@ describe('ll', () => {
           rhs: ['exp2+'],
         },
         {
+          symbol: 's2',
+          rhs: ['5'],
+        },
+        {
           symbol: 'exp2',
           rhs: ['1'],
         },
@@ -110,113 +114,113 @@ describe('ll', () => {
     });
     expect(ret.error).toBeFalsy();
     expect(prettyJson(ret.ast)).toMatchInlineSnapshot(`
-      "{
-        'symbol': 's2',
-        'type': 'symbol',
-        'ruleIndex': 5,
-        'children': [
-          {
-            'symbol': 'exp2',
-            'type': 'symbol',
-            'ruleIndex': 6,
-            'children': [
-              {
-                'type': 'token',
-                'text': '1',
-                'token': '1',
-                'start': 0,
-                'end': 1,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 1,
-                'lastColumn': 2
-              }
-            ],
-            'start': 0,
-            'end': 1,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 1,
-            'lastColumn': 2
-          },
-          {
-            'symbol': 'exp2',
-            'type': 'symbol',
-            'ruleIndex': 6,
-            'children': [
-              {
-                'type': 'token',
-                'text': '1',
-                'token': '1',
-                'start': 2,
-                'end': 3,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 3,
-                'lastColumn': 4
-              }
-            ],
-            'start': 2,
-            'end': 3,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 3,
-            'lastColumn': 4
-          },
-          {
-            'symbol': 'exp2',
-            'type': 'symbol',
-            'ruleIndex': 6,
-            'children': [
-              {
-                'type': 'token',
-                'text': '1',
-                'token': '1',
-                'start': 4,
-                'end': 5,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 5,
-                'lastColumn': 6
-              }
-            ],
-            'start': 4,
-            'end': 5,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 5,
-            'lastColumn': 6
-          },
-          {
-            'symbol': 'exp2',
-            'type': 'symbol',
-            'ruleIndex': 6,
-            'children': [
-              {
-                'type': 'token',
-                'text': '1',
-                'token': '1',
-                'start': 6,
-                'end': 7,
-                'firstLine': 1,
-                'lastLine': 1,
-                'firstColumn': 7,
-                'lastColumn': 8
-              }
-            ],
-            'start': 6,
-            'end': 7,
-            'firstLine': 1,
-            'lastLine': 1,
-            'firstColumn': 7,
-            'lastColumn': 8
-          }
-        ],
-        'start': 0,
-        'firstLine': 1,
-        'firstColumn': 1
-      }"
-    `);
+"{
+  'symbol': 's2',
+  'type': 'symbol',
+  'ruleIndex': 5,
+  'children': [
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 7,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
+        }
+      ],
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2
+    },
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 7,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4
+        }
+      ],
+      'start': 2,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 4
+    },
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 7,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6
+        }
+      ],
+      'start': 4,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 6
+    },
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 7,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 6,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 8
+        }
+      ],
+      'start': 6,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 7,
+      'lastColumn': 8
+    }
+  ],
+  'start': 0,
+  'firstLine': 1,
+  'firstColumn': 1
+}"
+`);
   });
 
   it('eliminate left recursive works', () => {

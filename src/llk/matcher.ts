@@ -1,7 +1,7 @@
-// @ts-check
-const { lexer } = require('../data');
+import data from '../data';
+const { lexer } = data;
 
-const createTokenMatcher = (token) => {
+const createTokenMatcher = (token: string) => {
   const fn = () => {
     const currentToken = lexer.getCurrentToken();
     return currentToken.t === token ? { count: 1 } : false;
@@ -10,6 +10,4 @@ const createTokenMatcher = (token) => {
   return fn;
 };
 
-module.exports = {
-  createTokenMatcher,
-};
+export { createTokenMatcher };

@@ -18,6 +18,7 @@
     "@babel/node": "7.x",
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-typescript": "^7.15.0",
+    "@babel/register": "^7.15.3",
     "@pika/pack": "^0.5.0",
     "@pika/plugin-standard-pkg": "^0.6.0",
     "@types/jest": "27.x",
@@ -50,10 +51,12 @@
     "modulex-util": "1.x"
   },
   "scripts": {
+    "compile":"babel -x '.js,.ts' src --out-dir lib && cp src/*.d.ts lib/",
+    "check": "tsc --noEmit",
     "start": "http-server --mimetypes examples/mime.types",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "prepare": "node scripts/link",
-    "pub": "np --no-cleanup  --no-publish --no-release-draft && npm publish",
+    "pub": "npm run check && npm run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
     "test": "jest",

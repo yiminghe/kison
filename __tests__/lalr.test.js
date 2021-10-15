@@ -1,4 +1,4 @@
-import LALRGrammar from '../lib/lalr/LALRGrammar';
+import LALRGrammar from '../src/lalr/LALRGrammar';
 import getGrammar from '../examples/cal/cal-grammar';
 import { prettyJson, run } from './utils';
 

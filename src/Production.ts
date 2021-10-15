@@ -1,38 +1,53 @@
-// @ts-check
+import utils from './utils';
+import type { Rhs } from './types';
+import type Lexer from './Lexer';
 
-const { filterRhs, eachRhs } = require('./utils');
+const { filterRhs, eachRhs } = utils;
+
+interface Params {
+  symbol: string;
+  rhs: Rhs;
+  label?: string;
+  skipAstNode?: boolean;
+  action?: Function;
+}
 
 class Production {
-  firsts = {};
-  follows = {};
-  symbol = undefined;
-  rhs = [];
+  firsts: Record<string, number> = {};
+  follows: Record<string, number> = {};
+  symbol: string = '';
+  rhs: Rhs = [];
+  flat?: boolean;
   nullable = false;
-  action = undefined;
-  priority = undefined;
+  action?: Function;
+  priority?: number;
+  precedence?: string;
+  skipAstNode?: boolean;
+  label?: string;
 
-  constructor(cfg) {
+  constructor(cfg: Params) {
     Object.assign(this, cfg);
   }
 
-  equals(other) {
+  equals(other: Production) {
     if (!equals(other.rhs, this.rhs)) {
       return false;
     }
     return other.symbol === this.symbol;
   }
 
-  lastTerminal(lexer) {
+  lastTerminal(lexer: Lexer) {
     const rhs = filterRhs(this.rhs);
     for (let i = rhs.length - 1; i >= 0; i--) {
-      if (lexer.hasToken(rhs[i], true)) {
+      const rh = rhs[i];
+      if (typeof rh === 'string' && lexer.hasToken(rh)) {
         return rhs[i];
       }
     }
     return null;
   }
 
-  commonLeftIndex(production) {
+  commonLeftIndex(production: Production) {
     if (this.symbol !== production.symbol) {
       return 0;
     }
@@ -47,11 +62,15 @@ class Production {
     return l;
   }
 
-  rhsEqSymbol(nonTerminals) {
-    return this.rhs.length === 1 && !!nonTerminals[this.rhs[0]];
+  rhsEqSymbol(nonTerminals: Record<string, true>) {
+    return (
+      this.rhs.length === 1 &&
+      typeof this.rhs[0] === 'string' &&
+      !!nonTerminals[this.rhs[0]]
+    );
   }
 
-  replaceSymbol(original, replaced) {
+  replaceSymbol(original: string, replaced: string) {
     if (this.symbol === original) {
       this.symbol = replaced;
     }
@@ -62,7 +81,7 @@ class Production {
     });
   }
 
-  indexAtStringIndex(index, inclusive) {
+  indexAtStringIndex(index: number, inclusive?: boolean) {
     let stringStart = -1;
     const { rhs } = this;
     for (let i = 0; i < rhs.length; i++) {
@@ -81,7 +100,7 @@ class Production {
     return rhs.length;
   }
 
-  toString(dot, lexer) {
+  toString(dot?: number) {
     var rhsStr = '';
     var { rhs } = this;
     eachRhs(rhs, (r, index) => {
@@ -98,9 +117,9 @@ class Production {
   }
 }
 
-module.exports = Production;
+export default Production;
 
-function equals(s1, s2) {
+function equals(s1: Rhs, s2: Rhs) {
   if (s1.length !== s2.length) {
     return false;
   }

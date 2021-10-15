@@ -1,6 +1,6 @@
 // @ts-check
 
-const data = require('../data');
+import data from '../data';
 let { parser, productionsBySymbol } = data;
 
 function initLLK() {
@@ -12,10 +12,8 @@ function initLLK() {
       ruleIndexes: [],
     };
     productionsBySymbol[symbol][i] = p;
-    productionsBySymbol[symbol].ruleIndexes.push(i);
+    (productionsBySymbol[symbol] as any).ruleIndexes.push(i);
   }
 }
 
-module.exports = {
-  initLLK,
-};
+export { initLLK };

@@ -1,14 +1,14 @@
-// @ts-check
 
-const Grammar = require('../Grammar');
-var Utils = require('../utils');
-const Production = require('../Production');
-const Lexer = require('../Lexer');
-const parse = require('./parse');
 
-const { serializeObject, assertSymbolString, filterRhs } = Utils;
+import Grammar from '../Grammar';
+import Utils from '../utils';
+import Production from '../Production';
+import Lexer from '../Lexer';
+import parse from './parse';
 
-function inProductions(productions, production) {
+const { serializeObject, filterRhs } = Utils;
+
+function inProductions(productions: Production[], production: Production) {
   for (const p of productions) {
     if (p.equals(production)) {
       return true;
@@ -17,18 +17,19 @@ function inProductions(productions, production) {
   return false;
 }
 
-function addToProductions(productions, production) {
+function addToProductions(productions: Production[], production: Production) {
   if (inProductions(productions, production)) {
     return;
   }
   productions.push(production);
 }
 
-class LLGrammar extends Grammar {
-  table = {};
+export type Table = Record<string, Record<string, number>>;
 
-  findFollows(symbol) {
-    assertSymbolString(symbol);
+class LLGrammar extends Grammar {
+  table: Table = {};
+
+  findFollows(symbol: string) {
     var { nonTerminals } = this;
     if (!nonTerminals[symbol]) {
       return { [symbol]: 1 };
@@ -58,7 +59,7 @@ class LLGrammar extends Grammar {
           const index = rhs.indexOf(symbol);
           if (index !== -1) {
             if (index !== rhs.length - 1) {
-              const nextSymbols = rhs.slice(index + 1);
+              const nextSymbols = filterRhs(rhs.slice(index + 1));
               cont =
                 nonTerminal.addFollows(this.findFirst(nextSymbols)) || cont;
               if (this.isNullable(nextSymbols)) {
@@ -76,9 +77,9 @@ class LLGrammar extends Grammar {
   }
 
   extractCommonPrefix() {
-    const prefixSymbolSlashMap = {};
+    const prefixSymbolSlashMap: Record<string, number> = {};
 
-    function getPrefixSymbol(symbol) {
+    function getPrefixSymbol(symbol: string) {
       let n = 1;
       if (prefixSymbolSlashMap[symbol]) {
         n = ++prefixSymbolSlashMap[symbol];
@@ -88,11 +89,11 @@ class LLGrammar extends Grammar {
       return '_' + n + '(' + symbol + ')';
     }
 
-    let { productions } = this;
+    let productions = this.productions as Production[];
 
     let needReplace;
     // extract common prefix
-    const groupedProductions = {};
+    const groupedProductions: Record<string, Production[]> = {};
 
     for (const p of productions) {
       const ps = (groupedProductions[p.symbol] =
@@ -112,7 +113,7 @@ class LLGrammar extends Grammar {
     }
 
     if (needReplace) {
-      productions = this.productions = [];
+      productions = this.productions = [] as Production[];
       for (const symbol of Object.keys(groupedProductions)) {
         productions.push(...groupedProductions[symbol]);
       }
@@ -120,7 +121,7 @@ class LLGrammar extends Grammar {
     }
   }
 
-  removeDuplicate(newPs) {
+  removeDuplicate(newPs: Production[]) {
     return newPs;
     // TODO: optimize
     // const nonTerminals = {};
@@ -155,7 +156,10 @@ class LLGrammar extends Grammar {
     this.productions.splice(0, 0, firstProduction);
   }
 
-  extractProductionCommonPrefix(ps, getPrefixSymbol) {
+  extractProductionCommonPrefix(
+    ps: Production[],
+    getPrefixSymbol: (s: string) => string,
+  ) {
     let cont = true;
     let newPs = [...ps];
     let changed;
@@ -220,26 +224,23 @@ class LLGrammar extends Grammar {
     this.buildTable();
   }
 
-  setTable(symbol, terminal, index, follow = false) {
+  setTable(symbol: string, terminal: string, index: number, follow = false) {
     index = follow ? -index : index;
-    const { lexer, table, productions } = this;
+    const { table, productions } = this;
     table[symbol] = table[symbol] || {};
     const original = table[symbol][terminal];
     table[symbol][terminal] = index;
     if (original !== undefined && original !== index) {
       const e = ['', `Conflict: ${symbol} , ${terminal} ->`];
       for (const i of [original, index]) {
-        e.push(
-          (i > 0 ? '' : '-: ') +
-            productions[Math.abs(i)].toString(undefined, lexer),
-        );
+        e.push((i > 0 ? '' : '-: ') + productions[Math.abs(i)].toString());
       }
       e.push('');
       console.error(e.join('\n'));
     }
   }
 
-  getTableVal(row, col) {
+  getTableVal(row: string, col: string) {
     const { table } = this;
     return table[row] && table[row][col];
   }
@@ -248,7 +249,8 @@ class LLGrammar extends Grammar {
     const { productions } = this;
     for (let index = 0; index < productions.length; index++) {
       const p = productions[index];
-      const { symbol, rhs } = p;
+      let { symbol, rhs: oRhs } = p;
+      const rhs = filterRhs(oRhs);
       const firsts = this.findFirst(rhs);
       for (const terminal of Object.keys(firsts)) {
         this.setTable(symbol, terminal, index);
@@ -285,13 +287,13 @@ class LLGrammar extends Grammar {
     return ret.join('\n');
   }
 
-  genCodeInternal(code) {
+  genCodeInternal(code: string[]) {
     const { table, lexer } = this;
-    const mappedTable = {};
+    const mappedTable: Table = {};
     for (const nonTerminal of Object.keys(table)) {
       const col = table[nonTerminal];
       if (col) {
-        const mappedCol = {};
+        const mappedCol: Record<string, number> = {};
         for (const terminal of Object.keys(col)) {
           const ps = col[terminal];
           if (ps !== undefined) {
@@ -308,4 +310,4 @@ class LLGrammar extends Grammar {
   }
 }
 
-module.exports = LLGrammar;
+export default LLGrammar;

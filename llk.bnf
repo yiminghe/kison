@@ -1,0 +1,6 @@
+program ::= statements
+statements ::= ( exp 'NEW_LINE' )*
+exp ::= exp '+' exp | exp '-' exp | exp '*' exp | exp '/' exp | exp '^' exp
+exp ::= '-' exp
+exp ::= 'NUMBER'
+exp ::= '(' exp ')'

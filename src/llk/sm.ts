@@ -1,13 +1,8 @@
-// @ts-check
+
 
 const { bfsMatch } = require('./bfsMatch');
-const {
-  parser,
-  lexer,
-  symbolStack,
-  productionsBySymbol,
-  smUnitBySymbol,
-} = require('../data');
+import data from '../data';
+var { parser, lexer, symbolStack, productionsBySymbol, smUnitBySymbol } = data;
 const {
   isOptionalSymbol,
   isZeroOrMoreSymbol,
@@ -16,9 +11,10 @@ const {
 } = require('../utils');
 const { createTokenMatcher } = require('./matcher');
 const { isSymbol } = require('./utils');
+import type { Rhs } from '../types';
 
-function buildRhsSM(symbol, rhs, ruleIndex) {
-  function getUnit(rr) {
+function buildRhsSM(symbol: string, rhs: Rhs, ruleIndex: number) {
+  function getUnit(rr: string) {
     if (isSymbol(rr)) {
       return new SymbolStateUnit(rr, ruleIndex);
     }
@@ -28,12 +24,10 @@ function buildRhsSM(symbol, rhs, ruleIndex) {
   }
 
   const units = [];
-  let i = -1;
   for (const r of rhs) {
     if (typeof r !== 'string') {
       continue;
     }
-    ++i;
     let finalUnit;
     if (isOptionalSymbol(r)) {
       const rr = normalizeSymbol(r);
@@ -79,9 +73,14 @@ function getParentSymbolItem() {
   return parentSymbolItem;
 }
 
+export interface PredictParam {
+  childReverseIndex: number;
+  ruleIndex: number;
+  topSymbol: any;
+}
 function predictProductionIndexLLK(
-  { childReverseIndex, ruleIndex, topSymbol },
-  fn,
+  { childReverseIndex, ruleIndex, topSymbol }: PredictParam,
+  fn?: Function,
 ) {
   let unit;
 
@@ -123,14 +122,14 @@ function predictProductionIndexLLK(
 
   let startState = unit.start;
 
-  let nextUnits;
+  let nextUnits: Record<string, Unit>;
 
   if (canSkipped) {
     startState = unit.start.transitions[0].to;
     nextUnits = startState.getUnits();
   } else {
     nextUnits = startState.getUnits();
-    const alternatives = productionsBySymbol[childSymbol];
+    const alternatives: any = productionsBySymbol[childSymbol];
     if (alternatives.ruleIndexes.length <= 1) {
       const ruleIndex = alternatives.ruleIndexes[0];
       if (ruleIndex === undefined) {
@@ -143,7 +142,7 @@ function predictProductionIndexLLK(
   let maxCount = 0;
   let matchedRuleIndex = -1;
 
-  function returnNext(ruleIndex) {
+  function returnNext(ruleIndex: number) {
     const nextUnit = nextUnits[ruleIndex];
     return {
       ruleIndex,
@@ -177,10 +176,10 @@ function predictProductionIndexLLK(
 }
 
 function findExpectedTokenFromStateMachine(
-  { childReverseIndex },
+  { childReverseIndex }: { childReverseIndex: number },
   stack = new Set(),
 ) {
-  const ret = new Set();
+  const ret = new Set<string>();
   const { ruleUnit: parentUnit } = getParentSymbolItem();
   const { units } = parentUnit;
   let unit = units[units.length - 1 - childReverseIndex];
@@ -204,37 +203,45 @@ function findExpectedTokenFromStateMachine(
   return Array.from(ret);
 }
 
-function predictProductionIndexNextLLK(arg) {
+function predictProductionIndexNextLLK(arg: PredictParam) {
   return predictProductionIndexLLK(arg, () => lexer.lex());
 }
 
+type Unit = StateUnit | SymbolStateUnit | RootSymbolUnit;
+
 class State {
-  constructor(type, unit) {
+  type: string;
+  unit: Unit;
+  transitions: Transition[];
+  constructor(type: string, unit: Unit) {
     this.type = type;
     this.unit = unit;
     this.transitions = [];
   }
-  pushTransition(endState, condition) {
+  pushTransition(endState: State | SymbolState, condition?: Function) {
     this.transitions.push(new Transition(endState, condition));
   }
 }
 
 class SymbolState {
-  constructor(symbol, type, unit) {
+  symbol: string;
+  units: Record<string, RootSymbolUnit>;
+  type: string;
+  _transitions: Transition[] = [];
+  allTranstions: Transition[] = [];
+  unit: Unit;
+  constructor(symbol: string, type: string, unit: Unit) {
     this.type = type;
     this.symbol = symbol;
-    let transitions = undefined;
-    this._transitions = [];
-    this.allTranstions = [];
+    let transitions: Transition[] | undefined = undefined;
     this.unit = unit;
-    this.emptyRuleIndex = undefined;
     this.units = {};
     Object.defineProperty(this, 'transitions', {
       get: () => {
         if (!transitions) {
           transitions = [];
           const myProductions = productionsBySymbol[symbol];
-          for (const i of myProductions.ruleIndexes) {
+          for (const i of (myProductions as any).ruleIndexes as number[]) {
             const p = myProductions[i];
             const rhs = parser.getProductionRhs(p);
             const rootSymbolUnit = buildRhsSM(symbol, rhs, i);
@@ -251,7 +258,7 @@ class SymbolState {
   }
 
   getTransitions() {
-    return this['transitions'];
+    return (this as any).transitions;
   }
 
   getUnits() {
@@ -259,12 +266,12 @@ class SymbolState {
     return this.units;
   }
 
-  pushTransition(endState, condition) {
+  pushTransition(endState: State | SymbolState, condition?: Function) {
     this._transitions.push(new Transition(endState, condition));
   }
 }
 
-function concatUnits(type, us, ruleIndex) {
+function concatUnits(type: string, us: Unit[], ruleIndex: number) {
   const l = us.length;
   for (let i = 0; i < l - 1; i++) {
     const first = us[i];
@@ -272,7 +279,7 @@ function concatUnits(type, us, ruleIndex) {
     first.end.pushTransition(s.start);
   }
   const ret = new RootSymbolUnit(type, ruleIndex);
-  if (l >= 1) {
+  if (us[0] && us[l - 1]) {
     ret.start = us[0].start;
     ret.end = us[l - 1].end;
   } else {
@@ -285,11 +292,13 @@ function concatUnits(type, us, ruleIndex) {
 }
 
 class RootSymbolUnit {
-  units = undefined;
-  start = undefined;
-  end = undefined;
+  units: Unit[] = [];
+  start: SymbolState | State = null!;
+  end: State = null!;
+  type: string;
+  ruleIndex: number;
   unitType = 'rootSymbol';
-  constructor(type, ruleIndex) {
+  constructor(type: string, ruleIndex: number) {
     this.type = type;
     this.ruleIndex = ruleIndex;
   }
@@ -299,7 +308,11 @@ class StateUnit {
   units = undefined;
   unitType = 'token';
   lazy = false;
-  constructor(type, ruleIndex) {
+  start: State;
+  end: State;
+  type: string;
+  ruleIndex: number;
+  constructor(type: string, ruleIndex: number) {
     this.type = type;
     this.ruleIndex = ruleIndex;
     this.start = new State(`startOf${type}`, this);
@@ -309,7 +322,11 @@ class StateUnit {
 
 class SymbolStateUnit {
   unitType = 'symbol';
-  constructor(type, ruleIndex) {
+  ruleIndex: number;
+  type: string;
+  end: State;
+  start: SymbolState;
+  constructor(type: string, ruleIndex: number) {
     this.ruleIndex = ruleIndex;
     this.type = type;
     this.end = new State(`endOf${type}`, this);
@@ -318,7 +335,9 @@ class SymbolStateUnit {
 }
 
 class Transition {
-  constructor(to, condition) {
+  condition?: Function;
+  to: State | SymbolState;
+  constructor(to: State | SymbolState, condition?: Function) {
     this.to = to;
     this.condition = condition;
   }
@@ -338,14 +357,14 @@ class Transition {
   }
 }
 
-function getUnitBySymbol(symbol) {
+function getUnitBySymbol(symbol: string) {
   if (!smUnitBySymbol[symbol]) {
     smUnitBySymbol[symbol] = new SymbolStateUnit(symbol, -1);
   }
   return smUnitBySymbol[symbol];
 }
 
-module.exports = {
+export {
   getUnitBySymbol,
   getParentSymbolItem,
   findExpectedTokenFromStateMachine,
@@ -360,3 +379,5 @@ module.exports = {
   Transition,
   RootSymbolUnit,
 };
+
+export type { Unit };

@@ -1,10 +1,15 @@
 // @ts-check
-var Utils = require('../utils');
-const { AstNode, isProductionEndFlag, isAddAstNodeFlag } = Utils;
+import { Token } from '../parser';
+import Production from '../Production';
+import Utils from '../utils';
+import { Table } from './LLGrammar';
+const { AstSymbolNode, AstTokenNode, isProductionEndFlag, isAddAstNodeFlag } =
+  Utils;
 
 const data = require('../data');
 
 let {
+  lexer,
   productionSkipAstNodeSet,
   productionEndFlag,
   parser,
@@ -22,16 +27,16 @@ const {
   closeAstWhenError,
 } = require('../utils');
 
-module.exports = function parse(input, options) {
-  const recoveryTokens = [];
+export default function parse(input: string, options: any) {
+  const recoveryTokens: Token[] = [];
   const terminalNodes = [];
 
   const { EOF_TOKEN } = Lexer.STATIC;
 
-  function getTableVal(row, col) {
+  function getTableVal(row: string, col: string) {
     return table[row] && table[row][col];
   }
-  function isSymbolName(s) {
+  function isSymbolName(s: string | number) {
     return !!table[s];
   }
 
@@ -49,21 +54,17 @@ module.exports = function parse(input, options) {
     transformNode = defaultTransformAstNode;
   }
 
-  var {
-    lexer,
-    table,
-    productions,
-    getProductionSymbol,
-    getProductionRhs,
-    getProductionLabel,
-  } = parser;
+  var { getProductionSymbol, getProductionRhs, getProductionLabel } = parser;
+
+  var productions = parser.productions as Production[];
+  var table = parser.table as Table;
 
   lexer.options = lexerOptions;
   startSymbol = startSymbol || getProductionSymbol(productions[0]);
   symbolStack = [startSymbol];
 
   const astStack = [
-    new AstNode({
+    new AstSymbolNode({
       children: [],
     }),
   ];
@@ -71,7 +72,7 @@ module.exports = function parse(input, options) {
   let token;
   let next;
 
-  let topSymbol;
+  let topSymbol: string | number;
 
   let errorNode;
 
@@ -98,11 +99,10 @@ module.exports = function parse(input, options) {
     }
 
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
-      let ast = astStack.pop();
+      let ast = astStack.pop()!;
       if (isAddAstNodeFlag(topSymbol)) {
         const stackTop = peekStack(astStack);
-        const wrap = new AstNode({
-          type: 'symbol',
+        const wrap = new AstSymbolNode({
           symbol: ast.symbol,
           children: [ast],
           label: ast.label,
@@ -110,6 +110,8 @@ module.exports = function parse(input, options) {
         stackTop.children.pop();
         stackTop.addChild(wrap);
         astStack.push(wrap);
+      } else {
+        ast.refreshChildren();
       }
       popSymbolStack();
       topSymbol = peekStack(symbolStack);
@@ -125,7 +127,7 @@ module.exports = function parse(input, options) {
       }
       if (topSymbol === token.t) {
         symbolStack.pop();
-        const terminalNode = new AstNode(token);
+        const terminalNode = new AstTokenNode(token);
         terminalNode.type = 'token';
         terminalNodes.push(terminalNode);
         const parent = peekStack(astStack);
@@ -142,8 +144,7 @@ module.exports = function parse(input, options) {
             getProductionRhs(production).concat().reverse(),
           );
         } else {
-          const newAst = new AstNode({
-            type: 'symbol',
+          const newAst = new AstSymbolNode({
             ruleIndex: next,
             symbol: getOriginalSymbol(topSymbol),
             label: getOriginalSymbol(getProductionLabel(production)),
@@ -165,7 +166,7 @@ module.exports = function parse(input, options) {
           lexer: lexer.toJSON(),
         };
         if (onErrorRecovery) {
-          const recommendedAction = {};
+          const recommendedAction: { action?: string } = {};
           lexer.stash();
           const nextToken = lexer.lex();
           lexer.stashPop();
@@ -179,9 +180,8 @@ module.exports = function parse(input, options) {
             recommendedAction.action = 'add';
           }
 
-          const localErrorNode = new AstNode({
+          const localErrorNode = new AstTokenNode({
             error,
-            type: 'token',
             ...error.lexer,
           });
           peekStack(astStack).addChild(localErrorNode);
@@ -207,7 +207,7 @@ module.exports = function parse(input, options) {
           if (action === 'del') {
             error.recovery = true;
             const deleteToken = recoveryTokens.pop();
-            deleteToken.recovery = 'del';
+            if (deleteToken) deleteToken.recovery = 'del';
             token = null;
           } else if (action === 'add') {
             error.recovery = true;
@@ -274,4 +274,4 @@ module.exports = function parse(input, options) {
     error,
     terminalNodes,
   };
-};
+}

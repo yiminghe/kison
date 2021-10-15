@@ -1,19 +1,26 @@
-// @ts-check
 
-const Lexer = require('../Lexer');
-var Grammar = require('../Grammar');
-const utils = require('../utils');
-var debug = require('debug')('kison');
-var { each, serializeObject } = utils;
-var Item = require('./Item');
-var ItemSet = require('./ItemSet');
 
-function measure(label, fn) {
-  const now = Date.now();
-  console.log(`start ${label} -------`);
-  fn();
-  console.log(`end ${label} -------`, Date.now() - now);
-}
+import Lexer from '../Lexer';
+import Grammar from '../Grammar';
+import utils from '../utils';
+import Item from './Item';
+import ItemSet from './ItemSet';
+// @ts-ignore
+import Debug from 'debug';
+import Production from '../Production';
+import data from '../data';
+
+const { lexer, parser } = data;
+
+var debug = Debug('kison');
+var { filterRhs, serializeObject } = utils;
+
+// function measure(label: string, fn: Function) {
+//   const now = Date.now();
+//   console.log(`start ${label} -------`);
+//   fn();
+//   console.log(`end ${label} -------`, Date.now() - now);
+// }
 
 var GrammarConst = {
   SHIFT_TYPE: 1,
@@ -23,14 +30,18 @@ var GrammarConst = {
   VALUE_INDEX: 1,
 };
 
-const ActionTypeMap = [];
+const ActionTypeMap: string[] = [];
 ActionTypeMap[GrammarConst.SHIFT_TYPE] = 'shift';
 ActionTypeMap[GrammarConst.REDUCE_TYPE] = 'reduce';
 ActionTypeMap[GrammarConst.ACCEPT_TYPE] = 'accept';
 
 var { START_TAG } = Grammar;
 
-function visualizeAction(action, productions, itemSets) {
+function visualizeAction(
+  action: number[],
+  productions: Production[],
+  itemSets: ItemSet[],
+) {
   let actionType;
   switch (action[GrammarConst.TYPE_INDEX]) {
     case GrammarConst.SHIFT_TYPE:
@@ -53,18 +64,30 @@ function visualizeAction(action, productions, itemSets) {
   }
   debug('to itemSet:');
   if (actionType === 'shift') {
-    debug(itemSets[action[GrammarConst.VALUE_INDEX]].toString(1));
+    debug(itemSets[action[GrammarConst.VALUE_INDEX]].toString(true));
   } else {
     debug('undefined');
   }
 }
 
+interface Table {
+  gotos: Record<string, Record<string, number>>;
+  action: Record<string, Record<string, number[]>>;
+}
+
 class LALRGrammar extends Grammar {
+  table: Table = {
+    gotos: {},
+    action: {},
+  };
+
+  operatorPriorityMap: Record<string, number> = {};
+
   genDTs() {
     return '';
   }
 
-  expandProductionsInternal() {}
+  expandProductionsInternal() { }
 
   build() {
     super.build();
@@ -81,7 +104,7 @@ class LALRGrammar extends Grammar {
       return;
     }
 
-    const rightOperatorMap = {};
+    const rightOperatorMap: Record<string, number> = {};
     this.operatorPriorityMap = {};
 
     const { operatorPriorityMap } = this;
@@ -101,7 +124,7 @@ class LALRGrammar extends Grammar {
         }
       }
     }
-    for (const p of this.productions) {
+    for (const p of this.productions as Production[]) {
       const op = p.precedence || p.lastTerminal(this.lexer);
       const opPriority = op && operatorPriorityMap[op];
       if (opPriority) {
@@ -115,23 +138,23 @@ class LALRGrammar extends Grammar {
     }
   }
 
-  closure(itemSet) {
+  closure(itemSet: ItemSet) {
     var { items } = itemSet;
-    var { productions } = this;
+    var productions = this.productions as Production[];
     var cont = true;
     while (cont) {
       cont = false;
-      each(items, (item) => {
+      for (const item of items) {
         var { dotPosition, production, lookAhead } = item;
         var { rhs } = production;
         var dotSymbol = rhs[dotPosition];
         var finalFirsts = {};
-        each(lookAhead, (_, ahead) => {
+        for (const ahead of Object.keys(lookAhead)) {
           var rightRhs = rhs.slice(dotPosition + 1);
           rightRhs.push(ahead);
-          Object.assign(finalFirsts, this.findFirst(rightRhs));
-        });
-        each(productions, (p2) => {
+          Object.assign(finalFirsts, this.findFirst(filterRhs(rightRhs)));
+        }
+        for (const p2 of productions) {
           if (p2.symbol === dotSymbol) {
             var newItem = new Item({
               production: p2,
@@ -154,16 +177,16 @@ class LALRGrammar extends Grammar {
               cont = true;
             }
           }
-        });
-      });
+        }
+      }
     }
     return itemSet;
   }
 
-  gotos(i, x) {
+  gotos(i: ItemSet, x: string) {
     var j = new ItemSet();
     var iItems = i.items;
-    each(iItems, (item) => {
+    for (const item of iItems) {
       var { production, dotPosition } = item;
       var markSymbol = production.rhs[dotPosition];
       if (markSymbol === x) {
@@ -184,11 +207,11 @@ class LALRGrammar extends Grammar {
           j.addItem(newItem);
         }
       }
-    });
+    }
     return this.closure(j);
   }
 
-  findItemSetIndex(itemSet) {
+  findItemSetIndex(itemSet: ItemSet) {
     var { itemSets } = this;
     var i;
     for (i = 0; i < itemSets.length; i++) {
@@ -201,7 +224,7 @@ class LALRGrammar extends Grammar {
 
   // algorithm: 4.53
   buildItemSet() {
-    var lookAheadTmp = {};
+    var lookAheadTmp: Record<string, number> = {};
     var { itemSets, productions } = this;
 
     lookAheadTmp[Lexer.STATIC.EOF_TOKEN] = 1;
@@ -209,7 +232,7 @@ class LALRGrammar extends Grammar {
       new ItemSet({
         items: [
           new Item({
-            production: productions[0],
+            production: productions[0] as Production,
             lookAhead: lookAheadTmp,
           }),
         ],
@@ -274,16 +297,18 @@ class LALRGrammar extends Grammar {
             one.items[k].addLookAhead(two.items[k].lookAhead);
           }
           var oneGotos = one.gotos;
-          each(two.gotos, (item, symbol) => {
+          for (const symbol of Object.keys(two.gotos)) {
+            const item = two.gotos[symbol];
             oneGotos[symbol] = item;
             item.addReverseGoto(symbol, one);
-          });
-          each(two.reverseGotos, (items, symbol) => {
-            each(items, (item) => {
+          }
+          for (const symbol of Object.keys(two.reverseGotos)) {
+            const items = two.reverseGotos[symbol];
+            for (const item of items) {
               item.gotos[symbol] = one;
               one.addReverseGoto(symbol, item);
-            });
-          });
+            }
+          }
           itemSets.splice(j--, 1);
         }
       }
@@ -291,18 +316,18 @@ class LALRGrammar extends Grammar {
   }
 
   buildTable() {
-    var { operatorPriorityMap, table, itemSets, productions, nonTerminals } =
-      this;
+    var { operatorPriorityMap, table, itemSets, nonTerminals } = this;
+    var productions = this.productions as Production[];
     var mappedStartTag = START_TAG;
     var mappedEndTag = Lexer.STATIC.EOF_TOKEN;
-    var gotos = {};
-    var action = {};
-    var i, itemSet;
+    var gotos: Record<string, Record<string, number>> = {};
+    var action: any = {};
+    var i: number, itemSet: ItemSet;
     table.gotos = gotos;
     table.action = action;
     for (i = 0; i < itemSets.length; i++) {
       itemSet = itemSets[i];
-      each(itemSet.items, (item) => {
+      for (const item of itemSet.items) {
         var { production } = item;
         if (item.dotPosition === production.rhs.length) {
           if (production.symbol === mappedStartTag) {
@@ -332,7 +357,7 @@ class LALRGrammar extends Grammar {
             // 1+ 2*3
             // 2 -> f, f 's lookahead contains *
             // f !-> e, e 's lookahead does not contain *
-            each(item.lookAhead, (_, l) => {
+            for (const l of Object.keys(item.lookAhead)) {
               const t = action[i][l];
               const val = [];
               val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
@@ -348,12 +373,13 @@ class LALRGrammar extends Grammar {
                 visualizeAction(val, productions, itemSets);
               }
               action[i][l] = val;
-            });
+            }
           }
         }
-      });
+      }
       // shift over reduce
-      each(itemSet.gotos, (anotherItemSet, symbol) => {
+      for (const symbol of Object.keys(itemSet.gotos)) {
+        const anotherItemSet = itemSet.gotos[symbol];
         if (!nonTerminals[symbol]) {
           action[i] = action[i] || {};
           const val = [];
@@ -368,17 +394,17 @@ class LALRGrammar extends Grammar {
                 if (p.priority < operatorPriorityMap[symbol]) {
                   action[i][symbol] = val;
                 }
-                return;
+                continue;
               }
             }
             debug(new Array(29).join('*'));
             debug('conflict in shift: action already defined ->', 'warn');
             debug('***** current itemSet:', 'info');
-            debug(itemSet.toString(1));
+            debug(itemSet.toString(true));
             debug('***** current symbol:', 'info');
             debug(symbol);
             debug('***** goto itemSet:', 'info');
-            debug(anotherItemSet.toString(1));
+            debug(anotherItemSet.toString(true));
             debug('***** current action:', 'info');
             visualizeAction(t, productions, itemSets);
             debug('***** will be overwritten ->', 'info');
@@ -393,11 +419,11 @@ class LALRGrammar extends Grammar {
             debug(new Array(29).join('*'));
             debug('conflict in shift: goto already defined ->', 'warn');
             debug('***** current itemSet:', 'info');
-            debug(itemSet.toString(1));
+            debug(itemSet.toString(true));
             debug('***** current symbol:', 'info');
             debug(symbol);
             debug('***** goto itemSet:', 'info');
-            debug(anotherItemSet.toString(1));
+            debug(anotherItemSet.toString(true));
             debug('***** current goto state:', 'info');
             debug(t);
             debug('***** will be overwritten ->', 'info');
@@ -405,7 +431,7 @@ class LALRGrammar extends Grammar {
           }
           gotos[i][symbol] = val;
         }
-      });
+      }
     }
   }
 
@@ -413,15 +439,17 @@ class LALRGrammar extends Grammar {
     var { table, productions } = this;
     var { gotos, action } = table;
     var ret = [];
-    each(this.itemSets, (itemSet, i) => {
+    this.itemSets.forEach((itemSet, i) => {
       ret.push(new Array(70).join('*') + ' itemSet : ' + i);
       ret.push(itemSet.toString());
       ret.push('');
     });
     ret.push('');
     ret.push(new Array(70).join('*') + ' table : ');
-    each(action, (av, index) => {
-      each(av, (v, s) => {
+    for (const index of Object.keys(action)) {
+      const av = action[index];
+      for (const s of Object.keys(av)) {
+        const v = av[s];
         var str;
         var type = v[GrammarConst.TYPE_INDEX];
         if (type === GrammarConst.ACCEPT_TYPE) {
@@ -433,27 +461,29 @@ class LALRGrammar extends Grammar {
           str = 's, ' + v[GrammarConst.VALUE_INDEX];
         }
         ret.push('action[' + index + ']' + '[' + s + '] = ' + str);
-      });
-    });
+      }
+    }
     ret.push('');
-    each(gotos, (sv, index) => {
-      each(sv, (v, s) => {
+    for (const index of Object.keys(gotos)) {
+      const sv = gotos[index];
+      for (const s of Object.keys(sv)) {
+        const v = sv[s];
         ret.push('goto[' + index + ']' + '[' + s + '] = ' + v);
-      });
-    });
+      }
+    }
     return ret.join('\n');
   }
 
   serializeTable() {
     const { table, lexer } = this;
-    const t = {};
+    const t: typeof table = { gotos: {}, action: {} };
     const { gotos, action } = table;
 
-    function transform(obj) {
-      const ret = {};
+    function transform(obj: any) {
+      const ret: any = {};
       for (const key of Object.keys(obj)) {
         const o = obj[key];
-        const newGoto = {};
+        const newGoto: any = {};
         for (const k of Object.keys(o)) {
           newGoto[lexer.mapSymbol(k)] = o[k];
         }
@@ -468,7 +498,7 @@ class LALRGrammar extends Grammar {
     return serializeObject(t);
   }
 
-  genCodeInternal(code) {
+  genCodeInternal(code: string[]) {
     code.push(peekStack.toString());
     code.push('var ActionTypeMap = ' + serializeObject(ActionTypeMap) + ';');
     code.push('var GrammarConst = ' + serializeObject(GrammarConst) + ';');
@@ -478,26 +508,18 @@ class LALRGrammar extends Grammar {
   }
 }
 
-function peekStack(stack, n) {
-  n = n || 1;
+function peekStack<T>(stack: T[], n: number = 1) {
   return stack[stack.length - n];
 }
 
-var parser = {};
-
 // #-------------- for generation start
-function parse(input, options) {
+function parse(input: string, options: any) {
   options = options || {};
   var { filename } = options;
   var state, token, ret, action, $$;
-  var {
-    getProductionSymbol,
-    getProductionRhs,
-    getProductionAction,
-    lexer,
-    table,
-    productions,
-  } = parser;
+  var { getProductionSymbol, getProductionRhs, getProductionAction } = parser;
+  var productions = parser.productions as Production[];
+  var table = parser.table as Table;
   var { gotos, action: tableAction } = table;
   // for debug info
   var prefix = filename ? 'in file: ' + filename + ' ' : '';
@@ -520,7 +542,7 @@ function parse(input, options) {
 
     if (!action) {
       var expectedInfo = [];
-      var expected = {};
+      var expected: Record<string, string[]> = {};
       if (tableAction[state]) {
         const map = tableAction[state];
         for (const symbolForState of Object.keys(map)) {
@@ -528,7 +550,7 @@ function parse(input, options) {
           action = v[GrammarConst.TYPE_INDEX];
           const actionStr = ActionTypeMap[action];
           const arr = (expected[actionStr] = expected[actionStr] || []);
-          const s = parser.lexer.mapReverseSymbol(symbolForState);
+          const s = lexer.mapReverseSymbol(symbolForState);
           arr.push(s);
           expectedInfo.push(actionStr + ':' + s);
         }
@@ -563,17 +585,18 @@ function parse(input, options) {
         var len = reducedRhs.length;
         $$ = peekStack(valueStack, len); // default to $$ = $1
         ret = undefined;
-        this.$$ = $$;
+        const p: any = parser;
+        p.$$ = $$;
         for (var i = 0; i < len; i++) {
-          this['$' + (len - i)] = peekStack(valueStack, i + 1);
+          p['$' + (len - i)] = peekStack(valueStack, i + 1);
         }
         if (reducedAction) {
-          ret = reducedAction.call(this);
+          ret = reducedAction.call(p);
         }
         if (ret !== undefined) {
           $$ = ret;
         } else {
-          $$ = this.$$;
+          $$ = p.$$;
         }
         var reverseIndex = len * -1;
         stateStack.splice(reverseIndex, len);
@@ -591,7 +614,7 @@ function parse(input, options) {
   }
 }
 
-module.exports = LALRGrammar;
+export default LALRGrammar;
 
 // #-------------------- for generation end
 

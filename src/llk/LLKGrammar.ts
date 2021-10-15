@@ -1,6 +1,8 @@
-const Grammar = require('../Grammar');
-const parseCode = require('./parse');
-const { serializeObject } = require('../utils');
+import Grammar from '../Grammar';
+import * as parseCode from './parse';
+import utils from '../utils';
+
+const { serializeObject } = utils;
 
 class LLKGrammar extends Grammar {
   buildMeta() {}
@@ -17,9 +19,9 @@ class LLKGrammar extends Grammar {
     this.expandProductionPriority();
   }
 
-  genCodeInternal(code) {
+  genCodeInternal(code: string[]) {
     for (const key of Object.keys(parseCode)) {
-      code.push(`var ${key} = ${serializeObject(parseCode[key])};`);
+      code.push(`var ${key} = ${serializeObject((parseCode as any)[key])};`);
     }
     code.push(`${parseCode.initLLK.name}();`);
     code.push(`parser.parse = ${parseCode.parse.name};`);
@@ -27,4 +29,4 @@ class LLKGrammar extends Grammar {
   }
 }
 
-module.exports = LLKGrammar;
+export default LLKGrammar;

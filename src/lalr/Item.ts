@@ -1,8 +1,8 @@
 // @ts-check
 
-var Utils = require('../utils');
+import Production from '../Production';
 
-function equals(s1, s2) {
+function equals(s1: any, s2: any) {
   for (var i in s1) {
     if (!(i in s2)) {
       return false;
@@ -18,6 +18,12 @@ function equals(s1, s2) {
   return true;
 }
 
+interface Params {
+  dotPosition?: number;
+  production: Production;
+  lookAhead?: Record<string, number>;
+}
+
 class Item {
   dotPosition = 0;
 
@@ -27,15 +33,16 @@ class Item {
              and find( indexOf )
              instead of array
              */
-  lookAhead = {};
+  lookAhead: Record<string, number> = {};
 
-  production = undefined;
+  production: Production;
 
-  constructor(cfg) {
+  constructor(cfg: Params) {
     Object.assign(this, cfg);
+    this.production = cfg.production;
   }
 
-  equals(other, ignoreLookAhead) {
+  equals(other: Item, ignoreLookAhead?: boolean) {
     var self = this;
     if (!other.production.equals(self.production)) {
       return false;
@@ -51,24 +58,24 @@ class Item {
     return true;
   }
 
-  toString(ignoreLookAhead) {
+  toString(ignoreLookAhead?: boolean) {
     return (
       this.production.toString(this.dotPosition) +
       (ignoreLookAhead ? '' : ',' + Object.keys(this.lookAhead).join('/'))
     );
   }
 
-  addLookAhead(ls) {
+  addLookAhead(ls: Record<string, number>): number {
     var lookAhead = this.lookAhead,
       ret = 0;
-    Utils.each(ls, function (_, l) {
-      if (!lookAhead[l]) {
-        lookAhead[l] = 1;
+    for (const k of Object.keys(ls)) {
+      if (!lookAhead[k]) {
+        lookAhead[k] = 1;
         ret = 1;
       }
-    });
+    }
     return ret;
   }
 }
 
-module.exports = Item;
+export default Item;

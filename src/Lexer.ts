@@ -1,27 +1,45 @@
-// @ts-check
+import Utils from './utils';
+import type { Token } from './parser';
 
-var Utils = require('./utils');
+var { serializeObject, normalizeSymbol } = Utils;
 
-var { serializeObject, each, toFunctionString, normalizeSymbol } = Utils;
-
-function mapSymbolForCodeGen(t) {
-  return this.symbolMap[t] || t;
+function mapSymbolForCodeGen(this: Lexer, t: string) {
+  return (this.symbolMap && this.symbolMap[t]) || t;
 }
 
-function mapStateForCodeGen(t) {
-  return this.stateMap[t] || t;
+function mapStateForCodeGen(this: Lexer, t: string) {
+  return (this.stateMap && this.stateMap[t]) || t;
 }
 
-const nonSerializedMethods = {
+const nonSerializedMethods: Record<string, number> = {
   init: 1,
   genCode: 1,
   genShortId: 1,
   constructor: 1,
 };
 
-var lexer;
+var lexer: Lexer;
 
-function lex(input, options = {}) {
+export interface LexerRule {
+  token: string;
+  regexp: Function | RegExp;
+  action?: Function;
+}
+
+interface Params {
+  rules: LexerRule[];
+}
+
+interface Options {
+  env?: string;
+  unicode?: boolean;
+  state?: {
+    userData?: any;
+    stateStack?: string[];
+  };
+}
+
+function lex(input: string, options: Options = {}) {
   lexer.options = options;
   lexer.resetInput(input);
   const { state } = options;
@@ -43,11 +61,42 @@ function lex(input, options = {}) {
   };
 }
 
-function identity(n) {
+function identity(n: any) {
   return n;
 }
 
 class Lexer {
+  start: number = 0;
+  end: number = 0;
+  firstLine: number = 0;
+  lastLine: number = 0;
+  firstColumn: number = 0;
+  lastColumn: number = 0;
+  lineNumber: number = 0;
+  matched: string = '';
+  stateStack: string[] = [];
+
+  token: string = '';
+  t: string = '';
+  text: string = '';
+  match: string = '';
+
+  tokens: Token[] = [];
+
+  nextTokens: Token[] = [];
+
+  options: Options = {};
+
+  defaultEnv?: string;
+
+  rules: LexerRule[] = [];
+
+  ruleIndexMap: Record<string, number> = {};
+
+  tokenSet: Set<string> = new Set();
+
+  static supportSticky?: boolean;
+
   static STATIC = {
     INITIAL_STATE: 'I',
     DEBUG_CONTEXT_LIMIT: 20,
@@ -56,15 +105,37 @@ class Lexer {
     HIDDEN_TOKEN: '$HIDDEN',
   };
 
+  getRuleItem: Function = () => {};
+
   isCompress = undefined;
 
-  static supportSticky = undefined;
+  regexpIndex: string | number = '';
 
-  constructor(cfg) {
+  userData: any;
+
+  errorRule: LexerRule | any[] = [];
+
+  errorRuleCompress: any[] = [];
+
+  input: string = '';
+
+  symbolMap?: Record<string, string>;
+
+  stateMap?: Record<string, string>;
+
+  reverseSymbolMap?: Record<string, string>;
+
+  reverseStateMap?: Record<string, string>;
+
+  stashIndex: number = 0;
+
+  matches: string[] = [];
+
+  constructor(cfg: Params) {
     this.init(cfg);
   }
 
-  transformRegExp(obj, p, disableSticky) {
+  transformRegExp(obj: any, p: string | number, disableSticky?: boolean) {
     const pattern = obj[p];
     if (pattern.test) {
       let source = pattern.source;
@@ -83,7 +154,7 @@ class Lexer {
     }
   }
 
-  hasToken(t) {
+  hasToken(t: string) {
     return this.tokenSet.has(t);
   }
 
@@ -96,7 +167,7 @@ class Lexer {
     }
   }
 
-  init(cfg) {
+  init(cfg: Params) {
     this.nextTokens = [];
     if (Lexer.supportSticky === undefined) {
       try {
@@ -142,7 +213,7 @@ class Lexer {
       }
     }
     if (this.isCompress) {
-      const errorRuleCompress = (this.errorRule = []);
+      const errorRuleCompress: any[] = (this.errorRule = []);
       errorRuleCompress[ruleIndexMap.token] = errorRule.token;
       errorRuleCompress[ruleIndexMap.regexp] = errorRule.regexp;
     }
@@ -154,7 +225,7 @@ class Lexer {
     return this.end < this.input.length ? this.input.charAt(this.end) : false;
   }
 
-  addRule(rule) {
+  addRule(rule: LexerRule) {
     this.rules.push(rule);
     const token = this.getRuleItem(rule, 'token');
     if (token) {
@@ -162,9 +233,8 @@ class Lexer {
     }
   }
 
-  resetInput(input) {
-    this.token = undefined;
-    this.tokensQueue = [];
+  resetInput(input: string) {
+    this.token = '';
     this.nextTokens = [];
     this.tokens = [];
     this.userData = {};
@@ -182,15 +252,16 @@ class Lexer {
     this.lastColumn = 1;
   }
 
-  genShortId(field) {
+  genShortId(field: string) {
     var base = 97, // a-1
       max = 122, // z
       interval = max - base + 1;
     field += '__gen';
+    const self: any = this;
     if (!(field in this)) {
-      this[field] = -1;
+      self[field] = -1;
     }
-    var index = (this[field] = this[field] + 1);
+    var index = (self[field] = self[field] + 1);
     var ret = '';
     do {
       ret = String.fromCharCode(base + (index % interval)) + ret;
@@ -200,21 +271,23 @@ class Lexer {
     return ret;
   }
 
-  genCode(cfg) {
+  genCode(cfg: { compressSymbol?: boolean; compressLexerState?: boolean }) {
     var STATIC = Lexer.STATIC,
       code = [],
-      stateMap;
+      stateMap: Record<string, string> | null = null;
 
     var { compressSymbol, compressLexerState: compressState } = cfg;
 
-    var genPrototype = {};
+    var genPrototype: Record<string, Function> = {};
 
-    for (const name of Object.getOwnPropertyNames(Lexer.prototype)) {
+    const lexerProtype: any = Lexer.prototype;
+
+    for (const name of Object.getOwnPropertyNames(lexerProtype)) {
       if (
         !nonSerializedMethods[name] &&
-        typeof Lexer.prototype[name] === 'function'
+        typeof lexerProtype[name] === 'function'
       ) {
-        genPrototype[name] = Lexer.prototype[name];
+        genPrototype[name] = lexerProtype[name];
       }
     }
 
@@ -249,7 +322,7 @@ class Lexer {
         isCompress: 1,
         defaultEnv: this.defaultEnv,
       },
-      (v, parent) => {
+      (v: any, parent: any) => {
         if (
           parent &&
           parent.isKisonRule &&
@@ -260,7 +333,7 @@ class Lexer {
         ) {
           return v;
         }
-        var ret;
+        var ret: any;
         if (v && (v.regexp || v.token)) {
           ret = [];
           var state = v.hasOwnProperty('state') && v.state,
@@ -286,7 +359,7 @@ class Lexer {
             ret[ruleIndexMap.filter] = filter;
           }
           if (compressState && state) {
-            state = state.map((s) => {
+            state = state.map((s: string) => {
               return this.mapState(s);
             });
           }
@@ -302,7 +375,7 @@ class Lexer {
 
     code.push('var lexer = new Lexer(' + newCfg + ');');
 
-    if (compressState) {
+    if (compressState && stateMap) {
       code.push('lexer.stateMap = ' + serializeObject(stateMap) + ';');
     }
 
@@ -311,11 +384,11 @@ class Lexer {
     return code.join('\n');
   }
 
-  getRuleItemNoCompress(rule, itemType) {
+  getRuleItemNoCompress(rule: any, itemType: string | number) {
     return rule[itemType];
   }
 
-  getRuleItemCompress(rule, itemType) {
+  getRuleItemCompress(rule: any, itemType: string | number) {
     return rule[this.ruleIndexMap[itemType]];
   }
 
@@ -343,17 +416,15 @@ class Lexer {
     return rules;
   }
 
-  peekState(n) {
-    n = n || 1;
+  peekState(n: number = 1) {
     return this.mapReverseState(this.stateStack[this.stateStack.length - n]);
   }
 
-  pushState(state) {
+  pushState(state: string) {
     this.stateStack.push(this.mapState(state));
   }
 
-  popState(num) {
-    num = num || 1;
+  popState(num: number = 1) {
     var ret;
     while (num--) {
       ret = this.stateStack.pop();
@@ -380,7 +451,7 @@ class Lexer {
     return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
   }
 
-  mapSymbol(t) {
+  mapSymbol(t: string) {
     var { symbolMap } = this;
     if (!symbolMap) {
       return t;
@@ -395,7 +466,7 @@ class Lexer {
     }
   }
 
-  mapReverseSymbol(rs) {
+  mapReverseSymbol(rs: string) {
     var { symbolMap, reverseSymbolMap } = this;
     if (!reverseSymbolMap && symbolMap) {
       reverseSymbolMap = this.reverseSymbolMap = {};
@@ -413,7 +484,7 @@ class Lexer {
     }
   }
 
-  mapState(s) {
+  mapState(s: string) {
     var { stateMap } = this;
     if (!stateMap) {
       return s;
@@ -421,7 +492,7 @@ class Lexer {
     return stateMap[s] || (stateMap[s] = this.genShortId('state'));
   }
 
-  mapReverseState(rs) {
+  mapReverseState(rs: string) {
     var { stateMap, reverseStateMap } = this;
     if (!reverseStateMap && stateMap) {
       reverseStateMap = this.reverseStateMap = {};
@@ -435,6 +506,7 @@ class Lexer {
   toJSON() {
     const currentToken = this.getCurrentToken();
     return {
+      t: currentToken.t,
       text: currentToken.text,
       firstLine: currentToken.firstLine,
       firstColumn: currentToken.firstColumn,
@@ -458,8 +530,8 @@ class Lexer {
     this.tokens.length = this.stashIndex;
   }
 
-  matchRegExp(regexp) {
-    if (regexp.test) {
+  matchRegExp(regexp: Function | RegExp) {
+    if (typeof regexp !== 'function') {
       regexp.lastIndex = this.end;
       const ret = regexp.exec(this.input);
       if (ret && ret.index !== this.end) {
@@ -470,7 +542,7 @@ class Lexer {
     return regexp.call(this, this);
   }
 
-  pushToken(token) {
+  pushToken(token: Token) {
     const tokens = this.tokens;
     if (tokens[tokens.length - 1]?.token === Lexer.STATIC.EOF_TOKEN) {
       tokens.pop();
@@ -478,7 +550,7 @@ class Lexer {
     tokens.push(token);
   }
 
-  lex() {
+  lex(): Token {
     const { EOF_TOKEN, HIDDEN_TOKEN } = Lexer.STATIC;
 
     const token = this.nextToken();
@@ -517,7 +589,7 @@ class Lexer {
     return this.getCharCode(this.end + index);
   }
 
-  nextStartsWith(search) {
+  nextStartsWith(search: string) {
     let { input, end } = this;
     const l = search.length;
     for (let i = 0; i < l; i++) {
@@ -528,7 +600,7 @@ class Lexer {
     return true;
   }
 
-  nextCharAt(index) {
+  nextCharAt(index: number) {
     return this.input.charAt(this.end + index);
   }
 
@@ -558,9 +630,9 @@ class Lexer {
     return this.tokens.length;
   }
 
-  nextToken() {
+  nextToken(): Token {
     if (this.nextTokens.length) {
-      return this.nextTokens.shift();
+      return this.nextTokens.shift()!;
     }
     var i,
       rule,
@@ -664,7 +736,8 @@ class Lexer {
         }
       }
     }
+    throw new Error('no match lexer');
   }
 }
 
-module.exports = Lexer;
+export default Lexer;

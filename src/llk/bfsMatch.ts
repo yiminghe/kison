@@ -1,9 +1,11 @@
-// @ts-check
-const { lexer, Lexer } = require('../data');
+import data from '../data';
+import type { State } from './sm';
 
-function bfsMatch(startState) {
+const { lexer, Lexer } = data;
+
+function bfsMatch(startState: State) {
   let reachableStates = [startState];
-  let ret = {};
+  let ret: { matchedInput: boolean } = { matchedInput: false };
   let count = 0;
   while (1) {
     reachableStates = getNextReachableStates(reachableStates, ret);
@@ -23,15 +25,18 @@ function bfsMatch(startState) {
   return { match: false, count };
 }
 
-function getNextReachableStates(reachableStates, ret) {
-  const stack = [];
+function getNextReachableStates(
+  reachableStates: State[],
+  ret: { matchedInput: boolean },
+) {
+  const stack: State[] = [];
   const newReachableStates = [];
   const encountered = new Set();
   for (const currentState of reachableStates) {
     stack.push(currentState);
-    let state;
+    let state: State;
     while (stack.length) {
-      state = stack.pop();
+      state = stack.pop()!;
       if (encountered.has(state)) {
         continue;
       }
@@ -49,9 +54,9 @@ function getNextReachableStates(reachableStates, ret) {
         finded = finded || !!find;
         if (find) {
           if (find.count) {
-            newReachableStates.push(t.to);
+            newReachableStates.push(t.to as State);
           } else {
-            stack.push(t.to);
+            stack.push(t.to as State);
           }
         }
       }
@@ -60,7 +65,4 @@ function getNextReachableStates(reachableStates, ret) {
   return newReachableStates;
 }
 
-module.exports = {
-  bfsMatch,
-  getNextReachableStates,
-};
+export { bfsMatch, getNextReachableStates };

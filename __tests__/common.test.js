@@ -1,5 +1,5 @@
-import Grammar from '../lib/Grammar';
-import Utils from '../lib/utils';
+import Grammar from '../src/Grammar';
+import Utils from '../src/utils';
 import { prettyJson, run } from './utils';
 
 describe('common', () => {

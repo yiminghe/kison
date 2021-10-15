@@ -1,42 +1,40 @@
-// @ts-check
+import Utils from './utils';
+var { filterRhs, serializeObject, eachRhs, globalUtils, getAstNodeClassName } =
+  Utils;
+import NonTerminal from './NonTerminal';
+import Lexer, { LexerRule } from './Lexer';
+import Production from './Production';
+import data from './data';
+import { Rh, Rhs } from './types';
+import ItemSet from './lalr/ItemSet';
 
-var Utils = require('./utils');
-var {
-  each,
-  filterRhs,
-  serializeObject,
-  eachRhs,
-  globalUtils,
-  assertSymbolString,
-  getAstNodeClassName,
-} = Utils;
-var NonTerminal = require('./NonTerminal');
-var Lexer = require('./Lexer');
-var Production = require('./Production');
-const { productionAddAstNodeFlag, gened: dataGened } = require('./data');
+const { productionAddAstNodeFlag, gened: dataGened, START_TAG } = data;
 const {
   isOneOrMoreSymbol,
   isOptionalSymbol,
   isZeroOrMoreSymbol,
   normalizeSymbol,
-} = require('./utils');
-const { START_TAG } = require('./data');
+} = Utils;
 
 const startGroupMarker = `'('`;
 const endGroupMarker = `')'`;
 const alterMark = `'|'`;
 
-function setSize(set3) {
+function setSize(set3: any) {
   return Object.keys(set3).length;
 }
 
-function camelCase(str) {
-  return str.replace(/-(\w)/g, (m, m1) => {
+function camelCase(str: string) {
+  return str.replace(/-(\w)/g, (_, m1) => {
     return m1.toUpperCase();
   });
 }
 
-function emurate(keys, ret, callback) {
+function emurate(
+  keys: number[],
+  ret: Record<string, number>,
+  callback: (ret: Record<string, number>) => void,
+) {
   if (!keys.length) {
     if (callback) {
       callback(ret);
@@ -51,28 +49,47 @@ function emurate(keys, ret, callback) {
   emurate(rest, ret, callback);
 }
 
+export interface ProductionRule {
+  symbol: string;
+  precedence?: string;
+  action?: Function;
+  flat?: boolean;
+  label?: string;
+  skipAstNode?: boolean;
+  rhs: Rhs;
+}
+
+interface Params {
+  productions: ProductionRule[];
+  lexer: {
+    rules: LexerRule[];
+  };
+}
+
+type FakeThis = { productions: ProductionRule[] };
+
 class Grammar {
-  table = {};
+  prioritySymbolMap: Record<string, string> = {};
 
-  prioritySymbolMap = {};
+  nonTerminals: Record<string, NonTerminal> = {};
 
-  nonTerminals = {};
+  itemSets: ItemSet[] = [];
 
-  itemSets = [];
+  productions: Production[] | ProductionRule[] = [];
 
-  productions = [];
+  isCompress: boolean = false;
 
-  isCompress = false;
+  operators?: string[][];
 
-  operators = undefined;
+  my?: any;
 
-  my = undefined;
-
-  lexer = undefined;
+  lexer: Lexer = undefined!;
 
   static START_TAG = START_TAG;
 
-  constructor(cfg) {
+  productionIndexMap: Record<string, number>;
+
+  constructor(cfg: Params) {
     Object.assign(this, cfg);
 
     if (this.productions && this.productions[0]) {
@@ -97,11 +114,11 @@ class Grammar {
     };
   }
 
-  setLexer(v) {
+  setLexer(v: { rules: LexerRule[] } | Lexer) {
     if (!(v instanceof Lexer)) {
-      v = new Lexer(v);
+      const lexerInstance = new Lexer(v);
       var { productions } = this;
-      const nonTerminals = {};
+      const nonTerminals: Record<string, number> = {};
       for (const production of productions) {
         var { symbol } = production;
         nonTerminals[symbol] = 1;
@@ -111,21 +128,22 @@ class Grammar {
           if (rh.length > 1 && (rh.endsWith('?') || rh.endsWith('*'))) {
             rh = normalizeSymbol(rh);
           }
-          if (!v.hasToken(rh) && !nonTerminals[rh]) {
-            v.addRule({
+          if (!lexerInstance.hasToken(rh) && !nonTerminals[rh]) {
+            lexerInstance.addRule({
               token: rh,
               regexp: new RegExp(Utils.regexEscape(rh), 'g'),
             });
           }
         });
       }
+      this.lexer = lexerInstance;
     }
-    this.lexer = v;
+    if (v instanceof Lexer) this.lexer = v;
   }
 
   // parser.d.ts
-  genDTs(base) {
-    const fake = {
+  genDTs(base: string) {
+    const fake: FakeThis = {
       productions: this.productions,
     };
 
@@ -136,12 +154,15 @@ class Grammar {
     this.expandZeroOrMoreSymbol(fake);
 
     const { productions } = fake;
-    const symbolMap = new Map();
+    const symbolMap = new Map<
+      string,
+      { code: string; index: number; zero?: boolean }[]
+    >();
     for (const p of productions) {
       symbolMap.set(p.symbol, []);
     }
 
-    let literalTokens = [];
+    let literalTokens: string[] = [];
 
     const allTokens = new Map();
 
@@ -165,17 +186,17 @@ class Grammar {
     const tokenMap = new Map();
     let tokenIndex = 0;
 
-    const parentMap = new Map();
+    const parentMap = new Map<string, Set<string>>();
 
     let classNameMap = new Map();
     let reverseClassNameMap = new Map();
 
-    let usedClassName = {};
+    let usedClassName: Record<string, number> = {};
 
-    let firstCls;
+    let firstCls: string = '';
 
-    const flatSymbols = {};
-    const skipNodeClass = {};
+    const flatSymbols: Record<string, number> = {};
+    const skipNodeClass: Record<string, number> = {};
     const parentNodeClassMap = new Map();
 
     for (let i = 0; i < productions.length; i++) {
@@ -234,18 +255,18 @@ class Grammar {
       }
     }
 
-    function filterSkipNodeParents(childName) {
+    function filterSkipNodeParents(childName: string) {
       const parentIter = parentMap.get(childName);
 
       if (!parentIter) {
         return null;
       }
 
-      let parents = Array.from(parentMap.get(childName));
+      let parents = Array.from(parentIter);
 
-      let processed = {};
+      let processed: Record<string, number> = {};
 
-      const f = (p) => {
+      const f = (p: string) => {
         return !skipNodeClass[p];
       };
 
@@ -315,7 +336,7 @@ class Grammar {
         }
 
         if (skipNodeClass[cls]) {
-          let nonSkipChildClasses = {};
+          let nonSkipChildClasses: Record<string, number> = {};
           let seed = { [cls]: 1 };
           while (true) {
             const currentChildClassesLength =
@@ -335,7 +356,7 @@ class Grammar {
             }
             if (
               currentChildClassesLength ===
-                Object.keys(nonSkipChildClasses).length &&
+              Object.keys(nonSkipChildClasses).length &&
               seedLength === Object.keys(seed).length
             ) {
               break;
@@ -377,18 +398,18 @@ class Grammar {
         children:${childrenType};
         ${parents && parents.length ? `parent:${parents.join(' | ')};` : ''}
       }`;
-          classes.push({ code, index, zero });
+          if (classes) classes.push({ code, index, zero });
         }
       }
     }
 
     let code = [];
 
-    let allClassNames = [];
+    let allClassNames: string[] = [];
 
     for (const symbol of symbolMap.keys()) {
       const classes = symbolMap.get(symbol);
-      if (classes.length) {
+      if (classes && classes.length) {
         const className = getAstNodeClassName(symbol);
         allClassNames.push(className);
         code.push(...classes.map((c) => c.code));
@@ -445,7 +466,7 @@ class Grammar {
   // https://www.w3.org/TR/2010/REC-xquery-20101214/#EBNFNotation
   // https://www.bottlecaps.de/rr/ui
   toBNF() {
-    const skipNodeProductionsMap = {};
+    const skipNodeProductionsMap: Record<string, string[]> = {};
     for (const p of this.productions) {
       if (p.skipAstNode) {
         skipNodeProductionsMap[p.symbol] = filterRhs(p.rhs);
@@ -454,7 +475,7 @@ class Grammar {
     const { lexer } = this;
     const ret = [];
 
-    function getSymbolBnf(r) {
+    function getSymbolBnf(r: string): string[] {
       const line = [];
       let s = normalizeSymbol(r);
       let quantifier = s === r ? '' : r.slice(s.length);
@@ -492,12 +513,14 @@ class Grammar {
     return ret.join('\n');
   }
 
-  getProductionItemByType(p, itemType) {
+  getProductionItemByType(p: any, itemType: string | number) {
     if (this.isCompress) {
       return p[this.productionIndexMap[itemType]];
     }
     return p[itemType];
   }
+
+  __expandProductions = 0;
 
   expandProductions() {
     if (this.__expandProductions) {
@@ -509,7 +532,9 @@ class Grammar {
     this.expandProductionsInternal();
   }
 
-  expandProductionAlternative(fake) {
+  __expandProductionAlternatives = 0;
+
+  expandProductionAlternative(fake?: FakeThis) {
     if (!fake && this.__expandProductionAlternatives) {
       return;
     }
@@ -527,21 +552,33 @@ class Grammar {
     fake.productions = newPs;
   }
 
-  expandOneProductionAlternative(p) {
+  expandOneProductionAlternative(p: ProductionRule) {
     const { rhs } = p;
 
-    const rhsRoot = {
+    type Node = {
+      rh: Rh;
+      tail: Node;
+      childIndex: number;
+      children: Node[];
+    };
+
+    const rhsRoot: Node = {
+      rh: '',
+      tail: null!,
+      childIndex: -1,
       children: [],
     };
 
-    function wrapRh(rh) {
+    function wrapRh(rh: Rh): Node {
       return {
         rh,
+        tail: null!,
+        childIndex: -1,
         children: [],
       };
     }
 
-    function addChildren(node, child) {
+    function addChildren(node: Node, child: Node) {
       if (node.rh === startGroupMarker || !node.rh) {
         child.childIndex = node.children.length;
       } else if (node.childIndex !== undefined) {
@@ -557,9 +594,9 @@ class Grammar {
         current = stack[stack.length - 1];
         continue;
       }
-      if (rh.startsWith && rh.startsWith(endGroupMarker)) {
+      if (typeof rh === 'string' && rh.startsWith(endGroupMarker)) {
         let newChild = wrapRh(rh);
-        const parent = stack.pop();
+        const parent = stack.pop()!;
         for (const c of parent.children) {
           addChildren(c.tail, newChild);
         }
@@ -579,7 +616,7 @@ class Grammar {
       }
     }
 
-    function collect(node, ret, rets) {
+    function collect(node: Node, ret: Rh[], rets: Rh[][]) {
       if (node.rh) {
         ret.push(node.rh);
       }
@@ -592,7 +629,7 @@ class Grammar {
       }
     }
 
-    const rhses = [];
+    const rhses: Rh[][] = [];
 
     collect(rhsRoot, [], rhses);
 
@@ -602,7 +639,9 @@ class Grammar {
     }));
   }
 
-  expandProductionGroup(fake) {
+  __expandProductionGroup = 0;
+
+  expandProductionGroup(fake?: FakeThis) {
     if (!fake) {
       if (this.__expandProductionGroup) {
         return;
@@ -626,7 +665,6 @@ class Grammar {
       for (const p of ps) {
         uuid++;
         const { rhs } = p;
-        const l = rhs.length;
         const newRhs = [];
         for (let i = 0; i < rhs.length; i++) {
           const rh = rhs[i];
@@ -638,21 +676,24 @@ class Grammar {
             let nest = 0;
             while (
               nest ||
-              !rhs[i].startsWith ||
-              !rhs[i].startsWith(endGroupMarker)
+              typeof rhs[i] === 'function' ||
+              !(rhs[i] as string).startsWith(endGroupMarker)
             ) {
-              if (rhs[i] === startGroupMarker) {
+              const rh = rhs[i];
+              if (rh === startGroupMarker) {
                 nest++;
               } else if (
-                rhs[i].startsWith &&
-                rhs[i].startsWith(endGroupMarker)
+                typeof rh === 'string' &&
+                rh.startsWith(endGroupMarker)
               ) {
                 nest--;
               }
-              subRhs.push(rhs[i]);
+              subRhs.push(rh);
               i++;
             }
-            const quantifier = rhs[i].slice(startGroupMarker.length);
+            const quantifier = (rhs[i] as string).slice(
+              startGroupMarker.length,
+            );
             const validRhs = subRhs.filter((rh) => {
               if (typeof rh !== 'string') {
                 return false;
@@ -703,9 +744,9 @@ class Grammar {
     fake.productions = newPs;
   }
 
-  expandProductionsInternal() {}
+  expandProductionsInternal() { }
 
-  getPrecedenceTerminal(p) {
+  getPrecedenceTerminal(p: ProductionRule) {
     if (p.precedence) {
       return p.precedence;
     }
@@ -720,9 +761,9 @@ class Grammar {
   }
 
   eliminateLeftRecursive() {
-    const symbolSlashMap = {};
+    const symbolSlashMap: Record<string, number> = {};
 
-    function getSuffixSymbol(symbol) {
+    function getSuffixSymbol(symbol: string) {
       let n = 1;
       if (symbolSlashMap[symbol]) {
         n = symbolSlashMap[symbol];
@@ -735,19 +776,17 @@ class Grammar {
     let { productions } = this;
 
     // eliminate left recursive
-    const nonTerminals = {};
+    const nonTerminals: Record<string, number> = {};
     for (const p of productions) {
       nonTerminals[p.symbol] = 1;
     }
-    const nonTerminalsList = Object.keys(nonTerminals);
-    const n = nonTerminalsList.length;
     let needReplace = true;
     // direct left recursive
     // TODO: support indirect recursive
     while (needReplace) {
       needReplace = false;
       let newProductions2 = [];
-      let emptySlashSet = new Set();
+      let emptySlashSet = new Set<string>();
       const deletedMap = new Set();
       const slashArgumentMap = new Map();
       const l = productions.length;
@@ -812,14 +851,16 @@ class Grammar {
 
   expandProductionPriority() {
     // expand priority
-    const { productions, operators } = this;
+    const { operators } = this;
+
+    const productions: ProductionRule[] = this.productions;
 
     if (!operators) {
       return;
     }
 
-    const rightMap = {};
-    const priorityMap = {};
+    const rightMap: Record<string, number> = {};
+    const priorityMap: Record<string, number> = {};
     let index = 0;
     for (const ops of operators) {
       ++index;
@@ -832,8 +873,8 @@ class Grammar {
       }
     }
 
-    const getPriority = (p1) => {
-      const precedenceTerminal1 = this.getPrecedenceTerminal(p1);
+    const getPriority = (p1: ProductionRule) => {
+      const precedenceTerminal1 = this.getPrecedenceTerminal(p1)!;
       const priority1 = priorityMap[precedenceTerminal1];
       return priority1;
     };
@@ -841,11 +882,11 @@ class Grammar {
     const unrelevants = productions.filter((p) => !getPriority(p));
     const relevantProductions = productions.filter((p) => !!getPriority(p));
 
-    relevantProductions.sort((p1, p2) => {
+    relevantProductions.sort((p1: ProductionRule, p2: ProductionRule) => {
       return getPriority(p1) - getPriority(p2);
     });
 
-    function getSymbol(s, priority) {
+    function getSymbol(s: string, priority: string | number) {
       return `${s}_p_${priority}`;
     }
 
@@ -865,9 +906,9 @@ class Grammar {
     if (part.length) {
       parts.push(part);
     }
-    const newRelevants = [];
+    const newRelevants: ProductionRule[] = [];
 
-    function getNextP(productions, index) {
+    function getNextP(productions: ProductionRule[], index: number) {
       const p = productions[index];
       const priority = getPriority(p);
       while (++index < productions.length) {
@@ -878,7 +919,7 @@ class Grammar {
     }
     const { prioritySymbolMap } = this;
 
-    const transformPart = (ps) => {
+    const transformPart = (ps: ProductionRule[]) => {
       const l = ps.length;
       const symbol = ps[0].symbol;
       const startSymbol = getSymbol(symbol, getPriority(ps[0]));
@@ -917,8 +958,8 @@ class Grammar {
           continue;
         }
         let newRhs;
-        if (rightMap[precedenceTerminal]) {
-          let replaced;
+        if (precedenceTerminal && rightMap[precedenceTerminal]) {
+          let replaced = false;
           newRhs = rhs.map((r) => {
             if (r === symbol) {
               if (replaced) {
@@ -963,8 +1004,8 @@ class Grammar {
 
     this.productions = unrelevants.concat(newRelevants);
   }
-
-  expandOptionalSymbol(fake) {
+  __expandOptionalSymbol = 0;
+  expandOptionalSymbol(fake?: FakeThis) {
     if (!fake && this.__expandOptionalSymbol) {
       return;
     }
@@ -976,7 +1017,7 @@ class Grammar {
     const newVs = [];
     for (const p of vs) {
       const { rhs } = p;
-      const keys = [];
+      const keys: number[] = [];
       for (let i = 0; i < rhs.length; i++) {
         const r = rhs[i];
         if (isOptionalSymbol(r)) {
@@ -1006,7 +1047,9 @@ class Grammar {
     fake.productions = newVs;
   }
 
-  expandOneOrMoreSymbol(fake) {
+  __expandOneOrMoreSymbol = 0;
+
+  expandOneOrMoreSymbol(fake?: FakeThis) {
     if (!fake && this.__expandOneOrMoreSymbol) {
       return;
     }
@@ -1020,7 +1063,7 @@ class Grammar {
       const newRhs = [];
       for (let i = 0; i < rhs.length; i++) {
         const r = rhs[i];
-        if (isOneOrMoreSymbol(r)) {
+        if (isOneOrMoreSymbol(r) && typeof r === 'string') {
           const rr = normalizeSymbol(r);
           const lazy = r.endsWith('?') ? '?' : '';
           newRhs.push(rr, `${rr}*${lazy}`);
@@ -1040,8 +1083,8 @@ class Grammar {
 
     fake.productions = newPs;
   }
-
-  expandZeroOrMoreSymbol(fake) {
+  __expandZeroOrMoreSymbol = 0;
+  expandZeroOrMoreSymbol(fake?: FakeThis) {
     if (!fake && this.__expandZeroOrMoreSymbol) {
       return;
     }
@@ -1049,7 +1092,7 @@ class Grammar {
       this.__expandZeroOrMoreSymbol = 1;
     }
     fake = fake || this;
-    const gened = {};
+    const gened: Record<string, string> = {};
     let zeroMoreIndex = 1;
     const zeroMorePrefix = 'zeroMore';
     let newVs2 = [];
@@ -1067,25 +1110,29 @@ class Grammar {
         const newP = { ...p, rhs: newRhs };
         for (const k of keys) {
           const r = rhs[k];
-          if (!gened[r]) {
-            const nr = normalizeSymbol(r);
-            const genId = (gened[r] =
-              zeroMorePrefix + '_' + nr + '_' + zeroMoreIndex++);
-            newVs2.push(
-              {
-                symbol: genId,
-                rhs: [genId, nr],
-                flat: true,
-                skipAstNode: true,
-              },
-              {
-                symbol: genId,
-                rhs: [],
-                skipAstNode: true,
-              },
-            );
+          if (typeof r === 'string') {
+            if (!gened[r]) {
+              const nr = normalizeSymbol(r);
+              const genId = (gened[r] =
+                zeroMorePrefix + '_' + nr + '_' + zeroMoreIndex++);
+              newVs2.push(
+                {
+                  symbol: genId,
+                  rhs: [genId, nr],
+                  flat: true,
+                  skipAstNode: true,
+                },
+                {
+                  symbol: genId,
+                  rhs: [],
+                  skipAstNode: true,
+                },
+              );
+            }
+            newRhs[k] = gened[r];
+          } else {
+            newRhs[k] = r;
           }
-          newRhs[k] = gened[r];
         }
         newVs2.push(newP);
       } else {
@@ -1103,18 +1150,16 @@ class Grammar {
 
   build() {
     this.expandProductions();
-    var { productions: vs } = this;
-    each(vs, function (v, index) {
-      vs[index] = new Production(v);
-    });
+    this.productions = this.productions.map((p) => new Production(p));
     this.buildProductions();
     this.buildMeta();
   }
 
-  buildProductions() {}
+  buildProductions() { }
 
   buildNonTerminals() {
-    var { lexer, nonTerminals, productions } = this;
+    var { lexer, nonTerminals } = this;
+    var productions: Production[] = this.productions as Production[];
     for (const production of productions) {
       var { symbol } = production;
       var nonTerminal = nonTerminals[symbol];
@@ -1125,7 +1170,7 @@ class Grammar {
       }
       nonTerminal.productions.push(production);
       eachRhs(production.rhs, (rh) => {
-        if (!lexer.hasToken(rh, true) && !nonTerminals[rh]) {
+        if (!lexer.hasToken(rh) && !nonTerminals[rh]) {
           nonTerminals[rh] = new NonTerminal({
             symbol: rh,
           });
@@ -1135,8 +1180,9 @@ class Grammar {
   }
 
   buildNullable() {
-    var i, rhs, n, t, production, productions;
+    var i, rhs, n, t, production;
     var { nonTerminals } = this;
+    var productions: Production[] = this.productions as Production[];
     var cont = true;
     // loop until no further changes have been made
     while (cont) {
@@ -1145,7 +1191,7 @@ class Grammar {
       // S -> T
       // T -> t
       // check if each production is null able
-      for (const production of this.productions) {
+      for (const production of productions) {
         if (!production.nullable) {
           rhs = filterRhs(production.rhs);
           for (i = 0, n = 0; (t = rhs[i]); ++i) {
@@ -1160,7 +1206,8 @@ class Grammar {
         }
       }
       //check if each symbol is null able
-      each(nonTerminals, (v) => {
+      for (const k of Object.keys(nonTerminals)) {
+        const v = nonTerminals[k];
         if (!v.nullable) {
           ({ productions } = v);
           for (i = 0; (production = productions[i]); i++) {
@@ -1170,11 +1217,11 @@ class Grammar {
             }
           }
         }
-      });
+      }
     }
   }
 
-  isNullable(symbol) {
+  isNullable(symbol: string | string[]) {
     var { nonTerminals } = this;
     // rhs
     if (symbol instanceof Array) {
@@ -1187,7 +1234,6 @@ class Grammar {
       return true;
       // terminal
     }
-    assertSymbolString(symbol);
     if (!nonTerminals[symbol]) {
       return false;
       // non terminal
@@ -1196,8 +1242,8 @@ class Grammar {
     }
   }
 
-  findFirst(symbol) {
-    var firsts = {};
+  findFirst(symbol: string | string[]) {
+    var firsts: Record<string, number> = {};
     var { nonTerminals } = this;
     var t, i;
     // rhs
@@ -1216,7 +1262,6 @@ class Grammar {
       return firsts;
       // terminal
     }
-    assertSymbolString(symbol);
     if (!nonTerminals[symbol]) {
       return { [symbol]: 1 };
       // non terminal
@@ -1229,6 +1274,7 @@ class Grammar {
     var { nonTerminals } = this;
     var cont = true;
     var nonTerminal, symbol, firsts;
+    const productions: Production[] = this.productions as Production[];
     // loop until no further changes have been made
     while (cont) {
       cont = false;
@@ -1238,8 +1284,8 @@ class Grammar {
 
       // S -> S y
       // S -> t
-      for (const production of this.productions) {
-        var firsts = this.findFirst(production.rhs);
+      for (const production of productions) {
+        const firsts = this.findFirst(filterRhs(production.rhs));
         if (setSize(firsts) !== setSize(production.firsts)) {
           production.firsts = firsts;
           cont = true;
@@ -1259,22 +1305,22 @@ class Grammar {
     }
   }
 
-  getProductionSymbol(p) {
+  getProductionSymbol(p: any) {
     return this.getProductionItemByType(p, 'symbol');
   }
-  getProductionRhs(p) {
+  getProductionRhs(p: any) {
     return this.getProductionItemByType(p, 'rhs');
   }
-  getProductionAction(p) {
+  getProductionAction(p: any) {
     return this.getProductionItemByType(p, 'action');
   }
-  getProductionLabel(p) {
+  getProductionLabel(p: any) {
     return this.getProductionItemByType(p, 'label');
   }
 
-  mapSymbols(s) {
+  mapSymbols(s: Rhs | Rh): Rh | Rhs {
     if (Array.isArray(s)) {
-      return s.map((t) => this.mapSymbols(t));
+      return s.map((t) => this.mapSymbols(t)) as Rhs;
     }
     if (typeof s === 'string') {
       return this.lexer.mapSymbol(s);
@@ -1282,18 +1328,19 @@ class Grammar {
     return s;
   }
 
-  genCodeInternal(code, cfg) {
+  genCodeInternal(code: string[], cfg: any) {
+    console.log(code, cfg);
     return '';
   }
 
-  genCode(cfg) {
+  genCode(cfg: any) {
     cfg = cfg || {};
     var { lexer } = this;
     var lexerCode = lexer.genCode(cfg);
     this.build();
     var productions = [];
     const { productionIndexMap } = this;
-    for (const p of this.productions) {
+    for (const p of this.productions as Production[]) {
       var { action, label } = p;
       var ret = [];
       ret[productionIndexMap.symbol] = this.mapSymbols(p.symbol);
@@ -1308,10 +1355,10 @@ class Grammar {
     }
     var code = [];
     for (const key of Object.keys(globalUtils)) {
-      code.push(`var ${key} = ${serializeObject(globalUtils[key])};`);
+      code.push(`var ${key} = ${serializeObject((globalUtils as any)[key])};`);
     }
     for (const key of Object.keys(dataGened)) {
-      code.push(`var ${key} = ${serializeObject(dataGened[key])};`);
+      code.push(`var ${key} = ${serializeObject((dataGened as any)[key])};`);
     }
     if (this.my) {
       code.push(`var my = ${serializeObject(this.my)};`);
@@ -1319,17 +1366,17 @@ class Grammar {
     code.push(lexerCode);
     code.push(
       'var parser = ' +
-        serializeObject({
-          productions,
-          productionIndexMap,
-          getProductionItemByType: this.getProductionItemByType,
-          getProductionSymbol: this.getProductionSymbol,
-          getProductionRhs: this.getProductionRhs,
-          getProductionAction: this.getProductionAction,
-          getProductionLabel: this.getProductionLabel,
-          isCompress: 1,
-        }) +
-        ';',
+      serializeObject({
+        productions,
+        productionIndexMap,
+        getProductionItemByType: this.getProductionItemByType,
+        getProductionSymbol: this.getProductionSymbol,
+        getProductionRhs: this.getProductionRhs,
+        getProductionAction: this.getProductionAction,
+        getProductionLabel: this.getProductionLabel,
+        isCompress: 1,
+      }) +
+      ';',
     );
 
     code.push(
@@ -1344,10 +1391,10 @@ class Grammar {
 
     code.push(
       'parser.prioritySymbolMap = ' +
-        serializeObject(this.prioritySymbolMap) +
-        ';',
+      serializeObject(this.prioritySymbolMap) +
+      ';',
     );
-    const productionSkipAstNodeSet = [];
+    const productionSkipAstNodeSet: number[] = [];
     this.productions.forEach((p, index) => {
       if (p.skipAstNode) {
         productionSkipAstNodeSet.push(index);
@@ -1372,4 +1419,4 @@ class Grammar {
   }
 }
 
-module.exports = Grammar;
+export default Grammar;

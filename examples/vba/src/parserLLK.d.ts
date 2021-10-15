@@ -22,12 +22,16 @@ interface Position {
 
 interface BaseSymbolNode extends Position {
   type: 'symbol';
+  symbol: string;
   parent?: AstSymbolNode;
-  label: '';
+  label: string;
+  children: AstNode[];
 }
 
 interface BaseTokenNode extends Position {
   type: 'token';
+  token: string;
+  t: string;
   text: string;
   parent: AstSymbolNode;
 }
@@ -41,15 +45,17 @@ type TransformNode = (arg: {
 
 interface Token extends Position {
   text: string;
+  t: string;
+  recovery?: string;
   token: LiteralToken;
 }
 
 interface ParseError {
   errorMessage: string;
   expected: LiteralToken[];
-  token: Token;
-  recovery: Boolean;
-  symbol: Symbol;
+  lexer: Token;
+  recovery?: Boolean;
+  symbol: AstSymbolNode['symbol'];
   tip: string;
 }
 
@@ -101,6 +107,7 @@ export type {
   ParseResult, LexResult, ParserOptions,
   TransformNode,
   AstRootNode,
+  ParseError,
   Position,
   LiteralToken,
   LexerOptions, AstTokenNode, Token, AstNode, AstSymbolNode

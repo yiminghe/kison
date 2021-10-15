@@ -1,59 +1,76 @@
-// @ts-check
+// @ts-ignore
+import util from 'modulex-util';
+import * as AstNodes from './AstNode';
+import type {
+  AstSymbolNode as AstSymbolNodeType,
+  AstNode as AstNodeType,
+} from './AstNode';
+import data from './data';
+import type { ParseError, Token } from './parser';
+import type { Rhs, TransformNode } from './types';
 
-var util = require('modulex-util');
-const { AstNode } = require('./AstNode');
-const {
+
+const { AstTokenNode, BaseAstNode, AstSymbolNode } = AstNodes;
+
+var {
   productionAddAstNodeFlag,
   productionEndFlag,
   lexer,
   Lexer,
   parser,
   START_TAG,
-} = require('./data');
+} = data;
 
 var doubleReg = /"/g;
 var single = /'/g;
 
 const globalUtils = {
-  AstNode,
+  BaseAstNode,
 
-  filterRhs(rhs) {
-    return rhs.filter((r) => typeof r === 'string');
+  AstSymbolNode,
+
+  AstTokenNode,
+
+  filterRhs(rhs: Rhs): string[] {
+    return rhs.filter((r) => typeof r === 'string') as string[];
   },
 
-  isExtraAstNode(ast) {
+  isExtraAstNode(ast: AstSymbolNodeType) {
     return ast.children && !ast.children.length;
   },
 
-  peekStack(stack, n) {
-    n = n || 1;
+  peekStack<T>(stack: T[], n: number = 1) {
     return stack[stack.length - n];
   },
 
-  getOriginalSymbol(s) {
+  getOriginalSymbol(s: string) {
     let uncompressed = lexer.mapReverseSymbol(s);
     return parser.prioritySymbolMap[uncompressed] || uncompressed;
   },
 
-  closeAstWhenError(error, astStack) {
-    const errorNode = new AstNode({
-      type: 'token',
+  closeAstWhenError(error: ParseError, astStack: AstNodeType[]) {
+    const errorNode = new AstTokenNode({
       error,
       ...error.lexer,
     });
-    peekStack(astStack).addChild(errorNode);
-    while (astStack.length !== 1) {
+    const top = peekStack(astStack);
+    if (top.type === 'symbol') {
+      top.addChild(errorNode);
+    }
+    while (astStack.length > 1) {
       const ast = astStack.pop();
-      if (ast.symbol && isExtraAstNode(ast)) {
+      if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
         const topAst = peekStack(astStack);
-        topAst.children.pop();
-        topAst.addChildren(ast.children);
+        if (topAst.type === 'symbol') {
+          topAst.children.pop();
+          topAst.addChildren(ast.children);
+        }
       }
     }
     return errorNode;
   },
 
-  pushRecoveryTokens(recoveryTokens, token) {
+  pushRecoveryTokens(recoveryTokens: Token[], token: Token) {
     const { EOF_TOKEN } = Lexer.STATIC;
     let eof;
     if (recoveryTokens[recoveryTokens.length - 1]?.token === EOF_TOKEN) {
@@ -65,7 +82,7 @@ const globalUtils = {
     }
   },
 
-  getParseError(getExpected) {
+  getParseError(getExpected: () => string[]) {
     const expected = getExpected();
     const tips = [];
     if (expected.length) {
@@ -76,16 +93,16 @@ const globalUtils = {
     return {
       errorMessage: [
         'syntax error at line ' +
-          lexer.lineNumber +
-          ':\n' +
-          lexer.showDebugInfo(),
+        lexer.lineNumber +
+        ':\n' +
+        lexer.showDebugInfo(),
         ...tips,
       ].join('\n'),
       tip,
     };
   },
 
-  cleanAst(ast, transformNode) {
+  cleanAst(ast: AstSymbolNodeType, transformNode: TransformNode): AstSymbolNodeType {
     if (!transformNode) {
       return ast;
     }
@@ -122,29 +139,44 @@ const globalUtils = {
         cleanAst(ast.parent, transformNode);
       } else {
         for (const c of children) {
-          cleanAst(c, transformNode);
+          if (c.type === 'symbol') {
+            cleanAst(c, transformNode);
+          }
         }
       }
     }
     return ast;
   },
 
-  getAstRootNode(astStack, transformNode, raw) {
-    let ast = astStack[0];
+  getAstRootNode(
+    astStack: AstNodeType[],
+    transformNode: TransformNode,
+    raw?: boolean,
+  ) {
+    let ast: AstNodeType | undefined = astStack[0];
+    if (!ast) {
+      return ast;
+    }
+    if (ast.type !== 'symbol') {
+      return ast;
+    }
     ast = ast?.children?.[0];
-    if (ast.symbol === START_TAG) {
+    if (ast && ast.type === 'symbol' && ast.symbol === START_TAG) {
       ast = ast?.children?.[0];
     }
     if (ast) {
-      ast.parent = null;
+      ast.parent = undefined;
     }
     if (raw) {
+      return ast;
+    }
+    if (ast && ast.type === 'token') {
       return ast;
     }
     return ast && cleanAst(ast, transformNode);
   },
 
-  checkProductionLabelIsSame(node, parent) {
+  checkProductionLabelIsSame(node: AstSymbolNodeType, parent: AstSymbolNodeType) {
     if (node.label || parent.label) {
       if (node.label === parent.label) {
         return node.children;
@@ -154,8 +186,8 @@ const globalUtils = {
     return node.children;
   },
 
-  defaultTransformAstNode({ node, parent }) {
-    if (node.token || node.error || node.symbol !== parent.symbol) {
+  defaultTransformAstNode({ node, parent }: Parameters<TransformNode>[0]) {
+    if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
     if (parent.children.length === 1) {
@@ -168,7 +200,7 @@ const globalUtils = {
       return node;
     }
     // drill down to token
-    if (node.children[0]?.token) {
+    if (node.children[0]?.type === 'token') {
       // do not check label
       // parent.label = node.label;
       return node.children;
@@ -176,36 +208,36 @@ const globalUtils = {
     return checkProductionLabelIsSame(node, parent);
   },
 
-  isAddAstNodeFlag(t) {
+  isAddAstNodeFlag(t: any) {
     return t === productionAddAstNodeFlag;
   },
 
-  isProductionEndFlag(t) {
+  isProductionEndFlag(t: any) {
     return t === productionEndFlag;
   },
 
-  isZeroOrMoreSymbol(s) {
+  isZeroOrMoreSymbol(s: any) {
     return (
       typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
     );
   },
 
-  isOneOrMoreSymbol(s) {
+  isOneOrMoreSymbol(s: any) {
     return (
       typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
     );
   },
 
-  isLazySymbol(s) {
-    const match = s.match(/(\*|\+|\?)\?$/);
+  isLazySymbol(s: any) {
+    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
     return match && s.length !== 2;
   },
 
-  isOptionalSymbol(s) {
+  isOptionalSymbol(s: any) {
     return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
   },
 
-  normalizeSymbol(s) {
+  normalizeSymbol(s: any): string {
     const ret =
       isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
         ? s.replace(/(\*|\+|\?)?\??$/, '')
@@ -215,40 +247,12 @@ const globalUtils = {
   },
 };
 
-const utils = (module.exports = {
+const utils = {
   globalUtils,
-
-  ...util,
 
   ...globalUtils,
 
-  each(object, fn, context) {
-    if (object) {
-      var key,
-        val,
-        length,
-        i = 0;
-
-      context = context || null;
-
-      if (!Array.isArray(object)) {
-        for (key in object) {
-          // can not use hasOwnProperty
-          if (fn.call(context, object[key], key, object) === false) {
-            break;
-          }
-        }
-      } else {
-        length = object.length;
-        for (val = object[0]; i < length; val = object[++i]) {
-          if (fn.call(context, val, i, object) === false) {
-            break;
-          }
-        }
-      }
-    }
-  },
-  eachRhs(rhs, fn) {
+  eachRhs(rhs: Rhs, fn: (r: string, index: number) => void) {
     rhs.forEach((r, index) => {
       if (typeof r !== 'string') {
         return;
@@ -257,17 +261,17 @@ const utils = (module.exports = {
     });
   },
 
-  regexEscape(input) {
+  regexEscape(input: string) {
     return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   },
 
-  assertSymbolString(symbol) {
+  assertSymbolString(symbol: any): asserts symbol is string {
     if (typeof symbol !== 'string') {
       throw new Error('invalid symbol:' + JSON.stringify(symbol, null, 2));
     }
   },
 
-  toFunctionString(fn, name) {
+  toFunctionString(fn: Function, name?: string) {
     const str = fn.toString();
     if (str.match(/^function\s+\(/)) {
       return str.replace(/^function\s+\(/, `function ${name || fn.name}(`);
@@ -275,7 +279,7 @@ const utils = (module.exports = {
     return 'function ' + str;
   },
 
-  escapeString(str, quote) {
+  escapeString(str: string, quote?: string) {
     var regexp = single;
     if (quote === '"') {
       regexp = doubleReg;
@@ -290,11 +294,15 @@ const utils = (module.exports = {
       .replace(regexp, '\\' + quote);
   },
 
-  getAstNodeClassName(str) {
+  getAstNodeClassName(str: string) {
     return util.ucfirst(util.camelCase(str)) + '_Node';
   },
 
-  serializeObject(obj, stringify, parent) {
+  serializeObject(
+    obj: any,
+    stringify?: Function,
+    parent?: any,
+  ): string | false {
     var r;
 
     if (
@@ -331,12 +339,12 @@ const utils = (module.exports = {
     } else if (Array.isArray(obj)) {
       ret.push('[');
       var sub = [];
-      util.each(obj, function (v) {
+      for (const v of obj) {
         var t = utils.serializeObject(v, stringify, obj);
         if (t !== false) {
           sub.push(t);
         }
-      });
+      }
       ret.push(sub.join(', '));
       ret.push(']');
       return ret.join('');
@@ -375,7 +383,7 @@ const utils = (module.exports = {
       return obj + '';
     }
   },
-});
+};
 
 const {
   isOptionalSymbol,
@@ -387,3 +395,13 @@ const {
   peekStack,
   isExtraAstNode,
 } = utils;
+
+for (const k of Object.keys(util)) {
+  // @ts-ignore
+  if (!utils[k]) {
+    // @ts-ignore
+    utils[k] = util[k];
+  }
+}
+
+export default utils;

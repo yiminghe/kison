@@ -1,20 +1,19 @@
-// @ts-check
-
-var Utils = require('../utils');
+import Item from './Item';
 
 class ItemSet {
-  items = [];
-  gotos = {};
+  __cache: Record<string, number> = {};
+  items: Item[] = [];
+  gotos: Record<string, ItemSet> = {};
   // 多个来源同一个symbol指向自己
   //{ c: [x,y]}
-  reverseGotos = {};
+  reverseGotos: Record<string, ItemSet[]> = {};
 
-  constructor(cfg) {
+  constructor(cfg: { items?: Item[] } = {}) {
     Object.assign(this, cfg);
   }
 
   // Insert item by order
-  addItem(item) {
+  addItem(item: Item) {
     var items = this.items;
     for (var i = 0; i < items.length; i++) {
       if (items[i].production.toString() > item.production.toString()) {
@@ -28,7 +27,7 @@ class ItemSet {
     return this.items.length;
   }
 
-  findItemIndex(item, ignoreLookAhead) {
+  findItemIndex(item: Item, ignoreLookAhead?: boolean) {
     var oneItems = this.items;
     for (var i = 0; i < oneItems.length; i++) {
       if (oneItems[i].equals(item, ignoreLookAhead)) {
@@ -38,11 +37,11 @@ class ItemSet {
     return -1;
   }
 
-  getItemAt(index) {
+  getItemAt(index: number) {
     return this.items[index];
   }
 
-  equals(other, ignoreLookAhead) {
+  equals(other: ItemSet, ignoreLookAhead?: boolean) {
     var oneItems = this.items,
       i,
       otherItems = other.items;
@@ -57,28 +56,29 @@ class ItemSet {
     return true;
   }
 
-  toString(withGoto) {
-    var ret = [],
+  toString(withGoto?: boolean) {
+    var ret: string[] = [],
       gotos = this.gotos;
-    Utils.each(this.items, function (item) {
+    for (const item of this.items) {
       ret.push(item.toString());
-    });
+    }
     if (withGoto) {
       ret.push('start gotos:');
-      Utils.each(gotos, function (itemSet, symbol) {
+      for (const symbol of Object.keys(gotos)) {
+        const itemSet = gotos[symbol];
         ret.push(symbol + ' -> ');
         ret.push(itemSet.toString());
-      });
+      }
       ret.push('end gotos:');
     }
     return ret.join(' \n ');
   }
 
-  addReverseGoto(symbol, item) {
+  addReverseGoto(symbol: string, itemSet: ItemSet) {
     var reverseGotos = this.reverseGotos;
     reverseGotos[symbol] = reverseGotos[symbol] || [];
-    reverseGotos[symbol].push(item);
+    reverseGotos[symbol].push(itemSet);
   }
 }
 
-module.exports = ItemSet;
+export default ItemSet;

@@ -1,5 +1,6 @@
 import Grammar from '../lib/Grammar';
-import { prettyJson } from './utils';
+import Utils from '../lib/utils';
+import { prettyJson, run } from './utils';
 
 describe('common', () => {
   const groupStartMark = `'('`;
@@ -17,6 +18,11 @@ describe('common', () => {
     groupEndZeroOrMoreMark,
     alternationMark,
   };
+
+  it('escape correctly', function () {
+    expect(Utils.escapeString("'\\")).toEqual("\\'\\\\");
+    expect(run("'" + Utils.escapeString("'\\") + "'")).toEqual("'\\");
+  });
 
   it('expand group and alteration', () => {
     const grammar = new Grammar({
@@ -50,7 +56,7 @@ describe('common', () => {
       },
     });
 
-    grammar.expandProductionAlternation();
+    grammar.expandProductionAlternative();
 
     expect(prettyJson(grammar.productions.slice(1))).toMatchInlineSnapshot(`
 "[
@@ -196,7 +202,7 @@ describe('common', () => {
       },
     });
 
-    grammar.expandProductionAlternation();
+    grammar.expandProductionAlternative();
 
     expect(prettyJson(grammar.productions.slice(1))).toMatchInlineSnapshot(`
 "[

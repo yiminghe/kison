@@ -1,20 +1,8 @@
-import Kison from '../lib';
+import LALRGrammar from '../lib/lalr/LALRGrammar';
 import getGrammar from '../examples/cal/cal-grammar';
-import { prettyJson } from './utils';
+import { prettyJson, run } from './utils';
 
-var LALRGrammar = Kison.LALRGrammar;
-var Utils = Kison.Utils;
-
-// global eval
-const run = eval;
-
-/*jshint quotmark:false*/
 describe('lalr', function () {
-  it('escape correctly', function () {
-    expect(Utils.escapeString("'\\")).toEqual("\\'\\\\");
-    expect(run("'" + Utils.escapeString("'\\") + "'")).toEqual("'\\");
-  });
-
   // 4-41 文法 GOTO 图
   it('generate goto map ok', function () {
     var grammar = new LALRGrammar({

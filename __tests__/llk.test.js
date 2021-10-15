@@ -1,82 +1,157 @@
-import Kison from '../lib';
+import LLKGrammar from '../lib/llk/LLKGrammar';
 import AstProcessor from '../examples/cal-ll/AstProcessor';
 import calGrammar from '../examples/cal-ll/cal-grammar';
-import { prettyJson } from './utils';
-
-var LLKGrammar = Kison.LLKGrammar;
-const run = eval;
-
-function getGrammar() {
-  var grammar = new LLKGrammar({
-    productions: [
-      {
-        symbol: 'E',
-        rhs: ['T', 'E_'],
-      },
-      {
-        symbol: 'E_',
-        rhs: ['+', 'T', 'E_'],
-      },
-      {
-        symbol: 'E_',
-        rhs: [],
-      },
-      {
-        symbol: 'T',
-        rhs: ['F', 'T_'],
-      },
-      {
-        symbol: 'T_',
-        rhs: ['*', 'F', 'T_'],
-      },
-      {
-        symbol: 'T_',
-        rhs: [],
-      },
-      {
-        symbol: 'F',
-        rhs: ['(', 'E', ')'],
-      },
-      {
-        symbol: 'F',
-        rhs: ['id'],
-      },
-    ],
-    lexer: {
-      rules: [
-        {
-          regexp: /^\+/,
-          token: '+',
-        },
-        {
-          regexp: /^\*/,
-          token: '*',
-        },
-        {
-          regexp: /^\(/,
-          token: '(',
-        },
-        {
-          regexp: /^\)/,
-          token: ')',
-        },
-        {
-          regexp: /^\*/,
-          token: '*',
-        },
-        {
-          regexp: /^\w+/,
-          token: 'id',
-        },
-      ],
-    },
-  });
-
-  grammar.build();
-  return grammar;
-}
+import { prettyJson, run } from './utils';
 
 describe('llk', () => {
+  it('support parse from startSymbol', () => {
+    var grammar = new LLKGrammar({
+      productions: [
+        {
+          symbol: 'program',
+          rhs: ['s1', 's2'],
+        },
+        {
+          symbol: 's1',
+          rhs: ['exp*'],
+        },
+        {
+          symbol: 's2',
+          rhs: ['exp2+'],
+        },
+        {
+          symbol: 'exp',
+          rhs: ['1'],
+        },
+        {
+          symbol: 'exp2',
+          rhs: ['1'],
+        },
+      ],
+      lexer: {
+        rules: [
+          {
+            regexp: /^\s+/,
+            token: '$HIDDEN',
+          },
+        ],
+      },
+    });
+    var code = grammar.genCode();
+    var parser = run(code);
+    var ret = parser.parse('1 1 1 1', {
+      startSymbol: 's2',
+    });
+    expect(ret.error).toBeFalsy();
+    expect(prettyJson(ret.ast)).toMatchInlineSnapshot(`
+"{
+  'symbol': 's2',
+  'type': 'symbol',
+  'ruleIndex': 3,
+  'children': [
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 5,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2
+        }
+      ],
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2
+    },
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 5,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4
+        }
+      ],
+      'start': 2,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 3,
+      'lastColumn': 4
+    },
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 5,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6
+        }
+      ],
+      'start': 4,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 6
+    },
+    {
+      'symbol': 'exp2',
+      'type': 'symbol',
+      'ruleIndex': 5,
+      'children': [
+        {
+          'type': 'token',
+          'text': '1',
+          'token': '1',
+          'start': 6,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 8
+        }
+      ],
+      'start': 6,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 7,
+      'lastColumn': 8
+    }
+  ],
+  'start': 0,
+  'firstLine': 1,
+  'firstColumn': 1
+}"
+`);
+  });
   it('lazy * symbol works', () => {
     var grammar = new LLKGrammar({
       productions: [
@@ -111,10 +186,12 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -138,6 +215,7 @@ describe('llk', () => {
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -161,6 +239,7 @@ describe('llk', () => {
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -184,6 +263,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -244,10 +324,12 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -271,6 +353,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -294,6 +377,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -317,6 +401,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -379,10 +464,12 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -406,6 +493,7 @@ describe('llk', () => {
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -429,6 +517,7 @@ describe('llk', () => {
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -452,6 +541,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -512,10 +602,12 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -539,6 +631,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -562,6 +655,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -585,6 +679,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -648,10 +743,12 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'type': 'token',
@@ -675,6 +772,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -698,6 +796,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -721,6 +820,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -781,10 +881,12 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -808,6 +910,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -831,6 +934,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -854,6 +958,7 @@ describe('llk', () => {
           {
             'symbol': 'exp2',
             'type': 'symbol',
+            'ruleIndex': 3,
             'children': [
               {
                 'type': 'token',
@@ -920,14 +1025,17 @@ describe('llk', () => {
       "{
         'symbol': 'program',
         'type': 'symbol',
+        'ruleIndex': 1,
         'children': [
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 2,
             'children': [
               {
                 'symbol': 'exp2',
                 'type': 'symbol',
+                'ruleIndex': 3,
                 'children': [
                   {
                     'type': 'token',
@@ -1250,6 +1358,7 @@ describe('llk', () => {
           {
             'symbol': 'exp',
             'type': 'symbol',
+            'ruleIndex': 10,
             'children': [
               {
                 'type': 'token',
@@ -1276,6 +1385,7 @@ describe('llk', () => {
               {
                 'symbol': 'exp',
                 'type': 'symbol',
+                'ruleIndex': 10,
                 'children': [
                   {
                     'type': 'token',

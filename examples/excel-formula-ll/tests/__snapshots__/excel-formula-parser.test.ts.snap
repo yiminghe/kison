@@ -160,7 +160,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'ruleIndex': 10
                                     }
                                   ],
-                                  'ruleIndex': -1
+                                  'ruleIndex': 86
                                 },
                                 {
                                   'start': 12,
@@ -197,17 +197,17 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'ruleIndex': 10
                                     }
                                   ],
-                                  'ruleIndex': -1
+                                  'ruleIndex': 86
                                 }
                               ],
-                              'ruleIndex': -1,
+                              'ruleIndex': 80,
                               'label': 'intersectionReference'
                             }
                           ],
                           'ruleIndex': 76
                         }
                       ],
-                      'ruleIndex': -1,
+                      'ruleIndex': 55,
                       'label': 'clipExp'
                     }
                   ],
@@ -231,7 +231,7 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
           'ruleIndex': 76
         }
       ],
-      'ruleIndex': -1,
+      'ruleIndex': 55,
       'label': 'clipExp'
     }
   ],
@@ -480,10 +480,10 @@ exports[`excel-formula-parser structure reference works 1`] = `
                           'ruleIndex': 12
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 },
                 {
                   'start': 19,
@@ -639,10 +639,10 @@ exports[`excel-formula-parser structure reference works 1`] = `
                           'ruleIndex': 12
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 }
               ],
               'ruleIndex': 26
@@ -662,7 +662,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
           'ruleIndex': 22
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -823,10 +823,10 @@ exports[`excel-formula-parser structure reference works for Reference operators 
               'ruleIndex': 12
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 80
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -997,7 +997,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'ruleIndex': 12
                 }
               ],
-              'ruleIndex': -1
+              'ruleIndex': 83
             },
             {
               'start': 23,
@@ -1143,14 +1143,14 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'ruleIndex': 12
                 }
               ],
-              'ruleIndex': -1
+              'ruleIndex': 83
             }
           ],
-          'ruleIndex': -1,
+          'ruleIndex': 80,
           'label': 'unionReference'
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -1321,7 +1321,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'ruleIndex': 12
                 }
               ],
-              'ruleIndex': -1
+              'ruleIndex': 86
             },
             {
               'start': 41,
@@ -1456,14 +1456,14 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'ruleIndex': 12
                 }
               ],
-              'ruleIndex': -1
+              'ruleIndex': 86
             }
           ],
-          'ruleIndex': -1,
+          'ruleIndex': 80,
           'label': 'intersectionReference'
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -1624,10 +1624,10 @@ exports[`excel-formula-parser structure reference works for space inside column 
               'ruleIndex': 12
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 80
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -1786,10 +1786,10 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
               'ruleIndex': 12
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 80
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -1948,10 +1948,10 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
               'ruleIndex': 12
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 80
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -2147,10 +2147,10 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
               'ruleIndex': 12
             }
           ],
-          'ruleIndex': -1
+          'ruleIndex': 80
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -2265,10 +2265,10 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                           'ruleIndex': 10
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 }
               ],
               'ruleIndex': 26
@@ -2288,7 +2288,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
           'ruleIndex': 22
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -2403,10 +2403,10 @@ exports[`excel-formula-parser works for env 1`] = `
                           'ruleIndex': 10
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 },
                 {
                   'start': 9,
@@ -2464,10 +2464,10 @@ exports[`excel-formula-parser works for env 1`] = `
                           'ruleIndex': 10
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 }
               ],
               'ruleIndex': 26
@@ -2487,7 +2487,7 @@ exports[`excel-formula-parser works for env 1`] = `
           'ruleIndex': 22
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -2571,7 +2571,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                   'ruleIndex': 10
                 }
               ],
-              'ruleIndex': -1
+              'ruleIndex': 83
             },
             {
               'start': 6,
@@ -2690,7 +2690,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                       'ruleIndex': 13
                     }
                   ],
-                  'ruleIndex': -1,
+                  'ruleIndex': 86,
                   'label': 'rangeReference'
                 },
                 {
@@ -2728,14 +2728,14 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                       'ruleIndex': 10
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 86
                 }
               ],
-              'ruleIndex': -1,
+              'ruleIndex': 83,
               'label': 'intersectionReference'
             }
           ],
-          'ruleIndex': -1,
+          'ruleIndex': 80,
           'label': 'unionReference'
         },
         {
@@ -2750,7 +2750,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
           'text': ')'
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -2886,7 +2886,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                               'ruleIndex': 10
                             }
                           ],
-                          'ruleIndex': -1
+                          'ruleIndex': 83
                         },
                         {
                           'start': 10,
@@ -3005,7 +3005,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                   'ruleIndex': 13
                                 }
                               ],
-                              'ruleIndex': -1,
+                              'ruleIndex': 86,
                               'label': 'rangeReference'
                             },
                             {
@@ -3043,14 +3043,14 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                   'ruleIndex': 10
                                 }
                               ],
-                              'ruleIndex': -1
+                              'ruleIndex': 86
                             }
                           ],
-                          'ruleIndex': -1,
+                          'ruleIndex': 83,
                           'label': 'intersectionReference'
                         }
                       ],
-                      'ruleIndex': -1,
+                      'ruleIndex': 80,
                       'label': 'unionReference'
                     },
                     {
@@ -3065,7 +3065,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                       'text': ')'
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 }
               ],
               'ruleIndex': 26
@@ -3085,7 +3085,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
           'ruleIndex': 22
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -3200,10 +3200,10 @@ exports[`excel-formula-parser works for row rangge 1`] = `
                           'ruleIndex': 10
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 }
               ],
               'ruleIndex': 26
@@ -3223,7 +3223,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
           'ruleIndex': 22
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1
@@ -3338,10 +3338,10 @@ exports[`excel-formula-parser works for simple 1`] = `
                           'ruleIndex': 10
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 },
                 {
                   'start': 9,
@@ -3399,10 +3399,10 @@ exports[`excel-formula-parser works for simple 1`] = `
                           'ruleIndex': 10
                         }
                       ],
-                      'ruleIndex': -1
+                      'ruleIndex': 80
                     }
                   ],
-                  'ruleIndex': -1
+                  'ruleIndex': 55
                 }
               ],
               'ruleIndex': 26
@@ -3422,7 +3422,7 @@ exports[`excel-formula-parser works for simple 1`] = `
           'ruleIndex': 22
         }
       ],
-      'ruleIndex': -1
+      'ruleIndex': 55
     }
   ],
   'ruleIndex': 1

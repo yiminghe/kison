@@ -6,7 +6,11 @@ interface Params {
 
 interface TokenParams extends Params {
   token?: string;
+  text?: string;
   t?: string;
+}
+
+interface ErrorTokenParams extends TokenParams {
   error?: ParseError;
 }
 
@@ -50,6 +54,14 @@ export class AstTokenNode extends BaseAstNode {
   constructor(params: TokenParams) {
     super();
     Object.assign(this, params);
+  }
+}
+
+export class AstErrorNode extends AstTokenNode {
+  error?: ParseError;
+  constructor(ErrorTokenParams: ErrorTokenParams) {
+    super(ErrorTokenParams);
+    Object.assign(ErrorTokenParams);
   }
 }
 

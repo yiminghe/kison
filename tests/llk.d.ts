@@ -106,6 +106,7 @@ export default parser;
 export type {
   ParseResult, LexResult, ParserOptions,
   TransformNode,
+  AstErrorNode,
   AstRootNode,
   ParseError,
   Position,

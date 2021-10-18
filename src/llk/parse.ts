@@ -1,8 +1,16 @@
 import data from '../data';
 import utils from '../utils';
-import type { AstTokenNode as AstTokenNodeType } from '../AstNode';
+import type {
+  AstTokenNode as AstTokenNodeType,
+  AstSymbolNode as AstSymbolNodeType,
+  AstErrorNode as AstErrorNodeType,
+} from '../AstNode';
+import type { ParseError, Token } from '../parser';
+import * as sm from './sm';
+import * as Utils from './utils';
+import type { Unit, PredictParam } from './sm';
 
-const { AstSymbolNode, AstTokenNode } = utils;
+const { AstSymbolNode, AstTokenNode, AstErrorNode } = utils;
 
 const {
   isZeroOrMoreSymbol,
@@ -18,35 +26,28 @@ const {
   closeAstWhenError,
   getOriginalSymbol,
 } = utils;
-import * as sm from './sm';
-import * as Utils from './utils';
-import type { ParseError, Token } from '../parser';
 
 const { isSymbol } = Utils;
 
-interface RuleFlag {
+export interface RuleFlag {
   type: 'rule';
   ruleUnit: Unit;
   tokensLength: number;
   ruleIndex: number;
 }
 
-let {
-  symbolStack,
-  parser,
-  lexer,
-  productionEndFlag,
-  productionSkipAstNodeSet,
-  Lexer,
-} = data;
+let { parser, lexer, productionEndFlag, productionSkipAstNodeSet, Lexer } =
+  data;
+
+type SymbolItem = string | number | RuleFlag | Function;
+
+var symbolStack = data.symbolStack as SymbolItem[];
 
 const {
   predictProductionIndexLLK,
   predictProductionIndexNextLLK,
   findExpectedTokenFromStateMachine,
 } = sm;
-
-import type { Unit, PredictParam } from './sm';
 
 function parse(input: string, options: any) {
   let recoveryTokens: Token[] = [];
@@ -82,7 +83,7 @@ function parse(input: string, options: any) {
 
   symbolStack = [startSymbol];
 
-  const astStack = [
+  const astStack: AstSymbolNodeType[] = [
     new AstSymbolNode({
       children: [],
     }),
@@ -94,18 +95,20 @@ function parse(input: string, options: any) {
 
   let next = null;
 
-  let topSymbol: RuleFlag | number | string;
+  let topSymbol: SymbolItem;
 
-  let errorNode;
+  let errorNode: AstErrorNodeType | undefined;
 
   function peekSymbolStack(n = 1) {
     let index = symbolStack.length - n;
+    let currentSymbolItem = symbolStack[index];
     while (
-      index !== -1 &&
-      symbolStack[index] &&
-      symbolStack[index].type === 'rule'
+      currentSymbolItem &&
+      typeof currentSymbolItem === 'object' &&
+      currentSymbolItem.type === 'rule'
     ) {
       index--;
+      currentSymbolItem = symbolStack[index];
     }
     return symbolStack[index];
   }
@@ -113,12 +116,15 @@ function parse(input: string, options: any) {
   function popSymbolStack() {
     while (true) {
       const t = symbolStack.pop();
-      if (!t || t.type !== 'rule') {
+      if (!t || typeof t !== 'object' || t.type !== 'rule') {
         break;
       }
     }
-    while (symbolStack[symbolStack.length - 1]?.type === 'rule') {
+    let l = symbolStack.length - 1;
+    let current = symbolStack[l];
+    while (current && typeof current === 'object' && current.type === 'rule') {
       symbolStack.pop();
+      current = symbolStack[--l];
     }
   }
 
@@ -149,14 +155,19 @@ function parse(input: string, options: any) {
     while (top >= 0 && symbolStack[top] !== topSymbol) {
       top--;
     }
-    while (top !== -1 && symbolStack[top] && symbolStack[top].type !== 'rule') {
-      if (typeof symbolStack[top] === 'string') {
+    let current = symbolStack[top];
+    while (
+      current &&
+      (typeof current !== 'object' || current.type !== 'rule')
+    ) {
+      if (typeof current === 'string') {
         i++;
       }
       top--;
+      current = symbolStack[top];
     }
-    if (symbolStack[top] && symbolStack[top].type === 'rule') {
-      ruleIndex = symbolStack[top].ruleIndex;
+    if (current && typeof current === 'object' && current.type === 'rule') {
+      ruleIndex = current.ruleIndex;
     }
     return { childReverseIndex: i, ruleIndex, topSymbol };
   }
@@ -267,7 +278,7 @@ function parse(input: string, options: any) {
             recommendedAction.action = 'add';
           }
 
-          const localErrorNode = new AstTokenNode({
+          const localErrorNode = new AstErrorNode({
             error,
             ...error.lexer,
           });

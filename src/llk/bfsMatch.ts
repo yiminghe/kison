@@ -1,9 +1,9 @@
 import data from '../data';
-import type { State } from './sm';
+import type { AllState } from './sm';
 
 const { lexer, Lexer } = data;
 
-function bfsMatch(startState: State) {
+function bfsMatch(startState: AllState) {
   let reachableStates = [startState];
   let ret: { matchedInput: boolean } = { matchedInput: false };
   let count = 0;
@@ -26,15 +26,15 @@ function bfsMatch(startState: State) {
 }
 
 function getNextReachableStates(
-  reachableStates: State[],
+  reachableStates: AllState[],
   ret: { matchedInput: boolean },
 ) {
-  const stack: State[] = [];
+  const stack: AllState[] = [];
   const newReachableStates = [];
   const encountered = new Set();
   for (const currentState of reachableStates) {
     stack.push(currentState);
-    let state: State;
+    let state: AllState;
     while (stack.length) {
       state = stack.pop()!;
       if (encountered.has(state)) {
@@ -54,9 +54,9 @@ function getNextReachableStates(
         finded = finded || !!find;
         if (find) {
           if (find.count) {
-            newReachableStates.push(t.to as State);
+            newReachableStates.push(t.to);
           } else {
-            stack.push(t.to as State);
+            stack.push(t.to);
           }
         }
       }

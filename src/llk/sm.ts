@@ -1,17 +1,16 @@
-
-
-const { bfsMatch } = require('./bfsMatch');
+import * as bfsMatchModule from './bfsMatch';
+import * as matcher from './matcher';
+import * as localUtils from './utils';
 import data from '../data';
-var { parser, lexer, symbolStack, productionsBySymbol, smUnitBySymbol } = data;
-const {
-  isOptionalSymbol,
-  isZeroOrMoreSymbol,
-  isLazySymbol,
-  normalizeSymbol,
-} = require('../utils');
-const { createTokenMatcher } = require('./matcher');
-const { isSymbol } = require('./utils');
+import utils from '../utils';
 import type { Rhs } from '../types';
+
+const { bfsMatch } = bfsMatchModule;
+const { createTokenMatcher } = matcher;
+const { isSymbol } = localUtils;
+var { parser, lexer, symbolStack, productionsBySymbol, smUnitBySymbol } = data;
+const { isOptionalSymbol, isZeroOrMoreSymbol, isLazySymbol, normalizeSymbol } =
+  utils;
 
 function buildRhsSM(symbol: string, rhs: Rhs, ruleIndex: number) {
   function getUnit(rr: string) {
@@ -207,7 +206,8 @@ function predictProductionIndexNextLLK(arg: PredictParam) {
   return predictProductionIndexLLK(arg, () => lexer.lex());
 }
 
-type Unit = StateUnit | SymbolStateUnit | RootSymbolUnit;
+export type Unit = StateUnit | SymbolStateUnit | RootSymbolUnit;
+export type AllState = State | SymbolState;
 
 class State {
   type: string;
@@ -230,12 +230,14 @@ class SymbolState {
   _transitions: Transition[] = [];
   allTranstions: Transition[] = [];
   unit: Unit;
+  transitions: Transition[];
   constructor(symbol: string, type: string, unit: Unit) {
     this.type = type;
     this.symbol = symbol;
     let transitions: Transition[] | undefined = undefined;
     this.unit = unit;
     this.units = {};
+    this.transitions = [];
     Object.defineProperty(this, 'transitions', {
       get: () => {
         if (!transitions) {
@@ -336,8 +338,8 @@ class SymbolStateUnit {
 
 class Transition {
   condition?: Function;
-  to: State | SymbolState;
-  constructor(to: State | SymbolState, condition?: Function) {
+  to: AllState;
+  constructor(to: AllState, condition?: Function) {
     this.to = to;
     this.condition = condition;
   }
@@ -379,5 +381,3 @@ export {
   Transition,
   RootSymbolUnit,
 };
-
-export type { Unit };

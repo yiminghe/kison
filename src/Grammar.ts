@@ -356,7 +356,7 @@ class Grammar {
             }
             if (
               currentChildClassesLength ===
-              Object.keys(nonSkipChildClasses).length &&
+                Object.keys(nonSkipChildClasses).length &&
               seedLength === Object.keys(seed).length
             ) {
               break;
@@ -744,7 +744,7 @@ class Grammar {
     fake.productions = newPs;
   }
 
-  expandProductionsInternal() { }
+  expandProductionsInternal() {}
 
   getPrecedenceTerminal(p: ProductionRule) {
     if (p.precedence) {
@@ -1155,7 +1155,7 @@ class Grammar {
     this.buildMeta();
   }
 
-  buildProductions() { }
+  buildProductions() {}
 
   buildNonTerminals() {
     var { lexer, nonTerminals } = this;
@@ -1366,17 +1366,17 @@ class Grammar {
     code.push(lexerCode);
     code.push(
       'var parser = ' +
-      serializeObject({
-        productions,
-        productionIndexMap,
-        getProductionItemByType: this.getProductionItemByType,
-        getProductionSymbol: this.getProductionSymbol,
-        getProductionRhs: this.getProductionRhs,
-        getProductionAction: this.getProductionAction,
-        getProductionLabel: this.getProductionLabel,
-        isCompress: 1,
-      }) +
-      ';',
+        serializeObject({
+          productions,
+          productionIndexMap,
+          getProductionItemByType: this.getProductionItemByType,
+          getProductionSymbol: this.getProductionSymbol,
+          getProductionRhs: this.getProductionRhs,
+          getProductionAction: this.getProductionAction,
+          getProductionLabel: this.getProductionLabel,
+          isCompress: 1,
+        }) +
+        ';',
     );
 
     code.push(
@@ -1391,8 +1391,8 @@ class Grammar {
 
     code.push(
       'parser.prioritySymbolMap = ' +
-      serializeObject(this.prioritySymbolMap) +
-      ';',
+        serializeObject(this.prioritySymbolMap) +
+        ';',
     );
     const productionSkipAstNodeSet: number[] = [];
     this.productions.forEach((p, index) => {

@@ -6,6 +6,8 @@ import LALRGrammar from './lalr/LALRGrammar';
 import fs from 'fs';
 import type { WriteFileOptions } from 'fs';
 import path from 'path';
+import program from 'commander';
+import pkg from '../package.json';
 
 var encoding: WriteFileOptions = 'utf-8';
 
@@ -16,7 +18,6 @@ const ConsMap: Record<string, any> = {
 };
 const placehoder = '__KISON___GENERATED__CODE__';
 
-var program = require('commander');
 program
   .option('-g, --grammar <grammar>', 'Set kison grammar file')
   .option('-o, --output [file]', 'output file path')
@@ -65,8 +66,6 @@ if (!ConsMap[mode]) {
 var modulePath = program.output
   ? path.resolve(outFile)
   : path.resolve(grammar, '../' + outFile + '.js');
-
-const pkg = require('../package.json');
 
 var codeTemplate = `
 /*

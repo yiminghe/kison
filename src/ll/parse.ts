@@ -1,20 +1,28 @@
-import { Token } from '../parser';
 import Production from '../Production';
 import Utils from '../utils';
 import { Table } from './LLGrammar';
-const { AstSymbolNode, AstTokenNode, isProductionEndFlag, isAddAstNodeFlag } =
-  Utils;
+import type { ParseError, Token } from '../parser';
+import type {
+  AstSymbolNode as AstSymbolNodeType,
+  AstTokenNode as AstTokenNodeType,
+  AstErrorNode as AstErrorNodeType,
+} from '../AstNode';
+import data from '../data';
 
-const data = require('../data');
+const {
+  AstSymbolNode,
+  AstTokenNode,
+  AstErrorNode,
+  isProductionEndFlag,
+  isAddAstNodeFlag,
+} = Utils;
 
-let {
-  lexer,
-  productionSkipAstNodeSet,
-  productionEndFlag,
-  parser,
-  Lexer,
-  symbolStack,
-} = data;
+let { lexer, productionSkipAstNodeSet, productionEndFlag, parser, Lexer } =
+  data;
+
+type SymbolItem = string | number | Function;
+
+var symbolStack = data.symbolStack as SymbolItem[];
 
 const {
   defaultTransformAstNode,
@@ -24,11 +32,11 @@ const {
   pushRecoveryTokens,
   getOriginalSymbol,
   closeAstWhenError,
-} = require('../utils');
+} = Utils;
 
 export default function parse(input: string, options: any) {
   const recoveryTokens: Token[] = [];
-  const terminalNodes = [];
+  const terminalNodes: AstTokenNodeType[] = [];
 
   const { EOF_TOKEN } = Lexer.STATIC;
 
@@ -40,7 +48,7 @@ export default function parse(input: string, options: any) {
   }
 
   options = options || {};
-  let error;
+  let error: ParseError | undefined;
   var {
     onErrorRecovery,
     onAction,
@@ -62,7 +70,7 @@ export default function parse(input: string, options: any) {
   startSymbol = startSymbol || getProductionSymbol(productions[0]);
   symbolStack = [startSymbol];
 
-  const astStack = [
+  const astStack: AstSymbolNodeType[] = [
     new AstSymbolNode({
       children: [],
     }),
@@ -71,9 +79,9 @@ export default function parse(input: string, options: any) {
   let token;
   let next;
 
-  let topSymbol: string | number;
+  let topSymbol: SymbolItem;
 
-  let errorNode;
+  let errorNode: AstErrorNodeType | undefined;
 
   function popSymbolStack() {
     symbolStack.pop();
@@ -81,6 +89,9 @@ export default function parse(input: string, options: any) {
 
   let getExpected = function () {
     const s = topSymbol;
+    if (typeof s !== 'string') {
+      throw new Error('unexpected topSymbol:' + s);
+    }
     if (!isSymbolName(s)) {
       return [lexer.mapReverseSymbol(s)];
     }
@@ -176,17 +187,27 @@ export default function parse(input: string, options: any) {
             getTableVal(topSymbol, nextToken.t) !== undefined
           ) {
             recommendedAction.action = 'del';
-          } else if (error.expected.length) {
+          } else if (error!.expected.length) {
             recommendedAction.action = 'add';
           }
 
-          const localErrorNode = new AstTokenNode({
+          const localErrorNode = new AstErrorNode({
             error,
-            ...error.lexer,
+            ...error!.lexer,
           });
           peekStack(astStack).addChild(localErrorNode);
 
-          const recovery =
+          const recovery:
+            | {
+                action?: '';
+              }
+            | { action: 'del' }
+            | {
+                action: 'add';
+                token: string;
+                text: string;
+                t: string;
+              } =
             onErrorRecovery(
               {
                 errorNode: localErrorNode,
@@ -205,12 +226,12 @@ export default function parse(input: string, options: any) {
           }
 
           if (action === 'del') {
-            error.recovery = true;
+            error!.recovery = true;
             const deleteToken = recoveryTokens.pop();
             if (deleteToken) deleteToken.recovery = 'del';
             token = null;
           } else if (action === 'add') {
-            error.recovery = true;
+            error!.recovery = true;
             token = {
               ...token,
               token: recovery.token,

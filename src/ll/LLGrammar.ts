@@ -1,5 +1,3 @@
-
-
 import Grammar from '../Grammar';
 import Utils from '../utils';
 import Production from '../Production';

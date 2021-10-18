@@ -9,8 +9,7 @@ import data from './data';
 import type { ParseError, Token } from './parser';
 import type { Rhs, TransformNode } from './types';
 
-
-const { AstTokenNode, BaseAstNode, AstSymbolNode } = AstNodes;
+const { AstTokenNode, AstErrorNode, BaseAstNode, AstSymbolNode } = AstNodes;
 
 var {
   productionAddAstNodeFlag,
@@ -31,6 +30,8 @@ const globalUtils = {
 
   AstTokenNode,
 
+  AstErrorNode,
+
   filterRhs(rhs: Rhs): string[] {
     return rhs.filter((r) => typeof r === 'string') as string[];
   },
@@ -49,7 +50,7 @@ const globalUtils = {
   },
 
   closeAstWhenError(error: ParseError, astStack: AstNodeType[]) {
-    const errorNode = new AstTokenNode({
+    const errorNode = new AstErrorNode({
       error,
       ...error.lexer,
     });
@@ -93,16 +94,19 @@ const globalUtils = {
     return {
       errorMessage: [
         'syntax error at line ' +
-        lexer.lineNumber +
-        ':\n' +
-        lexer.showDebugInfo(),
+          lexer.lineNumber +
+          ':\n' +
+          lexer.showDebugInfo(),
         ...tips,
       ].join('\n'),
       tip,
     };
   },
 
-  cleanAst(ast: AstSymbolNodeType, transformNode: TransformNode): AstSymbolNodeType {
+  cleanAst(
+    ast: AstSymbolNodeType,
+    transformNode: TransformNode,
+  ): AstSymbolNodeType {
     if (!transformNode) {
       return ast;
     }
@@ -176,7 +180,10 @@ const globalUtils = {
     return ast && cleanAst(ast, transformNode);
   },
 
-  checkProductionLabelIsSame(node: AstSymbolNodeType, parent: AstSymbolNodeType) {
+  checkProductionLabelIsSame(
+    node: AstSymbolNodeType,
+    parent: AstSymbolNodeType,
+  ) {
     if (node.label || parent.label) {
       if (node.label === parent.label) {
         return node.children;

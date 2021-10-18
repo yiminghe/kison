@@ -1,5 +1,3 @@
-
-
 import Lexer from '../Lexer';
 import Grammar from '../Grammar';
 import utils from '../utils';
@@ -87,7 +85,7 @@ class LALRGrammar extends Grammar {
     return '';
   }
 
-  expandProductionsInternal() { }
+  expandProductionsInternal() {}
 
   build() {
     super.build();

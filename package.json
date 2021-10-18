@@ -58,7 +58,7 @@
     "prepare": "node scripts/link",
     "pub": "npm run check && npm run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
-    "prettier": "prettier --write \"{lib,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
+    "prettier": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
     "test": "jest",
     "test-debug": "jest -i"
   },

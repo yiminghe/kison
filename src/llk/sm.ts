@@ -244,8 +244,11 @@ class SymbolState {
       const { symbol, unit, units } = this;
       this.alltransitions = transitions = [];
       const myProductions = productionsBySymbol[symbol];
-      for (const i of (myProductions as any).ruleIndexes as number[]) {
-        const p = myProductions[i];
+      if (!myProductions) {
+        throw new Error('unexpected productionsBySymbol: ' + symbol);
+      }
+      for (const i of myProductions.ruleIndexes) {
+        const p = myProductions.productions[i];
         const rhs = parser.getProductionRhs(p);
         const rootSymbolUnit = buildRhsSM(symbol, rhs, i);
         units[i] = rootSymbolUnit;

@@ -37,7 +37,7 @@ var { START_TAG } = Grammar;
 
 function visualizeAction(
   action: number[],
-  productions: Production[],
+  productionInstances: Production[],
   itemSets: ItemSet[],
 ) {
   let actionType;
@@ -56,7 +56,7 @@ function visualizeAction(
   }
   debug('from production:');
   if (actionType === 'reduce') {
-    debug(productions[action[GrammarConst.VALUE_INDEX]] + '');
+    debug(productionInstances[action[GrammarConst.VALUE_INDEX]] + '');
   } else {
     debug('undefined');
   }
@@ -122,7 +122,7 @@ class LALRGrammar extends Grammar {
         }
       }
     }
-    for (const p of this.productions as Production[]) {
+    for (const p of this.productionInstances) {
       const op = p.precedence || p.lastTerminal(this.lexer);
       const opPriority = op && operatorPriorityMap[op];
       if (opPriority) {
@@ -138,7 +138,7 @@ class LALRGrammar extends Grammar {
 
   closure(itemSet: ItemSet) {
     var { items } = itemSet;
-    var productions = this.productions as Production[];
+    var productionInstances = this.productionInstances;
     var cont = true;
     while (cont) {
       cont = false;
@@ -152,7 +152,7 @@ class LALRGrammar extends Grammar {
           rightRhs.push(ahead);
           Object.assign(finalFirsts, this.findFirst(filterRhs(rightRhs)));
         }
-        for (const p2 of productions) {
+        for (const p2 of productionInstances) {
           if (p2.symbol === dotSymbol) {
             var newItem = new Item({
               production: p2,
@@ -223,14 +223,14 @@ class LALRGrammar extends Grammar {
   // algorithm: 4.53
   buildItemSet() {
     var lookAheadTmp: Record<string, number> = {};
-    var { itemSets, productions } = this;
+    var { itemSets, productionInstances } = this;
 
     lookAheadTmp[Lexer.STATIC.EOF_TOKEN] = 1;
     var initItemSet = this.closure(
       new ItemSet({
         items: [
           new Item({
-            production: productions[0] as Production,
+            production: productionInstances[0],
             lookAhead: lookAheadTmp,
           }),
         ],
@@ -315,7 +315,7 @@ class LALRGrammar extends Grammar {
 
   buildTable() {
     var { operatorPriorityMap, table, itemSets, nonTerminals } = this;
-    var productions = this.productions as Production[];
+    var productionInstances = this.productionInstances;
     var mappedStartTag = START_TAG;
     var mappedEndTag = Lexer.STATIC.EOF_TOKEN;
     var gotos: Record<string, Record<string, number>> = {};
@@ -343,9 +343,9 @@ class LALRGrammar extends Grammar {
                 debug('***** current item:', 'info');
                 debug(item.toString());
                 debug('***** current action:', 'info');
-                visualizeAction(t, productions, itemSets);
+                visualizeAction(t, productionInstances, itemSets);
                 debug('***** will be overwritten ->', 'info');
-                visualizeAction(val, productions, itemSets);
+                visualizeAction(val, productionInstances, itemSets);
               }
               action[i][mappedEndTag] = val;
             }
@@ -359,16 +359,17 @@ class LALRGrammar extends Grammar {
               const t = action[i][l];
               const val = [];
               val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
-              val[GrammarConst.VALUE_INDEX] = productions.indexOf(production);
+              val[GrammarConst.VALUE_INDEX] =
+                productionInstances.indexOf(production);
               if (t && t.toString() !== val.toString()) {
                 debug(new Array(29).join('*'));
                 debug('conflict in reduce: action already defined ->', 'warn');
                 debug('***** current item:', 'info');
                 debug(item.toString());
                 debug('***** current action:', 'info');
-                visualizeAction(t, productions, itemSets);
+                visualizeAction(t, productionInstances, itemSets);
                 debug('***** will be overwritten ->', 'info');
-                visualizeAction(val, productions, itemSets);
+                visualizeAction(val, productionInstances, itemSets);
               }
               action[i][l] = val;
             }
@@ -386,7 +387,7 @@ class LALRGrammar extends Grammar {
           const t = action[i][symbol];
           if (t && t.toString() !== val.toString()) {
             if (t[GrammarConst.TYPE_INDEX] === GrammarConst.REDUCE_TYPE) {
-              const p = productions[t[GrammarConst.VALUE_INDEX]];
+              const p = productionInstances[t[GrammarConst.VALUE_INDEX]];
               // https://www.gnu.org/software/bison/manual/html_node/How-Precedence.html
               if (p.priority && operatorPriorityMap[symbol]) {
                 if (p.priority < operatorPriorityMap[symbol]) {
@@ -404,9 +405,9 @@ class LALRGrammar extends Grammar {
             debug('***** goto itemSet:', 'info');
             debug(anotherItemSet.toString(true));
             debug('***** current action:', 'info');
-            visualizeAction(t, productions, itemSets);
+            visualizeAction(t, productionInstances, itemSets);
             debug('***** will be overwritten ->', 'info');
-            visualizeAction(val, productions, itemSets);
+            visualizeAction(val, productionInstances, itemSets);
           }
           action[i][symbol] = val;
         } else {
@@ -434,7 +435,7 @@ class LALRGrammar extends Grammar {
   }
 
   visualizeTable() {
-    var { table, productions } = this;
+    var { table, productionInstances } = this;
     var { gotos, action } = table;
     var ret = [];
     this.itemSets.forEach((itemSet, i) => {
@@ -453,7 +454,7 @@ class LALRGrammar extends Grammar {
         if (type === GrammarConst.ACCEPT_TYPE) {
           str = 'acc';
         } else if (type === GrammarConst.REDUCE_TYPE) {
-          var production = productions[v[GrammarConst.VALUE_INDEX]];
+          var production = productionInstances[v[GrammarConst.VALUE_INDEX]];
           str = 'r, ' + production.symbol + '=' + production.rhs.join(' ');
         } else if (type === GrammarConst.SHIFT_TYPE) {
           str = 's, ' + v[GrammarConst.VALUE_INDEX];
@@ -515,8 +516,12 @@ function parse(input: string, options: any) {
   options = options || {};
   var { filename } = options;
   var state, token, ret, action, $$;
-  var { getProductionSymbol, getProductionRhs, getProductionAction } = parser;
-  var productions = parser.productions as Production[];
+  var {
+    getProductionSymbol,
+    getProductionRhs,
+    getProductionAction,
+    productions,
+  } = parser;
   var table = parser.table as Table;
   var { gotos, action: tableAction } = table;
   // for debug info

@@ -61,9 +61,12 @@ export default function parse(input: string, options: any) {
     transformNode = defaultTransformAstNode;
   }
 
-  var { getProductionSymbol, getProductionRhs, getProductionLabel } = parser;
-
-  var productions = parser.productions as Production[];
+  var {
+    getProductionSymbol,
+    getProductionRhs,
+    getProductionLabel,
+    productions,
+  } = parser;
   var table = parser.table as Table;
 
   lexer.options = lexerOptions;

@@ -38,10 +38,10 @@ class LLGrammar extends Grammar {
   }
 
   buildFollows() {
-    const { productions, nonTerminals } = this;
+    const { productionInstances, nonTerminals } = this;
     var cont = true;
     var nonTerminal, symbol;
-    var mappedStartTag = productions[0].symbol;
+    var mappedStartTag = productionInstances[0].symbol;
     var { EOF_TOKEN } = Lexer.STATIC;
     nonTerminals[mappedStartTag].addFollows({
       [EOF_TOKEN]: 1,
@@ -51,7 +51,7 @@ class LLGrammar extends Grammar {
       cont = false;
       for (symbol in nonTerminals) {
         nonTerminal = nonTerminals[symbol];
-        for (const p of productions) {
+        for (const p of productionInstances) {
           let { rhs, symbol: leftSymbol } = p;
           rhs = filterRhs(rhs);
           const index = rhs.indexOf(symbol);
@@ -87,13 +87,13 @@ class LLGrammar extends Grammar {
       return '_' + n + '(' + symbol + ')';
     }
 
-    let productions = this.productions as Production[];
+    let productionInstances = this.productionInstances;
 
     let needReplace;
     // extract common prefix
     const groupedProductions: Record<string, Production[]> = {};
 
-    for (const p of productions) {
+    for (const p of productionInstances) {
       const ps = (groupedProductions[p.symbol] =
         groupedProductions[p.symbol] || []);
       ps.push(p);
@@ -111,11 +111,11 @@ class LLGrammar extends Grammar {
     }
 
     if (needReplace) {
-      productions = this.productions = [] as Production[];
+      productionInstances = this.productionInstances = [];
       for (const symbol of Object.keys(groupedProductions)) {
-        productions.push(...groupedProductions[symbol]);
+        productionInstances.push(...groupedProductions[symbol]);
       }
-      this.productions = this.removeDuplicate(productions);
+      this.productionInstances = this.removeDuplicate(productionInstances);
     }
   }
 
@@ -147,11 +147,11 @@ class LLGrammar extends Grammar {
   }
 
   buildProductions() {
-    const firstProduction = this.productions[0];
-    this.productions.splice(0, 1);
+    const firstProduction = this.productionInstances[0];
+    this.productionInstances.splice(0, 1);
     this.eliminateLeftRecursive();
     this.extractCommonPrefix();
-    this.productions.splice(0, 0, firstProduction);
+    this.productionInstances.splice(0, 0, firstProduction);
   }
 
   extractProductionCommonPrefix(
@@ -216,22 +216,24 @@ class LLGrammar extends Grammar {
     return changed ? this.removeDuplicate(newPs) : ps;
   }
 
-  build() {
-    super.build();
+  buildMeta() {
+    super.buildMeta();
     this.buildFollows();
     this.buildTable();
   }
 
   setTable(symbol: string, terminal: string, index: number, follow = false) {
     index = follow ? -index : index;
-    const { table, productions } = this;
+    const { table, productionInstances } = this;
     table[symbol] = table[symbol] || {};
     const original = table[symbol][terminal];
     table[symbol][terminal] = index;
     if (original !== undefined && original !== index) {
       const e = ['', `Conflict: ${symbol} , ${terminal} ->`];
       for (const i of [original, index]) {
-        e.push((i > 0 ? '' : '-: ') + productions[Math.abs(i)].toString());
+        e.push(
+          (i > 0 ? '' : '-: ') + productionInstances[Math.abs(i)].toString(),
+        );
       }
       e.push('');
       console.error(e.join('\n'));
@@ -244,9 +246,9 @@ class LLGrammar extends Grammar {
   }
 
   buildTable() {
-    const { productions } = this;
-    for (let index = 0; index < productions.length; index++) {
-      const p = productions[index];
+    const { productionInstances } = this;
+    for (let index = 0; index < productionInstances.length; index++) {
+      const p = productionInstances[index];
       let { symbol, rhs: oRhs } = p;
       const rhs = filterRhs(oRhs);
       const firsts = this.findFirst(rhs);
@@ -264,14 +266,14 @@ class LLGrammar extends Grammar {
 
   visualizeTable() {
     const ret = [];
-    const { table, productions } = this;
+    const { table, productionInstances } = this;
     for (const nonTerminal of Object.keys(table)) {
       const col = table[nonTerminal];
       if (col) {
         for (const terminal of Object.keys(col)) {
           const ps = col[terminal];
           if (ps !== undefined) {
-            const production = productions[Math.abs(ps)];
+            const production = productionInstances[Math.abs(ps)];
             ret.push(
               (ps > 0 ? '' : '-: ') +
                 `${nonTerminal} ${terminal} => ${production.symbol} -> ${

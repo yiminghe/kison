@@ -33,7 +33,13 @@ const globalUtils = {
   AstErrorNode,
 
   filterRhs(rhs: Rhs): string[] {
-    return rhs.filter((r) => typeof r === 'string') as string[];
+    const ret: string[] = [];
+    for (const r of rhs) {
+      if (typeof r === 'string') {
+        ret.push(r);
+      }
+    }
+    return ret;
   },
 
   isExtraAstNode(ast: AstSymbolNodeType) {

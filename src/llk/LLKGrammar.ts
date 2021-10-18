@@ -8,10 +8,10 @@ class LLKGrammar extends Grammar {
   buildMeta() {}
 
   buildProductions() {
-    const firstProduction = this.productions[0];
-    this.productions.splice(0, 1);
+    const firstProduction = this.productionInstances[0];
+    this.productionInstances.splice(0, 1);
     this.eliminateLeftRecursive();
-    this.productions.splice(0, 0, firstProduction);
+    this.productionInstances.splice(0, 0, firstProduction);
   }
 
   expandProductionsInternal() {

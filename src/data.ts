@@ -8,7 +8,13 @@ const gened: {
   smUnitBySymbol: Record<string, SymbolStateUnit>;
   productionSkipAstNodeSet: Set<number> | undefined;
   symbolStack: any[];
-  productionsBySymbol: Record<string, ProductionRule[]>;
+  productionsBySymbol: Record<
+    string,
+    {
+      productions: ProductionRule[];
+      ruleIndexes: number[];
+    }
+  >;
   productionAddAstNodeFlag: 1;
   productionEndFlag: 2;
 } = {

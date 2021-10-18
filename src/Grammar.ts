@@ -75,7 +75,9 @@ class Grammar {
 
   itemSets: ItemSet[] = [];
 
-  productions: Production[] | ProductionRule[] = [];
+  productions: ProductionRule[] = [];
+
+  productionInstances: Production[] = [];
 
   isCompress: boolean = false;
 
@@ -674,26 +676,29 @@ class Grammar {
             i++;
             const subRhs = [];
             let nest = 0;
+            let subRh: Rh = rhs[i];
             while (
-              nest ||
-              typeof rhs[i] === 'function' ||
-              !(rhs[i] as string).startsWith(endGroupMarker)
+              subRh &&
+              (nest ||
+                typeof subRh !== 'string' ||
+                !subRh.startsWith(endGroupMarker))
             ) {
-              const rh = rhs[i];
-              if (rh === startGroupMarker) {
+              if (subRh === startGroupMarker) {
                 nest++;
               } else if (
-                typeof rh === 'string' &&
-                rh.startsWith(endGroupMarker)
+                typeof subRh === 'string' &&
+                subRh.startsWith(endGroupMarker)
               ) {
                 nest--;
               }
-              subRhs.push(rh);
+              subRhs.push(subRh);
               i++;
+              subRh = rhs[i];
             }
-            const quantifier = (rhs[i] as string).slice(
-              startGroupMarker.length,
-            );
+            if (typeof subRh !== 'string') {
+              throw new Error('unexpected rh: ' + subRh);
+            }
+            const quantifier = subRh.slice(startGroupMarker.length);
             const validRhs = subRhs.filter((rh) => {
               if (typeof rh !== 'string') {
                 return false;
@@ -773,11 +778,11 @@ class Grammar {
       return '(' + symbol + ')' + n + '_';
     }
 
-    let { productions } = this;
+    let { productionInstances } = this;
 
     // eliminate left recursive
     const nonTerminals: Record<string, number> = {};
-    for (const p of productions) {
+    for (const p of productionInstances) {
       nonTerminals[p.symbol] = 1;
     }
     let needReplace = true;
@@ -785,13 +790,13 @@ class Grammar {
     // TODO: support indirect recursive
     while (needReplace) {
       needReplace = false;
-      let newProductions2 = [];
+      let newProductions2: Production[] = [];
       let emptySlashSet = new Set<string>();
       const deletedMap = new Set();
       const slashArgumentMap = new Map();
-      const l = productions.length;
+      const l = productionInstances.length;
       for (let i = 0; i < l; i++) {
-        const p = productions[i];
+        const p = productionInstances[i];
         if (p.symbol === p.rhs[0]) {
           const isFlat = p.flat;
           needReplace = true;
@@ -808,7 +813,7 @@ class Grammar {
           newProductions2.push(newProd);
           emptySlashSet.add(slashSymbol);
           for (let j = 0; j < l; j++) {
-            const p2 = productions[j];
+            const p2 = productionInstances[j];
             if (p2.symbol === p.symbol && p2.symbol !== p2.rhs[0]) {
               if (slashArgumentMap.get(slashSymbol) === p2) {
                 continue;
@@ -834,7 +839,7 @@ class Grammar {
         }
       }
       if (needReplace) {
-        this.productions = productions = newProductions2.filter(
+        this.productionInstances = productionInstances = newProductions2.filter(
           (p) => !deletedMap.has(p),
         );
         for (const slashSymbol of emptySlashSet.values()) {
@@ -843,7 +848,7 @@ class Grammar {
             symbol: slashSymbol,
             rhs: [],
           });
-          productions.push(newProd);
+          productionInstances.push(newProd);
         }
       }
     }
@@ -853,7 +858,7 @@ class Grammar {
     // expand priority
     const { operators } = this;
 
-    const productions: ProductionRule[] = this.productions;
+    const { productions } = this;
 
     if (!operators) {
       return;
@@ -1004,7 +1009,9 @@ class Grammar {
 
     this.productions = unrelevants.concat(newRelevants);
   }
+
   __expandOptionalSymbol = 0;
+
   expandOptionalSymbol(fake?: FakeThis) {
     if (!fake && this.__expandOptionalSymbol) {
       return;
@@ -1083,7 +1090,9 @@ class Grammar {
 
     fake.productions = newPs;
   }
+
   __expandZeroOrMoreSymbol = 0;
+
   expandZeroOrMoreSymbol(fake?: FakeThis) {
     if (!fake && this.__expandZeroOrMoreSymbol) {
       return;
@@ -1150,7 +1159,7 @@ class Grammar {
 
   build() {
     this.expandProductions();
-    this.productions = this.productions.map((p) => new Production(p));
+    this.productionInstances = this.productions.map((p) => new Production(p));
     this.buildProductions();
     this.buildMeta();
   }
@@ -1159,8 +1168,8 @@ class Grammar {
 
   buildNonTerminals() {
     var { lexer, nonTerminals } = this;
-    var productions: Production[] = this.productions as Production[];
-    for (const production of productions) {
+    var productionInstances = this.productionInstances;
+    for (const production of productionInstances) {
       var { symbol } = production;
       var nonTerminal = nonTerminals[symbol];
       if (!nonTerminal) {
@@ -1182,7 +1191,7 @@ class Grammar {
   buildNullable() {
     var i, rhs, n, t, production;
     var { nonTerminals } = this;
-    var productions: Production[] = this.productions as Production[];
+    var productionInstances = this.productionInstances;
     var cont = true;
     // loop until no further changes have been made
     while (cont) {
@@ -1191,7 +1200,7 @@ class Grammar {
       // S -> T
       // T -> t
       // check if each production is null able
-      for (const production of productions) {
+      for (const production of productionInstances) {
         if (!production.nullable) {
           rhs = filterRhs(production.rhs);
           for (i = 0, n = 0; (t = rhs[i]); ++i) {
@@ -1209,8 +1218,8 @@ class Grammar {
       for (const k of Object.keys(nonTerminals)) {
         const v = nonTerminals[k];
         if (!v.nullable) {
-          ({ productions } = v);
-          for (i = 0; (production = productions[i]); i++) {
+          ({ productions: productionInstances } = v);
+          for (i = 0; (production = productionInstances[i]); i++) {
             if (production.nullable) {
               v.nullable = cont = true;
               break;
@@ -1274,7 +1283,7 @@ class Grammar {
     var { nonTerminals } = this;
     var cont = true;
     var nonTerminal, symbol, firsts;
-    const productions: Production[] = this.productions as Production[];
+    const productionInstances = this.productionInstances;
     // loop until no further changes have been made
     while (cont) {
       cont = false;
@@ -1284,7 +1293,7 @@ class Grammar {
 
       // S -> S y
       // S -> t
-      for (const production of productions) {
+      for (const production of productionInstances) {
         const firsts = this.findFirst(filterRhs(production.rhs));
         if (setSize(firsts) !== setSize(production.firsts)) {
           production.firsts = firsts;
@@ -1305,27 +1314,28 @@ class Grammar {
     }
   }
 
-  getProductionSymbol(p: any) {
+  getProductionSymbol(p: ProductionRule) {
     return this.getProductionItemByType(p, 'symbol');
   }
-  getProductionRhs(p: any) {
+  getProductionRhs(p: ProductionRule) {
     return this.getProductionItemByType(p, 'rhs');
   }
-  getProductionAction(p: any) {
+  getProductionAction(p: ProductionRule) {
     return this.getProductionItemByType(p, 'action');
   }
-  getProductionLabel(p: any) {
+  getProductionLabel(p: ProductionRule) {
     return this.getProductionItemByType(p, 'label');
   }
 
-  mapSymbols(s: Rhs | Rh): Rh | Rhs {
-    if (Array.isArray(s)) {
-      return s.map((t) => this.mapSymbols(t)) as Rhs;
-    }
+  mapSymbol(s: Rh): Rh {
     if (typeof s === 'string') {
       return this.lexer.mapSymbol(s);
     }
     return s;
+  }
+
+  mapSymbols(s: Rhs): Rhs {
+    return s.map((t) => this.mapSymbol(t));
   }
 
   genCodeInternal(code: string[], cfg: any) {
@@ -1340,16 +1350,16 @@ class Grammar {
     this.build();
     var productions = [];
     const { productionIndexMap } = this;
-    for (const p of this.productions as Production[]) {
+    for (const p of this.productionInstances) {
       var { action, label } = p;
       var ret = [];
-      ret[productionIndexMap.symbol] = this.mapSymbols(p.symbol);
+      ret[productionIndexMap.symbol] = this.mapSymbol(p.symbol);
       ret[productionIndexMap.rhs] = this.mapSymbols(p.rhs);
       if (action) {
         ret[productionIndexMap.action] = action;
       }
       if (label) {
-        ret[productionIndexMap.label] = this.mapSymbols(label);
+        ret[productionIndexMap.label] = this.mapSymbol(label);
       }
       productions.push(ret);
     }
@@ -1395,7 +1405,7 @@ class Grammar {
         ';',
     );
     const productionSkipAstNodeSet: number[] = [];
-    this.productions.forEach((p, index) => {
+    this.productionInstances.forEach((p, index) => {
       if (p.skipAstNode) {
         productionSkipAstNodeSet.push(index);
       }

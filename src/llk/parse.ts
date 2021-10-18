@@ -139,7 +139,7 @@ function parse(input: string, options: any) {
     );
   };
 
-  function makeRuleIndexFlag(ruleIndex: number, ruleUnit: Unit) {
+  function makeRuleIndexFlag(ruleIndex: number, ruleUnit: Unit): RuleFlag {
     return {
       type: 'rule',
       ruleUnit,
@@ -233,11 +233,11 @@ function parse(input: string, options: any) {
         production = productions[ruleIndex];
 
         if (productionSkipAstNodeSet?.has(ruleIndex)) {
-          symbolStack.push(
-            ...(getProductionRhs(production) as any[])
-              .concat(makeRuleIndexFlag(ruleIndex, unit))
-              .reverse(),
-          );
+          const newRhs: SymbolItem[] = [
+            ...getProductionRhs(production),
+            makeRuleIndexFlag(ruleIndex, unit),
+          ].reverse();
+          symbolStack.push(...newRhs);
         } else {
           const newAst = new AstSymbolNode({
             ruleIndex,
@@ -247,11 +247,12 @@ function parse(input: string, options: any) {
           });
           peekStack(astStack).addChild(newAst);
           astStack.push(newAst);
-          symbolStack.push(
-            ...(getProductionRhs(production) as any[])
-              .concat([makeRuleIndexFlag(ruleIndex, unit), productionEndFlag])
-              .reverse(),
-          );
+          const newRhs: SymbolItem[] = [
+            ...getProductionRhs(production),
+            makeRuleIndexFlag(ruleIndex, unit),
+            productionEndFlag,
+          ].reverse();
+          symbolStack.push(...newRhs);
         }
       } else if (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol)) {
         popSymbolStack();

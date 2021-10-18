@@ -6,11 +6,12 @@ function initLLK() {
   for (let i = 0; i < productions.length; i++) {
     const p = productions[i];
     const symbol = parser.getProductionSymbol(p);
-    productionsBySymbol[symbol] = productionsBySymbol[symbol] || {
+    const item = (productionsBySymbol[symbol] = productionsBySymbol[symbol] || {
       ruleIndexes: [],
-    };
-    productionsBySymbol[symbol][i] = p;
-    (productionsBySymbol[symbol] as any).ruleIndexes.push(i);
+      productions: [],
+    });
+    item.productions[i] = p;
+    item.ruleIndexes.push(i);
   }
 }
 

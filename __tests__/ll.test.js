@@ -270,7 +270,7 @@ describe('ll', () => {
 
     grammar.build();
 
-    expect(prettyJson(grammar.productions.map((p) => p.toString())))
+    expect(prettyJson(grammar.productionInstances.map((p) => p.toString())))
       .toMatchInlineSnapshot(`
       "[
         '$START => S ',
@@ -319,7 +319,7 @@ describe('ll', () => {
 
     grammar.build();
 
-    expect(prettyJson(grammar.productions.map((p) => p + '')))
+    expect(prettyJson(grammar.productionInstances.map((p) => p + '')))
       .toMatchInlineSnapshot(`
       "[
         '$START => S ',

@@ -228,39 +228,37 @@ class SymbolState {
   units: Record<string, RootSymbolUnit>;
   type: string;
   _transitions: Transition[] = [];
-  allTranstions: Transition[] = [];
   unit: Unit;
-  transitions: Transition[];
+  alltransitions?: Transition[];
+
   constructor(symbol: string, type: string, unit: Unit) {
     this.type = type;
     this.symbol = symbol;
-    let transitions: Transition[] | undefined = undefined;
     this.unit = unit;
     this.units = {};
-    this.transitions = [];
-    Object.defineProperty(this, 'transitions', {
-      get: () => {
-        if (!transitions) {
-          transitions = [];
-          const myProductions = productionsBySymbol[symbol];
-          for (const i of (myProductions as any).ruleIndexes as number[]) {
-            const p = myProductions[i];
-            const rhs = parser.getProductionRhs(p);
-            const rootSymbolUnit = buildRhsSM(symbol, rhs, i);
-            this.units[i] = rootSymbolUnit;
-            transitions.push(new Transition(rootSymbolUnit.start));
-            rootSymbolUnit.end.pushTransition(unit.end);
-          }
-          transitions = transitions.concat(this._transitions);
-          this.allTranstions = transitions;
-        }
-        return transitions;
-      },
-    });
+  }
+
+  get transitions() {
+    let transitions = this.alltransitions;
+    if (!transitions) {
+      const { symbol, unit, units } = this;
+      this.alltransitions = transitions = [];
+      const myProductions = productionsBySymbol[symbol];
+      for (const i of (myProductions as any).ruleIndexes as number[]) {
+        const p = myProductions[i];
+        const rhs = parser.getProductionRhs(p);
+        const rootSymbolUnit = buildRhsSM(symbol, rhs, i);
+        units[i] = rootSymbolUnit;
+        transitions.push(new Transition(rootSymbolUnit.start));
+        rootSymbolUnit.end.pushTransition(unit.end);
+      }
+      this.alltransitions = transitions = transitions.concat(this._transitions);
+    }
+    return transitions;
   }
 
   getTransitions() {
-    return (this as any).transitions;
+    return this.transitions;
   }
 
   getUnits() {

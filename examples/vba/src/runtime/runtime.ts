@@ -1,65 +1,92 @@
 import parser from '../parser';
-import type { AstRootNode, SubStmt_Node } from '../parser';
-import type { VBTypes, SubDef } from './types';
+import type { AstRootNode } from '../parser';
+import type { VBType, SubBinder, FileId, SymbolName } from './types';
 import { evaluate } from './evaluator/index';
+import { build } from './symbol-table/index';
+import { SymbolItem, VBArgument, VBScope,ArgInfo } from './types';
+import { last } from './utils';
 
 const defaultFileId = 'default.vb';
 
 export class Runtime {
   astMap = new Map<string, AstRootNode>();
 
-  subDefMap = new Map<string, SubDef>();
+  subBindersMap = new Map<string, SubBinder>();
 
-  currentFileId = '';
+  currentFileId: FileId = '';
 
-  subDeclareMap = new Map<string, Map<string, SubStmt_Node>>();
+  symbolTable = new Map<FileId, Map<SymbolName, SymbolItem>>();
 
-  run(code: string, fileId: string = defaultFileId) {
+  scopeStack: VBScope[] = [];
+
+  run(code: string, fileId: FileId = defaultFileId) {
     const { ast, error } = parser.parse(code);
     if (error) {
       throw new Error(error.errorMessage);
     }
     this.astMap.set(fileId, ast);
     this.currentFileId = fileId;
-    return this.evaluate(ast);
+    return build(ast, this);
   }
 
-  registerSubDeclare(subName: string, sub: SubStmt_Node) {
-    const { subDeclareMap, currentFileId } = this;
-    let map = subDeclareMap.get(currentFileId);
-    if (!map) {
-      subDeclareMap.set(currentFileId, (map = new Map()));
+  registerSymbolItem(name: string, item: SymbolItem) {
+    const { symbolTable, currentFileId } = this;
+    let currentTable = symbolTable.get(currentFileId);
+    if (!currentTable) {
+      symbolTable.set(currentFileId, (currentTable = new Map()));
     }
-    map.set(subName, sub);
+    currentTable.set(name, item);
   }
 
-  registerSub(subDef: SubDef) {
-    this.subDefMap.set(subDef.name, subDef);
+  registerSubBinder(subBinder: SubBinder) {
+    this.subBindersMap.set(subBinder.name, subBinder);
   }
 
-  callSub(
+  getCurrentScope() {
+    return last(this.scopeStack)!;
+  }
+
+  async callSub(
     subName: string,
-    args: VBTypes[] = [],
+    args: (VBType | VBArgument)[] = [],
     fileId: string = defaultFileId,
   ) {
-    const { subDefMap, subDeclareMap } = this;
-    const subDeclare = subDeclareMap.get(fileId)?.get(subName);
-    if (subDeclare) {
-      return evaluate(
-        subDeclare.children.filter(
-          (c) => c.type === 'symbol' && c.symbol === 'block',
-        )[0],
-        this,
-      );
+    
+    const setupScope = (argumentsInfo: ArgInfo[]) => {
+      const scope = new VBScope();
+      let i = -1;
+      for (const a of args) {
+        ++i;
+        const argInfo = argumentsInfo[i];
+        if (!argInfo) {
+          continue
+        }
+        if (a?.type === 'Argument') {
+          a.byRef = argInfo.byRef;
+          scope.setArgument(argInfo.name, a);
+        } else {
+          scope.setVariable(argInfo.name, a);
+        }
+      }
+      this.scopeStack.push(scope);
+    };
+
+    const { subBindersMap, symbolTable } = this;
+    const subSymbolItem = symbolTable.get(fileId)?.get(subName);
+    if (subSymbolItem && subSymbolItem.type === 'sub') {
+      const argumentsInfo = subSymbolItem.getArugmentsInfo();
+      setupScope(argumentsInfo);
+      const ret = await evaluate(subSymbolItem.block, this);
+      this.scopeStack.pop();
+      return ret;
     }
-    const def = subDefMap.get(subName);
+    const def = subBindersMap.get(subName);
     if (!def) {
       throw new Error('Can not find sub definition: ' + subName);
     }
-    return def.fn({ args });
-  }
-
-  evaluate(ast: AstRootNode) {
-    return evaluate(ast, this);
+    setupScope(def.argumentsInfo);
+    const ret = await def.fn(this);
+    this.scopeStack.pop();
+    return ret;
   }
 }

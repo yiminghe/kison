@@ -20,7 +20,7 @@ function generateLexerRulesByKeywords(arr) {
   const rules = [];
   for (const token of arr) {
     const reg = token.replace(/^macro_/i, '#').replace(/_/g, ' ');
-    const regexp = new RegExp(RegexEscape(reg), 'i');
+    const regexp = new RegExp(RegexEscape(reg+'\\b'), 'i');
     rules.push([token, regexp]);
   }
   return rules;
@@ -182,9 +182,21 @@ module.exports = {
       n.RPAREN,
     ],
 
-    [n.valueStmt, n.literal],
+    [n.valueStmt, n.literal,
+    n.alternationMark,
+    n.implicitCallStmt_InStmt,
+    ],
 
-    [n.literal, n.INTEGERLITERAL, n.alternationMark, n.STRINGLITERAL],
+    [n.implicitCallStmt_InStmt,
+    n.iCS_S_VariableOrProcedureCall
+    ],
+
+    [n.iCS_S_VariableOrProcedureCall,
+    n.IDENTIFIER,
+    ],
+
+    [n.literal, n.INTEGERLITERAL,
+    n.alternationMark, n.STRINGLITERAL],
 
     [
       n.typeHint,

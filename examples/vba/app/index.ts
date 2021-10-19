@@ -1,4 +1,4 @@
-import { parser, Runtime, SubDef } from '../src/index';
+import { parser, Runtime, SubBinder } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 
 declare var require: any;
@@ -14,9 +14,13 @@ require.config({
 const $ = (v: string): any => document.getElementById(v)!;
 
 const sampleCode = `
+sub test2 (ByVal msg As Integer, msg2 As Integer)
+MsgBox msg
+MsgBox msg2
+end sub
+
 sub test
-MsgBox 1
-MsgBox 2
+test2 1, 2
 end sub
 `.trim();
 
@@ -24,7 +28,7 @@ require(['vs/editor/editor.main'], () => {
   $('sub').value = 'test';
   const editorContainer = $('monaco-editor');
   editorContainer.innerHTML = '';
-  editorContainer.style.height = '100px';
+  editorContainer.style.height = '400px';
 
   let editor = monaco.editor.create(editorContainer, {
     model: null,
@@ -45,15 +49,32 @@ require(['vs/editor/editor.main'], () => {
     const value = getCurrentCode();
     return { value, ret: parser.parse(value, {}) };
   }
-
+  $('lex').addEventListener('click', () => {
+    const value = getCurrentCode();
+    console.log(parser.lex(value));
+  });
   $('parse').addEventListener('click', () => {
-    console.log(getCurrentAst().ret);
+    const {ret}=getCurrentAst();
+    console.log(ret);
+    if(ret.error){
+      console.error(ret.error.errorMessage);
+    }
   });
 
-  const MsgBoxSub: SubDef = {
+  function wait(ms:number){
+    return new Promise((resolve)=>{
+      setTimeout(resolve,ms);
+    });
+  }
+
+  const MsgBoxSub: SubBinder = {
     name: 'MsgBox',
-    fn({ args }) {
-      alert(args[0]?.value);
+    argumentsInfo:[{
+      name:'msg',
+    }],
+    async fn(runtime) {
+      alert(runtime.getCurrentScope().getVariable('msg')?.value);
+      await wait(500);
       return undefined;
     },
   };
@@ -61,7 +82,7 @@ require(['vs/editor/editor.main'], () => {
   $('evaluate').addEventListener('click', () => {
     try {
       const runtime = new Runtime();
-      runtime.registerSub(MsgBoxSub);
+      runtime.registerSubBinder(MsgBoxSub);
       runtime.run(getCurrentCode());
       runtime.callSub('test');
     } catch (e: any) {

@@ -1,27 +1,15 @@
-import type {
-  ICS_B_ProcedureCall_Node,
-  ArgsCall_Node,
-  SubStmt_Node,
-} from '../../parser';
+import type { ICS_B_ProcedureCall_Node, ArgsCall_Node } from '../../parser';
 import type { Runtime } from '../runtime';
+import { VBArgument, VBType } from '../types';
 
 import { evaluators, evaluate } from './evaluators';
 
 Object.assign(evaluators, {
-  evaluate_subStmt(node: SubStmt_Node, runtime: Runtime) {
-    let id;
-    for (const c of node.children) {
-      if (!id) {
-        if (c.type === 'token' && c.token === 'IDENTIFIER') {
-          id = c.text;
-          runtime.registerSubDeclare(id, node);
-          return;
-        }
-      }
-    }
+  evaluate_subStmt() {
+    return;
   },
 
-  evaluate_iCS_B_ProcedureCall(
+  async evaluate_iCS_B_ProcedureCall(
     node: ICS_B_ProcedureCall_Node,
     runtime: Runtime,
   ) {
@@ -30,16 +18,18 @@ Object.assign(evaluators, {
       throw new Error('unexpected');
     }
     const subName = children[0].text;
-    let args = [];
+    let args: (VBType | VBArgument)[] = [];
     for (const f of children) {
       if (f.type === 'symbol' && f.symbol === 'argsCall') {
-        args = evaluate(f, runtime);
+        args = (await evaluate(f, runtime)) as (VBType | VBArgument)[];
       }
     }
-    return runtime.callSub(subName, args);
+
+    const currentScope = runtime.getCurrentScope();
+    return await runtime.callSub(subName, args.map(a => a?.type === 'Argument' ? a : new VBArgument(a, currentScope)));
   },
 
-  evaluate_argsCall(node: ArgsCall_Node, runtime: Runtime) {
+  async evaluate_argsCall(node: ArgsCall_Node, runtime: Runtime) {
     const args = [];
     const { children } = node;
     let lastArg = undefined;
@@ -49,7 +39,7 @@ Object.assign(evaluators, {
         lastArg = undefined;
         continue;
       }
-      lastArg = evaluate(c, runtime);
+      lastArg = await evaluate(c, runtime);
     }
     if (children.length) {
       args.push(lastArg);

@@ -5,7 +5,7 @@ https://github.com/yiminghe/kison
 ## usage
 
 ```typescript
-import { Runtime, SubDef } from 'vba';
+import { Runtime, SubBinder } from 'vba';
 
 const sampleCode = `
 sub test
@@ -14,16 +14,19 @@ MsgBox 2
 end sub
 `.trim();
 
-const MsgBoxSub: SubDef = {
+const MsgBoxSub: SubBinder = {
   name: 'MsgBox',
-  fn({ args }) {
-    alert(args[0]?.value);
+  argumentsInfo:[{
+    name:'msg',
+  }],
+  async fn(runtime) {
+    console.log(runtime.getCurrentScope().getVariable('msg')?.value);
     return undefined;
   },
 };
 
 const runtime = new Runtime();
-runtime.registerSub(MsgBoxSub);
+runtime.registerSubBinder(MsgBoxSub);
 runtime.run(sampleCode);
 runtime.callSub('test');
 ```

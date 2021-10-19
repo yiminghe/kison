@@ -1,7 +1,7 @@
-import { Runtime, SubDef } from '../src/';
+import { Runtime, SubBinder } from '../src/';
 
 describe('vba parser', () => {
-  it('parse correctly', () => {
+  it('parse correctly', async () => {
     const sampleCode = `
 sub test
 MsgBox 1
@@ -11,18 +11,21 @@ end sub
 
     const ret: any[] = [];
 
-    const MsgBoxSub: SubDef = {
+    const MsgBoxSub: SubBinder = {
       name: 'MsgBox',
-      fn({ args }) {
-        ret.push(args[0]?.value);
+      argumentsInfo:[{
+        name:'msg',
+      }],
+      async fn(runtime) {
+        ret.push(runtime.getCurrentScope().getVariable('msg')?.value);
         return undefined;
       },
     };
 
     const runtime = new Runtime();
-    runtime.registerSub(MsgBoxSub);
+    runtime.registerSubBinder(MsgBoxSub);
     runtime.run(sampleCode);
-    runtime.callSub('test');
+    await runtime.callSub('test');
 
     expect(ret).toMatchInlineSnapshot(`
       Array [

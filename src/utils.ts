@@ -343,7 +343,7 @@ const utils = {
     } else if (util.isRegExp(obj)) {
       return (
         '/' +
-        obj.source +
+        obj.source.replace(/\\\\/g,'\\') +
         '/' +
         (obj.global ? 'g' : '') +
         (obj.ignoreCase ? 'i' : '') +

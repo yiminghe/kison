@@ -211,8 +211,15 @@ function parse(input: string, options: any) {
         token = lexer.lex();
         pushRecoveryTokens(recoveryTokens, token);
       }
-      if (topSymbol === token.t) {
-        popSymbolStack();
+
+      const normalizedSymbol = normalizeSymbol(topSymbol);
+      
+      next = null;
+
+      if (isSymbol(normalizedSymbol)) {
+        next = predictProductionIndexLLK(findSymbolIndex());
+      } else if (normalizedSymbol === token.t) {
+        if (!isZeroOrMoreSymbol(topSymbol)) { popSymbolStack(); }
         const terminalNode = new AstTokenNode(token);
         terminalNodes.push(terminalNode);
         const parent = peekStack(astStack);
@@ -222,7 +229,6 @@ function parse(input: string, options: any) {
         continue;
       }
 
-      next = predictProductionIndexLLK(findSymbolIndex());
       if (next) {
         if (!isZeroOrMoreSymbol(topSymbol)) {
           popSymbolStack();

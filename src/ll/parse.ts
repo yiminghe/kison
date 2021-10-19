@@ -1,4 +1,3 @@
-import Production from '../Production';
 import Utils from '../utils';
 import { Table } from './LLGrammar';
 import type { ParseError, Token } from '../parser';

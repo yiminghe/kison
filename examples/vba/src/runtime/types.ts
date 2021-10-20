@@ -209,15 +209,6 @@ export type VBPrimitive =
 
 export type VBValue = VBPrimitive | VBObject;
 
-export class VBVariant extends VBBase {
-  type: 'Variant' = 'Variant';
-  value: VBPrimitive;
-  constructor(value: VBPrimitive, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
 export type SymbolItem = SubSymbolItem;
 
 export class SubSymbolItem {

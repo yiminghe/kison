@@ -13,11 +13,13 @@ end sub
 
     const MsgBoxSub: SubBinder = {
       name: 'MsgBox',
-      argumentsInfo:[{
-        name:'msg',
-      }],
+      argumentsInfo: [
+        {
+          name: 'msg',
+        },
+      ],
       async fn(runtime) {
-        ret.push(runtime.getCurrentScope().getVariable('msg')?.value);
+        ret.push(runtime.getCurrentScope().getVariable('msg')?.value.value);
         return undefined;
       },
     };

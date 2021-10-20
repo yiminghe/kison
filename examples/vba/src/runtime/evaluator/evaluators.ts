@@ -1,7 +1,8 @@
 import type { AstNode } from '../../parser';
 import type { Runtime } from '../runtime';
+import { VB_EMPTY } from '../types';
 
-export async function evaluate(ast: AstNode, runtime: Runtime):Promise<any> {
+export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
   let symbol = '',
     token = '',
     label = '';
@@ -40,7 +41,7 @@ export async function evaluate(ast: AstNode, runtime: Runtime):Promise<any> {
   for (const c of children) {
     ret = await evaluate(c, runtime);
   }
-  return ret;
+  return ret || VB_EMPTY;
 }
 
 export const evaluators: Record<

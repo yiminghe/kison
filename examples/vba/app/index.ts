@@ -54,26 +54,28 @@ require(['vs/editor/editor.main'], () => {
     console.log(parser.lex(value));
   });
   $('parse').addEventListener('click', () => {
-    const {ret}=getCurrentAst();
+    const { ret } = getCurrentAst();
     console.log(ret);
-    if(ret.error){
+    if (ret.error) {
       console.error(ret.error.errorMessage);
     }
   });
 
-  function wait(ms:number){
-    return new Promise((resolve)=>{
-      setTimeout(resolve,ms);
+  function wait(ms: number) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
     });
   }
 
   const MsgBoxSub: SubBinder = {
     name: 'MsgBox',
-    argumentsInfo:[{
-      name:'msg',
-    }],
+    argumentsInfo: [
+      {
+        name: 'msg',
+      },
+    ],
     async fn(runtime) {
-      alert(runtime.getCurrentScope().getVariable('msg')?.value);
+      alert(runtime.getCurrentScope().getVariable('msg')?.value.value);
       await wait(500);
       return undefined;
     },

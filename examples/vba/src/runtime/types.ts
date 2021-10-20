@@ -8,7 +8,9 @@ export type SymbolName = string;
 export class VBBase {
   name: string = '';
   constructor(name?: string) {
-    if (name) { this.name = name; }
+    if (name) {
+      this.name = name;
+    }
   }
 }
 
@@ -128,6 +130,16 @@ export class VBNull extends VBBase {
   }
 }
 
+export class VBEmpty extends VBBase {
+  type: 'Empty' = 'Empty';
+  value = undefined;
+  constructor(name?: string) {
+    super(name);
+  }
+}
+
+export const VB_EMPTY = new VBEmpty();
+
 export class VBBoolean extends VBBase {
   type: 'Boolean' = 'Boolean';
   value: boolean;
@@ -137,71 +149,70 @@ export class VBBoolean extends VBBase {
   }
 }
 
+class VBObject {
+  type: 'Object' = 'Object';
+  value: VBPrimitiveType;
+  variant?: boolean;
+  constructor(value: VBPrimitiveType) {
+    this.value = value;
+  }
+}
+
 export class VBScope {
   fileId: FileId = '';
-  variableMap = new Map<String, VBType | VBArgument>();
-  getVariable(name: string): VBType {
-    const ret = this.variableMap.get(name);
-    if (ret?.type === 'Argument') {
-      return ret._value;
+
+  variableMap = new Map<String, VBObject>();
+
+  getVariable(name: string): VBObject {
+    let v = this.variableMap.get(name);
+    if (v) {
+      return v;
     }
-    return ret;
+    const empty = new VBObject(VB_EMPTY);
+    this.variableMap.set(name, empty);
+    return empty;
   }
-  setVariableRef(name: string, fromName: string) {
-    let currentValue = this.variableMap.get(fromName);
-    if (currentValue && currentValue.type === 'Argument') {
-      currentValue = currentValue.value;
-    }
-    this.variableMap.set(name, currentValue);
-  }
-  setArgument(name: string, value: VBArgument) {
-    this.variableMap.set(name, value);
-  }
+
   setVariable(name: string, value: VBType) {
-    const currentValue = this.variableMap.get(name);
-    if (currentValue && currentValue.type === 'Argument') {
-      currentValue.value = value;
-      if (currentValue.byRef) {
-        return;
-      }
+    if (value.type === 'Object') {
+      this.variableMap.set(name, value);
+    } else {
+      this.variableMap.set(name, new VBObject(value));
     }
-    this.variableMap.set(name, value);
-  }
-}
-
-
-
-export class VBArgument {
-  type: 'Argument' = 'Argument';
-  scope: VBScope;
-  _value: VBType;
-  byRef?: boolean;
-
-  constructor(_value: VBType, scope: VBScope) {
-    this._value = _value;
-    this.scope = scope;
   }
 
-  get value() {
-    return this._value;
-  }
-
-  set value(value: VBType) {
-    if ((this.byRef === undefined || this.byRef) && this._value) {
-      this.scope.setVariable(this._value.name, value);
+  setVariableValue(name: string, value: VBType) {
+    if (value.type === 'Object') {
+      this.variableMap.set(name, new VBObject(value.value));
+    } else {
+      this.variableMap.set(name, new VBObject(value));
     }
   }
 }
 
-export type VBDefinitiveType = VBByte | VBCollection | VBCurrency | VBDate | VBDecimal | VBInteger | VBDouble |
-  VBDictionary | VBLong | VBLongLong | VBSingle | VBNull | VBBoolean | VBString | undefined;
+export type VBPrimitiveType =
+  | VBByte
+  | VBCollection
+  | VBCurrency
+  | VBDate
+  | VBDecimal
+  | VBInteger
+  | VBDouble
+  | VBDictionary
+  | VBLong
+  | VBLongLong
+  | VBSingle
+  | VBNull
+  | VBBoolean
+  | VBString
+  | VBEmpty;
 
-export type VBType = VBDefinitiveType | VBVariant;
+export type VBType = VBPrimitiveType | VBObject;
 
 export class VBVariant extends VBBase {
   type: 'Variant' = 'Variant';
-  value: VBDefinitiveType;
-  constructor(value: VBDefinitiveType, name?: string) {
+  value: VBPrimitiveType;
+  constructor(value: VBPrimitiveType, name?: string) {
     super(name);
     this.value = value;
   }
@@ -246,7 +257,7 @@ export class SubSymbolItem {
 }
 
 export interface SubBinder {
-  fn: (runtime: Runtime) => Promise<VBType>;
+  fn: (runtime: Runtime) => Promise<VBType | undefined>;
   argumentsInfo: ArgInfo[];
   name: string;
 }
@@ -258,5 +269,5 @@ export interface ArgInfo {
 }
 
 export interface AsTypeClauseInfo {
-  type: Exclude<VBType, undefined>['type'];
+  type: Exclude<VBPrimitiveType, VBEmpty | VBNull>['type'] | 'Variant';
 }

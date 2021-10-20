@@ -1,7 +1,6 @@
 import type { ICS_B_ProcedureCall_Node, ArgsCall_Node } from '../../parser';
 import type { Runtime } from '../runtime';
-import { VBArgument, VBType } from '../types';
-
+import { VBType } from '../types';
 import { evaluators, evaluate } from './evaluators';
 
 Object.assign(evaluators, {
@@ -18,15 +17,13 @@ Object.assign(evaluators, {
       throw new Error('unexpected');
     }
     const subName = children[0].text;
-    let args: (VBType | VBArgument)[] = [];
+    let args: VBType[] = [];
     for (const f of children) {
       if (f.type === 'symbol' && f.symbol === 'argsCall') {
-        args = (await evaluate(f, runtime)) as (VBType | VBArgument)[];
+        args = await evaluate(f, runtime);
       }
     }
-
-    const currentScope = runtime.getCurrentScope();
-    return await runtime.callSub(subName, args.map(a => a?.type === 'Argument' ? a : new VBArgument(a, currentScope)));
+    return await runtime.callSub(subName, args);
   },
 
   async evaluate_argsCall(node: ArgsCall_Node, runtime: Runtime) {

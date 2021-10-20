@@ -20,7 +20,7 @@ const MsgBoxSub: SubBinder = {
     name:'msg',
   }],
   async fn(runtime) {
-    console.log(runtime.getCurrentScope().getVariable('msg')?.value);
+    console.log(runtime.getCurrentScope().getVariable('msg')?.value.value);
     return undefined;
   },
 };

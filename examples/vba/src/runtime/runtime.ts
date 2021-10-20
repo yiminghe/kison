@@ -3,7 +3,7 @@ import type { AstRootNode } from '../parser';
 import type { VBType, SubBinder, FileId, SymbolName } from './types';
 import { evaluate } from './evaluator/index';
 import { build } from './symbol-table/index';
-import { SymbolItem, VBArgument, VBScope,ArgInfo } from './types';
+import { SymbolItem, VBScope, ArgInfo, VB_EMPTY } from './types';
 import { last } from './utils';
 
 const defaultFileId = 'default.vb';
@@ -48,10 +48,9 @@ export class Runtime {
 
   async callSub(
     subName: string,
-    args: (VBType | VBArgument)[] = [],
+    args: VBType[] = [],
     fileId: string = defaultFileId,
   ) {
-    
     const setupScope = (argumentsInfo: ArgInfo[]) => {
       const scope = new VBScope();
       let i = -1;
@@ -59,13 +58,12 @@ export class Runtime {
         ++i;
         const argInfo = argumentsInfo[i];
         if (!argInfo) {
-          continue
+          continue;
         }
-        if (a?.type === 'Argument') {
-          a.byRef = argInfo.byRef;
-          scope.setArgument(argInfo.name, a);
-        } else {
+        if (a.type === 'Object' && argInfo.byRef) {
           scope.setVariable(argInfo.name, a);
+        } else {
+          scope.setVariableValue(argInfo.name, a);
         }
       }
       this.scopeStack.push(scope);
@@ -87,6 +85,6 @@ export class Runtime {
     setupScope(def.argumentsInfo);
     const ret = await def.fn(this);
     this.scopeStack.pop();
-    return ret;
+    return ret || VB_EMPTY;
   }
 }

@@ -20,7 +20,7 @@ function generateLexerRulesByKeywords(arr) {
   const rules = [];
   for (const token of arr) {
     const reg = token.replace(/^macro_/i, '#').replace(/_/g, ' ');
-    const regexp = new RegExp(RegexEscape(reg+'\\b'), 'i');
+    const regexp = new RegExp(RegexEscape(reg + '\\b'), 'i');
     rules.push([token, regexp]);
   }
   return rules;
@@ -67,6 +67,28 @@ module.exports = {
       n.variableStmt,
       n.alternationMark,
       n.implicitCallStmt_InBlock,
+      n.alternationMark,
+      n.explicitCallStmt,
+    ],
+
+    [n.explicitCallStmt, n.eCS_ProcedureCall],
+
+    [
+      n.eCS_ProcedureCall,
+      // CALL WS ambiguousIdentifier typeHint? (WS? LPAREN WS? argsCall WS? RPAREN)? (WS? LPAREN subscripts RPAREN)*;
+      n.CALL,
+      n.IDENTIFIER,
+      n.typeHintOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.argsCall,
+      n.RPAREN,
+      n.groupEndOptionalMark,
+      n.groupStartMark,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [n.implicitCallStmt_InBlock, n.iCS_B_ProcedureCall],
@@ -182,21 +204,13 @@ module.exports = {
       n.RPAREN,
     ],
 
-    [n.valueStmt, n.literal,
-    n.alternationMark,
-    n.implicitCallStmt_InStmt,
-    ],
+    [n.valueStmt, n.literal, n.alternationMark, n.implicitCallStmt_InStmt],
 
-    [n.implicitCallStmt_InStmt,
-    n.iCS_S_VariableOrProcedureCall
-    ],
+    [n.implicitCallStmt_InStmt, n.iCS_S_VariableOrProcedureCall],
 
-    [n.iCS_S_VariableOrProcedureCall,
-    n.IDENTIFIER,
-    ],
+    [n.iCS_S_VariableOrProcedureCall, n.IDENTIFIER],
 
-    [n.literal, n.INTEGERLITERAL,
-    n.alternationMark, n.STRINGLITERAL],
+    [n.literal, n.INTEGERLITERAL, n.alternationMark, n.STRINGLITERAL],
 
     [
       n.typeHint,

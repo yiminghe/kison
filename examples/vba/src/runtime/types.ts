@@ -257,7 +257,7 @@ export class SubSymbolItem {
 }
 
 export interface SubBinder {
-  fn: (runtime: Runtime) => Promise<VBType | undefined>;
+  fn: (runtime: Runtime) => Promise<VBType | undefined> | VBType | undefined;
   argumentsInfo: ArgInfo[];
   name: string;
 }

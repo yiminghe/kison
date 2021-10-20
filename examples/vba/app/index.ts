@@ -16,7 +16,7 @@ const $ = (v: string): any => document.getElementById(v)!;
 const sampleCode = `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
 MsgBox msg
-MsgBox msg2
+call MsgBox(msg2)
 end sub
 
 sub test

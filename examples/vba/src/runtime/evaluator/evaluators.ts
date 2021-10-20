@@ -23,7 +23,11 @@ export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
   const fn = evaluators[m2] || evaluators[m1];
 
   if (fn) {
-    return await fn(ast, runtime);
+    let ret = fn(ast, runtime);
+    if (ret && ret.then) {
+      ret = await ret;
+    }
+    return ret || VB_EMPTY;
   }
 
   let children;
@@ -39,7 +43,10 @@ export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
 
   let ret;
   for (const c of children) {
-    ret = await evaluate(c, runtime);
+    ret = evaluate(c, runtime);
+    if (ret && (ret as Promise<any>).then) {
+      ret = await ret;
+    }
   }
   return ret || VB_EMPTY;
 }

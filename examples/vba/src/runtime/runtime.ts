@@ -83,7 +83,10 @@ export class Runtime {
       throw new Error('Can not find sub definition: ' + subName);
     }
     setupScope(def.argumentsInfo);
-    const ret = await def.fn(this);
+    let ret = def.fn(this);
+    if (ret && (ret as Promise<any>).then) {
+      ret = await ret;
+    }
     this.scopeStack.pop();
     return ret || VB_EMPTY;
   }

@@ -15,7 +15,7 @@ Object.assign(evaluators, {
   evaluate_IDENTIFIER(node: IDENTIFIER_Node, context: Context): VBVariable {
     const scope = context.getCurrentScope();
     const name = node.text;
-    return new VBVariable(name, scope);
+    return scope.getVariable(name);
   },
 
   evaluate_NOTHING() {

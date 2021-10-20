@@ -24,15 +24,7 @@ async function callSub(
       args = await evaluate(f, context);
     }
   }
-  const valueArgs: VBValue[] = [];
-  for (const a of args) {
-    if (a.type === 'Variable') {
-      valueArgs.push(a.value);
-    } else {
-      valueArgs.push(a);
-    }
-  }
-  return await context.callSub(subName, valueArgs);
+  return await context.callSub(subName, args);
 }
 
 Object.assign(evaluators, {

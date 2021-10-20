@@ -69,11 +69,11 @@ require(['vs/editor/editor.main'], () => {
     }
   });
 
-  function wait(ms: number) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
+  // function wait(ms: number) {
+  //   return new Promise((resolve) => {
+  //     setTimeout(resolve, ms);
+  //   });
+  // }
 
   const MsgBoxSub: SubBinder = {
     name: 'MsgBox',

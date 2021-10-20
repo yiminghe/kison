@@ -3,7 +3,7 @@ import type { AstRootNode } from '../parser';
 import type { VBValue, SubBinder, FileId, SymbolName } from './types';
 import { evaluate } from './evaluator/index';
 import { build } from './symbol-table/index';
-import { SymbolItem, VBScope, ArgInfo, VB_EMPTY } from './types';
+import { SymbolItem, VBScope, ArgInfo, VB_EMPTY, VBVariable } from './types';
 import { last } from './utils';
 
 const defaultFileId = 'default.vb';
@@ -26,15 +26,13 @@ export class Context {
     }
     this.astMap.set(fileId, ast);
     this.currentFileId = fileId;
+    this.symbolTable.set(fileId, new Map());
     return build(ast, this);
   }
 
   registerSymbolItem(name: string, item: SymbolItem) {
     const { symbolTable, currentFileId } = this;
-    let currentTable = symbolTable.get(currentFileId);
-    if (!currentTable) {
-      symbolTable.set(currentFileId, (currentTable = new Map()));
-    }
+    const currentTable = symbolTable.get(currentFileId)!;
     currentTable.set(name, item);
   }
 
@@ -48,7 +46,7 @@ export class Context {
 
   async callSub(
     subName: string,
-    args: VBValue[] = [],
+    args: (VBValue | VBVariable)[] = [],
     fileId: string = defaultFileId,
   ) {
     const setupScope = (argumentsInfo: ArgInfo[]) => {
@@ -60,10 +58,15 @@ export class Context {
         if (!argInfo) {
           continue;
         }
-        if (a.type === 'Object' && argInfo.byRef) {
-          scope.setVariable(argInfo.name, a);
+        const variant = argInfo.asType?.type === 'Variant';
+        if (a.type === 'Variable' && argInfo.byRef) {
+          scope.setVariable(
+            argInfo.name,
+            new VBVariable(argInfo.name, a.address, variant),
+          );
         } else {
-          scope.setVariableValue(argInfo.name, a);
+          const v = scope.setVariableValue(argInfo.name, a);
+          v.variant = variant;
         }
       }
       this.scopeStack.push(scope);

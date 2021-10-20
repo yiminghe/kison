@@ -20,10 +20,10 @@ Object.assign(evaluators, {
     const left: ImplicitCallStmt_InStmt_Node = c;
     const op = children[++index] as AstTokenNode;
     const right = children[++index] as ValueStmt_Node;
-    const leftObj = (await evaluate(left, context)) as VBVariable;
-    const rightValue = (await evaluate(right, context)) as VBValue;
+    const leftVariable = (await evaluate(left, context)) as VBVariable;
+    const rightValue = (await evaluate(right, context)) as VBValue | VBVariable;
     if (op.token === 'EQ') {
-      leftObj.value = rightValue;
+      leftVariable.value = rightValue;
     }
   },
 });

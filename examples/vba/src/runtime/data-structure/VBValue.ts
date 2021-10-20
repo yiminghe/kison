@@ -127,11 +127,21 @@ export class VBBoolean extends VBBase {
   }
 }
 
+export class VBArray {
+  type: 'Array' = 'Array';
+  lower: number = 0;
+  upper: number = -1;
+  value: VBValue[] = [];
+  constructor(value: VBValue[] = []) {
+    this.value = value;
+  }
+}
+
+// address
 export class VBObject {
   type: 'Object' = 'Object';
-  value: VBPrimitive;
-  variant?: boolean;
-  constructor(value: VBPrimitive = VB_EMPTY) {
+  value: VBValue;
+  constructor(value: VBValue = VB_EMPTY) {
     this.value = value;
   }
 }
@@ -159,7 +169,7 @@ export type VBPrimitive =
   | VBNothing
   | VBEmpty;
 
-export type VBValue = VBPrimitive | VBObject;
+export type VBValue = VBPrimitive | VBArray;
 
 export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();

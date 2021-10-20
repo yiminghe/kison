@@ -3,22 +3,22 @@ import type {
   VariableListStmt_Node,
   VariableStmt_Node,
   VariableSubStmt_Node,
-  Visibility_Node,
+  // Visibility_Node,
 } from '../../parser';
 import { collect_asTypeClause } from '../common/collectType';
 import type { Context } from '../Context';
 import {
   AsTypeClauseInfo,
   VBInteger,
-  VBObject,
   VBString,
+  VBValue,
   VBVariable,
-  VB_EMPTY,
+  VBVariableInfo,
 } from '../types';
 import { evaluators } from './evaluators';
 
 function evaluate_variableListStmt(node: VariableListStmt_Node) {
-  const ret: VBVariable[] = [];
+  const ret: VBVariableInfo[] = [];
   const { children } = node;
   for (const c of children) {
     if (c.type === 'symbol' && c.symbol === 'variableSubStmt') {
@@ -28,7 +28,7 @@ function evaluate_variableListStmt(node: VariableListStmt_Node) {
   return ret;
 }
 
-function evaluate_variableSubStmt(node: VariableSubStmt_Node): VBVariable {
+function evaluate_variableSubStmt(node: VariableSubStmt_Node): VBVariableInfo {
   const { children } = node;
   const name = (children[0] as IDENTIFIER_Node).text;
   let asType: AsTypeClauseInfo = {
@@ -38,39 +38,43 @@ function evaluate_variableSubStmt(node: VariableSubStmt_Node): VBVariable {
   if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
     asType = collect_asTypeClause(lastChild);
   }
-  let obj = new VBObject();
-  obj.variant = asType.type === 'Variant';
+  let value: VBValue = null!;
   if (asType.type === 'Integer') {
-    obj.value = new VBInteger();
+    value = new VBInteger();
   } else if (asType.type === 'String') {
-    obj.value = new VBString();
+    value = new VBString();
   }
   return {
-    value: obj,
+    value,
     name,
+    variant: asType.type === 'Variant',
   };
 }
 
 Object.assign(evaluators, {
   async evaluate_variableStmt(node: VariableStmt_Node, context: Context) {
     const { children } = node;
-    const first = children[0];
-    let staticFlag: boolean = false;
-    if (first.type === 'token') {
-      staticFlag = first.token === 'STATIC';
-    }
-    let visibility: Visibility_Node['children'][0]['token'] = 'PUBLIC';
-    if (first.type === 'symbol') {
-      visibility = first.children[0].token;
-    }
+
+    // const first = children[0];
+    // let staticFlag: boolean = false;
+    // if (first.type === 'token') {
+    //   staticFlag = first.token === 'STATIC';
+    // }
+    // let visibility: Visibility_Node['children'][0]['token'] = 'PUBLIC';
+    // if (first.type === 'symbol') {
+    //   visibility = first.children[0].token;
+    // }
 
     const variableListStmt = children[children.length - 1];
-    const variables: VBVariable[] = evaluate_variableListStmt(
+    const variables: VBVariableInfo[] = evaluate_variableListStmt(
       variableListStmt as VariableListStmt_Node,
     );
     const currentScope = context.getCurrentScope();
     for (const v of variables) {
-      currentScope.setVariable(v.name, v.value);
+      currentScope.setVariable(
+        v.name,
+        new VBVariable(v.name, v.value, v.variant),
+      );
     }
   },
 });

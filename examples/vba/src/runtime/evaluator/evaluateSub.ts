@@ -3,13 +3,13 @@ import type {
   ArgsCall_Node,
   ECS_ProcedureCall_Node,
 } from '../../parser';
-import type { Runtime } from '../runtime';
-import { VBValue } from '../types';
+import type { Context } from '../Context';
+import { VBValue, VBVariable } from '../types';
 import { evaluators, evaluate } from './evaluators';
 
 async function callSub(
   node: ICS_B_ProcedureCall_Node | ECS_ProcedureCall_Node,
-  runtime: Runtime,
+  context: Context,
   tokenIndex: number,
 ) {
   const children = node.children;
@@ -18,13 +18,21 @@ async function callSub(
     throw new Error('unexpected');
   }
   const subName = token.text;
-  let args: VBValue[] = [];
+  let args: (VBValue | VBVariable)[] = [];
   for (const f of children) {
     if (f.type === 'symbol' && f.symbol === 'argsCall') {
-      args = await evaluate(f, runtime);
+      args = await evaluate(f, context);
     }
   }
-  return await runtime.callSub(subName, args);
+  const valueArgs: VBValue[] = [];
+  for (const a of args) {
+    if (a.type === 'Variable') {
+      valueArgs.push(a.value);
+    } else {
+      valueArgs.push(a);
+    }
+  }
+  return await context.callSub(subName, valueArgs);
 }
 
 Object.assign(evaluators, {
@@ -34,23 +42,23 @@ Object.assign(evaluators, {
 
   async evaluate_iCS_B_ProcedureCall(
     node: ICS_B_ProcedureCall_Node,
-    runtime: Runtime,
+    context: Context,
   ) {
-    return callSub(node, runtime, 0);
+    return callSub(node, context, 0);
   },
 
   async evaluate_eCS_ProcedureCall(
     node: ECS_ProcedureCall_Node,
-    runtime: Runtime,
+    context: Context,
   ) {
     const children = node.children;
     if (children[1].type !== 'token') {
       throw new Error('unexpected');
     }
-    return callSub(node, runtime, 1);
+    return callSub(node, context, 1);
   },
 
-  async evaluate_argsCall(node: ArgsCall_Node, runtime: Runtime) {
+  async evaluate_argsCall(node: ArgsCall_Node, context: Context) {
     const args = [];
     const { children } = node;
     let lastArg = undefined;
@@ -60,7 +68,7 @@ Object.assign(evaluators, {
         lastArg = undefined;
         continue;
       }
-      lastArg = await evaluate(c, runtime);
+      lastArg = await evaluate(c, context);
     }
     if (children.length) {
       args.push(lastArg);

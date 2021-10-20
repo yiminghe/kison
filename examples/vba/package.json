@@ -1,7 +1,7 @@
 {
   "name": "vba",
   "version": "0.0.4",
-  "description": "vba js runtime",
+  "description": "vba js context",
   "author": "yiminghe <yiminghe@gmail.com>",
   "repository": {
     "type": "git",

@@ -213,13 +213,15 @@ function parse(input: string, options: any) {
       }
 
       const normalizedSymbol = normalizeSymbol(topSymbol);
-      
+
       next = null;
 
       if (isSymbol(normalizedSymbol)) {
         next = predictProductionIndexLLK(findSymbolIndex());
       } else if (normalizedSymbol === token.t) {
-        if (!isZeroOrMoreSymbol(topSymbol)) { popSymbolStack(); }
+        if (!isZeroOrMoreSymbol(topSymbol)) {
+          popSymbolStack();
+        }
         const terminalNode = new AstTokenNode(token);
         terminalNodes.push(terminalNode);
         const parent = peekStack(astStack);

@@ -1,8 +1,9 @@
 import type { AstNode } from '../../parser';
-import type { Runtime } from '../runtime';
+import type { Context } from '../Context';
 import { VB_EMPTY } from '../types';
+import { warn } from '../utils';
 
-export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
+export async function evaluate(ast: AstNode, context: Context): Promise<any> {
   let symbol = '',
     token = '',
     label = '';
@@ -23,7 +24,7 @@ export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
   const fn = evaluators[m2] || evaluators[m1];
 
   if (fn) {
-    let ret = fn(ast, runtime);
+    let ret = fn(ast, context);
     if (ret && ret.then) {
       ret = await ret;
     }
@@ -34,16 +35,14 @@ export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
 
   if (ast.type === 'symbol') {
     children = ast.children;
-  }
-
-  if (!children) {
-    console.error(ast);
-    throw new Error('unrecognized node type:' + n1 || n2);
+  } else {
+    warn('unrecognized node type:' + n1 || n2);
+    return;
   }
 
   let ret;
   for (const c of children) {
-    ret = evaluate(c, runtime);
+    ret = evaluate(c, context);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;
     }
@@ -53,7 +52,7 @@ export async function evaluate(ast: AstNode, runtime: Runtime): Promise<any> {
 
 export const evaluators: Record<
   string,
-  (node: AstNode, context: Runtime) => any
+  (node: AstNode, context: Context) => any
 > = {
   evaluate,
 };

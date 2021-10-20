@@ -1,11 +1,11 @@
-# vba js runtime
+# vba js context
 
 https://github.com/yiminghe/kison
 
 ## usage
 
 ```typescript
-import { Runtime, SubBinder } from 'vba';
+import { Context, SubBinder } from 'vba';
 
 const sampleCode = `
 sub test
@@ -19,15 +19,15 @@ const MsgBoxSub: SubBinder = {
   argumentsInfo:[{
     name:'msg',
   }],
-  async fn(runtime) {
-    console.log(runtime.getCurrentScope().getVariable('msg')?.value.value);
+  async fn(context) {
+    console.log(context.getCurrentScope().getVariable('msg')?.value.value);
     return undefined;
   },
 };
 
-const runtime = new Runtime();
-runtime.registerSubBinder(MsgBoxSub);
-runtime.run(sampleCode);
-runtime.callSub('test');
+const context = new Context();
+context.registerSubBinder(MsgBoxSub);
+context.run(sampleCode);
+context.callSub('test');
 ```
 

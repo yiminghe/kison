@@ -1,4 +1,4 @@
-import { parser, Runtime, SubBinder } from '../src/index';
+import { parser, Context, SubBinder } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 
 declare var require: any;
@@ -15,12 +15,20 @@ const $ = (v: string): any => document.getElementById(v)!;
 
 const sampleCode = `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
-MsgBox msg
-call MsgBox(msg2)
+  MsgBox msg
+  call MsgBox(msg2)
+  msg = 11
+  msg2 = 12
 end sub
 
 sub test
-test2 1, 2
+  dim m1 as Integer
+  dim m2 as Integer
+  m1 = 10
+  test2 m1, m2
+  test2 1, 2
+  MsgBox m1
+  MsgBox m2
 end sub
 `.trim();
 
@@ -74,19 +82,21 @@ require(['vs/editor/editor.main'], () => {
         name: 'msg',
       },
     ],
-    async fn(runtime) {
-      alert(runtime.getCurrentScope().getVariable('msg')?.value.value);
-      await wait(500);
+    async fn(context) {
+      console.log(
+        'Call MsgBox: ',
+        context.getCurrentScope().getVariable('msg')?.value.value,
+      );
       return undefined;
     },
   };
 
   $('evaluate').addEventListener('click', () => {
     try {
-      const runtime = new Runtime();
-      runtime.registerSubBinder(MsgBoxSub);
-      runtime.run(getCurrentCode());
-      runtime.callSub('test');
+      const context = new Context();
+      context.registerSubBinder(MsgBoxSub);
+      context.run(getCurrentCode());
+      context.callSub('test');
     } catch (e: any) {
       console.error(e);
     }

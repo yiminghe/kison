@@ -1,12 +1,24 @@
-import { Runtime, SubBinder } from '../src/';
+import { Context, SubBinder } from '../src/';
 
 describe('vba parser', () => {
   it('parse correctly', async () => {
     const sampleCode = `
-sub test
-MsgBox 1
-MsgBox 2
-end sub
+    sub test2 (ByVal msg As Integer, msg2 As Integer)
+    MsgBox msg
+    call MsgBox(msg2)
+    msg = 11
+    msg2 = 12
+  end sub
+  
+  sub test
+    dim m1 as Integer
+    dim m2 as Integer
+    m1 = 10
+    test2 m1, m2
+    test2 1, 2
+    MsgBox m1
+    MsgBox m2
+  end sub
 `.trim();
 
     const ret: any[] = [];
@@ -18,22 +30,26 @@ end sub
           name: 'msg',
         },
       ],
-      async fn(runtime) {
-        ret.push(runtime.getCurrentScope().getVariable('msg')?.value.value);
+      async fn(context) {
+        ret.push(context.getCurrentScope().getVariable('msg')?.value.value);
         return undefined;
       },
     };
 
-    const runtime = new Runtime();
-    runtime.registerSubBinder(MsgBoxSub);
-    runtime.run(sampleCode);
-    await runtime.callSub('test');
+    const context = new Context();
+    context.registerSubBinder(MsgBoxSub);
+    context.run(sampleCode);
+    await context.callSub('test');
 
     expect(ret).toMatchInlineSnapshot(`
-      Array [
-        1,
-        2,
-      ]
-    `);
+Array [
+  10,
+  0,
+  1,
+  2,
+  10,
+  12,
+]
+`);
   });
 });

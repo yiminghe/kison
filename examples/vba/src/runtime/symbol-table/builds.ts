@@ -1,7 +1,8 @@
 import type { AstNode } from '../../parser';
-import type { Runtime } from '../runtime';
+import type { Context } from '../Context';
+import { warn } from '../utils';
 
-export function build(ast: AstNode, runtime: Runtime): any {
+export function build(ast: AstNode, context: Context): any {
   let symbol = '',
     token = '',
     label = '';
@@ -22,28 +23,26 @@ export function build(ast: AstNode, runtime: Runtime): any {
   const fn = builds[m2] || builds[m1];
 
   if (fn) {
-    return fn(ast, runtime);
+    return fn(ast, context);
   }
 
   let children;
 
   if (ast.type === 'symbol') {
     children = ast.children;
-  }
-
-  if (!children) {
-    console.error(ast);
-    throw new Error('unrecognized node type:' + n1 || n2);
+  } else {
+    warn('unrecognized node type:' + n1 || n2);
+    return;
   }
 
   let ret;
   for (const c of children) {
-    ret = build(c, runtime);
+    ret = build(c, context);
   }
   return ret;
 }
 
-export const builds: Record<string, (node: AstNode, context: Runtime) => void> =
+export const builds: Record<string, (node: AstNode, context: Context) => void> =
   {
     build,
   };

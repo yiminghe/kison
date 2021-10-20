@@ -69,7 +69,27 @@ module.exports = {
       n.implicitCallStmt_InBlock,
       n.alternationMark,
       n.explicitCallStmt,
+      n.alternationMark,
+      n.setStmt,
+      n.alternationMark,
+      n.letStmt,
     ],
+
+    [
+      n.letStmt,
+      n.LETOptional,
+      n.implicitCallStmt_InStmt,
+      n.groupStartMark,
+      n.EQ,
+      n.alternationMark,
+      n.PLUS_EQ,
+      n.alternationMark,
+      n.MINUS_EQ,
+      n.groupEndMark,
+      n.valueStmt,
+    ],
+
+    [n.setStmt, n.SET, n.implicitCallStmt_InStmt, n.EQ, n.valueStmt],
 
     [n.explicitCallStmt, n.eCS_ProcedureCall],
 
@@ -145,7 +165,9 @@ module.exports = {
       n.variableStmt,
       n.groupStartMark,
       n.DIM,
+      n.alternationMark,
       n.STATIC,
+      n.alternationMark,
       n.visibility,
       n.groupEndMark,
       n.WITHEVENTSOptional,
@@ -208,7 +230,19 @@ module.exports = {
 
     [n.implicitCallStmt_InStmt, n.iCS_S_VariableOrProcedureCall],
 
-    [n.iCS_S_VariableOrProcedureCall, n.IDENTIFIER],
+    [
+      n.iCS_S_VariableOrProcedureCall,
+      n.IDENTIFIER,
+      n.typeHintOptional,
+      n.dictionaryCallStmtOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.groupEndZeroOrMoreMark,
+    ],
+
+    [n.dictionaryCallStmt, '!', n.IDENTIFIER, n.typeHintOptional],
 
     [n.literal, n.INTEGERLITERAL, n.alternationMark, n.STRINGLITERAL],
 

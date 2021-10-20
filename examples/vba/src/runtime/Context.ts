@@ -8,7 +8,7 @@ import { last } from './utils';
 
 const defaultFileId = 'default.vb';
 
-export class Runtime {
+export class Context {
   astMap = new Map<string, AstRootNode>();
 
   subBindersMap = new Map<string, SubBinder>();

@@ -1,162 +1,20 @@
-import type { Runtime } from '../runtime/runtime';
+import type { Context } from './Context';
 import type { Block_Node, SubStmt_Node } from '../parser';
 import { build } from './symbol-table/builds';
+import {
+  VBObject,
+  VB_EMPTY,
+  VBValue,
+  VBPrimitive,
+  VBNothing,
+  VBEmpty,
+  VBNull,
+} from './data-structure/VBValue';
 
 export type FileId = string;
 export type SymbolName = string;
 
-export class VBBase {
-  name: string = '';
-  constructor(name?: string) {
-    if (name) {
-      this.name = name;
-    }
-  }
-}
-
-export class VBCollection extends VBBase {
-  type: 'Collection' = 'Collection';
-  value = new Set<VBValue>();
-  constructor(name?: string) {
-    super(name);
-  }
-}
-
-export class VBDictionary extends VBBase {
-  type: 'Dictionary' = 'Dictionary';
-  value = new Map<VBValue, VBValue>();
-  constructor(name?: string) {
-    super(name);
-  }
-}
-
-export class VBByte extends VBBase {
-  type: 'Byte' = 'Byte';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBDouble extends VBBase {
-  type: 'Double' = 'Double';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBSingle extends VBBase {
-  type: 'Single' = 'Single';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBInteger extends VBBase {
-  type: 'Integer' = 'Integer';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBLongLong extends VBBase {
-  type: 'LongLong' = 'LongLong';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export const VBLongPtr = VBLongLong;
-
-export class VBLong extends VBBase {
-  type: 'Long' = 'Long';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBCurrency extends VBBase {
-  type: 'Currency' = 'Currency';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBDate extends VBBase {
-  type: 'Date' = 'Date';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBDecimal extends VBBase {
-  type: 'Decimal' = 'Decimal';
-  value: number;
-  constructor(value: number, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBString extends VBBase {
-  type: 'String' = 'String';
-  value: string;
-  constructor(value: string, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-export class VBNull extends VBBase {
-  type: 'Null' = 'Null';
-  value = null;
-  constructor(name?: string) {
-    super(name);
-  }
-}
-
-export class VBEmpty extends VBBase {
-  type: 'Empty' = 'Empty';
-  value = undefined;
-  constructor(name?: string) {
-    super(name);
-  }
-}
-
-export const VB_EMPTY = new VBEmpty();
-
-export class VBBoolean extends VBBase {
-  type: 'Boolean' = 'Boolean';
-  value: boolean;
-  constructor(value: boolean, name?: string) {
-    super(name);
-    this.value = value;
-  }
-}
-
-class VBObject {
-  type: 'Object' = 'Object';
-  value: VBPrimitive;
-  variant?: boolean;
-  constructor(value: VBPrimitive) {
-    this.value = value;
-  }
-}
+export * from './data-structure/VBValue';
 
 export class VBScope {
   fileId: FileId = '';
@@ -182,32 +40,14 @@ export class VBScope {
   }
 
   setVariableValue(name: string, value: VBValue) {
+    let obj = this.getVariable(name);
     if (value.type === 'Object') {
-      this.variableMap.set(name, new VBObject(value.value));
+      obj.value = value.value;
     } else {
-      this.variableMap.set(name, new VBObject(value));
+      obj.value = value;
     }
   }
 }
-
-export type VBPrimitive =
-  | VBByte
-  | VBCollection
-  | VBCurrency
-  | VBDate
-  | VBDecimal
-  | VBInteger
-  | VBDouble
-  | VBDictionary
-  | VBLong
-  | VBLongLong
-  | VBSingle
-  | VBNull
-  | VBBoolean
-  | VBString
-  | VBEmpty;
-
-export type VBValue = VBPrimitive | VBObject;
 
 export type SymbolItem = SubSymbolItem;
 
@@ -215,11 +55,11 @@ export class SubSymbolItem {
   type: 'sub' = 'sub';
   sub: SubStmt_Node;
   block: Block_Node;
-  runtime: Runtime;
+  context: Context;
   argumentsInfo?: ArgInfo[];
 
-  constructor(sub: SubStmt_Node, runtime: Runtime) {
-    this.runtime = runtime;
+  constructor(sub: SubStmt_Node, context: Context) {
+    this.context = context;
     this.sub = sub;
     let block;
     for (const c of sub.children) {
@@ -240,7 +80,7 @@ export class SubSymbolItem {
     this.argumentsInfo = [];
     for (const c of this.sub.children) {
       if (c.type === 'symbol' && c.symbol === 'argList') {
-        this.argumentsInfo = build(c, this.runtime);
+        this.argumentsInfo = build(c, this.context);
       }
     }
     return this.argumentsInfo || [];
@@ -248,7 +88,7 @@ export class SubSymbolItem {
 }
 
 export interface SubBinder {
-  fn: (runtime: Runtime) => Promise<VBValue | undefined> | VBValue | undefined;
+  fn: (context: Context) => Promise<VBValue | undefined> | VBValue | undefined;
   argumentsInfo: ArgInfo[];
   name: string;
 }
@@ -260,5 +100,24 @@ export interface ArgInfo {
 }
 
 export interface AsTypeClauseInfo {
-  type: Exclude<VBPrimitive, VBEmpty | VBNull>['type'] | 'Variant';
+  type: Exclude<VBPrimitive, VBEmpty | VBNothing | VBNull>['type'] | 'Variant';
+}
+
+export class VBVariable {
+  type: 'Variable' = 'Variable';
+  name: string;
+  scope: VBScope;
+
+  constructor(name: string, scope: VBScope) {
+    this.name = name;
+    this.scope = scope;
+  }
+
+  get value() {
+    return this.scope.getVariable(this.name);
+  }
+
+  set value(value: VBValue) {
+    this.scope.setVariableValue(this.name, value);
+  }
 }

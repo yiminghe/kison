@@ -1,44 +1,40 @@
-import type {
-  SubStmt_Node,
-  ArgList_Node, Arg_Node, AsTypeClause_Node, Type__Node
-} from '../../parser';
-import type { Runtime } from '../runtime';
-import {
-  ArgInfo, SubSymbolItem, AsTypeClauseInfo,
-} from '../types';
+import type { SubStmt_Node, ArgList_Node, Arg_Node } from '../../parser';
+import { collect_asTypeClause } from '../common/collectType';
+import type { Context } from '../Context';
+import { ArgInfo, SubSymbolItem } from '../types';
 import { builds, build } from './builds';
 
 Object.assign(builds, {
-  build_subStmt(node: SubStmt_Node, runtime: Runtime) {
+  build_subStmt(node: SubStmt_Node, context: Context) {
     let id;
     for (const c of node.children) {
       if (!id) {
         if (c.type === 'token' && c.token === 'IDENTIFIER') {
           id = c.text;
-          const subSymbolItem = new SubSymbolItem(node, runtime);
-          runtime.registerSymbolItem(id, subSymbolItem);
+          const subSymbolItem = new SubSymbolItem(node, context);
+          context.registerSymbolItem(id, subSymbolItem);
           return;
         }
       }
     }
   },
 
-  build_argList(node: ArgList_Node, runtime: Runtime) {
+  build_argList(node: ArgList_Node, context: Context) {
     const ret: ArgInfo[] = [];
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'arg') {
-        ret.push(build(c, runtime));
+        ret.push(build(c, context));
       }
     }
     return ret;
   },
 
-  build_arg(node: Arg_Node, runtime: Runtime): ArgInfo {
+  build_arg(node: Arg_Node): ArgInfo {
     const argInfo: ArgInfo = {
       byRef: true,
       name: '',
       asType: {
-        type: 'Variant'
+        type: 'Variant',
       },
     };
     for (const c of node.children) {
@@ -47,32 +43,9 @@ Object.assign(builds, {
       } else if (c.type === 'token' && c.token === 'IDENTIFIER') {
         argInfo.name = c.text;
       } else if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
-        argInfo.asType = build(c, runtime);
+        argInfo.asType = collect_asTypeClause(c);
       }
     }
     return argInfo;
-  },
-
-  build_asTypeClause(node: AsTypeClause_Node, runtime: Runtime) {
-    const asType: AsTypeClauseInfo = {
-      type: 'Variant'
-    };
-    for (const c of node.children) {
-      if (c.type === 'symbol' && c.symbol === 'type_') {
-        asType.type = build(c, runtime) || asType.type;
-      }
-    }
-    return asType;
-  },
-
-  build_type_(node: Type__Node) {
-    for (const c of node.children) {
-      if (c.type === 'symbol' && c.symbol === 'baseType') {
-        const node = c.children[0];
-        if (node.type === 'token') {
-          return node.text;
-        }
-      }
-    }
   },
 });

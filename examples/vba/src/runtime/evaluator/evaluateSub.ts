@@ -4,7 +4,7 @@ import type {
   ECS_ProcedureCall_Node,
 } from '../../parser';
 import type { Runtime } from '../runtime';
-import { VBType } from '../types';
+import { VBValue } from '../types';
 import { evaluators, evaluate } from './evaluators';
 
 async function callSub(
@@ -18,7 +18,7 @@ async function callSub(
     throw new Error('unexpected');
   }
   const subName = token.text;
-  let args: VBType[] = [];
+  let args: VBValue[] = [];
   for (const f of children) {
     if (f.type === 'symbol' && f.symbol === 'argsCall') {
       args = await evaluate(f, runtime);

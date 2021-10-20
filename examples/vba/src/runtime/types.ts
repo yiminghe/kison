@@ -16,7 +16,7 @@ export class VBBase {
 
 export class VBCollection extends VBBase {
   type: 'Collection' = 'Collection';
-  value = new Set<VBType>();
+  value = new Set<VBValue>();
   constructor(name?: string) {
     super(name);
   }
@@ -24,7 +24,7 @@ export class VBCollection extends VBBase {
 
 export class VBDictionary extends VBBase {
   type: 'Dictionary' = 'Dictionary';
-  value = new Map<VBType, VBType>();
+  value = new Map<VBValue, VBValue>();
   constructor(name?: string) {
     super(name);
   }
@@ -151,9 +151,9 @@ export class VBBoolean extends VBBase {
 
 class VBObject {
   type: 'Object' = 'Object';
-  value: VBPrimitiveType;
+  value: VBPrimitive;
   variant?: boolean;
-  constructor(value: VBPrimitiveType) {
+  constructor(value: VBPrimitive) {
     this.value = value;
   }
 }
@@ -173,7 +173,7 @@ export class VBScope {
     return empty;
   }
 
-  setVariable(name: string, value: VBType) {
+  setVariable(name: string, value: VBValue) {
     if (value.type === 'Object') {
       this.variableMap.set(name, value);
     } else {
@@ -181,7 +181,7 @@ export class VBScope {
     }
   }
 
-  setVariableValue(name: string, value: VBType) {
+  setVariableValue(name: string, value: VBValue) {
     if (value.type === 'Object') {
       this.variableMap.set(name, new VBObject(value.value));
     } else {
@@ -190,7 +190,7 @@ export class VBScope {
   }
 }
 
-export type VBPrimitiveType =
+export type VBPrimitive =
   | VBByte
   | VBCollection
   | VBCurrency
@@ -207,12 +207,12 @@ export type VBPrimitiveType =
   | VBString
   | VBEmpty;
 
-export type VBType = VBPrimitiveType | VBObject;
+export type VBValue = VBPrimitive | VBObject;
 
 export class VBVariant extends VBBase {
   type: 'Variant' = 'Variant';
-  value: VBPrimitiveType;
-  constructor(value: VBPrimitiveType, name?: string) {
+  value: VBPrimitive;
+  constructor(value: VBPrimitive, name?: string) {
     super(name);
     this.value = value;
   }
@@ -257,7 +257,7 @@ export class SubSymbolItem {
 }
 
 export interface SubBinder {
-  fn: (runtime: Runtime) => Promise<VBType | undefined> | VBType | undefined;
+  fn: (runtime: Runtime) => Promise<VBValue | undefined> | VBValue | undefined;
   argumentsInfo: ArgInfo[];
   name: string;
 }
@@ -269,5 +269,5 @@ export interface ArgInfo {
 }
 
 export interface AsTypeClauseInfo {
-  type: Exclude<VBPrimitiveType, VBEmpty | VBNull>['type'] | 'Variant';
+  type: Exclude<VBPrimitive, VBEmpty | VBNull>['type'] | 'Variant';
 }

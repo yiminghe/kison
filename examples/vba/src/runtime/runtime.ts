@@ -1,6 +1,6 @@
 import parser from '../parser';
 import type { AstRootNode } from '../parser';
-import type { VBType, SubBinder, FileId, SymbolName } from './types';
+import type { VBValue, SubBinder, FileId, SymbolName } from './types';
 import { evaluate } from './evaluator/index';
 import { build } from './symbol-table/index';
 import { SymbolItem, VBScope, ArgInfo, VB_EMPTY } from './types';
@@ -48,7 +48,7 @@ export class Runtime {
 
   async callSub(
     subName: string,
-    args: VBType[] = [],
+    args: VBValue[] = [],
     fileId: string = defaultFileId,
   ) {
     const setupScope = (argumentsInfo: ArgInfo[]) => {

@@ -1,15 +1,7 @@
 import type { Context } from '../Context';
 import type { Block_Node, SubStmt_Node } from '../../parser';
 import { build } from '../symbol-table/builds';
-import {
-  VBObject,
-  VB_EMPTY,
-  VBValue,
-  VBPrimitive,
-  VBNothing,
-  VBEmpty,
-  VBNull,
-} from './VBValue';
+import { VBObject, VB_EMPTY, VBValue, VBValidPrimitiveType } from './VBValue';
 
 export type FileId = string;
 export type SymbolName = string;
@@ -17,26 +9,27 @@ export type SymbolName = string;
 export class VBScope {
   fileId: FileId = '';
 
-  variableMap = new Map<String, VBVariable>();
+  variableMap = new Map<String, VBObject>();
 
-  getVariable(name: string): VBVariable {
+  getVariable(name: string): VBObject {
     let v = this.variableMap.get(name);
     if (v) {
       return v;
     }
-    v = new VBVariable(name, VB_EMPTY, true);
+    v = new VBObject(VB_EMPTY, 'Variant');
     this.variableMap.set(name, v);
     return v;
   }
 
-  setVariable(name: string, value: VBVariable) {
+  setVariable(name: string, value: VBObject) {
     this.variableMap.set(name, value);
     return value;
   }
 
-  setVariableValue(name: string, value: VBValue | VBVariable) {
+  setVariableValue(name: string, value: VBValue | VBObject) {
     let v = this.getVariable(name);
-    v.value = value;
+    const setValue = value.type === 'Object' ? value.value : value;
+    v.value = setValue;
     return v;
   }
 }
@@ -92,40 +85,15 @@ export interface ArgInfo {
 }
 
 export interface AsTypeClauseInfo {
-  type: Exclude<VBPrimitive, VBEmpty | VBNothing | VBNull>['type'] | 'Variant';
-}
-
-export class VBVariable {
-  type: 'Variable' = 'Variable';
-  name: string;
-  address: VBObject;
-  variant: boolean;
-
-  constructor(name: string, value: VBValue | VBObject, variant: boolean) {
-    this.name = name;
-    if (value.type === 'Object') {
-      this.address = value;
-    } else {
-      this.address = new VBObject(value);
-    }
-    this.variant = variant;
-  }
-
-  get value(): VBValue {
-    return this.address.value;
-  }
-
-  set value(value: VBValue | VBVariable) {
-    if (value.type === 'Variable') {
-      this.address.value = value.address.value;
-    } else {
-      this.address.value = value;
-    }
-  }
+  type: VBValidPrimitiveType;
 }
 
 export interface VBVariableInfo {
   name: string;
   value: VBValue;
-  variant: boolean;
+  subscripts?: {
+    lower: number;
+    upper: number;
+  };
+  asType: VBValidPrimitiveType;
 }

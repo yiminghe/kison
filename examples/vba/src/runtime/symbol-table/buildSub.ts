@@ -1,5 +1,5 @@
 import type { SubStmt_Node, ArgList_Node, Arg_Node } from '../../parser';
-import { collect_asTypeClause } from '../common/collectType';
+import { collect_asTypeClause } from '../collect/collectType';
 import type { Context } from '../Context';
 import { ArgInfo, SubSymbolItem } from '../types';
 import { builds, build } from './builds';

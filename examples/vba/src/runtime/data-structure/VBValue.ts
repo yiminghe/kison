@@ -84,7 +84,7 @@ export class VBCurrency extends VBBase {
 export class VBDate extends VBBase {
   type: 'Date' = 'Date';
   value: number;
-  constructor(value: number) {
+  constructor(value: number = 0) {
     super();
     this.value = value;
   }
@@ -121,28 +121,113 @@ export class VBEmpty extends VBBase {
 export class VBBoolean extends VBBase {
   type: 'Boolean' = 'Boolean';
   value: boolean;
-  constructor(value: boolean) {
+  constructor(value: boolean = false) {
     super();
     this.value = value;
   }
 }
 
+export const VBPrimitiveTypeClass = {
+  String: VBString,
+  Single: VBSingle,
+  Integer: VBInteger,
+  Boolean: VBBoolean,
+  Byte: VBByte,
+  Collection: VBCollection,
+  Currency: VBCurrency,
+  Date: VBDate,
+  Decimal: VBDecimal,
+  Dictionary: VBDictionary,
+  Double: VBDouble,
+  Long: VBLong,
+  LongLong: VBLongLong,
+};
+
+export interface Subscript {
+  lower: number;
+  upper: number;
+  one: boolean;
+}
+
+type ArrayElement = VBObject | VBObject[];
+
 export class VBArray {
   type: 'Array' = 'Array';
-  lower: number = 0;
-  upper: number = -1;
-  value: VBValue[] = [];
-  constructor(value: VBValue[] = []) {
-    this.value = value;
+  subscripts: Subscript[] = [];
+  elementType: VBValidPrimitiveType;
+  value: ArrayElement[] = [];
+  constructor(elementType: VBValidPrimitiveType) {
+    this.elementType = elementType;
+  }
+
+  getElement(indexes: number[]) {
+    let { value, elementType, subscripts } = this;
+    if (indexes.length !== subscripts.length) {
+      throw new Error('unexpected array access!');
+    }
+    let element = value[0];
+    for (let i = 0; i < indexes.length; i++) {
+      const index = indexes[i];
+      const subscript = subscripts[i];
+      if (!subscript) {
+        throw new Error('unexpected array access!');
+      }
+      if (index < subscript.lower || index > subscript.upper) {
+        throw new Error('unexpected array access!');
+      }
+      if (value[index] === undefined) {
+        if (i < subscripts.length - 1) {
+          value[index] = [];
+        } else if (elementType === 'Variant') {
+          value[index] = new VBObject();
+        } else {
+          const VBC = VBPrimitiveTypeClass[elementType];
+          value[index] = new VBObject(new VBC());
+        }
+      }
+      element = value[index];
+      value = value[index] as (VBObject | VBObject[])[];
+    }
+    return element as VBObject;
+  }
+
+  setElement(indexes: number[], value: VBValue) {
+    this.getElement(indexes).value = value;
   }
 }
 
 // address
 export class VBObject {
   type: 'Object' = 'Object';
-  value: VBValue;
-  constructor(value: VBValue = VB_EMPTY) {
-    this.value = value;
+  asType: VBValidPrimitiveType;
+
+  // nested address or value
+  _value: VBValue | VBObject;
+
+  constructor(
+    value: VBValue | VBObject = VB_EMPTY,
+    asType: VBValidPrimitiveType = 'Variant',
+  ) {
+    this._value = value;
+    this.asType = asType;
+  }
+
+  get value(): VBValue {
+    if (this._value.type === 'Object') {
+      return this._value.value;
+    }
+    return this._value;
+  }
+
+  _getObject(): VBObject {
+    if (this._value.type === 'Object') {
+      return this._value._getObject();
+    }
+    return this;
+  }
+
+  set value(value: VBValue) {
+    this._getObject()._value = value;
   }
 }
 
@@ -168,6 +253,10 @@ export type VBPrimitive =
   | VBString
   | VBNothing
   | VBEmpty;
+
+export type VBValidPrimitiveType =
+  | Exclude<VBPrimitive, VBEmpty | VBNothing | VBNull>['type']
+  | 'Variant';
 
 export type VBValue = VBPrimitive | VBArray;
 

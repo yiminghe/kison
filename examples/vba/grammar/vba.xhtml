@@ -958,6 +958,7 @@
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_B_ProcedureCall" title="iCS_B_ProcedureCall">iCS_B_ProcedureCall</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="argCall">argCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="585" height="157">
          <defs>
@@ -1067,6 +1068,7 @@
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
+            <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="variableStmt">variableStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="483" height="125">
@@ -1280,6 +1282,7 @@
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_B_ProcedureCall" title="iCS_B_ProcedureCall">iCS_B_ProcedureCall</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#variableSubStmt" title="variableSubStmt">variableSubStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
@@ -1440,7 +1443,7 @@
             <xhtml:li><xhtml:a href="#setStmt" title="setStmt">setStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#subscript_" title="subscript_">subscript_</xhtml:a></xhtml:li>
          </xhtml:ul>
-      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="implicitCallStmt_InStmt">implicitCallStmt_InStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="277" height="37">
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="implicitCallStmt_InStmt">implicitCallStmt_InStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="317" height="81">
          <defs>
             <style type="text/css">
     @namespace "http://www.w3.org/2000/svg";
@@ -1472,20 +1475,90 @@
          </defs>
          <polygon points="9 17 1 13 1 21"></polygon>
          <polygon points="17 17 9 13 9 21"></polygon><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iCS_S_VariableOrProcedureCall" xlink:title="iCS_S_VariableOrProcedureCall">
-            <rect x="31" y="3" width="218" height="32"></rect>
-            <rect x="29" y="1" width="218" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="39" y="21">iCS_S_VariableOrProcedureCall</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m218 0 h10 m3 0 h-3"></svg:path>
-         <polygon points="267 17 275 13 275 21"></polygon>
-         <polygon points="267 17 259 13 259 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+            <rect x="51" y="3" width="218" height="32"></rect>
+            <rect x="49" y="1" width="218" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="21">iCS_S_VariableOrProcedureCall</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iCS_S_ProcedureOrArrayCall" xlink:title="iCS_S_ProcedureOrArrayCall">
+            <rect x="51" y="47" width="200" height="32"></rect>
+            <rect x="49" y="45" width="200" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="65">iCS_S_ProcedureOrArrayCall</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m218 0 h10 m-258 0 h20 m238 0 h20 m-278 0 q10 0 10 10 m258 0 q0 -10 10 -10 m-268 10 v24 m258 0 v-24 m-258 24 q0 10 10 10 m238 0 q10 0 10 -10 m-248 10 h10 m200 0 h10 m0 0 h18 m23 -44 h-3"></svg:path>
+         <polygon points="307 17 315 13 315 21"></polygon>
+         <polygon points="307 17 299 13 299 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
          <xhtml:div class="ebnf"><xhtml:code>
                <div><a href="#implicitCallStmt_InStmt" title="implicitCallStmt_InStmt">implicitCallStmt_InStmt</a></div>
-               <div>         ::= <a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</a></div></xhtml:code></xhtml:div>
+               <div>         ::= <a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</a></div>
+               <div>           | <a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</a></div></xhtml:code></xhtml:div>
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#letStmt" title="letStmt">letStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#setStmt" title="setStmt">setStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#valueStmt" title="valueStmt">valueStmt</xhtml:a></xhtml:li>
+         </xhtml:ul>
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="801" height="167">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 17 1 13 1 21"></polygon>
+         <polygon points="17 17 9 13 9 21"></polygon>
+         <rect x="31" y="3" width="102" height="32" rx="10"></rect>
+         <rect x="29" y="1" width="102" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="39" y="21">IDENTIFIER</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#typeHint" xlink:title="typeHint">
+            <rect x="173" y="35" width="72" height="32"></rect>
+            <rect x="171" y="33" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="181" y="53">typeHint</text></a><rect x="285" y="3" width="74" height="32" rx="10"></rect>
+         <rect x="283" y="1" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="293" y="21">LPAREN</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#argsCall" xlink:title="argsCall">
+            <rect x="399" y="35" width="72" height="32"></rect>
+            <rect x="397" y="33" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="407" y="53">argsCall</text></a><rect x="511" y="3" width="74" height="32" rx="10"></rect>
+         <rect x="509" y="1" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="519" y="21">RPAREN</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#dictionaryCallStmt" xlink:title="dictionaryCallStmt">
+            <rect x="625" y="35" width="134" height="32"></rect>
+            <rect x="623" y="33" width="134" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="633" y="53">dictionaryCallStmt</text></a><rect x="461" y="117" width="74" height="32" rx="10"></rect>
+         <rect x="459" y="115" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="469" y="135">LPAREN</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#subscripts" xlink:title="subscripts">
+            <rect x="555" y="117" width="84" height="32"></rect>
+            <rect x="553" y="115" width="84" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="563" y="135">subscripts</text></a><rect x="659" y="117" width="74" height="32" rx="10"></rect>
+         <rect x="657" y="115" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="667" y="135">RPAREN</text>
+         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m102 0 h10 m20 0 h10 m0 0 h82 m-112 0 h20 m92 0 h20 m-132 0 q10 0 10 10 m112 0 q0 -10 10 -10 m-122 10 v12 m112 0 v-12 m-112 12 q0 10 10 10 m92 0 q10 0 10 -10 m-102 10 h10 m72 0 h10 m20 -32 h10 m74 0 h10 m20 0 h10 m0 0 h82 m-112 0 h20 m92 0 h20 m-132 0 q10 0 10 10 m112 0 q0 -10 10 -10 m-122 10 v12 m112 0 v-12 m-112 12 q0 10 10 10 m92 0 q10 0 10 -10 m-102 10 h10 m72 0 h10 m20 -32 h10 m74 0 h10 m20 0 h10 m0 0 h144 m-174 0 h20 m154 0 h20 m-194 0 q10 0 10 10 m174 0 q0 -10 10 -10 m-184 10 v12 m174 0 v-12 m-174 12 q0 10 10 10 m154 0 q10 0 10 -10 m-164 10 h10 m134 0 h10 m22 -32 l2 0 m2 0 l2 0 m2 0 l2 0 m-402 114 l2 0 m2 0 l2 0 m2 0 l2 0 m42 0 h10 m74 0 h10 m0 0 h10 m84 0 h10 m0 0 h10 m74 0 h10 m-312 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -12 q0 -10 10 -10 m292 32 l20 0 m-20 0 q10 0 10 -10 l0 -12 q0 -10 -10 -10 m-292 0 h10 m0 0 h282 m-332 32 h20 m332 0 h20 m-372 0 q10 0 10 10 m352 0 q0 -10 10 -10 m-362 10 v14 m352 0 v-14 m-352 14 q0 10 10 10 m332 0 q10 0 10 -10 m-342 10 h10 m0 0 h322 m23 -34 h-3"></svg:path>
+         <polygon points="791 131 799 127 799 135"></polygon>
+         <polygon points="791 131 783 127 783 135"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <xhtml:div class="ebnf"><xhtml:code>
+               <div><a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</a></div>
+               <div>         ::= 'IDENTIFIER' <a href="#typeHint" title="typeHint">typeHint</a>? 'LPAREN' <a href="#argsCall" title="argsCall">argsCall</a>? 'RPAREN' <a href="#dictionaryCallStmt" title="dictionaryCallStmt">dictionaryCallStmt</a>? ( 'LPAREN' <a href="#subscripts" title="subscripts">subscripts</a> 'RPAREN' )*</div></xhtml:code></xhtml:div>
+      </xhtml:p>
+      <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <xhtml:ul>
+            <xhtml:li><xhtml:a href="#implicitCallStmt_InStmt" title="implicitCallStmt_InStmt">implicitCallStmt_InStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="859" height="85">
          <defs>
@@ -1661,6 +1734,7 @@
             <xhtml:li><xhtml:a href="#arg" title="arg">arg</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#dictionaryCallStmt" title="dictionaryCallStmt">dictionaryCallStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#variableSubStmt" title="variableSubStmt">variableSubStmt</xhtml:a></xhtml:li>
          </xhtml:ul>

@@ -953,6 +953,12 @@ export const letStmt = 'letStmt';
 export const letStmtOptional = 'letStmt?';
 export const letStmtZeroOrMore = 'letStmt*';
 export const letStmtOneOrMore = 'letStmt+';
+export const iCS_S_ProcedureOrArrayCall = 'iCS_S_ProcedureOrArrayCall';
+export const iCS_S_ProcedureOrArrayCallOptional = 'iCS_S_ProcedureOrArrayCall?';
+export const iCS_S_ProcedureOrArrayCallZeroOrMore =
+  'iCS_S_ProcedureOrArrayCall*';
+export const iCS_S_ProcedureOrArrayCallOneOrMore =
+  'iCS_S_ProcedureOrArrayCall+';
 export const groupStartMark = "'('";
 export const groupEndMark = "')'";
 export const groupEndOptionalMark = "')'?";

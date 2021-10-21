@@ -3,55 +3,120 @@ import type {
   VariableListStmt_Node,
   VariableStmt_Node,
   VariableSubStmt_Node,
-  // Visibility_Node,
+  ValueStmt_Node,
+  Subscripts_Node,
+  Subscript__Node,
 } from '../../parser';
-import { collect_asTypeClause } from '../common/collectType';
+import { collect_asTypeClause } from '../collect/collectType';
 import type { Context } from '../Context';
 import {
   AsTypeClauseInfo,
+  VBArray,
   VBInteger,
   VBString,
   VBValue,
-  VBVariable,
   VBVariableInfo,
+  Subscript,
+  VBObject,
 } from '../types';
-import { evaluators } from './evaluators';
+import { evaluators, evaluate } from './evaluators';
 
-function evaluate_variableListStmt(node: VariableListStmt_Node) {
-  const ret: VBVariableInfo[] = [];
-  const { children } = node;
-  for (const c of children) {
-    if (c.type === 'symbol' && c.symbol === 'variableSubStmt') {
-      ret.push(evaluate_variableSubStmt(c));
+function getNumberFromSubscript(node: VBObject | VBInteger) {
+  if (node.type === 'Object') {
+    const vbValue = node.value;
+    if (vbValue.type !== 'Integer') {
+      throw new Error('unexpected array dimision!');
     }
+    return vbValue.value;
   }
-  return ret;
-}
-
-function evaluate_variableSubStmt(node: VariableSubStmt_Node): VBVariableInfo {
-  const { children } = node;
-  const name = (children[0] as IDENTIFIER_Node).text;
-  let asType: AsTypeClauseInfo = {
-    type: 'Variant',
-  };
-  const lastChild = children[children.length - 1];
-  if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
-    asType = collect_asTypeClause(lastChild);
-  }
-  let value: VBValue = null!;
-  if (asType.type === 'Integer') {
-    value = new VBInteger();
-  } else if (asType.type === 'String') {
-    value = new VBString();
-  }
-  return {
-    value,
-    name,
-    variant: asType.type === 'Variant',
-  };
+  return node.value;
 }
 
 Object.assign(evaluators, {
+  async evaluate_subscripts(node: Subscripts_Node, context: Context) {
+    let ret = [];
+    const { children } = node;
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'subscript_') {
+        ret.push(await evaluate(c, context));
+      }
+    }
+    return ret;
+  },
+  async evaluate_variableListStmt(
+    node: VariableListStmt_Node,
+    context: Context,
+  ) {
+    const ret: VBVariableInfo[] = [];
+    const { children } = node;
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'variableSubStmt') {
+        ret.push(await evaluate(c, context));
+      }
+    }
+    return ret;
+  },
+  async evaluate_variableSubStmt(
+    node: VariableSubStmt_Node,
+    context: Context,
+  ): Promise<VBVariableInfo> {
+    const { children } = node;
+    const name = (children[0] as IDENTIFIER_Node).text;
+    let asType: AsTypeClauseInfo = {
+      type: 'Variant',
+    };
+    let subscripts: Subscript[] | undefined;
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'subscripts') {
+        subscripts = await evaluate(c, context);
+      }
+    }
+    const lastChild = children[children.length - 1];
+    if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
+      asType = collect_asTypeClause(lastChild);
+    }
+    let value: VBValue = null!;
+
+    if (subscripts) {
+      value = new VBArray(asType.type);
+      value.subscripts = subscripts;
+    } else if (asType.type === 'Integer') {
+      value = new VBInteger();
+    } else if (asType.type === 'String') {
+      value = new VBString();
+    }
+    return {
+      value,
+      name,
+      asType: asType.type,
+    };
+  },
+  async evaluate_subscript_(
+    node: Subscript__Node,
+    context: Context,
+  ): Promise<Subscript> {
+    let lower = 0;
+    let upper = 0;
+    const subs: ValueStmt_Node[] = [];
+    for (const c of node.children) {
+      if (c.type === 'symbol' && c.symbol === 'valueStmt') {
+        subs.push(c);
+      }
+    }
+    let one = false;
+    if (subs.length === 2) {
+      lower = getNumberFromSubscript(await evaluate(subs[0], context));
+      upper = getNumberFromSubscript(await evaluate(subs[1], context));
+    } else if (subs.length === 1) {
+      one = true;
+      upper = getNumberFromSubscript(await evaluate(subs[0], context));
+    }
+    return {
+      lower,
+      upper,
+      one,
+    };
+  },
   async evaluate_variableStmt(node: VariableStmt_Node, context: Context) {
     const { children } = node;
 
@@ -66,15 +131,13 @@ Object.assign(evaluators, {
     // }
 
     const variableListStmt = children[children.length - 1];
-    const variables: VBVariableInfo[] = evaluate_variableListStmt(
-      variableListStmt as VariableListStmt_Node,
+    const variables: VBVariableInfo[] = await evaluate(
+      variableListStmt,
+      context,
     );
     const currentScope = context.getCurrentScope();
     for (const v of variables) {
-      currentScope.setVariable(
-        v.name,
-        new VBVariable(v.name, v.value, v.variant),
-      );
+      currentScope.setVariable(v.name, new VBObject(v.value, v.asType));
     }
   },
 });

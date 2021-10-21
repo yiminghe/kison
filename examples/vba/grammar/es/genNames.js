@@ -243,7 +243,7 @@ const symbols = [
   'eCS_ProcedureCall',
   'setStmt',
   'letStmt',
-  'implicitCallStmt_InBlock',
+  'iCS_S_ProcedureOrArrayCall',
   'implicitCallStmt_InBlock',
   'implicitCallStmt_InBlock',
   'implicitCallStmt_InBlock',

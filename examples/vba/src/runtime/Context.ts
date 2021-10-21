@@ -3,7 +3,7 @@ import type { AstRootNode } from '../parser';
 import type { VBValue, SubBinder, FileId, SymbolName } from './types';
 import { evaluate } from './evaluator/index';
 import { build } from './symbol-table/index';
-import { SymbolItem, VBScope, ArgInfo, VB_EMPTY, VBVariable } from './types';
+import { SymbolItem, VBScope, ArgInfo, VB_EMPTY, VBObject } from './types';
 import { last } from './utils';
 
 const defaultFileId = 'default.vb';
@@ -46,7 +46,7 @@ export class Context {
 
   async callSub(
     subName: string,
-    args: (VBValue | VBVariable)[] = [],
+    args: (VBValue | VBObject)[] = [],
     fileId: string = defaultFileId,
   ) {
     const setupScope = (argumentsInfo: ArgInfo[]) => {
@@ -58,15 +58,13 @@ export class Context {
         if (!argInfo) {
           continue;
         }
-        const variant = argInfo.asType?.type === 'Variant';
-        if (a.type === 'Variable' && argInfo.byRef) {
+        if (a.type === 'Object' && argInfo.byRef) {
           scope.setVariable(
             argInfo.name,
-            new VBVariable(argInfo.name, a.address, variant),
+            new VBObject(a, argInfo.asType?.type || 'Variant'),
           );
         } else {
-          const v = scope.setVariableValue(argInfo.name, a);
-          v.variant = variant;
+          scope.setVariableValue(argInfo.name, a);
         }
       }
       this.scopeStack.push(scope);

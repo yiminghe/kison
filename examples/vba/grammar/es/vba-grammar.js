@@ -108,7 +108,7 @@ module.exports = {
       n.LPAREN,
       n.subscripts,
       n.RPAREN,
-      n.groupEndZeroOrMoreMark,
+      n.groupEndOptionalMark,
     ],
 
     [n.implicitCallStmt_InBlock, n.iCS_B_ProcedureCall],
@@ -121,7 +121,7 @@ module.exports = {
       n.LPAREN,
       n.subscripts,
       n.RPAREN,
-      n.groupEndZeroOrMoreMark,
+      n.groupEndOptionalMark,
     ],
 
     [
@@ -228,7 +228,27 @@ module.exports = {
 
     [n.valueStmt, n.literal, n.alternationMark, n.implicitCallStmt_InStmt],
 
-    [n.implicitCallStmt_InStmt, n.iCS_S_VariableOrProcedureCall],
+    [
+      n.implicitCallStmt_InStmt,
+      n.iCS_S_VariableOrProcedureCall,
+      n.alternationMark,
+      n.iCS_S_ProcedureOrArrayCall,
+    ],
+
+    [
+      n.iCS_S_ProcedureOrArrayCall,
+      n.IDENTIFIER,
+      n.typeHintOptional,
+      n.LPAREN,
+      n.argsCallOptional,
+      n.RPAREN,
+      n.dictionaryCallStmtOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.groupEndOptionalMark,
+    ],
 
     [
       n.iCS_S_VariableOrProcedureCall,
@@ -239,7 +259,7 @@ module.exports = {
       n.LPAREN,
       n.subscripts,
       n.RPAREN,
-      n.groupEndZeroOrMoreMark,
+      n.groupEndOptionalMark,
     ],
 
     [n.dictionaryCallStmt, '!', n.IDENTIFIER, n.typeHintOptional],

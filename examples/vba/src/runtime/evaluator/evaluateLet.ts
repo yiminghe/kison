@@ -5,7 +5,7 @@ import type {
   ValueStmt_Node,
 } from '../../parser';
 import type { Context } from '../Context';
-import { VBValue, VBVariable } from '../types';
+import { VBObject, VBValue } from '../types';
 import { evaluators, evaluate } from './evaluators';
 
 Object.assign(evaluators, {
@@ -20,8 +20,11 @@ Object.assign(evaluators, {
     const left: ImplicitCallStmt_InStmt_Node = c;
     const op = children[++index] as AstTokenNode;
     const right = children[++index] as ValueStmt_Node;
-    const leftVariable = (await evaluate(left, context)) as VBVariable;
-    const rightValue = (await evaluate(right, context)) as VBValue | VBVariable;
+    const leftVariable: VBObject = await evaluate(left, context);
+    if (leftVariable.type !== 'Object') {
+      throw new Error('unexpect let left side operator!');
+    }
+    const rightValue: VBValue | VBObject = await evaluate(right, context);
     if (op.token === 'EQ') {
       leftVariable.value = rightValue;
     }

@@ -226,8 +226,12 @@ export class VBObject {
     return this;
   }
 
-  set value(value: VBValue) {
-    this._getObject()._value = value;
+  set value(value: VBValue | VBObject) {
+    if (value.type === 'Object') {
+      this._getObject()._value = value.value;
+    } else {
+      this._getObject()._value = value;
+    }
   }
 }
 

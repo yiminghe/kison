@@ -21,7 +21,7 @@ sub test2 (ByVal msg As Integer, msg2 As Integer)
   msg2 = 12
 end sub
 
-sub test
+sub main
   dim m1 as Integer
   dim m2 as Integer
   m1 = 10
@@ -33,7 +33,7 @@ end sub
 `.trim();
 
 require(['vs/editor/editor.main'], () => {
-  $('sub').value = 'test';
+  $('sub').value = 'main';
   const editorContainer = $('monaco-editor');
   editorContainer.innerHTML = '';
   editorContainer.style.height = '400px';
@@ -96,7 +96,7 @@ require(['vs/editor/editor.main'], () => {
       const context = new Context();
       context.registerSubBinder(MsgBoxSub);
       context.run(getCurrentCode());
-      context.callSub('test');
+      context.callSub($('sub').value);
     } catch (e: any) {
       console.error(e);
     }

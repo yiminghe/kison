@@ -135,7 +135,7 @@ const keywords = [
   'READ',
   'READ_WRITE',
   'REDIM',
-  'REM',
+  // 'REM',
   'RESET',
   'RESUME',
   'RETURN',

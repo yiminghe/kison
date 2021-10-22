@@ -1,0 +1,427 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`vba parser parse comment and line continuation correctly 2`] = `
+"{
+  'start': 1,
+  'end': 56,
+  'firstLine': 2,
+  'lastLine': 11,
+  'firstColumn': 1,
+  'lastColumn': 8,
+  'symbol': 'progam',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 1,
+      'end': 56,
+      'firstLine': 2,
+      'lastLine': 11,
+      'firstColumn': 1,
+      'lastColumn': 8,
+      'symbol': 'moduleBody',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 1,
+          'end': 56,
+          'firstLine': 2,
+          'lastLine': 11,
+          'firstColumn': 1,
+          'lastColumn': 8,
+          'symbol': 'moduleBodyElement',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 1,
+              'end': 56,
+              'firstLine': 2,
+              'lastLine': 11,
+              'firstColumn': 1,
+              'lastColumn': 8,
+              'symbol': 'subStmt',
+              'type': 'symbol',
+              'children': [
+                {
+                  'start': 1,
+                  'end': 4,
+                  'firstLine': 2,
+                  'lastLine': 2,
+                  'firstColumn': 1,
+                  'lastColumn': 4,
+                  'token': 'SUB',
+                  'type': 'token',
+                  'text': 'sub'
+                },
+                {
+                  'start': 5,
+                  'end': 9,
+                  'firstLine': 2,
+                  'lastLine': 2,
+                  'firstColumn': 5,
+                  'lastColumn': 9,
+                  'token': 'IDENTIFIER',
+                  'type': 'token',
+                  'text': 'test'
+                },
+                {
+                  'start': 40,
+                  'end': 47,
+                  'firstLine': 8,
+                  'lastLine': 9,
+                  'firstColumn': 1,
+                  'lastColumn': 2,
+                  'symbol': 'block',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 40,
+                      'end': 47,
+                      'firstLine': 8,
+                      'lastLine': 9,
+                      'firstColumn': 1,
+                      'lastColumn': 2,
+                      'symbol': 'blockStmt',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 40,
+                          'end': 47,
+                          'firstLine': 8,
+                          'lastLine': 9,
+                          'firstColumn': 1,
+                          'lastColumn': 2,
+                          'symbol': 'letStmt',
+                          'type': 'symbol',
+                          'children': [
+                            {
+                              'start': 40,
+                              'end': 41,
+                              'firstLine': 8,
+                              'lastLine': 8,
+                              'firstColumn': 1,
+                              'lastColumn': 2,
+                              'symbol': 'implicitCallStmt_InStmt',
+                              'type': 'symbol',
+                              'children': [
+                                {
+                                  'start': 40,
+                                  'end': 41,
+                                  'firstLine': 8,
+                                  'lastLine': 8,
+                                  'firstColumn': 1,
+                                  'lastColumn': 2,
+                                  'symbol': 'iCS_S_VariableOrProcedureCall',
+                                  'type': 'symbol',
+                                  'children': [
+                                    {
+                                      'start': 40,
+                                      'end': 41,
+                                      'firstLine': 8,
+                                      'lastLine': 8,
+                                      'firstColumn': 1,
+                                      'lastColumn': 2,
+                                      'token': 'IDENTIFIER',
+                                      'type': 'token',
+                                      'text': 'x'
+                                    }
+                                  ],
+                                  'ruleIndex': 53
+                                }
+                              ],
+                              'ruleIndex': 50
+                            },
+                            {
+                              'start': 42,
+                              'end': 43,
+                              'firstLine': 8,
+                              'lastLine': 8,
+                              'firstColumn': 3,
+                              'lastColumn': 4,
+                              'token': 'EQ',
+                              'type': 'token',
+                              'text': '='
+                            },
+                            {
+                              'start': 46,
+                              'end': 47,
+                              'firstLine': 9,
+                              'lastLine': 9,
+                              'firstColumn': 1,
+                              'lastColumn': 2,
+                              'symbol': 'valueStmt',
+                              'type': 'symbol',
+                              'children': [
+                                {
+                                  'start': 46,
+                                  'end': 47,
+                                  'firstLine': 9,
+                                  'lastLine': 9,
+                                  'firstColumn': 1,
+                                  'lastColumn': 2,
+                                  'symbol': 'literal',
+                                  'type': 'symbol',
+                                  'children': [
+                                    {
+                                      'start': 46,
+                                      'end': 47,
+                                      'firstLine': 9,
+                                      'lastLine': 9,
+                                      'firstColumn': 1,
+                                      'lastColumn': 2,
+                                      'token': 'INTEGERLITERAL',
+                                      'type': 'token',
+                                      'text': '1'
+                                    }
+                                  ],
+                                  'ruleIndex': 55
+                                }
+                              ],
+                              'ruleIndex': 48
+                            }
+                          ],
+                          'ruleIndex': 24
+                        }
+                      ],
+                      'ruleIndex': 17
+                    }
+                  ],
+                  'ruleIndex': 11
+                },
+                {
+                  'start': 49,
+                  'end': 56,
+                  'firstLine': 11,
+                  'lastLine': 11,
+                  'firstColumn': 1,
+                  'lastColumn': 8,
+                  'token': 'END_SUB',
+                  'type': 'token',
+                  'text': 'end sub'
+                }
+              ],
+              'ruleIndex': 9
+            }
+          ],
+          'ruleIndex': 4
+        }
+      ],
+      'ruleIndex': 2
+    }
+  ],
+  'ruleIndex': 1
+}"
+`;
+
+exports[`vba parser parse correctly 2`] = `
+"{
+  'start': 1,
+  'end': 26,
+  'firstLine': 2,
+  'lastLine': 4,
+  'firstColumn': 1,
+  'lastColumn': 8,
+  'symbol': 'progam',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 1,
+      'end': 26,
+      'firstLine': 2,
+      'lastLine': 4,
+      'firstColumn': 1,
+      'lastColumn': 8,
+      'symbol': 'moduleBody',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 1,
+          'end': 26,
+          'firstLine': 2,
+          'lastLine': 4,
+          'firstColumn': 1,
+          'lastColumn': 8,
+          'symbol': 'moduleBodyElement',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 1,
+              'end': 26,
+              'firstLine': 2,
+              'lastLine': 4,
+              'firstColumn': 1,
+              'lastColumn': 8,
+              'symbol': 'subStmt',
+              'type': 'symbol',
+              'children': [
+                {
+                  'start': 1,
+                  'end': 4,
+                  'firstLine': 2,
+                  'lastLine': 2,
+                  'firstColumn': 1,
+                  'lastColumn': 4,
+                  'token': 'SUB',
+                  'type': 'token',
+                  'text': 'sub'
+                },
+                {
+                  'start': 5,
+                  'end': 9,
+                  'firstLine': 2,
+                  'lastLine': 2,
+                  'firstColumn': 5,
+                  'lastColumn': 9,
+                  'token': 'IDENTIFIER',
+                  'type': 'token',
+                  'text': 'test'
+                },
+                {
+                  'start': 10,
+                  'end': 18,
+                  'firstLine': 3,
+                  'lastLine': 3,
+                  'firstColumn': 1,
+                  'lastColumn': 9,
+                  'symbol': 'block',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 10,
+                      'end': 18,
+                      'firstLine': 3,
+                      'lastLine': 3,
+                      'firstColumn': 1,
+                      'lastColumn': 9,
+                      'symbol': 'blockStmt',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 10,
+                          'end': 18,
+                          'firstLine': 3,
+                          'lastLine': 3,
+                          'firstColumn': 1,
+                          'lastColumn': 9,
+                          'symbol': 'implicitCallStmt_InBlock',
+                          'type': 'symbol',
+                          'children': [
+                            {
+                              'start': 10,
+                              'end': 18,
+                              'firstLine': 3,
+                              'lastLine': 3,
+                              'firstColumn': 1,
+                              'lastColumn': 9,
+                              'symbol': 'iCS_B_ProcedureCall',
+                              'type': 'symbol',
+                              'children': [
+                                {
+                                  'start': 10,
+                                  'end': 16,
+                                  'firstLine': 3,
+                                  'lastLine': 3,
+                                  'firstColumn': 1,
+                                  'lastColumn': 7,
+                                  'token': 'IDENTIFIER',
+                                  'type': 'token',
+                                  'text': 'MsgBox'
+                                },
+                                {
+                                  'start': 17,
+                                  'end': 18,
+                                  'firstLine': 3,
+                                  'lastLine': 3,
+                                  'firstColumn': 8,
+                                  'lastColumn': 9,
+                                  'symbol': 'argsCall',
+                                  'type': 'symbol',
+                                  'children': [
+                                    {
+                                      'start': 17,
+                                      'end': 18,
+                                      'firstLine': 3,
+                                      'lastLine': 3,
+                                      'firstColumn': 8,
+                                      'lastColumn': 9,
+                                      'symbol': 'argCall',
+                                      'type': 'symbol',
+                                      'children': [
+                                        {
+                                          'start': 17,
+                                          'end': 18,
+                                          'firstLine': 3,
+                                          'lastLine': 3,
+                                          'firstColumn': 8,
+                                          'lastColumn': 9,
+                                          'symbol': 'valueStmt',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 17,
+                                              'end': 18,
+                                              'firstLine': 3,
+                                              'lastLine': 3,
+                                              'firstColumn': 8,
+                                              'lastColumn': 9,
+                                              'symbol': 'literal',
+                                              'type': 'symbol',
+                                              'children': [
+                                                {
+                                                  'start': 17,
+                                                  'end': 18,
+                                                  'firstLine': 3,
+                                                  'lastLine': 3,
+                                                  'firstColumn': 8,
+                                                  'lastColumn': 9,
+                                                  'token': 'INTEGERLITERAL',
+                                                  'type': 'token',
+                                                  'text': '1'
+                                                }
+                                              ],
+                                              'ruleIndex': 55
+                                            }
+                                          ],
+                                          'ruleIndex': 48
+                                        }
+                                      ],
+                                      'ruleIndex': 36
+                                    }
+                                  ],
+                                  'ruleIndex': 32
+                                }
+                              ],
+                              'ruleIndex': 31
+                            }
+                          ],
+                          'ruleIndex': 30
+                        }
+                      ],
+                      'ruleIndex': 14
+                    }
+                  ],
+                  'ruleIndex': 11
+                },
+                {
+                  'start': 19,
+                  'end': 26,
+                  'firstLine': 4,
+                  'lastLine': 4,
+                  'firstColumn': 1,
+                  'lastColumn': 8,
+                  'token': 'END_SUB',
+                  'type': 'token',
+                  'text': 'end sub'
+                }
+              ],
+              'ruleIndex': 9
+            }
+          ],
+          'ruleIndex': 4
+        }
+      ],
+      'ruleIndex': 2
+    }
+  ],
+  'ruleIndex': 1
+}"
+`;

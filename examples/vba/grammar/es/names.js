@@ -542,10 +542,6 @@ export const REDIM = 'REDIM';
 export const REDIMOptional = 'REDIM?';
 export const REDIMZeroOrMore = 'REDIM*';
 export const REDIMOneOrMore = 'REDIM+';
-export const REM = 'REM';
-export const REMOptional = 'REM?';
-export const REMZeroOrMore = 'REM*';
-export const REMOneOrMore = 'REM+';
 export const RESET = 'RESET';
 export const RESETOptional = 'RESET?';
 export const RESETZeroOrMore = 'RESET*';
@@ -1106,7 +1102,6 @@ export const KEYWORDS = [
   'READ',
   'READ_WRITE',
   'REDIM',
-  'REM',
   'RESET',
   'RESUME',
   'RETURN',

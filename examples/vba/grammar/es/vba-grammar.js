@@ -26,6 +26,27 @@ function generateLexerRulesByKeywords(arr) {
   return rules;
 }
 
+const LINE_CONTINUATION = `([\\u0020\\t]+_\\r?\\n)`;
+const NEWLINE = `([\\r\\n]+)`;
+const WS = `(([\\u0020\\t]|${LINE_CONTINUATION})+)`;
+const REMCOMMENT = `(\\:?rem${WS}(${LINE_CONTINUATION}|[^\\r\\n])*)`;
+const COMMENT = `('(${LINE_CONTINUATION}|[^\\r\\n])*)`;
+
+const HIDDEN_REG = new RegExp(
+  `
+${COMMENT}
+|
+${REMCOMMENT}
+|
+${LINE_CONTINUATION}
+|
+${WS}
+|
+(\\s+)
+`.replace(/\s/g, ''),
+  'i',
+);
+
 module.exports = {
   productions: n.makeProductions([
     [n.progam, n.moduleBodyOptional],
@@ -402,7 +423,7 @@ module.exports = {
 
       // ['$NEW_LINE', /[\r\n]+/,],
 
-      ['$HIDDEN', /\s+/],
+      ['$HIDDEN', HIDDEN_REG],
 
       ['STRINGLITERAL', /"[^"\r\n]*"/],
 

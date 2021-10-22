@@ -18,10 +18,50 @@ end sub
     `;
     const ret: any[] = await run(code);
     expect(ret).toMatchInlineSnapshot(`
-Array [
-  1,
-  2,
-]
-`);
+      Array [
+        1,
+        2,
+      ]
+    `);
+  });
+
+  it('multi dimension works', async () => {
+    let code = `
+sub test
+  dim m(1 to 2, 3 to 4) as Integer
+  m(1,3)=1
+  m(1,4)=2
+  MsgBox m(1,3)
+  MsgBox m(1,4)
+end sub   
+  `;
+    let ret: any[] = await run(code);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+        2,
+      ]
+    `);
+
+    code = `
+sub test
+  dim m(1 to 2, 3 to 4) as Integer
+  m(1,3)=1
+  m(1,4)=2
+  MsgBox m(1,5)
+end sub   
+  `;
+
+    let error: any;
+
+    try {
+      await run(code);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(() => {
+      throw error;
+    }).toThrowErrorMatchingInlineSnapshot(`"unexpected array access!"`);
   });
 });

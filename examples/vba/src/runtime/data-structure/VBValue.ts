@@ -84,22 +84,6 @@ export class VBBoolean {
   constructor(public value: boolean = false) {}
 }
 
-export const VBPrimitiveTypeClass = {
-  String: VBString,
-  Single: VBSingle,
-  Integer: VBInteger,
-  Boolean: VBBoolean,
-  Byte: VBByte,
-  Collection: VBCollection,
-  Currency: VBCurrency,
-  Date: VBDate,
-  Decimal: VBDecimal,
-  Dictionary: VBDictionary,
-  Double: VBDouble,
-  Long: VBLong,
-  LongLong: VBLongLong,
-};
-
 export interface Subscript {
   lower: number;
   upper: number;
@@ -132,8 +116,6 @@ export class VBArray {
       if (value[index] === undefined) {
         if (i < subscripts.length - 1) {
           value[index] = [];
-        } else if (elementType === 'Variant') {
-          value[index] = new VBObject();
         } else {
           const VBC = VBPrimitiveTypeClass[elementType];
           value[index] = new VBObject(new VBC(), elementType);
@@ -223,9 +205,24 @@ export type VBPrimitive =
   | VBNothing
   | VBEmpty;
 
-export type VBValidPrimitiveType =
-  | Exclude<VBPrimitive, VBEmpty | VBNothing | VBNull>['type']
-  | 'Variant';
+export const VBPrimitiveTypeClass = {
+  String: VBString,
+  Single: VBSingle,
+  Integer: VBInteger,
+  Boolean: VBBoolean,
+  Byte: VBByte,
+  Collection: VBCollection,
+  Currency: VBCurrency,
+  Date: VBDate,
+  Decimal: VBDecimal,
+  Dictionary: VBDictionary,
+  Double: VBDouble,
+  Long: VBLong,
+  LongLong: VBLongLong,
+  Variant: VBEmpty,
+};
+
+export type VBValidPrimitiveType = keyof typeof VBPrimitiveTypeClass;
 
 export type VBValue = VBPrimitive | VBArray;
 

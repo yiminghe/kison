@@ -14,6 +14,7 @@ import {
   VBVariableInfo,
   Subscript,
   VBObject,
+  VBPrimitiveTypeClass,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -70,13 +71,17 @@ registerEvaluators({
     }
     let value: VBValue = null!;
 
+    const typeName = asType.type;
+
+    const PrimitiveClass = VBPrimitiveTypeClass[typeName];
+
     if (subscripts) {
-      value = new VBArray(asType.type);
+      value = new VBArray(typeName);
       value.subscripts = subscripts;
-    } else if (asType.type === 'Integer') {
-      value = new VBInteger();
-    } else if (asType.type === 'String') {
-      value = new VBString();
+    } else if (PrimitiveClass) {
+      value = new PrimitiveClass();
+    } else {
+      throw new Error('unexpect type: ' + typeName);
     }
     return {
       value,

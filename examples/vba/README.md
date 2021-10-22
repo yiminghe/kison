@@ -1,4 +1,4 @@
-# vba js context
+# vba typescript/javascript runtime
 
 https://github.com/yiminghe/kison
 

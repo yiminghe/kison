@@ -4,6 +4,7 @@ import type {
   EXIT_FUNCTION_Node,
   EXIT_PROPERTY_Node,
   EXIT_SUB_Node,
+  END_Node,
 } from '../../parser';
 
 export class VBCollection {
@@ -157,9 +158,14 @@ export class ExitResult {
       | EXIT_FOR_Node
       | EXIT_FUNCTION_Node
       | EXIT_PROPERTY_Node
-      | EXIT_SUB_Node,
+      | EXIT_SUB_Node
+      | END_Node,
   ) {}
 }
+
+export const END_EXIT_RESULT = new ExitResult({
+  token: 'END',
+} as END_Node);
 
 // address
 export class VBObject {

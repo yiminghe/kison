@@ -31,6 +31,10 @@ registerEvaluators({
     return;
   },
 
+  evaluate_functionStmt() {
+    return;
+  },
+
   async evaluate_iCS_B_ProcedureCall(node, context) {
     return callSub(node, context, 0);
   },

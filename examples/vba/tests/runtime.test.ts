@@ -1,27 +1,4 @@
-import { Context, SubBinder } from '../src/';
-
-async function run(sampleCode: string) {
-  const ret: any[] = [];
-
-  const MsgBoxSub: SubBinder = {
-    name: 'MsgBox',
-    argumentsInfo: [
-      {
-        name: 'msg',
-      },
-    ],
-    async fn(context) {
-      ret.push(context.getCurrentScope().getVariable('msg')?.value.value);
-      return undefined;
-    },
-  };
-
-  const context = new Context();
-  context.registerSubBinder(MsgBoxSub);
-  context.run(sampleCode);
-  await context.callSub('test');
-  return ret;
-}
+import { run } from './utils';
 
 describe('vba runtime', () => {
   it('run correctly', async () => {
@@ -56,54 +33,5 @@ end sub
         12,
       ]
     `);
-  });
-
-  it('array works', async () => {
-    const code = `
-sub test
-  dim m(1) as Integer
-  m(0)=1
-  test2 m(0), m(1)
-  MsgBox m(0)
-  MsgBox m(1)
-end sub
-
-sub test2(byVal a as Integer, b as Integer)
-  a=3
-  b=2
-end sub
-    `;
-    const ret: any[] = await run(code);
-    expect(ret).toMatchInlineSnapshot(`
-Array [
-  1,
-  2,
-]
-`);
-  });
-
-  it('exit sub works', async () => {
-    const code = `
-sub test
-  dim m(1) as Integer
-  m(0)=1
-  test2 m(0), m(1)
-  MsgBox m(0)
-  MsgBox m(1)
-end sub
-
-sub test2(byVal a as Integer, b as Integer)
-  a=3
-  exit sub
-  b=2
-end sub
-    `;
-    const ret: any[] = await run(code);
-    expect(ret).toMatchInlineSnapshot(`
-Array [
-  1,
-  2,
-]
-`);
   });
 });

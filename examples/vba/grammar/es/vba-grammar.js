@@ -32,11 +32,7 @@ module.exports = {
 
     [n.moduleBody, n.moduleBodyElementOneOrMore],
 
-    [
-      n.moduleBodyElement,
-      // 'functionStmt',n.alternationMark,
-      n.subStmt,
-    ],
+    [n.moduleBodyElement, n.functionStmt, n.alternationMark, n.subStmt],
 
     [
       n.visibility,
@@ -58,6 +54,19 @@ module.exports = {
       n.argListOptional,
       n.blockOptional,
       n.END_SUB,
+    ],
+
+    [
+      n.functionStmt,
+      n.visibilityOptional,
+      n.STATICOptional,
+      n.FUNCTION,
+      n.IDENTIFIER,
+      n.typeHintOptional,
+      n.argListOptional,
+      n.asTypeClauseOptional,
+      n.blockOptional,
+      n.END_FUNCTION,
     ],
 
     [n.block, n.blockStmtOneOrMore],
@@ -88,6 +97,8 @@ module.exports = {
       n.EXIT_PROPERTY,
       n.alternationMark,
       n.EXIT_SUB,
+      n.alternationMark,
+      n.END,
     ],
     [
       n.letStmt,

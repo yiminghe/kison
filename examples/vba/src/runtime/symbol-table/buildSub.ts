@@ -1,20 +1,27 @@
+import { FunctionStmt_Node, SubStmt_Node } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
+import { Context } from '../Context';
 import { ArgInfo, SubSymbolItem } from '../types';
 import { registerBuilders, build } from './builders';
 
+function buildSub(node: FunctionStmt_Node | SubStmt_Node, context: Context) {
+  for (const c of node.children) {
+    if (c.type === 'token' && c.token === 'IDENTIFIER') {
+      const subSymbolItem = new SubSymbolItem(node, context);
+      context.registerSymbolItem(c.text, subSymbolItem);
+      return;
+    }
+  }
+  throw new Error(`expect ${node.symbol} definition name!`);
+}
+
 registerBuilders({
   build_subStmt(node, context) {
-    let id;
-    for (const c of node.children) {
-      if (!id) {
-        if (c.type === 'token' && c.token === 'IDENTIFIER') {
-          id = c.text;
-          const subSymbolItem = new SubSymbolItem(node, context);
-          context.registerSymbolItem(id, subSymbolItem);
-          return;
-        }
-      }
-    }
+    buildSub(node, context);
+  },
+
+  build_functionStmt(node, context) {
+    buildSub(node, context);
   },
 
   build_argList(node, context) {

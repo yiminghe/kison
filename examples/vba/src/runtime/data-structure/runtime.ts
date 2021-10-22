@@ -5,6 +5,7 @@ import type {
   AstSymbolNode,
   LiteralToken,
   AstNodeTypeMap,
+  FunctionStmt_Node,
 } from '../../parser';
 import { build } from '../symbol-table/builders';
 import { VBObject, VBValue, VBValidPrimitiveType } from './VBValue';
@@ -16,6 +17,10 @@ export class VBScope {
   fileId: FileId = '';
 
   variableMap = new Map<String, VBObject>();
+
+  hasVariable(name: string) {
+    return this.variableMap.has(name);
+  }
 
   getVariable(name: string): VBObject {
     let v = this.variableMap.get(name);
@@ -43,11 +48,16 @@ export class VBScope {
 export type SymbolItem = SubSymbolItem;
 
 export class SubSymbolItem {
-  type: 'sub' = 'sub';
   block: Block_Node;
   argumentsInfo?: ArgInfo[];
+  returnInfo?: AsTypeClauseInfo;
+  type: 'sub' | 'function';
 
-  constructor(public sub: SubStmt_Node, public context: Context) {
+  constructor(
+    public sub: SubStmt_Node | FunctionStmt_Node,
+    public context: Context,
+  ) {
+    this.type = this.sub.symbol === 'subStmt' ? 'sub' : 'function';
     let block;
     for (const c of sub.children) {
       if (c.type === 'symbol' && c.symbol === 'block') {
@@ -72,10 +82,28 @@ export class SubSymbolItem {
     }
     return this.argumentsInfo || [];
   }
+
+  getReturnInfo(): AsTypeClauseInfo | undefined {
+    if (this.sub.symbol === 'subStmt') {
+      return;
+    }
+    if (this.returnInfo) {
+      return this.returnInfo;
+    }
+    for (const c of this.sub.children) {
+      if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
+        this.returnInfo = build(c, this.context);
+      }
+    }
+    this.returnInfo = this.returnInfo || { type: 'Variant' };
+    return this.returnInfo;
+  }
 }
 
 export interface SubBinder {
-  fn: (context: Context) => Promise<VBValue | undefined> | VBValue | undefined;
+  fn: (
+    context: Context,
+  ) => Promise<VBValue | undefined> | VBValue | undefined | false;
   argumentsInfo: ArgInfo[];
   name: string;
 }

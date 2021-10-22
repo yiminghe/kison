@@ -1,4 +1,4 @@
-import { parser, Context, SubBinder } from '../src/index';
+import { parser, Context } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 
 declare var require: any;
@@ -75,14 +75,14 @@ require(['vs/editor/editor.main'], () => {
   //   });
   // }
 
-  const MsgBoxSub: SubBinder = {
+  const MsgBoxSub = {
     name: 'MsgBox',
     argumentsInfo: [
       {
         name: 'msg',
       },
     ],
-    async fn(context) {
+    async fn(context: Context) {
       console.log(
         'Call MsgBox: ',
         context.getCurrentScope().getVariable('msg')?.value.value,

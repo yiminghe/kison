@@ -10,6 +10,8 @@ import {
   VB_EMPTY,
   VBObject,
   ExitResult,
+  VBEmpty,
+  END_EXIT_RESULT,
 } from './types';
 import { last } from './utils';
 
@@ -40,11 +42,11 @@ export class Context {
   registerSymbolItem(name: string, item: SymbolItem) {
     const { symbolTable, currentFileId } = this;
     const currentTable = symbolTable.get(currentFileId)!;
-    currentTable.set(name, item);
+    currentTable.set(name.toLowerCase(), item);
   }
 
   registerSubBinder(subBinder: SubBinder) {
-    this.subBindersMap.set(subBinder.name, subBinder);
+    this.subBindersMap.set(subBinder.name.toLowerCase(), subBinder);
   }
 
   getCurrentScope() {
@@ -56,6 +58,7 @@ export class Context {
     args: (VBValue | VBObject)[] = [],
     fileId: string = defaultFileId,
   ) {
+    subName = subName.toLowerCase();
     const setupScope = (argumentsInfo: ArgInfo[]) => {
       const scope = new VBScope();
       let i = -1;
@@ -79,12 +82,20 @@ export class Context {
 
     const { subBindersMap, symbolTable } = this;
     const subSymbolItem = symbolTable.get(fileId)?.get(subName);
-    if (subSymbolItem && subSymbolItem.type === 'sub') {
+    if (subSymbolItem) {
       const argumentsInfo = subSymbolItem.getArugmentsInfo();
       setupScope(argumentsInfo);
       let ret = await evaluate(subSymbolItem.block, this);
       if (ret && (ret as ExitResult).type === 'Exit') {
-        ret = VB_EMPTY;
+        const exit: ExitResult = ret;
+        if (exit.token.token === 'END') {
+          return exit;
+        }
+      }
+      if (subSymbolItem.type === 'function') {
+        ret = last(this.scopeStack).getVariable(subName).value;
+      } else {
+        ret = VBEmpty;
       }
       this.scopeStack.pop();
       return ret;
@@ -97,6 +108,9 @@ export class Context {
     let ret = def.fn(this);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;
+    }
+    if (ret === false) {
+      return END_EXIT_RESULT;
     }
     this.scopeStack.pop();
     return ret || VB_EMPTY;

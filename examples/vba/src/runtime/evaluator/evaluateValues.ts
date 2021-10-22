@@ -7,8 +7,9 @@ import {
   Subscript,
   VBObject,
   ExitResult,
+  VBValue,
 } from '../types';
-import { evaluators, evaluate, registerEvaluators } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 
 registerEvaluators({
   evaluate_INTEGERLITERAL(node) {
@@ -17,12 +18,6 @@ registerEvaluators({
 
   evaluate_STRINGLITERAL(node) {
     return new VBString(node.text);
-  },
-
-  evaluate_IDENTIFIER(node, context): VBObject {
-    const scope = context.getCurrentScope();
-    const name = node.text;
-    return scope.getVariable(name);
   },
 
   evaluate_NOTHING() {
@@ -34,25 +29,50 @@ registerEvaluators({
   },
 
   async evaluate_iCS_S_VariableOrProcedureCall(node, context) {
-    let variable: VBObject = evaluators.evaluate_IDENTIFIER!(
-      node.children[0] as IDENTIFIER_Node,
-      context,
-    );
     let subscripts: Subscript[] | undefined;
+
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'subscripts') {
         subscripts = await evaluate(c, context);
       }
     }
+
+    const id = (node.children[0] as IDENTIFIER_Node).text;
+    const scope = context.getCurrentScope();
+
+    // a = r(1)
+    if (
+      !scope.hasVariable(id) &&
+      subscripts &&
+      subscripts.every((s) => s.one)
+    ) {
+      let args: (VBValue | VBObject)[] = [];
+      for (const c of node.children) {
+        if (c.type === 'symbol' && c.symbol === 'subscripts') {
+          for (const cc of c.children) {
+            if (cc.type === 'symbol' && cc.symbol === 'subscript_') {
+              for (const ccc of cc.children) {
+                if (ccc.type === 'symbol' && ccc.symbol === 'valueStmt') {
+                  args.push(await evaluate(ccc, context));
+                }
+              }
+            }
+          }
+        }
+      }
+      return await context.callSub(id, args);
+    }
+
+    let variable: VBObject = scope.getVariable(id);
+
     if (subscripts) {
       if (variable.value.type !== 'Array') {
-        throw new Error('expect array');
+        throw new Error('expect array or function or sub');
       }
       variable = variable.value.getElement(subscripts.map((s) => s.upper));
     }
     return variable;
   },
-
   evaluate_exitStmt(node) {
     return new ExitResult(node.children[0]);
   },

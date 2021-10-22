@@ -9,7 +9,6 @@ import {
   AsTypeClauseInfo,
   VBArray,
   VBInteger,
-  VBString,
   VBValue,
   VBVariableInfo,
   Subscript,

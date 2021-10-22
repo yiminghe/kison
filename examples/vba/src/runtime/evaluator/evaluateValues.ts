@@ -6,6 +6,7 @@ import {
   VB_NULL,
   Subscript,
   VBObject,
+  ExitResult,
 } from '../types';
 import { evaluators, evaluate, registerEvaluators } from './evaluators';
 
@@ -52,5 +53,7 @@ registerEvaluators({
     return variable;
   },
 
-  evaluate_exitStmt() {},
+  evaluate_exitStmt(node) {
+    return new ExitResult(node.children[0]);
+  },
 });

@@ -152,21 +152,14 @@ export class VBArray {
 export class ExitResult {
   type: 'Exit' = 'Exit';
   constructor(
-    public exit: (
+    public token:
       | EXIT_DO_Node
       | EXIT_FOR_Node
       | EXIT_FUNCTION_Node
       | EXIT_PROPERTY_Node
-      | EXIT_SUB_Node
-    )['token'],
+      | EXIT_SUB_Node,
   ) {}
 }
-
-export const EXIT_DO = new ExitResult('EXIT_DO');
-export const EXIT_FOR = new ExitResult('EXIT_FOR');
-export const EXIT_FUNCTION = new ExitResult('EXIT_FUNCTION');
-export const EXIT_PROPERTY = new ExitResult('EXIT_PROPERTY');
-export const EXIT_SUB = new ExitResult('EXIT_SUB');
 
 // address
 export class VBObject {

@@ -1,6 +1,6 @@
 import type { AstNode } from '../../parser';
 import type { Context } from '../Context';
-import { Evaluators, AstVisitor, VB_EMPTY } from '../types';
+import { Evaluators, AstVisitor, VB_EMPTY, ExitResult } from '../types';
 import { warn } from '../utils';
 
 export async function evaluate(ast: AstNode, context: Context): Promise<any> {
@@ -47,7 +47,7 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;
     }
-    if (ret && ret.type === 'Exit') {
+    if (ret && (ret as ExitResult).type === 'Exit') {
       return ret;
     }
   }

@@ -3,7 +3,14 @@ import type { AstRootNode } from '../parser';
 import type { VBValue, SubBinder, FileId, SymbolName } from './types';
 import { evaluate } from './evaluator/index';
 import { build } from './symbol-table/index';
-import { SymbolItem, VBScope, ArgInfo, VB_EMPTY, VBObject } from './types';
+import {
+  SymbolItem,
+  VBScope,
+  ArgInfo,
+  VB_EMPTY,
+  VBObject,
+  ExitResult,
+} from './types';
 import { last } from './utils';
 
 const defaultFileId = 'default.vb';
@@ -75,7 +82,10 @@ export class Context {
     if (subSymbolItem && subSymbolItem.type === 'sub') {
       const argumentsInfo = subSymbolItem.getArugmentsInfo();
       setupScope(argumentsInfo);
-      const ret = await evaluate(subSymbolItem.block, this);
+      let ret = await evaluate(subSymbolItem.block, this);
+      if (ret && (ret as ExitResult).type === 'Exit') {
+        ret = VB_EMPTY;
+      }
       this.scopeStack.pop();
       return ret;
     }

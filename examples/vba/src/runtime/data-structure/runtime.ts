@@ -4,10 +4,10 @@ import type {
   SubStmt_Node,
   AstSymbolNode,
   LiteralToken,
+  AstNodeTypeMap,
 } from '../../parser';
 import { build } from '../symbol-table/builders';
 import { VBObject, VBValue, VBValidPrimitiveType } from './VBValue';
-import { AstNodeTypeMap } from '../..';
 
 export type FileId = string;
 export type SymbolName = string;

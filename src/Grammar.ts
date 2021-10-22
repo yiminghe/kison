@@ -460,9 +460,17 @@ class Grammar {
         .join('|')};`;
     });
 
-    const exporsCode = `export type { ${allExports.join(',')} }`;
+    const astNodeTypeMapCode = [`export type AstNodeTypeMap = { ast: AstNode;`];
 
-    return [base, ...code, exporsCode].join('\n');
+    for (const symbol of [...symbolMap.keys(), ...tokenMap.keys()]) {
+      astNodeTypeMapCode.push(`${symbol}: ${getAstNodeClassName(symbol)};`);
+    }
+
+    astNodeTypeMapCode.push('};');
+
+    const exportsCode = `export type { ${allExports.join(',')} }`;
+
+    return [base, ...code, ...astNodeTypeMapCode, exportsCode].join('\n');
   }
 
   // https://www.w3.org/TR/2010/REC-xquery-20101214/#EBNFNotation

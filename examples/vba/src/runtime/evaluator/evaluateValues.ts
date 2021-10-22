@@ -1,9 +1,4 @@
-import type {
-  AstTokenNode,
-  IDENTIFIER_Node,
-  ICS_S_VariableOrProcedureCall_Node,
-} from '../../parser';
-import type { Context } from '../Context';
+import type { IDENTIFIER_Node } from '../../parser';
 import {
   VBInteger,
   VBString,
@@ -12,18 +7,18 @@ import {
   Subscript,
   VBObject,
 } from '../types';
-import { evaluators, evaluate } from './evaluators';
+import { evaluators, evaluate, registerEvaluators } from './evaluators';
 
-Object.assign(evaluators, {
-  evaluate_INTEGERLITERAL(node: AstTokenNode) {
+registerEvaluators({
+  evaluate_INTEGERLITERAL(node) {
     return new VBInteger(parseInt(node.text));
   },
 
-  evaluate_STRINGLITERAL(node: AstTokenNode) {
+  evaluate_STRINGLITERAL(node) {
     return new VBString(node.text);
   },
 
-  evaluate_IDENTIFIER(node: IDENTIFIER_Node, context: Context): VBObject {
+  evaluate_IDENTIFIER(node, context): VBObject {
     const scope = context.getCurrentScope();
     const name = node.text;
     return scope.getVariable(name);
@@ -37,12 +32,9 @@ Object.assign(evaluators, {
     return VB_NULL;
   },
 
-  async evaluate_iCS_S_VariableOrProcedureCall(
-    node: ICS_S_VariableOrProcedureCall_Node,
-    context: Context,
-  ) {
-    let variable: VBObject = evaluators.evaluate_IDENTIFIER(
-      node.children[0],
+  async evaluate_iCS_S_VariableOrProcedureCall(node, context) {
+    let variable: VBObject = evaluators.evaluate_IDENTIFIER!(
+      node.children[0] as IDENTIFIER_Node,
       context,
     );
     let subscripts: Subscript[] | undefined;
@@ -59,4 +51,6 @@ Object.assign(evaluators, {
     }
     return variable;
   },
+
+  evaluate_exitStmt() {},
 });

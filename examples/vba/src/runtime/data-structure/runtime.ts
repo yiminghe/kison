@@ -1,7 +1,13 @@
 import type { Context } from '../Context';
-import type { Block_Node, SubStmt_Node } from '../../parser';
-import { build } from '../symbol-table/builds';
-import { VBObject, VB_EMPTY, VBValue, VBValidPrimitiveType } from './VBValue';
+import type {
+  Block_Node,
+  SubStmt_Node,
+  AstSymbolNode,
+  LiteralToken,
+} from '../../parser';
+import { build } from '../symbol-table/builders';
+import { VBObject, VBValue, VBValidPrimitiveType } from './VBValue';
+import { AstNodeTypeMap } from '../..';
 
 export type FileId = string;
 export type SymbolName = string;
@@ -16,7 +22,7 @@ export class VBScope {
     if (v) {
       return v;
     }
-    v = new VBObject(VB_EMPTY, 'Variant');
+    v = new VBObject();
     this.variableMap.set(name, v);
     return v;
   }
@@ -38,14 +44,10 @@ export type SymbolItem = SubSymbolItem;
 
 export class SubSymbolItem {
   type: 'sub' = 'sub';
-  sub: SubStmt_Node;
   block: Block_Node;
-  context: Context;
   argumentsInfo?: ArgInfo[];
 
-  constructor(sub: SubStmt_Node, context: Context) {
-    this.context = context;
-    this.sub = sub;
+  constructor(public sub: SubStmt_Node, public context: Context) {
     let block;
     for (const c of sub.children) {
       if (c.type === 'symbol' && c.symbol === 'block') {
@@ -97,3 +99,29 @@ export interface VBVariableInfo {
   };
   asType: VBValidPrimitiveType;
 }
+
+export type ExtractSymbol<
+  T extends string = any,
+  Prefix extends string = any,
+> = T extends `${Prefix}_${infer s}`
+  ? s extends LiteralToken | AstSymbolNode['symbol']
+    ? s
+    : 'ast'
+  : 'ast';
+
+export type AstVisitor<T extends string = any, Prefix extends string = any> = (
+  node: AstNodeTypeMap[ExtractSymbol<T, Prefix>],
+  context: Context,
+) => any;
+
+export type Evaluators = {
+  [e in
+    | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
+    | 'evaluate']?: AstVisitor<e, 'evaluate'>;
+};
+
+export type Builders = {
+  [e in
+    | `build_${LiteralToken | AstSymbolNode['symbol']}`
+    | 'build']?: AstVisitor<e, 'build'>;
+};

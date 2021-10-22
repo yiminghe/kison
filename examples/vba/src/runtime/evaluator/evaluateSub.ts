@@ -1,11 +1,10 @@
 import type {
   ICS_B_ProcedureCall_Node,
-  ArgsCall_Node,
   ECS_ProcedureCall_Node,
 } from '../../parser';
 import type { Context } from '../Context';
 import { VBObject, VBValue } from '../types';
-import { evaluators, evaluate } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 
 async function callSub(
   node: ICS_B_ProcedureCall_Node | ECS_ProcedureCall_Node,
@@ -27,22 +26,16 @@ async function callSub(
   return await context.callSub(subName, args);
 }
 
-Object.assign(evaluators, {
+registerEvaluators({
   evaluate_subStmt() {
     return;
   },
 
-  async evaluate_iCS_B_ProcedureCall(
-    node: ICS_B_ProcedureCall_Node,
-    context: Context,
-  ) {
+  async evaluate_iCS_B_ProcedureCall(node, context) {
     return callSub(node, context, 0);
   },
 
-  async evaluate_eCS_ProcedureCall(
-    node: ECS_ProcedureCall_Node,
-    context: Context,
-  ) {
+  async evaluate_eCS_ProcedureCall(node, context) {
     const children = node.children;
     if (children[1].type !== 'token') {
       throw new Error('unexpected');
@@ -50,7 +43,7 @@ Object.assign(evaluators, {
     return callSub(node, context, 1);
   },
 
-  async evaluate_argsCall(node: ArgsCall_Node, context: Context) {
+  async evaluate_argsCall(node, context) {
     const args = [];
     const { children } = node;
     let lastArg = undefined;

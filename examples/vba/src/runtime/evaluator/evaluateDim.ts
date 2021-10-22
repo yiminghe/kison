@@ -1,11 +1,7 @@
 import type {
   IDENTIFIER_Node,
   VariableListStmt_Node,
-  VariableStmt_Node,
-  VariableSubStmt_Node,
   ValueStmt_Node,
-  Subscripts_Node,
-  Subscript__Node,
 } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
 import type { Context } from '../Context';
@@ -19,7 +15,7 @@ import {
   Subscript,
   VBObject,
 } from '../types';
-import { evaluators, evaluate } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 
 function getNumberFromSubscript(node: VBObject | VBInteger) {
   if (node.type === 'Object') {
@@ -32,8 +28,8 @@ function getNumberFromSubscript(node: VBObject | VBInteger) {
   return node.value;
 }
 
-Object.assign(evaluators, {
-  async evaluate_subscripts(node: Subscripts_Node, context: Context) {
+registerEvaluators({
+  async evaluate_subscripts(node, context) {
     let ret = [];
     const { children } = node;
     for (const c of children) {
@@ -56,10 +52,7 @@ Object.assign(evaluators, {
     }
     return ret;
   },
-  async evaluate_variableSubStmt(
-    node: VariableSubStmt_Node,
-    context: Context,
-  ): Promise<VBVariableInfo> {
+  async evaluate_variableSubStmt(node, context): Promise<VBVariableInfo> {
     const { children } = node;
     const name = (children[0] as IDENTIFIER_Node).text;
     let asType: AsTypeClauseInfo = {
@@ -91,10 +84,7 @@ Object.assign(evaluators, {
       asType: asType.type,
     };
   },
-  async evaluate_subscript_(
-    node: Subscript__Node,
-    context: Context,
-  ): Promise<Subscript> {
+  async evaluate_subscript_(node, context): Promise<Subscript> {
     let lower = 0;
     let upper = 0;
     const subs: ValueStmt_Node[] = [];
@@ -117,7 +107,7 @@ Object.assign(evaluators, {
       one,
     };
   },
-  async evaluate_variableStmt(node: VariableStmt_Node, context: Context) {
+  async evaluate_variableStmt(node, context) {
     const { children } = node;
 
     // const first = children[0];

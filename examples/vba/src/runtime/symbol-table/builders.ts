@@ -1,5 +1,6 @@
 import type { AstNode } from '../../parser';
 import type { Context } from '../Context';
+import { Builders, AstVisitor } from '../types';
 import { warn } from '../utils';
 
 export function build(ast: AstNode, context: Context): any {
@@ -20,7 +21,9 @@ export function build(ast: AstNode, context: Context): any {
   const m1 = `build_${n1}`;
   const m2 = `build_${n2}`;
 
-  const fn = builds[m2] || builds[m1];
+  const builders2 = builders as any;
+
+  const fn: AstVisitor = builders2[m2] || builders2[m1];
 
   if (fn) {
     return fn(ast, context);
@@ -42,7 +45,10 @@ export function build(ast: AstNode, context: Context): any {
   return ret;
 }
 
-export const builds: Record<string, (node: AstNode, context: Context) => void> =
-  {
-    build,
-  };
+export function registerBuilders(others: Builders) {
+  Object.assign(builders, others);
+}
+
+export const builders: Builders = {
+  build,
+};

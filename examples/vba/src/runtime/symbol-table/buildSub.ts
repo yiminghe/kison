@@ -1,11 +1,9 @@
-import type { SubStmt_Node, ArgList_Node, Arg_Node } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
-import type { Context } from '../Context';
 import { ArgInfo, SubSymbolItem } from '../types';
-import { builds, build } from './builds';
+import { registerBuilders, build } from './builders';
 
-Object.assign(builds, {
-  build_subStmt(node: SubStmt_Node, context: Context) {
+registerBuilders({
+  build_subStmt(node, context) {
     let id;
     for (const c of node.children) {
       if (!id) {
@@ -19,7 +17,7 @@ Object.assign(builds, {
     }
   },
 
-  build_argList(node: ArgList_Node, context: Context) {
+  build_argList(node, context) {
     const ret: ArgInfo[] = [];
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'arg') {
@@ -29,7 +27,7 @@ Object.assign(builds, {
     return ret;
   },
 
-  build_arg(node: Arg_Node): ArgInfo {
+  build_arg(node): ArgInfo {
     const argInfo: ArgInfo = {
       byRef: true,
       name: '',

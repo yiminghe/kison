@@ -1,15 +1,13 @@
 import type {
-  LetStmt_Node,
   AstTokenNode,
   ImplicitCallStmt_InStmt_Node,
   ValueStmt_Node,
 } from '../../parser';
-import type { Context } from '../Context';
 import { VBObject, VBValue } from '../types';
-import { evaluators, evaluate } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 
-Object.assign(evaluators, {
-  async evaluate_letStmt(node: LetStmt_Node, context: Context) {
+registerEvaluators({
+  async evaluate_letStmt(node, context) {
     let { children } = node;
     let index = 0;
     let c: any = children[0];

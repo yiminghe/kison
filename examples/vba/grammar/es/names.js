@@ -959,6 +959,10 @@ export const iCS_S_ProcedureOrArrayCallZeroOrMore =
   'iCS_S_ProcedureOrArrayCall*';
 export const iCS_S_ProcedureOrArrayCallOneOrMore =
   'iCS_S_ProcedureOrArrayCall+';
+export const exitStmt = 'exitStmt';
+export const exitStmtOptional = 'exitStmt?';
+export const exitStmtZeroOrMore = 'exitStmt*';
+export const exitStmtOneOrMore = 'exitStmt+';
 export const groupStartMark = "'('";
 export const groupEndMark = "')'";
 export const groupEndOptionalMark = "')'?";

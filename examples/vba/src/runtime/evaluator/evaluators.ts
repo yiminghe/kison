@@ -1,6 +1,6 @@
 import type { AstNode } from '../../parser';
 import type { Context } from '../Context';
-import { VB_EMPTY } from '../types';
+import { Evaluators, AstVisitor, VB_EMPTY } from '../types';
 import { warn } from '../utils';
 
 export async function evaluate(ast: AstNode, context: Context): Promise<any> {
@@ -21,7 +21,8 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
   const m1 = `evaluate_${n1}`;
   const m2 = `evaluate_${n2}`;
 
-  const fn = evaluators[m2] || evaluators[m1];
+  const evaluators2 = evaluators as any;
+  const fn: AstVisitor = evaluators2[m2] || evaluators2[m1];
 
   if (fn) {
     let ret = fn(ast, context);
@@ -46,13 +47,17 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;
     }
+    if (ret && ret.type === 'Exit') {
+      return ret;
+    }
   }
   return ret || VB_EMPTY;
 }
 
-export const evaluators: Record<
-  string,
-  (node: AstNode, context: Context) => any
-> = {
+export function registerEvaluators(others: Evaluators) {
+  Object.assign(evaluators, others);
+}
+
+export const evaluators: Evaluators = {
   evaluate,
 };

@@ -1,130 +1,86 @@
-export class VBBase {}
+import type {
+  EXIT_DO_Node,
+  EXIT_FOR_Node,
+  EXIT_FUNCTION_Node,
+  EXIT_PROPERTY_Node,
+  EXIT_SUB_Node,
+} from '../../parser';
 
-export class VBCollection extends VBBase {
+export class VBCollection {
   type: 'Collection' = 'Collection';
   value = new Set<VBValue>();
-  constructor() {
-    super();
-  }
 }
 
-export class VBDictionary extends VBBase {
+export class VBDictionary {
   type: 'Dictionary' = 'Dictionary';
   value = new Map<VBValue, VBValue>();
-  constructor() {
-    super();
-  }
 }
 
-export class VBByte extends VBBase {
+export class VBByte {
   type: 'Byte' = 'Byte';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBDouble extends VBBase {
+export class VBDouble {
   type: 'Double' = 'Double';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBSingle extends VBBase {
+export class VBSingle {
   type: 'Single' = 'Single';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBInteger extends VBBase {
+export class VBInteger {
   type: 'Integer' = 'Integer';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBLongLong extends VBBase {
+export class VBLongLong {
   type: 'LongLong' = 'LongLong';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
 export const VBLongPtr = VBLongLong;
 
-export class VBLong extends VBBase {
+export class VBLong {
   type: 'Long' = 'Long';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBCurrency extends VBBase {
+export class VBCurrency {
   type: 'Currency' = 'Currency';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBDate extends VBBase {
+export class VBDate {
   type: 'Date' = 'Date';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBDecimal extends VBBase {
+export class VBDecimal {
   type: 'Decimal' = 'Decimal';
-  value: number;
-  constructor(value: number = 0) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: number = 0) {}
 }
 
-export class VBString extends VBBase {
+export class VBString {
   type: 'String' = 'String';
-  value: string;
-  constructor(value: string = '') {
-    super();
-    this.value = value;
-  }
+  constructor(public value: string = '') {}
 }
 
-export class VBNull extends VBBase {
+export class VBNull {
   type: 'Null' = 'Null';
   value = null;
 }
 
-export class VBEmpty extends VBBase {
+export class VBEmpty {
   type: 'Empty' = 'Empty';
   value = undefined;
 }
 
-export class VBBoolean extends VBBase {
+export class VBBoolean {
   type: 'Boolean' = 'Boolean';
-  value: boolean;
-  constructor(value: boolean = false) {
-    super();
-    this.value = value;
-  }
+  constructor(public value: boolean = false) {}
 }
 
 export const VBPrimitiveTypeClass = {
@@ -154,11 +110,8 @@ type ArrayElement = VBObject | VBObject[];
 export class VBArray {
   type: 'Array' = 'Array';
   subscripts: Subscript[] = [];
-  elementType: VBValidPrimitiveType;
   value: ArrayElement[] = [];
-  constructor(elementType: VBValidPrimitiveType) {
-    this.elementType = elementType;
-  }
+  constructor(public elementType: VBValidPrimitiveType) {}
 
   getElement(indexes: number[]) {
     let { value, elementType, subscripts } = this;
@@ -182,7 +135,7 @@ export class VBArray {
           value[index] = new VBObject();
         } else {
           const VBC = VBPrimitiveTypeClass[elementType];
-          value[index] = new VBObject(new VBC());
+          value[index] = new VBObject(new VBC(), elementType);
         }
       }
       element = value[index];
@@ -196,21 +149,34 @@ export class VBArray {
   }
 }
 
+export class ExitResult {
+  type: 'Exit' = 'Exit';
+  constructor(
+    public exit: (
+      | EXIT_DO_Node
+      | EXIT_FOR_Node
+      | EXIT_FUNCTION_Node
+      | EXIT_PROPERTY_Node
+      | EXIT_SUB_Node
+    )['token'],
+  ) {}
+}
+
+export const EXIT_DO = new ExitResult('EXIT_DO');
+export const EXIT_FOR = new ExitResult('EXIT_FOR');
+export const EXIT_FUNCTION = new ExitResult('EXIT_FUNCTION');
+export const EXIT_PROPERTY = new ExitResult('EXIT_PROPERTY');
+export const EXIT_SUB = new ExitResult('EXIT_SUB');
+
 // address
 export class VBObject {
   type: 'Object' = 'Object';
-  asType: VBValidPrimitiveType;
-
-  // nested address or value
-  _value: VBValue | VBObject;
 
   constructor(
-    value: VBValue | VBObject = VB_EMPTY,
-    asType: VBValidPrimitiveType = 'Variant',
-  ) {
-    this._value = value;
-    this.asType = asType;
-  }
+    // nested address or value
+    private _value: VBValue | VBObject = VB_EMPTY,
+    public asType: VBValidPrimitiveType = 'Variant',
+  ) {}
 
   get value(): VBValue {
     if (this._value.type === 'Object') {
@@ -235,7 +201,7 @@ export class VBObject {
   }
 }
 
-export class VBNothing extends VBBase {
+export class VBNothing {
   type: 'Nothing' = 'Nothing';
   value: undefined;
 }

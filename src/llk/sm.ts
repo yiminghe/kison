@@ -210,12 +210,8 @@ export type Unit = StateUnit | SymbolStateUnit | RootSymbolUnit;
 export type AllState = State | SymbolState;
 
 class State {
-  type: string;
-  unit: Unit;
-  transitions: Transition[];
-  constructor(type: string, unit: Unit) {
-    this.type = type;
-    this.unit = unit;
+  transitions: Transition[] = [];
+  constructor(public type: string, public unit: Unit) {
     this.transitions = [];
   }
   pushTransition(endState: State | SymbolState, condition?: Function) {
@@ -224,17 +220,11 @@ class State {
 }
 
 class SymbolState {
-  symbol: string;
   units: Record<string, RootSymbolUnit>;
-  type: string;
   _transitions: Transition[] = [];
-  unit: Unit;
   alltransitions?: Transition[];
 
-  constructor(symbol: string, type: string, unit: Unit) {
-    this.type = type;
-    this.symbol = symbol;
-    this.unit = unit;
+  constructor(public symbol: string, public type: string, public unit: Unit) {
     this.units = {};
   }
 
@@ -298,13 +288,8 @@ class RootSymbolUnit {
   units: Unit[] = [];
   start: SymbolState | State = null!;
   end: State = null!;
-  type: string;
-  ruleIndex: number;
   unitType = 'rootSymbol';
-  constructor(type: string, ruleIndex: number) {
-    this.type = type;
-    this.ruleIndex = ruleIndex;
-  }
+  constructor(public type: string, public ruleIndex: number) {}
 }
 
 class StateUnit {
@@ -313,11 +298,8 @@ class StateUnit {
   lazy = false;
   start: State;
   end: State;
-  type: string;
-  ruleIndex: number;
-  constructor(type: string, ruleIndex: number) {
-    this.type = type;
-    this.ruleIndex = ruleIndex;
+
+  constructor(public type: string, public ruleIndex: number) {
     this.start = new State(`startOf${type}`, this);
     this.end = new State(`endOf${type}`, this);
   }
@@ -325,25 +307,16 @@ class StateUnit {
 
 class SymbolStateUnit {
   unitType = 'symbol';
-  ruleIndex: number;
-  type: string;
   end: State;
   start: SymbolState;
-  constructor(type: string, ruleIndex: number) {
-    this.ruleIndex = ruleIndex;
-    this.type = type;
+  constructor(public type: string, public ruleIndex: number) {
     this.end = new State(`endOf${type}`, this);
     this.start = new SymbolState(type, `startOf${type}`, this);
   }
 }
 
 class Transition {
-  condition?: Function;
-  to: AllState;
-  constructor(to: AllState, condition?: Function) {
-    this.to = to;
-    this.condition = condition;
-  }
+  constructor(public to: AllState, public condition?: Function) {}
   perform() {
     if (this.condition) {
       const ret = this.condition();

@@ -64,6 +64,8 @@ module.exports = {
 
     [
       n.blockStmt,
+      n.exitStmt,
+      n.alternationMark,
       n.variableStmt,
       n.alternationMark,
       n.implicitCallStmt_InBlock,
@@ -75,6 +77,18 @@ module.exports = {
       n.letStmt,
     ],
 
+    [
+      n.exitStmt,
+      n.EXIT_DO,
+      n.alternationMark,
+      n.EXIT_FOR,
+      n.alternationMark,
+      n.EXIT_FUNCTION,
+      n.alternationMark,
+      n.EXIT_PROPERTY,
+      n.alternationMark,
+      n.EXIT_SUB,
+    ],
     [
       n.letStmt,
       n.LETOptional,

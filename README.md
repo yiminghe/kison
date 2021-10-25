@@ -8,13 +8,16 @@
 
 [https://github.com/yiminghe/kison](https://github.com/yiminghe/kison)
 
-A LALR(1)/LL(1)/LL(K) parser generator for javascript/typescript
+A LALR(1)/LL(1)/LL(K) parser generator for `javascript`/`typescript`
 
 ## examples
 
 [https://yiminghe.me/kison/examples/](https://yiminghe.me/kison/examples/)
 
 - [xtemplate](https://github.com/xtemplate/xtemplate): an extensible template engine
+
+[![npm version](https://badge.fury.io/js/xtemplate.svg)](https://badge.fury.io/js/xtemplate)
+[![NPM downloads](https://img.shields.io/npm/dm/xtemplate.svg)](https://npmjs.org/package/xtemplate)
 
 - [excel-formula](https://yiminghe.me/kison/examples/excel-formula-ll/): excel formula engine
 
@@ -225,11 +228,11 @@ module.exports = () => ({
 
 ## command options
 
-- es: generate es module `npx kison --es -g cal-grammar.js`
-- g: grammar file
-- m: ll or lalr or llk **(llk is powerful than ll but less performant!)**
-- babel: use babel to transform code. need install @babel/core@7.x and @babel/preset-env manually
-- declaration: generate d.ts type file for LL parser
+- `--es`: generate es module
+- `-g`: grammar file
+- `-m`: ll or lalr or llk **(llk is powerful than ll but less performant!)**
+- `--babel`: use babel to transform code. need install @babel/core@7.x and @babel/preset-env manually
+- `--declaration`: generate d.ts type file for LL parser
 
 ### LALR
 

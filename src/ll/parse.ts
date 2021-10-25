@@ -1,6 +1,7 @@
 import Utils from '../utils';
 import { Table } from './LLGrammar';
-import type { ParseError, Token } from '../parser';
+import type { Token } from '../parser';
+import type { ParseError } from '../types';
 import type {
   AstSymbolNode as AstSymbolNodeType,
   AstTokenNode as AstTokenNodeType,

@@ -5,11 +5,11 @@ import type {
   AstSymbolNode as AstSymbolNodeType,
   AstErrorNode as AstErrorNodeType,
 } from '../AstNode';
-import type { ParseError, Token } from '../parser';
+import type { Token } from '../parser';
 import * as sm from './sm';
 import * as Utils from './utils';
 import type { Unit, PredictParam } from './sm';
-
+import type { ParseError } from '../types';
 const { AstSymbolNode, AstTokenNode, AstErrorNode } = utils;
 
 const {

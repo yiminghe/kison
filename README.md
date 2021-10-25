@@ -8,11 +8,13 @@
 
 [https://github.com/yiminghe/kison](https://github.com/yiminghe/kison)
 
-A LALR(1)/LL(1)/LL(K) parser generator for javascript originated from [KISSY XTemplate](https://github.com/xtemplate/xtemplate)
+A LALR(1)/LL(1)/LL(K) parser generator for javascript/typescript
 
 ## examples
 
 [https://yiminghe.me/kison/examples/](https://yiminghe.me/kison/examples/)
+
+- [xtemplate](https://github.com/xtemplate/xtemplate): an extensible template engine
 
 - [excel-formula](https://yiminghe.me/kison/examples/excel-formula-ll/): excel formula engine
 

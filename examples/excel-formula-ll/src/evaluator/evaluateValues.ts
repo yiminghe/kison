@@ -1,25 +1,21 @@
 import { makeError, VALUE_ERROR } from '../functions/utils';
-
-import type { Array_Node, AstTokenNode } from '../parser';
-
-import { evaluators, evaluate } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 import type {
   Array_Type,
   Atom_Value_Type,
-  Context,
   Error_Type,
   Number_Type,
   String_Type,
 } from './types';
 
-Object.assign(evaluators, {
-  evaluate_NUMBER(node: AstTokenNode): Number_Type {
+registerEvaluators({
+  evaluate_NUMBER(node): Number_Type {
     return {
       type: 'number',
       value: Number(node.text),
     };
   },
-  evaluate_STRING(node: AstTokenNode): String_Type {
+  evaluate_STRING(node): String_Type {
     return {
       type: 'string',
       value: node.text,
@@ -27,8 +23,8 @@ Object.assign(evaluators, {
   },
 
   [`evaluate_array`](
-    node: Array_Node,
-    context: Context,
+    node,
+    context,
   ): Array_Type | Error_Type {
     const { children: raw } = node;
     const children = raw.slice(1, -1);

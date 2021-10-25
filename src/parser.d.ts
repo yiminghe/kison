@@ -1,17 +1,22 @@
-type AstNode = AstSymbolNode | AstTokenNode;
+// TODO: improve Tuple type
+type Optional<T> = T | undefined;
+type OneOrMore<T> = T extends Array<infer U> ? [...T, ...U[]] : [T, ...T[]];
+type ZeroOrMore<T> = T extends Array<infer U> ? U[] : T[];
+
+export type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
-type AstSymbolNode = BaseSymbolNode;
-type AstTokenNode = BaseTokenNode;
-type LiteralToken = string;
-type AstRootNode = BaseSymbolNode;
+export type AstSymbolNode = BaseSymbolNode;
+export type AstTokenNode = BaseTokenNode;
+export type LiteralToken = string;
+export type AstRootNode = BaseSymbolNode;
 // replace end
 
-type AstErrorNode = AstTokenNode & {
+export type AstErrorNode = AstTokenNode & {
   error: ParseError;
 }
 
-interface Position {
+export interface Position {
   start: number;
   end: number;
   firstLine: number;
@@ -22,35 +27,35 @@ interface Position {
 
 interface BaseSymbolNode extends Position {
   type: 'symbol';
-  symbol: string;
+  symbol: '';
   parent?: AstSymbolNode;
-  label: string;
+  label: '';
   children: AstNode[];
 }
 
 interface BaseTokenNode extends Position {
   type: 'token';
-  token: string;
+  token: '';
   t: string;
   text: string;
   parent: AstSymbolNode;
 }
 
-type TransformNode = (arg: {
+export type TransformNode = (arg: {
   index: number;
   node: AstNode;
   parent: AstSymbolNode;
   defaultTransformNode: TransformNode;
 }) => AstNode | null;
 
-interface Token extends Position {
+export interface Token extends Position {
   text: string;
   t: string;
   recovery?: string;
   token: LiteralToken;
 }
 
-interface ParseError {
+export interface ParseError {
   errorMessage: string;
   expected: LiteralToken[];
   lexer: Token;
@@ -59,7 +64,7 @@ interface ParseError {
   tip: string;
 }
 
-interface LexerOptions<T = any> {
+export interface LexerOptions<T = any> {
   env?: string;
   state?: {
     userData?: T,
@@ -67,7 +72,7 @@ interface LexerOptions<T = any> {
   }
 }
 
-interface ParserOptions {
+export interface ParserOptions {
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
   onErrorRecovery?: (args: {
@@ -78,7 +83,7 @@ interface ParserOptions {
   }) => void;
 }
 
-interface ParseResult {
+export interface ParseResult {
   ast: AstRootNode;
   error?: ParseError;
   errorNode?: AstErrorNode;
@@ -87,7 +92,7 @@ interface ParseResult {
   tokens: Token[];
 }
 
-interface LexResult<T = any> {
+export interface LexResult<T = any> {
   tokens: Token[];
   state: {
     userData: T,
@@ -102,14 +107,3 @@ declare function lex<T = any>(input: string, options?: LexerOptions<T>): LexResu
 declare const parser: { parse: typeof parse, lex: typeof lex };
 
 export default parser;
-
-export type {
-  ParseResult, LexResult, ParserOptions,
-  TransformNode,
-  AstErrorNode,
-  AstRootNode,
-  ParseError,
-  Position,
-  LiteralToken,
-  LexerOptions, AstTokenNode, Token, AstNode, AstSymbolNode
-}

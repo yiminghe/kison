@@ -1,6 +1,6 @@
 import type { AstNode } from '../parser';
 
-import type { All_Type, Context } from './types';
+import type { All_Type, Context,Evaluators,AstVisitor } from './types';
 
 export function evaluate(
   ast: AstNode,
@@ -25,7 +25,8 @@ export function evaluate(
   const m1 = `evaluate_${n1}`;
   const m2 = `evaluate_${n2}`;
 
-  const fn = evaluators[m2] || evaluators[m1];
+  const evaluators2 = evaluators as any;
+  const fn: AstVisitor = evaluators2[m2] || evaluators2[m1];
 
   if (fn) {
     return fn(ast, context);
@@ -47,9 +48,10 @@ export function evaluate(
   return evaluate(child, context);
 }
 
-export const evaluators: Record<
-  string,
-  (node: AstNode, context: Context) => All_Type
-> = {
+export const evaluators: Evaluators = {
   evaluate,
 };
+
+export function registerEvaluators(others: Evaluators) {
+  Object.assign(evaluators, others);
+}

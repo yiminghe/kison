@@ -6,8 +6,8 @@ import type {
   AstNode as AstNodeType,
 } from './AstNode';
 import data from './data';
-import type { ParseError, Token } from './parser';
-import type { Rhs, TransformNode } from './types';
+import type { Token } from './parser';
+import type { ParseError, Rhs, TransformNode } from './types';
 
 const { AstTokenNode, AstErrorNode, BaseAstNode, AstSymbolNode } = AstNodes;
 

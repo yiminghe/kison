@@ -8,7 +8,7 @@ import {
 
 import type { AstSymbolNode, Exp_Node } from '../parser';
 
-import { evaluators, evaluate } from './evaluators';
+import { evaluate,registerEvaluators } from './evaluators';
 import type {
   All_Type,
   Array_Type,
@@ -457,7 +457,7 @@ function evaluatePrefixExp(
   return one(a);
 }
 
-Object.assign(evaluators, {
+registerEvaluators({
   ['evaluate_binaryExp']: evaluate_binary_exp,
   ['evaluate_percentageExp'](node: Exp_Node, context: Context) {
     if (node.label !== 'percentageExp') {
@@ -514,4 +514,4 @@ Object.assign(evaluators, {
     }
     return a;
   },
-});
+} as any);

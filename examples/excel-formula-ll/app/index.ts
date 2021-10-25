@@ -68,7 +68,10 @@ require(['vs/editor/editor.main'], () => {
             error: { expected },
           } = errorNode;
           const hasToken = expected.indexOf(token) !== -1;
-          if ((symbol === 'arguments' || symbol === 'function') && hasToken) {
+          if (
+            (symbol === 'argumentsList' || symbol === 'functionExp') &&
+            hasToken
+          ) {
             fixed = true;
             return {
               action,

@@ -12,7 +12,7 @@ const exps = root.children;
 const node = exps[0].children[0];
 if (node.type == 'symbol') {
   console.log('symbol', node.symbol);
-  if (node.symbol === 'function') {
+  if (node.symbol === 'functionExp') {
     const args = node.children[2];
     args.children;
   }

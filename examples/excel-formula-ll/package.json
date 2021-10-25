@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/excel-formula",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"
@@ -44,7 +44,7 @@
     "check":"tsc --noEmit",
     "build": "npm run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
     "gen": "sh scripts/gen.sh",
-    "pub": "sh scripts/pub.sh"
+    "pub": "sh scripts/pub.sh && rm -rf pkg"
   },
   "main": "index.js"
 }

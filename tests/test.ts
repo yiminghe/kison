@@ -15,7 +15,8 @@ const exp = '1+3+4\n1+3*4\n';
       // console.log(JSON.stringify(ret.ast, null, 2));
       console.log(ret.error.errorMessage);
     } else {
-      console.log(JSON.stringify(ret.ast, null, 2));
+      const ast = ret.ast;
+      console.log(JSON.stringify(ast, null, 2));
     }
   }
 

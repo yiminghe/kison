@@ -1,6 +1,6 @@
 {
   "name": "vba",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "vba typescript/javascript runtime",
   "author": "yiminghe <yiminghe@gmail.com>",
   "repository": {
@@ -42,6 +42,6 @@
     "check":"tsc --noEmit",
     "build": "npm run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
     "gen": "sh scripts/gen.sh",
-    "pub": "sh scripts/pub.sh"
+    "pub": "sh scripts/pub.sh && rm -rf pkg"
   }
 }

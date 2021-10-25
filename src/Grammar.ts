@@ -146,102 +146,110 @@ class Grammar {
   // parser.d.ts
   genDTs(base: string) {
     const fake: FakeThis = {
-      productions: this.productions,
+      productions: this.productions.concat(),
     };
 
     this.expandProductionAlternative(fake);
     this.expandProductionGroup(fake);
     this.expandOptionalSymbol(fake);
-    this.expandOneOrMoreSymbol(fake);
-    this.expandZeroOrMoreSymbol(fake);
+
+    let code = [];
 
     const { productions } = fake;
-    const symbolMap = new Map<
-      string,
-      { code: string; index: number; zero?: boolean }[]
-    >();
-    for (const p of productions) {
-      symbolMap.set(p.symbol, []);
-    }
-
-    let literalTokens: string[] = [];
+    productions.shift();
 
     const allTokens = new Map();
+    const rules = [...this.lexer.rules];
+    const tokenAstNodeClassNames = new Map<string, string>();
 
-    const rules = [
-      ...this.lexer.rules,
-      {
-        token: '$EOF',
-      },
-      {
-        token: '$UNKOWN',
-      },
-    ];
+    for (const token of ['$EOF', '$UNKNOWN']) {
+      rules.push({
+        token,
+        regexp: /./,
+      });
+      const cls = getAstNodeClassName(token);
+      tokenAstNodeClassNames.set(token, cls);
+      code.push(
+        `export interface ${cls} extends BaseTokenNode {
+      token:${JSON.stringify(token)};
+      parent:AstSymbolNode;
+    }`,
+      );
+    }
 
     for (const r of rules) {
       if (r.token && r.token.match(/^[\d\w\$]+$/)) {
-        literalTokens.push(r.token);
         allTokens.set(r.token, r.token);
       }
     }
 
-    const tokenMap = new Map();
     let tokenIndex = 0;
 
     const parentMap = new Map<string, Set<string>>();
 
-    let classNameMap = new Map();
-    let reverseClassNameMap = new Map();
+    let firstSymbol: string = '';
 
-    let usedClassName: Record<string, number> = {};
+    const productionsBySymbol: Record<
+      string,
+      {
+        ruleIndexes: number[];
+        skipAstNode: boolean;
+        productions: ProductionRule[];
+      }
+    > = {};
 
-    let firstCls: string = '';
+    function getAstClassForParent(p: ProductionRule, index: number) {
+      let n = (
+        getAstNodeClassName(p.skipAstNode ? p.symbol + '_Parent' : p.symbol)
+      );
+      if (productionsBySymbol[p.symbol].ruleIndexes.length > 1) {
+        n += '_' + index;
+      }
+      return n;
+    }
 
-    const flatSymbols: Record<string, number> = {};
-    const skipNodeClass: Record<string, number> = {};
-    const parentNodeClassMap = new Map();
+    function getAstClass(p: ProductionRule, index: number) {
+      let n = getAstNodeClassName(p.symbol);
+      if (productionsBySymbol[p.symbol].ruleIndexes.length > 1) {
+        n += '_' + index;
+      }
+      return n;
+    }
 
     for (let i = 0; i < productions.length; i++) {
       const p = productions[i];
-      if (p.symbol === START_TAG) {
-        continue;
+      const { symbol } = p;
+      const item = (productionsBySymbol[symbol] = productionsBySymbol[
+        symbol
+      ] || {
+        ruleIndexes: [],
+        skipAstNode: false,
+        productions: [],
+      });
+      item.skipAstNode = !!p.skipAstNode;
+      item.productions[i] = p;
+      item.ruleIndexes.push(i);
+    }
+
+    for (let i = 0; i < productions.length; i++) {
+      const p = productions[i];
+      const clsName = getAstClassForParent(p, i);
+      if (!p.skipAstNode && !firstSymbol) {
+        firstSymbol = p.symbol;
       }
-      if (p.flat) {
-        flatSymbols[p.symbol] = 1;
-      }
-      let clsName = getAstNodeClassName(p.symbol);
-      const normalizeClsName = clsName;
-      if (p.skipAstNode) {
-        skipNodeClass[clsName + '_0'] = 1;
-      }
-      firstCls = firstCls || clsName;
-      if (usedClassName[clsName]) {
-        const prevP = reverseClassNameMap.get(clsName);
-        if (prevP) {
-          classNameMap.set(prevP, { name: clsName + '_0', index: 0, zero: 1 });
-          reverseClassNameMap.set(clsName + '_0', prevP);
-          reverseClassNameMap.delete(clsName);
-        }
-        clsName += '_' + i;
-      }
-      if (p.skipAstNode) {
-        skipNodeClass[clsName] = 1;
-      }
-      usedClassName[clsName] = 1;
-      classNameMap.set(p, { name: clsName, index: i });
-      reverseClassNameMap.set(clsName, p);
+
       const { rhs } = p;
-      for (const r of rhs) {
+      for (let r of rhs) {
         if (typeof r !== 'string') {
           continue;
         }
+        r = normalizeSymbol(r);
         let rhName;
-        if (symbolMap.has(r)) {
+        if (productionsBySymbol[r]) {
           rhName = r;
         } else if (allTokens.has(r)) {
           rhName = allTokens.get(r);
         } else {
-          literalTokens.push(r);
           rhName = 'TOKEN_' + tokenIndex++;
           allTokens.set(r, rhName);
         }
@@ -249,75 +257,39 @@ class Grammar {
         if (!parents) {
           parents = new Set();
           parentMap.set(rhName, parents);
-          parentNodeClassMap.set(getAstNodeClassName(rhName), parents);
         }
-        if (!parents.has(normalizeClsName)) {
+        if (!parents.has(clsName)) {
           parents.add(clsName);
         }
       }
     }
 
-    function filterSkipNodeParents(childName: string) {
-      const parentIter = parentMap.get(childName);
-
-      if (!parentIter) {
-        return null;
-      }
-
-      let parents = Array.from(parentIter);
-
-      let processed: Record<string, number> = {};
-
-      const f = (p: string) => {
-        return !skipNodeClass[p];
-      };
-
-      while (true) {
-        let prev = parents;
-        parents = parents.filter(f);
-        if (prev.length !== parents.length) {
-          const skipNodeParents = prev.filter((p) => !f(p));
-          if (skipNodeParents.every((f) => !!processed[f])) {
-            break;
-          }
-          for (const skipNodeParent of skipNodeParents) {
-            processed[skipNodeParent] = 1;
-            if (parentNodeClassMap.get(skipNodeParent)) {
-              parents = parents.concat(
-                Array.from(parentNodeClassMap.get(skipNodeParent)),
-              );
-            }
-          }
-        } else {
-          break;
+    for (let i = 0; i < productions.length; i++) {
+      const p = productions[i];
+      if (p.skipAstNode) {
+        const parents = Array.from(parentMap.get(p.symbol) || []);
+        if (parents.length) {
+          code.push(`
+        type ${getAstClassForParent(p, i)} = ${parents.join('|')};
+        `);
         }
       }
-
-      parents = parents.filter(f);
-
-      return parents;
     }
 
-    for (const p of productions) {
-      if (p.symbol === START_TAG) {
-        continue;
-      }
-      const classes = symbolMap.get(p.symbol);
+    for (let i = 0; i < productions.length; i++) {
+      const p = productions[i];
       const { rhs } = p;
       const rhsTypes = [];
 
-      let looseRhType = p.flat;
+      for (let or of rhs) {
+        if (typeof or !== 'string') {
+          continue;
+        }
 
-      for (const r of rhs) {
-        if (typeof r !== 'string') {
-          continue;
-        }
-        if (p.flat && r === p.symbol) {
-          continue;
-        }
+        const r = normalizeSymbol(or);
         let rhName;
 
-        if (symbolMap.has(r)) {
+        if (productionsBySymbol[r]) {
           rhName = r;
         } else if (allTokens.has(r)) {
           rhName = allTokens.get(r);
@@ -325,152 +297,102 @@ class Grammar {
           throw new Error('Error token:' + r);
         }
 
-        const cls = getAstNodeClassName(rhName);
-
-        if (!symbolMap.has(rhName) && !tokenMap.has(rhName)) {
-          let parents = filterSkipNodeParents(rhName);
-
-          let code = `interface ${cls} extends BaseTokenNode {
+        let cls = getAstNodeClassName(rhName);
+        if (
+          !productionsBySymbol[rhName] &&
+          !tokenAstNodeClassNames.has(rhName)
+        ) {
+          let parents = Array.from(parentMap.get(rhName) || []);
+          code.push(`export interface ${cls} extends BaseTokenNode {
             token:${JSON.stringify(r)};
             ${parents && parents.length ? `parent:${parents.join(' | ')};` : ''}
-          }`;
-          tokenMap.set(rhName, code);
+          }`);
+          tokenAstNodeClassNames.set(rhName, cls);
         }
-
-        if (skipNodeClass[cls]) {
-          let nonSkipChildClasses: Record<string, number> = {};
-          let seed = { [cls]: 1 };
-          while (true) {
-            const currentChildClassesLength =
-              Object.keys(nonSkipChildClasses).length;
-            const seedLength = Object.keys(seed).length;
-            for (const c of parentNodeClassMap.keys()) {
-              const parents = parentNodeClassMap.get(c);
-              for (const s of Object.keys(seed)) {
-                if (parents.has(s)) {
-                  if (!skipNodeClass[c]) {
-                    nonSkipChildClasses[c] = 1;
-                  } else {
-                    seed[c] = 1;
-                  }
-                }
-              }
-            }
-            if (
-              currentChildClassesLength ===
-                Object.keys(nonSkipChildClasses).length &&
-              seedLength === Object.keys(seed).length
-            ) {
-              break;
-            }
-          }
-          delete nonSkipChildClasses[cls];
-          rhsTypes.push(...Object.keys(nonSkipChildClasses));
-          looseRhType = true;
-        } else {
-          rhsTypes.push(cls);
+        if (isOneOrMoreSymbol(or)) {
+          cls = `...OneOrMore<${cls}>`;
+        } else if (isZeroOrMoreSymbol(or)) {
+          cls = `...ZeroOrMore<${cls}>`;
+        } else if (productionsBySymbol[r]?.skipAstNode) {
+          cls = `...${cls}`;
         }
-      }
-
-      for (const t of ['$EOF', '$UNKNOWN']) {
-        tokenMap.set(
-          t,
-          `interface ${t}_Node extends BaseTokenNode {
-        token:${JSON.stringify(t)};
-        parent:AstSymbolNode;
-      }`,
-        );
+        rhsTypes.push(cls);
       }
 
       {
-        const { index, name: className, zero } = classNameMap.get(p);
-        if (!skipNodeClass[className]) {
-          let childrenType = `[${rhsTypes.join(',')}]`;
-          if (looseRhType) {
-            childrenType = `Array<${rhsTypes.join(' | ')}>`;
-          }
-          let parents = filterSkipNodeParents(p.symbol);
-          if (parents && flatSymbols[p.symbol]) {
-            const cls = getAstNodeClassName(p.symbol);
-            parents = parents.filter((s) => !s.startsWith(cls));
-          }
-          let code = `interface ${className} extends BaseSymbolNode {
+        const className = getAstClass(p, i);
+        let childrenType = `[${rhsTypes.join(',')}]`;
+        if (p.skipAstNode) {
+          code.push(`type ${className}  = ${childrenType};`);
+        } else {
+          let parents = Array.from(parentMap.get(p.symbol) || []);
+          code.push(`interface ${className} extends BaseSymbolNode {
         symbol:${JSON.stringify(p.symbol)};
         ${p.label ? `label:${JSON.stringify(p.label)};` : ''}
         children:${childrenType};
         ${parents && parents.length ? `parent:${parents.join(' | ')};` : ''}
-      }`;
-          if (classes) classes.push({ code, index, zero });
+      }`);
         }
       }
     }
 
-    let code = [];
+    const allClassNames: string[] = [];
 
-    let allClassNames: string[] = [];
-
-    for (const symbol of symbolMap.keys()) {
-      const classes = symbolMap.get(symbol);
-      if (classes && classes.length) {
-        const className = getAstNodeClassName(symbol);
-        allClassNames.push(className);
-        code.push(...classes.map((c) => c.code));
-        if (classes.length > 1) {
-          code.push(
-            `type ${className} = ${classes
-              .map(({ index, zero }) => {
-                if (index || zero) {
-                  return className + '_' + index;
-                }
-                return className;
-              })
-              .join(' | ')};`,
-          );
-        }
+    for (const symbol of Object.keys(productionsBySymbol)) {
+      const { ruleIndexes, skipAstNode } = productionsBySymbol[symbol];
+      const normalizeClassName = getAstNodeClassName(symbol);
+      if (!skipAstNode) {
+        allClassNames.push(normalizeClassName);
+      }
+      if (ruleIndexes.length > 1) {
+        code.push(
+          `${skipAstNode ? '' : 'export '
+          }type ${normalizeClassName} = ${ruleIndexes
+            .map((index) => {
+              return getAstClass(productions[index], index);
+            })
+            .join(' | ')};`,
+        );
+      } else if (!skipAstNode) {
+        code.push(`export type { ${normalizeClassName} };`)
       }
     }
-
-    let allExports = allClassNames;
 
     base = base.replace(/type AstSymbolNode =[^\n]+/, () => {
       return `type AstSymbolNode = ${allClassNames.join('|')};`;
     });
 
     base = base.replace(/type AstRootNode =[^\n]+/, () => {
-      return `type AstRootNode = ${firstCls};`;
+      return `type AstRootNode = ${getAstNodeClassName(firstSymbol)};`;
     });
-
-    allClassNames = [];
-
-    for (const tokenName of tokenMap.keys()) {
-      const className = getAstNodeClassName(tokenName);
-      allClassNames.push(className);
-      code.push(tokenMap.get(tokenName));
-    }
 
     base = base.replace(/type AstTokenNode =[^\n]+/, () => {
-      return `type AstTokenNode = ${allClassNames.join('|')};`;
+      return `type AstTokenNode = ${Array.from(
+        tokenAstNodeClassNames.values(),
+      ).join('|')};`;
     });
 
-    allExports.push(...allClassNames);
-
     base = base.replace(/type LiteralToken =[^\n]+/, () => {
-      return `type LiteralToken = ${literalTokens
+      return `type LiteralToken = ${Array.from(allTokens.keys())
         .map((r) => JSON.stringify(r))
         .join('|')};`;
     });
 
-    const astNodeTypeMapCode = [`export type AstNodeTypeMap = { ast: AstNode;`];
+    code.push(`export type AstNodeTypeMap = { ast: AstNode;`);
 
-    for (const symbol of [...symbolMap.keys(), ...tokenMap.keys()]) {
-      astNodeTypeMapCode.push(`${symbol}: ${getAstNodeClassName(symbol)};`);
+    for (const symbol of Object.keys(productionsBySymbol)) {
+      const { skipAstNode } = productionsBySymbol[symbol];
+      if (!skipAstNode) {
+        code.push(`${symbol}: ${getAstNodeClassName(symbol)};`);
+      }
+    }
+    for (const token of tokenAstNodeClassNames.keys()) {
+      code.push(`${token}: ${tokenAstNodeClassNames.get(token)};`);
     }
 
-    astNodeTypeMapCode.push('};');
+    code.push('};');
 
-    const exportsCode = `export type { ${allExports.join(',')} }`;
-
-    return [base, ...code, ...astNodeTypeMapCode, exportsCode].join('\n');
+    return [base, ...code].join('\n');
   }
 
   // https://www.w3.org/TR/2010/REC-xquery-20101214/#EBNFNotation
@@ -757,7 +679,7 @@ class Grammar {
     fake.productions = newPs;
   }
 
-  expandProductionsInternal() {}
+  expandProductionsInternal() { }
 
   getPrecedenceTerminal(p: ProductionRule) {
     if (p.precedence) {
@@ -1172,7 +1094,7 @@ class Grammar {
     this.buildMeta();
   }
 
-  buildProductions() {}
+  buildProductions() { }
 
   buildNonTerminals() {
     var { lexer, nonTerminals } = this;
@@ -1384,17 +1306,17 @@ class Grammar {
     code.push(lexerCode);
     code.push(
       'var parser = ' +
-        serializeObject({
-          productions,
-          productionIndexMap,
-          getProductionItemByType: this.getProductionItemByType,
-          getProductionSymbol: this.getProductionSymbol,
-          getProductionRhs: this.getProductionRhs,
-          getProductionAction: this.getProductionAction,
-          getProductionLabel: this.getProductionLabel,
-          isCompress: 1,
-        }) +
-        ';',
+      serializeObject({
+        productions,
+        productionIndexMap,
+        getProductionItemByType: this.getProductionItemByType,
+        getProductionSymbol: this.getProductionSymbol,
+        getProductionRhs: this.getProductionRhs,
+        getProductionAction: this.getProductionAction,
+        getProductionLabel: this.getProductionLabel,
+        isCompress: 1,
+      }) +
+      ';',
     );
 
     code.push(
@@ -1409,8 +1331,8 @@ class Grammar {
 
     code.push(
       'parser.prioritySymbolMap = ' +
-        serializeObject(this.prioritySymbolMap) +
-        ';',
+      serializeObject(this.prioritySymbolMap) +
+      ';',
     );
     const productionSkipAstNodeSet: number[] = [];
     this.productionInstances.forEach((p, index) => {

@@ -1,9 +1,9 @@
 import { makeError, makeReference } from '../functions/utils';
 
-import type { CELL_Node, NAME_Node, Reference_Node } from '../parser';
+import type { Reference_Node } from '../parser';
 import { parseCoord } from '../utils';
 
-import { evaluators, evaluate } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 
 import type { Context } from './types';
 
@@ -27,64 +27,66 @@ const cellAddress = `(?:
   #?
 )`.replace(/\s/g, '');
 
-Object.assign(evaluators, {
-  ['evaluate_rangeReference'](node: Reference_Node, context: Context) {
-    const { children } = node;
-    const left = evaluate(children[0], context);
-    if (left.type === 'error') {
-      return left;
-    }
-    if (children[2]) {
-      const right = evaluate(children[2], context);
+registerEvaluators({
+  ...{
+    ['evaluate_rangeReference'](node: Reference_Node, context: Context) {
+      const { children } = node;
+      const left = evaluate(children[0], context);
+      if (left.type === 'error') {
+        return left;
+      }
+      if (children[2]) {
+        const right = evaluate(children[2], context);
+        if (right.type === 'error') {
+          return right;
+        }
+        if (left.type === 'reference' && right.type === 'reference') {
+          return expandReference(left, right);
+        }
+      } else {
+        return left;
+      }
+    },
+
+    ['evaluate_unionReference'](node: Reference_Node, context: Context) {
+      const { children } = node;
+      const left = evaluate(children[0], context);
+      if (left.type === 'error') {
+        return left;
+      }
+      if (children[2]) {
+        const right = evaluate(children[2], context);
+        if (right.type === 'error') {
+          return right;
+        }
+        if (left.type === 'reference' && right.type === 'reference') {
+          return unionReference(left, right);
+        }
+      } else {
+        return left;
+      }
+    },
+
+    ['evaluate_intersectionReference'](node: Reference_Node, context: Context) {
+      const { children } = node;
+      const left = evaluate(children[0], context);
+      if (left.type === 'error') {
+        return left;
+      }
+      if (!children[1]) {
+        return left;
+      }
+      const right = evaluate(children[1], context);
       if (right.type === 'error') {
         return right;
       }
       if (left.type === 'reference' && right.type === 'reference') {
-        return expandReference(left, right);
+        return intersectReference(left, right);
       }
-    } else {
-      return left;
-    }
-  },
+    },
+  } as any,
 
-  ['evaluate_unionReference'](node: Reference_Node, context: Context) {
-    const { children } = node;
-    const left = evaluate(children[0], context);
-    if (left.type === 'error') {
-      return left;
-    }
-    if (children[2]) {
-      const right = evaluate(children[2], context);
-      if (right.type === 'error') {
-        return right;
-      }
-      if (left.type === 'reference' && right.type === 'reference') {
-        return unionReference(left, right);
-      }
-    } else {
-      return left;
-    }
-  },
-
-  ['evaluate_intersectionReference'](node: Reference_Node, context: Context) {
-    const { children } = node;
-    const left = evaluate(children[0], context);
-    if (left.type === 'error') {
-      return left;
-    }
-    if (!children[1]) {
-      return left;
-    }
-    const right = evaluate(children[1], context);
-    if (right.type === 'error') {
-      return right;
-    }
-    if (left.type === 'reference' && right.type === 'reference') {
-      return intersectReference(left, right);
-    }
-  },
-
-  evaluate_CELL(node: CELL_Node) {
+  evaluate_CELL(node) {
     const { text } = node;
     let rowMatch = text.match(rowRangeAddress);
     if (rowMatch) {
@@ -120,7 +122,7 @@ Object.assign(evaluators, {
     ]);
   },
 
-  evaluate_NAME(node: NAME_Node) {
+  evaluate_NAME(node) {
     // TODO name resolution
     // only colum
     const { text } = node;

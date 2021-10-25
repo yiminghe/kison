@@ -1,4 +1,4 @@
-import type { ParseError } from './parser';
+import type { ParseError } from './types';
 
 interface Params {
   parent?: AstNode;

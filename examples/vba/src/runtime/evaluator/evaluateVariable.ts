@@ -70,7 +70,9 @@ registerEvaluators({
     }
     let value: VBValue = null!;
 
-    const typeName = asType.type;
+    let typeName = asType.type;
+
+    typeName = (typeName as any).toLowerCase();
 
     const PrimitiveClass = VBPrimitiveTypeClass[typeName];
 
@@ -83,9 +85,8 @@ registerEvaluators({
       throw new Error('unexpect type: ' + typeName);
     }
     return {
-      value,
+      value: new VBObject(value, asType.type),
       name,
-      asType: asType.type,
     };
   },
   async evaluate_subscript_(node, context): Promise<Subscript> {
@@ -113,25 +114,30 @@ registerEvaluators({
   },
   async evaluate_variableStmt(node, context) {
     const { children } = node;
-
-    // const first = children[0];
-    // let staticFlag: boolean = false;
-    // if (first.type === 'token') {
-    //   staticFlag = first.token === 'STATIC';
-    // }
-    // let visibility: Visibility_Node['children'][0]['token'] = 'PUBLIC';
-    // if (first.type === 'symbol') {
-    //   visibility = first.children[0].token;
-    // }
-
+    const first = children[0];
     const variableListStmt = children[children.length - 1];
     const variables: VBVariableInfo[] = await evaluate(
       variableListStmt,
       context,
     );
+    let isStatic: boolean = false;
+    if (first.type === 'token') {
+      isStatic = first.token === 'STATIC';
+    }
     const currentScope = context.getCurrentScope();
+    const subSymbolItem = context.symbolTable.get(currentScope.file.id)?.symbolTable.get(currentScope.subName);
+    if (!subSymbolItem || subSymbolItem.type === 'variable') {
+      throw new Error('expected subSymbolItem when evaluate_variableStmt!');
+    }
+    isStatic = isStatic || subSymbolItem.isStatic;
     for (const v of variables) {
-      currentScope.setVariable(v.name, new VBObject(v.value, v.asType));
+      if (isStatic) {
+        if (!subSymbolItem.hasStaticVariable(v.name)) {
+          subSymbolItem.addStaticVariable(v.name, v.value);
+        }
+      } else {
+        currentScope.setVariable(v.name, v.value);
+      }
     }
   },
 });

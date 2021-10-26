@@ -2,22 +2,46 @@
 
 exports[`vba parser parse comment and line continuation correctly 2`] = `
 "{
-  'start': 1,
-  'end': 56,
-  'firstLine': 2,
-  'lastLine': 11,
+  'start': 0,
+  'end': 57,
+  'firstLine': 1,
+  'lastLine': 12,
   'firstColumn': 1,
-  'lastColumn': 8,
+  'lastColumn': 1,
   'symbol': 'progam',
   'type': 'symbol',
   'children': [
     {
-      'start': 1,
-      'end': 56,
-      'firstLine': 2,
-      'lastLine': 11,
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 2,
       'firstColumn': 1,
-      'lastColumn': 8,
+      'lastColumn': 1,
+      'symbol': 'endOfLine',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 2,
+          'firstColumn': 1,
+          'lastColumn': 1,
+          'token': 'NEWLINE',
+          'type': 'token',
+          'text': '\\\\n'
+        }
+      ],
+      'ruleIndex': 2
+    },
+    {
+      'start': 1,
+      'end': 57,
+      'firstLine': 2,
+      'lastLine': 12,
+      'firstColumn': 1,
+      'lastColumn': 1,
       'symbol': 'moduleBody',
       'type': 'symbol',
       'children': [
@@ -61,15 +85,148 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                   'lastColumn': 9,
                   'token': 'IDENTIFIER',
                   'type': 'token',
-                  'text': 'test'
+                  'text': 'main'
+                },
+                {
+                  'start': 9,
+                  'end': 40,
+                  'firstLine': 2,
+                  'lastLine': 8,
+                  'firstColumn': 9,
+                  'lastColumn': 1,
+                  'symbol': 'endOfStatement',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 9,
+                      'end': 10,
+                      'firstLine': 2,
+                      'lastLine': 3,
+                      'firstColumn': 9,
+                      'lastColumn': 1,
+                      'symbol': 'endOfLine',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 9,
+                          'end': 10,
+                          'firstLine': 2,
+                          'lastLine': 3,
+                          'firstColumn': 9,
+                          'lastColumn': 1,
+                          'token': 'NEWLINE',
+                          'type': 'token',
+                          'text': '\\\\n'
+                        }
+                      ],
+                      'ruleIndex': 2
+                    },
+                    {
+                      'start': 10,
+                      'end': 23,
+                      'firstLine': 3,
+                      'lastLine': 4,
+                      'firstColumn': 1,
+                      'lastColumn': 8,
+                      'symbol': 'endOfLine',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 10,
+                          'end': 23,
+                          'firstLine': 3,
+                          'lastLine': 4,
+                          'firstColumn': 1,
+                          'lastColumn': 8,
+                          'token': 'COMMENT',
+                          'type': 'token',
+                          'text': '' x _\\\\nsdfasdf'
+                        }
+                      ],
+                      'ruleIndex': 2
+                    },
+                    {
+                      'start': 23,
+                      'end': 24,
+                      'firstLine': 4,
+                      'lastLine': 5,
+                      'firstColumn': 8,
+                      'lastColumn': 1,
+                      'symbol': 'endOfLine',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 23,
+                          'end': 24,
+                          'firstLine': 4,
+                          'lastLine': 5,
+                          'firstColumn': 8,
+                          'lastColumn': 1,
+                          'token': 'NEWLINE',
+                          'type': 'token',
+                          'text': '\\\\n'
+                        }
+                      ],
+                      'ruleIndex': 2
+                    },
+                    {
+                      'start': 24,
+                      'end': 38,
+                      'firstLine': 5,
+                      'lastLine': 6,
+                      'firstColumn': 1,
+                      'lastColumn': 4,
+                      'symbol': 'endOfLine',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 24,
+                          'end': 38,
+                          'firstLine': 5,
+                          'lastLine': 6,
+                          'firstColumn': 1,
+                          'lastColumn': 4,
+                          'token': 'REMCOMMENT',
+                          'type': 'token',
+                          'text': 'rem xxxx _\\\\nyyy'
+                        }
+                      ],
+                      'ruleIndex': 2
+                    },
+                    {
+                      'start': 38,
+                      'end': 40,
+                      'firstLine': 6,
+                      'lastLine': 8,
+                      'firstColumn': 4,
+                      'lastColumn': 1,
+                      'symbol': 'endOfLine',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 38,
+                          'end': 40,
+                          'firstLine': 6,
+                          'lastLine': 8,
+                          'firstColumn': 4,
+                          'lastColumn': 1,
+                          'token': 'NEWLINE',
+                          'type': 'token',
+                          'text': '\\\\n\\\\n'
+                        }
+                      ],
+                      'ruleIndex': 2
+                    }
+                  ],
+                  'ruleIndex': 3
                 },
                 {
                   'start': 40,
-                  'end': 47,
+                  'end': 49,
                   'firstLine': 8,
-                  'lastLine': 9,
+                  'lastLine': 11,
                   'firstColumn': 1,
-                  'lastColumn': 2,
+                  'lastColumn': 1,
                   'symbol': 'block',
                   'type': 'symbol',
                   'children': [
@@ -125,10 +282,10 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': 'x'
                                     }
                                   ],
-                                  'ruleIndex': 53
+                                  'ruleIndex': 32
                                 }
                               ],
-                              'ruleIndex': 50
+                              'ruleIndex': 30
                             },
                             {
                               'start': 42,
@@ -173,16 +330,53 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 55
+                                  'ruleIndex': 34
                                 }
                               ],
-                              'ruleIndex': 48
+                              'ruleIndex': 29
                             }
                           ],
-                          'ruleIndex': 24
+                          'ruleIndex': 14
                         }
                       ],
-                      'ruleIndex': 17
+                      'ruleIndex': 12
+                    },
+                    {
+                      'start': 47,
+                      'end': 49,
+                      'firstLine': 9,
+                      'lastLine': 11,
+                      'firstColumn': 2,
+                      'lastColumn': 1,
+                      'symbol': 'endOfStatement',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 47,
+                          'end': 49,
+                          'firstLine': 9,
+                          'lastLine': 11,
+                          'firstColumn': 2,
+                          'lastColumn': 1,
+                          'symbol': 'endOfLine',
+                          'type': 'symbol',
+                          'children': [
+                            {
+                              'start': 47,
+                              'end': 49,
+                              'firstLine': 9,
+                              'lastLine': 11,
+                              'firstColumn': 2,
+                              'lastColumn': 1,
+                              'token': 'NEWLINE',
+                              'type': 'token',
+                              'text': '\\\\n\\\\n'
+                            }
+                          ],
+                          'ruleIndex': 2
+                        }
+                      ],
+                      'ruleIndex': 3
                     }
                   ],
                   'ruleIndex': 11
@@ -202,10 +396,34 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
               'ruleIndex': 9
             }
           ],
-          'ruleIndex': 4
+          'ruleIndex': 7
+        },
+        {
+          'start': 56,
+          'end': 57,
+          'firstLine': 11,
+          'lastLine': 12,
+          'firstColumn': 8,
+          'lastColumn': 1,
+          'symbol': 'endOfLine',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 56,
+              'end': 57,
+              'firstLine': 11,
+              'lastLine': 12,
+              'firstColumn': 8,
+              'lastColumn': 1,
+              'token': 'NEWLINE',
+              'type': 'token',
+              'text': '\\\\n'
+            }
+          ],
+          'ruleIndex': 2
         }
       ],
-      'ruleIndex': 2
+      'ruleIndex': 6
     }
   ],
   'ruleIndex': 1
@@ -214,22 +432,46 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
 
 exports[`vba parser parse correctly 2`] = `
 "{
-  'start': 1,
-  'end': 26,
-  'firstLine': 2,
-  'lastLine': 4,
+  'start': 0,
+  'end': 27,
+  'firstLine': 1,
+  'lastLine': 5,
   'firstColumn': 1,
-  'lastColumn': 8,
+  'lastColumn': 1,
   'symbol': 'progam',
   'type': 'symbol',
   'children': [
     {
-      'start': 1,
-      'end': 26,
-      'firstLine': 2,
-      'lastLine': 4,
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 2,
       'firstColumn': 1,
-      'lastColumn': 8,
+      'lastColumn': 1,
+      'symbol': 'endOfLine',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 2,
+          'firstColumn': 1,
+          'lastColumn': 1,
+          'token': 'NEWLINE',
+          'type': 'token',
+          'text': '\\\\n'
+        }
+      ],
+      'ruleIndex': 2
+    },
+    {
+      'start': 1,
+      'end': 27,
+      'firstLine': 2,
+      'lastLine': 5,
+      'firstColumn': 1,
+      'lastColumn': 1,
       'symbol': 'moduleBody',
       'type': 'symbol',
       'children': [
@@ -273,15 +515,52 @@ exports[`vba parser parse correctly 2`] = `
                   'lastColumn': 9,
                   'token': 'IDENTIFIER',
                   'type': 'token',
-                  'text': 'test'
+                  'text': 'main'
+                },
+                {
+                  'start': 9,
+                  'end': 10,
+                  'firstLine': 2,
+                  'lastLine': 3,
+                  'firstColumn': 9,
+                  'lastColumn': 1,
+                  'symbol': 'endOfStatement',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 9,
+                      'end': 10,
+                      'firstLine': 2,
+                      'lastLine': 3,
+                      'firstColumn': 9,
+                      'lastColumn': 1,
+                      'symbol': 'endOfLine',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 9,
+                          'end': 10,
+                          'firstLine': 2,
+                          'lastLine': 3,
+                          'firstColumn': 9,
+                          'lastColumn': 1,
+                          'token': 'NEWLINE',
+                          'type': 'token',
+                          'text': '\\\\n'
+                        }
+                      ],
+                      'ruleIndex': 2
+                    }
+                  ],
+                  'ruleIndex': 3
                 },
                 {
                   'start': 10,
-                  'end': 18,
+                  'end': 19,
                   'firstLine': 3,
-                  'lastLine': 3,
+                  'lastLine': 4,
                   'firstColumn': 1,
-                  'lastColumn': 9,
+                  'lastColumn': 1,
                   'symbol': 'block',
                   'type': 'symbol',
                   'children': [
@@ -378,25 +657,62 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 55
+                                              'ruleIndex': 34
                                             }
                                           ],
-                                          'ruleIndex': 48
+                                          'ruleIndex': 29
                                         }
                                       ],
-                                      'ruleIndex': 36
+                                      'ruleIndex': 21
                                     }
                                   ],
-                                  'ruleIndex': 32
+                                  'ruleIndex': 20
                                 }
                               ],
-                              'ruleIndex': 31
+                              'ruleIndex': 19
                             }
                           ],
-                          'ruleIndex': 30
+                          'ruleIndex': 18
                         }
                       ],
-                      'ruleIndex': 14
+                      'ruleIndex': 12
+                    },
+                    {
+                      'start': 18,
+                      'end': 19,
+                      'firstLine': 3,
+                      'lastLine': 4,
+                      'firstColumn': 9,
+                      'lastColumn': 1,
+                      'symbol': 'endOfStatement',
+                      'type': 'symbol',
+                      'children': [
+                        {
+                          'start': 18,
+                          'end': 19,
+                          'firstLine': 3,
+                          'lastLine': 4,
+                          'firstColumn': 9,
+                          'lastColumn': 1,
+                          'symbol': 'endOfLine',
+                          'type': 'symbol',
+                          'children': [
+                            {
+                              'start': 18,
+                              'end': 19,
+                              'firstLine': 3,
+                              'lastLine': 4,
+                              'firstColumn': 9,
+                              'lastColumn': 1,
+                              'token': 'NEWLINE',
+                              'type': 'token',
+                              'text': '\\\\n'
+                            }
+                          ],
+                          'ruleIndex': 2
+                        }
+                      ],
+                      'ruleIndex': 3
                     }
                   ],
                   'ruleIndex': 11
@@ -416,10 +732,34 @@ exports[`vba parser parse correctly 2`] = `
               'ruleIndex': 9
             }
           ],
-          'ruleIndex': 4
+          'ruleIndex': 7
+        },
+        {
+          'start': 26,
+          'end': 27,
+          'firstLine': 4,
+          'lastLine': 5,
+          'firstColumn': 8,
+          'lastColumn': 1,
+          'symbol': 'endOfLine',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 26,
+              'end': 27,
+              'firstLine': 4,
+              'lastLine': 5,
+              'firstColumn': 8,
+              'lastColumn': 1,
+              'token': 'NEWLINE',
+              'type': 'token',
+              'text': '\\\\n'
+            }
+          ],
+          'ruleIndex': 2
         }
       ],
-      'ruleIndex': 2
+      'ruleIndex': 6
     }
   ],
   'ruleIndex': 1

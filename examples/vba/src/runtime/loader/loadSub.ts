@@ -1,13 +1,15 @@
 import { FunctionStmt_Node, SubStmt_Node } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
+import { evaluate } from '../evaluator/index';
 import { ArgInfo, SubSymbolItem } from '../types';
-import { registerBuilders, build } from './builders';
+import { registerLoaders, load } from './loaders';
 
-function buildSub(node: FunctionStmt_Node | SubStmt_Node, context: Context) {
+async function loadSub(node: FunctionStmt_Node | SubStmt_Node, context: Context) {
   for (const c of node.children) {
     if (c.type === 'token' && c.token === 'IDENTIFIER') {
       const subSymbolItem = new SubSymbolItem(node, context);
+      await subSymbolItem.init();
       context.registerSymbolItem(c.text, subSymbolItem);
       return;
     }
@@ -15,26 +17,26 @@ function buildSub(node: FunctionStmt_Node | SubStmt_Node, context: Context) {
   throw new Error(`expect ${node.symbol} definition name!`);
 }
 
-registerBuilders({
-  build_subStmt(node, context) {
-    buildSub(node, context);
+registerLoaders({
+  load_subStmt(node, context) {
+    return loadSub(node, context);
   },
 
-  build_functionStmt(node, context) {
-    buildSub(node, context);
+  load_functionStmt(node, context) {
+    return loadSub(node, context);
   },
 
-  build_argList(node, context) {
+  async load_argList(node, context) {
     const ret: ArgInfo[] = [];
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'arg') {
-        ret.push(build(c, context));
+        ret.push(await load(c, context));
       }
     }
     return ret;
   },
 
-  build_arg(node): ArgInfo {
+  async load_arg(node, context) {
     const argInfo: ArgInfo = {
       byRef: true,
       name: '',
@@ -49,6 +51,10 @@ registerBuilders({
         argInfo.name = c.text;
       } else if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
         argInfo.asType = collect_asTypeClause(c);
+      } else if (c.type === 'token' && c.token === 'OPTIONAL') {
+        argInfo.optional = true;
+      } else if (c.type === 'symbol' && c.symbol === 'argDefaultValue') {
+        argInfo.defaultValue = await evaluate(c, context);
       }
     }
     return argInfo;

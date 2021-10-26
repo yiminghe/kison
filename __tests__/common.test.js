@@ -65,7 +65,8 @@ describe('common', () => {
     'rhs': [
       '1',
       '2'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -81,7 +82,8 @@ describe('common', () => {
       '')'',
       '10',
       '')'*'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -96,7 +98,8 @@ describe('common', () => {
       '')'',
       '10',
       '')'*'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -106,7 +109,8 @@ describe('common', () => {
       ''('',
       '11',
       '')'*'
-    ]
+    ],
+    'ruleIndex': 1
   }
 ]"
 `);
@@ -120,7 +124,8 @@ describe('common', () => {
     'rhs': [
       '1',
       '2'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -128,7 +133,8 @@ describe('common', () => {
       '3',
       '4',
       'start_3_group_2*'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -136,7 +142,8 @@ describe('common', () => {
       '3',
       '4',
       'start_4_group_2*'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -144,7 +151,8 @@ describe('common', () => {
       '3',
       '4',
       '11*'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start_3_group_2',
@@ -155,6 +163,7 @@ describe('common', () => {
       '8',
       '10'
     ],
+    'ruleIndex': 1,
     'skipAstNode': true
   },
   {
@@ -165,6 +174,7 @@ describe('common', () => {
       '9',
       '10'
     ],
+    'ruleIndex': 1,
     'skipAstNode': true
   }
 ]"
@@ -215,7 +225,8 @@ describe('common', () => {
       ',',
       '')'',
       '')'*'
-    ]
+    ],
+    'ruleIndex': 1
   },
   {
     'symbol': 'start',
@@ -226,7 +237,8 @@ describe('common', () => {
       ';',
       '')'',
       '')'*'
-    ]
+    ],
+    'ruleIndex': 1
   }
 ]"
 `);

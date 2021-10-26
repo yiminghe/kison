@@ -13,7 +13,7 @@ require.config({
 
 const $ = (v: string): any => document.getElementById(v)!;
 
-const sampleCode = `
+const sampleCode = localStorage.getItem('code')||`
 sub test2 (ByVal msg As Integer, msg2 As Integer)
   MsgBox msg
   call MsgBox(msg2)
@@ -50,7 +50,9 @@ require(['vs/editor/editor.main'], () => {
   }
 
   function getCurrentCode() {
-    return editor.getModel()!.getValue().trim();
+    const code= editor.getModel()!.getValue().trim();
+    localStorage.setItem('code',code);
+    return code;
   }
 
   function getCurrentAst() {
@@ -87,16 +89,17 @@ require(['vs/editor/editor.main'], () => {
         'Call MsgBox: ',
         context.getCurrentScope().getVariable('msg')?.value.value,
       );
+      // await wait(100);
       return undefined;
     },
   };
 
-  $('evaluate').addEventListener('click', () => {
+  $('evaluate').addEventListener('click', async () => {
     try {
       const context = new Context();
       context.registerSubBinder(MsgBoxSub);
-      context.run(getCurrentCode());
-      context.callSub($('sub').value);
+      await context.load(getCurrentCode());
+      await context.callSub($('sub').value);
     } catch (e: any) {
       console.error(e);
     }

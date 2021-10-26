@@ -31,6 +31,7 @@ export default {
   gened,
   Lexer: {} as typeof Lexer,
   lexer: {} as Lexer,
+  productionRuleIndexMap: {} as Record<number, number>,
   parser: {} as {
     table: any;
     prioritySymbolMap: Record<string, string>;

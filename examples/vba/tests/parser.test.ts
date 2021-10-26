@@ -4,7 +4,7 @@ import parser from '../src/parserLLK';
 describe('vba parser', () => {
   it('parse correctly', () => {
     const code = `
-sub test
+sub main
 MsgBox 1
 end sub
 `;
@@ -17,7 +17,7 @@ end sub
 
   it('parse comment and line continuation correctly', () => {
     const code = `
-sub test
+sub main
 ' x _
 sdfasdf
 rem xxxx _

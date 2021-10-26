@@ -28,18 +28,12 @@ function generateLexerRulesByKeywords(arr) {
 
 const LINE_CONTINUATION = `([\\u0020\\t]+_\\r?\\n)`;
 const NEWLINE = `([\\r\\n]+)`;
-const WS = `(([\\u0020\\t]|${LINE_CONTINUATION})+)`;
+const WS = `((${LINE_CONTINUATION}|[\\u0020\\t])+)`;
 const REMCOMMENT = `(\\:?rem${WS}(${LINE_CONTINUATION}|[^\\r\\n])*)`;
 const COMMENT = `('(${LINE_CONTINUATION}|[^\\r\\n])*)`;
 
 const HIDDEN_REG = new RegExp(
   `
-${COMMENT}
-|
-${REMCOMMENT}
-|
-${LINE_CONTINUATION}
-|
 ${WS}
 |
 (\\s+)
@@ -49,11 +43,56 @@ ${WS}
 
 module.exports = {
   productions: n.makeProductions([
-    [n.progam, n.moduleBodyOptional],
+    [n.progam,
+    n.moduleDeclarationsOptional,
+    n.endOfLineZeroOrMore,
+    n.moduleBodyOptional,
+    n.endOfLineZeroOrMore,
+    ],
+    [
+      n.endOfLine,
+      n.NEWLINE,
+      n.alternationMark,
+      n.COMMENT,
+      n.alternationMark,
+      n.REMCOMMENT,
+    ],
+    [
+      n.endOfStatement,
+      n.groupStartMark,
+      n.endOfLine,
+      n.alternationMark,
+      n.COLON,
+      n.groupEndZeroOrMoreMark,
+    ],
 
-    [n.moduleBody, n.moduleBodyElementOneOrMore],
+    [n.moduleDeclarations,
+    n.moduleDeclarationsElement,
+    n.groupStartMark,
+    n.endOfLineOneOrMore,
+    n.moduleDeclarationsElement,
+    n.groupEndZeroOrMoreMark,
+    n.endOfLineZeroOrMore,
+    ],
 
-    [n.moduleBodyElement, n.functionStmt, n.alternationMark, n.subStmt],
+    [n.moduleDeclarationsElement, n.variableStmt],
+
+    [n.moduleBody,
+
+    n.moduleBodyElement,
+    n.groupStartMark,
+    n.endOfLineOneOrMore,
+    n.moduleBodyElement,
+    n.groupEndZeroOrMoreMark,
+    n.endOfLineZeroOrMore,
+    ],
+
+    [
+      n.moduleBodyElement,
+      n.functionStmt,
+      n.alternationMark,
+      n.subStmt,
+    ],
 
     [
       n.visibility,
@@ -73,6 +112,7 @@ module.exports = {
       n.SUB,
       n.IDENTIFIER,
       n.argListOptional,
+      n.endOfStatement,
       n.blockOptional,
       n.END_SUB,
     ],
@@ -86,11 +126,20 @@ module.exports = {
       n.typeHintOptional,
       n.argListOptional,
       n.asTypeClauseOptional,
+      n.endOfStatement,
       n.blockOptional,
       n.END_FUNCTION,
     ],
 
-    [n.block, n.blockStmtOneOrMore],
+    [n.block,
+
+    n.blockStmt,
+    n.groupStartMark,
+    n.endOfStatement,
+    n.blockStmt,
+    n.groupEndZeroOrMoreMark,
+    n.endOfStatement,
+    ],
 
     [
       n.blockStmt,
@@ -400,6 +449,7 @@ module.exports = {
       ...generateLexerRulesByKeywords(n.KEYWORDS),
 
       ...generateLexerRulesByMap({
+        COLON: ':',
         AMPERSAND: '&',
         ASSIGN: ':=',
         DIV: '/',
@@ -421,15 +471,17 @@ module.exports = {
         R_SQUARE_BRACKET: ']',
       }),
 
-      // ['$NEW_LINE', /[\r\n]+/,],
+      [n.NEWLINE, new RegExp(NEWLINE),],
+      [n.REMCOMMENT, new RegExp(REMCOMMENT),],
+      [n.COMMENT, new RegExp(COMMENT),],
 
       ['$HIDDEN', HIDDEN_REG],
 
-      ['STRINGLITERAL', /"[^"\r\n]*"/],
+      [n.STRINGLITERAL, /"[^"\r\n]*"/],
 
-      ['INTEGERLITERAL', /(\+|-)?[0-9]+/],
+      [n.INTEGERLITERAL, /(\+|-)?[0-9]+/],
 
-      ['IDENTIFIER', /\w[\w\d]*/],
+      [n.IDENTIFIER, /\w[\w\d]*/],
     ]),
   },
 };

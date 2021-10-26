@@ -3,7 +3,7 @@ import { run } from './utils';
 describe('array', () => {
   it('array works', async () => {
     const code = `
-sub test
+sub main
   dim m(1) as Integer
   m(0)=1
   test2 m(0), m(1)
@@ -27,7 +27,7 @@ end sub
 
   it('multi dimension works', async () => {
     let code = `
-sub test
+sub main
   dim m(1 to 2, 3 to 4) as Integer
   m(1,3)=1
   m(1,4)=2
@@ -44,7 +44,7 @@ end sub
     `);
 
     code = `
-sub test
+sub main
   dim m(1 to 2, 3 to 4) as Integer
   m(1,3)=1
   m(1,4)=2

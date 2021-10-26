@@ -18,7 +18,7 @@ export async function run(sampleCode: string) {
 
   const context = new Context();
   context.registerSubBinder(MsgBoxSub);
-  context.run(sampleCode);
-  await context.callSub('test');
+  await context.load(sampleCode.trim());
+  await context.callSub('main');
   return ret;
 }

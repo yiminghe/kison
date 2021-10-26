@@ -558,7 +558,7 @@ var $parser = (function (undefined) {
       }
     }
 
-    const ruleIndexMap = (this.ruleIndexMap = {
+    const productionRuleIndexMap = (this.productionRuleIndexMap = {
       token: 0,
       regexp: 1,
       action: 2,
@@ -575,7 +575,7 @@ var $parser = (function (undefined) {
     this.defaultEnv = undefined;
     Object.assign(this, cfg);
     this.rules = this.rules.concat();
-    this.regexpIndex = this.isCompress ? this.ruleIndexMap.regexp : "regexp";
+    this.regexpIndex = this.isCompress ? this.productionRuleIndexMap.regexp : "regexp";
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -596,8 +596,8 @@ var $parser = (function (undefined) {
 
     if (this.isCompress) {
       const errorRuleCompress = (this.errorRule = []);
-      errorRuleCompress[ruleIndexMap.token] = errorRule.token;
-      errorRuleCompress[ruleIndexMap.regexp] = errorRule.regexp;
+      errorRuleCompress[productionRuleIndexMap.token] = errorRule.token;
+      errorRuleCompress[productionRuleIndexMap.regexp] = errorRule.regexp;
     }
 
     this.resetInput(this.input);
@@ -670,7 +670,7 @@ var $parser = (function (undefined) {
       return rule[itemType];
     },
     getRuleItemCompress: function (rule, itemType) {
-      return rule[this.ruleIndexMap[itemType]];
+      return rule[this.productionRuleIndexMap[itemType]];
     },
     getCurrentRules: function () {
       var currentState = this.stateStack[this.stateStack.length - 1],

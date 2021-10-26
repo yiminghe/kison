@@ -1,4 +1,6 @@
-# vba typescript/javascript runtime
+# vba engine
+
+vba engine, written in typescript/javascript
 
 https://github.com/yiminghe/kison
 
@@ -8,7 +10,7 @@ https://github.com/yiminghe/kison
 import { Context, SubBinder } from 'vba';
 
 const sampleCode = `
-sub test
+sub main
 MsgBox 1
 MsgBox 2
 end sub
@@ -25,9 +27,13 @@ const MsgBoxSub: SubBinder = {
   },
 };
 
-const context = new Context();
-context.registerSubBinder(MsgBoxSub);
-context.run(sampleCode);
-context.callSub('test');
+async function main(){
+  const context = new Context();
+  context.registerSubBinder(MsgBoxSub);
+  await context.load(sampleCode);
+  await context.callSub('main');
+}
+
+main();
 ```
 

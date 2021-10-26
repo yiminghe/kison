@@ -1,6 +1,6 @@
 import './evaluateValues';
 import './evaluateSub';
-import './evaluateDim';
+import './evaluateVariable';
 import './evaluateLet';
 
 export { evaluators, evaluate } from './evaluators';

@@ -3,7 +3,7 @@ import { run } from './utils';
 describe('sub', () => {
   it('exit sub works', async () => {
     const code = `
-sub test
+sub main
 msgbox 1
 test2
 msgbox 4
@@ -27,7 +27,7 @@ Array [
 
   it('end works', async () => {
     const code = `
-sub test
+sub main
 msgbox 0
 test2
 msgbox 3

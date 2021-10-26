@@ -54,6 +54,7 @@ export interface ProductionRule {
   precedence?: string;
   action?: Function;
   flat?: boolean;
+  ruleIndex: number;
   label?: string;
   skipAstNode?: boolean;
   rhs: Rhs;
@@ -89,14 +90,23 @@ class Grammar {
 
   static START_TAG = START_TAG;
 
+  productionRuleIndexMap: Record<number, number> = {};
+
   productionIndexMap: Record<string, number>;
 
   constructor(cfg: Params) {
     Object.assign(this, cfg);
 
+    let index = 0;
+
+    for (const p of this.productions) {
+      p.ruleIndex = ++index;
+    }
+
     if (this.productions && this.productions[0]) {
       this.productions = [
         {
+          ruleIndex: 1,
           symbol: Grammar.START_TAG,
           rhs: [this.productions[0].symbol],
         },
@@ -477,7 +487,7 @@ class Grammar {
 
     fake = fake || this;
 
-    let newPs = [];
+    let newPs: ProductionRule[] = [];
     for (const p of fake.productions) {
       newPs.push(...this.expandOneProductionAlternative(p));
     }
@@ -592,7 +602,7 @@ class Grammar {
     while (true) {
       let changed = false;
       newPs = [];
-      const addedPs = [];
+      const addedPs: ProductionRule[] = [];
 
       for (const p of ps) {
         uuid++;
@@ -658,6 +668,7 @@ class Grammar {
             addedPs.push({
               symbol: newSymbol,
               rhs: subRhs,
+              ruleIndex: p.ruleIndex,
               skipAstNode: true,
             });
             newRhs.push(newSymbol + quantifier);
@@ -738,6 +749,7 @@ class Grammar {
             // instruct ast processor
             skipAstNode: true,
             symbol: slashSymbol,
+            ruleIndex: p.ruleIndex,
             rhs,
           });
           newProductions2.push(newProd);
@@ -756,6 +768,7 @@ class Grammar {
               const newProd = new Production({
                 symbol: p.symbol,
                 label: p.label,
+                ruleIndex: p.ruleIndex,
                 skipAstNode: p.skipAstNode,
                 // instruct ast processor
                 rhs,
@@ -776,6 +789,7 @@ class Grammar {
           const newProd = new Production({
             skipAstNode: true,
             symbol: slashSymbol,
+            ruleIndex: 0,
             rhs: [],
           });
           productionInstances.push(newProd);
@@ -876,6 +890,7 @@ class Grammar {
         } else {
           newRelevants.push({
             symbol: expSymbol,
+            ruleIndex: p.ruleIndex,
             // label, do not keep label
             rhs: [nextSymbol],
           });
@@ -885,6 +900,7 @@ class Grammar {
         if (rhs.filter((r) => r === symbol).length === 1) {
           newRelevants.push({
             symbol: expSymbol,
+            ruleIndex: p.ruleIndex,
             label,
             rhs: rhs.map((r) => {
               return r === symbol ? expSymbol : r;
@@ -923,6 +939,7 @@ class Grammar {
         }
         newRelevants.push({
           symbol: expSymbol,
+          ruleIndex: p.ruleIndex,
           label,
           rhs: newRhs,
         });
@@ -951,7 +968,7 @@ class Grammar {
     }
     fake = fake || this;
     var { productions: vs } = fake;
-    const newVs = [];
+    const newVs: ProductionRule[] = [];
     for (const p of vs) {
       const { rhs } = p;
       const keys: number[] = [];
@@ -993,7 +1010,7 @@ class Grammar {
     if (!fake) {
       this.__expandOneOrMoreSymbol = 1;
     }
-    let newPs = [];
+    let newPs: ProductionRule[] = [];
     fake = fake || this;
     for (const p of fake.productions) {
       const { rhs } = p;
@@ -1034,7 +1051,7 @@ class Grammar {
     const gened: Record<string, string> = {};
     let zeroMoreIndex = 1;
     const zeroMorePrefix = 'zeroMore';
-    let newVs2 = [];
+    let newVs2: ProductionRule[] = [];
     for (const p of fake.productions) {
       const { rhs } = p;
       const keys = [];
@@ -1057,12 +1074,14 @@ class Grammar {
               newVs2.push(
                 {
                   symbol: genId,
+                  ruleIndex: p.ruleIndex,
                   rhs: [genId, nr],
                   flat: true,
                   skipAstNode: true,
                 },
                 {
                   symbol: genId,
+                  ruleIndex: p.ruleIndex,
                   rhs: [],
                   skipAstNode: true,
                 },
@@ -1334,6 +1353,9 @@ class Grammar {
       serializeObject(this.prioritySymbolMap) +
       ';',
     );
+
+
+
     const productionSkipAstNodeSet: number[] = [];
     this.productionInstances.forEach((p, index) => {
       if (p.skipAstNode) {
@@ -1349,6 +1371,19 @@ class Grammar {
     }
 
     let internalCode = this.genCodeInternal(code, cfg);
+
+    let index = 0;
+
+    for (const p of this.productions) {
+      this.productionRuleIndexMap[index++] = p.ruleIndex;
+    }
+
+    internalCode += (
+      '\n' +
+      'var productionRuleIndexMap = ' +
+      serializeObject(this.productionRuleIndexMap) +
+      ';'
+    );
 
     if (cfg.compressSymbol) {
       internalCode +=

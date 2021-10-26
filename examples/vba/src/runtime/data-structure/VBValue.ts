@@ -19,54 +19,54 @@ export class VBDictionary {
 
 export class VBByte {
   type: 'Byte' = 'Byte';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBDouble {
   type: 'Double' = 'Double';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBSingle {
   type: 'Single' = 'Single';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBInteger {
   type: 'Integer' = 'Integer';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBLongLong {
   type: 'LongLong' = 'LongLong';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export const VBLongPtr = VBLongLong;
 
 export class VBLong {
   type: 'Long' = 'Long';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBCurrency {
   type: 'Currency' = 'Currency';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBDate {
   type: 'Date' = 'Date';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBDecimal {
   type: 'Decimal' = 'Decimal';
-  constructor(public value: number = 0) {}
+  constructor(public value: number = 0) { }
 }
 
 export class VBString {
   type: 'String' = 'String';
-  constructor(public value: string = '') {}
+  constructor(public value: string = '') { }
 }
 
 export class VBNull {
@@ -81,7 +81,7 @@ export class VBEmpty {
 
 export class VBBoolean {
   type: 'Boolean' = 'Boolean';
-  constructor(public value: boolean = false) {}
+  constructor(public value: boolean = false) { }
 }
 
 export interface Subscript {
@@ -96,7 +96,7 @@ export class VBArray {
   type: 'Array' = 'Array';
   subscripts: Subscript[] = [];
   value: ArrayElement[] = [];
-  constructor(public elementType: VBValidPrimitiveType) {}
+  constructor(public elementType: VBValidPrimitiveType) { }
 
   getElement(indexes: number[]) {
     let { value, elementType, subscripts } = this;
@@ -142,7 +142,7 @@ export class ExitResult {
       | EXIT_PROPERTY_Node
       | EXIT_SUB_Node
       | END_Node,
-  ) {}
+  ) { }
 }
 
 export const END_EXIT_RESULT = new ExitResult({
@@ -157,7 +157,7 @@ export class VBObject {
     // nested address or value
     private _value: VBValue | VBObject = VB_EMPTY,
     public asType: VBValidPrimitiveType = 'Variant',
-  ) {}
+  ) { }
 
   get value(): VBValue {
     if (this._value.type === 'Object') {
@@ -221,6 +221,10 @@ export const VBPrimitiveTypeClass = {
   LongLong: VBLongLong,
   Variant: VBEmpty,
 };
+
+Object.keys(VBPrimitiveTypeClass).forEach(k => {
+  (VBPrimitiveTypeClass as any)[k.toLowerCase()] = (VBPrimitiveTypeClass as any)[k];
+});
 
 export type VBValidPrimitiveType = keyof typeof VBPrimitiveTypeClass;
 

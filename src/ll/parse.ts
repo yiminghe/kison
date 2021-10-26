@@ -17,8 +17,14 @@ const {
   isAddAstNodeFlag,
 } = Utils;
 
-let { lexer, productionSkipAstNodeSet, productionEndFlag, parser, Lexer } =
-  data;
+let {
+  lexer,
+  productionSkipAstNodeSet,
+  productionEndFlag,
+  parser,
+  Lexer,
+  productionRuleIndexMap
+} = data;
 
 type SymbolItem = string | number | Function;
 
@@ -159,7 +165,7 @@ export default function parse(input: string, options: any) {
           );
         } else {
           const newAst = new AstSymbolNode({
-            ruleIndex: next,
+            ruleIndex: productionRuleIndexMap[next],
             symbol: getOriginalSymbol(topSymbol),
             label: getOriginalSymbol(getProductionLabel(production)),
             children: [],
@@ -202,15 +208,15 @@ export default function parse(input: string, options: any) {
 
           const recovery:
             | {
-                action?: '';
-              }
+              action?: '';
+            }
             | { action: 'del' }
             | {
-                action: 'add';
-                token: string;
-                text: string;
-                t: string;
-              } =
+              action: 'add';
+              token: string;
+              text: string;
+              t: string;
+            } =
             onErrorRecovery(
               {
                 errorNode: localErrorNode,

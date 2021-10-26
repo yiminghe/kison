@@ -1182,7 +1182,7 @@ describe('llk', () => {
           'text': '2'
         }
       ],
-      'ruleIndex': 4
+      'ruleIndex': 2
     },
     {
       'start': 3,
@@ -1207,7 +1207,7 @@ describe('llk', () => {
       'text': '3'
     }
   ],
-  'ruleIndex': 4
+  'ruleIndex': 2
 }"
 `);
   });
@@ -1294,10 +1294,10 @@ describe('llk', () => {
           'text': '3'
         }
       ],
-      'ruleIndex': 7
+      'ruleIndex': 4
     }
   ],
-  'ruleIndex': 4
+  'ruleIndex': 2
 }"
 `);
   });
@@ -1394,10 +1394,10 @@ describe('llk', () => {
               'text': '4'
             }
           ],
-          'ruleIndex': 7
+          'ruleIndex': 4
         }
       ],
-      'ruleIndex': 4
+      'ruleIndex': 2
     },
     {
       'start': 5,
@@ -1486,13 +1486,13 @@ describe('llk', () => {
               'text': '3'
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 7
         }
       ],
-      'ruleIndex': 10
+      'ruleIndex': 7
     }
   ],
-  'ruleIndex': 4
+  'ruleIndex': 2
 }"
 `);
   });
@@ -1601,10 +1601,10 @@ describe('llk', () => {
           'text': ''
         }
       ],
-      'ruleIndex': 7
+      'ruleIndex': 4
     }
   ],
-  'ruleIndex': 4
+  'ruleIndex': 2
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
@@ -1807,7 +1807,7 @@ describe('llk', () => {
       'recovery': 'add'
     }
   ],
-  'ruleIndex': 4
+  'ruleIndex': 2
 }"
 `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`

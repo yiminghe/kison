@@ -10,7 +10,7 @@ sub test2 (ByVal msg As Integer, msg2 As Integer)
   msg2 = 12
 end sub
 
-sub test
+sub main
   dim m1 as Integer
   dim m2 as Integer
   m1 = 10

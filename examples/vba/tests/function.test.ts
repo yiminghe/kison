@@ -3,7 +3,7 @@ import { run } from './utils';
 describe('function', () => {
   it('return works', async () => {
     const code = `
-    sub test
+    sub main
     dim a as Integer
     a = r(1)
     msgbox a

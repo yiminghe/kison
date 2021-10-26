@@ -30,7 +30,7 @@ A LALR(1)/LL(1)/LL(K) parser generator for `javascript`/`typescript`
 [![npm version](https://badge.fury.io/js/%40yiminghe%2Fregexp.svg)](https://badge.fury.io/js/%40yiminghe%2Fregexp)
 [![NPM downloads](https://img.shields.io/npm/dm/@yiminghe/regexp.svg)](https://npmjs.org/package/%40yiminghe%2Fregexp)
 
-- [vba](https://yiminghe.me/kison/examples/vba/): vba typescript/javascript runtime
+- [vba](https://yiminghe.me/kison/examples/vba/): vba engine, written in typescript/javascript
 
 [![npm version](https://badge.fury.io/js/vba.svg)](https://badge.fury.io/js/vba)
 [![NPM downloads](https://img.shields.io/npm/dm/vba.svg)](https://npmjs.org/package/vba)

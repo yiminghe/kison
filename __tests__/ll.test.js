@@ -146,7 +146,7 @@ describe('ll', () => {
           'text': '1'
         }
       ],
-      'ruleIndex': 7
+      'ruleIndex': 5
     },
     {
       'start': 2,
@@ -170,7 +170,7 @@ describe('ll', () => {
           'text': '1'
         }
       ],
-      'ruleIndex': 7
+      'ruleIndex': 5
     },
     {
       'start': 4,
@@ -194,7 +194,7 @@ describe('ll', () => {
           'text': '1'
         }
       ],
-      'ruleIndex': 7
+      'ruleIndex': 5
     },
     {
       'start': 6,
@@ -218,10 +218,10 @@ describe('ll', () => {
           'text': '1'
         }
       ],
-      'ruleIndex': 7
+      'ruleIndex': 5
     }
   ],
-  'ruleIndex': 5
+  'ruleIndex': 3
 }"
 `);
   });
@@ -458,7 +458,7 @@ describe('ll', () => {
           'text': '2'
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 4
     },
     {
       'start': 3,
@@ -483,7 +483,7 @@ describe('ll', () => {
       'text': '3'
     }
   ],
-  'ruleIndex': 6
+  'ruleIndex': 4
 }"
 `);
   });
@@ -570,10 +570,10 @@ describe('ll', () => {
           'text': '3'
         }
       ],
-      'ruleIndex': 10
+      'ruleIndex': 7
     }
   ],
-  'ruleIndex': 6
+  'ruleIndex': 4
 }"
 `);
   });
@@ -670,10 +670,10 @@ describe('ll', () => {
               'text': '4'
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 7
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 4
     },
     {
       'start': 5,
@@ -761,14 +761,12 @@ describe('ll', () => {
               'type': 'token',
               'text': '3'
             }
-          ],
-          'ruleIndex': 13
+          ]
         }
-      ],
-      'ruleIndex': 13
+      ]
     }
   ],
-  'ruleIndex': 6
+  'ruleIndex': 4
 }"
 `);
   });
@@ -877,10 +875,10 @@ describe('ll', () => {
           'text': ''
         }
       ],
-      'ruleIndex': 10
+      'ruleIndex': 7
     }
   ],
-  'ruleIndex': 6
+  'ruleIndex': 4
 }"
 `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
@@ -1083,7 +1081,7 @@ describe('ll', () => {
       'recovery': 'add'
     }
   ],
-  'ruleIndex': 6
+  'ruleIndex': 4
 }"
 `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`

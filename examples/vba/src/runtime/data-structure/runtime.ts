@@ -1,104 +1,38 @@
 import type { Context } from '../Context';
 import type {
-  Block_Node,
-  SubStmt_Node,
   AstSymbolNode,
   LiteralToken,
   AstNodeTypeMap,
-  FunctionStmt_Node,
 } from '../../parser';
-import { build } from '../symbol-table/builders';
 import { VBObject, VBValue, VBValidPrimitiveType } from './VBValue';
+import { Visibility_Node } from '../../parserLLK';
+import type {SubSymbolItem} from './SubSymbolItem';
 
-export type FileId = string;
+export interface VBFile {
+  id: string;
+  type: 'module' | 'class';
+}
+
 export type SymbolName = string;
 
-export class VBScope {
-  fileId: FileId = '';
+export type SymbolItem = SubSymbolItem | VariableSymbolItem;
 
-  variableMap = new Map<String, VBObject>();
-
-  hasVariable(name: string) {
-    return this.variableMap.has(name);
-  }
-
-  getVariable(name: string): VBObject {
-    let v = this.variableMap.get(name);
-    if (v) {
-      return v;
-    }
-    v = new VBObject();
-    this.variableMap.set(name, v);
-    return v;
-  }
-
-  setVariable(name: string, value: VBObject) {
-    this.variableMap.set(name, value);
-    return value;
-  }
-
-  setVariableValue(name: string, value: VBValue | VBObject) {
-    let v = this.getVariable(name);
-    const setValue = value.type === 'Object' ? value.value : value;
-    v.value = setValue;
-    return v;
-  }
-}
-
-export type SymbolItem = SubSymbolItem;
-
-export class SubSymbolItem {
-  block: Block_Node;
-  argumentsInfo?: ArgInfo[];
-  returnInfo?: AsTypeClauseInfo;
-  type: 'sub' | 'function';
-
+export class VariableSymbolItem {
+  type: 'variable' = 'variable';
+  file: VBFile;
   constructor(
-    public sub: SubStmt_Node | FunctionStmt_Node,
+    public value: VBVariableInfo,
+    public isStatic: boolean,
+    public visibility: Visibility,
     public context: Context,
   ) {
-    this.type = this.sub.symbol === 'subStmt' ? 'sub' : 'function';
-    let block;
-    for (const c of sub.children) {
-      if (c.type === 'symbol' && c.symbol === 'block') {
-        block = c;
-      }
-    }
-    if (!block) {
-      throw new Error('unexpected SubSymbolItem');
-    }
-    this.block = block;
-  }
-
-  getArugmentsInfo(): ArgInfo[] {
-    if (this.argumentsInfo) {
-      return this.argumentsInfo;
-    }
-    this.argumentsInfo = [];
-    for (const c of this.sub.children) {
-      if (c.type === 'symbol' && c.symbol === 'argList') {
-        this.argumentsInfo = build(c, this.context);
-      }
-    }
-    return this.argumentsInfo || [];
-  }
-
-  getReturnInfo(): AsTypeClauseInfo | undefined {
-    if (this.sub.symbol === 'subStmt') {
-      return;
-    }
-    if (this.returnInfo) {
-      return this.returnInfo;
-    }
-    for (const c of this.sub.children) {
-      if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
-        this.returnInfo = build(c, this.context);
-      }
-    }
-    this.returnInfo = this.returnInfo || { type: 'Variant' };
-    return this.returnInfo;
+    this.file = context.currentFile;
   }
 }
+
+export type Visibility = Visibility_Node['children'][0]['token'];
+
+
 
 export interface SubBinder {
   fn: (
@@ -112,6 +46,8 @@ export interface ArgInfo {
   byRef?: boolean;
   name: string;
   asType?: AsTypeClauseInfo;
+  optional?: boolean;
+  defaultValue?: VBObject;
 }
 
 export interface AsTypeClauseInfo {
@@ -120,21 +56,16 @@ export interface AsTypeClauseInfo {
 
 export interface VBVariableInfo {
   name: string;
-  value: VBValue;
-  subscripts?: {
-    lower: number;
-    upper: number;
-  };
-  asType: VBValidPrimitiveType;
+  value: VBObject;
 }
 
 export type ExtractSymbol<
   T extends string = any,
   Prefix extends string = any,
-> = T extends `${Prefix}_${infer s}`
+  > = T extends `${Prefix}_${infer s}`
   ? s extends LiteralToken | AstSymbolNode['symbol']
-    ? s
-    : 'ast'
+  ? s
+  : 'ast'
   : 'ast';
 
 export type AstVisitor<T extends string = any, Prefix extends string = any> = (
@@ -144,12 +75,17 @@ export type AstVisitor<T extends string = any, Prefix extends string = any> = (
 
 export type Evaluators = {
   [e in
-    | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
-    | 'evaluate']?: AstVisitor<e, 'evaluate'>;
+  | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
+  | 'evaluate']?: AstVisitor<e, 'evaluate'>;
 };
 
-export type Builders = {
+export type Loaders = {
   [e in
-    | `build_${LiteralToken | AstSymbolNode['symbol']}`
-    | 'build']?: AstVisitor<e, 'build'>;
+  | `load_${LiteralToken | AstSymbolNode['symbol']}`
+  | 'load']?: AstVisitor<e, 'load'>;
 };
+
+export class FileSymbolTable {
+  symbolTable = new Map<SymbolName, SymbolItem>();
+  constructor(public type: 'module' | 'class') { }
+}

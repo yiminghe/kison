@@ -8,6 +8,7 @@ interface Params {
   symbol: string;
   rhs: Rhs;
   label?: string;
+  ruleIndex: number;
   skipAstNode?: boolean;
   action?: Function;
 }
@@ -20,6 +21,7 @@ class Production {
   flat?: boolean;
   nullable = false;
   action?: Function;
+  ruleIndex: number;
   priority?: number;
   precedence?: string;
   skipAstNode?: boolean;
@@ -27,6 +29,7 @@ class Production {
 
   constructor(cfg: Params) {
     Object.assign(this, cfg);
+    this.ruleIndex = cfg.ruleIndex;
   }
 
   equals(other: Production) {

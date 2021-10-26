@@ -1,8 +1,13 @@
 import parser from '../parser';
 import type { AstRootNode } from '../parser';
-import type { VBValue, SubBinder, FileId, SymbolName } from './types';
+import type {
+  VBValue,
+  SubBinder,
+  VBFile,
+  SubSymbolItem,
+} from './types';
 import { evaluate } from './evaluator/index';
-import { build } from './symbol-table/index';
+import { load } from './loader/index';
 import {
   SymbolItem,
   VBScope,
@@ -12,37 +17,41 @@ import {
   ExitResult,
   VBEmpty,
   END_EXIT_RESULT,
+  FileSymbolTable,
 } from './types';
 import { last } from './utils';
 
-const defaultFileId = 'default.vb';
+const defaultFileId: VBFile = { id: 'default', type: 'module' };
 
 export class Context {
-  astMap = new Map<string, AstRootNode>();
+  astMap = new Map<VBFile, AstRootNode>();
 
   subBindersMap = new Map<string, SubBinder>();
 
-  currentFileId: FileId = '';
+  currentFile: VBFile = defaultFileId;
 
-  symbolTable = new Map<FileId, Map<SymbolName, SymbolItem>>();
+  symbolTable = new Map<string, FileSymbolTable>();
 
   scopeStack: VBScope[] = [];
 
-  run(code: string, fileId: FileId = defaultFileId) {
+  load(code: string, file: VBFile = defaultFileId) {
+    if (!code) {
+      this.symbolTable.delete(file.id);
+    }
     const { ast, error } = parser.parse(code);
     if (error) {
       throw new Error(error.errorMessage);
     }
-    this.astMap.set(fileId, ast);
-    this.currentFileId = fileId;
-    this.symbolTable.set(fileId, new Map());
-    return build(ast, this);
+    this.astMap.set(file, ast);
+    this.currentFile = file;
+    this.symbolTable.set(file.id, new FileSymbolTable(file.type));
+    return load(ast, this);
   }
 
   registerSymbolItem(name: string, item: SymbolItem) {
-    const { symbolTable, currentFileId } = this;
-    const currentTable = symbolTable.get(currentFileId)!;
-    currentTable.set(name.toLowerCase(), item);
+    const { symbolTable, currentFile: currentFileId } = this;
+    const currentTable = symbolTable.get(currentFileId.id)!;
+    currentTable.symbolTable.set(name.toLowerCase(), item);
   }
 
   registerSubBinder(subBinder: SubBinder) {
@@ -53,14 +62,42 @@ export class Context {
     return last(this.scopeStack)!;
   }
 
-  async callSub(
-    subName: string,
-    args: (VBValue | VBObject)[] = [],
-    fileId: string = defaultFileId,
-  ) {
+  getSymbolItem(name: string, myFile?: VBFile) {
+    const { symbolTable } = this;
+    if (myFile) {
+      const item = this.getSymbolItemFromFile(name, myFile.id, true);
+      if (item) {
+        return item;
+      }
+    }
+    for (const file of symbolTable.keys()) {
+      const item = this.getSymbolItemFromFile(name, file);
+      if (item) {
+        return item;
+      }
+    }
+  }
+
+  getSymbolItemFromFile(name: string, file: string, noCheckPublic: boolean = false) {
+    const item = this.symbolTable.get(file);
+    if (item && item.type === 'module') {
+      const sub = item.symbolTable.get(name);
+      if (sub) {
+        if (noCheckPublic || sub.visibility === 'PUBLIC') {
+          return sub;
+        }
+      }
+    }
+
+  }
+
+  async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
     subName = subName.toLowerCase();
-    const setupScope = (argumentsInfo: ArgInfo[]) => {
-      const scope = new VBScope();
+    const setupScope = (
+      argumentsInfo: ArgInfo[],
+      file: VBFile = this.currentFile,
+    ) => {
+      const scope = new VBScope(file, subName, this);
       let i = -1;
       for (const a of args) {
         ++i;
@@ -77,14 +114,48 @@ export class Context {
           scope.setVariableValue(argInfo.name, a);
         }
       }
+      while (i < argumentsInfo.length) {
+        const argInfo = argumentsInfo[i];
+        if (argInfo) {
+          if (argInfo.optional && argInfo.defaultValue) {
+            scope.setVariableValue(argInfo.name,
+              new VBObject(argInfo.defaultValue.value, argInfo.asType?.type || 'Variant'));
+          }
+        }
+        ++i;
+      }
       this.scopeStack.push(scope);
     };
 
+    function getItemFromFile(file: string, noCheck: boolean = false) {
+      const item = symbolTable.get(file);
+      if (item && item.type === 'module') {
+        const sub = item.symbolTable.get(subName);
+        if (sub && sub.type !== 'variable') {
+          if (noCheck || sub.visibility === 'PUBLIC') {
+            return sub;
+          }
+        }
+      }
+    }
+
     const { subBindersMap, symbolTable } = this;
-    const subSymbolItem = symbolTable.get(fileId)?.get(subName);
+    let subSymbolItem: SubSymbolItem | undefined = getItemFromFile(
+      this.currentFile.id,
+      true,
+    );
+    if (!subSymbolItem) {
+      for (const file of symbolTable.keys()) {
+        subSymbolItem = getItemFromFile(file);
+        if (subSymbolItem) {
+          break;
+        }
+      }
+    }
+
     if (subSymbolItem) {
-      const argumentsInfo = subSymbolItem.getArugmentsInfo();
-      setupScope(argumentsInfo);
+      const argumentsInfo = subSymbolItem.arugmentsInfo;
+      setupScope(argumentsInfo, subSymbolItem.file);
       let ret = await evaluate(subSymbolItem.block, this);
       if (ret && (ret as ExitResult).type === 'Exit') {
         const exit: ExitResult = ret;

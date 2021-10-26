@@ -36,8 +36,14 @@ export interface RuleFlag {
   ruleIndex: number;
 }
 
-let { parser, lexer, productionEndFlag, productionSkipAstNodeSet, Lexer } =
-  data;
+let {
+  parser,
+  lexer,
+  productionEndFlag,
+  productionSkipAstNodeSet,
+  Lexer,
+  productionRuleIndexMap
+} = data;
 
 type SymbolItem = string | number | RuleFlag | Function;
 
@@ -248,7 +254,7 @@ function parse(input: string, options: any) {
           symbolStack.push(...newRhs);
         } else {
           const newAst = new AstSymbolNode({
-            ruleIndex,
+            ruleIndex: productionRuleIndexMap[ruleIndex],
             symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
             label: getOriginalSymbol(getProductionLabel(production)),
             children: [],

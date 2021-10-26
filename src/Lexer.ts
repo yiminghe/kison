@@ -91,7 +91,7 @@ class Lexer {
 
   rules: LexerRule[] = [];
 
-  ruleIndexMap: Record<string, number> = {};
+  lexerRuleIndexMap: Record<string, number> = {};
 
   tokenSet: Set<string> = new Set();
 
@@ -177,7 +177,7 @@ class Lexer {
       }
     }
 
-    const ruleIndexMap = (this.ruleIndexMap = {
+    const lexerRuleIndexMap = (this.lexerRuleIndexMap = {
       token: 0,
       regexp: 1,
       action: 2,
@@ -195,7 +195,7 @@ class Lexer {
     Object.assign(this, cfg);
     this.rules = this.rules.concat();
 
-    this.regexpIndex = this.isCompress ? this.ruleIndexMap.regexp : 'regexp';
+    this.regexpIndex = this.isCompress ? this.lexerRuleIndexMap.regexp : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -214,8 +214,8 @@ class Lexer {
     }
     if (this.isCompress) {
       const errorRuleCompress: any[] = (this.errorRule = []);
-      errorRuleCompress[ruleIndexMap.token] = errorRule.token;
-      errorRuleCompress[ruleIndexMap.regexp] = errorRule.regexp;
+      errorRuleCompress[lexerRuleIndexMap.token] = errorRule.token;
+      errorRuleCompress[lexerRuleIndexMap.regexp] = errorRule.regexp;
     }
     this.resetInput(this.input);
     this.options = {};
@@ -312,7 +312,7 @@ class Lexer {
 
     code.push('Lexer.STATIC= ' + serializeObject(STATIC) + ';');
 
-    const ruleIndexMap = this.ruleIndexMap;
+    const lexerRuleIndexMap = this.lexerRuleIndexMap;
 
     const newRules = [];
 
@@ -327,8 +327,8 @@ class Lexer {
           parent &&
           parent.isKisonRule &&
           Array.isArray(parent) &&
-          parent[ruleIndexMap.regexp] &&
-          v === parent[ruleIndexMap.regexp] &&
+          parent[lexerRuleIndexMap.regexp] &&
+          v === parent[lexerRuleIndexMap.regexp] &&
           typeof v === 'string'
         ) {
           return v;
@@ -346,17 +346,17 @@ class Lexer {
             token = this.mapSymbol(token);
           }
           if (token) {
-            ret[ruleIndexMap.token] = token;
+            ret[lexerRuleIndexMap.token] = token;
           }
           if (regexp) {
-            ret[ruleIndexMap.regexp] = regexp;
-            this.transformRegExp(ret, ruleIndexMap.regexp, true);
+            ret[lexerRuleIndexMap.regexp] = regexp;
+            this.transformRegExp(ret, lexerRuleIndexMap.regexp, true);
           }
           if (action) {
-            ret[ruleIndexMap.action] = action;
+            ret[lexerRuleIndexMap.action] = action;
           }
           if (filter) {
-            ret[ruleIndexMap.filter] = filter;
+            ret[lexerRuleIndexMap.filter] = filter;
           }
           if (compressState && state) {
             state = state.map((s: string) => {
@@ -364,7 +364,7 @@ class Lexer {
             });
           }
           if (state) {
-            ret[ruleIndexMap.state] = state;
+            ret[lexerRuleIndexMap.state] = state;
           }
           ret['isKisonRule'] = 1;
           newRules.push(ret);
@@ -389,7 +389,7 @@ class Lexer {
   }
 
   getRuleItemCompress(rule: any, itemType: string | number) {
-    return rule[this.ruleIndexMap[itemType]];
+    return rule[this.lexerRuleIndexMap[itemType]];
   }
 
   getCurrentRules() {

@@ -1,17 +1,17 @@
-import type { AstNode } from '../../parser';
+import type { AstNode, LiteralToken } from '../../parser';
 import type { Context } from '../Context';
 import { Evaluators, AstVisitor, VB_EMPTY, ExitResult } from '../types';
-import { warn } from '../utils';
+import { isSkipToken, warn } from '../utils';
 
 export async function evaluate(ast: AstNode, context: Context): Promise<any> {
-  let symbol = '',
-    token = '';
+  let symbol = '';
+  let token: LiteralToken = '' as LiteralToken;
 
   if (ast.type === 'symbol') {
     symbol = ast.symbol;
   } else {
     token = ast.token;
-    if (token === 'NEWLINE') {
+    if (isSkipToken(token)) {
       return;
     }
   }

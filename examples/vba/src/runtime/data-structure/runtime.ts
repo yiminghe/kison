@@ -16,13 +16,22 @@ export type SymbolItem = SubSymbolItem | VariableSymbolItem;
 export class VariableSymbolItem {
   type: 'variable' = 'variable';
   file: VBFile;
+  _value: VBObject | undefined;
   constructor(
-    public value: VBVariableInfo,
+    public variableInfo: VBVariableInfo,
     public isStatic: boolean,
     public visibility: Visibility,
     public context: Context,
   ) {
     this.file = context.currentFile;
+  }
+
+  get value() {
+    if (this._value) {
+      return this._value;
+    }
+    this._value = this.variableInfo.value();
+    return this._value;
   }
 }
 
@@ -50,7 +59,7 @@ export interface AsTypeClauseInfo {
 
 export interface VBVariableInfo {
   name: string;
-  value: VBObject;
+  value: () => VBObject;
 }
 
 export type ExtractSymbol<

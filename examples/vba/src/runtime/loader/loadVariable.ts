@@ -23,7 +23,7 @@ registerLoaders({
       (v) => new VariableSymbolItem(v, isStatic, visibility, context),
     );
     for (const item of variableSymbolItems) {
-      context.registerSymbolItem(item.value.name, item);
+      context.registerSymbolItem(item.variableInfo.name, item);
     }
   },
 });

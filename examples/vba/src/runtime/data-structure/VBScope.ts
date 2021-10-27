@@ -32,7 +32,7 @@ export class VBScope {
     }
     const vItem = this.context.getSymbolItem(name, this.file);
     if (vItem && vItem.type === 'variable') {
-      v = vItem.value.value;
+      v = vItem.value;
     }
     return v;
   }

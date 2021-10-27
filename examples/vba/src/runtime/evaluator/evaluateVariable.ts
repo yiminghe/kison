@@ -9,7 +9,6 @@ import {
   AsTypeClauseInfo,
   VBArray,
   VBInteger,
-  VBValue,
   VBVariableInfo,
   Subscript,
   VBObject,
@@ -68,7 +67,6 @@ registerEvaluators({
     if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
       asType = collect_asTypeClause(lastChild);
     }
-    let value: VBValue = null!;
 
     let typeName = asType.type;
 
@@ -76,16 +74,23 @@ registerEvaluators({
 
     const PrimitiveClass = VBPrimitiveTypeClass[typeName];
 
+    let value: VBVariableInfo['value'];
     if (subscripts) {
-      value = new VBArray(typeName);
-      value.subscripts = subscripts;
+      value = () => {
+        const value = new VBArray(typeName);
+        value.subscripts = subscripts!;
+        return new VBObject(value, asType.type);
+      };
     } else if (PrimitiveClass) {
-      value = new PrimitiveClass();
+      value = () => {
+        const value = new PrimitiveClass();
+        return new VBObject(value, asType.type);
+      };
     } else {
       throw new Error('unexpect type: ' + typeName);
     }
     return {
-      value: new VBObject(value, asType.type),
+      value,
       name,
     };
   },
@@ -135,10 +140,10 @@ registerEvaluators({
     for (const v of variables) {
       if (isStatic) {
         if (!subSymbolItem.hasStaticVariable(v.name)) {
-          subSymbolItem.addStaticVariable(v.name, v.value);
+          subSymbolItem.addStaticVariable(v.name, v.value());
         }
       } else {
-        currentScope.setVariable(v.name, v.value);
+        currentScope.setVariable(v.name, v.value());
       }
     }
   },

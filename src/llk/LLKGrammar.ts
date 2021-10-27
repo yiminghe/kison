@@ -5,21 +5,21 @@ import utils from '../utils';
 const { serializeObject } = utils;
 
 class LLKGrammar extends Grammar {
-  buildMeta() {}
+  override buildMeta() {}
 
-  buildProductions() {
+  override buildProductions() {
     const firstProduction = this.productionInstances[0];
     this.productionInstances.splice(0, 1);
     this.eliminateLeftRecursive();
     this.productionInstances.splice(0, 0, firstProduction);
   }
 
-  expandProductionsInternal() {
+  override expandProductionsInternal() {
     this.expandOneOrMoreSymbol();
     this.expandProductionPriority();
   }
 
-  genCodeInternal(code: string[]) {
+  override genCodeInternal(code: string[]) {
     for (const key of Object.keys(parseCode)) {
       code.push(`var ${key} = ${serializeObject((parseCode as any)[key])};`);
     }

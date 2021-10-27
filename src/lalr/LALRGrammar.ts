@@ -81,13 +81,13 @@ class LALRGrammar extends Grammar {
 
   operatorPriorityMap: Record<string, number> = {};
 
-  genDTs() {
+  override genDTs() {
     return '';
   }
 
-  expandProductionsInternal() {}
+  override expandProductionsInternal() {}
 
-  build() {
+  override build() {
     super.build();
     this.buildOperatorPriority();
     this.buildItemSet();
@@ -497,7 +497,7 @@ class LALRGrammar extends Grammar {
     return serializeObject(t);
   }
 
-  genCodeInternal(code: string[]) {
+  override genCodeInternal(code: string[]) {
     code.push(peekStack.toString());
     code.push('var ActionTypeMap = ' + serializeObject(ActionTypeMap) + ';');
     code.push('var GrammarConst = ' + serializeObject(GrammarConst) + ';');

@@ -14,6 +14,8 @@
     "noImplicitAny": true,
     "isolatedModules": true,
     "skipLibCheck": true,
+    "noImplicitThis":true,
+    "noImplicitOverride": true,
     "strictNullChecks": true,
     "declaration": true,
     "strictFunctionTypes": true,

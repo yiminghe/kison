@@ -139,14 +139,14 @@ class LLGrammar extends Grammar {
     // return newPs
   }
 
-  expandProductionsInternal() {
+  override expandProductionsInternal() {
     this.expandOptionalSymbol();
     this.expandOneOrMoreSymbol();
     this.expandZeroOrMoreSymbol();
     this.expandProductionPriority();
   }
 
-  buildProductions() {
+  override buildProductions() {
     const firstProduction = this.productionInstances[0];
     this.productionInstances.splice(0, 1);
     this.eliminateLeftRecursive();
@@ -218,7 +218,7 @@ class LLGrammar extends Grammar {
     return changed ? this.removeDuplicate(newPs) : ps;
   }
 
-  buildMeta() {
+  override buildMeta() {
     super.buildMeta();
     this.buildFollows();
     this.buildTable();
@@ -289,7 +289,7 @@ class LLGrammar extends Grammar {
     return ret.join('\n');
   }
 
-  genCodeInternal(code: string[]) {
+  override genCodeInternal(code: string[]) {
     const { table, lexer } = this;
     const mappedTable: Table = {};
     for (const nonTerminal of Object.keys(table)) {

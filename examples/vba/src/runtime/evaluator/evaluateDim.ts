@@ -13,6 +13,7 @@ import {
   Subscript,
   VBObject,
   VBPrimitiveTypeClass,
+  DEFAULT_AS_TYPE,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -29,7 +30,7 @@ function getNumberFromSubscript(node: VBObject | VBInteger) {
 
 registerEvaluators({
   async evaluate_subscripts(node, context) {
-    let ret = [];
+    let ret: Subscript[] = [];
     const { children } = node;
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'subscript_') {
@@ -51,15 +52,16 @@ registerEvaluators({
     }
     return ret;
   },
+
   async evaluate_variableSubStmt(node, context): Promise<VBVariableInfo> {
     const { children } = node;
     const name = (children[0] as IDENTIFIER_Node).text;
-    let asType: AsTypeClauseInfo = {
-      type: 'Variant',
-    };
+    let asType: AsTypeClauseInfo = DEFAULT_AS_TYPE;
     let subscripts: Subscript[] | undefined;
     for (const c of children) {
-      if (c.type === 'symbol' && c.symbol === 'subscripts') {
+      if (c.type == 'token' && c.token === 'LPAREN') {
+        subscripts = subscripts || [];
+      } else if (c.type === 'symbol' && c.symbol === 'subscripts') {
         subscripts = await evaluate(c, context);
       }
     }
@@ -77,14 +79,13 @@ registerEvaluators({
     let value: VBVariableInfo['value'];
     if (subscripts) {
       value = () => {
-        const value = new VBArray(typeName);
-        value.subscripts = subscripts!;
-        return new VBObject(value, asType.type);
+        const value = new VBArray(typeName, subscripts!);
+        return new VBObject(value, asType);
       };
     } else if (PrimitiveClass) {
       value = () => {
         const value = new PrimitiveClass();
-        return new VBObject(value, asType.type);
+        return new VBObject(value, asType);
       };
     } else {
       throw new Error('unexpect type: ' + typeName);
@@ -147,4 +148,70 @@ registerEvaluators({
       }
     }
   },
+
+  async evaluate_redimSubStmt(node, context): Promise<RedimRet> {
+    const { children } = node;
+    const obj = await evaluate(children[0], context);
+    const subscripts = await evaluate(children[2], context);
+    const lastChild = children[children.length - 1];
+    let asType: AsTypeClauseInfo | undefined;
+    if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
+      asType = collect_asTypeClause(lastChild);
+    }
+    return {
+      obj,
+      subscripts,
+      asType,
+    };
+  },
+
+  async evaluate_redimStmt(node, context) {
+    const { children } = node;
+    const preserve = children[1].type === 'token';
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'redimSubStmt') {
+        const { obj, asType, subscripts }: RedimRet = await evaluate(
+          c,
+          context,
+        );
+        if (obj.value.type === 'Array') {
+          if (obj.dynamicArray) {
+            obj.value.dynamic = true;
+            obj.value.subscripts = subscripts;
+            if (!preserve) {
+              obj.value.value = [];
+            }
+            if (asType) {
+              obj.value.elementType = asType.type;
+              obj.asType = asType;
+            }
+          } else {
+            throw new Error('unexpected redim!');
+          }
+        } else {
+          throw new Error('unexpected redim!');
+        }
+      }
+    }
+  },
+
+  async evaluate_eraseStmt({ children }, context) {
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'valueStmt') {
+        const obj: VBObject = await evaluate(c, context);
+        if (obj.value.type === 'Array') {
+          obj.value.value = [];
+          if (obj.dynamicArray) {
+            obj.value.subscripts = [];
+          }
+        }
+      }
+    }
+  },
 });
+
+type RedimRet = {
+  obj: VBObject;
+  subscripts: Subscript[];
+  asType?: AsTypeClauseInfo;
+};

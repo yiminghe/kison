@@ -1,4 +1,4 @@
 import './loadSub';
-import './loadVariable';
+import './loadDim';
 
 export { loaders, load } from './loaders';

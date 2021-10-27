@@ -45,6 +45,7 @@ registerLoaders({
       name: '',
       asType: {
         type: 'Variant',
+        isArray: false,
       },
     };
     for (const c of node.children) {

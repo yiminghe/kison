@@ -1,6 +1,6 @@
 import type { Context } from '../Context';
 import type { AstSymbolNode, LiteralToken, AstNodeTypeMap } from '../../parser';
-import { VBObject, VBValue, VBValidPrimitiveType } from './VBValue';
+import { VBObject, VBValue, AsTypeClauseInfo } from './VBValue';
 import { Visibility_Node } from '../../parserLLK';
 import type { SubSymbolItem } from './SubSymbolItem';
 
@@ -51,10 +51,6 @@ export interface ArgInfo {
   asType?: AsTypeClauseInfo;
   optional?: boolean;
   defaultValue?: VBObject;
-}
-
-export interface AsTypeClauseInfo {
-  type: VBValidPrimitiveType;
 }
 
 export interface VBVariableInfo {

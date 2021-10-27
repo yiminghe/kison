@@ -1,8 +1,8 @@
 import type { Context } from '../Context';
 import type { Block_Node, SubStmt_Node, FunctionStmt_Node } from '../../parser';
 import { load } from '../loader/loaders';
-import { VBObject } from './VBValue';
-import type { VBFile, ArgInfo, AsTypeClauseInfo, Visibility } from './runtime';
+import { VBObject, AsTypeClauseInfo, DEFAULT_AS_TYPE } from './VBValue';
+import type { VBFile, ArgInfo, Visibility } from './runtime';
 
 export class SubSymbolItem {
   block: Block_Node;
@@ -78,7 +78,7 @@ export class SubSymbolItem {
         this._returnInfo = await load(c, this.context);
       }
     }
-    this._returnInfo = this._returnInfo || { type: 'Variant' };
+    this._returnInfo = this._returnInfo || DEFAULT_AS_TYPE;
     this._argumentsInfo = this._argumentsInfo || [];
   }
 

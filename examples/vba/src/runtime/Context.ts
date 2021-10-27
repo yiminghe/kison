@@ -104,10 +104,7 @@ export class Context {
           continue;
         }
         if (a.type === 'Object' && argInfo.byRef) {
-          scope.setVariable(
-            argInfo.name,
-            new VBObject(a, argInfo.asType?.type || 'Variant'),
-          );
+          scope.setVariable(argInfo.name, new VBObject(a, argInfo.asType));
         } else {
           scope.setVariableValue(argInfo.name, a);
         }
@@ -118,10 +115,7 @@ export class Context {
           if (argInfo.optional && argInfo.defaultValue) {
             scope.setVariableValue(
               argInfo.name,
-              new VBObject(
-                argInfo.defaultValue.value,
-                argInfo.asType?.type || 'Variant',
-              ),
+              new VBObject(argInfo.defaultValue.value, argInfo.asType),
             );
           }
         }

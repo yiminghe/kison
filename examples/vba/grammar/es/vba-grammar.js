@@ -81,7 +81,6 @@ module.exports = {
 
     [
       n.moduleBody,
-
       n.moduleBodyElement,
       n.groupStartMark,
       n.endOfLineOneOrMore,
@@ -131,7 +130,6 @@ module.exports = {
 
     [
       n.block,
-
       n.blockStmt,
       n.groupStartMark,
       n.endOfStatement,
@@ -142,6 +140,8 @@ module.exports = {
 
     [
       n.blockStmt,
+      n.eraseStmt,
+      n.alternationMark,
       n.exitStmt,
       n.alternationMark,
       n.variableStmt,
@@ -153,6 +153,38 @@ module.exports = {
       n.setStmt,
       n.alternationMark,
       n.letStmt,
+      n.alternationMark,
+      n.redimStmt,
+    ],
+
+    [
+      n.eraseStmt,
+      n.ERASE,
+      n.valueStmt,
+      n.groupStartMark,
+      ',',
+      n.valueStmt,
+      n.groupEndZeroOrMoreMark,
+    ],
+
+    [
+      n.redimStmt,
+      n.REDIM,
+      n.PRESERVEOptional,
+      n.redimSubStmt,
+      n.groupStartMark,
+      ',',
+      n.redimSubStmt,
+      n.groupEndZeroOrMoreMark,
+    ],
+
+    [
+      n.redimSubStmt,
+      n.implicitCallStmt_InStmt,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.asTypeClauseOptional,
     ],
 
     [

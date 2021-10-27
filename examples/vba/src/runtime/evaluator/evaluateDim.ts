@@ -13,7 +13,10 @@ import {
   Subscript,
   VBObject,
   VBPrimitiveTypeClass,
-  DEFAULT_AS_TYPE,
+  getDEFAULT_AS_TYPE,
+  VBClass,
+  VBEmpty,
+  VB_EMPTY,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -56,7 +59,7 @@ registerEvaluators({
   async evaluate_variableSubStmt(node, context): Promise<VBVariableInfo> {
     const { children } = node;
     const name = (children[0] as IDENTIFIER_Node).text;
-    let asType: AsTypeClauseInfo = DEFAULT_AS_TYPE;
+    let asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE();
     let subscripts: Subscript[] | undefined;
     for (const c of children) {
       if (c.type == 'token' && c.token === 'LPAREN') {
@@ -67,28 +70,44 @@ registerEvaluators({
     }
     const lastChild = children[children.length - 1];
     if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
-      asType = collect_asTypeClause(lastChild);
+      asType = collect_asTypeClause(lastChild, context);
     }
 
-    let typeName = asType.type;
+    let { type, classType, isNew } = asType;
+    let value: VBVariableInfo['value'] | undefined;
 
-    typeName = (typeName as any).toLowerCase();
-
-    const PrimitiveClass = VBPrimitiveTypeClass[typeName];
-
-    let value: VBVariableInfo['value'];
-    if (subscripts) {
-      value = () => {
-        const value = new VBArray(typeName, subscripts!);
-        return new VBObject(value, asType);
-      };
-    } else if (PrimitiveClass) {
-      value = () => {
-        const value = new PrimitiveClass();
-        return new VBObject(value, asType);
-      };
-    } else {
-      throw new Error('unexpect type: ' + typeName);
+    if (type) {
+      type = (type as any).toLowerCase();
+      const PrimitiveClass = VBPrimitiveTypeClass[type!];
+      if (subscripts) {
+        value = () => {
+          const value = new VBArray(type!, subscripts!);
+          return new VBObject(value, asType);
+        };
+      } else if (PrimitiveClass) {
+        value = () => {
+          const value = new PrimitiveClass();
+          return new VBObject(value, asType);
+        };
+      }
+    } else if (classType) {
+      const classId = classType[0];
+      context.symbolTable.get(classId);
+      if (isNew) {
+        value = () => {
+          const value = new VBClass(classId, context);
+          return new VBObject(value, asType);
+        };
+      } else {
+        value = () => {
+          return new VBObject(VB_EMPTY, asType);
+        };
+      }
+    }
+    if (!value) {
+      throw new Error(
+        'unexpect asType: ' + asType.type || asType.classType?.join(''),
+      );
     }
     return {
       value,
@@ -156,7 +175,7 @@ registerEvaluators({
     const lastChild = children[children.length - 1];
     let asType: AsTypeClauseInfo | undefined;
     if (lastChild.type === 'symbol' && lastChild.symbol === 'asTypeClause') {
-      asType = collect_asTypeClause(lastChild);
+      asType = collect_asTypeClause(lastChild, context);
     }
     return {
       obj,
@@ -174,15 +193,16 @@ registerEvaluators({
           c,
           context,
         );
-        if (obj.value.type === 'Array') {
+        const objValue = obj.value;
+        if (objValue.type === 'Array') {
           if (obj.dynamicArray) {
-            obj.value.dynamic = true;
-            obj.value.subscripts = subscripts;
+            objValue.dynamic = true;
+            objValue.subscripts = subscripts;
             if (!preserve) {
-              obj.value.value = [];
+              objValue.value = [];
             }
             if (asType) {
-              obj.value.elementType = asType.type;
+              objValue.elementType = asType.type!;
               obj.asType = asType;
             }
           } else {

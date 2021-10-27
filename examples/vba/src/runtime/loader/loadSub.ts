@@ -54,7 +54,7 @@ registerLoaders({
       } else if (c.type === 'token' && c.token === 'IDENTIFIER') {
         argInfo.name = c.text;
       } else if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
-        argInfo.asType = collect_asTypeClause(c);
+        argInfo.asType = collect_asTypeClause(c, context);
       } else if (c.type === 'token' && c.token === 'OPTIONAL') {
         argInfo.optional = true;
       } else if (c.type === 'symbol' && c.symbol === 'argDefaultValue') {

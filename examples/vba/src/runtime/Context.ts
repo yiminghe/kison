@@ -1,6 +1,12 @@
 import parser from '../parser';
 import type { AstRootNode } from '../parser';
-import type { VBValue, SubBinder, VBFile, SubSymbolItem } from './types';
+import type {
+  VBValue,
+  SubBinder,
+  VBFile,
+  SubSymbolItem,
+  VBClass,
+} from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import {
@@ -16,7 +22,11 @@ import {
 } from './types';
 import { last } from './utils';
 
-const defaultFileId: VBFile = { id: 'default', type: 'module' };
+const defaultFileId: VBFile = {
+  id: Math.random() + '',
+  name: 'default',
+  type: 'module',
+};
 
 export class Context {
   astMap = new Map<VBFile, AstRootNode>();
@@ -39,7 +49,7 @@ export class Context {
     }
     this.astMap.set(file, ast);
     this.currentFile = file;
-    this.symbolTable.set(file.id, new FileSymbolTable(file.type));
+    this.symbolTable.set(file.id, new FileSymbolTable(file));
     return load(ast, this);
   }
 
@@ -55,6 +65,16 @@ export class Context {
 
   getCurrentScope() {
     return last(this.scopeStack)!;
+  }
+
+  renameFile(id: string, name: string) {
+    const { symbolTable } = this;
+    for (const fileSymbolTable of symbolTable.values()) {
+      const { file } = fileSymbolTable;
+      if (file.id === id) {
+        file.name = name;
+      }
+    }
   }
 
   getSymbolItem(name: string, myFile?: VBFile) {
@@ -89,40 +109,80 @@ export class Context {
     }
   }
 
+  getFileIdFromFileName(name: string) {
+    for (const fileSymbolTable of this.symbolTable.values()) {
+      const { file } = fileSymbolTable;
+      if (file.name === name) {
+        return file.id;
+      }
+    }
+    throw new Error('Can not find file name: ' + name);
+  }
+
+  async callSubSymbolItem(
+    subSymbolItem: SubSymbolItem,
+    args: (VBValue | VBObject)[] = [],
+    classObj?: VBClass,
+  ) {
+    const argumentsInfo = subSymbolItem.arugmentsInfo;
+    const subName = subSymbolItem.name.toLowerCase();
+    this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
+    if (classObj) {
+      last(this.scopeStack).classObj = classObj;
+    }
+    let ret = await evaluate(subSymbolItem.block, this);
+    if (ret && (ret as ExitResult).type === 'Exit') {
+      const exit: ExitResult = ret;
+      if (exit.token.token === 'END') {
+        return exit;
+      }
+    }
+    if (subSymbolItem.type === 'function') {
+      ret = last(this.scopeStack).getVariable(subName).value;
+    } else {
+      ret = VBEmpty;
+    }
+    this.scopeStack.pop();
+    return ret;
+  }
+
+  _setupScope(
+    subName: string,
+    args: (VBValue | VBObject)[],
+    argumentsInfo: ArgInfo[],
+    file: VBFile = this.currentFile,
+  ) {
+    const scope = new VBScope(file, subName, this);
+    let i = -1;
+    for (const a of args) {
+      ++i;
+      const argInfo = argumentsInfo[i];
+      if (!argInfo) {
+        continue;
+      }
+      if (a.type === 'Object' && argInfo.byRef) {
+        scope.setVariable(argInfo.name, new VBObject(a, argInfo.asType));
+      } else {
+        scope.setVariableValue(argInfo.name, a);
+      }
+    }
+    while (i < argumentsInfo.length) {
+      const argInfo = argumentsInfo[i];
+      if (argInfo) {
+        if (argInfo.optional && argInfo.defaultValue) {
+          scope.setVariableValue(
+            argInfo.name,
+            new VBObject(argInfo.defaultValue.value, argInfo.asType),
+          );
+        }
+      }
+      ++i;
+    }
+    this.scopeStack.push(scope);
+  }
+
   async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
     subName = subName.toLowerCase();
-    const setupScope = (
-      argumentsInfo: ArgInfo[],
-      file: VBFile = this.currentFile,
-    ) => {
-      const scope = new VBScope(file, subName, this);
-      let i = -1;
-      for (const a of args) {
-        ++i;
-        const argInfo = argumentsInfo[i];
-        if (!argInfo) {
-          continue;
-        }
-        if (a.type === 'Object' && argInfo.byRef) {
-          scope.setVariable(argInfo.name, new VBObject(a, argInfo.asType));
-        } else {
-          scope.setVariableValue(argInfo.name, a);
-        }
-      }
-      while (i < argumentsInfo.length) {
-        const argInfo = argumentsInfo[i];
-        if (argInfo) {
-          if (argInfo.optional && argInfo.defaultValue) {
-            scope.setVariableValue(
-              argInfo.name,
-              new VBObject(argInfo.defaultValue.value, argInfo.asType),
-            );
-          }
-        }
-        ++i;
-      }
-      this.scopeStack.push(scope);
-    };
 
     function getItemFromFile(file: string, noCheck: boolean = false) {
       const item = symbolTable.get(file);
@@ -149,30 +209,14 @@ export class Context {
         }
       }
     }
-
     if (subSymbolItem) {
-      const argumentsInfo = subSymbolItem.arugmentsInfo;
-      setupScope(argumentsInfo, subSymbolItem.file);
-      let ret = await evaluate(subSymbolItem.block, this);
-      if (ret && (ret as ExitResult).type === 'Exit') {
-        const exit: ExitResult = ret;
-        if (exit.token.token === 'END') {
-          return exit;
-        }
-      }
-      if (subSymbolItem.type === 'function') {
-        ret = last(this.scopeStack).getVariable(subName).value;
-      } else {
-        ret = VBEmpty;
-      }
-      this.scopeStack.pop();
-      return ret;
+      return this.callSubSymbolItem(subSymbolItem, args);
     }
     const def = subBindersMap.get(subName);
     if (!def) {
       throw new Error('Can not find sub definition: ' + subName);
     }
-    setupScope(def.argumentsInfo);
+    this._setupScope(subName, args, def.argumentsInfo);
     let ret = def.fn(this);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;

@@ -6,6 +6,7 @@ import type {
   EXIT_SUB_Node,
   END_Node,
 } from '../../parser';
+import { Context } from '../Context';
 
 export class VBCollection {
   type: 'Collection' = 'Collection';
@@ -170,7 +171,7 @@ export class VBObject {
   constructor(
     // nested address or value
     private _value: VBValue | VBObject = VB_EMPTY,
-    public asType: AsTypeClauseInfo = DEFAULT_AS_TYPE,
+    public asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE(),
   ) {
     if (_value.type === 'Array') {
       this.dynamicArray = _value.dynamic;
@@ -179,6 +180,12 @@ export class VBObject {
         this.dynamicArray = true;
       }
     }
+  }
+
+  clone() {
+    const newObj = new VBObject(this._value, this.asType);
+    newObj.dynamicArray = this.dynamicArray;
+    return newObj;
   }
 
   get value(): VBValue {
@@ -201,6 +208,69 @@ export class VBObject {
     } else {
       this._getObject()._value = value;
     }
+  }
+}
+
+// user class
+export class VBClass {
+  type: 'Class' = 'Class';
+  private _init: boolean = false;
+  value = new Map<string, VBObject>();
+  constructor(public classType: string, public context: Context) {}
+  ensureInit() {
+    if (this._init) {
+      return;
+    }
+    this._init = true;
+    const fileSymbolTable = this.context.symbolTable.get(this.classType);
+    if (!fileSymbolTable) {
+      throw new Error('Can not find class: ' + this.classType);
+    }
+    for (const symbolItem of fileSymbolTable.symbolTable.values()) {
+      if (symbolItem.type === 'variable') {
+        this.value.set(symbolItem.name, symbolItem.value.clone());
+      }
+    }
+    this.callSub('Class_Initialize', [], false);
+  }
+  callSub(
+    name: string,
+    args: (VBValue | VBObject)[] = [],
+    check: boolean = true,
+  ) {
+    name = name.toLowerCase();
+    this.ensureInit();
+    const fileSymbolTable = this.context.symbolTable.get(this.classType)!;
+    const sub = fileSymbolTable.symbolTable.get(name);
+    if (sub && sub.type === 'sub') {
+      this.context.callSubSymbolItem(sub, args, this);
+    } else {
+      if (check) {
+        throw new Error(`Can not find sub ${name} in class ${this.classType}!`);
+      }
+    }
+  }
+  callFunction() {
+    this.ensureInit();
+  }
+  letProperty() {
+    this.ensureInit();
+  }
+  setProperty() {
+    this.ensureInit();
+  }
+  getProperty() {
+    this.ensureInit();
+  }
+  letMember() {
+    this.ensureInit();
+  }
+  setMember() {
+    this.ensureInit();
+  }
+  getMember(name: string) {
+    this.ensureInit();
+    return this.value.get(name);
   }
 }
 
@@ -252,18 +322,20 @@ Object.keys(VBPrimitiveTypeClass).forEach((k) => {
 
 export type VBValidPrimitiveType = keyof typeof VBPrimitiveTypeClass;
 
-export type VBValue = VBPrimitive | VBArray;
+export type VBValue = VBPrimitive | VBArray | VBClass;
 
 export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();
 export const VB_EMPTY = new VBEmpty();
 
 export interface AsTypeClauseInfo {
-  type: VBValidPrimitiveType;
+  type?: VBValidPrimitiveType;
   isArray: boolean;
+  isNew?: boolean;
+  classType?: string[];
 }
 
-export const DEFAULT_AS_TYPE: AsTypeClauseInfo = {
+export const getDEFAULT_AS_TYPE: () => AsTypeClauseInfo = () => ({
   type: 'Variant',
   isArray: false,
-};
+});

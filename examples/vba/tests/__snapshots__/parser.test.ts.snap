@@ -282,7 +282,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': 'x'
                                     }
                                   ],
-                                  'ruleIndex': 35
+                                  'ruleIndex': 37
                                 }
                               ],
                               'ruleIndex': 33
@@ -330,7 +330,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 37
+                                  'ruleIndex': 39
                                 }
                               ],
                               'ruleIndex': 32
@@ -657,7 +657,7 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 37
+                                              'ruleIndex': 39
                                             }
                                           ],
                                           'ruleIndex': 32

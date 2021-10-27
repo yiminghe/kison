@@ -6,6 +6,7 @@ import type { SubSymbolItem } from './SubSymbolItem';
 
 export interface VBFile {
   id: string;
+  name: string;
   type: 'module' | 'class';
 }
 
@@ -24,6 +25,10 @@ export class VariableSymbolItem {
     public context: Context,
   ) {
     this.file = context.currentFile;
+  }
+
+  get name() {
+    return this.variableInfo.name;
   }
 
   get value() {
@@ -87,5 +92,9 @@ export type Loaders = {
 
 export class FileSymbolTable {
   symbolTable = new Map<SymbolName, SymbolItem>();
-  constructor(public type: 'module' | 'class') {}
+  constructor(public file: VBFile) {}
+
+  get type() {
+    return this.file.type;
+  }
 }

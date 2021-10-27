@@ -356,11 +356,41 @@ module.exports = {
 
     [
       n.implicitCallStmt_InStmt,
+      n.iCS_S_MembersCall,
+      n.alternationMark,
       n.iCS_S_VariableOrProcedureCall,
       n.alternationMark,
       n.iCS_S_ProcedureOrArrayCall,
     ],
 
+    [
+      n.iCS_S_MembersCall,
+      n.groupStartMark,
+      n.iCS_S_VariableOrProcedureCall,
+      n.alternationMark,
+      n.iCS_S_ProcedureOrArrayCall,
+      n.groupEndOptionalMark,
+      n.iCS_S_MemberCallOneOrMore,
+      n.dictionaryCallStmtOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.groupEndOptionalMark,
+    ],
+    [
+      n.iCS_S_MemberCall,
+      n.groupStartMark,
+      '.',
+      n.alternationMark,
+      '!',
+      n.groupEndMark,
+      n.groupStartMark,
+      n.iCS_S_VariableOrProcedureCall,
+      n.alternationMark,
+      n.iCS_S_ProcedureOrArrayCall,
+      n.groupEndMark,
+    ],
     [
       n.iCS_S_ProcedureOrArrayCall,
       n.IDENTIFIER,
@@ -432,11 +462,28 @@ module.exports = {
 
     [
       n.type_,
+      n.groupStartMark,
       n.baseType,
+      n.alternationMark,
+      n.complexType,
+      n.groupEndMark,
       n.groupStartMark,
       n.LPAREN,
       n.RPAREN,
       n.groupEndOptionalMark,
+    ],
+
+    [
+      n.complexType,
+      n.IDENTIFIER,
+      n.groupStartMark,
+      n.groupStartMark,
+      '.',
+      n.alternationMark,
+      '!',
+      n.groupEndMark,
+      n.IDENTIFIER,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [

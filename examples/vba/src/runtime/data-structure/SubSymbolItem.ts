@@ -1,11 +1,12 @@
 import type { Context } from '../Context';
 import type { Block_Node, SubStmt_Node, FunctionStmt_Node } from '../../parser';
 import { load } from '../loader/loaders';
-import { VBObject, AsTypeClauseInfo, DEFAULT_AS_TYPE } from './VBValue';
+import { VBObject, AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
 import type { VBFile, ArgInfo, Visibility } from './runtime';
 
 export class SubSymbolItem {
   block: Block_Node;
+  name: string = '';
   private _argumentsInfo?: ArgInfo[];
   private _returnInfo?: AsTypeClauseInfo;
   type: 'sub' | 'function' | 'propertyGet' | 'propertyLet' | 'propertySet';
@@ -36,6 +37,8 @@ export class SubSymbolItem {
     for (const c of sub.children) {
       if (c.type === 'symbol' && c.symbol === 'block') {
         block = c;
+      } else if (c.type === 'token' && c.token === 'IDENTIFIER') {
+        this.name = c.text;
       }
     }
     if (!block) {
@@ -78,7 +81,7 @@ export class SubSymbolItem {
         this._returnInfo = await load(c, this.context);
       }
     }
-    this._returnInfo = this._returnInfo || DEFAULT_AS_TYPE;
+    this._returnInfo = this._returnInfo || getDEFAULT_AS_TYPE();
     this._argumentsInfo = this._argumentsInfo || [];
   }
 

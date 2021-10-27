@@ -1,4 +1,5 @@
 import type { IDENTIFIER_Node } from '../../parser';
+import { collect_IDENTIFIER } from '../collect/collectType';
 import {
   VBInteger,
   VBString,
@@ -8,6 +9,7 @@ import {
   VBObject,
   ExitResult,
   VBValue,
+  VB_EMPTY,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -26,6 +28,36 @@ registerEvaluators({
 
   evaluate_NULL() {
     return VB_NULL;
+  },
+
+  async evaluate_iCS_S_MembersCall({ children }, context) {
+    const valueNodes = [];
+
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'iCS_S_VariableOrProcedureCall') {
+        valueNodes.push(c);
+      } else if (c.type === 'symbol' && c.symbol === 'iCS_S_MemberCall') {
+        for (const c2 of c.children) {
+          if (
+            c2.type === 'symbol' &&
+            c2.symbol === 'iCS_S_VariableOrProcedureCall'
+          ) {
+            valueNodes.push(c);
+          }
+        }
+      }
+    }
+
+    let v: VBObject | undefined = await evaluate(valueNodes[0], context);
+
+    for (let i = 1; i < valueNodes.length; i++) {
+      if (!v || v.value.type !== 'Class') {
+        throw new Error('expected class instance!');
+      }
+      v = v.value.getMember(collect_IDENTIFIER(valueNodes[i])!);
+    }
+
+    return v || VB_EMPTY;
   },
 
   async evaluate_iCS_S_VariableOrProcedureCall(node, context) {

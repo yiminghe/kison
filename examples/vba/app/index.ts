@@ -13,8 +13,8 @@ require.config({
 
 const $ = (v: string): any => document.getElementById(v)!;
 
-const sampleCode =
-  localStorage.getItem('code') ||
+const moduleSampleCode =
+  localStorage.getItem('moduleCode') ||
   `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
   MsgBox msg
@@ -31,30 +31,82 @@ sub main
   test2 1, 2
   MsgBox m1
   MsgBox m2
+
+  dim c as New MyClass
+  msgbox c.m
+end sub
+`.trim();
+
+const classSampleCode =
+  localStorage.getItem('classCode') ||
+  `
+public m as Integer
+
+sub Class_Initialize
+m = 2
 end sub
 `.trim();
 
 require(['vs/editor/editor.main'], () => {
   $('sub').value = 'main';
   const editorContainer = $('monaco-editor');
-  editorContainer.innerHTML = '';
-  editorContainer.style.height = '400px';
+  Object.assign(editorContainer.style, { display: 'flex', height: '430px' });
+  editorContainer.innerHTML = `
+  <div  style="flex:1;flex-direction:column;display:flex;">
+  <p>module: </p>
+  <div id='module-editor' style="flex:1">
+  </div>
+  </div>
+  <div style="flex:1;flex-direction:column;display:flex;">
+  <p>MyClass: </p>
+  <div id='class-editor' style="flex:1">
+  </div>
+  </div>
+  `;
 
-  let editor = monaco.editor.create(editorContainer, {
+  const moduleEditorNode = $('module-editor');
+  const classEditorNode = $('class-editor');
+
+  let classEditor = monaco.editor.create(classEditorNode, {
+    model: null,
+  });
+  let moduleEditor = monaco.editor.create(moduleEditorNode, {
     model: null,
   });
 
-  var oldModel = editor.getModel();
-  var newModel = monaco.editor.createModel(sampleCode, 'vb');
-  editor.setModel(newModel);
-  if (oldModel) {
-    oldModel.dispose();
+  {
+    var oldModel = moduleEditor.getModel();
+    var newModel = monaco.editor.createModel(moduleSampleCode, 'vb');
+    moduleEditor.setModel(newModel);
+    if (oldModel) {
+      oldModel.dispose();
+    }
+  }
+  {
+    var oldModel = classEditor.getModel();
+    var newModel = monaco.editor.createModel(classSampleCode, 'vb');
+    classEditor.setModel(newModel);
+    if (oldModel) {
+      oldModel.dispose();
+    }
   }
 
-  function getCurrentCode() {
+  function getCurrentCode(
+    editor: Manaco.editor.IStandaloneCodeEditor = moduleEditor,
+    type: 'moduleCode' | 'classCode' = 'moduleCode',
+  ) {
     const code = editor.getModel()!.getValue().trim();
-    localStorage.setItem('code', code);
+    localStorage.setItem(type, code);
     return code;
+  }
+
+  function getAllCodes() {
+    const moduleCode = getCurrentCode();
+    const classCode = getCurrentCode(classEditor, 'classCode');
+    return {
+      classCode,
+      moduleCode,
+    };
   }
 
   function getCurrentAst() {
@@ -100,7 +152,17 @@ require(['vs/editor/editor.main'], () => {
     try {
       const context = new Context();
       context.registerSubBinder(MsgBoxSub);
-      await context.load(getCurrentCode());
+      const { classCode, moduleCode } = getAllCodes();
+      await context.load(classCode, {
+        id: 'MyClass',
+        name: 'MyClass',
+        type: 'class',
+      });
+      await context.load(moduleCode, {
+        id: 'module',
+        name: 'module',
+        type: 'module',
+      });
       await context.callSub($('sub').value);
     } catch (e: any) {
       console.error(e);

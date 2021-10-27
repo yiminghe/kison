@@ -1,12 +1,13 @@
 import type { VBFile } from './runtime';
 import type { Context } from '../Context';
-import { VBObject, VBValue } from './VBValue';
+import { VBClass, VBObject, VBValue } from './VBValue';
 
 export class VBScope {
   constructor(
     public file: VBFile,
     public subName: string,
     public context: Context,
+    public classObj?: VBClass,
   ) {}
 
   variableMap = new Map<String, VBObject>();
@@ -30,6 +31,15 @@ export class VBScope {
     if (v) {
       return v;
     }
+
+    if (this.classObj) {
+      v = this.classObj.getMember(name);
+    }
+
+    if (v) {
+      return v;
+    }
+
     const vItem = this.context.getSymbolItem(name, this.file);
     if (vItem && vItem.type === 'variable') {
       v = vItem.value;

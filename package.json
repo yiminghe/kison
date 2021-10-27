@@ -51,12 +51,12 @@
     "modulex-util": "1.x"
   },
   "scripts": {
-    "compile": "rm -rf lib && babel -x '.js,.ts' src --out-dir lib && cp src/*.d.ts lib/",
+    "compile": "babel -x '.js,.ts' src --out-dir lib && cp src/*.d.ts lib/",
     "check": "tsc --noEmit",
     "start": "http-server --mimetypes examples/mime.types",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
     "prepare": "node scripts/link",
-    "pub": "npm run check && npm run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
+    "pub": "npm run check && rm -rf lib && npm run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
     "test": "rm -rf lib && jest",

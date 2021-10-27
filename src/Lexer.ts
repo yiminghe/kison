@@ -195,7 +195,9 @@ class Lexer {
     Object.assign(this, cfg);
     this.rules = this.rules.concat();
 
-    this.regexpIndex = this.isCompress ? this.lexerRuleIndexMap.regexp : 'regexp';
+    this.regexpIndex = this.isCompress
+      ? this.lexerRuleIndexMap.regexp
+      : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;

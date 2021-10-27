@@ -943,9 +943,12 @@ export const implicitCallStmt_InStmtOptional = 'implicitCallStmt_InStmt?';
 export const implicitCallStmt_InStmtZeroOrMore = 'implicitCallStmt_InStmt*';
 export const implicitCallStmt_InStmtOneOrMore = 'implicitCallStmt_InStmt+';
 export const iCS_S_VariableOrProcedureCall = 'iCS_S_VariableOrProcedureCall';
-export const iCS_S_VariableOrProcedureCallOptional = 'iCS_S_VariableOrProcedureCall?';
-export const iCS_S_VariableOrProcedureCallZeroOrMore = 'iCS_S_VariableOrProcedureCall*';
-export const iCS_S_VariableOrProcedureCallOneOrMore = 'iCS_S_VariableOrProcedureCall+';
+export const iCS_S_VariableOrProcedureCallOptional =
+  'iCS_S_VariableOrProcedureCall?';
+export const iCS_S_VariableOrProcedureCallZeroOrMore =
+  'iCS_S_VariableOrProcedureCall*';
+export const iCS_S_VariableOrProcedureCallOneOrMore =
+  'iCS_S_VariableOrProcedureCall+';
 export const explicitCallStmt = 'explicitCallStmt';
 export const explicitCallStmtOptional = 'explicitCallStmt?';
 export const explicitCallStmtZeroOrMore = 'explicitCallStmt*';
@@ -964,8 +967,10 @@ export const letStmtZeroOrMore = 'letStmt*';
 export const letStmtOneOrMore = 'letStmt+';
 export const iCS_S_ProcedureOrArrayCall = 'iCS_S_ProcedureOrArrayCall';
 export const iCS_S_ProcedureOrArrayCallOptional = 'iCS_S_ProcedureOrArrayCall?';
-export const iCS_S_ProcedureOrArrayCallZeroOrMore = 'iCS_S_ProcedureOrArrayCall*';
-export const iCS_S_ProcedureOrArrayCallOneOrMore = 'iCS_S_ProcedureOrArrayCall+';
+export const iCS_S_ProcedureOrArrayCallZeroOrMore =
+  'iCS_S_ProcedureOrArrayCall*';
+export const iCS_S_ProcedureOrArrayCallOneOrMore =
+  'iCS_S_ProcedureOrArrayCall+';
 export const exitStmt = 'exitStmt';
 export const exitStmtOptional = 'exitStmt?';
 export const exitStmtZeroOrMore = 'exitStmt*';
@@ -988,27 +993,204 @@ export const groupEndOptionalMark = "')'?";
 export const groupEndZeroOrMoreMark = "')'*";
 export const groupEndOneOrMoreMark = "')'+";
 export const alternationMark = "'|'";
-export const KEYWORDS=["ACCESS","ADDRESSOF","ALIAS","AND","ATTRIBUTE","APPACTIVATE","APPEND","AS","BEGIN","BEEP","BINARY","BOOLEAN","BYVAL","BYREF","BYTE","CALL","CASE","CHDIR","CHDRIVE","CLASS","CLOSE","COLLECTION","CONST","DATABASE","DATE","DECLARE","DEFBOOL","DEFBYTE","DEFDATE","DEFDBL","DEFDEC","DEFCUR","DEFINT","DEFLNG","DEFOBJ","DEFSNG","DEFSTR","DEFVAR","DELETESETTING","DIM","DO","DOUBLE","EACH","ELSE","ELSEIF","END_ENUM","END_FUNCTION","END_IF","END_PROPERTY","END_SELECT","END_SUB","END_TYPE","END_WITH","END","ENUM","EQV","ERASE","ERROR","EVENT","EXIT_DO","EXIT_FOR","EXIT_FUNCTION","EXIT_PROPERTY","EXIT_SUB","FALSE","FILECOPY","FRIEND","FOR","FUNCTION","GET","GLOBAL","GOSUB","GOTO","IF","IMP","IMPLEMENTS","IN","INPUT","IS","INTEGER","KILL","LOAD","LOCK","LONG","LOOP","LEN","LET","LIB","LIKE","LINE_INPUT","LOCK_READ","LOCK_WRITE","LOCK_READ_WRITE","LSET","MACRO_CONST","MACRO_IF","MACRO_ELSEIF","MACRO_ELSE","MACRO_END_IF","ME","MID","MKDIR","MOD","NAME","NEXT","NEW","NOT","NOTHING","NULL","ON","ON_ERROR","ON_LOCAL_ERROR","OPEN","OPTIONAL","OPTION_BASE","OPTION_EXPLICIT","OPTION_COMPARE","OPTION_PRIVATE_MODULE","OR","OUTPUT","PARAMARRAY","PRESERVE","PRINT","PRIVATE","PROPERTY_GET","PROPERTY_LET","PROPERTY_SET","PTRSAFE","PUBLIC","PUT","RANDOM","RANDOMIZE","RAISEEVENT","READ","READ_WRITE","REDIM","RESET","RESUME","RETURN","RMDIR","RSET","SAVEPICTURE","SAVESETTING","SEEK","SELECT","SENDKEYS","SET","SETATTR","SHARED","SINGLE","SPC","STATIC","STEP","STOP","STRING","SUB","TAB","TEXT","THEN","TIME","TO","TRUE","TYPE","TYPEOF","UNLOAD","UNLOCK","UNTIL","VARIANT","VERSION","WEND","WHILE","WIDTH","WITH","WITHEVENTS","WRITE","XOR"];
+export const KEYWORDS = [
+  'ACCESS',
+  'ADDRESSOF',
+  'ALIAS',
+  'AND',
+  'ATTRIBUTE',
+  'APPACTIVATE',
+  'APPEND',
+  'AS',
+  'BEGIN',
+  'BEEP',
+  'BINARY',
+  'BOOLEAN',
+  'BYVAL',
+  'BYREF',
+  'BYTE',
+  'CALL',
+  'CASE',
+  'CHDIR',
+  'CHDRIVE',
+  'CLASS',
+  'CLOSE',
+  'COLLECTION',
+  'CONST',
+  'DATABASE',
+  'DATE',
+  'DECLARE',
+  'DEFBOOL',
+  'DEFBYTE',
+  'DEFDATE',
+  'DEFDBL',
+  'DEFDEC',
+  'DEFCUR',
+  'DEFINT',
+  'DEFLNG',
+  'DEFOBJ',
+  'DEFSNG',
+  'DEFSTR',
+  'DEFVAR',
+  'DELETESETTING',
+  'DIM',
+  'DO',
+  'DOUBLE',
+  'EACH',
+  'ELSE',
+  'ELSEIF',
+  'END_ENUM',
+  'END_FUNCTION',
+  'END_IF',
+  'END_PROPERTY',
+  'END_SELECT',
+  'END_SUB',
+  'END_TYPE',
+  'END_WITH',
+  'END',
+  'ENUM',
+  'EQV',
+  'ERASE',
+  'ERROR',
+  'EVENT',
+  'EXIT_DO',
+  'EXIT_FOR',
+  'EXIT_FUNCTION',
+  'EXIT_PROPERTY',
+  'EXIT_SUB',
+  'FALSE',
+  'FILECOPY',
+  'FRIEND',
+  'FOR',
+  'FUNCTION',
+  'GET',
+  'GLOBAL',
+  'GOSUB',
+  'GOTO',
+  'IF',
+  'IMP',
+  'IMPLEMENTS',
+  'IN',
+  'INPUT',
+  'IS',
+  'INTEGER',
+  'KILL',
+  'LOAD',
+  'LOCK',
+  'LONG',
+  'LOOP',
+  'LEN',
+  'LET',
+  'LIB',
+  'LIKE',
+  'LINE_INPUT',
+  'LOCK_READ',
+  'LOCK_WRITE',
+  'LOCK_READ_WRITE',
+  'LSET',
+  'MACRO_CONST',
+  'MACRO_IF',
+  'MACRO_ELSEIF',
+  'MACRO_ELSE',
+  'MACRO_END_IF',
+  'ME',
+  'MID',
+  'MKDIR',
+  'MOD',
+  'NAME',
+  'NEXT',
+  'NEW',
+  'NOT',
+  'NOTHING',
+  'NULL',
+  'ON',
+  'ON_ERROR',
+  'ON_LOCAL_ERROR',
+  'OPEN',
+  'OPTIONAL',
+  'OPTION_BASE',
+  'OPTION_EXPLICIT',
+  'OPTION_COMPARE',
+  'OPTION_PRIVATE_MODULE',
+  'OR',
+  'OUTPUT',
+  'PARAMARRAY',
+  'PRESERVE',
+  'PRINT',
+  'PRIVATE',
+  'PROPERTY_GET',
+  'PROPERTY_LET',
+  'PROPERTY_SET',
+  'PTRSAFE',
+  'PUBLIC',
+  'PUT',
+  'RANDOM',
+  'RANDOMIZE',
+  'RAISEEVENT',
+  'READ',
+  'READ_WRITE',
+  'REDIM',
+  'RESET',
+  'RESUME',
+  'RETURN',
+  'RMDIR',
+  'RSET',
+  'SAVEPICTURE',
+  'SAVESETTING',
+  'SEEK',
+  'SELECT',
+  'SENDKEYS',
+  'SET',
+  'SETATTR',
+  'SHARED',
+  'SINGLE',
+  'SPC',
+  'STATIC',
+  'STEP',
+  'STOP',
+  'STRING',
+  'SUB',
+  'TAB',
+  'TEXT',
+  'THEN',
+  'TIME',
+  'TO',
+  'TRUE',
+  'TYPE',
+  'TYPEOF',
+  'UNLOAD',
+  'UNLOCK',
+  'UNTIL',
+  'VARIANT',
+  'VERSION',
+  'WEND',
+  'WHILE',
+  'WIDTH',
+  'WITH',
+  'WITHEVENTS',
+  'WRITE',
+  'XOR',
+];
 
-export const makeProductions = (arr)=>{
-  return arr.map(a=>{
-    if(Array.isArray(a)) {
-       return {
-         symbol: a[0],
-         rhs: a.slice(1)
-       };
+export const makeProductions = (arr) => {
+  return arr.map((a) => {
+    if (Array.isArray(a)) {
+      return {
+        symbol: a[0],
+        rhs: a.slice(1),
+      };
     }
     return a;
   });
 };
 
-export const makeLexerRules = (arr)=>{
-  return arr.map(a=>{
-    if(Array.isArray(a)) {
-       return {
-         token: a[0],
-         regexp: a[1]
-       };
+export const makeLexerRules = (arr) => {
+  return arr.map((a) => {
+    if (Array.isArray(a)) {
+      return {
+        token: a[0],
+        regexp: a[1],
+      };
     }
     return a;
   });

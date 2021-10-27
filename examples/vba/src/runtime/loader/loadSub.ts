@@ -5,7 +5,10 @@ import { evaluate } from '../evaluator/index';
 import { ArgInfo, SubSymbolItem } from '../types';
 import { registerLoaders, load } from './loaders';
 
-async function loadSub(node: FunctionStmt_Node | SubStmt_Node, context: Context) {
+async function loadSub(
+  node: FunctionStmt_Node | SubStmt_Node,
+  context: Context,
+) {
   for (const c of node.children) {
     if (c.type === 'token' && c.token === 'IDENTIFIER') {
       const subSymbolItem = new SubSymbolItem(node, context);

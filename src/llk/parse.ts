@@ -42,7 +42,7 @@ let {
   productionEndFlag,
   productionSkipAstNodeSet,
   Lexer,
-  productionRuleIndexMap
+  productionRuleIndexMap,
 } = data;
 
 type SymbolItem = string | number | RuleFlag | Function;

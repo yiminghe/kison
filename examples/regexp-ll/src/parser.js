@@ -16,7 +16,7 @@ var $parser = (function (undefined) {
       const ret = {};
 
       for (const k of Object.keys(this)) {
-        if (k !== "parent" && k !== "t") {
+        if (k !== 'parent' && k !== 't') {
           const v = this[k];
 
           if (v !== undefined) {
@@ -29,8 +29,8 @@ var $parser = (function (undefined) {
     }
   };
   var AstSymbolNode = class AstSymbolNode extends BaseAstNode {
-    symbol = "";
-    type = "symbol";
+    symbol = '';
+    type = 'symbol';
     children = [];
     ruleIndex = -1;
 
@@ -79,9 +79,9 @@ var $parser = (function (undefined) {
     }
   };
   var AstTokenNode = class AstTokenNode extends BaseAstNode {
-    token = "";
-    t = "";
-    type = "token";
+    token = '';
+    t = '';
+    type = 'token';
 
     constructor(params) {
       super();
@@ -98,7 +98,7 @@ var $parser = (function (undefined) {
     const ret = [];
 
     for (const r of rhs) {
-      if (typeof r === "string") {
+      if (typeof r === 'string') {
         ret.push(r);
       }
     }
@@ -122,17 +122,17 @@ var $parser = (function (undefined) {
     });
     const top = peekStack(astStack);
 
-    if (top.type === "symbol") {
+    if (top.type === 'symbol') {
       top.addChild(errorNode);
     }
 
     while (astStack.length > 1) {
       const ast = astStack.pop();
 
-      if (ast && ast.type === "symbol" && isExtraAstNode(ast)) {
+      if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
         const topAst = peekStack(astStack);
 
-        if (topAst.type === "symbol") {
+        if (topAst.type === 'symbol') {
           topAst.children.pop();
           topAst.addChildren(ast.children);
         }
@@ -171,15 +171,15 @@ var $parser = (function (undefined) {
     }
 
     tips.push("current token: '" + lexer.getCurrentToken().token + "'.");
-    const tip = tips.join("\n");
+    const tip = tips.join('\n');
     return {
       errorMessage: [
-        "syntax error at line " +
+        'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo(),
         ...tips,
-      ].join("\n"),
+      ].join('\n'),
       tip,
     };
   };
@@ -227,7 +227,7 @@ var $parser = (function (undefined) {
         cleanAst(ast.parent, transformNode);
       } else {
         for (const c of children) {
-          if (c.type === "symbol") {
+          if (c.type === 'symbol') {
             cleanAst(c, transformNode);
           }
         }
@@ -245,7 +245,7 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast.type !== "symbol") {
+    if (ast.type !== 'symbol') {
       return ast;
     }
 
@@ -256,7 +256,7 @@ var $parser = (function (undefined) {
         ? void 0
         : _ast$children[0];
 
-    if (ast && ast.type === "symbol" && ast.symbol === START_TAG) {
+    if (ast && ast.type === 'symbol' && ast.symbol === START_TAG) {
       var _ast2, _ast2$children;
 
       ast =
@@ -276,7 +276,7 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast && ast.type === "token") {
+    if (ast && ast.type === 'token') {
       return ast;
     }
 
@@ -296,7 +296,7 @@ var $parser = (function (undefined) {
   var defaultTransformAstNode = function ({ node, parent }) {
     var _node$children$;
 
-    if (node.type === "token" || node.symbol !== parent.symbol) {
+    if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
 
@@ -315,7 +315,7 @@ var $parser = (function (undefined) {
       ((_node$children$ = node.children[0]) === null ||
       _node$children$ === void 0
         ? void 0
-        : _node$children$.type) === "token"
+        : _node$children$.type) === 'token'
     ) {
       // do not check label
       // parent.label = node.label;
@@ -332,30 +332,30 @@ var $parser = (function (undefined) {
   };
   var isZeroOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "*?" && s.length > 1 && !!s.match(/\*\??$/)
+      typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
     );
   };
   var isOneOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "+?" && s.length > 1 && !!s.match(/\+\??$/)
+      typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
     );
   };
   var isLazySymbol = function (s) {
-    const match = typeof s === "string" && s.match(/(\*|\+|\?)\?$/);
+    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
     return match && s.length !== 2;
   };
   var isOptionalSymbol = function (s) {
-    return typeof s === "string" && s.length > 1 && !!s.match(/\??\?/);
+    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
   };
   var normalizeSymbol = function (s) {
     const ret =
       isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
-        ? s.replace(/(\*|\+|\?)?\??$/, "")
+        ? s.replace(/(\*|\+|\?)?\??$/, '')
         : s; // ??
 
     return ret || (s && s.slice(0, -1));
   };
-  var START_TAG = "$START";
+  var START_TAG = '$START';
   var smUnitBySymbol = {};
   var productionSkipAstNodeSet = undefined;
   var symbolStack = [{}];
@@ -372,11 +372,11 @@ var $parser = (function (undefined) {
       return [str];
     },
     matchOnlyEscapeChar: function (lexer, index = 0) {
-      let m = "";
+      let m = '';
       let char = lexer.nextChar(index);
       m += char;
 
-      if (char === "\\") {
+      if (char === '\\') {
         char = lexer.nextChar(index + 1);
         m += char;
       } else {
@@ -386,8 +386,8 @@ var $parser = (function (undefined) {
         };
       }
 
-      if (m === "\\u" || m === "\\x") {
-        const len = m === "\\u" ? 4 : 2;
+      if (m === '\\u' || m === '\\x') {
+        const len = m === '\\u' ? 4 : 2;
         let matchedNumber = my.matchNumber(lexer, index + 2, 1, len);
 
         if (matchedNumber && matchedNumber[0].length === len) {
@@ -444,7 +444,7 @@ var $parser = (function (undefined) {
     matchAnyChar: function (lexer) {
       const char = lexer.nextChar();
 
-      if (char === "." && !lexer.userData.insideCharacterGroup) {
+      if (char === '.' && !lexer.userData.insideCharacterGroup) {
         return [char];
       }
 
@@ -473,24 +473,24 @@ var $parser = (function (undefined) {
       let index = prefix.length;
       let char = lexer.nextChar(index++);
 
-      while ((char >= "a" && char <= "z") || (char >= "A" && char <= "Z")) {
+      while ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
         ret.push(char);
         char = lexer.nextChar(index++);
       }
 
-      if (char === ">") {
-        const name = ret.join("");
-        return [prefix + name + ">", name];
+      if (char === '>') {
+        const name = ret.join('');
+        return [prefix + name + '>', name];
       }
 
       return false;
     },
     matchBackreference: function (lexer) {
-      if (lexer.nextChar() !== "\\") {
+      if (lexer.nextChar() !== '\\') {
         return false;
       }
 
-      const prefix = "\\k<";
+      const prefix = '\\k<';
 
       if (lexer.nextStartsWith(prefix)) {
         return my.matchGroupName(lexer, prefix);
@@ -502,7 +502,7 @@ var $parser = (function (undefined) {
         return false;
       }
 
-      match[0] = "\\" + match[0];
+      match[0] = '\\' + match[0];
       return match;
     },
     matchQuantifierNumber: function (lexer) {
@@ -521,9 +521,9 @@ var $parser = (function (undefined) {
       while (index < l) {
         const char = lexer.nextCharAt(start + index).toLowerCase();
 
-        if (char < "0" || char > "9") {
+        if (char < '0' || char > '9') {
           if (hex) {
-            if (char < "a" || char > "f") {
+            if (char < 'a' || char > 'f') {
               break;
             }
           } else {
@@ -535,10 +535,10 @@ var $parser = (function (undefined) {
         index++;
       }
 
-      return match.length ? [match.join("")] : false;
+      return match.length ? [match.join('')] : false;
     },
     matchNamedGroupPrefix: function (lexer) {
-      const prefix = "(?<";
+      const prefix = '(?<';
 
       if (!lexer.nextStartsWith(prefix)) {
         return false;
@@ -552,7 +552,7 @@ var $parser = (function (undefined) {
 
     if (Lexer.supportSticky === undefined) {
       try {
-        Lexer.supportSticky = typeof /(?:)/.sticky == "boolean";
+        Lexer.supportSticky = typeof /(?:)/.sticky == 'boolean';
       } catch (e) {
         Lexer.supportSticky = false;
       }
@@ -577,7 +577,7 @@ var $parser = (function (undefined) {
     this.rules = this.rules.concat();
     this.regexpIndex = this.isCompress
       ? this.lexerRuleIndexMap.regexp
-      : "regexp";
+      : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -589,7 +589,7 @@ var $parser = (function (undefined) {
     });
 
     for (const rule of this.rules) {
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
@@ -612,16 +612,16 @@ var $parser = (function (undefined) {
       if (pattern.test) {
         let source = pattern.source;
 
-        if (source.startsWith("^")) {
+        if (source.startsWith('^')) {
           source = source.slice(1);
         }
 
-        var flags = Lexer.supportSticky && !disableSticky ? "gy" : "g";
-        if (pattern.multiline) flags += "m";
-        if (pattern.ignoreCase) flags += "i";
-        if (pattern.unicode) flags += "u";
+        var flags = Lexer.supportSticky && !disableSticky ? 'gy' : 'g';
+        if (pattern.multiline) flags += 'm';
+        if (pattern.ignoreCase) flags += 'i';
+        if (pattern.unicode) flags += 'u';
         obj[p] = new RegExp(source, flags);
-      } else if (typeof pattern === "object") {
+      } else if (typeof pattern === 'object') {
         for (const k of Object.keys(pattern)) {
           this.transformRegExp(pattern, k);
         }
@@ -644,22 +644,22 @@ var $parser = (function (undefined) {
     },
     addRule: function (rule) {
       this.rules.push(rule);
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
       }
     },
     resetInput: function (input) {
-      this.token = "";
+      this.token = '';
       this.nextTokens = [];
       this.tokens = [];
       this.userData = {};
       this.input = input;
-      this.matched = "";
+      this.matched = '';
       this.stateStack = [Lexer.STATIC.INITIAL_STATE];
-      this.match = "";
-      this.text = "";
+      this.match = '';
+      this.text = '';
       this.firstLine = 1;
       this.lineNumber = 1;
       this.lastLine = 1;
@@ -679,7 +679,7 @@ var $parser = (function (undefined) {
         rules = [];
 
       for (const r of this.rules) {
-        var filter = this.getRuleItem(r, "filter");
+        var filter = this.getRuleItem(r, 'filter');
 
         if (filter) {
           if (filter.call(this)) {
@@ -689,7 +689,7 @@ var $parser = (function (undefined) {
           continue;
         }
 
-        var state = this.getRuleItem(r, "state");
+        var state = this.getRuleItem(r, 'state');
 
         if (!state) {
           if (currentState === Lexer.STATIC.INITIAL_STATE) {
@@ -723,17 +723,17 @@ var $parser = (function (undefined) {
       var { matched, match, input } = this;
       matched = matched.slice(0, matched.length - match.length);
       var past =
-          (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+          (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
           matched
             .slice(0 - DEBUG_CONTEXT_LIMIT)
-            .split("\n")
-            .join(" "),
+            .split('\n')
+            .join(' '),
         next = match + input.slice(this.end); //#JSCOVERAGE_ENDIF
 
       next =
-        next.slice(0, DEBUG_CONTEXT_LIMIT).split("\n").join(" ") +
-        (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-      return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
+        (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
+      return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
     },
     mapSymbol: function (n) {
       return n;
@@ -772,7 +772,7 @@ var $parser = (function (undefined) {
       this.tokens.length = this.stashIndex;
     },
     matchRegExp: function (regexp) {
-      if (typeof regexp !== "function") {
+      if (typeof regexp !== 'function') {
         regexp.lastIndex = this.end;
         const ret = regexp.exec(this.input);
 
@@ -861,7 +861,7 @@ var $parser = (function (undefined) {
         const code = this.input.codePointAt(index);
 
         if (code === undefined || isNaN(code)) {
-          return "";
+          return '';
         }
 
         return String.fromCodePoint(code);
@@ -892,7 +892,7 @@ var $parser = (function (undefined) {
         rules = this.getCurrentRules();
       var { input } = this;
       var { env = this.defaultEnv } = this.options;
-      this.match = this.text = "";
+      this.match = this.text = '';
 
       if (this.end >= input.length) {
         this.token = Lexer.STATIC.EOF_TOKEN;
@@ -900,7 +900,7 @@ var $parser = (function (undefined) {
         this.firstLine = this.lastLine;
         this.firstColumn = this.lastColumn;
         return {
-          text: "",
+          text: '',
           t: this.mapSymbol(this.token),
           token: this.token,
           start: this.start,
@@ -914,15 +914,15 @@ var $parser = (function (undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        var regexp = this.getRuleItem(rule, "regexp"),
-          token = this.getRuleItem(rule, "token"),
-          action = this.getRuleItem(rule, "action");
+        var regexp = this.getRuleItem(rule, 'regexp'),
+          token = this.getRuleItem(rule, 'token'),
+          action = this.getRuleItem(rule, 'action');
 
         if (
-          typeof regexp !== "function" &&
+          typeof regexp !== 'function' &&
           regexp &&
           env &&
-          typeof regexp.test !== "function"
+          typeof regexp.test !== 'function'
         ) {
           regexp = regexp[env];
         }
@@ -934,7 +934,7 @@ var $parser = (function (undefined) {
         if ((m = this.matchRegExp(regexp))) {
           this.start = this.end;
           this.end += m[0].length;
-          lines = m[0].split("\n");
+          lines = m[0].split('\n');
           lines.shift();
           this.lineNumber += lines.length;
           const position = {
@@ -980,112 +980,112 @@ var $parser = (function (undefined) {
         }
       }
 
-      throw new Error("no match lexer");
+      throw new Error('no match lexer');
     },
   };
   Lexer.STATIC = {
-    INITIAL_STATE: "I",
+    INITIAL_STATE: 'I',
     DEBUG_CONTEXT_LIMIT: 20,
-    EOF_TOKEN: "$EOF",
-    UNKNOWN_TOKEN: "$UNKNOWN",
-    HIDDEN_TOKEN: "$HIDDEN",
+    EOF_TOKEN: '$EOF',
+    UNKNOWN_TOKEN: '$UNKNOWN',
+    HIDDEN_TOKEN: '$HIDDEN',
   };
   var lexer = new Lexer({
     rules: [
-      ["characterClassAnyWord", my.createMatchString.bind(undefined, "\\w")],
+      ['characterClassAnyWord', my.createMatchString.bind(undefined, '\\w')],
       [
-        "characterClassAnyWordInverted",
-        my.createMatchString.bind(undefined, "\\W"),
+        'characterClassAnyWordInverted',
+        my.createMatchString.bind(undefined, '\\W'),
       ],
-      ["whitespaceCharacter", my.createMatchString.bind(undefined, "\\s")],
+      ['whitespaceCharacter', my.createMatchString.bind(undefined, '\\s')],
       [
-        "whitespaceCharacterInverted",
-        my.createMatchString.bind(undefined, "\\S"),
-      ],
-      [
-        "characterClassAnyDecimalDigit",
-        my.createMatchString.bind(undefined, "\\d"),
+        'whitespaceCharacterInverted',
+        my.createMatchString.bind(undefined, '\\S'),
       ],
       [
-        "characterClassAnyDecimalDigitInverted",
-        my.createMatchString.bind(undefined, "\\D"),
+        'characterClassAnyDecimalDigit',
+        my.createMatchString.bind(undefined, '\\d'),
       ],
-      ["anchorWordBoundary", my.createMatchString.bind(undefined, "\\b")],
-      ["anchorNonWordBoundary", my.createMatchString.bind(undefined, "\\B")],
-      ["anchorStartOfStringOnly", my.createMatchString.bind(undefined, "\\A")],
       [
-        "anchorEndOfStringOnlyNotNewline",
-        my.createMatchString.bind(undefined, "\\z"),
+        'characterClassAnyDecimalDigitInverted',
+        my.createMatchString.bind(undefined, '\\D'),
       ],
-      ["anchorEndOfStringOnly", my.createMatchString.bind(undefined, "\\Z")],
-      ["anchorPreviousMatchEnd", my.createMatchString.bind(undefined, "\\G")],
-      ["backreference", my.matchBackreference],
+      ['anchorWordBoundary', my.createMatchString.bind(undefined, '\\b')],
+      ['anchorNonWordBoundary', my.createMatchString.bind(undefined, '\\B')],
+      ['anchorStartOfStringOnly', my.createMatchString.bind(undefined, '\\A')],
       [
-        "char",
+        'anchorEndOfStringOnlyNotNewline',
+        my.createMatchString.bind(undefined, '\\z'),
+      ],
+      ['anchorEndOfStringOnly', my.createMatchString.bind(undefined, '\\Z')],
+      ['anchorPreviousMatchEnd', my.createMatchString.bind(undefined, '\\G')],
+      ['backreference', my.matchBackreference],
+      [
+        'char',
         my.matchEscapeChar,
         function () {
           this.text = this.matches[1];
         },
       ],
-      ["lookahead", my.createMatchString.bind(undefined, "(?=")],
-      ["negativeLookahead", my.createMatchString.bind(undefined, "(?!")],
-      ["lookbehind", my.createMatchString.bind(undefined, "(?<=")],
-      ["negativeLookbehind", my.createMatchString.bind(undefined, "(?<!")],
+      ['lookahead', my.createMatchString.bind(undefined, '(?=')],
+      ['negativeLookahead', my.createMatchString.bind(undefined, '(?!')],
+      ['lookbehind', my.createMatchString.bind(undefined, '(?<=')],
+      ['negativeLookbehind', my.createMatchString.bind(undefined, '(?<!')],
       [
-        "namedGroupPrefix",
+        'namedGroupPrefix',
         my.matchNamedGroupPrefix,
         function () {
           this.text = this.matches[1];
         },
       ],
-      ["$", my.createMatchString.bind(undefined, "$")],
-      [",", my.createMatchString.bind(undefined, ",")],
-      ["^", my.createMatchString.bind(undefined, "^")],
-      ["?:", my.createMatchString.bind(undefined, "?:")],
-      ["(", my.createMatchString.bind(undefined, "(")],
-      [")", my.createMatchString.bind(undefined, ")")],
-      ["-", my.createMatchString.bind(undefined, "-")],
-      ["|", my.createMatchString.bind(undefined, "|")],
-      ["*", my.createMatchString.bind(undefined, "*")],
-      ["+", my.createMatchString.bind(undefined, "+")],
+      ['$', my.createMatchString.bind(undefined, '$')],
+      [',', my.createMatchString.bind(undefined, ',')],
+      ['^', my.createMatchString.bind(undefined, '^')],
+      ['?:', my.createMatchString.bind(undefined, '?:')],
+      ['(', my.createMatchString.bind(undefined, '(')],
+      [')', my.createMatchString.bind(undefined, ')')],
+      ['-', my.createMatchString.bind(undefined, '-')],
+      ['|', my.createMatchString.bind(undefined, '|')],
+      ['*', my.createMatchString.bind(undefined, '*')],
+      ['+', my.createMatchString.bind(undefined, '+')],
       [
-        "OPTIONAL",
-        my.createMatchString.bind(undefined, "?"),
+        'OPTIONAL',
+        my.createMatchString.bind(undefined, '?'),
         function () {
           this.userData.insideCharacterGroup = true;
         },
       ],
       [
-        "[",
-        my.createMatchString.bind(undefined, "["),
+        '[',
+        my.createMatchString.bind(undefined, '['),
         function () {
           this.userData.insideCharacterGroup = true;
         },
       ],
       [
-        "]",
-        my.createMatchString.bind(undefined, "]"),
+        ']',
+        my.createMatchString.bind(undefined, ']'),
         function () {
           this.userData.insideCharacterGroup = false;
         },
       ],
-      ["anyChar", my.matchAnyChar],
+      ['anyChar', my.matchAnyChar],
       [
-        "{",
-        my.createMatchString.bind(undefined, "{"),
+        '{',
+        my.createMatchString.bind(undefined, '{'),
         function () {
           this.userData.insideQuantifierRange = true;
         },
       ],
       [
-        "}",
-        my.createMatchString.bind(undefined, "}"),
+        '}',
+        my.createMatchString.bind(undefined, '}'),
         function () {
           this.userData.insideQuantifierRange = false;
         },
       ],
-      ["int", my.matchQuantifierNumber],
-      ["char", my.matchChar],
+      ['int', my.matchQuantifierNumber],
+      ['char', my.matchChar],
       ["'('", /'\('/g],
       ["')'", /'\)'/g],
     ],
@@ -1119,92 +1119,92 @@ var $parser = (function (undefined) {
   }
   var parser = {
     productions: [
-      ["$START", ["Regexp"]],
-      ["Regexp", ["^", "Expression"]],
-      ["Regexp", ["Expression"]],
+      ['$START', ['Regexp']],
+      ['Regexp', ['^', 'Expression']],
+      ['Regexp', ['Expression']],
       [
-        "(zeroMore_Expression_3_group_1_1)1_",
-        ["Expression_3_group_1", "(zeroMore_Expression_3_group_1_1)1_"],
+        '(zeroMore_Expression_3_group_1_1)1_',
+        ['Expression_3_group_1', '(zeroMore_Expression_3_group_1_1)1_'],
       ],
-      ["(zeroMore_Expression_3_group_1_1)1_", []],
+      ['(zeroMore_Expression_3_group_1_1)1_', []],
       [
-        "zeroMore_Expression_3_group_1_1",
-        ["(zeroMore_Expression_3_group_1_1)1_"],
+        'zeroMore_Expression_3_group_1_1',
+        ['(zeroMore_Expression_3_group_1_1)1_'],
       ],
-      ["Expression", ["SubExpression", "zeroMore_Expression_3_group_1_1"]],
+      ['Expression', ['SubExpression', 'zeroMore_Expression_3_group_1_1']],
       [
-        "(zeroMore_ExpressionItem_2)1_",
-        ["ExpressionItem", "(zeroMore_ExpressionItem_2)1_"],
+        '(zeroMore_ExpressionItem_2)1_',
+        ['ExpressionItem', '(zeroMore_ExpressionItem_2)1_'],
       ],
-      ["(zeroMore_ExpressionItem_2)1_", []],
-      ["zeroMore_ExpressionItem_2", ["(zeroMore_ExpressionItem_2)1_"]],
-      ["SubExpression", ["zeroMore_ExpressionItem_2"]],
-      ["ExpressionItem", ["Match"]],
-      ["ExpressionItem", ["Group"]],
-      ["ExpressionItem", ["Anchor"]],
-      ["ExpressionItem", ["backreference"]],
-      ["Group", ["(", "_1(Group)"]],
-      ["_2(Group)", []],
-      ["_2(Group)", ["Quantifier"]],
-      ["Group", ["namedGroupPrefix", "Expression", ")", "_2(Group)"]],
-      ["_1(_1(Group))", ["Quantifier"]],
-      ["_1(_1(Group))", []],
-      ["_1(Group)", ["Expression", ")", "_1(_1(Group))"]],
-      ["_2(_1(Group))", ["Quantifier"]],
-      ["_2(_1(Group))", []],
-      ["_1(Group)", ["?:", "Expression", ")", "_2(_1(Group))"]],
-      ["_1(Match)", []],
-      ["_1(Match)", ["Quantifier"]],
-      ["Match", ["MatchItem", "_1(Match)"]],
-      ["MatchItem", ["anyChar"]],
-      ["MatchItem", ["MatchCharacterClass"]],
-      ["MatchItem", ["char"]],
-      ["MatchCharacterClass", ["CharacterGroup"]],
-      ["MatchCharacterClass", ["CharacterClass"]],
-      ["_1(CharacterGroup)", ["CharacterGroupInner", "]"]],
-      ["_1(CharacterGroup)", ["^", "CharacterGroupInner", "]"]],
-      ["CharacterGroup", ["[", "_1(CharacterGroup)"]],
+      ['(zeroMore_ExpressionItem_2)1_', []],
+      ['zeroMore_ExpressionItem_2', ['(zeroMore_ExpressionItem_2)1_']],
+      ['SubExpression', ['zeroMore_ExpressionItem_2']],
+      ['ExpressionItem', ['Match']],
+      ['ExpressionItem', ['Group']],
+      ['ExpressionItem', ['Anchor']],
+      ['ExpressionItem', ['backreference']],
+      ['Group', ['(', '_1(Group)']],
+      ['_2(Group)', []],
+      ['_2(Group)', ['Quantifier']],
+      ['Group', ['namedGroupPrefix', 'Expression', ')', '_2(Group)']],
+      ['_1(_1(Group))', ['Quantifier']],
+      ['_1(_1(Group))', []],
+      ['_1(Group)', ['Expression', ')', '_1(_1(Group))']],
+      ['_2(_1(Group))', ['Quantifier']],
+      ['_2(_1(Group))', []],
+      ['_1(Group)', ['?:', 'Expression', ')', '_2(_1(Group))']],
+      ['_1(Match)', []],
+      ['_1(Match)', ['Quantifier']],
+      ['Match', ['MatchItem', '_1(Match)']],
+      ['MatchItem', ['anyChar']],
+      ['MatchItem', ['MatchCharacterClass']],
+      ['MatchItem', ['char']],
+      ['MatchCharacterClass', ['CharacterGroup']],
+      ['MatchCharacterClass', ['CharacterClass']],
+      ['_1(CharacterGroup)', ['CharacterGroupInner', ']']],
+      ['_1(CharacterGroup)', ['^', 'CharacterGroupInner', ']']],
+      ['CharacterGroup', ['[', '_1(CharacterGroup)']],
       [
-        "(zeroMore_CharacterGroupItem_3)1_",
-        ["CharacterGroupItem", "(zeroMore_CharacterGroupItem_3)1_"],
+        '(zeroMore_CharacterGroupItem_3)1_',
+        ['CharacterGroupItem', '(zeroMore_CharacterGroupItem_3)1_'],
       ],
-      ["(zeroMore_CharacterGroupItem_3)1_", []],
-      ["zeroMore_CharacterGroupItem_3", ["(zeroMore_CharacterGroupItem_3)1_"]],
-      ["CharacterGroupInner", ["zeroMore_CharacterGroupItem_3"]],
-      ["CharacterGroupItem", ["CharacterClass"]],
-      ["CharacterGroupItem", ["CharacterRange"]],
-      ["CharacterClass", ["characterClassAnyWordInverted"]],
-      ["CharacterClass", ["characterClassAnyWord"]],
-      ["CharacterClass", ["characterClassAnyDecimalDigit"]],
-      ["CharacterClass", ["characterClassAnyDecimalDigitInverted"]],
-      ["CharacterClass", ["whitespaceCharacter"]],
-      ["CharacterClass", ["whitespaceCharacterInverted"]],
-      ["_1(CharacterRange)", ["-", "char"]],
-      ["_1(CharacterRange)", []],
-      ["CharacterRange", ["char", "_1(CharacterRange)"]],
-      ["_1(Quantifier)", []],
-      ["_1(Quantifier)", ["OPTIONAL"]],
-      ["Quantifier", ["QuantifierType", "_1(Quantifier)"]],
-      ["QuantifierType", ["*"]],
-      ["QuantifierType", ["+"]],
-      ["QuantifierType", ["OPTIONAL"]],
-      ["_1(QuantifierType)", ["}"]],
-      ["QuantifierType", ["{", "int", "_1(QuantifierType)"]],
-      ["_1(_1(QuantifierType))", ["int", "}"]],
-      ["_1(_1(QuantifierType))", ["}"]],
-      ["_1(QuantifierType)", [",", "_1(_1(QuantifierType))"]],
-      ["Anchor", ["anchorWordBoundary"]],
-      ["Anchor", ["anchorNonWordBoundary"]],
-      ["Anchor", ["anchorStartOfStringOnly"]],
-      ["Anchor", ["anchorEndOfStringOnlyNotNewline"]],
-      ["Anchor", ["anchorEndOfStringOnly"]],
-      ["Anchor", ["anchorPreviousMatchEnd"]],
-      ["Anchor", ["$"]],
-      ["Anchor", ["lookahead", "Expression", ")"]],
-      ["Anchor", ["negativeLookahead", "Expression", ")"]],
-      ["Anchor", ["lookbehind", "Expression", ")"]],
-      ["Anchor", ["negativeLookbehind", "Expression", ")"]],
-      ["Expression_3_group_1", ["|", "SubExpression"]],
+      ['(zeroMore_CharacterGroupItem_3)1_', []],
+      ['zeroMore_CharacterGroupItem_3', ['(zeroMore_CharacterGroupItem_3)1_']],
+      ['CharacterGroupInner', ['zeroMore_CharacterGroupItem_3']],
+      ['CharacterGroupItem', ['CharacterClass']],
+      ['CharacterGroupItem', ['CharacterRange']],
+      ['CharacterClass', ['characterClassAnyWordInverted']],
+      ['CharacterClass', ['characterClassAnyWord']],
+      ['CharacterClass', ['characterClassAnyDecimalDigit']],
+      ['CharacterClass', ['characterClassAnyDecimalDigitInverted']],
+      ['CharacterClass', ['whitespaceCharacter']],
+      ['CharacterClass', ['whitespaceCharacterInverted']],
+      ['_1(CharacterRange)', ['-', 'char']],
+      ['_1(CharacterRange)', []],
+      ['CharacterRange', ['char', '_1(CharacterRange)']],
+      ['_1(Quantifier)', []],
+      ['_1(Quantifier)', ['OPTIONAL']],
+      ['Quantifier', ['QuantifierType', '_1(Quantifier)']],
+      ['QuantifierType', ['*']],
+      ['QuantifierType', ['+']],
+      ['QuantifierType', ['OPTIONAL']],
+      ['_1(QuantifierType)', ['}']],
+      ['QuantifierType', ['{', 'int', '_1(QuantifierType)']],
+      ['_1(_1(QuantifierType))', ['int', '}']],
+      ['_1(_1(QuantifierType))', ['}']],
+      ['_1(QuantifierType)', [',', '_1(_1(QuantifierType))']],
+      ['Anchor', ['anchorWordBoundary']],
+      ['Anchor', ['anchorNonWordBoundary']],
+      ['Anchor', ['anchorStartOfStringOnly']],
+      ['Anchor', ['anchorEndOfStringOnlyNotNewline']],
+      ['Anchor', ['anchorEndOfStringOnly']],
+      ['Anchor', ['anchorPreviousMatchEnd']],
+      ['Anchor', ['$']],
+      ['Anchor', ['lookahead', 'Expression', ')']],
+      ['Anchor', ['negativeLookahead', 'Expression', ')']],
+      ['Anchor', ['lookbehind', 'Expression', ')']],
+      ['Anchor', ['negativeLookbehind', 'Expression', ')']],
+      ['Expression_3_group_1', ['|', 'SubExpression']],
     ],
     productionIndexMap: {
       symbol: 0,
@@ -1220,16 +1220,16 @@ var $parser = (function (undefined) {
       return p[itemType];
     },
     getProductionSymbol: function (p) {
-      return this.getProductionItemByType(p, "symbol");
+      return this.getProductionItemByType(p, 'symbol');
     },
     getProductionRhs: function (p) {
-      return this.getProductionItemByType(p, "rhs");
+      return this.getProductionItemByType(p, 'rhs');
     },
     getProductionAction: function (p) {
-      return this.getProductionItemByType(p, "action");
+      return this.getProductionItemByType(p, 'action');
     },
     getProductionLabel: function (p) {
-      return this.getProductionItemByType(p, "label");
+      return this.getProductionItemByType(p, 'label');
     },
     isCompress: 1,
   };
@@ -1246,9 +1246,9 @@ var $parser = (function (undefined) {
   ]);
   parser.table = {
     $START: {
-      "^": 0,
+      '^': 0,
       anyChar: 0,
-      "[": 0,
+      '[': 0,
       characterClassAnyWordInverted: 0,
       characterClassAnyWord: 0,
       characterClassAnyDecimalDigit: 0,
@@ -1256,7 +1256,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 0,
       whitespaceCharacterInverted: 0,
       char: 0,
-      "(": 0,
+      '(': 0,
       namedGroupPrefix: 0,
       anchorWordBoundary: 0,
       anchorNonWordBoundary: 0,
@@ -1272,9 +1272,9 @@ var $parser = (function (undefined) {
       backreference: 0,
     },
     Regexp: {
-      "^": 1,
+      '^': 1,
       anyChar: 2,
-      "[": 2,
+      '[': 2,
       characterClassAnyWordInverted: 2,
       characterClassAnyWord: 2,
       characterClassAnyDecimalDigit: 2,
@@ -1282,7 +1282,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 2,
       whitespaceCharacterInverted: 2,
       char: 2,
-      "(": 2,
+      '(': 2,
       namedGroupPrefix: 2,
       anchorWordBoundary: 2,
       anchorNonWordBoundary: 2,
@@ -1297,19 +1297,19 @@ var $parser = (function (undefined) {
       negativeLookbehind: 2,
       backreference: 2,
     },
-    "(zeroMore_Expression_3_group_1_1)1_": {
-      "|": 3,
+    '(zeroMore_Expression_3_group_1_1)1_': {
+      '|': 3,
       $EOF: 4,
-      ")": 4,
+      ')': 4,
     },
     zeroMore_Expression_3_group_1_1: {
-      "|": 5,
+      '|': 5,
       $EOF: 5,
-      ")": 5,
+      ')': 5,
     },
     Expression: {
       anyChar: 6,
-      "[": 6,
+      '[': 6,
       characterClassAnyWordInverted: 6,
       characterClassAnyWord: 6,
       characterClassAnyDecimalDigit: 6,
@@ -1317,7 +1317,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 6,
       whitespaceCharacterInverted: 6,
       char: 6,
-      "(": 6,
+      '(': 6,
       namedGroupPrefix: 6,
       anchorWordBoundary: 6,
       anchorNonWordBoundary: 6,
@@ -1332,9 +1332,9 @@ var $parser = (function (undefined) {
       negativeLookbehind: 6,
       backreference: 6,
     },
-    "(zeroMore_ExpressionItem_2)1_": {
+    '(zeroMore_ExpressionItem_2)1_': {
       anyChar: 7,
-      "[": 7,
+      '[': 7,
       characterClassAnyWordInverted: 7,
       characterClassAnyWord: 7,
       characterClassAnyDecimalDigit: 7,
@@ -1342,7 +1342,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 7,
       whitespaceCharacterInverted: 7,
       char: 7,
-      "(": 7,
+      '(': 7,
       namedGroupPrefix: 7,
       anchorWordBoundary: 7,
       anchorNonWordBoundary: 7,
@@ -1356,13 +1356,13 @@ var $parser = (function (undefined) {
       lookbehind: 7,
       negativeLookbehind: 7,
       backreference: 7,
-      "|": 8,
+      '|': 8,
       $EOF: 8,
-      ")": 8,
+      ')': 8,
     },
     zeroMore_ExpressionItem_2: {
       anyChar: 9,
-      "[": 9,
+      '[': 9,
       characterClassAnyWordInverted: 9,
       characterClassAnyWord: 9,
       characterClassAnyDecimalDigit: 9,
@@ -1370,7 +1370,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 9,
       whitespaceCharacterInverted: 9,
       char: 9,
-      "(": 9,
+      '(': 9,
       namedGroupPrefix: 9,
       anchorWordBoundary: 9,
       anchorNonWordBoundary: 9,
@@ -1384,13 +1384,13 @@ var $parser = (function (undefined) {
       lookbehind: 9,
       negativeLookbehind: 9,
       backreference: 9,
-      "|": 9,
+      '|': 9,
       $EOF: 9,
-      ")": 9,
+      ')': 9,
     },
     SubExpression: {
       anyChar: 10,
-      "[": 10,
+      '[': 10,
       characterClassAnyWordInverted: 10,
       characterClassAnyWord: 10,
       characterClassAnyDecimalDigit: 10,
@@ -1398,7 +1398,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 10,
       whitespaceCharacterInverted: 10,
       char: 10,
-      "(": 10,
+      '(': 10,
       namedGroupPrefix: 10,
       anchorWordBoundary: 10,
       anchorNonWordBoundary: 10,
@@ -1415,7 +1415,7 @@ var $parser = (function (undefined) {
     },
     ExpressionItem: {
       anyChar: 11,
-      "[": 11,
+      '[': 11,
       characterClassAnyWordInverted: 11,
       characterClassAnyWord: 11,
       characterClassAnyDecimalDigit: 11,
@@ -1423,7 +1423,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 11,
       whitespaceCharacterInverted: 11,
       char: 11,
-      "(": 12,
+      '(': 12,
       namedGroupPrefix: 12,
       anchorWordBoundary: 13,
       anchorNonWordBoundary: 13,
@@ -1439,12 +1439,12 @@ var $parser = (function (undefined) {
       backreference: 14,
     },
     Group: {
-      "(": 15,
+      '(': 15,
       namedGroupPrefix: 18,
     },
-    "_2(Group)": {
+    '_2(Group)': {
       anyChar: 16,
-      "[": 16,
+      '[': 16,
       characterClassAnyWordInverted: 16,
       characterClassAnyWord: 16,
       characterClassAnyDecimalDigit: 16,
@@ -1452,7 +1452,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 16,
       whitespaceCharacterInverted: 16,
       char: 16,
-      "(": 16,
+      '(': 16,
       namedGroupPrefix: 16,
       anchorWordBoundary: 16,
       anchorNonWordBoundary: 16,
@@ -1466,21 +1466,21 @@ var $parser = (function (undefined) {
       lookbehind: 16,
       negativeLookbehind: 16,
       backreference: 16,
-      "|": 16,
+      '|': 16,
       $EOF: 16,
-      ")": 16,
-      "*": 17,
-      "+": 17,
+      ')': 16,
+      '*': 17,
+      '+': 17,
       OPTIONAL: 17,
-      "{": 17,
+      '{': 17,
     },
-    "_1(_1(Group))": {
-      "*": 19,
-      "+": 19,
+    '_1(_1(Group))': {
+      '*': 19,
+      '+': 19,
       OPTIONAL: 19,
-      "{": 19,
+      '{': 19,
       anyChar: 20,
-      "[": 20,
+      '[': 20,
       characterClassAnyWordInverted: 20,
       characterClassAnyWord: 20,
       characterClassAnyDecimalDigit: 20,
@@ -1488,7 +1488,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 20,
       whitespaceCharacterInverted: 20,
       char: 20,
-      "(": 20,
+      '(': 20,
       namedGroupPrefix: 20,
       anchorWordBoundary: 20,
       anchorNonWordBoundary: 20,
@@ -1502,13 +1502,13 @@ var $parser = (function (undefined) {
       lookbehind: 20,
       negativeLookbehind: 20,
       backreference: 20,
-      "|": 20,
+      '|': 20,
       $EOF: 20,
-      ")": 20,
+      ')': 20,
     },
-    "_1(Group)": {
+    '_1(Group)': {
       anyChar: 21,
-      "[": 21,
+      '[': 21,
       characterClassAnyWordInverted: 21,
       characterClassAnyWord: 21,
       characterClassAnyDecimalDigit: 21,
@@ -1516,7 +1516,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 21,
       whitespaceCharacterInverted: 21,
       char: 21,
-      "(": 21,
+      '(': 21,
       namedGroupPrefix: 21,
       anchorWordBoundary: 21,
       anchorNonWordBoundary: 21,
@@ -1530,15 +1530,15 @@ var $parser = (function (undefined) {
       lookbehind: 21,
       negativeLookbehind: 21,
       backreference: 21,
-      "?:": 24,
+      '?:': 24,
     },
-    "_2(_1(Group))": {
-      "*": 22,
-      "+": 22,
+    '_2(_1(Group))': {
+      '*': 22,
+      '+': 22,
       OPTIONAL: 22,
-      "{": 22,
+      '{': 22,
       anyChar: 23,
-      "[": 23,
+      '[': 23,
       characterClassAnyWordInverted: 23,
       characterClassAnyWord: 23,
       characterClassAnyDecimalDigit: 23,
@@ -1546,7 +1546,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 23,
       whitespaceCharacterInverted: 23,
       char: 23,
-      "(": 23,
+      '(': 23,
       namedGroupPrefix: 23,
       anchorWordBoundary: 23,
       anchorNonWordBoundary: 23,
@@ -1560,13 +1560,13 @@ var $parser = (function (undefined) {
       lookbehind: 23,
       negativeLookbehind: 23,
       backreference: 23,
-      "|": 23,
+      '|': 23,
       $EOF: 23,
-      ")": 23,
+      ')': 23,
     },
-    "_1(Match)": {
+    '_1(Match)': {
       anyChar: 25,
-      "[": 25,
+      '[': 25,
       characterClassAnyWordInverted: 25,
       characterClassAnyWord: 25,
       characterClassAnyDecimalDigit: 25,
@@ -1574,7 +1574,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 25,
       whitespaceCharacterInverted: 25,
       char: 25,
-      "(": 25,
+      '(': 25,
       namedGroupPrefix: 25,
       anchorWordBoundary: 25,
       anchorNonWordBoundary: 25,
@@ -1588,17 +1588,17 @@ var $parser = (function (undefined) {
       lookbehind: 25,
       negativeLookbehind: 25,
       backreference: 25,
-      "|": 25,
+      '|': 25,
       $EOF: 25,
-      ")": 25,
-      "*": 26,
-      "+": 26,
+      ')': 25,
+      '*': 26,
+      '+': 26,
       OPTIONAL: 26,
-      "{": 26,
+      '{': 26,
     },
     Match: {
       anyChar: 27,
-      "[": 27,
+      '[': 27,
       characterClassAnyWordInverted: 27,
       characterClassAnyWord: 27,
       characterClassAnyDecimalDigit: 27,
@@ -1609,7 +1609,7 @@ var $parser = (function (undefined) {
     },
     MatchItem: {
       anyChar: 28,
-      "[": 29,
+      '[': 29,
       characterClassAnyWordInverted: 29,
       characterClassAnyWord: 29,
       characterClassAnyDecimalDigit: 29,
@@ -1619,7 +1619,7 @@ var $parser = (function (undefined) {
       char: 30,
     },
     MatchCharacterClass: {
-      "[": 31,
+      '[': 31,
       characterClassAnyWordInverted: 32,
       characterClassAnyWord: 32,
       characterClassAnyDecimalDigit: 32,
@@ -1627,7 +1627,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 32,
       whitespaceCharacterInverted: 32,
     },
-    "_1(CharacterGroup)": {
+    '_1(CharacterGroup)': {
       characterClassAnyWordInverted: 33,
       characterClassAnyWord: 33,
       characterClassAnyDecimalDigit: 33,
@@ -1635,12 +1635,12 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 33,
       whitespaceCharacterInverted: 33,
       char: 33,
-      "^": 34,
+      '^': 34,
     },
     CharacterGroup: {
-      "[": 35,
+      '[': 35,
     },
-    "(zeroMore_CharacterGroupItem_3)1_": {
+    '(zeroMore_CharacterGroupItem_3)1_': {
       characterClassAnyWordInverted: 36,
       characterClassAnyWord: 36,
       characterClassAnyDecimalDigit: 36,
@@ -1648,7 +1648,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 36,
       whitespaceCharacterInverted: 36,
       char: 36,
-      "]": 37,
+      ']': 37,
     },
     zeroMore_CharacterGroupItem_3: {
       characterClassAnyWordInverted: 38,
@@ -1658,7 +1658,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 38,
       whitespaceCharacterInverted: 38,
       char: 38,
-      "]": 38,
+      ']': 38,
     },
     CharacterGroupInner: {
       characterClassAnyWordInverted: 39,
@@ -1686,8 +1686,8 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 46,
       whitespaceCharacterInverted: 47,
     },
-    "_1(CharacterRange)": {
-      "-": 48,
+    '_1(CharacterRange)': {
+      '-': 48,
       characterClassAnyWordInverted: 49,
       characterClassAnyWord: 49,
       characterClassAnyDecimalDigit: 49,
@@ -1695,14 +1695,14 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 49,
       whitespaceCharacterInverted: 49,
       char: 49,
-      "]": 49,
+      ']': 49,
     },
     CharacterRange: {
       char: 50,
     },
-    "_1(Quantifier)": {
+    '_1(Quantifier)': {
       anyChar: 51,
-      "[": 51,
+      '[': 51,
       characterClassAnyWordInverted: 51,
       characterClassAnyWord: 51,
       characterClassAnyDecimalDigit: 51,
@@ -1710,7 +1710,7 @@ var $parser = (function (undefined) {
       whitespaceCharacter: 51,
       whitespaceCharacterInverted: 51,
       char: 51,
-      "(": 51,
+      '(': 51,
       namedGroupPrefix: 51,
       anchorWordBoundary: 51,
       anchorNonWordBoundary: 51,
@@ -1724,30 +1724,30 @@ var $parser = (function (undefined) {
       lookbehind: 51,
       negativeLookbehind: 51,
       backreference: 51,
-      "|": 51,
+      '|': 51,
       $EOF: 51,
-      ")": 51,
+      ')': 51,
       OPTIONAL: 52,
     },
     Quantifier: {
-      "*": 53,
-      "+": 53,
+      '*': 53,
+      '+': 53,
       OPTIONAL: 53,
-      "{": 53,
+      '{': 53,
     },
     QuantifierType: {
-      "*": 54,
-      "+": 55,
+      '*': 54,
+      '+': 55,
       OPTIONAL: 56,
-      "{": 58,
+      '{': 58,
     },
-    "_1(QuantifierType)": {
-      "}": 57,
-      ",": 61,
+    '_1(QuantifierType)': {
+      '}': 57,
+      ',': 61,
     },
-    "_1(_1(QuantifierType))": {
+    '_1(_1(QuantifierType))': {
       int: 59,
-      "}": 60,
+      '}': 60,
     },
     Anchor: {
       anchorWordBoundary: 62,
@@ -1763,7 +1763,7 @@ var $parser = (function (undefined) {
       negativeLookbehind: 72,
     },
     Expression_3_group_1: {
-      "|": 73,
+      '|': 73,
     },
   };
   parser.parse = function parse(input, options) {
@@ -1821,8 +1821,8 @@ var $parser = (function (undefined) {
     let getExpected = function () {
       const s = topSymbol;
 
-      if (typeof s !== "string") {
-        throw new Error("unexpected topSymbol:" + s);
+      if (typeof s !== 'string') {
+        throw new Error('unexpected topSymbol:' + s);
       }
 
       if (!isSymbolName(s)) {
@@ -1868,7 +1868,7 @@ var $parser = (function (undefined) {
         }
       }
 
-      if (typeof topSymbol === "string") {
+      if (typeof topSymbol === 'string') {
         if (!token) {
           token = lexer.lex();
           pushRecoveryTokens(recoveryTokens, token);
@@ -1877,7 +1877,7 @@ var $parser = (function (undefined) {
         if (topSymbol === token.t) {
           symbolStack.pop();
           const terminalNode = new AstTokenNode(token);
-          terminalNode.type = "token";
+          terminalNode.type = 'token';
           terminalNodes.push(terminalNode);
           const parent = peekStack(astStack);
           parent.addChild(terminalNode);
@@ -1894,7 +1894,7 @@ var $parser = (function (undefined) {
           ) {
             symbolStack.push.apply(
               symbolStack,
-              getProductionRhs(production).concat().reverse()
+              getProductionRhs(production).concat().reverse(),
             );
           } else {
             const newAst = new AstSymbolNode({
@@ -1907,7 +1907,7 @@ var $parser = (function (undefined) {
             astStack.push(newAst);
             symbolStack.push.apply(
               symbolStack,
-              getProductionRhs(production).concat(productionEndFlag).reverse()
+              getProductionRhs(production).concat(productionEndFlag).reverse(),
             );
           }
         } else {
@@ -1929,9 +1929,9 @@ var $parser = (function (undefined) {
               topSymbol === nextToken.t ||
               getTableVal(topSymbol, nextToken.t) !== undefined
             ) {
-              recommendedAction.action = "del";
+              recommendedAction.action = 'del';
             } else if (error.expected.length) {
-              recommendedAction.action = "add";
+              recommendedAction.action = 'add';
             }
 
             const localErrorNode = new AstErrorNode({
@@ -1945,7 +1945,7 @@ var $parser = (function (undefined) {
                   errorNode: localErrorNode,
                   parseTree: getAstRootNode(astStack, transformNode, true),
                 },
-                recommendedAction
+                recommendedAction,
               ) || {};
             const { action } = recovery;
             peekStack(astStack).children.pop();
@@ -1955,19 +1955,19 @@ var $parser = (function (undefined) {
               break;
             }
 
-            if (action === "del") {
+            if (action === 'del') {
               error.recovery = true;
               const deleteToken = recoveryTokens.pop();
-              if (deleteToken) deleteToken.recovery = "del";
+              if (deleteToken) deleteToken.recovery = 'del';
               token = null;
-            } else if (action === "add") {
+            } else if (action === 'add') {
               error.recovery = true;
               token = {
                 ...token,
                 token: recovery.token,
                 text: recovery.text,
                 t: lexer.mapSymbol(recovery.token),
-                recovery: "add",
+                recovery: 'add',
               };
               lexer.pushToken(token);
               pushRecoveryTokens(recoveryTokens, token);
@@ -1981,7 +1981,7 @@ var $parser = (function (undefined) {
 
       topSymbol = peekStack(symbolStack);
 
-      while (topSymbol && typeof topSymbol === "function") {
+      while (topSymbol && typeof topSymbol === 'function') {
         if (onAction) {
           onAction({
             token: lexer.getLastToken(),

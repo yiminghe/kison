@@ -1,12 +1,8 @@
 import type { Context } from '../Context';
-import type {
-  AstSymbolNode,
-  LiteralToken,
-  AstNodeTypeMap,
-} from '../../parser';
+import type { AstSymbolNode, LiteralToken, AstNodeTypeMap } from '../../parser';
 import { VBObject, VBValue, VBValidPrimitiveType } from './VBValue';
 import { Visibility_Node } from '../../parserLLK';
-import type {SubSymbolItem} from './SubSymbolItem';
+import type { SubSymbolItem } from './SubSymbolItem';
 
 export interface VBFile {
   id: string;
@@ -31,8 +27,6 @@ export class VariableSymbolItem {
 }
 
 export type Visibility = Visibility_Node['children'][0]['token'];
-
-
 
 export interface SubBinder {
   fn: (
@@ -62,10 +56,10 @@ export interface VBVariableInfo {
 export type ExtractSymbol<
   T extends string = any,
   Prefix extends string = any,
-  > = T extends `${Prefix}_${infer s}`
+> = T extends `${Prefix}_${infer s}`
   ? s extends LiteralToken | AstSymbolNode['symbol']
-  ? s
-  : 'ast'
+    ? s
+    : 'ast'
   : 'ast';
 
 export type AstVisitor<T extends string = any, Prefix extends string = any> = (
@@ -75,17 +69,18 @@ export type AstVisitor<T extends string = any, Prefix extends string = any> = (
 
 export type Evaluators = {
   [e in
-  | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
-  | 'evaluate']?: AstVisitor<e, 'evaluate'>;
+    | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
+    | 'evaluate']?: AstVisitor<e, 'evaluate'>;
 };
 
 export type Loaders = {
-  [e in
-  | `load_${LiteralToken | AstSymbolNode['symbol']}`
-  | 'load']?: AstVisitor<e, 'load'>;
+  [e in `load_${LiteralToken | AstSymbolNode['symbol']}` | 'load']?: AstVisitor<
+    e,
+    'load'
+  >;
 };
 
 export class FileSymbolTable {
   symbolTable = new Map<SymbolName, SymbolItem>();
-  constructor(public type: 'module' | 'class') { }
+  constructor(public type: 'module' | 'class') {}
 }

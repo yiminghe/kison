@@ -209,8 +209,8 @@ class Grammar {
     > = {};
 
     function getAstClassForParent(p: ProductionRule, index: number) {
-      let n = (
-        getAstNodeClassName(p.skipAstNode ? p.symbol + '_Parent' : p.symbol)
+      let n = getAstNodeClassName(
+        p.skipAstNode ? p.symbol + '_Parent' : p.symbol,
       );
       if (productionsBySymbol[p.symbol].ruleIndexes.length > 1) {
         n += '_' + index;
@@ -356,7 +356,8 @@ class Grammar {
       }
       if (ruleIndexes.length > 1) {
         code.push(
-          `${skipAstNode ? '' : 'export '
+          `${
+            skipAstNode ? '' : 'export '
           }type ${normalizeClassName} = ${ruleIndexes
             .map((index) => {
               return getAstClass(productions[index], index);
@@ -364,7 +365,7 @@ class Grammar {
             .join(' | ')};`,
         );
       } else if (!skipAstNode) {
-        code.push(`export type { ${normalizeClassName} };`)
+        code.push(`export type { ${normalizeClassName} };`);
       }
     }
 
@@ -690,7 +691,7 @@ class Grammar {
     fake.productions = newPs;
   }
 
-  expandProductionsInternal() { }
+  expandProductionsInternal() {}
 
   getPrecedenceTerminal(p: ProductionRule) {
     if (p.precedence) {
@@ -1113,7 +1114,7 @@ class Grammar {
     this.buildMeta();
   }
 
-  buildProductions() { }
+  buildProductions() {}
 
   buildNonTerminals() {
     var { lexer, nonTerminals } = this;
@@ -1325,17 +1326,17 @@ class Grammar {
     code.push(lexerCode);
     code.push(
       'var parser = ' +
-      serializeObject({
-        productions,
-        productionIndexMap,
-        getProductionItemByType: this.getProductionItemByType,
-        getProductionSymbol: this.getProductionSymbol,
-        getProductionRhs: this.getProductionRhs,
-        getProductionAction: this.getProductionAction,
-        getProductionLabel: this.getProductionLabel,
-        isCompress: 1,
-      }) +
-      ';',
+        serializeObject({
+          productions,
+          productionIndexMap,
+          getProductionItemByType: this.getProductionItemByType,
+          getProductionSymbol: this.getProductionSymbol,
+          getProductionRhs: this.getProductionRhs,
+          getProductionAction: this.getProductionAction,
+          getProductionLabel: this.getProductionLabel,
+          isCompress: 1,
+        }) +
+        ';',
     );
 
     code.push(
@@ -1350,11 +1351,9 @@ class Grammar {
 
     code.push(
       'parser.prioritySymbolMap = ' +
-      serializeObject(this.prioritySymbolMap) +
-      ';',
+        serializeObject(this.prioritySymbolMap) +
+        ';',
     );
-
-
 
     const productionSkipAstNodeSet: number[] = [];
     this.productionInstances.forEach((p, index) => {
@@ -1378,12 +1377,11 @@ class Grammar {
       this.productionRuleIndexMap[index++] = p.ruleIndex;
     }
 
-    internalCode += (
+    internalCode +=
       '\n' +
       'var productionRuleIndexMap = ' +
       serializeObject(this.productionRuleIndexMap) +
-      ';'
-    );
+      ';';
 
     if (cfg.compressSymbol) {
       internalCode +=

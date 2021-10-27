@@ -1,9 +1,13 @@
-import type { VBFile } from "./runtime";
-import type { Context } from "../Context";
+import type { VBFile } from './runtime';
+import type { Context } from '../Context';
 import { VBObject, VBValue } from './VBValue';
 
 export class VBScope {
-  constructor(public file: VBFile, public subName: string, public context: Context) { }
+  constructor(
+    public file: VBFile,
+    public subName: string,
+    public context: Context,
+  ) {}
 
   variableMap = new Map<String, VBObject>();
 
@@ -16,7 +20,10 @@ export class VBScope {
     if (v) {
       return v;
     }
-    const subItem = this.context.getSymbolItemFromFile(this.subName, this.file.id);
+    const subItem = this.context.getSymbolItemFromFile(
+      this.subName,
+      this.file.id,
+    );
     if (subItem && subItem.type !== 'variable') {
       v = subItem.getStaticVariable(name);
     }

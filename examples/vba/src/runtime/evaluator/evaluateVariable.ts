@@ -125,7 +125,9 @@ registerEvaluators({
       isStatic = first.token === 'STATIC';
     }
     const currentScope = context.getCurrentScope();
-    const subSymbolItem = context.symbolTable.get(currentScope.file.id)?.symbolTable.get(currentScope.subName);
+    const subSymbolItem = context.symbolTable
+      .get(currentScope.file.id)
+      ?.symbolTable.get(currentScope.subName);
     if (!subSymbolItem || subSymbolItem.type === 'variable') {
       throw new Error('expected subSymbolItem when evaluate_variableStmt!');
     }

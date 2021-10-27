@@ -192,7 +192,7 @@ class LLGrammar extends Grammar {
           for (const p of ps) {
             const two = new Production({
               symbol: newSymbol,
-              ruleIndex:p.ruleIndex,
+              ruleIndex: p.ruleIndex,
               rhs: p.rhs.slice(p.indexAtStringIndex(minLeft, true)),
               skipAstNode: true,
             });
@@ -201,7 +201,7 @@ class LLGrammar extends Grammar {
           const one = new Production({
             symbol: left.symbol,
             label: left.label,
-            ruleIndex:left.ruleIndex,
+            ruleIndex: left.ruleIndex,
             skipAstNode: left.skipAstNode,
             rhs: [
               ...left.rhs.slice(0, left.indexAtStringIndex(minLeft)),

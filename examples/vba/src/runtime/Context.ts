@@ -1,11 +1,6 @@
 import parser from '../parser';
 import type { AstRootNode } from '../parser';
-import type {
-  VBValue,
-  SubBinder,
-  VBFile,
-  SubSymbolItem,
-} from './types';
+import type { VBValue, SubBinder, VBFile, SubSymbolItem } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import {
@@ -78,7 +73,11 @@ export class Context {
     }
   }
 
-  getSymbolItemFromFile(name: string, file: string, noCheckPublic: boolean = false) {
+  getSymbolItemFromFile(
+    name: string,
+    file: string,
+    noCheckPublic: boolean = false,
+  ) {
     const item = this.symbolTable.get(file);
     if (item && item.type === 'module') {
       const sub = item.symbolTable.get(name);
@@ -88,7 +87,6 @@ export class Context {
         }
       }
     }
-
   }
 
   async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
@@ -118,8 +116,13 @@ export class Context {
         const argInfo = argumentsInfo[i];
         if (argInfo) {
           if (argInfo.optional && argInfo.defaultValue) {
-            scope.setVariableValue(argInfo.name,
-              new VBObject(argInfo.defaultValue.value, argInfo.asType?.type || 'Variant'));
+            scope.setVariableValue(
+              argInfo.name,
+              new VBObject(
+                argInfo.defaultValue.value,
+                argInfo.asType?.type || 'Variant',
+              ),
+            );
           }
         }
         ++i;

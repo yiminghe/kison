@@ -22,10 +22,7 @@ registerEvaluators({
     };
   },
 
-  [`evaluate_array`](
-    node,
-    context,
-  ): Array_Type | Error_Type {
+  [`evaluate_array`](node, context): Array_Type | Error_Type {
     const { children: raw } = node;
     const children = raw.slice(1, -1);
     const ret: Atom_Value_Type[][] = [];

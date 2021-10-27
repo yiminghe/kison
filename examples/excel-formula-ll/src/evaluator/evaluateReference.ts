@@ -28,7 +28,7 @@ const cellAddress = `(?:
 )`.replace(/\s/g, '');
 
 registerEvaluators({
-  ...{
+  ...({
     ['evaluate_rangeReference'](node: Reference_Node, context: Context) {
       const { children } = node;
       const left = evaluate(children[0], context);
@@ -84,7 +84,7 @@ registerEvaluators({
         return intersectReference(left, right);
       }
     },
-  } as any,
+  } as any),
 
   evaluate_CELL(node) {
     const { text } = node;

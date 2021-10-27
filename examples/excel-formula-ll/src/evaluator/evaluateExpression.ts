@@ -8,7 +8,7 @@ import {
 
 import type { AstSymbolNode, Exp_Node } from '../parser';
 
-import { evaluate,registerEvaluators } from './evaluators';
+import { evaluate, registerEvaluators } from './evaluators';
 import type {
   All_Type,
   Array_Type,

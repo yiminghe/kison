@@ -7,11 +7,7 @@ import type {
   NUM_ERROR,
   NAME_ERROR,
 } from '../common/constants';
-import type {
-  AstSymbolNode,
-  LiteralToken,
-  AstNodeTypeMap,
-} from '../parser';
+import type { AstSymbolNode, LiteralToken, AstNodeTypeMap } from '../parser';
 
 export interface String_Type {
   type: 'string';
@@ -77,7 +73,6 @@ export type Atom_Value_Type = Exclude<Atom_Type, Ref_Type>;
 export interface Context {
   getCellValues: (ref: Ref_Type) => Atom_Value_Type[][];
 }
-
 
 export type ExtractSymbol<
   T extends string = any,

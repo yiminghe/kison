@@ -13,7 +13,9 @@ require.config({
 
 const $ = (v: string): any => document.getElementById(v)!;
 
-const sampleCode = localStorage.getItem('code')||`
+const sampleCode =
+  localStorage.getItem('code') ||
+  `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
   MsgBox msg
   call MsgBox(msg2)
@@ -50,8 +52,8 @@ require(['vs/editor/editor.main'], () => {
   }
 
   function getCurrentCode() {
-    const code= editor.getModel()!.getValue().trim();
-    localStorage.setItem('code',code);
+    const code = editor.getModel()!.getValue().trim();
+    localStorage.setItem('code', code);
     return code;
   }
 

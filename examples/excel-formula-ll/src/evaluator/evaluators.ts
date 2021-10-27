@@ -1,6 +1,6 @@
 import type { AstNode } from '../parser';
 
-import type { All_Type, Context,Evaluators,AstVisitor } from './types';
+import type { All_Type, Context, Evaluators, AstVisitor } from './types';
 
 export function evaluate(
   ast: AstNode,

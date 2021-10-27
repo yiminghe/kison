@@ -1,12 +1,8 @@
 import type { Context } from '../Context';
-import type {
-  Block_Node,
-  SubStmt_Node,
-  FunctionStmt_Node,
-} from '../../parser';
+import type { Block_Node, SubStmt_Node, FunctionStmt_Node } from '../../parser';
 import { load } from '../loader/loaders';
 import { VBObject } from './VBValue';
-import type {VBFile,ArgInfo,AsTypeClauseInfo,Visibility} from './runtime';
+import type { VBFile, ArgInfo, AsTypeClauseInfo, Visibility } from './runtime';
 
 export class SubSymbolItem {
   block: Block_Node;

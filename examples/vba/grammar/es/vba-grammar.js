@@ -43,11 +43,12 @@ ${WS}
 
 module.exports = {
   productions: n.makeProductions([
-    [n.progam,
-    n.moduleDeclarationsOptional,
-    n.endOfLineZeroOrMore,
-    n.moduleBodyOptional,
-    n.endOfLineZeroOrMore,
+    [
+      n.progam,
+      n.moduleDeclarationsOptional,
+      n.endOfLineZeroOrMore,
+      n.moduleBodyOptional,
+      n.endOfLineZeroOrMore,
     ],
     [
       n.endOfLine,
@@ -66,33 +67,30 @@ module.exports = {
       n.groupEndZeroOrMoreMark,
     ],
 
-    [n.moduleDeclarations,
-    n.moduleDeclarationsElement,
-    n.groupStartMark,
-    n.endOfLineOneOrMore,
-    n.moduleDeclarationsElement,
-    n.groupEndZeroOrMoreMark,
-    n.endOfLineZeroOrMore,
+    [
+      n.moduleDeclarations,
+      n.moduleDeclarationsElement,
+      n.groupStartMark,
+      n.endOfLineOneOrMore,
+      n.moduleDeclarationsElement,
+      n.groupEndZeroOrMoreMark,
+      n.endOfLineZeroOrMore,
     ],
 
     [n.moduleDeclarationsElement, n.variableStmt],
 
-    [n.moduleBody,
-
-    n.moduleBodyElement,
-    n.groupStartMark,
-    n.endOfLineOneOrMore,
-    n.moduleBodyElement,
-    n.groupEndZeroOrMoreMark,
-    n.endOfLineZeroOrMore,
-    ],
-
     [
+      n.moduleBody,
+
       n.moduleBodyElement,
-      n.functionStmt,
-      n.alternationMark,
-      n.subStmt,
+      n.groupStartMark,
+      n.endOfLineOneOrMore,
+      n.moduleBodyElement,
+      n.groupEndZeroOrMoreMark,
+      n.endOfLineZeroOrMore,
     ],
+
+    [n.moduleBodyElement, n.functionStmt, n.alternationMark, n.subStmt],
 
     [
       n.visibility,
@@ -131,14 +129,15 @@ module.exports = {
       n.END_FUNCTION,
     ],
 
-    [n.block,
+    [
+      n.block,
 
-    n.blockStmt,
-    n.groupStartMark,
-    n.endOfStatement,
-    n.blockStmt,
-    n.groupEndZeroOrMoreMark,
-    n.endOfStatement,
+      n.blockStmt,
+      n.groupStartMark,
+      n.endOfStatement,
+      n.blockStmt,
+      n.groupEndZeroOrMoreMark,
+      n.endOfStatement,
     ],
 
     [
@@ -471,9 +470,9 @@ module.exports = {
         R_SQUARE_BRACKET: ']',
       }),
 
-      [n.NEWLINE, new RegExp(NEWLINE),],
-      [n.REMCOMMENT, new RegExp(REMCOMMENT),],
-      [n.COMMENT, new RegExp(COMMENT),],
+      [n.NEWLINE, new RegExp(NEWLINE)],
+      [n.REMCOMMENT, new RegExp(REMCOMMENT)],
+      [n.COMMENT, new RegExp(COMMENT)],
 
       ['$HIDDEN', HIDDEN_REG],
 

@@ -135,19 +135,19 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                                           'text': 'a'
                                         }
                                       ],
-                                      'ruleIndex': 30
+                                      'ruleIndex': 17
                                     }
                                   ],
-                                  'ruleIndex': 27
+                                  'ruleIndex': 16
                                 }
                               ],
-                              'ruleIndex': 11
+                              'ruleIndex': 6
                             }
                           ],
-                          'ruleIndex': 10
+                          'ruleIndex': 5
                         }
                       ],
-                      'ruleIndex': 6
+                      'ruleIndex': 3
                     },
                     {
                       'start': 4,
@@ -192,7 +192,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                               'text': '+'
                             }
                           ],
-                          'ruleIndex': 55
+                          'ruleIndex': 40
                         },
                         {
                           'start': 6,
@@ -206,22 +206,22 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                           'text': '?'
                         }
                       ],
-                      'ruleIndex': 53
+                      'ruleIndex': 38
                     }
                   ],
-                  'ruleIndex': 15
+                  'ruleIndex': 8
                 }
               ],
-              'ruleIndex': 12
+              'ruleIndex': 7
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -349,19 +349,19 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                                           'text': 'c'
                                         }
                                       ],
-                                      'ruleIndex': 30
+                                      'ruleIndex': 17
                                     }
                                   ],
-                                  'ruleIndex': 27
+                                  'ruleIndex': 16
                                 }
                               ],
-                              'ruleIndex': 11
+                              'ruleIndex': 6
                             }
                           ],
-                          'ruleIndex': 10
+                          'ruleIndex': 5
                         }
                       ],
-                      'ruleIndex': 6
+                      'ruleIndex': 3
                     },
                     {
                       'start': 6,
@@ -375,10 +375,10 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                       'text': ')'
                     }
                   ],
-                  'ruleIndex': 18
+                  'ruleIndex': 9
                 }
               ],
-              'ruleIndex': 12
+              'ruleIndex': 7
             },
             {
               'start': 7,
@@ -422,22 +422,22 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                           'text': 'b'
                         }
                       ],
-                      'ruleIndex': 30
+                      'ruleIndex': 17
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -565,16 +565,16 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                           'text': 'a'
                                         }
                                       ],
-                                      'ruleIndex': 30
+                                      'ruleIndex': 17
                                     }
                                   ],
-                                  'ruleIndex': 27
+                                  'ruleIndex': 16
                                 }
                               ],
-                              'ruleIndex': 11
+                              'ruleIndex': 6
                             }
                           ],
-                          'ruleIndex': 10
+                          'ruleIndex': 5
                         },
                         {
                           'start': 2,
@@ -639,19 +639,19 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                           'text': 'b'
                                         }
                                       ],
-                                      'ruleIndex': 30
+                                      'ruleIndex': 17
                                     }
                                   ],
-                                  'ruleIndex': 27
+                                  'ruleIndex': 16
                                 }
                               ],
-                              'ruleIndex': 11
+                              'ruleIndex': 6
                             }
                           ],
-                          'ruleIndex': 10
+                          'ruleIndex': 5
                         }
                       ],
-                      'ruleIndex': 6
+                      'ruleIndex': 3
                     },
                     {
                       'start': 4,
@@ -696,16 +696,16 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                               'text': '*'
                             }
                           ],
-                          'ruleIndex': 54
+                          'ruleIndex': 39
                         }
                       ],
-                      'ruleIndex': 53
+                      'ruleIndex': 38
                     }
                   ],
-                  'ruleIndex': 15
+                  'ruleIndex': 8
                 }
               ],
-              'ruleIndex': 12
+              'ruleIndex': 7
             },
             {
               'start': 6,
@@ -749,22 +749,22 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                           'text': 'z'
                         }
                       ],
-                      'ruleIndex': 30
+                      'ruleIndex': 17
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -935,13 +935,13 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                               'text': 'z'
                                             }
                                           ],
-                                          'ruleIndex': 50
+                                          'ruleIndex': 35
                                         }
                                       ],
-                                      'ruleIndex': 41
+                                      'ruleIndex': 28
                                     }
                                   ],
-                                  'ruleIndex': 39
+                                  'ruleIndex': 26
                                 },
                                 {
                                   'start': 5,
@@ -955,28 +955,28 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                   'text': ']'
                                 }
                               ],
-                              'ruleIndex': 35
+                              'ruleIndex': 22
                             }
                           ],
-                          'ruleIndex': 31
+                          'ruleIndex': 18
                         }
                       ],
-                      'ruleIndex': 29
+                      'ruleIndex': 17
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -1136,10 +1136,10 @@ exports[`regexp parser works for [a-z] 1`] = `
                                               'text': 'z'
                                             }
                                           ],
-                                          'ruleIndex': 50
+                                          'ruleIndex': 35
                                         }
                                       ],
-                                      'ruleIndex': 41
+                                      'ruleIndex': 28
                                     },
                                     {
                                       'start': 4,
@@ -1173,13 +1173,13 @@ exports[`regexp parser works for [a-z] 1`] = `
                                               'text': '\\\\b'
                                             }
                                           ],
-                                          'ruleIndex': 50
+                                          'ruleIndex': 35
                                         }
                                       ],
-                                      'ruleIndex': 41
+                                      'ruleIndex': 28
                                     }
                                   ],
-                                  'ruleIndex': 39
+                                  'ruleIndex': 26
                                 },
                                 {
                                   'start': 5,
@@ -1193,28 +1193,28 @@ exports[`regexp parser works for [a-z] 1`] = `
                                   'text': ']'
                                 }
                               ],
-                              'ruleIndex': 35
+                              'ruleIndex': 22
                             }
                           ],
-                          'ruleIndex': 31
+                          'ruleIndex': 18
                         }
                       ],
-                      'ruleIndex': 29
+                      'ruleIndex': 17
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -1271,7 +1271,7 @@ exports[`regexp parser works for \\12\\b 1`] = `
                   'text': '\\\\\\\\12'
                 }
               ],
-              'ruleIndex': 14
+              'ruleIndex': 8
             },
             {
               'start': 3,
@@ -1304,20 +1304,19 @@ exports[`regexp parser works for \\12\\b 1`] = `
                       'type': 'token',
                       'text': '\\\\\\\\b'
                     }
-                  ],
-                  'ruleIndex': 62
+                  ]
                 }
               ],
-              'ruleIndex': 13
+              'ruleIndex': 8
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -1405,7 +1404,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                           'text': 'a'
                         }
                       ],
-                      'ruleIndex': 30
+                      'ruleIndex': 17
                     },
                     {
                       'start': 2,
@@ -1439,16 +1438,16 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                               'text': '+'
                             }
                           ],
-                          'ruleIndex': 55
+                          'ruleIndex': 40
                         }
                       ],
-                      'ruleIndex': 53
+                      'ruleIndex': 38
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             },
             {
               'start': 3,
@@ -1492,13 +1491,13 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                           'text': 'z'
                         }
                       ],
-                      'ruleIndex': 30
+                      'ruleIndex': 17
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             },
             {
               'start': 4,
@@ -1531,17 +1530,16 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                       'type': 'token',
                       'text': '$'
                     }
-                  ],
-                  'ruleIndex': 68
+                  ]
                 }
               ],
-              'ruleIndex': 13
+              'ruleIndex': 8
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
   'ruleIndex': 1
@@ -1621,7 +1619,7 @@ exports[`regexp parser works for a{1,2} 1`] = `
                           'text': 'a'
                         }
                       ],
-                      'ruleIndex': 30
+                      'ruleIndex': 17
                     },
                     {
                       'start': 1,
@@ -1699,25 +1697,25 @@ exports[`regexp parser works for a{1,2} 1`] = `
                               'text': '}'
                             }
                           ],
-                          'ruleIndex': 58
+                          'ruleIndex': 43
                         }
                       ],
-                      'ruleIndex': 53
+                      'ruleIndex': 38
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;
 
@@ -1794,7 +1792,7 @@ exports[`regexp parser works for a{1} 1`] = `
                           'text': 'a'
                         }
                       ],
-                      'ruleIndex': 30
+                      'ruleIndex': 17
                     },
                     {
                       'start': 1,
@@ -1850,24 +1848,24 @@ exports[`regexp parser works for a{1} 1`] = `
                               'text': '}'
                             }
                           ],
-                          'ruleIndex': 58
+                          'ruleIndex': 43
                         }
                       ],
-                      'ruleIndex': 53
+                      'ruleIndex': 38
                     }
                   ],
-                  'ruleIndex': 27
+                  'ruleIndex': 16
                 }
               ],
-              'ruleIndex': 11
+              'ruleIndex': 6
             }
           ],
-          'ruleIndex': 10
+          'ruleIndex': 5
         }
       ],
-      'ruleIndex': 6
+      'ruleIndex': 3
     }
   ],
-  'ruleIndex': 2
+  'ruleIndex': 1
 }"
 `;

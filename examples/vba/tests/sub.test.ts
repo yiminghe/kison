@@ -4,7 +4,7 @@ describe('sub', () => {
   it('exit sub works', async () => {
     const code = `
 sub main
-msgbox 1
+msgbox vbModal
 test2
 msgbox 4
 end sub
@@ -12,7 +12,7 @@ end sub
 sub test2
 msgbox 2
 exit sub
-msgbox 3
+console.log 3
 end sub
     `;
     const ret: any[] = await run(code);
@@ -34,7 +34,7 @@ msgbox 3
 end sub
 
 sub test2
-msgbox 1
+msgbox VBA.FormShowConstants.vbModal
 end
 msgbox 2
 end sub

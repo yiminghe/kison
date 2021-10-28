@@ -1,4 +1,11 @@
-import { parser, Context } from '../src/index';
+import {
+  parser,
+  Context,
+  VariableBinder,
+  VBInteger,
+  SubBinder,
+  VBObject,
+} from '../src/index';
 import type * as Manaco from 'monaco-editor';
 
 declare var require: any;
@@ -33,7 +40,7 @@ sub main
   MsgBox m2
 
   dim c as New MyClass
-  msgbox c.m
+  console.log c.m
 end sub
 `.trim();
 
@@ -43,6 +50,8 @@ const classSampleCode =
 public m as Integer
 
 sub Class_Initialize
+msgbox VBA.FormShowConstants.vbModal
+msgbox vbModal
 m = 2
 end sub
 `.trim();
@@ -118,11 +127,15 @@ require(['vs/editor/editor.main'], () => {
     console.log(parser.lex(value));
   });
   $('parse').addEventListener('click', () => {
+    let start = Date.now();
     const { ret } = getCurrentAst();
     console.log(ret);
     if (ret.error) {
       console.error(ret.error.errorMessage);
     }
+    console.log('parse duration: ' + (Date.now() - start));
+    console.log('');
+    console.log('');
   });
 
   // function wait(ms: number) {
@@ -131,28 +144,47 @@ require(['vs/editor/editor.main'], () => {
   //   });
   // }
 
-  const MsgBoxSub = {
-    name: 'MsgBox',
+  const MsgBoxSub: (name: string) => SubBinder = (name: string) => ({
+    name,
     argumentsInfo: [
       {
         name: 'msg',
       },
+      {
+        name: 'msg2',
+      },
     ],
-    async fn(context: Context) {
+    async value(context) {
       console.log(
-        'Call MsgBox: ',
+        `Call ${name}: `,
         context.getCurrentScope().getVariable('msg')?.value.value,
+        context.getCurrentScope().getVariable('msg2')?.value.value || '',
       );
       // await wait(100);
       return undefined;
     },
+  });
+
+  const vbModal: VariableBinder = {
+    name: 'vbModal',
+    value: new VBInteger(1),
   };
 
   $('evaluate').addEventListener('click', async () => {
     try {
       const context = new Context();
-      context.registerSubBinder(MsgBoxSub);
+
+      context.registerSubBinder(MsgBoxSub('MsgBox'));
+      context.registerSubBinder(MsgBoxSub('console.log'));
+
+      context.registerVariableBinder(vbModal);
+      context.registerVariableBinder({
+        ...vbModal,
+        name: 'VBA.FormShowConstants.' + vbModal.name,
+      });
+
       const { classCode, moduleCode } = getAllCodes();
+      let start = Date.now();
       await context.load(classCode, {
         id: 'MyClass',
         name: 'MyClass',
@@ -163,7 +195,14 @@ require(['vs/editor/editor.main'], () => {
         name: 'module',
         type: 'module',
       });
+      console.log('parse duration: ' + (Date.now() - start));
+      console.log('');
+      console.log('');
+      start = Date.now();
       await context.callSub($('sub').value);
+      console.log('');
+      console.log('');
+      console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {
       console.error(e);
     }

@@ -282,10 +282,10 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': 'x'
                                     }
                                   ],
-                                  'ruleIndex': 37
+                                  'ruleIndex': 39
                                 }
                               ],
-                              'ruleIndex': 33
+                              'ruleIndex': 35
                             },
                             {
                               'start': 42,
@@ -330,10 +330,10 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 39
+                                  'ruleIndex': 41
                                 }
                               ],
-                              'ruleIndex': 32
+                              'ruleIndex': 34
                             }
                           ],
                           'ruleIndex': 17
@@ -603,7 +603,7 @@ exports[`vba parser parse correctly 2`] = `
                                   'lastColumn': 7,
                                   'token': 'IDENTIFIER',
                                   'type': 'token',
-                                  'text': 'MsgBox'
+                                  'text': 'msgbox'
                                 },
                                 {
                                   'start': 17,
@@ -657,22 +657,22 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 39
+                                              'ruleIndex': 41
                                             }
                                           ],
-                                          'ruleIndex': 32
+                                          'ruleIndex': 34
                                         }
                                       ],
-                                      'ruleIndex': 24
+                                      'ruleIndex': 26
                                     }
                                   ],
-                                  'ruleIndex': 23
+                                  'ruleIndex': 25
                                 }
                               ],
-                              'ruleIndex': 22
+                              'ruleIndex': 24
                             }
                           ],
-                          'ruleIndex': 21
+                          'ruleIndex': 22
                         }
                       ],
                       'ruleIndex': 12

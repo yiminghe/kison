@@ -1011,6 +1011,14 @@ export const iCS_S_MemberCall = 'iCS_S_MemberCall';
 export const iCS_S_MemberCallOptional = 'iCS_S_MemberCall?';
 export const iCS_S_MemberCallZeroOrMore = 'iCS_S_MemberCall*';
 export const iCS_S_MemberCallOneOrMore = 'iCS_S_MemberCall+';
+export const eCS_MemberProcedureCall = 'eCS_MemberProcedureCall';
+export const eCS_MemberProcedureCallOptional = 'eCS_MemberProcedureCall?';
+export const eCS_MemberProcedureCallZeroOrMore = 'eCS_MemberProcedureCall*';
+export const eCS_MemberProcedureCallOneOrMore = 'eCS_MemberProcedureCall+';
+export const iCS_B_MemberProcedureCall = 'iCS_B_MemberProcedureCall';
+export const iCS_B_MemberProcedureCallOptional = 'iCS_B_MemberProcedureCall?';
+export const iCS_B_MemberProcedureCallZeroOrMore = 'iCS_B_MemberProcedureCall*';
+export const iCS_B_MemberProcedureCallOneOrMore = 'iCS_B_MemberProcedureCall+';
 export const groupStartMark = "'('";
 export const groupEndMark = "')'";
 export const groupEndOptionalMark = "')'?";
@@ -1211,10 +1219,14 @@ export const makeProductions = (arr) => {
 export const makeLexerRules = (arr) => {
   return arr.map((a) => {
     if (Array.isArray(a)) {
-      return {
+      const ret = {
         token: a[0],
         regexp: a[1],
       };
+      if (a[2]) {
+        ret.action = a[2];
+      }
+      return ret;
     }
     return a;
   });

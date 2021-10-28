@@ -6,7 +6,10 @@ import type {
   EXIT_SUB_Node,
   END_Node,
 } from '../../parser';
-import { Context } from '../Context';
+import type { VBClass } from './VBClass';
+import type { VBArray } from './VBArray';
+import { VBNamespace } from './VBNamespace';
+import { SubBinder, VariableBinder } from './runtime';
 
 export class VBCollection {
   type: 'Collection' = 'Collection';
@@ -35,7 +38,10 @@ export class VBSingle {
 
 export class VBInteger {
   type: 'Integer' = 'Integer';
-  constructor(public value: number = 0) {}
+  value: number = 0;
+  constructor(value: number = 0) {
+    this.value = value & 0xffff;
+  }
 }
 
 export class VBLongLong {
@@ -91,60 +97,6 @@ export interface Subscript {
   one: boolean;
 }
 
-type ArrayElement = VBObject | VBObject[];
-
-const ARRAY_ACCESS_ERROR = `Subscript out of Range`;
-
-export class VBArray {
-  type: 'Array' = 'Array';
-  value: ArrayElement[] = [];
-  dynamic: boolean = false;
-  constructor(
-    public elementType: VBValidPrimitiveType,
-    public subscripts: Subscript[],
-  ) {
-    if (!subscripts.length) {
-      this.dynamic = true;
-    }
-  }
-
-  getElement(indexes: number[]) {
-    let { value, elementType, subscripts } = this;
-    if (indexes.length !== subscripts.length) {
-      throw new Error(ARRAY_ACCESS_ERROR);
-    }
-    let element = value[0];
-    for (let i = 0; i < indexes.length; i++) {
-      const index = indexes[i];
-      const subscript = subscripts[i];
-      if (!subscript) {
-        throw new Error(ARRAY_ACCESS_ERROR);
-      }
-      if (index < subscript.lower || index > subscript.upper) {
-        throw new Error(ARRAY_ACCESS_ERROR);
-      }
-      if (value[index] === undefined) {
-        if (i < subscripts.length - 1) {
-          value[index] = [];
-        } else {
-          const VBPrimitiveClass = VBPrimitiveTypeClass[elementType];
-          value[index] = new VBObject(new VBPrimitiveClass(), {
-            type: elementType,
-            isArray: false,
-          });
-        }
-      }
-      element = value[index];
-      value = value[index] as (VBObject | VBObject[])[];
-    }
-    return element as VBObject;
-  }
-
-  setElement(indexes: number[], value: VBValue) {
-    this.getElement(indexes).value = value;
-  }
-}
-
 export class ExitResult {
   type: 'Exit' = 'Exit';
   constructor(
@@ -161,118 +113,6 @@ export class ExitResult {
 export const END_EXIT_RESULT = new ExitResult({
   token: 'END',
 } as END_Node);
-
-// address
-export class VBObject {
-  type: 'Object' = 'Object';
-
-  dynamicArray: boolean = false;
-
-  constructor(
-    // nested address or value
-    private _value: VBValue | VBObject = VB_EMPTY,
-    public asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE(),
-  ) {
-    if (_value.type === 'Array') {
-      this.dynamicArray = _value.dynamic;
-
-      if (asType.type === 'Variant') {
-        this.dynamicArray = true;
-      }
-    }
-  }
-
-  clone() {
-    const newObj = new VBObject(this._value, this.asType);
-    newObj.dynamicArray = this.dynamicArray;
-    return newObj;
-  }
-
-  get value(): VBValue {
-    if (this._value.type === 'Object') {
-      return this._value.value;
-    }
-    return this._value;
-  }
-
-  _getObject(): VBObject {
-    if (this._value.type === 'Object') {
-      return this._value._getObject();
-    }
-    return this;
-  }
-
-  set value(value: VBValue | VBObject) {
-    if (value.type === 'Object') {
-      this._getObject()._value = value.value;
-    } else {
-      this._getObject()._value = value;
-    }
-  }
-}
-
-// user class
-export class VBClass {
-  type: 'Class' = 'Class';
-  private _init: boolean = false;
-  value = new Map<string, VBObject>();
-  constructor(public classType: string, public context: Context) {}
-  ensureInit() {
-    if (this._init) {
-      return;
-    }
-    this._init = true;
-    const fileSymbolTable = this.context.symbolTable.get(this.classType);
-    if (!fileSymbolTable) {
-      throw new Error('Can not find class: ' + this.classType);
-    }
-    for (const symbolItem of fileSymbolTable.symbolTable.values()) {
-      if (symbolItem.type === 'variable') {
-        this.value.set(symbolItem.name, symbolItem.value.clone());
-      }
-    }
-    this.callSub('Class_Initialize', [], false);
-  }
-  callSub(
-    name: string,
-    args: (VBValue | VBObject)[] = [],
-    check: boolean = true,
-  ) {
-    name = name.toLowerCase();
-    this.ensureInit();
-    const fileSymbolTable = this.context.symbolTable.get(this.classType)!;
-    const sub = fileSymbolTable.symbolTable.get(name);
-    if (sub && sub.type === 'sub') {
-      this.context.callSubSymbolItem(sub, args, this);
-    } else {
-      if (check) {
-        throw new Error(`Can not find sub ${name} in class ${this.classType}!`);
-      }
-    }
-  }
-  callFunction() {
-    this.ensureInit();
-  }
-  letProperty() {
-    this.ensureInit();
-  }
-  setProperty() {
-    this.ensureInit();
-  }
-  getProperty() {
-    this.ensureInit();
-  }
-  letMember() {
-    this.ensureInit();
-  }
-  setMember() {
-    this.ensureInit();
-  }
-  getMember(name: string) {
-    this.ensureInit();
-    return this.value.get(name);
-  }
-}
 
 export class VBNothing {
   type: 'Nothing' = 'Nothing';
@@ -322,7 +162,13 @@ Object.keys(VBPrimitiveTypeClass).forEach((k) => {
 
 export type VBValidPrimitiveType = keyof typeof VBPrimitiveTypeClass;
 
-export type VBValue = VBPrimitive | VBArray | VBClass;
+export type VBValue =
+  | VBPrimitive
+  | VBArray
+  | VBClass
+  | VBNamespace
+  | SubBinder
+  | VariableBinder;
 
 export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();

@@ -6,6 +6,8 @@ import type {
   VBFile,
   SubSymbolItem,
   VBClass,
+  VariableBinder,
+  UserVariableBinder,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -13,6 +15,7 @@ import {
   SymbolItem,
   VBScope,
   ArgInfo,
+  VBNamespace,
   VB_EMPTY,
   VBObject,
   ExitResult,
@@ -31,7 +34,7 @@ const defaultFileId: VBFile = {
 export class Context {
   astMap = new Map<VBFile, AstRootNode>();
 
-  subBindersMap = new Map<string, SubBinder>();
+  bindersMap = new Map<string, VBObject>();
 
   currentFile: VBFile = defaultFileId;
 
@@ -40,6 +43,7 @@ export class Context {
   scopeStack: VBScope[] = [];
 
   load(code: string, file: VBFile = defaultFileId) {
+    file.name = file.name.toLowerCase();
     if (!code) {
       this.symbolTable.delete(file.id);
     }
@@ -59,8 +63,50 @@ export class Context {
     currentTable.symbolTable.set(name.toLowerCase(), item);
   }
 
-  registerSubBinder(subBinder: SubBinder) {
-    this.subBindersMap.set(subBinder.name.toLowerCase(), subBinder);
+  registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {
+    const binder: SubBinder = {
+      ...subBinder,
+      type: 'subBinder',
+      name: subBinder.name.toLowerCase(),
+    };
+    this._registerBinder(binder);
+  }
+
+  registerVariableBinder(variableBinder: UserVariableBinder) {
+    const binder: VariableBinder = {
+      ...variableBinder,
+      type: 'variableBinder',
+      name: variableBinder.name.toLowerCase(),
+    };
+    this._registerBinder(binder);
+  }
+
+  _registerBinder(userBinder: VariableBinder | SubBinder) {
+    const names = userBinder.name.split('.');
+    let namespace = this.bindersMap;
+    const len = names.length;
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
+      if (i === len - 1) {
+        let binder;
+        if (userBinder.type === 'subBinder') {
+          binder = new VBObject(userBinder, undefined, true);
+        } else {
+          binder = new VBObject(userBinder.value, undefined, true);
+        }
+        namespace.set(name, binder);
+      } else {
+        if (!namespace.get(name)) {
+          const newNamespace = new VBObject(new VBNamespace(name));
+          namespace.set(name, newNamespace);
+        }
+        const n2 = namespace.get(name)?.value;
+        if (n2?.type !== 'Namespace') {
+          throw new Error('error when binding');
+        }
+        namespace = n2.value;
+      }
+    }
   }
 
   getCurrentScope() {
@@ -68,6 +114,7 @@ export class Context {
   }
 
   renameFile(id: string, name: string) {
+    name = name.toLowerCase();
     const { symbolTable } = this;
     for (const fileSymbolTable of symbolTable.values()) {
       const { file } = fileSymbolTable;
@@ -119,33 +166,6 @@ export class Context {
     throw new Error('Can not find file name: ' + name);
   }
 
-  async callSubSymbolItem(
-    subSymbolItem: SubSymbolItem,
-    args: (VBValue | VBObject)[] = [],
-    classObj?: VBClass,
-  ) {
-    const argumentsInfo = subSymbolItem.arugmentsInfo;
-    const subName = subSymbolItem.name.toLowerCase();
-    this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
-    if (classObj) {
-      last(this.scopeStack).classObj = classObj;
-    }
-    let ret = await evaluate(subSymbolItem.block, this);
-    if (ret && (ret as ExitResult).type === 'Exit') {
-      const exit: ExitResult = ret;
-      if (exit.token.token === 'END') {
-        return exit;
-      }
-    }
-    if (subSymbolItem.type === 'function') {
-      ret = last(this.scopeStack).getVariable(subName).value;
-    } else {
-      ret = VBEmpty;
-    }
-    this.scopeStack.pop();
-    return ret;
-  }
-
   _setupScope(
     subName: string,
     args: (VBValue | VBObject)[],
@@ -181,9 +201,47 @@ export class Context {
     this.scopeStack.push(scope);
   }
 
-  async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
-    subName = subName.toLowerCase();
+  async callSubSymbolItem(
+    subSymbolItem: SubSymbolItem,
+    args: (VBValue | VBObject)[] = [],
+    classObj?: VBClass,
+  ) {
+    const argumentsInfo = subSymbolItem.arugmentsInfo;
+    const subName = subSymbolItem.name;
+    this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
+    if (classObj) {
+      last(this.scopeStack).classObj = classObj;
+    }
+    let ret = await evaluate(subSymbolItem.block, this);
+    if (ret && (ret as ExitResult).type === 'Exit') {
+      const exit: ExitResult = ret;
+      if (exit.token.token === 'END') {
+        return exit;
+      }
+    }
+    if (subSymbolItem.type === 'function') {
+      ret = last(this.scopeStack).getVariable(subName).value;
+    } else {
+      ret = VBEmpty;
+    }
+    this.scopeStack.pop();
+    return ret;
+  }
 
+  async callSubBinder(subDef: SubBinder, args: (VBValue | VBObject)[] = []) {
+    this._setupScope(subDef.name, args, subDef.argumentsInfo);
+    let ret = subDef.value(this);
+    if (ret && (ret as Promise<any>).then) {
+      ret = await ret;
+    }
+    if (ret === false) {
+      return END_EXIT_RESULT;
+    }
+    this.scopeStack.pop();
+    return ret || VB_EMPTY;
+  }
+
+  async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
     function getItemFromFile(file: string, noCheck: boolean = false) {
       const item = symbolTable.get(file);
       if (item && item.type === 'module') {
@@ -196,7 +254,7 @@ export class Context {
       }
     }
 
-    const { subBindersMap, symbolTable } = this;
+    const { bindersMap: subBindersMap, symbolTable } = this;
     let subSymbolItem: SubSymbolItem | undefined = getItemFromFile(
       this.currentFile.id,
       true,
@@ -212,19 +270,32 @@ export class Context {
     if (subSymbolItem) {
       return this.callSubSymbolItem(subSymbolItem, args);
     }
-    const def = subBindersMap.get(subName);
-    if (!def) {
+    const names = subName.split('.');
+
+    let defMap = subBindersMap;
+    let i;
+    let subDef;
+
+    for (i = 0; i < names.length; i++) {
+      const n = names[i];
+      const namespace = defMap.get(n);
+      if (!namespace) {
+        throw new Error('Can not find sub definition: ' + subName);
+      }
+      if (namespace.value.type === 'Namespace') {
+        defMap = namespace.value.value;
+      } else if (
+        namespace.value.type === 'subBinder' &&
+        i === names.length - 1
+      ) {
+        subDef = namespace.value;
+      }
+    }
+
+    if (!subDef) {
       throw new Error('Can not find sub definition: ' + subName);
     }
-    this._setupScope(subName, args, def.argumentsInfo);
-    let ret = def.fn(this);
-    if (ret && (ret as Promise<any>).then) {
-      ret = await ret;
-    }
-    if (ret === false) {
-      return END_EXIT_RESULT;
-    }
-    this.scopeStack.pop();
-    return ret || VB_EMPTY;
+
+    return this.callSubBinder(subDef, args);
   }
 }

@@ -1,6 +1,7 @@
 import type { Context } from '../Context';
 import type { AstSymbolNode, LiteralToken, AstNodeTypeMap } from '../../parser';
-import { VBObject, VBValue, AsTypeClauseInfo } from './VBValue';
+import { VBValue, AsTypeClauseInfo } from './VBValue';
+import { VBObject } from './VBObject';
 import { Visibility_Node } from '../../parserLLK';
 import type { SubSymbolItem } from './SubSymbolItem';
 
@@ -43,10 +44,22 @@ export class VariableSymbolItem {
 export type Visibility = Visibility_Node['children'][0]['token'];
 
 export interface SubBinder {
-  fn: (
+  type: 'subBinder';
+  value: (
     context: Context,
   ) => Promise<VBValue | undefined> | VBValue | undefined | false;
   argumentsInfo: ArgInfo[];
+  name: string;
+}
+
+export interface VariableBinder {
+  type: 'variableBinder';
+  value: VBValue;
+  name: string;
+}
+
+export interface UserVariableBinder {
+  value: VBValue;
   name: string;
 }
 
@@ -60,7 +73,7 @@ export interface ArgInfo {
 
 export interface VBVariableInfo {
   name: string;
-  value: () => VBObject;
+  value: () => Promise<VBObject> | VBObject;
 }
 
 export type ExtractSymbol<

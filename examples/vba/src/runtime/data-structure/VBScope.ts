@@ -1,6 +1,8 @@
 import type { VBFile } from './runtime';
 import type { Context } from '../Context';
-import { VBClass, VBObject, VBValue } from './VBValue';
+import type { VBValue } from './VBValue';
+import type { VBClass } from './VBClass';
+import { VBObject } from './VBObject';
 
 export class VBScope {
   constructor(
@@ -17,14 +19,16 @@ export class VBScope {
   }
 
   _getVariable(name: string): VBObject | undefined {
-    let v = this.variableMap.get(name);
+    const { variableMap, context, classObj, file, subName } = this;
+
+    // local scope variable
+    let v = variableMap.get(name);
     if (v) {
       return v;
     }
-    const subItem = this.context.getSymbolItemFromFile(
-      this.subName,
-      this.file.id,
-    );
+    const subItem = context.getSymbolItemFromFile(subName, file.id);
+
+    // static variable
     if (subItem && subItem.type !== 'variable') {
       v = subItem.getStaticVariable(name);
     }
@@ -32,15 +36,22 @@ export class VBScope {
       return v;
     }
 
-    if (this.classObj) {
-      v = this.classObj.getMember(name);
+    // class member
+    if (classObj) {
+      v = classObj.get(name);
     }
 
     if (v) {
       return v;
     }
 
-    const vItem = this.context.getSymbolItem(name, this.file);
+    // binder
+    v = context.bindersMap.get(name);
+    if (v) {
+      return v;
+    }
+
+    const vItem = context.getSymbolItem(name, file);
     if (vItem && vItem.type === 'variable') {
       v = vItem.value;
     }

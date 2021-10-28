@@ -65,9 +65,7 @@ end sub
       error = e;
     }
 
-    expect(() => {
-      throw error;
-    }).toThrowErrorMatchingInlineSnapshot(`"Subscript out of Range"`);
+    expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
   });
 
   it('redim works', async () => {
@@ -82,9 +80,7 @@ end sub
       error = e;
     }
 
-    expect(() => {
-      throw error;
-    }).toThrowErrorMatchingInlineSnapshot(`"Subscript out of Range"`);
+    expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
 
     error = undefined;
 
@@ -99,9 +95,7 @@ end sub
       error = e;
     }
 
-    expect(() => {
-      throw error;
-    }).toThrowErrorMatchingInlineSnapshot(`"unexpected redim!"`);
+    expect(error.message).toMatchInlineSnapshot(`"unexpected redim!"`);
 
     ret = await run(`
 sub main
@@ -160,8 +154,6 @@ end sub
       error = e;
     }
 
-    expect(() => {
-      throw error;
-    }).toThrowErrorMatchingInlineSnapshot(`"Subscript out of Range"`);
+    expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
   });
 });

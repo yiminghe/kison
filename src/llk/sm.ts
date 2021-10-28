@@ -210,6 +210,7 @@ export type Unit = StateUnit | SymbolStateUnit | RootSymbolUnit;
 export type AllState = State | SymbolState;
 
 class State {
+  classType: 'State' = 'State';
   transitions: Transition[] = [];
   constructor(public type: string, public unit: Unit) {
     this.transitions = [];
@@ -220,6 +221,7 @@ class State {
 }
 
 class SymbolState {
+  classType: 'SymbolState' = 'SymbolState';
   units: Record<string, RootSymbolUnit>;
   _transitions: Transition[] = [];
   alltransitions?: Transition[];

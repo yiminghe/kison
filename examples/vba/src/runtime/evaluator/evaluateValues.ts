@@ -51,10 +51,17 @@ registerEvaluators({
     let v: VBObject | undefined = await evaluate(valueNodes[0], context);
 
     for (let i = 1; i < valueNodes.length; i++) {
-      if (!v || v.value.type !== 'Class') {
-        throw new Error('expected class instance!');
+      if (!v) {
+        throw new Error('unexpected member access!');
       }
-      v = v.value.getMember(collect_IDENTIFIER(valueNodes[i])!);
+      const id = collect_IDENTIFIER(valueNodes[i])!;
+      if (v.value.type === 'Class') {
+        v = v.value.get(id);
+      } else if (v.value.type === 'Namespace') {
+        v = v.value.get(id);
+      } else {
+        throw new Error('unexpected member access!');
+      }
     }
 
     return v || VB_EMPTY;
@@ -69,7 +76,7 @@ registerEvaluators({
       }
     }
 
-    const id = (node.children[0] as IDENTIFIER_Node).text;
+    const id = collect_IDENTIFIER(node, true)!;
     const scope = context.getCurrentScope();
 
     // a = r(1)

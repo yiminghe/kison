@@ -217,7 +217,31 @@ module.exports = {
 
     [n.setStmt, n.SET, n.implicitCallStmt_InStmt, n.EQ, n.valueStmt],
 
-    [n.explicitCallStmt, n.eCS_ProcedureCall],
+    [
+      n.explicitCallStmt,
+      n.eCS_MemberProcedureCall,
+      n.alternationMark,
+      n.eCS_ProcedureCall,
+    ],
+
+    [
+      n.eCS_MemberProcedureCall,
+      n.CALL,
+      n.implicitCallStmt_InStmtOptional,
+      '.',
+      n.IDENTIFIER,
+      n.typeHintOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.argsCall,
+      n.RPAREN,
+      n.groupEndOptionalMark,
+      n.groupStartMark,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.groupEndOptionalMark,
+    ],
 
     [
       n.eCS_ProcedureCall,
@@ -237,7 +261,27 @@ module.exports = {
       n.groupEndOptionalMark,
     ],
 
-    [n.implicitCallStmt_InBlock, n.iCS_B_ProcedureCall],
+    [
+      n.implicitCallStmt_InBlock,
+      n.iCS_B_MemberProcedureCall,
+      n.alternationMark,
+      n.iCS_B_ProcedureCall,
+    ],
+
+    [
+      n.iCS_B_MemberProcedureCall,
+      n.implicitCallStmt_InStmtOptional,
+      '.',
+      n.IDENTIFIER,
+      n.typeHintOptional,
+      n.argsCallOptional,
+      n.dictionaryCallStmtOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.subscripts,
+      n.RPAREN,
+      n.groupEndOptionalMark,
+    ],
 
     [
       n.iCS_B_ProcedureCall,
@@ -559,7 +603,13 @@ module.exports = {
 
       [n.INTEGERLITERAL, /(\+|-)?[0-9]+/],
 
-      [n.IDENTIFIER, /\w[\w\d]*/],
+      [
+        n.IDENTIFIER,
+        /\w[\w\d]*/,
+        function action() {
+          this.text = (this.text || '').toLowerCase();
+        },
+      ],
     ]),
   },
 };

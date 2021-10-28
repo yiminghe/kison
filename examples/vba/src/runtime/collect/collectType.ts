@@ -3,13 +3,23 @@ import { AstNode } from '../../parserLLK';
 import { Context } from '../Context';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
 
-export function collect_IDENTIFIER(node: AstNode): string | undefined {
+export function collect_IDENTIFIER(
+  node: AstNode,
+  breadth: boolean = false,
+): string | undefined {
   if (node.type === 'token' && node.token === 'IDENTIFIER') {
     return node.text;
   }
   if (node.type === 'symbol') {
+    if (breadth) {
+      for (const c of node.children) {
+        if (c.type === 'token' && c.token === 'IDENTIFIER') {
+          return c.text;
+        }
+      }
+    }
     for (const c of node.children) {
-      const text = collect_IDENTIFIER(c);
+      const text = collect_IDENTIFIER(c, breadth);
       if (text) {
         return text;
       }

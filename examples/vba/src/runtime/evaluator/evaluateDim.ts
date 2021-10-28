@@ -3,7 +3,10 @@ import type {
   VariableListStmt_Node,
   ValueStmt_Node,
 } from '../../parser';
-import { collect_asTypeClause } from '../collect/collectType';
+import {
+  collect_asTypeClause,
+  collect_IDENTIFIER,
+} from '../collect/collectType';
 import type { Context } from '../Context';
 import {
   AsTypeClauseInfo,
@@ -58,7 +61,7 @@ registerEvaluators({
 
   async evaluate_variableSubStmt(node, context): Promise<VBVariableInfo> {
     const { children } = node;
-    const name = (children[0] as IDENTIFIER_Node).text;
+    const name = collect_IDENTIFIER(node, true)!;
     let asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE();
     let subscripts: Subscript[] | undefined;
     for (const c of children) {
@@ -94,8 +97,9 @@ registerEvaluators({
       const classId = classType[0];
       context.symbolTable.get(classId);
       if (isNew) {
-        value = () => {
+        value = async () => {
           const value = new VBClass(classId, context);
+          await value.init();
           return new VBObject(value, asType);
         };
       } else {
@@ -160,10 +164,12 @@ registerEvaluators({
     for (const v of variables) {
       if (isStatic) {
         if (!subSymbolItem.hasStaticVariable(v.name)) {
-          subSymbolItem.addStaticVariable(v.name, v.value());
+          const value = await v.value();
+          subSymbolItem.addStaticVariable(v.name, value);
         }
       } else {
-        currentScope.setVariable(v.name, v.value());
+        const value = await v.value();
+        currentScope.setVariable(v.name, value);
       }
     }
   },

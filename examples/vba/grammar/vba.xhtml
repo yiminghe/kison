@@ -1223,7 +1223,7 @@
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#blockStmt" title="blockStmt">blockStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
-      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="explicitCallStmt">explicitCallStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="199" height="37">
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="explicitCallStmt">explicitCallStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="291" height="81">
          <defs>
             <style type="text/css">
     @namespace "http://www.w3.org/2000/svg";
@@ -1254,19 +1254,95 @@
   </style>
          </defs>
          <polygon points="9 17 1 13 1 21"></polygon>
-         <polygon points="17 17 9 13 9 21"></polygon><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#eCS_ProcedureCall" xlink:title="eCS_ProcedureCall">
-            <rect x="31" y="3" width="140" height="32"></rect>
-            <rect x="29" y="1" width="140" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="39" y="21">eCS_ProcedureCall</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m140 0 h10 m3 0 h-3"></svg:path>
-         <polygon points="189 17 197 13 197 21"></polygon>
-         <polygon points="189 17 181 13 181 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <polygon points="17 17 9 13 9 21"></polygon><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#eCS_MemberProcedureCall" xlink:title="eCS_MemberProcedureCall">
+            <rect x="51" y="3" width="192" height="32"></rect>
+            <rect x="49" y="1" width="192" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="21">eCS_MemberProcedureCall</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#eCS_ProcedureCall" xlink:title="eCS_ProcedureCall">
+            <rect x="51" y="47" width="140" height="32"></rect>
+            <rect x="49" y="45" width="140" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="65">eCS_ProcedureCall</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m192 0 h10 m-232 0 h20 m212 0 h20 m-252 0 q10 0 10 10 m232 0 q0 -10 10 -10 m-242 10 v24 m232 0 v-24 m-232 24 q0 10 10 10 m212 0 q10 0 10 -10 m-222 10 h10 m140 0 h10 m0 0 h52 m23 -44 h-3"></svg:path>
+         <polygon points="281 17 289 13 289 21"></polygon>
+         <polygon points="281 17 273 13 273 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
          <xhtml:div class="ebnf"><xhtml:code>
                <div><a href="#explicitCallStmt" title="explicitCallStmt">explicitCallStmt</a></div>
-               <div>         ::= <a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</a></div></xhtml:code></xhtml:div>
+               <div>         ::= <a href="#eCS_MemberProcedureCall" title="eCS_MemberProcedureCall">eCS_MemberProcedureCall</a></div>
+               <div>           | <a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</a></div></xhtml:code></xhtml:div>
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#blockStmt" title="blockStmt">blockStmt</xhtml:a></xhtml:li>
+         </xhtml:ul>
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="eCS_MemberProcedureCall">eCS_MemberProcedureCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="953" height="155">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 17 1 13 1 21"></polygon>
+         <polygon points="17 17 9 13 9 21"></polygon>
+         <rect x="31" y="3" width="54" height="32" rx="10"></rect>
+         <rect x="29" y="1" width="54" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="39" y="21">CALL</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#implicitCallStmt_InStmt" xlink:title="implicitCallStmt_InStmt">
+            <rect x="125" y="35" width="168" height="32"></rect>
+            <rect x="123" y="33" width="168" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="133" y="53">implicitCallStmt_InStmt</text></a><rect x="333" y="3" width="24" height="32" rx="10"></rect>
+         <rect x="331" y="1" width="24" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="341" y="21">.</text>
+         <rect x="377" y="3" width="102" height="32" rx="10"></rect>
+         <rect x="375" y="1" width="102" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="385" y="21">IDENTIFIER</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#typeHint" xlink:title="typeHint">
+            <rect x="519" y="35" width="72" height="32"></rect>
+            <rect x="517" y="33" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="527" y="53">typeHint</text></a><rect x="651" y="35" width="74" height="32" rx="10"></rect>
+         <rect x="649" y="33" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="659" y="53">LPAREN</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#argsCall" xlink:title="argsCall">
+            <rect x="745" y="35" width="72" height="32"></rect>
+            <rect x="743" y="33" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="753" y="53">argsCall</text></a><rect x="837" y="35" width="74" height="32" rx="10"></rect>
+         <rect x="835" y="33" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="845" y="53">RPAREN</text>
+         <rect x="633" y="121" width="74" height="32" rx="10"></rect>
+         <rect x="631" y="119" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="641" y="139">LPAREN</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#subscripts" xlink:title="subscripts">
+            <rect x="727" y="121" width="84" height="32"></rect>
+            <rect x="725" y="119" width="84" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="735" y="139">subscripts</text></a><rect x="831" y="121" width="74" height="32" rx="10"></rect>
+         <rect x="829" y="119" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="839" y="139">RPAREN</text>
+         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m54 0 h10 m20 0 h10 m0 0 h178 m-208 0 h20 m188 0 h20 m-228 0 q10 0 10 10 m208 0 q0 -10 10 -10 m-218 10 v12 m208 0 v-12 m-208 12 q0 10 10 10 m188 0 q10 0 10 -10 m-198 10 h10 m168 0 h10 m20 -32 h10 m24 0 h10 m0 0 h10 m102 0 h10 m20 0 h10 m0 0 h82 m-112 0 h20 m92 0 h20 m-132 0 q10 0 10 10 m112 0 q0 -10 10 -10 m-122 10 v12 m112 0 v-12 m-112 12 q0 10 10 10 m92 0 q10 0 10 -10 m-102 10 h10 m72 0 h10 m40 -32 h10 m0 0 h270 m-300 0 h20 m280 0 h20 m-320 0 q10 0 10 10 m300 0 q0 -10 10 -10 m-310 10 v12 m300 0 v-12 m-300 12 q0 10 10 10 m280 0 q10 0 10 -10 m-290 10 h10 m74 0 h10 m0 0 h10 m72 0 h10 m0 0 h10 m74 0 h10 m22 -32 l2 0 m2 0 l2 0 m2 0 l2 0 m-362 86 l2 0 m2 0 l2 0 m2 0 l2 0 m22 0 h10 m0 0 h282 m-312 0 h20 m292 0 h20 m-332 0 q10 0 10 10 m312 0 q0 -10 10 -10 m-322 10 v12 m312 0 v-12 m-312 12 q0 10 10 10 m292 0 q10 0 10 -10 m-302 10 h10 m74 0 h10 m0 0 h10 m84 0 h10 m0 0 h10 m74 0 h10 m23 -32 h-3"></svg:path>
+         <polygon points="943 103 951 99 951 107"></polygon>
+         <polygon points="943 103 935 99 935 107"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <xhtml:div class="ebnf"><xhtml:code>
+               <div><a href="#eCS_MemberProcedureCall" title="eCS_MemberProcedureCall">eCS_MemberProcedureCall</a></div>
+               <div>         ::= 'CALL' <a href="#implicitCallStmt_InStmt" title="implicitCallStmt_InStmt">implicitCallStmt_InStmt</a>? '.' 'IDENTIFIER' <a href="#typeHint" title="typeHint">typeHint</a>? ( 'LPAREN' <a href="#argsCall" title="argsCall">argsCall</a> 'RPAREN' )? ( 'LPAREN' <a href="#subscripts" title="subscripts">subscripts</a> 'RPAREN' )?</div></xhtml:code></xhtml:div>
+      </xhtml:p>
+      <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <xhtml:ul>
+            <xhtml:li><xhtml:a href="#explicitCallStmt" title="explicitCallStmt">explicitCallStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="eCS_ProcedureCall">eCS_ProcedureCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="681" height="155">
          <defs>
@@ -1335,7 +1411,7 @@
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#explicitCallStmt" title="explicitCallStmt">explicitCallStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
-      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="implicitCallStmt_InBlock">implicitCallStmt_InBlock:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="211" height="37">
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="implicitCallStmt_InBlock">implicitCallStmt_InBlock:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="301" height="81">
          <defs>
             <style type="text/css">
     @namespace "http://www.w3.org/2000/svg";
@@ -1366,19 +1442,90 @@
   </style>
          </defs>
          <polygon points="9 17 1 13 1 21"></polygon>
-         <polygon points="17 17 9 13 9 21"></polygon><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iCS_B_ProcedureCall" xlink:title="iCS_B_ProcedureCall">
-            <rect x="31" y="3" width="152" height="32"></rect>
-            <rect x="29" y="1" width="152" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="39" y="21">iCS_B_ProcedureCall</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m152 0 h10 m3 0 h-3"></svg:path>
-         <polygon points="201 17 209 13 209 21"></polygon>
-         <polygon points="201 17 193 13 193 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <polygon points="17 17 9 13 9 21"></polygon><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iCS_B_MemberProcedureCall" xlink:title="iCS_B_MemberProcedureCall">
+            <rect x="51" y="3" width="202" height="32"></rect>
+            <rect x="49" y="1" width="202" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="21">iCS_B_MemberProcedureCall</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#iCS_B_ProcedureCall" xlink:title="iCS_B_ProcedureCall">
+            <rect x="51" y="47" width="152" height="32"></rect>
+            <rect x="49" y="45" width="152" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="65">iCS_B_ProcedureCall</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m202 0 h10 m-242 0 h20 m222 0 h20 m-262 0 q10 0 10 10 m242 0 q0 -10 10 -10 m-252 10 v24 m242 0 v-24 m-242 24 q0 10 10 10 m222 0 q10 0 10 -10 m-232 10 h10 m152 0 h10 m0 0 h50 m23 -44 h-3"></svg:path>
+         <polygon points="291 17 299 13 299 21"></polygon>
+         <polygon points="291 17 283 13 283 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
          <xhtml:div class="ebnf"><xhtml:code>
                <div><a href="#implicitCallStmt_InBlock" title="implicitCallStmt_InBlock">implicitCallStmt_InBlock</a></div>
-               <div>         ::= <a href="#iCS_B_ProcedureCall" title="iCS_B_ProcedureCall">iCS_B_ProcedureCall</a></div></xhtml:code></xhtml:div>
+               <div>         ::= <a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</a></div>
+               <div>           | <a href="#iCS_B_ProcedureCall" title="iCS_B_ProcedureCall">iCS_B_ProcedureCall</a></div></xhtml:code></xhtml:div>
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#blockStmt" title="blockStmt">blockStmt</xhtml:a></xhtml:li>
+         </xhtml:ul>
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="885" height="155">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 17 1 13 1 21"></polygon>
+         <polygon points="17 17 9 13 9 21"></polygon><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#implicitCallStmt_InStmt" xlink:title="implicitCallStmt_InStmt">
+            <rect x="51" y="35" width="168" height="32"></rect>
+            <rect x="49" y="33" width="168" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="53">implicitCallStmt_InStmt</text></a><rect x="259" y="3" width="24" height="32" rx="10"></rect>
+         <rect x="257" y="1" width="24" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="267" y="21">.</text>
+         <rect x="303" y="3" width="102" height="32" rx="10"></rect>
+         <rect x="301" y="1" width="102" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="311" y="21">IDENTIFIER</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#typeHint" xlink:title="typeHint">
+            <rect x="445" y="35" width="72" height="32"></rect>
+            <rect x="443" y="33" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="453" y="53">typeHint</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#argsCall" xlink:title="argsCall">
+            <rect x="577" y="35" width="72" height="32"></rect>
+            <rect x="575" y="33" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="585" y="53">argsCall</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#dictionaryCallStmt" xlink:title="dictionaryCallStmt">
+            <rect x="709" y="35" width="134" height="32"></rect>
+            <rect x="707" y="33" width="134" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="717" y="53">dictionaryCallStmt</text></a><rect x="565" y="121" width="74" height="32" rx="10"></rect>
+         <rect x="563" y="119" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="573" y="139">LPAREN</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#subscripts" xlink:title="subscripts">
+            <rect x="659" y="121" width="84" height="32"></rect>
+            <rect x="657" y="119" width="84" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="667" y="139">subscripts</text></a><rect x="763" y="121" width="74" height="32" rx="10"></rect>
+         <rect x="761" y="119" width="74" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="771" y="139">RPAREN</text>
+         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m0 0 h178 m-208 0 h20 m188 0 h20 m-228 0 q10 0 10 10 m208 0 q0 -10 10 -10 m-218 10 v12 m208 0 v-12 m-208 12 q0 10 10 10 m188 0 q10 0 10 -10 m-198 10 h10 m168 0 h10 m20 -32 h10 m24 0 h10 m0 0 h10 m102 0 h10 m20 0 h10 m0 0 h82 m-112 0 h20 m92 0 h20 m-132 0 q10 0 10 10 m112 0 q0 -10 10 -10 m-122 10 v12 m112 0 v-12 m-112 12 q0 10 10 10 m92 0 q10 0 10 -10 m-102 10 h10 m72 0 h10 m40 -32 h10 m0 0 h82 m-112 0 h20 m92 0 h20 m-132 0 q10 0 10 10 m112 0 q0 -10 10 -10 m-122 10 v12 m112 0 v-12 m-112 12 q0 10 10 10 m92 0 q10 0 10 -10 m-102 10 h10 m72 0 h10 m40 -32 h10 m0 0 h144 m-174 0 h20 m154 0 h20 m-194 0 q10 0 10 10 m174 0 q0 -10 10 -10 m-184 10 v12 m174 0 v-12 m-174 12 q0 10 10 10 m154 0 q10 0 10 -10 m-164 10 h10 m134 0 h10 m22 -32 l2 0 m2 0 l2 0 m2 0 l2 0 m-362 86 l2 0 m2 0 l2 0 m2 0 l2 0 m22 0 h10 m0 0 h282 m-312 0 h20 m292 0 h20 m-332 0 q10 0 10 10 m312 0 q0 -10 10 -10 m-322 10 v12 m312 0 v-12 m-312 12 q0 10 10 10 m292 0 q10 0 10 -10 m-302 10 h10 m74 0 h10 m0 0 h10 m84 0 h10 m0 0 h10 m74 0 h10 m23 -32 h-3"></svg:path>
+         <polygon points="875 103 883 99 883 107"></polygon>
+         <polygon points="875 103 867 99 867 107"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <xhtml:div class="ebnf"><xhtml:code>
+               <div><a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</a></div>
+               <div>         ::= <a href="#implicitCallStmt_InStmt" title="implicitCallStmt_InStmt">implicitCallStmt_InStmt</a>? '.' 'IDENTIFIER' <a href="#typeHint" title="typeHint">typeHint</a>? <a href="#argsCall" title="argsCall">argsCall</a>? <a href="#dictionaryCallStmt" title="dictionaryCallStmt">dictionaryCallStmt</a>? ( 'LPAREN' <a href="#subscripts" title="subscripts">subscripts</a> 'RPAREN' )?</div></xhtml:code></xhtml:div>
+      </xhtml:p>
+      <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <xhtml:ul>
+            <xhtml:li><xhtml:a href="#implicitCallStmt_InBlock" title="implicitCallStmt_InBlock">implicitCallStmt_InBlock</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="iCS_B_ProcedureCall">iCS_B_ProcedureCall:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="625" height="69">
          <defs>
@@ -1494,7 +1641,9 @@
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
+            <xhtml:li><xhtml:a href="#eCS_MemberProcedureCall" title="eCS_MemberProcedureCall">eCS_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_B_ProcedureCall" title="iCS_B_ProcedureCall">iCS_B_ProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
          </xhtml:ul>
@@ -1606,6 +1755,7 @@
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
+            <xhtml:li><xhtml:a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_MembersCall" title="iCS_S_MembersCall">iCS_S_MembersCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</xhtml:a></xhtml:li>
@@ -1820,7 +1970,9 @@
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
+            <xhtml:li><xhtml:a href="#eCS_MemberProcedureCall" title="eCS_MemberProcedureCall">eCS_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_B_ProcedureCall" title="iCS_B_ProcedureCall">iCS_B_ProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_MembersCall" title="iCS_S_MembersCall">iCS_S_MembersCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
@@ -2038,6 +2190,8 @@
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
+            <xhtml:li><xhtml:a href="#eCS_MemberProcedureCall" title="eCS_MemberProcedureCall">eCS_MemberProcedureCall</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#letStmt" title="letStmt">letStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#redimSubStmt" title="redimSubStmt">redimSubStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#setStmt" title="setStmt">setStmt</xhtml:a></xhtml:li>
@@ -2402,8 +2556,10 @@
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#arg" title="arg">arg</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#dictionaryCallStmt" title="dictionaryCallStmt">dictionaryCallStmt</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#eCS_MemberProcedureCall" title="eCS_MemberProcedureCall">eCS_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#eCS_ProcedureCall" title="eCS_ProcedureCall">eCS_ProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#functionStmt" title="functionStmt">functionStmt</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#iCS_B_MemberProcedureCall" title="iCS_B_MemberProcedureCall">iCS_B_MemberProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#variableSubStmt" title="variableSubStmt">variableSubStmt</xhtml:a></xhtml:li>

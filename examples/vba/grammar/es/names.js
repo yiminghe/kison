@@ -1214,10 +1214,14 @@ export const makeProductions = (arr) => {
 export const makeLexerRules = (arr) => {
   return arr.map((a) => {
     if (Array.isArray(a)) {
-      return {
+      const ret = {
         token: a[0],
         regexp: a[1],
       };
+      if (a[2]) {
+        ret.action = a[2];
+      }
+      return ret;
     }
     return a;
   });

@@ -135,7 +135,6 @@ require(['vs/editor/editor.main'], () => {
     }
     console.log('parse duration: ' + (Date.now() - start));
     console.log('');
-    console.log('');
   });
 
   // function wait(ms: number) {
@@ -197,10 +196,8 @@ require(['vs/editor/editor.main'], () => {
       });
       console.log('parse duration: ' + (Date.now() - start));
       console.log('');
-      console.log('');
       start = Date.now();
       await context.callSub($('sub').value);
-      console.log('');
       console.log('');
       console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {

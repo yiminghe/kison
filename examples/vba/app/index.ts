@@ -40,7 +40,7 @@ sub main
   MsgBox m2
 
   dim c as New MyClass
-  console.log c.m
+  debug.print c.m
 end sub
 `.trim();
 
@@ -175,7 +175,7 @@ require(['vs/editor/editor.main'], () => {
       const context = new Context();
 
       context.registerSubBinder(MsgBoxSub('MsgBox'));
-      context.registerSubBinder(MsgBoxSub('console.log'));
+      context.registerSubBinder(MsgBoxSub('debug.print'));
 
       context.registerVariableBinder(vbModal);
       context.registerVariableBinder({

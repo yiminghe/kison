@@ -121,7 +121,6 @@ const keywords = [
   'OUTPUT',
   'PARAMARRAY',
   'PRESERVE',
-  'PRINT',
   'PRIVATE',
   'PROPERTY_GET',
   'PROPERTY_LET',

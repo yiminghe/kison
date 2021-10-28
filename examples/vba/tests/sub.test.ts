@@ -12,7 +12,7 @@ end sub
 sub test2
 msgbox 2
 exit sub
-console.log 3
+debug.print 3
 end sub
     `;
     const ret: any[] = await run(code);

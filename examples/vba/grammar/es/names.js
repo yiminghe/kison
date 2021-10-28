@@ -486,10 +486,6 @@ export const PRESERVE = 'PRESERVE';
 export const PRESERVEOptional = 'PRESERVE?';
 export const PRESERVEZeroOrMore = 'PRESERVE*';
 export const PRESERVEOneOrMore = 'PRESERVE+';
-export const PRINT = 'PRINT';
-export const PRINTOptional = 'PRINT?';
-export const PRINTZeroOrMore = 'PRINT*';
-export const PRINTOneOrMore = 'PRINT+';
 export const PRIVATE = 'PRIVATE';
 export const PRIVATEOptional = 'PRIVATE?';
 export const PRIVATEZeroOrMore = 'PRIVATE*';
@@ -1148,7 +1144,6 @@ export const KEYWORDS = [
   'OUTPUT',
   'PARAMARRAY',
   'PRESERVE',
-  'PRINT',
   'PRIVATE',
   'PROPERTY_GET',
   'PROPERTY_LET',
@@ -1219,14 +1214,10 @@ export const makeProductions = (arr) => {
 export const makeLexerRules = (arr) => {
   return arr.map((a) => {
     if (Array.isArray(a)) {
-      const ret = {
+      return {
         token: a[0],
         regexp: a[1],
       };
-      if (a[2]) {
-        ret.action = a[2];
-      }
-      return ret;
     }
     return a;
   });

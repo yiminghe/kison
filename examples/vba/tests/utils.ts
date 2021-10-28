@@ -1,10 +1,4 @@
-import {
-  Context,
-  SubBinder,
-  VariableBinder,
-  VBObject,
-  VBInteger,
-} from '../src/';
+import { Context, SubBinder, VariableBinder, VBInteger } from '../src/';
 import { VBFile } from '../src/runtime/types';
 
 export async function run(moduleCode: string) {
@@ -40,7 +34,7 @@ export async function runs(
   context.registerSubBinder(MsgBoxSub);
   context.registerSubBinder({
     ...MsgBoxSub,
-    name: 'console.log',
+    name: 'debug.print',
   });
 
   context.registerVariableBinder(vbModal);

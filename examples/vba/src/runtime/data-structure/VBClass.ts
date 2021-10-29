@@ -19,7 +19,7 @@ export class VBClass {
     }
     for (const symbolItem of fileSymbolTable.symbolTable.values()) {
       if (symbolItem.type === 'variable') {
-        this.value.set(symbolItem.name, symbolItem.value.clone());
+        this.value.set(symbolItem.name, symbolItem.value!.clone());
       }
     }
     return this.callSub('Class_Initialize', [], false);

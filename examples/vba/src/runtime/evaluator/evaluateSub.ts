@@ -2,7 +2,7 @@ import type {
   ICS_B_ProcedureCall_Node,
   ECS_ProcedureCall_Node,
 } from '../../parser';
-import { AstNode, AstSymbolNode } from '../../parserLLK';
+import { AstSymbolNode } from '../../parserLLK';
 import { collect_IDENTIFIER } from '../collect/collectType';
 import type { Context } from '../Context';
 import { VBObject, VBValue } from '../types';

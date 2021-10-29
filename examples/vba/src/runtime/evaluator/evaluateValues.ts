@@ -1,11 +1,9 @@
-import type { IDENTIFIER_Node } from '../../parser';
 import { collect_IDENTIFIER } from '../collect/collectType';
 import {
   VBInteger,
   VBString,
   VB_NOTHING,
   VB_NULL,
-  Subscript,
   VBObject,
   ExitResult,
   VBValue,

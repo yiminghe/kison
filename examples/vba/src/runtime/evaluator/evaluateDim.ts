@@ -1,8 +1,4 @@
-import type {
-  IDENTIFIER_Node,
-  VariableListStmt_Node,
-  ValueStmt_Node,
-} from '../../parser';
+import type { VariableListStmt_Node, ValueStmt_Node } from '../../parser';
 import {
   collect_asTypeClause,
   collect_IDENTIFIER,
@@ -18,7 +14,6 @@ import {
   VBPrimitiveTypeClass,
   getDEFAULT_AS_TYPE,
   VBClass,
-  VBEmpty,
   VB_EMPTY,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';

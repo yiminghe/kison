@@ -1,6 +1,6 @@
 import { ProductionRule } from './Grammar';
 import type Lexer from './Lexer';
-import type { SymbolState, SymbolStateUnit } from './llk/sm';
+import type { SymbolStateUnit } from './llk/sm';
 import { Rhs } from './types';
 
 const gened: {

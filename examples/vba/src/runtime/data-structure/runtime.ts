@@ -18,8 +18,8 @@ export type SymbolItem = SubSymbolItem | VariableSymbolItem;
 export class VariableSymbolItem {
   type: 'variable' = 'variable';
   file: VBFile;
-  _value: VBObject | undefined;
   constructor(
+    public value: VBObject,
     public variableInfo: VBVariableInfo,
     public isStatic: boolean,
     public visibility: Visibility,
@@ -30,14 +30,6 @@ export class VariableSymbolItem {
 
   get name() {
     return this.variableInfo.name;
-  }
-
-  get value() {
-    if (this._value) {
-      return this._value;
-    }
-    this._value = this.variableInfo.value();
-    return this._value;
   }
 }
 

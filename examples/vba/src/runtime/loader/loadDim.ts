@@ -1,4 +1,9 @@
-import { VBVariableInfo, Visibility, VariableSymbolItem } from '../types';
+import {
+  VBVariableInfo,
+  Visibility,
+  VariableSymbolItem,
+  VBObject,
+} from '../types';
 import { registerLoaders } from './loaders';
 import { evaluate } from '../evaluator/index';
 
@@ -19,8 +24,13 @@ registerLoaders({
       variableListStmt,
       context,
     );
+    const values: VBObject[] = [];
+    for (const v of variables) {
+      values.push(await v.value());
+    }
     const variableSymbolItems = variables.map(
-      (v) => new VariableSymbolItem(v, isStatic, visibility, context),
+      (v, index) =>
+        new VariableSymbolItem(values[index], v, isStatic, visibility, context),
     );
     for (const item of variableSymbolItems) {
       context.registerSymbolItem(item.variableInfo.name, item);

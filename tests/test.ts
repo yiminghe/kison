@@ -9,7 +9,7 @@ const exp = '1+3+4\n1+3*4\n';
   let e;
   if (1) {
     console.log('llk:' + '*'.repeat(10));
-    const ret = llk.parse(exp);
+    const ret = llk.parse('1 1 1');
     if (ret.error) {
       e = ret.error;
       // console.log(JSON.stringify(ret.ast, null, 2));
@@ -19,6 +19,8 @@ const exp = '1+3+4\n1+3*4\n';
       console.log(JSON.stringify(ast, null, 2));
     }
   }
+
+  return;
 
   if (1) {
     console.log('ll:' + '*'.repeat(10));

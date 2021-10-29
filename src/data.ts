@@ -1,9 +1,10 @@
 import { ProductionRule } from './Grammar';
 import type Lexer from './Lexer';
-import type { SymbolStateUnit } from './llk/sm';
+import type { SymbolState, SymbolStateUnit } from './llk/sm';
 import { Rhs } from './types';
 
 const gened: {
+  VIRTUAL_OPTIONAL_RULE_INDEX: number;
   START_TAG: string;
   smUnitBySymbol: Record<string, SymbolStateUnit>;
   productionSkipAstNodeSet: Set<number> | undefined;
@@ -18,6 +19,7 @@ const gened: {
   productionAddAstNodeFlag: 1;
   productionEndFlag: 2;
 } = {
+  VIRTUAL_OPTIONAL_RULE_INDEX: -100,
   START_TAG: '$START',
   smUnitBySymbol: {},
   productionSkipAstNodeSet: undefined,

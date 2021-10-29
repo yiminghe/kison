@@ -10,6 +10,7 @@ import * as sm from './sm';
 import * as Utils from './utils';
 import type { Unit, PredictParam } from './sm';
 import type { ParseError } from '../types';
+
 const { AstSymbolNode, AstTokenNode, AstErrorNode } = utils;
 
 const {
@@ -72,6 +73,7 @@ function parse(input: string, options: any) {
   } = parser;
 
   var {
+    globalMatch = false,
     onErrorRecovery,
     onAction,
     lexerOptions = {},
@@ -223,7 +225,7 @@ function parse(input: string, options: any) {
       next = null;
 
       if (isSymbol(normalizedSymbol)) {
-        next = predictProductionIndexLLK(findSymbolIndex());
+        next = predictProductionIndexLLK(globalMatch, findSymbolIndex());
       } else if (normalizedSymbol === token.t) {
         if (!isZeroOrMoreSymbol(topSymbol)) {
           popSymbolStack();
@@ -286,7 +288,7 @@ function parse(input: string, options: any) {
           // should delete
           if (
             topSymbol === nextToken.t ||
-            predictProductionIndexNextLLK(findSymbolIndex())
+            predictProductionIndexNextLLK(globalMatch, findSymbolIndex())
           ) {
             recommendedAction.action = 'del';
           } else if (error.expected.length) {

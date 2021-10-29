@@ -1044,7 +1044,10 @@ describe('llk', () => {
     const code = grammar.genCode();
     const parser = run(code);
 
-    const ret = parser.parse('1 1 1');
+    const ret = parser.parse('1 1 1', {
+      // expensive
+      globalMatch: true,
+    });
     expect(ret.error).toBeFalsy();
     expect(prettyJson(ret.ast)).toMatchInlineSnapshot(`
 "{

@@ -5,10 +5,17 @@ import data from '../data';
 import utils from '../utils';
 import type { Rhs } from '../types';
 
-const { bfsMatch } = bfsMatchModule;
+const { findBestAlternation } = bfsMatchModule;
 const { createTokenMatcher } = matcher;
 const { isSymbol } = localUtils;
-var { parser, lexer, symbolStack, productionsBySymbol, smUnitBySymbol } = data;
+var {
+  parser,
+  lexer,
+  symbolStack,
+  productionsBySymbol,
+  smUnitBySymbol,
+  VIRTUAL_OPTIONAL_RULE_INDEX,
+} = data;
 const { isOptionalSymbol, isZeroOrMoreSymbol, isLazySymbol, normalizeSymbol } =
   utils;
 
@@ -78,22 +85,26 @@ export interface PredictParam {
   topSymbol: any;
 }
 function predictProductionIndexLLK(
+  // expensive
+  globalMatch: boolean,
   { childReverseIndex, ruleIndex, topSymbol }: PredictParam,
   fn?: Function,
 ) {
   let unit;
+  let lastUnit;
+  let endState;
 
   if (ruleIndex === -1) {
-    unit = getUnitBySymbol(topSymbol);
+    lastUnit = unit = getUnitBySymbol(topSymbol);
   } else {
     let parentSymbolItem = getParentSymbolItem();
     if (!parentSymbolItem) {
       throw new Error('no parent symbol');
     }
-    const parentUnit = parentSymbolItem.ruleUnit;
-
+    const parentUnit: RootSymbolUnit = parentSymbolItem.ruleUnit;
     const { units } = parentUnit;
     unit = units[units.length - 1 - childReverseIndex];
+    lastUnit = units[units.length - 1];
   }
 
   const childSymbol = unit.type;
@@ -104,42 +115,30 @@ function predictProductionIndexLLK(
 
   const { unitType } = unit;
 
-  if (unit.lazy) {
-    lexer.stash();
-    if (fn) {
-      fn();
+  function getSkipCheckStates(unit: Unit) {
+    const u: any = unit;
+    let states: AllState[] = u.checkStates;
+    if (!states) {
+      u.checkStates = states = [];
+      const skipStartState = new State(
+        'startOfSkip$' + childSymbol,
+        null,
+        VIRTUAL_OPTIONAL_RULE_INDEX,
+      );
+      skipStartState.pushTransition(unit.end);
+      const symbolUnit = new SymbolStateUnit(childSymbol, -2);
+      symbolUnit.end.pushTransition(unit.end);
+      states.push(
+        skipStartState,
+        ...symbolUnit.start.getAlternativeStartStates(),
+      );
     }
-    const { match } = bfsMatch(unit.end);
-    lexer.stashPop();
-    if (match) {
-      // skip this symbol first
-      return null;
-    }
+    return states;
   }
-
-  const canSkipped = unitType === 'zeroOrMore' || unitType === 'optional';
-
-  let startState = unit.start;
 
   let nextUnits: Record<string, Unit>;
 
-  if (canSkipped) {
-    startState = unit.start.transitions[0].to;
-    nextUnits = startState.getUnits();
-  } else {
-    nextUnits = startState.getUnits();
-    const alternatives: any = productionsBySymbol[childSymbol];
-    if (alternatives.ruleIndexes.length <= 1) {
-      const ruleIndex = alternatives.ruleIndexes[0];
-      if (ruleIndex === undefined) {
-        throw new Error('no predict!');
-      }
-      return returnNext(ruleIndex);
-    }
-  }
-
-  let maxCount = 0;
-  let matchedRuleIndex = -1;
+  let startState: AllState;
 
   function returnNext(ruleIndex: number) {
     const nextUnit = nextUnits[ruleIndex];
@@ -149,28 +148,84 @@ function predictProductionIndexLLK(
     };
   }
 
-  for (const key of Object.keys(nextUnits)) {
-    const u = nextUnits[key];
+  if (unit.lazy) {
     lexer.stash();
     if (fn) {
       fn();
     }
-    const { match, count } = bfsMatch(u.start);
+    let states: AllState[] = getSkipCheckStates(unit);
+    endState = lastUnit.end;
+    const ruleIndexes = findBestAlternation(
+      childSymbol,
+      states,
+      globalMatch ? null : endState,
+    );
     lexer.stashPop();
-    if (match) {
-      //console.log('match', productions[u.ruleIndex] + '');
-      return returnNext(u.ruleIndex);
-    }
-    if (maxCount < count) {
-      maxCount = count;
-      matchedRuleIndex = u.ruleIndex;
+    if (
+      ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX ||
+      ruleIndexes.length === 0
+    ) {
+      // skip this symbol first
+      return null;
+    } else {
+      startState = unit.start.transitions[0].to;
+      if (startState.classType !== 'SymbolState') {
+        throw new Error('expect SymbolState!');
+      }
+      nextUnits = startState.getUnits();
+      return returnNext(Array.from(ruleIndexes.values())[0]);
     }
   }
 
-  if (matchedRuleIndex !== -1 && !canSkipped) {
-    //console.log('matchedRuleIndex', productions[matchedRuleIndex] + '');
-    return returnNext(matchedRuleIndex);
+  const canSkipped = unitType === 'zeroOrMore' || unitType === 'optional';
+
+  let startStates: AllState[] = [];
+
+  if (canSkipped) {
+    startState = unit.start.transitions[0].to;
+    if (startState.classType !== 'SymbolState') {
+      throw new Error('expect SymbolState!');
+    }
+    nextUnits = startState.getUnits();
+    startStates = getSkipCheckStates(unit);
+    endState = lastUnit.end;
+  } else {
+    const alternatives: any = productionsBySymbol[childSymbol];
+    startState = unit.start;
+    if (startState.classType !== 'SymbolState') {
+      throw new Error('expect SymbolState!');
+    }
+    nextUnits = startState.getUnits();
+    if (alternatives.ruleIndexes.length <= 1) {
+      const ruleIndex = alternatives.ruleIndexes[0];
+      if (ruleIndex === undefined) {
+        throw new Error('no predict!');
+      }
+      return returnNext(ruleIndex);
+    }
+    startStates = startState.getAlternativeStartStates();
+    endState = lastUnit.end;
   }
+
+  lexer.stash();
+  if (fn) {
+    fn();
+  }
+  const ruleIndexes = findBestAlternation(
+    childSymbol,
+    startStates,
+    globalMatch ? null : endState,
+  );
+  lexer.stashPop();
+
+  if (ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX) {
+    ruleIndexes.shift();
+  }
+
+  if (ruleIndexes.length) {
+    return returnNext(ruleIndexes[0]);
+  }
+
   return null;
 }
 
@@ -202,8 +257,11 @@ function findExpectedTokenFromStateMachine(
   return Array.from(ret);
 }
 
-function predictProductionIndexNextLLK(arg: PredictParam) {
-  return predictProductionIndexLLK(arg, () => lexer.lex());
+function predictProductionIndexNextLLK(
+  globalMatch: boolean,
+  arg: PredictParam,
+) {
+  return predictProductionIndexLLK(globalMatch, arg, () => lexer.lex());
 }
 
 export type Unit = StateUnit | SymbolStateUnit | RootSymbolUnit;
@@ -212,7 +270,11 @@ export type AllState = State | SymbolState;
 class State {
   classType: 'State' = 'State';
   transitions: Transition[] = [];
-  constructor(public type: string, public unit: Unit) {
+  constructor(
+    public type: string,
+    public unit: Unit | null,
+    public ruleIndex: number,
+  ) {
     this.transitions = [];
   }
   pushTransition(endState: State | SymbolState, condition?: Function) {
@@ -222,18 +284,24 @@ class State {
 
 class SymbolState {
   classType: 'SymbolState' = 'SymbolState';
-  units: Record<string, RootSymbolUnit>;
-  _transitions: Transition[] = [];
+  startStates: AllState[];
+  units: Record<string, RootSymbolUnit> = {};
+  _afterTransitions: Transition[] = [];
+  _beforeTransitions: Transition[] = [];
   alltransitions?: Transition[];
-
-  constructor(public symbol: string, public type: string, public unit: Unit) {
-    this.units = {};
+  constructor(
+    public symbol: string,
+    public type: string,
+    public unit: Unit,
+    public ruleIndex: number,
+  ) {
+    this.startStates = [];
   }
 
   get transitions() {
     let transitions = this.alltransitions;
     if (!transitions) {
-      const { symbol, unit, units } = this;
+      const { symbol, unit, startStates, units } = this;
       this.alltransitions = transitions = [];
       const myProductions = productionsBySymbol[symbol];
       if (!myProductions) {
@@ -244,10 +312,15 @@ class SymbolState {
         const rhs = parser.getProductionRhs(p);
         const rootSymbolUnit = buildRhsSM(symbol, rhs, i);
         units[i] = rootSymbolUnit;
+        startStates.push(rootSymbolUnit.start);
         transitions.push(new Transition(rootSymbolUnit.start));
         rootSymbolUnit.end.pushTransition(unit.end);
       }
-      this.alltransitions = transitions = transitions.concat(this._transitions);
+      this.alltransitions = transitions = [
+        ...this._beforeTransitions,
+        ...transitions,
+        ...this._afterTransitions,
+      ];
     }
     return transitions;
   }
@@ -261,8 +334,17 @@ class SymbolState {
     return this.units;
   }
 
+  getAlternativeStartStates() {
+    this.getTransitions();
+    return this.startStates;
+  }
+
+  pushBeforeTransition(endState: State | SymbolState, condition?: Function) {
+    this._beforeTransitions.push(new Transition(endState, condition));
+  }
+
   pushTransition(endState: State | SymbolState, condition?: Function) {
-    this._transitions.push(new Transition(endState, condition));
+    this._afterTransitions.push(new Transition(endState, condition));
   }
 }
 
@@ -278,8 +360,8 @@ function concatUnits(type: string, us: Unit[], ruleIndex: number) {
     ret.start = us[0].start;
     ret.end = us[l - 1].end;
   } else {
-    ret.start = new State(`startOf${type}`, ret);
-    ret.end = new State(`endOf${type}`, ret);
+    ret.start = new State(`startOf${type}`, ret, ruleIndex);
+    ret.end = new State(`endOf${type}`, ret, ruleIndex);
     ret.start.pushTransition(ret.end);
   }
   ret.units = us;
@@ -290,6 +372,7 @@ class RootSymbolUnit {
   units: Unit[] = [];
   start: SymbolState | State = null!;
   end: State = null!;
+  lazy = false;
   unitType = 'rootSymbol';
   constructor(public type: string, public ruleIndex: number) {}
 }
@@ -302,18 +385,20 @@ class StateUnit {
   end: State;
 
   constructor(public type: string, public ruleIndex: number) {
-    this.start = new State(`startOf${type}`, this);
-    this.end = new State(`endOf${type}`, this);
+    this.start = new State(`startOf${type}`, this, ruleIndex);
+    this.end = new State(`endOf${type}`, this, ruleIndex);
   }
 }
 
 class SymbolStateUnit {
   unitType = 'symbol';
+  units: undefined;
   end: State;
+  lazy = false;
   start: SymbolState;
   constructor(public type: string, public ruleIndex: number) {
-    this.end = new State(`endOf${type}`, this);
-    this.start = new SymbolState(type, `startOf${type}`, this);
+    this.end = new State(`endOf${type}`, this, ruleIndex);
+    this.start = new SymbolState(type, `startOf${type}`, this, ruleIndex);
   }
 }
 

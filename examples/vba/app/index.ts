@@ -4,7 +4,6 @@ import {
   VariableBinder,
   VBInteger,
   SubBinder,
-  VBObject,
 } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 

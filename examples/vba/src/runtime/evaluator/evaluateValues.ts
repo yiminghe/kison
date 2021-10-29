@@ -14,6 +14,17 @@ import {
 import { evaluate, registerEvaluators } from './evaluators';
 
 registerEvaluators({
+  async evaluate_indexes(node, context) {
+    let ret: (VBValue | VBObject)[] = [];
+    const { children } = node;
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'valueStmt') {
+        ret.push(await evaluate(c, context));
+      }
+    }
+    return ret;
+  },
+
   evaluate_INTEGERLITERAL(node) {
     return new VBInteger(parseInt(node.text));
   },
@@ -67,12 +78,16 @@ registerEvaluators({
     return v || VB_EMPTY;
   },
 
+  // async evaluate_iCS_S_ProcedureOrArrayCall(node, context){
+
+  // },
+
   async evaluate_iCS_S_VariableOrProcedureCall(node, context) {
-    let subscripts: Subscript[] | undefined;
+    let indexes: (VBObject | VBValue)[] | undefined;
 
     for (const c of node.children) {
-      if (c.type === 'symbol' && c.symbol === 'subscripts') {
-        subscripts = await evaluate(c, context);
+      if (c.type === 'symbol' && c.symbol === 'indexes') {
+        indexes = await evaluate(c, context);
       }
     }
 
@@ -80,35 +95,31 @@ registerEvaluators({
     const scope = context.getCurrentScope();
 
     // a = r(1)
-    if (
-      !scope.hasVariable(id) &&
-      subscripts &&
-      subscripts.every((s) => s.one)
-    ) {
-      let args: (VBValue | VBObject)[] = [];
-      for (const c of node.children) {
-        if (c.type === 'symbol' && c.symbol === 'subscripts') {
-          for (const cc of c.children) {
-            if (cc.type === 'symbol' && cc.symbol === 'subscript_') {
-              for (const ccc of cc.children) {
-                if (ccc.type === 'symbol' && ccc.symbol === 'valueStmt') {
-                  args.push(await evaluate(ccc, context));
-                }
-              }
-            }
-          }
-        }
-      }
+    if (!scope.hasVariable(id) && indexes) {
+      let args: (VBValue | VBObject)[] = indexes;
       return await context.callSub(id, args);
     }
 
     let variable: VBObject = scope.getVariable(id);
 
-    if (subscripts) {
+    if (indexes) {
       if (variable.value.type !== 'Array') {
         throw new Error('expect array or function or sub');
       }
-      variable = variable.value.getElement(subscripts.map((s) => s.upper));
+      const ns: number[] = [];
+      for (const index of indexes) {
+        let v: VBValue;
+        if (index.type === 'Object') {
+          v = index.value;
+        } else {
+          v = index;
+        }
+        if (v.type !== 'Integer') {
+          throw new Error('expect Integer when access array');
+        }
+        ns.push(v.value);
+      }
+      variable = variable.value.getElement(ns);
     }
     return variable;
   },

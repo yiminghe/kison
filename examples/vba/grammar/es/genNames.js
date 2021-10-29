@@ -233,6 +233,7 @@ const symbols = [
   'baseType',
   'fieldLength',
   'subscripts',
+  'indexes',
   'subscript_',
   'literal',
   'implicitCallStmt_InBlock',

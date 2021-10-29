@@ -665,13 +665,22 @@ class Grammar {
               }
             }
 
-            let newSymbol = `${p.symbol}_${uuid}_group_${start}`;
-            addedPs.push({
-              symbol: newSymbol,
-              rhs: subRhs,
-              ruleIndex: p.ruleIndex,
-              skipAstNode: true,
-            });
+            const existingP = findIdenticalProductionRule(
+              [...newPs, ...addedPs, ...ps],
+              subRhs,
+              true,
+            );
+
+            let newSymbol =
+              existingP?.symbol || `${p.symbol}_${uuid}_group_${start}`;
+            if (!existingP) {
+              addedPs.push({
+                symbol: newSymbol,
+                rhs: subRhs,
+                ruleIndex: p.ruleIndex,
+                skipAstNode: true,
+              });
+            }
             newRhs.push(newSymbol + quantifier);
           } else {
             newRhs.push(rh);
@@ -687,6 +696,31 @@ class Grammar {
         break;
       }
       ps = newPs.concat(addedPs);
+    }
+
+    function arrayEqual<T>(a1: T[], a2: T[]) {
+      const l = a1.length;
+      if (a2.length !== l) {
+        return false;
+      }
+      for (let i = 0; i < l; i++) {
+        if (a1[i] !== a2[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function findIdenticalProductionRule(
+      localPs: ProductionRule[],
+      rhs: Rhs,
+      skipNode: boolean,
+    ) {
+      for (const p of localPs) {
+        if (p.skipAstNode === skipNode && arrayEqual(p.rhs, rhs)) {
+          return p;
+        }
+      }
     }
     fake.productions = newPs;
   }
@@ -887,6 +921,7 @@ class Grammar {
         const nextSymbol = nextP
           ? getSymbol(symbol, getPriority(nextP))
           : endSymbol;
+
         if (already.get(expSymbol) === nextSymbol) {
         } else {
           newRelevants.push({

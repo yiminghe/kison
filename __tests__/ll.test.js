@@ -74,6 +74,8 @@ function getGrammar() {
 }
 
 describe('ll', () => {
+  it('ok', () => {});
+
   it('support parse from startSymbol', () => {
     var grammar = new LLGrammar({
       productions: [

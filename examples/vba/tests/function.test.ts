@@ -18,7 +18,6 @@ describe('function', () => {
 
     sub r2 (b as Integer)
     msgbox b
-    r2 = b
     end sub
     `;
     const ret: any[] = await run(code);

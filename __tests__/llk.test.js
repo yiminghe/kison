@@ -1046,7 +1046,7 @@ describe('llk', () => {
 
     const ret = parser.parse('1 1 1', {
       // expensive
-      globalMatch: true,
+      // globalMatch: true,
     });
     expect(ret.error).toBeFalsy();
     expect(prettyJson(ret.ast)).toMatchInlineSnapshot(`

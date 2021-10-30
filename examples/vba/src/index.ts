@@ -11,7 +11,7 @@ import type {
 // parser.parse = (input, options = {}) => {
 //   return parse(input, {
 //     ...options,
-//     globalMatch: true,
+//     globalMatch: false,
 //   })
 // };
 

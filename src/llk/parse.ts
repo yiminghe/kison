@@ -73,7 +73,7 @@ function parse(input: string, options: any) {
   } = parser;
 
   var {
-    globalMatch = false,
+    globalMatch = true,
     onErrorRecovery,
     onAction,
     lexerOptions = {},

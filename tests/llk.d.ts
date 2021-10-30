@@ -73,6 +73,8 @@ export interface LexerOptions<T = any> {
 }
 
 export interface ParserOptions {
+  // only for llk, global match improve accuracy but impact parse speed
+  globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
   onErrorRecovery?: (args: {

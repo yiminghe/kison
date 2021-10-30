@@ -1,5 +1,5 @@
 import { prettyJson } from '../../../__tests__/utils';
-import parser from '../src/parserLLK';
+import { parser } from '../src/';
 
 describe('vba parser', () => {
   it('parse correctly', () => {

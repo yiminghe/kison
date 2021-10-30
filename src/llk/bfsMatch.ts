@@ -52,16 +52,20 @@ function findBestAlternation(
     }
   }
 
-  if (ruleIndexes.has(VIRTUAL_OPTIONAL_RULE_INDEX)) {
-    ruleIndexes.set(VIRTUAL_OPTIONAL_RULE_INDEX, 0xffff);
-  }
-  const arr = Array.from(ruleIndexes.keys()).sort((a, b) => {
-    const ret = ruleIndexes.get(b)! - ruleIndexes.get(a)!;
-    if (ret === 0) {
-      return a - b;
+  let arr = Array.from(ruleIndexes.keys());
+
+  if (arr.length > 1) {
+    if (ruleIndexes.has(VIRTUAL_OPTIONAL_RULE_INDEX)) {
+      ruleIndexes.set(VIRTUAL_OPTIONAL_RULE_INDEX, 0xffff);
     }
-    return ret;
-  });
+    arr = arr.sort((a, b) => {
+      const ret = ruleIndexes.get(b)! - ruleIndexes.get(a)!;
+      if (ret === 0) {
+        return a - b;
+      }
+      return ret;
+    });
+  }
 
   // const time = Date.now() - start;
   // console.log('');
@@ -177,20 +181,23 @@ function getNextReachableStateItems(
 
   newReachableStates = newReachableStates.filter((n) => !!n);
 
-  // let current = newReachableStates[0];
-  // if (current) {
-  //   let i = 1;
-  //   for (i = 1; i < newReachableStates.length; i++) {
-  //     let next = newReachableStates[i];
-  //     if (current.ruleIndexes[0] !== next.ruleIndexes[0]) {
-  //       break;
-  //     }
-  //   }
-  //   if (i === newReachableStates.length) {
-  //     ruleIndexes.add(current.ruleIndexes[0]);
-  //     return [];
-  //   }
-  // }
+  let current = newReachableStates[0];
+  if (current && ruleIndexes.size === 0) {
+    let i = 1;
+    for (i = 1; i < newReachableStates.length; i++) {
+      let next = newReachableStates[i];
+      if (next) {
+        if (current.ruleIndexes[0] !== next.ruleIndexes[0]) {
+          break;
+        }
+        current = next;
+      }
+    }
+    if (current && i === newReachableStates.length) {
+      ruleIndexes.set(current.ruleIndexes[0], count);
+      return [];
+    }
+  }
 
   return newReachableStates;
 }

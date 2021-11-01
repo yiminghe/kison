@@ -1,4 +1,7 @@
-import { collect_IDENTIFIER } from '../collect/collectType';
+import {
+  collectAmbiguousIdentifier,
+  collectIndexesNode,
+} from '../collect/collectType';
 import {
   VBInteger,
   VBString,
@@ -10,6 +13,7 @@ import {
   VB_EMPTY,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
+import { buildArgs, buildIndexes, checkIndexesInterger } from './common';
 
 registerEvaluators({
   async evaluate_indexes(node, context) {
@@ -57,19 +61,44 @@ registerEvaluators({
       }
     }
 
-    let v: VBObject | undefined = await evaluate(valueNodes[0], context);
+    let v: VBObject | VBValue | undefined = await evaluate(
+      valueNodes[0],
+      context,
+    );
 
     for (let i = 1; i < valueNodes.length; i++) {
       if (!v) {
         throw new Error('unexpected member access!');
       }
-      const id = collect_IDENTIFIER(valueNodes[i])!;
-      if (v.value.type === 'Class') {
+      const valueNode = valueNodes[i];
+      const indexesNode = collectIndexesNode(valueNode);
+      const id = collectAmbiguousIdentifier(valueNode)!;
+      if (
+        (v.type === 'Object' && v.value.type === 'Class') ||
+        (v.type === 'Object' && v.value.type === 'Namespace')
+      ) {
         v = v.value.get(id);
-      } else if (v.value.type === 'Namespace') {
-        v = v.value.get(id);
+      } else if (v.type === 'Namespace' || v.type === 'Class') {
+        v = v.get(id);
       } else {
         throw new Error('unexpected member access!');
+      }
+      if (indexesNode && v) {
+        const vbValue = v.value;
+        const indexesValues = await buildIndexes(
+          { children: [indexesNode] },
+          context,
+        );
+        if (vbValue.type === 'Array') {
+          const indexes = checkIndexesInterger(indexesValues);
+          v = vbValue.getElement(indexes);
+        } else if (vbValue.type === 'subBinder') {
+          const ret = await context.callSubBinder(vbValue, indexesValues);
+          if (ret?.type === 'Exit') {
+            return ret;
+          }
+          v = ret;
+        }
       }
     }
 
@@ -89,13 +118,15 @@ registerEvaluators({
       }
     }
 
-    const id = collect_IDENTIFIER(node, true)!;
+    const id = collectAmbiguousIdentifier(node, true)!;
     const scope = context.getCurrentScope();
 
-    // a = r(1)
-    if (!scope.hasVariable(id) && indexes) {
-      let args: (VBValue | VBObject)[] = indexes;
-      return await context.callSub(id, args);
+    if (indexes) {
+      // a = r(1)
+      if (!scope.hasVariable(id)) {
+        let args: (VBValue | VBObject)[] = indexes;
+        return await context.callSub(id, args);
+      }
     }
 
     let variable: VBObject = scope.getVariable(id);

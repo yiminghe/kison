@@ -1,7 +1,7 @@
 import type { VariableListStmt_Node, ValueStmt_Node } from '../../parser';
 import {
   collect_asTypeClause,
-  collect_IDENTIFIER,
+  collectAmbiguousIdentifier,
 } from '../collect/collectType';
 import type { Context } from '../Context';
 import {
@@ -56,7 +56,7 @@ registerEvaluators({
 
   async evaluate_variableSubStmt(node, context): Promise<VBVariableInfo> {
     const { children } = node;
-    const name = collect_IDENTIFIER(node, true)!;
+    const name = collectAmbiguousIdentifier(node, true)!;
     let asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE();
     let subscripts: Subscript[] | undefined;
     for (const c of children) {

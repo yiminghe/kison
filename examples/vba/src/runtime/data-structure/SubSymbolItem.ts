@@ -38,8 +38,8 @@ export class SubSymbolItem {
     for (const c of sub.children) {
       if (c.type === 'symbol' && c.symbol === 'block') {
         block = c;
-      } else if (c.type === 'token' && c.token === 'IDENTIFIER') {
-        this.name = c.text;
+      } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+        this.name = c.children[0].text;
       }
     }
     if (!block) {

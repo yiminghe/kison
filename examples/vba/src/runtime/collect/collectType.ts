@@ -1,27 +1,51 @@
 import type { AsTypeClause_Node, Type__Node } from '../../parser';
-import { AstNode } from '../../parserLLK';
+import { AstNode, Indexes_Node } from '../../parserLLK';
 import { Context } from '../Context';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
 
-export function collect_IDENTIFIER(
+export function collectAmbiguousIdentifier(
   node: AstNode,
   breadth: boolean = false,
 ): string | undefined {
-  if (node.type === 'token' && node.token === 'IDENTIFIER') {
-    return node.text;
-  }
   if (node.type === 'symbol') {
+    if (node.symbol === 'ambiguousIdentifier') {
+      return node.children[0].text;
+    }
     if (breadth) {
       for (const c of node.children) {
-        if (c.type === 'token' && c.token === 'IDENTIFIER') {
-          return c.text;
+        if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+          return c.children[0].text;
         }
       }
     }
     for (const c of node.children) {
-      const text = collect_IDENTIFIER(c, breadth);
+      const text = collectAmbiguousIdentifier(c, breadth);
       if (text) {
         return text;
+      }
+    }
+  }
+}
+
+export function collectIndexesNode(
+  node: AstNode,
+  breadth: boolean = false,
+): Indexes_Node | undefined {
+  if (node.type === 'symbol') {
+    if (node.symbol === 'indexes') {
+      return node;
+    }
+    if (breadth) {
+      for (const c of node.children) {
+        if (c.type === 'symbol' && c.symbol === 'indexes') {
+          return c;
+        }
+      }
+    }
+    for (const c of node.children) {
+      const indexesNode = collectIndexesNode(c, breadth);
+      if (indexesNode) {
+        return indexesNode;
       }
     }
   }
@@ -55,8 +79,8 @@ export function collect_type_(node: Type__Node, context: Context) {
     } else if (c.type === 'symbol' && c.symbol === 'complexType') {
       const classType = [];
       for (const id of c.children) {
-        if (id.token === 'IDENTIFIER') {
-          classType.push(id.text);
+        if (id.type === 'symbol' && id.symbol === 'ambiguousIdentifier') {
+          classType.push(id.children[0].text);
         }
       }
       classType[0] = context.getFileIdFromFileName(classType[0])!;

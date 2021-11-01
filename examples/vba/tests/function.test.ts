@@ -8,6 +8,7 @@ describe('function', () => {
     a = r(1)
     msgbox a
     a = r2(a)
+    a = debug.print(a)
     msgbox a
     end sub
 
@@ -22,12 +23,13 @@ describe('function', () => {
     `;
     const ret: any[] = await run(code);
     expect(ret).toMatchInlineSnapshot(`
-Array [
-  1,
-  1,
-  1,
-  undefined,
-]
-`);
+      Array [
+        1,
+        1,
+        1,
+        undefined,
+        1,
+      ]
+    `);
   });
 });

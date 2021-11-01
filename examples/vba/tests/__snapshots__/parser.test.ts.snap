@@ -83,9 +83,22 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                   'lastLine': 2,
                   'firstColumn': 5,
                   'lastColumn': 9,
-                  'token': 'IDENTIFIER',
-                  'type': 'token',
-                  'text': 'main'
+                  'symbol': 'ambiguousIdentifier',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 5,
+                      'end': 9,
+                      'firstLine': 2,
+                      'lastLine': 2,
+                      'firstColumn': 5,
+                      'lastColumn': 9,
+                      'token': 'IDENTIFIER',
+                      'type': 'token',
+                      'text': 'main'
+                    }
+                  ],
+                  'ruleIndex': 54
                 },
                 {
                   'start': 9,
@@ -277,15 +290,28 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'lastLine': 8,
                                       'firstColumn': 1,
                                       'lastColumn': 2,
-                                      'token': 'IDENTIFIER',
-                                      'type': 'token',
-                                      'text': 'x'
+                                      'symbol': 'ambiguousIdentifier',
+                                      'type': 'symbol',
+                                      'children': [
+                                        {
+                                          'start': 40,
+                                          'end': 41,
+                                          'firstLine': 8,
+                                          'lastLine': 8,
+                                          'firstColumn': 1,
+                                          'lastColumn': 2,
+                                          'token': 'IDENTIFIER',
+                                          'type': 'token',
+                                          'text': 'x'
+                                        }
+                                      ],
+                                      'ruleIndex': 54
                                     }
                                   ],
-                                  'ruleIndex': 41
+                                  'ruleIndex': 43
                                 }
                               ],
-                              'ruleIndex': 37
+                              'ruleIndex': 39
                             },
                             {
                               'start': 42,
@@ -330,16 +356,16 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 43
+                                  'ruleIndex': 45
                                 }
                               ],
-                              'ruleIndex': 36
+                              'ruleIndex': 38
                             }
                           ],
-                          'ruleIndex': 17
+                          'ruleIndex': 20
                         }
                       ],
-                      'ruleIndex': 12
+                      'ruleIndex': 15
                     },
                     {
                       'start': 47,
@@ -379,7 +405,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'ruleIndex': 3
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 14
                 },
                 {
                   'start': 49,
@@ -513,9 +539,22 @@ exports[`vba parser parse correctly 2`] = `
                   'lastLine': 2,
                   'firstColumn': 5,
                   'lastColumn': 9,
-                  'token': 'IDENTIFIER',
-                  'type': 'token',
-                  'text': 'main'
+                  'symbol': 'ambiguousIdentifier',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 5,
+                      'end': 9,
+                      'firstLine': 2,
+                      'lastLine': 2,
+                      'firstColumn': 5,
+                      'lastColumn': 9,
+                      'token': 'IDENTIFIER',
+                      'type': 'token',
+                      'text': 'main'
+                    }
+                  ],
+                  'ruleIndex': 54
                 },
                 {
                   'start': 9,
@@ -601,9 +640,22 @@ exports[`vba parser parse correctly 2`] = `
                                   'lastLine': 3,
                                   'firstColumn': 1,
                                   'lastColumn': 7,
-                                  'token': 'IDENTIFIER',
-                                  'type': 'token',
-                                  'text': 'msgbox'
+                                  'symbol': 'ambiguousIdentifier',
+                                  'type': 'symbol',
+                                  'children': [
+                                    {
+                                      'start': 10,
+                                      'end': 16,
+                                      'firstLine': 3,
+                                      'lastLine': 3,
+                                      'firstColumn': 1,
+                                      'lastColumn': 7,
+                                      'token': 'IDENTIFIER',
+                                      'type': 'token',
+                                      'text': 'msgbox'
+                                    }
+                                  ],
+                                  'ruleIndex': 54
                                 },
                                 {
                                   'start': 17,
@@ -657,25 +709,25 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 43
+                                              'ruleIndex': 45
                                             }
                                           ],
-                                          'ruleIndex': 36
+                                          'ruleIndex': 38
                                         }
                                       ],
-                                      'ruleIndex': 26
+                                      'ruleIndex': 29
                                     }
                                   ],
-                                  'ruleIndex': 25
+                                  'ruleIndex': 28
                                 }
                               ],
-                              'ruleIndex': 24
+                              'ruleIndex': 27
                             }
                           ],
-                          'ruleIndex': 22
+                          'ruleIndex': 25
                         }
                       ],
-                      'ruleIndex': 12
+                      'ruleIndex': 15
                     },
                     {
                       'start': 18,
@@ -715,7 +767,7 @@ exports[`vba parser parse correctly 2`] = `
                       'ruleIndex': 3
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 14
                 },
                 {
                   'start': 19,

@@ -10,10 +10,10 @@ async function loadSub(
   context: Context,
 ) {
   for (const c of node.children) {
-    if (c.type === 'token' && c.token === 'IDENTIFIER') {
+    if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
       const subSymbolItem = new SubSymbolItem(node, context);
       await subSymbolItem.init();
-      context.registerSymbolItem(c.text, subSymbolItem);
+      context.registerSymbolItem(c.children[0].text, subSymbolItem);
       return;
     }
   }
@@ -51,8 +51,8 @@ registerLoaders({
     for (const c of node.children) {
       if (c.type === 'token' && c.token === 'BYVAL') {
         argInfo.byRef = false;
-      } else if (c.type === 'token' && c.token === 'IDENTIFIER') {
-        argInfo.name = c.text;
+      } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+        argInfo.name = c.children[0].text;
       } else if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
         argInfo.asType = collect_asTypeClause(c, context);
       } else if (c.type === 'token' && c.token === 'OPTIONAL') {

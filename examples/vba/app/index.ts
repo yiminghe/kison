@@ -142,8 +142,8 @@ require(['vs/editor/editor.main'], () => {
   //   });
   // }
 
-  const MsgBoxSub: (name: string) => SubBinder = (name: string) => ({
-    name,
+  const MsgBoxSub: SubBinder = {
+    name: 'msgbox',
     argumentsInfo: [
       {
         name: 'msg',
@@ -161,7 +161,7 @@ require(['vs/editor/editor.main'], () => {
       // await wait(100);
       return undefined;
     },
-  });
+  };
 
   const vbModal: VariableBinder = {
     name: 'vbModal',
@@ -172,8 +172,27 @@ require(['vs/editor/editor.main'], () => {
     try {
       const context = new Context();
 
-      context.registerSubBinder(MsgBoxSub('MsgBox'));
-      context.registerSubBinder(MsgBoxSub('debug.print'));
+      context.registerSubBinder(MsgBoxSub);
+      context.registerSubBinder({
+        argumentsInfo: [
+          {
+            name: 'msg',
+          },
+          {
+            name: 'msg2',
+          },
+        ],
+        async value(context) {
+          console.log(
+            `Call ${name}: `,
+            context.getCurrentScope().getVariable('msg')?.value.value,
+            context.getCurrentScope().getVariable('msg2')?.value.value || '',
+          );
+          // await wait(100);
+          return new VBInteger(1);
+        },
+        name: 'debug.print',
+      });
 
       context.registerVariableBinder(vbModal);
       context.registerVariableBinder({

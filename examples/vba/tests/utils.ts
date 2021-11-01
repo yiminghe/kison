@@ -33,8 +33,16 @@ export async function runs(
   const context = new Context();
   context.registerSubBinder(MsgBoxSub);
   context.registerSubBinder({
-    ...MsgBoxSub,
     name: 'debug.print',
+    argumentsInfo: [
+      {
+        name: 'msg',
+      },
+    ],
+    async value(context) {
+      ret.push(context.getCurrentScope().getVariable('msg')?.value.value);
+      return new VBInteger(1);
+    },
   });
 
   context.registerVariableBinder(vbModal);

@@ -10,7 +10,7 @@ msgbox 4
 end sub
 
 sub test2
-msgbox 2
+call debug.print(2)
 exit sub
 debug.print 3
 end sub

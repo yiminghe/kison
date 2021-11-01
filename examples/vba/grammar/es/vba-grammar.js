@@ -89,7 +89,18 @@ module.exports = {
       n.endOfLineZeroOrMore,
     ],
 
-    [n.moduleBodyElement, n.functionStmt, n.alternationMark, n.subStmt],
+    [
+      n.moduleBodyElement,
+      n.functionStmt,
+      n.alternationMark,
+      n.propertyGetStmt,
+      n.alternationMark,
+      n.propertySetStmt,
+      n.alternationMark,
+      n.propertyLetStmt,
+      n.alternationMark,
+      n.subStmt,
+    ],
 
     [
       n.visibility,
@@ -107,7 +118,7 @@ module.exports = {
       n.visibilityOptional,
       n.STATICOptional,
       n.SUB,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.argListOptional,
       n.endOfStatement,
       n.blockOptional,
@@ -115,11 +126,50 @@ module.exports = {
     ],
 
     [
+      n.propertyGetStmt,
+      n.visibilityOptional,
+      n.STATICOptional,
+      n.PROPERTY_GET,
+      n.ambiguousIdentifier,
+      n.typeHintOptional,
+      n.LPAREN,
+      n.RPAREN,
+      n.asTypeClauseOptional,
+      n.endOfStatement,
+      n.blockOptional,
+      n.END_PROPERTY,
+    ],
+
+    [
+      n.propertySetStmt,
+      n.visibilityOptional,
+      n.STATICOptional,
+      n.PROPERTY_SET,
+      n.ambiguousIdentifier,
+      n.argListOptional,
+      n.endOfStatement,
+      n.blockOptional,
+      n.END_PROPERTY,
+    ],
+
+    [
+      n.propertyLetStmt,
+      n.visibilityOptional,
+      n.STATICOptional,
+      n.PROPERTY_LET,
+      n.ambiguousIdentifier,
+      n.argListOptional,
+      n.endOfStatement,
+      n.blockOptional,
+      n.END_PROPERTY,
+    ],
+
+    [
       n.functionStmt,
       n.visibilityOptional,
       n.STATICOptional,
       n.FUNCTION,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.argListOptional,
       n.asTypeClauseOptional,
@@ -229,7 +279,7 @@ module.exports = {
       n.CALL,
       n.implicitCallStmt_InStmtOptional,
       '.',
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -247,7 +297,7 @@ module.exports = {
       n.eCS_ProcedureCall,
       // CALL WS ambiguousIdentifier typeHint? (WS? LPAREN WS? argsCall WS? RPAREN)? (WS? LPAREN indexes RPAREN)*;
       n.CALL,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -272,7 +322,7 @@ module.exports = {
       n.iCS_B_MemberProcedureCall,
       n.implicitCallStmt_InStmt,
       '.',
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.argsCallOptional,
       n.dictionaryCallStmtOptional,
@@ -284,7 +334,7 @@ module.exports = {
     ],
     [
       n.iCS_B_ProcedureCall,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.argsCallOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -316,8 +366,6 @@ module.exports = {
       n.valueStmt,
     ],
 
-    [n.dictionaryCallStmt, '!', n.IDENTIFIER, n.typeHintOptional],
-
     [
       n.variableStmt,
       n.groupStartMark,
@@ -342,7 +390,7 @@ module.exports = {
 
     [
       n.variableSubStmt,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.groupStartMark,
       n.LPAREN,
       n.subscriptsOptional,
@@ -442,7 +490,7 @@ module.exports = {
     ],
     [
       n.iCS_S_ProcedureOrArrayCall,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.LPAREN,
       n.argsCallOptional,
@@ -457,7 +505,7 @@ module.exports = {
 
     [
       n.iCS_S_VariableOrProcedureCall,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.dictionaryCallStmtOptional,
       n.groupStartMark,
@@ -467,7 +515,7 @@ module.exports = {
       n.groupEndOptionalMark,
     ],
 
-    [n.dictionaryCallStmt, '!', n.IDENTIFIER, n.typeHintOptional],
+    [n.dictionaryCallStmt, '!', n.ambiguousIdentifier, n.typeHintOptional],
 
     [n.literal, n.INTEGERLITERAL, n.alternationMark, n.STRINGLITERAL],
 
@@ -495,7 +543,7 @@ module.exports = {
       n.BYREF,
       n.groupEndOptionalMark,
       n.PARAMARRAYOptional,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.typeHintOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -524,14 +572,14 @@ module.exports = {
 
     [
       n.complexType,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.groupStartMark,
       n.groupStartMark,
       '.',
       n.alternationMark,
       '!',
       n.groupEndMark,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
       n.groupEndZeroOrMoreMark,
     ],
 
@@ -568,8 +616,12 @@ module.exports = {
       n.INTEGERLITERAL,
       n.alternationMark,
       n.MULT,
-      n.IDENTIFIER,
+      n.ambiguousIdentifier,
     ],
+
+    // ...n.KEYWORDS.map((keyword) => [n.ambiguousIdentifier, keyword]),
+
+    [n.ambiguousIdentifier, n.IDENTIFIER],
   ]),
   lexer: {
     rules: n.makeLexerRules([

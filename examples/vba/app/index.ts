@@ -128,6 +128,10 @@ require(['vs/editor/editor.main'], () => {
     const value = getCurrentCode();
     return { value, ret: parser.parse(value, {}) };
   }
+  $('resetCode').addEventListener('click', () => {
+    localStorage.clear();
+    location.reload();
+  });
   $('lex').addEventListener('click', () => {
     const value = getCurrentCode();
     console.log(parser.lex(value));

@@ -21,9 +21,8 @@ const MsgBoxSub: SubBinder = {
   argumentsInfo:[{
     name:'msg',
   }],
-  async fn(context) {
-    console.log(context.getCurrentScope().getVariable('msg')?.value.value);
-    return undefined;
+  async fn(args) {
+    console.log(args.msg?.value.value);
   },
 };
 

@@ -94,10 +94,6 @@ export const DATABASE = 'DATABASE';
 export const DATABASEOptional = 'DATABASE?';
 export const DATABASEZeroOrMore = 'DATABASE*';
 export const DATABASEOneOrMore = 'DATABASE+';
-export const DATE = 'DATE';
-export const DATEOptional = 'DATE?';
-export const DATEZeroOrMore = 'DATE*';
-export const DATEOneOrMore = 'DATE+';
 export const DECLARE = 'DECLARE';
 export const DECLAREOptional = 'DECLARE?';
 export const DECLAREZeroOrMore = 'DECLARE*';
@@ -1070,7 +1066,6 @@ export const KEYWORDS = [
   'COLLECTION',
   'CONST',
   'DATABASE',
-  'DATE',
   'DECLARE',
   'DEFBOOL',
   'DEFBYTE',

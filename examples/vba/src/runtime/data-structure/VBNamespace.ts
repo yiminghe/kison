@@ -1,8 +1,17 @@
 import type { VBObject } from './VBObject';
+import type { SubBinder, ClassBinder } from './runtime';
 
-export class VBNamespace {
+export type BinderValue =
+  | VBObject
+  | SubBinder
+  | ClassBinder
+  | VBNamespaceBinder;
+
+export type BinderMap = Map<string, BinderValue>;
+
+export class VBNamespaceBinder {
   type: 'Namespace' = 'Namespace';
-  value: Map<string, VBObject> = new Map();
+  value: BinderMap = new Map();
   constructor(public name: string) {}
 
   get(name: string) {

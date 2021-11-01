@@ -2,7 +2,8 @@ import type { VBFile } from './runtime';
 import type { Context } from '../Context';
 import type { VBValue } from './VBValue';
 import type { VBClass } from './VBClass';
-import { VBObject } from './VBObject';
+import { VBObject, VBNativeObject } from './VBObject';
+import { VBNamespaceBinder } from './VBNamespace';
 
 export class VBScope {
   constructor(
@@ -12,13 +13,13 @@ export class VBScope {
     public classObj?: VBClass,
   ) {}
 
-  variableMap = new Map<String, VBObject>();
+  variableMap = new Map<string, VBObject>();
 
   hasVariable(name: string) {
     return !!this._getVariable(name);
   }
 
-  _getVariable(name: string): VBObject | undefined {
+  _getVariable(name: string): VBObject | VBNamespaceBinder | undefined {
     const { variableMap, context, classObj, file, subName } = this;
 
     // local scope variable
@@ -46,9 +47,14 @@ export class VBScope {
     }
 
     // binder
-    v = context.bindersMap.get(name);
-    if (v) {
-      return v;
+    const binder = context.bindersMap.get(name);
+    if (binder) {
+      if (binder.type === 'Namespace') {
+        return binder;
+      }
+      if (binder.type === 'Object') {
+        return binder;
+      }
     }
 
     const vItem = context.getSymbolItem(name, file);
@@ -58,12 +64,12 @@ export class VBScope {
     return v;
   }
 
-  getVariable(name: string): VBObject {
+  getVariable(name: string): VBObject | VBNamespaceBinder {
     let v = this._getVariable(name);
     if (v) {
       return v;
     }
-    v = new VBObject();
+    v = new VBNativeObject();
     this.variableMap.set(name, v);
     return v;
   }

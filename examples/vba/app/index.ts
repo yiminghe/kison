@@ -4,6 +4,8 @@ import {
   VariableBinder,
   VBInteger,
   SubBinder,
+  ClassBinder,
+  VBString,
 } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 
@@ -40,6 +42,11 @@ sub main
 
   dim c as New MyClass
   debug.print c.m
+
+  dim d as New js.Date
+  debug.print d.date
+  d.date = 10
+  debug.print d.date
 end sub
 `.trim();
 
@@ -142,7 +149,7 @@ require(['vs/editor/editor.main'], () => {
   //   });
   // }
 
-  const MsgBoxSub: SubBinder = {
+  const MsgBoxBinder: SubBinder = {
     name: 'msgbox',
     argumentsInfo: [
       {
@@ -152,18 +159,52 @@ require(['vs/editor/editor.main'], () => {
         name: 'msg2',
       },
     ],
-    async value(context) {
+    async value(args) {
       console.log(
-        `Call ${name}: `,
-        context.getCurrentScope().getVariable('msg')?.value.value,
-        context.getCurrentScope().getVariable('msg2')?.value.value || '',
+        `Call ${MsgBoxBinder.name}: `,
+        args.msg?.value.value,
+        args.msg2?.value.value || '',
       );
       // await wait(100);
       return undefined;
     },
   };
 
-  const vbModal: VariableBinder = {
+  function upperFirst(name: string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  const JSDateBinder: ClassBinder = {
+    name: 'js.Date',
+    async value() {
+      const d: any = new Date();
+      return {
+        get(name) {
+          const method = `get${upperFirst(name)}`;
+          if (!d[method]) {
+            throw new Error('no property getter ' + name + ' in js.Date!');
+          }
+          const v = d[method]();
+          if (typeof v === 'string') {
+            return new VBString(v);
+          } else if (typeof v === 'number') {
+            return new VBInteger(v);
+          }
+          throw new Error('only allow string/number return type');
+        },
+        set(name, value) {
+          const method = `set${upperFirst(name)}`;
+          if (!d[method]) {
+            throw new Error('no property setter ' + name + ' in js.Date!');
+          }
+          let v = value.value;
+          d[method](v);
+        },
+      };
+    },
+  };
+
+  const vbModalBinder: VariableBinder = {
     name: 'vbModal',
     value: new VBInteger(1),
   };
@@ -171,8 +212,8 @@ require(['vs/editor/editor.main'], () => {
   $('evaluate').addEventListener('click', async () => {
     try {
       const context = new Context();
-
-      context.registerSubBinder(MsgBoxSub);
+      context.registerClassBinder(JSDateBinder);
+      context.registerSubBinder(MsgBoxBinder);
       context.registerSubBinder({
         argumentsInfo: [
           {
@@ -182,11 +223,11 @@ require(['vs/editor/editor.main'], () => {
             name: 'msg2',
           },
         ],
-        async value(context) {
+        async value(args) {
           console.log(
-            `Call ${name}: `,
-            context.getCurrentScope().getVariable('msg')?.value.value,
-            context.getCurrentScope().getVariable('msg2')?.value.value || '',
+            `Call ${'debug.print'}: `,
+            args.msg?.value.value,
+            args.msg2?.value.value || '',
           );
           // await wait(100);
           return new VBInteger(1);
@@ -194,10 +235,10 @@ require(['vs/editor/editor.main'], () => {
         name: 'debug.print',
       });
 
-      context.registerVariableBinder(vbModal);
+      context.registerVariableBinder(vbModalBinder);
       context.registerVariableBinder({
-        ...vbModal,
-        name: 'VBA.FormShowConstants.' + vbModal.name,
+        ...vbModalBinder,
+        name: 'VBA.FormShowConstants.' + vbModalBinder.name,
       });
 
       const { classCode, moduleCode } = getAllCodes();

@@ -1,3 +1,4 @@
+import { VBBindProperty } from './VBClass';
 import {
   VBValue,
   AsTypeClauseInfo,
@@ -5,10 +6,14 @@ import {
   VB_EMPTY,
 } from './VBValue';
 
-// address
-export class VBObject {
-  type: 'Object' = 'Object';
+export type VBObject = VBNativeObject | VBBindProperty;
 
+// address
+export class VBNativeObject {
+  type: 'Object' = 'Object';
+  subType: 'address' = 'address';
+
+  isProperty: boolean = false;
   dynamicArray: boolean = false;
 
   constructor(
@@ -25,9 +30,14 @@ export class VBObject {
     }
   }
 
+  setValue(value: VBObject | VBValue) {
+    this.value = value;
+  }
+
   clone() {
-    const newObj = new VBObject(this._value, this.asType);
+    const newObj = new VBNativeObject(this._value, this.asType);
     newObj.dynamicArray = this.dynamicArray;
+    newObj.isProperty = this.isProperty;
     return newObj;
   }
 
@@ -49,10 +59,15 @@ export class VBObject {
     if (this.constant) {
       throw new Error('Can not set const variable!');
     }
-    if (value.type === 'Object') {
-      this._getObject()._value = value.value;
+    const obj = this._getObject();
+    if (obj.subType === 'address') {
+      if (value.type === 'Object') {
+        obj._value = value.value;
+      } else {
+        obj._value = value;
+      }
     } else {
-      this._getObject()._value = value;
+      obj.value = value;
     }
   }
 }

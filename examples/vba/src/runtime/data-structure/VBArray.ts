@@ -4,7 +4,7 @@ import {
   VBValue,
   VBPrimitiveTypeClass,
 } from './VBValue';
-import { VBObject } from './VBObject';
+import { VBObject, VBNativeObject } from './VBObject';
 
 type ArrayElement = VBObject | VBObject[];
 
@@ -43,7 +43,7 @@ export class VBArray {
           value[index] = [];
         } else {
           const VBPrimitiveClass = VBPrimitiveTypeClass[elementType];
-          value[index] = new VBObject(new VBPrimitiveClass(), {
+          value[index] = new VBNativeObject(new VBPrimitiveClass(), {
             type: elementType,
             isArray: false,
           });

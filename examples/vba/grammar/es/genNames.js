@@ -23,7 +23,6 @@ const keywords = [
   'COLLECTION',
   'CONST',
   'DATABASE',
-  'DATE',
   'DECLARE',
   'DEFBOOL',
   'DEFBYTE',

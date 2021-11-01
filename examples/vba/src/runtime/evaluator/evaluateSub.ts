@@ -3,13 +3,18 @@ import type {
   ECS_ProcedureCall_Node,
 } from '../../parser';
 import {
-  AstSymbolNode,
   ECS_MemberProcedureCall_Node,
   ICS_B_MemberProcedureCall_Node,
 } from '../../parserLLK';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
-import { VBObject, VBValue } from '../types';
+import {
+  VBNamespaceBinder,
+  VBObject,
+  VBValue,
+  SubBinder,
+  BinderValue,
+} from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import { buildArgs, buildIndexes, checkIndexesInterger } from './common';
 
@@ -34,7 +39,7 @@ async function callMemberSub(
   callerIndex: number,
 ) {
   const { children } = node;
-  let v: VBObject | VBValue | undefined;
+  let v: VBObject | VBValue | VBNamespaceBinder | SubBinder | undefined;
   const callerNode = children[callerIndex];
   if (
     callerNode.type === 'symbol' &&
@@ -45,12 +50,12 @@ async function callMemberSub(
   if (!v) {
     throw new Error('TODO with!');
   }
-  //const hasIndexes=children.findIndex(v=>v.type==='symbol'&&v.symbol==='indexes');
+
   const indexes: (VBValue | VBObject)[] = await buildIndexes(node, context);
   let args: (VBValue | VBObject)[] = await buildArgs(node, context);
 
   const id = collectAmbiguousIdentifier(node, true)!;
-  let subOrArray;
+  let subOrArray: undefined | BinderValue;
 
   if (v.type === 'Object' && v.value.type === 'Class') {
     return v.value.callSub(id, args);
@@ -59,21 +64,22 @@ async function callMemberSub(
     return v.callSub(id, args);
   }
 
-  if (v.type === 'Object' && v.value.type === 'Namespace') {
-    subOrArray = v.value.get(id)?.value;
-  } else if (v.type === 'Namespace') {
-    subOrArray = v.get(id)?.value;
+  if (v.type === 'Namespace') {
+    subOrArray = v.get(id);
   }
 
   if (subOrArray) {
-    if (subOrArray.type === 'subBinder') {
+    if (subOrArray.type === 'SubBinder') {
       return context.callSubBinder(subOrArray, args.length ? args : indexes);
-    } else if (subOrArray.type === 'Array') {
+    } else if (
+      subOrArray.type === 'Object' &&
+      subOrArray.value.type === 'Array'
+    ) {
       const numberIndexes = checkIndexesInterger(indexes);
       if (!numberIndexes.length) {
         throw new Error('unexpected array access!');
       }
-      return subOrArray.getElement(numberIndexes);
+      return subOrArray.value.getElement(numberIndexes);
     }
   }
 

@@ -15,6 +15,9 @@ import {
   getDEFAULT_AS_TYPE,
   VBClass,
   VB_EMPTY,
+  VBNativeObject,
+  VBBindClass,
+  VBNativeClass,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -71,35 +74,46 @@ registerEvaluators({
       asType = collect_asTypeClause(lastChild, context);
     }
 
-    let { type, classType, isNew } = asType;
+    const { type, classType, isNew } = asType;
     let value: VBVariableInfo['value'] | undefined;
 
     if (type) {
-      type = (type as any).toLowerCase();
-      const PrimitiveClass = VBPrimitiveTypeClass[type!];
+      const lowerType = type.toLowerCase() as any;
+      const PrimitiveClass = (VBPrimitiveTypeClass as any)[lowerType];
       if (subscripts) {
         value = () => {
-          const value = new VBArray(type!, subscripts!);
-          return new VBObject(value, asType);
+          const value = new VBArray(lowerType, subscripts!);
+          return new VBNativeObject(value, asType);
         };
       } else if (PrimitiveClass) {
         value = () => {
           const value = new PrimitiveClass();
-          return new VBObject(value, asType);
+          return new VBNativeObject(value, asType);
         };
       }
     } else if (classType) {
       const classId = classType[0];
-      context.symbolTable.get(classId);
       if (isNew) {
         value = async () => {
-          const value = new VBClass(classId, context);
+          const binder = context.getBinder(classType);
+          let value: VBClass | undefined;
+          if (binder && binder.type === 'ClassBinder') {
+            value = new VBBindClass(binder);
+          } else if (classType.length === 1) {
+            const symbolItem = context.symbolTable.get(classId);
+            if (symbolItem && symbolItem.type === 'class') {
+              value = new VBNativeClass(classId, context);
+            }
+          }
+          if (!value) {
+            throw new Error('Can not find class: ' + classType.join('.'));
+          }
           await value.init();
-          return new VBObject(value, asType);
+          return new VBNativeObject(value, asType);
         };
       } else {
         value = () => {
-          return new VBObject(VB_EMPTY, asType);
+          return new VBNativeObject(VB_EMPTY, asType);
         };
       }
     }
@@ -195,7 +209,7 @@ registerEvaluators({
           context,
         );
         const objValue = obj.value;
-        if (objValue.type === 'Array') {
+        if (objValue.type === 'Array' && obj.subType === 'address') {
           if (obj.dynamicArray) {
             objValue.dynamic = true;
             objValue.subscripts = subscripts;
@@ -220,7 +234,11 @@ registerEvaluators({
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
         const obj: VBObject = await evaluate(c, context);
-        if (obj.value.type === 'Array') {
+        if (
+          obj.type === 'Object' &&
+          obj.subType === 'address' &&
+          obj.value.type === 'Array'
+        ) {
           obj.value.value = [];
           if (obj.dynamicArray) {
             obj.value.subscripts = [];

@@ -1,6 +1,8 @@
-import { runs } from './utils';
+import { runs, run } from './utils';
 
-describe('array', () => {
+describe('class', () => {
+  let ret;
+
   it('Class_Initialize works', async () => {
     const classCode = `
 public m as Integer
@@ -17,7 +19,7 @@ msgbox c.m
 end sub    
     `;
 
-    const ret = await runs(
+    ret = await runs(
       [moduleCode],
       [
         {
@@ -32,6 +34,23 @@ end sub
     expect(ret).toMatchInlineSnapshot(`
       Array [
         2,
+      ]
+    `);
+  });
+
+  it('support bind class', async () => {
+    ret = await run(`
+    sub main
+    dim d as New js.Date
+    msgbox d.date
+    d.date=10
+    msgbox d.date
+  end sub
+         `);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+        10,
       ]
     `);
   });

@@ -24,7 +24,7 @@ registerEvaluators({
     }
     const rightValue: VBValue | VBObject = await evaluate(right, context);
     if (op.token === 'EQ') {
-      leftVariable.value = rightValue;
+      leftVariable.setValue(rightValue);
     }
   },
 });

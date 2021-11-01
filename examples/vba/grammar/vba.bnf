@@ -49,6 +49,6 @@ argDefaultValue ::= 'EQ' valueStmt
 asTypeClause ::= 'AS' 'NEW'? type_ fieldLength?
 type_ ::= ( baseType | complexType ) ( 'LPAREN' 'RPAREN' )?
 complexType ::= ambiguousIdentifier ( ( '.' | '!' ) ambiguousIdentifier )*
-baseType ::= 'BOOLEAN' | 'BYTE' | 'COLLECTION' | 'DATE' | 'DOUBLE' | 'INTEGER' | 'LONG' | 'SINGLE' | 'VARIANT' | 'STRING' ( 'MULT' valueStmt )?
+baseType ::= 'BOOLEAN' | 'BYTE' | 'COLLECTION' | 'DOUBLE' | 'INTEGER' | 'LONG' | 'SINGLE' | 'VARIANT' | 'STRING' ( 'MULT' valueStmt )?
 fieldLength ::= 'MULT' 'INTEGERLITERAL' | 'MULT' ambiguousIdentifier
 ambiguousIdentifier ::= 'IDENTIFIER'

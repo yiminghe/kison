@@ -591,8 +591,6 @@ module.exports = {
       n.alternationMark,
       n.COLLECTION,
       n.alternationMark,
-      n.DATE,
-      n.alternationMark,
       n.DOUBLE,
       n.alternationMark,
       n.INTEGER,

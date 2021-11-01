@@ -4,6 +4,7 @@ import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBObject } from './VBObject';
 import { Visibility_Node } from '../../parserLLK';
 import type { SubSymbolItem } from './SubSymbolItem';
+import { VBNamespaceBinder } from './VBNamespace';
 
 export interface VBFile {
   id: string;
@@ -35,25 +36,41 @@ export class VariableSymbolItem {
 
 export type Visibility = Visibility_Node['children'][0]['token'];
 
+export type SubBinderReturnType =
+  | VBValue
+  | undefined
+  | false
+  | VBNamespaceBinder;
+
 export interface SubBinder {
-  type: 'subBinder';
+  type: 'SubBinder';
   value: (
-    context: Context,
-  ) => Promise<VBValue | undefined> | VBValue | undefined | false;
-  argumentsInfo: ArgInfo[];
+    args: Record<string, VBObject>,
+  ) => Promise<SubBinderReturnType> | SubBinderReturnType;
+  argumentsInfo?: ArgInfo[];
   name: string;
 }
 
 export interface VariableBinder {
-  type: 'variableBinder';
+  type: 'VariableBinder';
   value: VBValue;
   name: string;
 }
 
-export interface UserVariableBinder {
-  value: VBValue;
-  name: string;
+export interface InstanceBinder {
+  get(name: string): VBValue;
+  set(name: string, value: VBValue): void;
 }
+
+export interface ClassBinder {
+  type: 'ClassBinder';
+  name: string;
+  value: () => Promise<InstanceBinder> | InstanceBinder;
+}
+
+export type UserClassBinder = Omit<ClassBinder, 'type'>;
+export type UserVariableBinder = Omit<VariableBinder, 'type'>;
+export type UserSubBinder = Omit<SubBinder, 'type'>;
 
 export interface ArgInfo {
   byRef?: boolean;

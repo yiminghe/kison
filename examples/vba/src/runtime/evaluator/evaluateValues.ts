@@ -7,13 +7,16 @@ import {
   VBString,
   VB_NOTHING,
   VB_NULL,
-  VBObject,
   ExitResult,
   VBValue,
+  SubBinder,
   VB_EMPTY,
+  ClassBinder,
+  VBNamespaceBinder,
+  VBObject,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
-import { buildArgs, buildIndexes, checkIndexesInterger } from './common';
+import { buildIndexes, checkIndexesInterger } from './common';
 
 registerEvaluators({
   async evaluate_indexes(node, context) {
@@ -61,10 +64,13 @@ registerEvaluators({
       }
     }
 
-    let v: VBObject | VBValue | undefined = await evaluate(
-      valueNodes[0],
-      context,
-    );
+    let v:
+      | VBObject
+      | VBValue
+      | SubBinder
+      | ClassBinder
+      | VBNamespaceBinder
+      | undefined = await evaluate(valueNodes[0], context);
 
     for (let i = 1; i < valueNodes.length; i++) {
       if (!v) {
@@ -73,10 +79,7 @@ registerEvaluators({
       const valueNode = valueNodes[i];
       const indexesNode = collectIndexesNode(valueNode);
       const id = collectAmbiguousIdentifier(valueNode)!;
-      if (
-        (v.type === 'Object' && v.value.type === 'Class') ||
-        (v.type === 'Object' && v.value.type === 'Namespace')
-      ) {
+      if (v.type === 'Object' && v.value.type === 'Class') {
         v = v.value.get(id);
       } else if (v.type === 'Namespace' || v.type === 'Class') {
         v = v.get(id);
@@ -84,16 +87,15 @@ registerEvaluators({
         throw new Error('unexpected member access!');
       }
       if (indexesNode && v) {
-        const vbValue = v.value;
         const indexesValues = await buildIndexes(
           { children: [indexesNode] },
           context,
         );
-        if (vbValue.type === 'Array') {
+        if (v.type === 'Object' && v.value.type === 'Array') {
           const indexes = checkIndexesInterger(indexesValues);
-          v = vbValue.getElement(indexes);
-        } else if (vbValue.type === 'subBinder') {
-          const ret = await context.callSubBinder(vbValue, indexesValues);
+          v = v.value.getElement(indexes);
+        } else if (v.type === 'SubBinder') {
+          const ret = await context.callSubBinder(v, indexesValues);
           if (ret?.type === 'Exit') {
             return ret;
           }
@@ -129,9 +131,9 @@ registerEvaluators({
       }
     }
 
-    let variable: VBObject = scope.getVariable(id);
+    let variable: VBObject | VBNamespaceBinder = scope.getVariable(id);
 
-    if (indexes) {
+    if (indexes && variable.type === 'Object') {
       if (variable.value.type !== 'Array') {
         throw new Error('expect array or function or sub');
       }

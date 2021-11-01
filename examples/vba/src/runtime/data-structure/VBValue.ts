@@ -8,8 +8,6 @@ import type {
 } from '../../parser';
 import type { VBClass } from './VBClass';
 import type { VBArray } from './VBArray';
-import { VBNamespace } from './VBNamespace';
-import { SubBinder, VariableBinder } from './runtime';
 
 export class VBCollection {
   type: 'Collection' = 'Collection';
@@ -162,13 +160,7 @@ Object.keys(VBPrimitiveTypeClass).forEach((k) => {
 
 export type VBValidPrimitiveType = keyof typeof VBPrimitiveTypeClass;
 
-export type VBValue =
-  | VBPrimitive
-  | VBArray
-  | VBClass
-  | VBNamespace
-  | SubBinder
-  | VariableBinder;
+export type VBValue = VBPrimitive | VBArray | VBClass;
 
 export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();

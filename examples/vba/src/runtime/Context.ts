@@ -1,6 +1,6 @@
 import parser from '../parser';
 import type { AstRootNode } from '../parser';
-import type {
+import {
   VBValue,
   SubBinder,
   VBFile,
@@ -8,6 +8,8 @@ import type {
   VBClass,
   VariableBinder,
   UserVariableBinder,
+  UserClassBinder,
+  VBNativeObject,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -15,13 +17,15 @@ import {
   SymbolItem,
   VBScope,
   ArgInfo,
-  VBNamespace,
+  VBNamespaceBinder,
   VB_EMPTY,
   VBObject,
   ExitResult,
   VBEmpty,
   END_EXIT_RESULT,
   FileSymbolTable,
+  ClassBinder,
+  BinderMap,
 } from './types';
 import { last } from './utils';
 
@@ -34,7 +38,7 @@ const defaultFileId: VBFile = {
 export class Context {
   astMap = new Map<VBFile, AstRootNode>();
 
-  bindersMap = new Map<string, VBObject>();
+  bindersMap: BinderMap = new Map();
 
   currentFile: VBFile = defaultFileId;
 
@@ -66,7 +70,7 @@ export class Context {
   registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {
     const binder: SubBinder = {
       ...subBinder,
-      type: 'subBinder',
+      type: 'SubBinder',
       name: subBinder.name.toLowerCase(),
     };
     this._registerBinder(binder);
@@ -75,37 +79,66 @@ export class Context {
   registerVariableBinder(variableBinder: UserVariableBinder) {
     const binder: VariableBinder = {
       ...variableBinder,
-      type: 'variableBinder',
+      type: 'VariableBinder',
       name: variableBinder.name.toLowerCase(),
     };
     this._registerBinder(binder);
   }
 
-  _registerBinder(userBinder: VariableBinder | SubBinder) {
+  registerClassBinder(classBinder: UserClassBinder) {
+    const binder: ClassBinder = {
+      type: 'ClassBinder',
+      ...classBinder,
+      name: classBinder.name.toLowerCase(),
+    };
+    this._registerBinder(binder);
+  }
+
+  _registerBinder(userBinder: VariableBinder | SubBinder | ClassBinder) {
     const names = userBinder.name.split('.');
+    const namespace = this._findBind(names);
+    if (namespace) {
+      const name = last(names);
+      let binder;
+      if (userBinder.type === 'VariableBinder') {
+        binder = new VBNativeObject(userBinder.value, undefined, true);
+      } else {
+        binder = userBinder;
+      }
+      namespace.set(name, binder);
+    } else {
+      throw new Error('error when binding');
+    }
+  }
+
+  _findBind(names: string[]): BinderMap | null {
     let namespace = this.bindersMap;
     const len = names.length;
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
       if (i === len - 1) {
-        let binder;
-        if (userBinder.type === 'subBinder') {
-          binder = new VBObject(userBinder, undefined, true);
-        } else {
-          binder = new VBObject(userBinder.value, undefined, true);
-        }
-        namespace.set(name, binder);
+        return namespace;
       } else {
         if (!namespace.get(name)) {
-          const newNamespace = new VBObject(new VBNamespace(name));
+          const newNamespace = new VBNamespaceBinder(name);
           namespace.set(name, newNamespace);
         }
-        const n2 = namespace.get(name)?.value;
+        const n2 = namespace.get(name);
         if (n2?.type !== 'Namespace') {
-          throw new Error('error when binding');
+          return null;
         }
         namespace = n2.value;
       }
+    }
+    return null;
+  }
+
+  getBinder(names: string[]) {
+    const namespace = this._findBind(names);
+    if (namespace) {
+      return namespace.get(last(names));
+    } else {
+      throw new Error('error when binding');
     }
   }
 
@@ -157,6 +190,9 @@ export class Context {
   }
 
   getFileIdFromFileName(name: string) {
+    if (this.bindersMap.get(name)?.type === 'Namespace') {
+      return name;
+    }
     for (const fileSymbolTable of this.symbolTable.values()) {
       const { file } = fileSymbolTable;
       if (file.name === name) {
@@ -181,7 +217,7 @@ export class Context {
         continue;
       }
       if (a.type === 'Object' && argInfo.byRef) {
-        scope.setVariable(argInfo.name, new VBObject(a, argInfo.asType));
+        scope.setVariable(argInfo.name, new VBNativeObject(a, argInfo.asType));
       } else {
         scope.setVariableValue(argInfo.name, a);
       }
@@ -192,7 +228,7 @@ export class Context {
         if (argInfo.optional && argInfo.defaultValue) {
           scope.setVariableValue(
             argInfo.name,
-            new VBObject(argInfo.defaultValue.value, argInfo.asType),
+            new VBNativeObject(argInfo.defaultValue.value, argInfo.asType),
           );
         }
       }
@@ -228,17 +264,33 @@ export class Context {
     return ret;
   }
 
-  async callSubBinder(subDef: SubBinder, args: (VBValue | VBObject)[] = []) {
-    this._setupScope(subDef.name, args, subDef.argumentsInfo);
-    let ret = subDef.value(this);
-    if (ret && (ret as Promise<any>).then) {
-      ret = await ret;
+  async callSubBinder(
+    subDef: SubBinder,
+    args: (VBValue | VBObject)[] = [],
+  ): Promise<VBValue | VBNamespaceBinder | typeof END_EXIT_RESULT> {
+    this._setupScope(subDef.name, args, subDef.argumentsInfo || []);
+    const passedArgs: Record<string, VBObject> = {};
+    const scope = this.getCurrentScope();
+    for (const name of scope.variableMap.keys()) {
+      Object.defineProperty(passedArgs, name, {
+        get() {
+          const v = scope.getVariable(name);
+          if (v.type === 'Object') {
+            return v;
+          }
+          return undefined;
+        },
+      });
     }
+    const ret = await subDef.value(passedArgs);
     if (ret === false) {
       return END_EXIT_RESULT;
     }
     this.scopeStack.pop();
-    return ret || VB_EMPTY;
+    if (ret !== undefined) {
+      return ret;
+    }
+    return VB_EMPTY;
   }
 
   async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
@@ -282,13 +334,10 @@ export class Context {
       if (!namespace) {
         throw new Error('Can not find sub definition: ' + subName);
       }
-      if (namespace.value.type === 'Namespace') {
-        defMap = namespace.value.value;
-      } else if (
-        namespace.value.type === 'subBinder' &&
-        i === names.length - 1
-      ) {
-        subDef = namespace.value;
+      if (namespace.type === 'Namespace') {
+        defMap = namespace.value;
+      } else if (namespace.type === 'SubBinder' && i === names.length - 1) {
+        subDef = namespace;
       }
     }
 

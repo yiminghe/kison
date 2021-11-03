@@ -24,9 +24,11 @@ export interface Bool_Type {
   value: boolean;
 }
 
+export type Array_Element_Type = Exclude<Atom_Type, Ref_Type>;
+
 export interface Array_Type {
   type: 'array';
-  value: Exclude<Atom_Type, Ref_Type>[][];
+  value: Array_Element_Type[][];
 }
 
 export type Primary_Type = number | boolean | string;
@@ -74,22 +76,18 @@ export interface Context {
   getCellValues: (ref: Ref_Type) => Atom_Value_Type[][];
 }
 
-export type ExtractSymbol<
-  T extends string = any,
-  Prefix extends string = any,
-> = T extends `${Prefix}_${infer s}`
-  ? s extends LiteralToken | AstSymbolNode['symbol']
-    ? s
-    : 'ast'
-  : 'ast';
+type All_Vistors = Exclude<
+  LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
+  ''
+>;
 
-export type AstVisitor<T extends string = any, Prefix extends string = any> = (
-  node: AstNodeTypeMap[ExtractSymbol<T, Prefix>],
+export type AstVisitor<T extends string = ''> = (
+  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
   context: Context,
 ) => All_Type;
 
 export type Evaluators = {
-  [e in
-    | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
-    | 'evaluate']?: AstVisitor<e, 'evaluate'>;
+  [e in All_Vistors | '' as e extends ''
+    ? 'evaluate'
+    : `evaluate_${e}`]?: AstVisitor<e>;
 };

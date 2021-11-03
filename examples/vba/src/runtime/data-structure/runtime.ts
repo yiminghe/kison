@@ -85,31 +85,26 @@ export interface VBVariableInfo {
   value: () => Promise<VBObject> | VBObject;
 }
 
-export type ExtractSymbol<
-  T extends string = any,
-  Prefix extends string = any,
-> = T extends `${Prefix}_${infer s}`
-  ? s extends LiteralToken | AstSymbolNode['symbol']
-    ? s
-    : 'ast'
-  : 'ast';
+type All_Vistors = Exclude<
+  LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
+  ''
+>;
 
-export type AstVisitor<T extends string = any, Prefix extends string = any> = (
-  node: AstNodeTypeMap[ExtractSymbol<T, Prefix>],
+export type AstVisitor<T extends string = ''> = (
+  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
   context: Context,
 ) => any;
 
 export type Evaluators = {
-  [e in
-    | `evaluate_${LiteralToken | AstSymbolNode['symbol']}`
-    | 'evaluate']?: AstVisitor<e, 'evaluate'>;
+  [e in All_Vistors | '' as e extends ''
+    ? 'evaluate'
+    : `evaluate_${e}`]?: AstVisitor<e>;
 };
 
 export type Loaders = {
-  [e in `load_${LiteralToken | AstSymbolNode['symbol']}` | 'load']?: AstVisitor<
-    e,
-    'load'
-  >;
+  [e in All_Vistors | '' as e extends ''
+    ? 'load'
+    : `load_${e}`]?: AstVisitor<e>;
 };
 
 export class FileSymbolTable {

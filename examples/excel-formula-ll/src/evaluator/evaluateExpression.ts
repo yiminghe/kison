@@ -2,14 +2,22 @@ import {
   DIV_ERROR,
   makeArray,
   makeError,
+  makeReference,
   NA_ERROR,
   VALUE_ERROR,
 } from '../functions/utils';
 
-import type { AstSymbolNode, Exp_Node } from '../parser';
+import type {
+  AstSymbolNode,
+  BinaryExp_Node,
+  ClipExp_Node,
+  PercentageExp_Node,
+  PrefixExp_Node,
+} from '../parser';
 
 import { evaluate, registerEvaluators } from './evaluators';
 import type {
+  Array_Element_Type,
   All_Type,
   Array_Type,
   Atom_Value_Type,
@@ -32,7 +40,7 @@ function opOneAndMany(
   n: Atom_Value_Type,
   a: Array_Type,
   { fn, check }: BinaryDef,
-) {
+): All_Type {
   let ret: Array_Type['value'] = [];
   const { value } = a;
   for (let i = 0; i < value.length; i++) {
@@ -102,10 +110,11 @@ type BinaryDef = {
   check?: (...args: (All_Type | null)[]) => Error_Type | undefined;
 };
 
-function evaluateBinaryExp(node: Exp_Node, context: Context, def: BinaryDef) {
-  if (node.label !== 'binaryExp') {
-    return;
-  }
+function evaluateBinaryExp(
+  node: BinaryExp_Node,
+  context: Context,
+  def: BinaryDef,
+): All_Type {
   const { fn } = def;
   let check;
   if ('check' in def) {
@@ -200,7 +209,7 @@ function evaluateBinaryExp(node: Exp_Node, context: Context, def: BinaryDef) {
   let rowCount = Math.max(rightRowCount, leftRowCount);
   let colCount = Math.max(rightColCount, leftColCount);
 
-  const ret = [];
+  const ret: Array_Type['value'] = [];
 
   function getLeftValue(row: number, col: number) {
     return leftValue[startLeftRow + row][startLeftCol + col];
@@ -211,7 +220,7 @@ function evaluateBinaryExp(node: Exp_Node, context: Context, def: BinaryDef) {
   }
 
   for (let i = 0; i < rowCount; i++) {
-    const row: Atom_Type[] = [];
+    const row: Exclude<Atom_Type, Ref_Type>[] = [];
     ret[i] = row;
     for (let j = 0; j < colCount; j++) {
       let li = i;
@@ -395,13 +404,6 @@ const opFn: Record<string, BinaryDef> = {
   },
 };
 
-function evaluate_binary_exp(node: Exp_Node, context: Context) {
-  if (node.label === 'binaryExp') {
-    const op = node.children[1].token;
-    return evaluateBinaryExp(node, context, opFn[op]);
-  }
-}
-
 const unaryOp: Record<
   '+' | '-',
   {
@@ -434,16 +436,13 @@ const unaryOp: Record<
   },
 };
 function evaluatePrefixExp(
-  node: Exp_Node,
+  node: PrefixExp_Node,
   context: Context,
-  { fn }: { fn: (arg: Atom_Type) => Number_Type | Error_Type },
-) {
-  if (node.label !== 'prefixExp') {
-    return;
-  }
+  { fn }: { fn: (arg: Array_Element_Type) => Number_Type | Error_Type },
+): All_Type {
   const a = transformToArray(node.children[1], context);
 
-  function one(b: Atom_Type) {
+  function one(b: Array_Element_Type) {
     let e = checkError(b);
     if (e) {
       return e;
@@ -452,17 +451,17 @@ function evaluatePrefixExp(
   }
 
   if (a.type === 'array') {
-    return mapArray(a.value, one);
+    return makeArray(mapArray(a.value, one));
   }
   return one(a);
 }
 
 registerEvaluators({
-  ['evaluate_binaryExp']: evaluate_binary_exp,
-  ['evaluate_percentageExp'](node: Exp_Node, context: Context) {
-    if (node.label !== 'percentageExp') {
-      return;
-    }
+  evaluate_binaryExp(node: BinaryExp_Node, context: Context) {
+    const op = node.children[1].token;
+    return evaluateBinaryExp(node, context, opFn[op]);
+  },
+  evaluate_percentageExp(node: PercentageExp_Node, context: Context) {
     const a = transformToArray(node.children[0], context);
 
     function one(b: Atom_Type): Number_Type | Error_Type {
@@ -481,37 +480,29 @@ registerEvaluators({
     }
 
     if (a.type === 'array') {
-      return mapArray(a.value, one);
+      return makeArray(mapArray(a.value, one));
     }
     return one(a);
   },
-  ['evaluate_prefixExp'](node: Exp_Node, context: Context) {
-    if (node.label === 'prefixExp') {
-      const op = node.children[0].token;
-      return evaluatePrefixExp(node, context, unaryOp[op]);
-    }
+  evaluate_prefixExp(node: PrefixExp_Node, context: Context) {
+    const op = node.children[0].token;
+    return evaluatePrefixExp(node, context, unaryOp[op]);
   },
-  ['evaluate_clipExp'](node: Exp_Node, context: Context) {
-    if (node.label !== 'clipExp') {
-      return;
-    }
+  evaluate_clipExp(node: ClipExp_Node, context: Context) {
     // TODO: implicit intersection
     const a = evaluate(node.children[1], context);
     if (a.type === 'array') {
       return a.value[0]?.[0];
     } else if (a.type === 'reference') {
       const range = a.value[0];
-      return {
-        type: a.type,
-        ranges: [
-          {
-            ...range,
-            rowCount: 1,
-            colCount: 1,
-          },
-        ],
-      };
+      return makeReference([
+        {
+          ...range,
+          rowCount: 1,
+          colCount: 1,
+        },
+      ]);
     }
     return a;
   },
-} as any);
+});

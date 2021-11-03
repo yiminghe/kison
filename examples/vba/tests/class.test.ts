@@ -39,6 +39,7 @@ end sub
   });
 
   it('support bind class', async () => {
+    const currentDate = new Date().getDate();
     ret = await run(`
     sub main
     dim d as New js.Date
@@ -47,11 +48,6 @@ end sub
     msgbox d.date
   end sub
          `);
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        1,
-        10,
-      ]
-    `);
+    expect(ret).toEqual([currentDate, 10]);
   });
 });

@@ -6,9 +6,11 @@ import { isSkipToken, warn } from '../utils';
 export async function load(ast: AstNode, context: Context): Promise<any> {
   let symbol = '';
   let token: LiteralToken = '' as LiteralToken;
+  let label = '';
 
   if (ast.type === 'symbol') {
     symbol = ast.symbol;
+    label = ast.label;
   } else {
     token = ast.token;
     if (isSkipToken(token)) {
@@ -17,11 +19,13 @@ export async function load(ast: AstNode, context: Context): Promise<any> {
   }
 
   const n1 = symbol || token;
+  const n2 = label || n1;
+
   const m1 = `load_${n1}`;
+  const m2 = `load_${n2}`;
 
-  const builders2 = loaders as any;
-
-  const fn: AstVisitor = builders2[m1];
+  const loaders2 = loaders as any;
+  const fn: AstVisitor = loaders2[m2] || loaders2[m1];
 
   if (fn) {
     let ret = fn(ast, context);

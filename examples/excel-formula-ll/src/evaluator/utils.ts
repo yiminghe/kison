@@ -5,7 +5,14 @@ import {
   VALUE_ERROR,
 } from '../functions/utils';
 
-import type { All_Type, Atom_Type, Error_Type, Ref_Type } from './types';
+import type {
+  All_Type,
+  Array_Type,
+  Atom_Type,
+  Array_Element_Type,
+  Error_Type,
+  Ref_Type,
+} from './types';
 
 export function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {
@@ -165,8 +172,8 @@ export function isSingleValueArray(array: Atom_Type[][]) {
 }
 
 export function mapArray(
-  arr: Atom_Type[][],
-  fn: (arg: Atom_Type) => Atom_Type,
+  arr: Array_Type['value'],
+  fn: (arg: Array_Element_Type) => Array_Element_Type,
 ) {
   const ret = [];
   for (let rowIndex = 0; rowIndex < arr.length; rowIndex++) {

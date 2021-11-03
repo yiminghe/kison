@@ -99,48 +99,57 @@ describe('excel-formula-evaluator', () => {
 
     it('unary works', () => {
       expect(prettyJson(evaluate(parse(`{1,2}%`)))).toMatchInlineSnapshot(`
-        "[
-          [
-            {
-              'type': 'number',
-              'value': 0.01
-            },
-            {
-              'type': 'number',
-              'value': 0.02
-            }
+        "{
+          'type': 'array',
+          'value': [
+            [
+              {
+                'type': 'number',
+                'value': 0.01
+              },
+              {
+                'type': 'number',
+                'value': 0.02
+              }
+            ]
           ]
-        ]"
+        }"
       `);
 
       expect(prettyJson(evaluate(parse(`+{"1","2"}`)))).toMatchInlineSnapshot(`
-        "[
-          [
-            {
-              'type': 'number',
-              'value': 1
-            },
-            {
-              'type': 'number',
-              'value': 2
-            }
+        "{
+          'type': 'array',
+          'value': [
+            [
+              {
+                'type': 'number',
+                'value': 1
+              },
+              {
+                'type': 'number',
+                'value': 2
+              }
+            ]
           ]
-        ]"
+        }"
       `);
 
       expect(prettyJson(evaluate(parse(`-{"1","2"}`)))).toMatchInlineSnapshot(`
-        "[
-          [
-            {
-              'type': 'number',
-              'value': -1
-            },
-            {
-              'type': 'number',
-              'value': -2
-            }
+        "{
+          'type': 'array',
+          'value': [
+            [
+              {
+                'type': 'number',
+                'value': -1
+              },
+              {
+                'type': 'number',
+                'value': -2
+              }
+            ]
           ]
-        ]"
+        }"
       `);
 
       expect(prettyJson(evaluate(parse(`@{"1","2"}`)))).toMatchInlineSnapshot(`

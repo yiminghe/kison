@@ -73,6 +73,8 @@ export interface LexerOptions<T = any> {
 }
 
 export interface ParserOptions {
+  // only for llk, global match improve accuracy but impact parse speed
+  globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
   onErrorRecovery?: (args: {
@@ -597,6 +599,13 @@ export type TableSpecifierInner_Node = TableSpecifierInner_Node_46 | TableSpecif
 export type TableSpecifierItem_Node = TableSpecifierItem_Node_48 | TableSpecifierItem_Node_49;
 export type { TableColumnSpecifier_Node };
 type ArgumentsList_40_group_1_Node = ArgumentsList_40_group_1_Node_52 | ArgumentsList_40_group_1_Node_53;
+export type BinaryExp_Node = Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9 | Exp_Node_10 | Exp_Node_11 | Exp_Node_12;
+export type PrefixExp_Node = Exp_Node_13 | Exp_Node_14;
+export type ClipExp_Node = Exp_Node_15;
+export type PercentageExp_Node = Exp_Node_16;
+export type UnionReference_Node = Reference_Node_26;
+export type IntersectionReference_Node = Reference_Node_27;
+export type RangeReference_Node = Reference_Node_28;
 export type AstNodeTypeMap = { ast: AstNode;
 formula: Formula_Node;
 exp: Exp_Node;
@@ -612,6 +621,13 @@ tableThisRow: TableThisRow_Node;
 tableSpecifierInner: TableSpecifierInner_Node;
 tableSpecifierItem: TableSpecifierItem_Node;
 tableColumnSpecifier: TableColumnSpecifier_Node;
+binaryExp: BinaryExp_Node;
+prefixExp: PrefixExp_Node;
+clipExp: ClipExp_Node;
+percentageExp: PercentageExp_Node;
+unionReference: UnionReference_Node;
+intersectionReference: IntersectionReference_Node;
+rangeReference: RangeReference_Node;
 $EOF: $EOF_Node;
 $UNKNOWN: $UNKNOWN_Node;
 TOKEN_0: TOKEN_0_Node;

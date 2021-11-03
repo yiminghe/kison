@@ -208,6 +208,14 @@ class Grammar {
       }
     > = {};
 
+    const productionsByLabel: Record<
+      string,
+      {
+        ruleIndexes: number[];
+        productions: ProductionRule[];
+      }
+    > = {};
+
     function getAstClassForParent(p: ProductionRule, index: number) {
       let n = getAstNodeClassName(
         p.skipAstNode ? p.symbol + '_Parent' : p.symbol,
@@ -228,17 +236,28 @@ class Grammar {
 
     for (let i = 0; i < productions.length; i++) {
       const p = productions[i];
-      const { symbol } = p;
-      const item = (productionsBySymbol[symbol] = productionsBySymbol[
-        symbol
-      ] || {
-        ruleIndexes: [],
-        skipAstNode: false,
-        productions: [],
-      });
-      item.skipAstNode = !!p.skipAstNode;
-      item.productions[i] = p;
-      item.ruleIndexes.push(i);
+      const { symbol, label } = p;
+      {
+        const item = (productionsBySymbol[symbol] = productionsBySymbol[
+          symbol
+        ] || {
+          ruleIndexes: [],
+          skipAstNode: false,
+          productions: [],
+        });
+        item.skipAstNode = !!p.skipAstNode;
+        item.productions[i] = p;
+        item.ruleIndexes.push(i);
+      }
+
+      if (label) {
+        const item = (productionsByLabel[label] = productionsByLabel[label] || {
+          ruleIndexes: [],
+          productions: [],
+        });
+        item.productions[i] = p;
+        item.ruleIndexes.push(i);
+      }
     }
 
     for (let i = 0; i < productions.length; i++) {
@@ -369,6 +388,18 @@ class Grammar {
       }
     }
 
+    for (const label of Object.keys(productionsByLabel)) {
+      const { ruleIndexes } = productionsByLabel[label];
+      const normalizeClassName = getAstNodeClassName(label);
+      code.push(
+        `export type ${normalizeClassName} = ${ruleIndexes
+          .map((index) => {
+            return getAstClass(productions[index], index);
+          })
+          .join(' | ')};`,
+      );
+    }
+
     base = base.replace(/type AstSymbolNode =[^\n]+/, () => {
       return `type AstSymbolNode = ${allClassNames.join('|')};`;
     });
@@ -396,6 +427,9 @@ class Grammar {
       if (!skipAstNode) {
         code.push(`${symbol}: ${getAstNodeClassName(symbol)};`);
       }
+    }
+    for (const label of Object.keys(productionsByLabel)) {
+      code.push(`${label}: ${getAstNodeClassName(label)};`);
     }
     for (const token of tokenAstNodeClassNames.keys()) {
       code.push(`${token}: ${tokenAstNodeClassNames.get(token)};`);

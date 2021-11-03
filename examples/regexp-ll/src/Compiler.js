@@ -8,7 +8,7 @@ import {
   characterClassMatcher,
   assertionMatcher,
 } from './matchers.js';
-import * as n from './names';
+import * as n from './names.js';
 import {
   asyncAnchorMatchers,
   asyncBackreferenceMatcher,

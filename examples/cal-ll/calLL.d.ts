@@ -8,7 +8,7 @@ export type AstNode = AstSymbolNode | AstTokenNode;
 // replace start
 export type AstSymbolNode = Exp_Node;
 export type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|NUMBER_Node;
-export type LiteralToken = "$HIDDEN"|"NUMBER"|"$EOF"|"$UNKNOWN"|"("|")"|"+"|"-"|"*"|"/"|"^";
+export type LiteralToken = "HIDDEN"|"NUMBER"|"$EOF"|"$UNKNOWN"|"("|")"|"+"|"-"|"*"|"/"|"^";
 export type AstRootNode = Exp_Node;
 // replace end
 
@@ -51,6 +51,7 @@ export type TransformNode = (arg: {
 export interface Token extends Position {
   text: string;
   t: string;
+  channel?: string|string[];
   recovery?: string;
   token: LiteralToken;
 }
@@ -73,6 +74,8 @@ export interface LexerOptions<T = any> {
 }
 
 export interface ParserOptions {
+  // only for llk, global match improve accuracy but impact parse speed
+  globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
   onErrorRecovery?: (args: {

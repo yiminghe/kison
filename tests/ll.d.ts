@@ -51,6 +51,7 @@ export type TransformNode = (arg: {
 export interface Token extends Position {
   text: string;
   t: string;
+  channel?: string|string[];
   recovery?: string;
   token: LiteralToken;
 }
@@ -73,6 +74,8 @@ export interface LexerOptions<T = any> {
 }
 
 export interface ParserOptions {
+  // only for llk, global match improve accuracy but impact parse speed
+  globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
   onErrorRecovery?: (args: {
@@ -137,7 +140,7 @@ export interface TOKEN_0_Node extends BaseTokenNode {
           }
 interface Exp_Node_2 extends BaseSymbolNode {
         symbol:"exp";
-        label:"binary-exp";
+        label:"binaryExp";
         children:[Exp_Node,TOKEN_0_Node,Exp_Node];
         parent:Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_9 | Statements_3_group_0_Parent_Node;
       }
@@ -147,7 +150,7 @@ export interface TOKEN_1_Node extends BaseTokenNode {
           }
 interface Exp_Node_3 extends BaseSymbolNode {
         symbol:"exp";
-        label:"binary-exp";
+        label:"binaryExp";
         children:[Exp_Node,TOKEN_1_Node,Exp_Node];
         parent:Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_9 | Statements_3_group_0_Parent_Node;
       }
@@ -157,7 +160,7 @@ export interface TOKEN_2_Node extends BaseTokenNode {
           }
 interface Exp_Node_4 extends BaseSymbolNode {
         symbol:"exp";
-        label:"binary-exp";
+        label:"binaryExp";
         children:[Exp_Node,TOKEN_2_Node,Exp_Node];
         parent:Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_9 | Statements_3_group_0_Parent_Node;
       }
@@ -167,7 +170,7 @@ export interface TOKEN_3_Node extends BaseTokenNode {
           }
 interface Exp_Node_5 extends BaseSymbolNode {
         symbol:"exp";
-        label:"binary-exp";
+        label:"binaryExp";
         children:[Exp_Node,TOKEN_3_Node,Exp_Node];
         parent:Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_9 | Statements_3_group_0_Parent_Node;
       }
@@ -177,7 +180,7 @@ export interface TOKEN_4_Node extends BaseTokenNode {
           }
 interface Exp_Node_6 extends BaseSymbolNode {
         symbol:"exp";
-        label:"binary-exp";
+        label:"binaryExp";
         children:[Exp_Node,TOKEN_4_Node,Exp_Node];
         parent:Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_9 | Statements_3_group_0_Parent_Node;
       }
@@ -219,10 +222,12 @@ type Statements_3_group_0_Node  = [Exp_Node,NEW_LINE_Node];
 export type { Program_Node };
 export type { Statements_Node };
 export type Exp_Node = Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7 | Exp_Node_8 | Exp_Node_9;
+export type BinaryExp_Node = Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
 export type AstNodeTypeMap = { ast: AstNode;
 program: Program_Node;
 statements: Statements_Node;
 exp: Exp_Node;
+binaryExp: BinaryExp_Node;
 $EOF: $EOF_Node;
 $UNKNOWN: $UNKNOWN_Node;
 TOKEN_0: TOKEN_0_Node;

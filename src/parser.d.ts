@@ -51,6 +51,7 @@ export type TransformNode = (arg: {
 export interface Token extends Position {
   text: string;
   t: string;
+  channel?: string|string[];
   recovery?: string;
   token: LiteralToken;
 }

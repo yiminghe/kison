@@ -35,12 +35,14 @@ export default {
   lexer: {} as Lexer,
   productionRuleIndexMap: {} as Record<number, number>,
   parser: {} as {
+    userData: any;
     table: any;
     prioritySymbolMap: Record<string, string>;
     getProductionRhs: (p: ProductionRule) => Rhs;
     getProductionSymbol: (p: ProductionRule) => string;
     getProductionLabel: (p: ProductionRule) => string;
     getProductionAction: (p: ProductionRule) => Function | undefined;
+    getProductionPredict: (p: ProductionRule) => Function | undefined;
     productions: ProductionRule[];
   },
   ...gened,

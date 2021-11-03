@@ -11,6 +11,7 @@ interface Params {
   ruleIndex: number;
   skipAstNode?: boolean;
   action?: Function;
+  predict?: Function;
 }
 
 class Production {
@@ -21,6 +22,7 @@ class Production {
   flat?: boolean;
   nullable = false;
   action?: Function;
+  predict?: Function;
   ruleIndex: number;
   priority?: number;
   precedence?: string;

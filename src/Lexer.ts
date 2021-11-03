@@ -22,6 +22,7 @@ var lexer: Lexer;
 
 export interface LexerRule {
   token: string;
+  channel?: string | string[];
   regexp: Function | RegExp;
   action?: Function;
 }
@@ -102,7 +103,6 @@ class Lexer {
     DEBUG_CONTEXT_LIMIT: 20,
     EOF_TOKEN: '$EOF',
     UNKNOWN_TOKEN: '$UNKNOWN',
-    HIDDEN_TOKEN: '$HIDDEN',
   };
 
   getRuleItem: Function = () => {};
@@ -183,13 +183,10 @@ class Lexer {
       action: 2,
       filter: 3,
       state: 4,
+      channel: 5,
     });
     const STATIC = Lexer.STATIC;
-    this.tokenSet = new Set([
-      STATIC.EOF_TOKEN,
-      STATIC.UNKNOWN_TOKEN,
-      STATIC.HIDDEN_TOKEN,
-    ]);
+    this.tokenSet = new Set([STATIC.EOF_TOKEN, STATIC.UNKNOWN_TOKEN]);
     this.rules = [];
     this.defaultEnv = undefined;
     Object.assign(this, cfg);
@@ -340,6 +337,7 @@ class Lexer {
           ret = [];
           var state = v.hasOwnProperty('state') && v.state,
             regexp = v.hasOwnProperty('regexp') && v.regexp,
+            channel = v.hasOwnProperty('channel') && v.channel,
             filter = v.hasOwnProperty('filter') && v.filter,
             action = v.hasOwnProperty('action') && v.action,
             token = v.hasOwnProperty('token') && v.token;
@@ -359,6 +357,9 @@ class Lexer {
           }
           if (filter) {
             ret[lexerRuleIndexMap.filter] = filter;
+          }
+          if (channel) {
+            ret[lexerRuleIndexMap.channel] = channel;
           }
           if (compressState && state) {
             state = state.map((s: string) => {
@@ -553,7 +554,7 @@ class Lexer {
   }
 
   lex(): Token {
-    const { EOF_TOKEN, HIDDEN_TOKEN } = Lexer.STATIC;
+    const { EOF_TOKEN } = Lexer.STATIC;
 
     const token = this.nextToken();
     const tokens = this.tokens;
@@ -566,7 +567,7 @@ class Lexer {
       return token;
     }
     this.tokens.push(token);
-    if (token.token === HIDDEN_TOKEN || !token.token) {
+    if (token.channel || !token.token) {
       return this.lex();
     }
     return token;
@@ -671,6 +672,7 @@ class Lexer {
       rule = rules[i];
       var regexp = this.getRuleItem(rule, 'regexp'),
         token = this.getRuleItem(rule, 'token'),
+        channel = this.getRuleItem(rule, 'channel'),
         action = this.getRuleItem(rule, 'action');
 
       if (
@@ -728,6 +730,7 @@ class Lexer {
           this.token = this.mapReverseSymbol(ret);
           return {
             text: this.text,
+            channel,
             token: this.token,
             t: ret,
             ...position,

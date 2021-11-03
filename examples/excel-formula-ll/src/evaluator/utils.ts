@@ -148,7 +148,7 @@ export function intersectReference(
 
 export function checkError(...args: All_Type[]) {
   for (const a of args) {
-    if (a.type === 'error') {
+    if (a?.type === 'error') {
       return a;
     }
   }

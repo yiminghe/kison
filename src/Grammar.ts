@@ -51,6 +51,7 @@ function emurate(
 
 export interface ProductionRule {
   symbol: string;
+  predict?: Function;
   precedence?: string;
   action?: Function;
   flat?: boolean;
@@ -123,6 +124,7 @@ class Grammar {
       rhs: 1,
       action: 2,
       label: 3,
+      predict: 4,
     };
   }
 
@@ -709,6 +711,7 @@ class Grammar {
               existingP?.symbol || `${p.symbol}_${uuid}_group_${start}`;
             if (!existingP) {
               addedPs.push({
+                // do not keep label
                 symbol: newSymbol,
                 rhs: subRhs,
                 ruleIndex: p.ruleIndex,
@@ -815,10 +818,10 @@ class Grammar {
             ? [...p.rhs.slice(1), slashSymbol]
             : [...p.rhs.slice(1), productionAddAstNodeFlag, slashSymbol];
           const newProd = new Production({
-            // instruct ast processor
+            // keep label here!
+            ...p,
             skipAstNode: true,
             symbol: slashSymbol,
-            ruleIndex: p.ruleIndex,
             rhs,
           });
           newProductions2.push(newProd);
@@ -835,11 +838,10 @@ class Grammar {
                 ? [...p2.rhs, slashSymbol]
                 : [...p2.rhs, productionAddAstNodeFlag, slashSymbol];
               const newProd = new Production({
+                // do not keep label
                 symbol: p.symbol,
-                label: p.label,
                 ruleIndex: p.ruleIndex,
                 skipAstNode: p.skipAstNode,
-                // instruct ast processor
                 rhs,
               });
               newProductions2.push(newProd);
@@ -946,7 +948,7 @@ class Grammar {
       let already = new Map();
       for (let i = 0; i < l; i++) {
         const p = ps[i];
-        const { rhs, label } = p;
+        const { rhs } = p;
         const precedenceTerminal = this.getPrecedenceTerminal(p);
         const nextP = getNextP(ps, i);
         let expSymbol = getSymbol(symbol, getPriority(p));
@@ -959,9 +961,9 @@ class Grammar {
         if (already.get(expSymbol) === nextSymbol) {
         } else {
           newRelevants.push({
+            // do not keep label
             symbol: expSymbol,
             ruleIndex: p.ruleIndex,
-            // label, do not keep label
             rhs: [nextSymbol],
           });
           already.set(expSymbol, nextSymbol);
@@ -969,9 +971,8 @@ class Grammar {
         // unary
         if (rhs.filter((r) => r === symbol).length === 1) {
           newRelevants.push({
+            ...p,
             symbol: expSymbol,
-            ruleIndex: p.ruleIndex,
-            label,
             rhs: rhs.map((r) => {
               return r === symbol ? expSymbol : r;
             }),
@@ -1008,9 +1009,8 @@ class Grammar {
           }
         }
         newRelevants.push({
+          ...p,
           symbol: expSymbol,
-          ruleIndex: p.ruleIndex,
-          label,
           rhs: newRhs,
         });
       }
@@ -1342,6 +1342,9 @@ class Grammar {
   getProductionAction(p: ProductionRule) {
     return this.getProductionItemByType(p, 'action');
   }
+  getProductionPredict(p: ProductionRule) {
+    return this.getProductionItemByType(p, 'predict');
+  }
   getProductionLabel(p: ProductionRule) {
     return this.getProductionItemByType(p, 'label');
   }
@@ -1370,7 +1373,7 @@ class Grammar {
     var productions = [];
     const { productionIndexMap } = this;
     for (const p of this.productionInstances) {
-      var { action, label } = p;
+      var { action, label, predict } = p;
       var ret = [];
       ret[productionIndexMap.symbol] = this.mapSymbol(p.symbol);
       ret[productionIndexMap.rhs] = this.mapSymbols(p.rhs);
@@ -1379,6 +1382,9 @@ class Grammar {
       }
       if (label) {
         ret[productionIndexMap.label] = this.mapSymbol(label);
+      }
+      if (predict) {
+        ret[productionIndexMap.predict] = predict;
       }
       productions.push(ret);
     }
@@ -1402,6 +1408,7 @@ class Grammar {
           getProductionSymbol: this.getProductionSymbol,
           getProductionRhs: this.getProductionRhs,
           getProductionAction: this.getProductionAction,
+          getProductionPredict: this.getProductionPredict,
           getProductionLabel: this.getProductionLabel,
           isCompress: 1,
         }) +

@@ -282,7 +282,8 @@ module.exports = () => ({
       {
         state: [my.insideStructureRef, 'I'],
         regexp: /^\s+/,
-        token: '$HIDDEN',
+        token: 'HIDDEN',
+        channel: 'HIDDEN',
       },
       {
         regexp: /^\(/,

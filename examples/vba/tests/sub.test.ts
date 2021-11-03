@@ -17,12 +17,12 @@ end sub
     `;
     const ret: any[] = await run(code);
     expect(ret).toMatchInlineSnapshot(`
-Array [
-  1,
-  2,
-  4,
-]
-`);
+      Array [
+        1,
+        2,
+        4,
+      ]
+    `);
   });
 
   it('end works', async () => {
@@ -41,10 +41,10 @@ end sub
     `;
     const ret: any[] = await run(code);
     expect(ret).toMatchInlineSnapshot(`
-Array [
-  0,
-  1,
-]
-`);
+      Array [
+        0,
+        1,
+      ]
+    `);
   });
 });

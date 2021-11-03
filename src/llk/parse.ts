@@ -43,7 +43,6 @@ let {
   productionEndFlag,
   productionSkipAstNodeSet,
   Lexer,
-  productionRuleIndexMap,
 } = data;
 
 type SymbolItem = string | number | RuleFlag | Function;
@@ -57,6 +56,10 @@ const {
 } = sm;
 
 function parse(input: string, options: any) {
+  parser.userData = {};
+
+  let id = 0;
+
   let recoveryTokens: Token[] = [];
 
   const terminalNodes: AstTokenNodeType[] = [];
@@ -75,7 +78,6 @@ function parse(input: string, options: any) {
   var {
     globalMatch = true,
     onErrorRecovery,
-    onAction,
     lexerOptions = {},
     transformNode,
     startSymbol = getProductionSymbol(productions[0]),
@@ -93,6 +95,7 @@ function parse(input: string, options: any) {
 
   const astStack: AstSymbolNodeType[] = [
     new AstSymbolNode({
+      id: 0,
       children: [],
     }),
   ];
@@ -196,16 +199,22 @@ function parse(input: string, options: any) {
       if (isAddAstNodeFlag(topSymbol)) {
         const stackTop = peekStack(astStack);
         const wrap = new AstSymbolNode({
+          id: ++id,
           symbol: ast.symbol,
           children: [ast],
-          label: ast.label,
-          ruleIndex: ast.ruleIndex,
+          internalRuleIndex: ast.internalRuleIndex,
         });
         stackTop.children.pop();
         stackTop.addChild(wrap);
         astStack.push(wrap);
       } else {
         ast.refreshChildren();
+        const ruleIndex = ast.internalRuleIndex;
+        const production = productions[ruleIndex];
+        const action = parser.getProductionAction(production);
+        if (action) {
+          action.call(parser);
+        }
       }
       popSymbolStack();
       topSymbol = peekSymbolStack();
@@ -249,14 +258,33 @@ function parse(input: string, options: any) {
         production = productions[ruleIndex];
 
         if (productionSkipAstNodeSet?.has(ruleIndex)) {
-          const newRhs: SymbolItem[] = [
+          const label = getProductionLabel(production);
+          let rhs = [
             ...getProductionRhs(production),
             makeRuleIndexFlag(ruleIndex, unit),
-          ].reverse();
-          symbolStack.push(...newRhs);
+          ];
+          if (label) {
+            let newRhs = [];
+            for (const r of rhs) {
+              newRhs.push(r);
+              if (isAddAstNodeFlag(r)) {
+                newRhs.push(() => {
+                  const stackTop = astStack[astStack.length - 1];
+                  const c: any =
+                    stackTop.children[stackTop.children.length - 1];
+                  if (c) {
+                    c.label = label;
+                  }
+                });
+              }
+            }
+            rhs = newRhs;
+          }
+          symbolStack.push.apply(symbolStack, rhs.reverse());
         } else {
           const newAst = new AstSymbolNode({
-            ruleIndex: productionRuleIndexMap[ruleIndex],
+            internalRuleIndex: ruleIndex,
+            id: ++id,
             symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
             label: getOriginalSymbol(getProductionLabel(production)),
             children: [],
@@ -346,13 +374,7 @@ function parse(input: string, options: any) {
     topSymbol = peekSymbolStack();
 
     while (topSymbol && typeof topSymbol === 'function') {
-      if (onAction) {
-        onAction({
-          token: lexer.getLastToken(),
-          action: topSymbol,
-          parseTree: getAstRootNode(astStack, transformNode, true),
-        });
-      }
+      topSymbol.call(parser);
       popSymbolStack();
       topSymbol = peekSymbolStack();
     }
@@ -380,7 +402,7 @@ function parse(input: string, options: any) {
 
   symbolStack = [];
 
-  // clearStateMatchCache();
+  parser.userData = {};
 
   return {
     ast,

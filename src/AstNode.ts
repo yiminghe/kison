@@ -1,4 +1,5 @@
 import type { ParseError } from './types';
+import data from './data';
 
 interface Params {
   parent?: AstNode;
@@ -15,10 +16,11 @@ interface ErrorTokenParams extends TokenParams {
 }
 
 interface SymbolParams extends Params {
+  id: number;
   children?: AstNode[];
   symbol?: string;
   label?: string;
-  ruleIndex?: number;
+  internalRuleIndex?: number;
 }
 
 export type AstNode = AstSymbolNode | AstTokenNode;
@@ -65,17 +67,23 @@ export class AstErrorNode extends AstTokenNode {
   }
 }
 
+const { productionRuleIndexMap } = data;
+
 export class AstSymbolNode extends BaseAstNode {
   symbol: string = '';
   label?: string;
   type: 'symbol' = 'symbol';
   children: AstNode[] = [];
   ruleIndex: number = -1;
+  internalRuleIndex: number = -1;
   constructor(params: SymbolParams) {
     super();
     Object.assign(this, params);
     if (params.children) {
       this.setChildren(params.children);
+    }
+    if (params.internalRuleIndex !== undefined) {
+      this.ruleIndex = productionRuleIndexMap[this.internalRuleIndex];
     }
   }
 

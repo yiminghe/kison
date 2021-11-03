@@ -186,39 +186,19 @@ const globalUtils = {
     return ast && cleanAst(ast, transformNode);
   },
 
-  checkProductionLabelIsSame(
-    node: AstSymbolNodeType,
-    parent: AstSymbolNodeType,
-  ) {
-    if (node.label || parent.label) {
-      if (node.label === parent.label) {
-        return node.children;
-      }
-      return node;
-    }
-    return node.children;
-  },
-
   defaultTransformAstNode({ node, parent }: Parameters<TransformNode>[0]) {
     if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
+    if (node.label || parent.label) {
+      if (node.label !== parent.label) {
+        return node;
+      }
+    }
     if (parent.children.length === 1) {
-      // do not check label
-      // replace label!
-      parent.label = node.label;
       return node.children;
     }
-    if (node.children.length > 1) {
-      return node;
-    }
-    // drill down to token
-    if (node.children[0]?.type === 'token') {
-      // do not check label
-      // parent.label = node.label;
-      return node.children;
-    }
-    return checkProductionLabelIsSame(node, parent);
+    return node;
   },
 
   isAddAstNodeFlag(t: any) {
@@ -400,7 +380,6 @@ const utils = {
 
 const {
   isOptionalSymbol,
-  checkProductionLabelIsSame,
   cleanAst,
   defaultTransformAstNode,
   isZeroOrMoreSymbol,

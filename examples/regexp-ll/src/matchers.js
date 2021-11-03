@@ -1,7 +1,7 @@
 // @ts-check
 import { isWord, isNumber } from './utils.js';
 import { Matcher } from './match.js';
-import * as n from './names';
+import * as n from './names.js';
 
 export const anchorMatchers = {
   '^'(input) {

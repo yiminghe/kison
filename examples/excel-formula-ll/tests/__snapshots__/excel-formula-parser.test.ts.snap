@@ -23,25 +23,25 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
       'children': [
         {
           'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2,
-          'token': '@',
-          'type': 'token',
-          'text': '@'
-        },
-        {
-          'start': 1,
           'end': 16,
           'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 2,
+          'firstColumn': 1,
           'lastColumn': 17,
           'symbol': 'exp',
           'type': 'symbol',
           'children': [
+            {
+              'start': 0,
+              'end': 1,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 1,
+              'lastColumn': 2,
+              'token': '@',
+              'type': 'token',
+              'text': '@'
+            },
             {
               'start': 1,
               'end': 16,
@@ -49,188 +49,254 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
               'lastLine': 1,
               'firstColumn': 2,
               'lastColumn': 17,
-              'symbol': 'functionExp',
+              'symbol': 'exp',
               'type': 'symbol',
               'children': [
                 {
                   'start': 1,
-                  'end': 4,
+                  'end': 16,
                   'firstLine': 1,
                   'lastLine': 1,
                   'firstColumn': 2,
-                  'lastColumn': 5,
-                  'token': 'FUNCTION',
-                  'type': 'token',
-                  'text': 'sum'
-                },
-                {
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6,
-                  'token': '(',
-                  'type': 'token',
-                  'text': '('
-                },
-                {
-                  'start': 0,
-                  'end': 0,
-                  'firstLine': 0,
-                  'lastLine': 0,
-                  'firstColumn': 0,
-                  'lastColumn': 0,
-                  'symbol': 'argumentsList',
+                  'lastColumn': 17,
+                  'symbol': 'functionExp',
                   'type': 'symbol',
                   'children': [
                     {
-                      'start': 5,
-                      'end': 0,
+                      'start': 1,
+                      'end': 4,
                       'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 2,
+                      'lastColumn': 5,
+                      'token': 'FUNCTION',
+                      'type': 'token',
+                      'text': 'sum'
+                    },
+                    {
+                      'start': 4,
+                      'end': 5,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 5,
+                      'lastColumn': 6,
+                      'token': '(',
+                      'type': 'token',
+                      'text': '('
+                    },
+                    {
+                      'start': 0,
+                      'end': 0,
+                      'firstLine': 0,
                       'lastLine': 0,
-                      'firstColumn': 6,
+                      'firstColumn': 0,
                       'lastColumn': 0,
-                      'symbol': 'exp',
+                      'symbol': 'argumentsList',
                       'type': 'symbol',
                       'children': [
                         {
                           'start': 5,
-                          'end': 6,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 6,
-                          'lastColumn': 7,
-                          'token': '@',
-                          'type': 'token',
-                          'text': '@'
-                        },
-                        {
-                          'start': 0,
                           'end': 0,
-                          'firstLine': 0,
+                          'firstLine': 1,
                           'lastLine': 0,
-                          'firstColumn': 0,
+                          'firstColumn': 6,
                           'lastColumn': 0,
                           'symbol': 'exp',
                           'type': 'symbol',
                           'children': [
                             {
-                              'start': 0,
+                              'start': 5,
                               'end': 0,
-                              'firstLine': 0,
+                              'firstLine': 1,
                               'lastLine': 0,
-                              'firstColumn': 0,
+                              'firstColumn': 6,
                               'lastColumn': 0,
-                              'symbol': 'reference',
+                              'symbol': 'exp',
                               'type': 'symbol',
                               'children': [
                                 {
-                                  'start': 6,
-                                  'end': 11,
+                                  'start': 5,
+                                  'end': 6,
                                   'firstLine': 1,
                                   'lastLine': 1,
-                                  'firstColumn': 7,
-                                  'lastColumn': 12,
-                                  'symbol': 'reference',
-                                  'type': 'symbol',
-                                  'children': [
-                                    {
-                                      'start': 6,
-                                      'end': 11,
-                                      'firstLine': 1,
-                                      'lastLine': 1,
-                                      'firstColumn': 7,
-                                      'lastColumn': 12,
-                                      'symbol': 'referenceItem',
-                                      'type': 'symbol',
-                                      'children': [
-                                        {
-                                          'start': 6,
-                                          'end': 11,
-                                          'firstLine': 1,
-                                          'lastLine': 1,
-                                          'firstColumn': 7,
-                                          'lastColumn': 12,
-                                          'token': 'CELL',
-                                          'type': 'token',
-                                          'text': 'a1:a2'
-                                        }
-                                      ],
-                                      'ruleIndex': 26
-                                    }
-                                  ]
+                                  'firstColumn': 6,
+                                  'lastColumn': 7,
+                                  'token': '@',
+                                  'type': 'token',
+                                  'text': '@'
                                 },
                                 {
-                                  'start': 12,
-                                  'end': 15,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 13,
-                                  'lastColumn': 16,
-                                  'symbol': 'reference',
+                                  'start': 0,
+                                  'end': 0,
+                                  'firstLine': 0,
+                                  'lastLine': 0,
+                                  'firstColumn': 0,
+                                  'lastColumn': 0,
+                                  'symbol': 'exp',
                                   'type': 'symbol',
                                   'children': [
                                     {
-                                      'start': 12,
-                                      'end': 15,
-                                      'firstLine': 1,
-                                      'lastLine': 1,
-                                      'firstColumn': 13,
-                                      'lastColumn': 16,
-                                      'symbol': 'referenceItem',
+                                      'start': 0,
+                                      'end': 0,
+                                      'firstLine': 0,
+                                      'lastLine': 0,
+                                      'firstColumn': 0,
+                                      'lastColumn': 0,
+                                      'symbol': 'reference',
                                       'type': 'symbol',
                                       'children': [
                                         {
-                                          'start': 12,
-                                          'end': 15,
-                                          'firstLine': 1,
-                                          'lastLine': 1,
-                                          'firstColumn': 13,
-                                          'lastColumn': 16,
-                                          'token': 'CELL',
-                                          'type': 'token',
-                                          'text': 'a3#'
+                                          'start': 0,
+                                          'end': 0,
+                                          'firstLine': 0,
+                                          'lastLine': 0,
+                                          'firstColumn': 0,
+                                          'lastColumn': 0,
+                                          'symbol': 'reference',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 6,
+                                              'end': 11,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 7,
+                                              'lastColumn': 12,
+                                              'symbol': 'reference',
+                                              'type': 'symbol',
+                                              'children': [
+                                                {
+                                                  'start': 6,
+                                                  'end': 11,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 7,
+                                                  'lastColumn': 12,
+                                                  'symbol': 'referenceItem',
+                                                  'type': 'symbol',
+                                                  'children': [
+                                                    {
+                                                      'start': 6,
+                                                      'end': 11,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 7,
+                                                      'lastColumn': 12,
+                                                      'token': 'CELL',
+                                                      'type': 'token',
+                                                      'text': 'a1:a2'
+                                                    }
+                                                  ],
+                                                  'ruleIndex': 26,
+                                                  'internalRuleIndex': 10,
+                                                  'id': 30
+                                                }
+                                              ],
+                                              'internalRuleIndex': 83,
+                                              'id': 27
+                                            },
+                                            {
+                                              'start': 12,
+                                              'end': 15,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 13,
+                                              'lastColumn': 16,
+                                              'symbol': 'reference',
+                                              'type': 'symbol',
+                                              'children': [
+                                                {
+                                                  'start': 12,
+                                                  'end': 15,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 13,
+                                                  'lastColumn': 16,
+                                                  'symbol': 'referenceItem',
+                                                  'type': 'symbol',
+                                                  'children': [
+                                                    {
+                                                      'start': 12,
+                                                      'end': 15,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 13,
+                                                      'lastColumn': 16,
+                                                      'token': 'CELL',
+                                                      'type': 'token',
+                                                      'text': 'a3#'
+                                                    }
+                                                  ],
+                                                  'ruleIndex': 26,
+                                                  'internalRuleIndex': 10,
+                                                  'id': 35
+                                                }
+                                              ],
+                                              'internalRuleIndex': 86,
+                                              'id': 36
+                                            }
+                                          ],
+                                          'internalRuleIndex': 83,
+                                          'id': 32,
+                                          'label': 'intersectionReference'
                                         }
                                       ],
-                                      'ruleIndex': 26
+                                      'internalRuleIndex': 80,
+                                      'id': 38
                                     }
-                                  ]
+                                  ],
+                                  'internalRuleIndex': 76,
+                                  'id': 24
                                 }
                               ],
-                              'label': 'intersectionReference'
+                              'internalRuleIndex': 77,
+                              'id': 23,
+                              'label': 'clipExp'
                             }
-                          ]
+                          ],
+                          'ruleIndex': 11,
+                          'internalRuleIndex': 55,
+                          'id': 44
                         }
                       ],
-                      'ruleIndex': 11,
-                      'label': 'clipExp'
+                      'ruleIndex': 40,
+                      'internalRuleIndex': 26,
+                      'id': 15
+                    },
+                    {
+                      'start': 15,
+                      'end': 16,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 16,
+                      'lastColumn': 17,
+                      'token': ')',
+                      'type': 'token',
+                      'text': ')'
                     }
                   ],
-                  'ruleIndex': 40
-                },
-                {
-                  'start': 15,
-                  'end': 16,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 16,
-                  'lastColumn': 17,
-                  'token': ')',
-                  'type': 'token',
-                  'text': ')'
+                  'ruleIndex': 39,
+                  'internalRuleIndex': 22,
+                  'id': 14
                 }
               ],
-              'ruleIndex': 39
+              'internalRuleIndex': 76,
+              'id': 12
             }
-          ]
+          ],
+          'internalRuleIndex': 77,
+          'id': 11,
+          'label': 'clipExp'
         }
       ],
       'ruleIndex': 11,
-      'label': 'clipExp'
+      'internalRuleIndex': 55,
+      'id': 50
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -411,7 +477,9 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                   'text': '[#total]'
                                                 }
                                               ],
-                                              'ruleIndex': 50
+                                              'ruleIndex': 50,
+                                              'internalRuleIndex': 38,
+                                              'id': 33
                                             },
                                             {
                                               'start': 14,
@@ -446,13 +514,19 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                   'text': '[y]'
                                                 }
                                               ],
-                                              'ruleIndex': 50
+                                              'ruleIndex': 50,
+                                              'internalRuleIndex': 37,
+                                              'id': 34
                                             }
                                           ],
-                                          'ruleIndex': 50
+                                          'ruleIndex': 50,
+                                          'internalRuleIndex': 42,
+                                          'id': 32
                                         }
                                       ],
-                                      'ruleIndex': 50
+                                      'ruleIndex': 50,
+                                      'internalRuleIndex': 36,
+                                      'id': 31
                                     },
                                     {
                                       'start': 18,
@@ -466,18 +540,28 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                       'text': ']'
                                     }
                                   ],
-                                  'ruleIndex': 45
+                                  'ruleIndex': 45,
+                                  'internalRuleIndex': 31,
+                                  'id': 30
                                 }
                               ],
-                              'ruleIndex': 42
+                              'ruleIndex': 42,
+                              'internalRuleIndex': 28,
+                              'id': 29
                             }
                           ],
-                          'ruleIndex': 31
+                          'ruleIndex': 31,
+                          'internalRuleIndex': 12,
+                          'id': 28
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 37
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 43
                 },
                 {
                   'start': 19,
@@ -604,13 +688,19 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                                   'text': 'x'
                                                 }
                                               ],
-                                              'ruleIndex': 50
+                                              'ruleIndex': 50,
+                                              'internalRuleIndex': 37,
+                                              'id': 62
                                             }
                                           ],
-                                          'ruleIndex': 50
+                                          'ruleIndex': 50,
+                                          'internalRuleIndex': 42,
+                                          'id': 61
                                         }
                                       ],
-                                      'ruleIndex': 50
+                                      'ruleIndex': 50,
+                                      'internalRuleIndex': 36,
+                                      'id': 60
                                     },
                                     {
                                       'start': 23,
@@ -624,21 +714,33 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                       'text': ']'
                                     }
                                   ],
-                                  'ruleIndex': 45
+                                  'ruleIndex': 45,
+                                  'internalRuleIndex': 31,
+                                  'id': 59
                                 }
                               ],
-                              'ruleIndex': 42
+                              'ruleIndex': 42,
+                              'internalRuleIndex': 28,
+                              'id': 58
                             }
                           ],
-                          'ruleIndex': 31
+                          'ruleIndex': 31,
+                          'internalRuleIndex': 12,
+                          'id': 57
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 65
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 71
                 }
               ],
-              'ruleIndex': 40
+              'ruleIndex': 40,
+              'internalRuleIndex': 26,
+              'id': 14
             },
             {
               'start': 24,
@@ -652,13 +754,19 @@ exports[`excel-formula-parser structure reference works 1`] = `
               'text': ')'
             }
           ],
-          'ruleIndex': 39
+          'ruleIndex': 39,
+          'internalRuleIndex': 22,
+          'id': 13
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 77
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -787,13 +895,19 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       'text': '[Sales Person]:[Region]'
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 37,
+                                  'id': 22
                                 }
                               ],
-                              'ruleIndex': 50
+                              'ruleIndex': 50,
+                              'internalRuleIndex': 42,
+                              'id': 21
                             }
                           ],
-                          'ruleIndex': 50
+                          'ruleIndex': 50,
+                          'internalRuleIndex': 36,
+                          'id': 20
                         },
                         {
                           'start': 33,
@@ -807,21 +921,33 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                           'text': ']'
                         }
                       ],
-                      'ruleIndex': 45
+                      'ruleIndex': 45,
+                      'internalRuleIndex': 31,
+                      'id': 19
                     }
                   ],
-                  'ruleIndex': 42
+                  'ruleIndex': 42,
+                  'internalRuleIndex': 28,
+                  'id': 18
                 }
               ],
-              'ruleIndex': 31
+              'ruleIndex': 31,
+              'internalRuleIndex': 12,
+              'id': 17
             }
-          ]
+          ],
+          'internalRuleIndex': 80,
+          'id': 25
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 31
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -858,11 +984,11 @@ exports[`excel-formula-parser structure reference works for Reference operators 
           'children': [
             {
               'start': 0,
-              'end': 23,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 24,
+              'end': 0,
+              'firstLine': 0,
+              'lastLine': 0,
+              'firstColumn': 0,
+              'lastColumn': 0,
               'symbol': 'reference',
               'type': 'symbol',
               'children': [
@@ -873,7 +999,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'lastLine': 1,
                   'firstColumn': 1,
                   'lastColumn': 24,
-                  'symbol': 'referenceItem',
+                  'symbol': 'reference',
                   'type': 'symbol',
                   'children': [
                     {
@@ -883,51 +1009,51 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                       'lastLine': 1,
                       'firstColumn': 1,
                       'lastColumn': 24,
-                      'symbol': 'structureReference',
+                      'symbol': 'referenceItem',
                       'type': 'symbol',
                       'children': [
                         {
                           'start': 0,
-                          'end': 9,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 1,
-                          'lastColumn': 10,
-                          'token': 'TABLE_NAME',
-                          'type': 'token',
-                          'text': 'DeptSales'
-                        },
-                        {
-                          'start': 9,
                           'end': 23,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 10,
+                          'firstColumn': 1,
                           'lastColumn': 24,
-                          'symbol': 'tableSpecifier',
+                          'symbol': 'structureReference',
                           'type': 'symbol',
                           'children': [
                             {
+                              'start': 0,
+                              'end': 9,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 1,
+                              'lastColumn': 10,
+                              'token': 'TABLE_NAME',
+                              'type': 'token',
+                              'text': 'DeptSales'
+                            },
+                            {
                               'start': 9,
-                              'end': 10,
+                              'end': 23,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 10,
-                              'lastColumn': 11,
-                              'token': '[',
-                              'type': 'token',
-                              'text': '['
-                            },
-                            {
-                              'start': 10,
-                              'end': 22,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 11,
-                              'lastColumn': 23,
-                              'symbol': 'tableSpecifierInner',
+                              'lastColumn': 24,
+                              'symbol': 'tableSpecifier',
                               'type': 'symbol',
                               'children': [
+                                {
+                                  'start': 9,
+                                  'end': 10,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 10,
+                                  'lastColumn': 11,
+                                  'token': '[',
+                                  'type': 'token',
+                                  'text': '['
+                                },
                                 {
                                   'start': 10,
                                   'end': 22,
@@ -935,7 +1061,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                   'lastLine': 1,
                                   'firstColumn': 11,
                                   'lastColumn': 23,
-                                  'symbol': 'tableColumnSpecifier',
+                                  'symbol': 'tableSpecifierInner',
                                   'type': 'symbol',
                                   'children': [
                                     {
@@ -945,7 +1071,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       'lastLine': 1,
                                       'firstColumn': 11,
                                       'lastColumn': 23,
-                                      'symbol': 'tableSpecifierItem',
+                                      'symbol': 'tableColumnSpecifier',
                                       'type': 'symbol',
                                       'children': [
                                         {
@@ -955,62 +1081,76 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                           'lastLine': 1,
                                           'firstColumn': 11,
                                           'lastColumn': 23,
-                                          'token': 'TABLE_COLUMN_SPECIFIER',
-                                          'type': 'token',
-                                          'text': 'Sales Amount'
+                                          'symbol': 'tableSpecifierItem',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 10,
+                                              'end': 22,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 11,
+                                              'lastColumn': 23,
+                                              'token': 'TABLE_COLUMN_SPECIFIER',
+                                              'type': 'token',
+                                              'text': 'Sales Amount'
+                                            }
+                                          ],
+                                          'ruleIndex': 50,
+                                          'internalRuleIndex': 37,
+                                          'id': 22
                                         }
                                       ],
-                                      'ruleIndex': 50
+                                      'ruleIndex': 50,
+                                      'internalRuleIndex': 42,
+                                      'id': 21
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 36,
+                                  'id': 20
+                                },
+                                {
+                                  'start': 22,
+                                  'end': 23,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 23,
+                                  'lastColumn': 24,
+                                  'token': ']',
+                                  'type': 'token',
+                                  'text': ']'
                                 }
                               ],
-                              'ruleIndex': 50
-                            },
-                            {
-                              'start': 22,
-                              'end': 23,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 23,
-                              'lastColumn': 24,
-                              'token': ']',
-                              'type': 'token',
-                              'text': ']'
+                              'ruleIndex': 45,
+                              'internalRuleIndex': 31,
+                              'id': 19
                             }
                           ],
-                          'ruleIndex': 45
+                          'ruleIndex': 42,
+                          'internalRuleIndex': 28,
+                          'id': 18
                         }
                       ],
-                      'ruleIndex': 42
+                      'ruleIndex': 31,
+                      'internalRuleIndex': 12,
+                      'id': 17
                     }
                   ],
-                  'ruleIndex': 31
-                }
-              ]
-            },
-            {
-              'start': 23,
-              'end': 24,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 24,
-              'lastColumn': 25,
-              'token': 'REF_UNION_OPERATOR',
-              'type': 'token',
-              'text': ','
-            },
-            {
-              'start': 24,
-              'end': 52,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 25,
-              'lastColumn': 53,
-              'symbol': 'reference',
-              'type': 'symbol',
-              'children': [
+                  'internalRuleIndex': 80,
+                  'id': 13
+                },
+                {
+                  'start': 23,
+                  'end': 24,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 24,
+                  'lastColumn': 25,
+                  'token': 'REF_UNION_OPERATOR',
+                  'type': 'token',
+                  'text': ','
+                },
                 {
                   'start': 24,
                   'end': 52,
@@ -1018,7 +1158,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'lastLine': 1,
                   'firstColumn': 25,
                   'lastColumn': 53,
-                  'symbol': 'referenceItem',
+                  'symbol': 'reference',
                   'type': 'symbol',
                   'children': [
                     {
@@ -1028,51 +1168,51 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                       'lastLine': 1,
                       'firstColumn': 25,
                       'lastColumn': 53,
-                      'symbol': 'structureReference',
+                      'symbol': 'referenceItem',
                       'type': 'symbol',
                       'children': [
                         {
                           'start': 24,
-                          'end': 33,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 25,
-                          'lastColumn': 34,
-                          'token': 'TABLE_NAME',
-                          'type': 'token',
-                          'text': 'DeptSales'
-                        },
-                        {
-                          'start': 33,
                           'end': 52,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 34,
+                          'firstColumn': 25,
                           'lastColumn': 53,
-                          'symbol': 'tableSpecifier',
+                          'symbol': 'structureReference',
                           'type': 'symbol',
                           'children': [
                             {
+                              'start': 24,
+                              'end': 33,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 25,
+                              'lastColumn': 34,
+                              'token': 'TABLE_NAME',
+                              'type': 'token',
+                              'text': 'DeptSales'
+                            },
+                            {
                               'start': 33,
-                              'end': 34,
+                              'end': 52,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 34,
-                              'lastColumn': 35,
-                              'token': '[',
-                              'type': 'token',
-                              'text': '['
-                            },
-                            {
-                              'start': 34,
-                              'end': 51,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 35,
-                              'lastColumn': 52,
-                              'symbol': 'tableSpecifierInner',
+                              'lastColumn': 53,
+                              'symbol': 'tableSpecifier',
                               'type': 'symbol',
                               'children': [
+                                {
+                                  'start': 33,
+                                  'end': 34,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 34,
+                                  'lastColumn': 35,
+                                  'token': '[',
+                                  'type': 'token',
+                                  'text': '['
+                                },
                                 {
                                   'start': 34,
                                   'end': 51,
@@ -1080,7 +1220,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                   'lastLine': 1,
                                   'firstColumn': 35,
                                   'lastColumn': 52,
-                                  'symbol': 'tableColumnSpecifier',
+                                  'symbol': 'tableSpecifierInner',
                                   'type': 'symbol',
                                   'children': [
                                     {
@@ -1090,7 +1230,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       'lastLine': 1,
                                       'firstColumn': 35,
                                       'lastColumn': 52,
-                                      'symbol': 'tableSpecifierItem',
+                                      'symbol': 'tableColumnSpecifier',
                                       'type': 'symbol',
                                       'children': [
                                         {
@@ -1100,49 +1240,83 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                           'lastLine': 1,
                                           'firstColumn': 35,
                                           'lastColumn': 52,
-                                          'token': 'TABLE_COLUMN_SPECIFIER',
-                                          'type': 'token',
-                                          'text': 'Commission Amount'
+                                          'symbol': 'tableSpecifierItem',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 34,
+                                              'end': 51,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 35,
+                                              'lastColumn': 52,
+                                              'token': 'TABLE_COLUMN_SPECIFIER',
+                                              'type': 'token',
+                                              'text': 'Commission Amount'
+                                            }
+                                          ],
+                                          'ruleIndex': 50,
+                                          'internalRuleIndex': 37,
+                                          'id': 34
                                         }
                                       ],
-                                      'ruleIndex': 50
+                                      'ruleIndex': 50,
+                                      'internalRuleIndex': 42,
+                                      'id': 33
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 36,
+                                  'id': 32
+                                },
+                                {
+                                  'start': 51,
+                                  'end': 52,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 52,
+                                  'lastColumn': 53,
+                                  'token': ']',
+                                  'type': 'token',
+                                  'text': ']'
                                 }
                               ],
-                              'ruleIndex': 50
-                            },
-                            {
-                              'start': 51,
-                              'end': 52,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 52,
-                              'lastColumn': 53,
-                              'token': ']',
-                              'type': 'token',
-                              'text': ']'
+                              'ruleIndex': 45,
+                              'internalRuleIndex': 31,
+                              'id': 31
                             }
                           ],
-                          'ruleIndex': 45
+                          'ruleIndex': 42,
+                          'internalRuleIndex': 28,
+                          'id': 30
                         }
                       ],
-                      'ruleIndex': 42
+                      'ruleIndex': 31,
+                      'internalRuleIndex': 12,
+                      'id': 29
                     }
                   ],
-                  'ruleIndex': 31
+                  'internalRuleIndex': 83,
+                  'id': 36
                 }
-              ]
+              ],
+              'internalRuleIndex': 80,
+              'id': 25,
+              'label': 'unionReference'
             }
           ],
-          'label': 'unionReference'
+          'internalRuleIndex': 80,
+          'id': 37
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 43
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -1179,11 +1353,11 @@ exports[`excel-formula-parser structure reference works for Reference operators 
           'children': [
             {
               'start': 0,
-              'end': 40,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 1,
-              'lastColumn': 41,
+              'end': 0,
+              'firstLine': 0,
+              'lastLine': 0,
+              'firstColumn': 0,
+              'lastColumn': 0,
               'symbol': 'reference',
               'type': 'symbol',
               'children': [
@@ -1194,7 +1368,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'lastLine': 1,
                   'firstColumn': 1,
                   'lastColumn': 41,
-                  'symbol': 'referenceItem',
+                  'symbol': 'reference',
                   'type': 'symbol',
                   'children': [
                     {
@@ -1204,51 +1378,51 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                       'lastLine': 1,
                       'firstColumn': 1,
                       'lastColumn': 41,
-                      'symbol': 'structureReference',
+                      'symbol': 'referenceItem',
                       'type': 'symbol',
                       'children': [
                         {
                           'start': 0,
-                          'end': 9,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 1,
-                          'lastColumn': 10,
-                          'token': 'TABLE_NAME',
-                          'type': 'token',
-                          'text': 'DeptSales'
-                        },
-                        {
-                          'start': 9,
                           'end': 40,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 10,
+                          'firstColumn': 1,
                           'lastColumn': 41,
-                          'symbol': 'tableSpecifier',
+                          'symbol': 'structureReference',
                           'type': 'symbol',
                           'children': [
                             {
+                              'start': 0,
+                              'end': 9,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 1,
+                              'lastColumn': 10,
+                              'token': 'TABLE_NAME',
+                              'type': 'token',
+                              'text': 'DeptSales'
+                            },
+                            {
                               'start': 9,
-                              'end': 10,
+                              'end': 40,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 10,
-                              'lastColumn': 11,
-                              'token': '[',
-                              'type': 'token',
-                              'text': '['
-                            },
-                            {
-                              'start': 10,
-                              'end': 39,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 11,
-                              'lastColumn': 40,
-                              'symbol': 'tableSpecifierInner',
+                              'lastColumn': 41,
+                              'symbol': 'tableSpecifier',
                               'type': 'symbol',
                               'children': [
+                                {
+                                  'start': 9,
+                                  'end': 10,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 10,
+                                  'lastColumn': 11,
+                                  'token': '[',
+                                  'type': 'token',
+                                  'text': '['
+                                },
                                 {
                                   'start': 10,
                                   'end': 39,
@@ -1256,7 +1430,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                   'lastLine': 1,
                                   'firstColumn': 11,
                                   'lastColumn': 40,
-                                  'symbol': 'tableColumnSpecifier',
+                                  'symbol': 'tableSpecifierInner',
                                   'type': 'symbol',
                                   'children': [
                                     {
@@ -1266,7 +1440,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       'lastLine': 1,
                                       'firstColumn': 11,
                                       'lastColumn': 40,
-                                      'symbol': 'tableSpecifierItem',
+                                      'symbol': 'tableColumnSpecifier',
                                       'type': 'symbol',
                                       'children': [
                                         {
@@ -1276,51 +1450,65 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                           'lastLine': 1,
                                           'firstColumn': 11,
                                           'lastColumn': 40,
-                                          'token': 'TABLE_COLUMN_SPECIFIER',
-                                          'type': 'token',
-                                          'text': '[Sales Person]:[Sales Amount]'
+                                          'symbol': 'tableSpecifierItem',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 10,
+                                              'end': 39,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 11,
+                                              'lastColumn': 40,
+                                              'token': 'TABLE_COLUMN_SPECIFIER',
+                                              'type': 'token',
+                                              'text': '[Sales Person]:[Sales Amount]'
+                                            }
+                                          ],
+                                          'ruleIndex': 50,
+                                          'internalRuleIndex': 37,
+                                          'id': 22
                                         }
                                       ],
-                                      'ruleIndex': 50
+                                      'ruleIndex': 50,
+                                      'internalRuleIndex': 42,
+                                      'id': 21
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 36,
+                                  'id': 20
+                                },
+                                {
+                                  'start': 39,
+                                  'end': 40,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 40,
+                                  'lastColumn': 41,
+                                  'token': ']',
+                                  'type': 'token',
+                                  'text': ']'
                                 }
                               ],
-                              'ruleIndex': 50
-                            },
-                            {
-                              'start': 39,
-                              'end': 40,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 40,
-                              'lastColumn': 41,
-                              'token': ']',
-                              'type': 'token',
-                              'text': ']'
+                              'ruleIndex': 45,
+                              'internalRuleIndex': 31,
+                              'id': 19
                             }
                           ],
-                          'ruleIndex': 45
+                          'ruleIndex': 42,
+                          'internalRuleIndex': 28,
+                          'id': 18
                         }
                       ],
-                      'ruleIndex': 42
+                      'ruleIndex': 31,
+                      'internalRuleIndex': 12,
+                      'id': 17
                     }
                   ],
-                  'ruleIndex': 31
-                }
-              ]
-            },
-            {
-              'start': 41,
-              'end': 75,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 42,
-              'lastColumn': 76,
-              'symbol': 'reference',
-              'type': 'symbol',
-              'children': [
+                  'internalRuleIndex': 83,
+                  'id': 14
+                },
                 {
                   'start': 41,
                   'end': 75,
@@ -1328,7 +1516,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'lastLine': 1,
                   'firstColumn': 42,
                   'lastColumn': 76,
-                  'symbol': 'referenceItem',
+                  'symbol': 'reference',
                   'type': 'symbol',
                   'children': [
                     {
@@ -1338,51 +1526,51 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                       'lastLine': 1,
                       'firstColumn': 42,
                       'lastColumn': 76,
-                      'symbol': 'structureReference',
+                      'symbol': 'referenceItem',
                       'type': 'symbol',
                       'children': [
                         {
                           'start': 41,
-                          'end': 50,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 42,
-                          'lastColumn': 51,
-                          'token': 'TABLE_NAME',
-                          'type': 'token',
-                          'text': 'DeptSales'
-                        },
-                        {
-                          'start': 50,
                           'end': 75,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 51,
+                          'firstColumn': 42,
                           'lastColumn': 76,
-                          'symbol': 'tableSpecifier',
+                          'symbol': 'structureReference',
                           'type': 'symbol',
                           'children': [
                             {
+                              'start': 41,
+                              'end': 50,
+                              'firstLine': 1,
+                              'lastLine': 1,
+                              'firstColumn': 42,
+                              'lastColumn': 51,
+                              'token': 'TABLE_NAME',
+                              'type': 'token',
+                              'text': 'DeptSales'
+                            },
+                            {
                               'start': 50,
-                              'end': 51,
+                              'end': 75,
                               'firstLine': 1,
                               'lastLine': 1,
                               'firstColumn': 51,
-                              'lastColumn': 52,
-                              'token': '[',
-                              'type': 'token',
-                              'text': '['
-                            },
-                            {
-                              'start': 51,
-                              'end': 74,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 52,
-                              'lastColumn': 75,
-                              'symbol': 'tableSpecifierInner',
+                              'lastColumn': 76,
+                              'symbol': 'tableSpecifier',
                               'type': 'symbol',
                               'children': [
+                                {
+                                  'start': 50,
+                                  'end': 51,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 51,
+                                  'lastColumn': 52,
+                                  'token': '[',
+                                  'type': 'token',
+                                  'text': '['
+                                },
                                 {
                                   'start': 51,
                                   'end': 74,
@@ -1390,7 +1578,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                   'lastLine': 1,
                                   'firstColumn': 52,
                                   'lastColumn': 75,
-                                  'symbol': 'tableColumnSpecifier',
+                                  'symbol': 'tableSpecifierInner',
                                   'type': 'symbol',
                                   'children': [
                                     {
@@ -1400,7 +1588,7 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       'lastLine': 1,
                                       'firstColumn': 52,
                                       'lastColumn': 75,
-                                      'symbol': 'tableSpecifierItem',
+                                      'symbol': 'tableColumnSpecifier',
                                       'type': 'symbol',
                                       'children': [
                                         {
@@ -1410,49 +1598,83 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                           'lastLine': 1,
                                           'firstColumn': 52,
                                           'lastColumn': 75,
-                                          'token': 'TABLE_COLUMN_SPECIFIER',
-                                          'type': 'token',
-                                          'text': '[Region]:[% Commission]'
+                                          'symbol': 'tableSpecifierItem',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 51,
+                                              'end': 74,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 52,
+                                              'lastColumn': 75,
+                                              'token': 'TABLE_COLUMN_SPECIFIER',
+                                              'type': 'token',
+                                              'text': '[Region]:[% Commission]'
+                                            }
+                                          ],
+                                          'ruleIndex': 50,
+                                          'internalRuleIndex': 37,
+                                          'id': 32
                                         }
                                       ],
-                                      'ruleIndex': 50
+                                      'ruleIndex': 50,
+                                      'internalRuleIndex': 42,
+                                      'id': 31
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 36,
+                                  'id': 30
+                                },
+                                {
+                                  'start': 74,
+                                  'end': 75,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 75,
+                                  'lastColumn': 76,
+                                  'token': ']',
+                                  'type': 'token',
+                                  'text': ']'
                                 }
                               ],
-                              'ruleIndex': 50
-                            },
-                            {
-                              'start': 74,
-                              'end': 75,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 75,
-                              'lastColumn': 76,
-                              'token': ']',
-                              'type': 'token',
-                              'text': ']'
+                              'ruleIndex': 45,
+                              'internalRuleIndex': 31,
+                              'id': 29
                             }
                           ],
-                          'ruleIndex': 45
+                          'ruleIndex': 42,
+                          'internalRuleIndex': 28,
+                          'id': 28
                         }
                       ],
-                      'ruleIndex': 42
+                      'ruleIndex': 31,
+                      'internalRuleIndex': 12,
+                      'id': 27
                     }
                   ],
-                  'ruleIndex': 31
+                  'internalRuleIndex': 86,
+                  'id': 33
                 }
-              ]
+              ],
+              'internalRuleIndex': 83,
+              'id': 24,
+              'label': 'intersectionReference'
             }
           ],
-          'label': 'intersectionReference'
+          'internalRuleIndex': 80,
+          'id': 35
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 41
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -1581,13 +1803,19 @@ exports[`excel-formula-parser structure reference works for space inside column 
                                       'text': 'a b'
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 37,
+                                  'id': 22
                                 }
                               ],
-                              'ruleIndex': 50
+                              'ruleIndex': 50,
+                              'internalRuleIndex': 42,
+                              'id': 21
                             }
                           ],
-                          'ruleIndex': 50
+                          'ruleIndex': 50,
+                          'internalRuleIndex': 36,
+                          'id': 20
                         },
                         {
                           'start': 6,
@@ -1601,21 +1829,33 @@ exports[`excel-formula-parser structure reference works for space inside column 
                           'text': ']'
                         }
                       ],
-                      'ruleIndex': 45
+                      'ruleIndex': 45,
+                      'internalRuleIndex': 31,
+                      'id': 19
                     }
                   ],
-                  'ruleIndex': 42
+                  'ruleIndex': 42,
+                  'internalRuleIndex': 28,
+                  'id': 18
                 }
               ],
-              'ruleIndex': 31
+              'ruleIndex': 31,
+              'internalRuleIndex': 12,
+              'id': 17
             }
-          ]
+          ],
+          'internalRuleIndex': 80,
+          'id': 25
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 31
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -1745,10 +1985,14 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                                   'text': 'Commission Amount'
                                 }
                               ],
-                              'ruleIndex': 48
+                              'ruleIndex': 48,
+                              'internalRuleIndex': 34,
+                              'id': 21
                             }
                           ],
-                          'ruleIndex': 49
+                          'ruleIndex': 49,
+                          'internalRuleIndex': 35,
+                          'id': 20
                         },
                         {
                           'start': 28,
@@ -1762,21 +2006,33 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
                           'text': ']'
                         }
                       ],
-                      'ruleIndex': 45
+                      'ruleIndex': 45,
+                      'internalRuleIndex': 31,
+                      'id': 19
                     }
                   ],
-                  'ruleIndex': 42
+                  'ruleIndex': 42,
+                  'internalRuleIndex': 28,
+                  'id': 18
                 }
               ],
-              'ruleIndex': 31
+              'ruleIndex': 31,
+              'internalRuleIndex': 12,
+              'id': 17
             }
-          ]
+          ],
+          'internalRuleIndex': 80,
+          'id': 24
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 30
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -1906,10 +2162,14 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                                   'text': '[Commission Amount]'
                                 }
                               ],
-                              'ruleIndex': 48
+                              'ruleIndex': 48,
+                              'internalRuleIndex': 34,
+                              'id': 21
                             }
                           ],
-                          'ruleIndex': 49
+                          'ruleIndex': 49,
+                          'internalRuleIndex': 35,
+                          'id': 20
                         },
                         {
                           'start': 30,
@@ -1923,21 +2183,33 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
                           'text': ']'
                         }
                       ],
-                      'ruleIndex': 45
+                      'ruleIndex': 45,
+                      'internalRuleIndex': 31,
+                      'id': 19
                     }
                   ],
-                  'ruleIndex': 42
+                  'ruleIndex': 42,
+                  'internalRuleIndex': 28,
+                  'id': 18
                 }
               ],
-              'ruleIndex': 31
+              'ruleIndex': 31,
+              'internalRuleIndex': 12,
+              'id': 17
             }
-          ]
+          ],
+          'internalRuleIndex': 80,
+          'id': 24
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 30
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -2066,7 +2338,9 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                                       'text': '[#This Row]'
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 38,
+                                  'id': 22
                                 },
                                 {
                                   'start': 21,
@@ -2101,13 +2375,19 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                                       'text': '[Commission Amount]'
                                     }
                                   ],
-                                  'ruleIndex': 50
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 37,
+                                  'id': 23
                                 }
                               ],
-                              'ruleIndex': 50
+                              'ruleIndex': 50,
+                              'internalRuleIndex': 42,
+                              'id': 21
                             }
                           ],
-                          'ruleIndex': 50
+                          'ruleIndex': 50,
+                          'internalRuleIndex': 36,
+                          'id': 20
                         },
                         {
                           'start': 42,
@@ -2121,21 +2401,33 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
                           'text': ']'
                         }
                       ],
-                      'ruleIndex': 45
+                      'ruleIndex': 45,
+                      'internalRuleIndex': 31,
+                      'id': 19
                     }
                   ],
-                  'ruleIndex': 42
+                  'ruleIndex': 42,
+                  'internalRuleIndex': 28,
+                  'id': 18
                 }
               ],
-              'ruleIndex': 31
+              'ruleIndex': 31,
+              'internalRuleIndex': 12,
+              'id': 17
             }
-          ]
+          ],
+          'internalRuleIndex': 80,
+          'id': 26
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 32
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -2244,15 +2536,23 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                               'text': 'shee1:sheet2!a1:a2'
                             }
                           ],
-                          'ruleIndex': 26
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 28
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 31
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 37
                 }
               ],
-              'ruleIndex': 40
+              'ruleIndex': 40,
+              'internalRuleIndex': 26,
+              'id': 14
             },
             {
               'start': 22,
@@ -2266,13 +2566,19 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
               'text': ')'
             }
           ],
-          'ruleIndex': 39
+          'ruleIndex': 39,
+          'internalRuleIndex': 22,
+          'id': 13
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 43
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -2381,12 +2687,18 @@ exports[`excel-formula-parser works for env 1`] = `
                               'text': 'a1:a2'
                             }
                           ],
-                          'ruleIndex': 26
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 28
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 31
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 37
                 },
                 {
                   'start': 9,
@@ -2441,15 +2753,23 @@ exports[`excel-formula-parser works for env 1`] = `
                               'text': 'b1'
                             }
                           ],
-                          'ruleIndex': 26
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 51
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 54
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 60
                 }
               ],
-              'ruleIndex': 40
+              'ruleIndex': 40,
+              'internalRuleIndex': 26,
+              'id': 14
             },
             {
               'start': 12,
@@ -2463,13 +2783,19 @@ exports[`excel-formula-parser works for env 1`] = `
               'text': ')'
             }
           ],
-          'ruleIndex': 39
+          'ruleIndex': 39,
+          'internalRuleIndex': 22,
+          'id': 13
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 66
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -2512,56 +2838,9 @@ exports[`excel-formula-parser works for reference operation 1`] = `
           'lastLine': 0,
           'firstColumn': 0,
           'lastColumn': 0,
-          'symbol': 'reference',
+          'symbol': 'exp',
           'type': 'symbol',
           'children': [
-            {
-              'start': 1,
-              'end': 6,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 2,
-              'lastColumn': 7,
-              'symbol': 'reference',
-              'type': 'symbol',
-              'children': [
-                {
-                  'start': 1,
-                  'end': 6,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 2,
-                  'lastColumn': 7,
-                  'symbol': 'referenceItem',
-                  'type': 'symbol',
-                  'children': [
-                    {
-                      'start': 1,
-                      'end': 6,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 2,
-                      'lastColumn': 7,
-                      'token': 'CELL',
-                      'type': 'token',
-                      'text': 'E4:H4'
-                    }
-                  ],
-                  'ruleIndex': 26
-                }
-              ]
-            },
-            {
-              'start': 6,
-              'end': 7,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 7,
-              'lastColumn': 8,
-              'token': 'REF_UNION_OPERATOR',
-              'type': 'token',
-              'text': ','
-            },
             {
               'start': 0,
               'end': 0,
@@ -2573,144 +2852,269 @@ exports[`excel-formula-parser works for reference operation 1`] = `
               'type': 'symbol',
               'children': [
                 {
-                  'start': 7,
-                  'end': 10,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 8,
-                  'lastColumn': 11,
+                  'start': 0,
+                  'end': 0,
+                  'firstLine': 0,
+                  'lastLine': 0,
+                  'firstColumn': 0,
+                  'lastColumn': 0,
                   'symbol': 'reference',
                   'type': 'symbol',
                   'children': [
                     {
-                      'start': 7,
-                      'end': 8,
+                      'start': 1,
+                      'end': 6,
                       'firstLine': 1,
                       'lastLine': 1,
-                      'firstColumn': 8,
-                      'lastColumn': 9,
+                      'firstColumn': 2,
+                      'lastColumn': 7,
                       'symbol': 'reference',
                       'type': 'symbol',
                       'children': [
                         {
-                          'start': 7,
-                          'end': 8,
+                          'start': 1,
+                          'end': 6,
                           'firstLine': 1,
                           'lastLine': 1,
-                          'firstColumn': 8,
-                          'lastColumn': 9,
+                          'firstColumn': 2,
+                          'lastColumn': 7,
                           'symbol': 'referenceItem',
                           'type': 'symbol',
                           'children': [
                             {
-                              'start': 7,
-                              'end': 8,
+                              'start': 1,
+                              'end': 6,
                               'firstLine': 1,
                               'lastLine': 1,
-                              'firstColumn': 8,
-                              'lastColumn': 9,
-                              'token': 'NAME',
+                              'firstColumn': 2,
+                              'lastColumn': 7,
+                              'token': 'CELL',
                               'type': 'token',
-                              'text': 'F'
+                              'text': 'E4:H4'
                             }
                           ],
-                          'ruleIndex': 30
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 26
                         }
                       ],
-                      'ruleIndex': 32
+                      'internalRuleIndex': 80,
+                      'id': 22
                     },
                     {
-                      'start': 8,
-                      'end': 9,
+                      'start': 6,
+                      'end': 7,
                       'firstLine': 1,
                       'lastLine': 1,
-                      'firstColumn': 9,
-                      'lastColumn': 10,
-                      'token': 'REF_RANGE_OPERATOR',
+                      'firstColumn': 7,
+                      'lastColumn': 8,
+                      'token': 'REF_UNION_OPERATOR',
                       'type': 'token',
-                      'text': ':'
+                      'text': ','
                     },
                     {
-                      'start': 9,
-                      'end': 10,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 10,
-                      'lastColumn': 11,
+                      'start': 0,
+                      'end': 0,
+                      'firstLine': 0,
+                      'lastLine': 0,
+                      'firstColumn': 0,
+                      'lastColumn': 0,
                       'symbol': 'reference',
                       'type': 'symbol',
                       'children': [
                         {
-                          'start': 9,
-                          'end': 10,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 10,
-                          'lastColumn': 11,
-                          'symbol': 'referenceItem',
+                          'start': 0,
+                          'end': 0,
+                          'firstLine': 0,
+                          'lastLine': 0,
+                          'firstColumn': 0,
+                          'lastColumn': 0,
+                          'symbol': 'reference',
                           'type': 'symbol',
                           'children': [
                             {
-                              'start': 9,
-                              'end': 10,
+                              'start': 0,
+                              'end': 0,
+                              'firstLine': 0,
+                              'lastLine': 0,
+                              'firstColumn': 0,
+                              'lastColumn': 0,
+                              'symbol': 'reference',
+                              'type': 'symbol',
+                              'children': [
+                                {
+                                  'start': 0,
+                                  'end': 0,
+                                  'firstLine': 0,
+                                  'lastLine': 0,
+                                  'firstColumn': 0,
+                                  'lastColumn': 0,
+                                  'symbol': 'reference',
+                                  'type': 'symbol',
+                                  'children': [
+                                    {
+                                      'start': 7,
+                                      'end': 8,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 8,
+                                      'lastColumn': 9,
+                                      'symbol': 'reference',
+                                      'type': 'symbol',
+                                      'children': [
+                                        {
+                                          'start': 7,
+                                          'end': 8,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 8,
+                                          'lastColumn': 9,
+                                          'symbol': 'referenceItem',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 7,
+                                              'end': 8,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 8,
+                                              'lastColumn': 9,
+                                              'token': 'NAME',
+                                              'type': 'token',
+                                              'text': 'F'
+                                            }
+                                          ],
+                                          'ruleIndex': 30,
+                                          'internalRuleIndex': 11,
+                                          'id': 33
+                                        }
+                                      ],
+                                      'internalRuleIndex': 86,
+                                      'id': 31
+                                    },
+                                    {
+                                      'start': 8,
+                                      'end': 9,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 9,
+                                      'lastColumn': 10,
+                                      'token': 'REF_RANGE_OPERATOR',
+                                      'type': 'token',
+                                      'text': ':'
+                                    },
+                                    {
+                                      'start': 9,
+                                      'end': 10,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 10,
+                                      'lastColumn': 11,
+                                      'symbol': 'reference',
+                                      'type': 'symbol',
+                                      'children': [
+                                        {
+                                          'start': 9,
+                                          'end': 10,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
+                                          'firstColumn': 10,
+                                          'lastColumn': 11,
+                                          'symbol': 'referenceItem',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 9,
+                                              'end': 10,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 10,
+                                              'lastColumn': 11,
+                                              'token': 'NAME',
+                                              'type': 'token',
+                                              'text': 'F'
+                                            }
+                                          ],
+                                          'ruleIndex': 30,
+                                          'internalRuleIndex': 11,
+                                          'id': 36
+                                        }
+                                      ],
+                                      'ruleIndex': 32,
+                                      'internalRuleIndex': 13,
+                                      'id': 35
+                                    }
+                                  ],
+                                  'internalRuleIndex': 86,
+                                  'id': 34,
+                                  'label': 'rangeReference'
+                                }
+                              ],
+                              'internalRuleIndex': 83,
+                              'id': 30
+                            },
+                            {
+                              'start': 11,
+                              'end': 13,
                               'firstLine': 1,
                               'lastLine': 1,
-                              'firstColumn': 10,
-                              'lastColumn': 11,
-                              'token': 'NAME',
-                              'type': 'token',
-                              'text': 'F'
+                              'firstColumn': 12,
+                              'lastColumn': 14,
+                              'symbol': 'reference',
+                              'type': 'symbol',
+                              'children': [
+                                {
+                                  'start': 11,
+                                  'end': 13,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
+                                  'firstColumn': 12,
+                                  'lastColumn': 14,
+                                  'symbol': 'referenceItem',
+                                  'type': 'symbol',
+                                  'children': [
+                                    {
+                                      'start': 11,
+                                      'end': 13,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
+                                      'firstColumn': 12,
+                                      'lastColumn': 14,
+                                      'token': 'CELL',
+                                      'type': 'token',
+                                      'text': 'K8'
+                                    }
+                                  ],
+                                  'ruleIndex': 26,
+                                  'internalRuleIndex': 10,
+                                  'id': 41
+                                }
+                              ],
+                              'internalRuleIndex': 86,
+                              'id': 42
                             }
                           ],
-                          'ruleIndex': 30
+                          'internalRuleIndex': 83,
+                          'id': 38,
+                          'label': 'intersectionReference'
                         }
                       ],
-                      'ruleIndex': 32
+                      'internalRuleIndex': 83,
+                      'id': 43
                     }
                   ],
-                  'label': 'rangeReference'
-                },
-                {
-                  'start': 11,
-                  'end': 13,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 12,
-                  'lastColumn': 14,
-                  'symbol': 'reference',
-                  'type': 'symbol',
-                  'children': [
-                    {
-                      'start': 11,
-                      'end': 13,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 12,
-                      'lastColumn': 14,
-                      'symbol': 'referenceItem',
-                      'type': 'symbol',
-                      'children': [
-                        {
-                          'start': 11,
-                          'end': 13,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 12,
-                          'lastColumn': 14,
-                          'token': 'CELL',
-                          'type': 'token',
-                          'text': 'K8'
-                        }
-                      ],
-                      'ruleIndex': 26
-                    }
-                  ]
+                  'internalRuleIndex': 80,
+                  'id': 29,
+                  'label': 'unionReference'
                 }
               ],
-              'label': 'intersectionReference'
+              'internalRuleIndex': 80,
+              'id': 44
             }
           ],
-          'label': 'unionReference'
+          'ruleIndex': 11,
+          'internalRuleIndex': 55,
+          'id': 50
         },
         {
           'start': 13,
@@ -2724,10 +3128,14 @@ exports[`excel-formula-parser works for reference operation 1`] = `
           'text': ')'
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 56
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -2822,56 +3230,9 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                       'lastLine': 0,
                       'firstColumn': 0,
                       'lastColumn': 0,
-                      'symbol': 'reference',
+                      'symbol': 'exp',
                       'type': 'symbol',
                       'children': [
-                        {
-                          'start': 5,
-                          'end': 10,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 6,
-                          'lastColumn': 11,
-                          'symbol': 'reference',
-                          'type': 'symbol',
-                          'children': [
-                            {
-                              'start': 5,
-                              'end': 10,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 6,
-                              'lastColumn': 11,
-                              'symbol': 'referenceItem',
-                              'type': 'symbol',
-                              'children': [
-                                {
-                                  'start': 5,
-                                  'end': 10,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 6,
-                                  'lastColumn': 11,
-                                  'token': 'CELL',
-                                  'type': 'token',
-                                  'text': 'E4:H4'
-                                }
-                              ],
-                              'ruleIndex': 26
-                            }
-                          ]
-                        },
-                        {
-                          'start': 10,
-                          'end': 11,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 11,
-                          'lastColumn': 12,
-                          'token': 'REF_UNION_OPERATOR',
-                          'type': 'token',
-                          'text': ','
-                        },
                         {
                           'start': 0,
                           'end': 0,
@@ -2883,144 +3244,269 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                           'type': 'symbol',
                           'children': [
                             {
-                              'start': 11,
-                              'end': 14,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 12,
-                              'lastColumn': 15,
+                              'start': 0,
+                              'end': 0,
+                              'firstLine': 0,
+                              'lastLine': 0,
+                              'firstColumn': 0,
+                              'lastColumn': 0,
                               'symbol': 'reference',
                               'type': 'symbol',
                               'children': [
                                 {
-                                  'start': 11,
-                                  'end': 12,
+                                  'start': 5,
+                                  'end': 10,
                                   'firstLine': 1,
                                   'lastLine': 1,
-                                  'firstColumn': 12,
-                                  'lastColumn': 13,
+                                  'firstColumn': 6,
+                                  'lastColumn': 11,
                                   'symbol': 'reference',
                                   'type': 'symbol',
                                   'children': [
                                     {
-                                      'start': 11,
-                                      'end': 12,
+                                      'start': 5,
+                                      'end': 10,
                                       'firstLine': 1,
                                       'lastLine': 1,
-                                      'firstColumn': 12,
-                                      'lastColumn': 13,
+                                      'firstColumn': 6,
+                                      'lastColumn': 11,
                                       'symbol': 'referenceItem',
                                       'type': 'symbol',
                                       'children': [
                                         {
-                                          'start': 11,
-                                          'end': 12,
+                                          'start': 5,
+                                          'end': 10,
                                           'firstLine': 1,
                                           'lastLine': 1,
-                                          'firstColumn': 12,
-                                          'lastColumn': 13,
-                                          'token': 'NAME',
+                                          'firstColumn': 6,
+                                          'lastColumn': 11,
+                                          'token': 'CELL',
                                           'type': 'token',
-                                          'text': 'F'
+                                          'text': 'E4:H4'
                                         }
                                       ],
-                                      'ruleIndex': 30
+                                      'ruleIndex': 26,
+                                      'internalRuleIndex': 10,
+                                      'id': 37
                                     }
                                   ],
-                                  'ruleIndex': 32
+                                  'internalRuleIndex': 80,
+                                  'id': 33
                                 },
                                 {
-                                  'start': 12,
-                                  'end': 13,
+                                  'start': 10,
+                                  'end': 11,
                                   'firstLine': 1,
                                   'lastLine': 1,
-                                  'firstColumn': 13,
-                                  'lastColumn': 14,
-                                  'token': 'REF_RANGE_OPERATOR',
+                                  'firstColumn': 11,
+                                  'lastColumn': 12,
+                                  'token': 'REF_UNION_OPERATOR',
                                   'type': 'token',
-                                  'text': ':'
+                                  'text': ','
                                 },
                                 {
-                                  'start': 13,
-                                  'end': 14,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 14,
-                                  'lastColumn': 15,
+                                  'start': 0,
+                                  'end': 0,
+                                  'firstLine': 0,
+                                  'lastLine': 0,
+                                  'firstColumn': 0,
+                                  'lastColumn': 0,
                                   'symbol': 'reference',
                                   'type': 'symbol',
                                   'children': [
                                     {
-                                      'start': 13,
-                                      'end': 14,
-                                      'firstLine': 1,
-                                      'lastLine': 1,
-                                      'firstColumn': 14,
-                                      'lastColumn': 15,
-                                      'symbol': 'referenceItem',
+                                      'start': 0,
+                                      'end': 0,
+                                      'firstLine': 0,
+                                      'lastLine': 0,
+                                      'firstColumn': 0,
+                                      'lastColumn': 0,
+                                      'symbol': 'reference',
                                       'type': 'symbol',
                                       'children': [
                                         {
-                                          'start': 13,
-                                          'end': 14,
+                                          'start': 0,
+                                          'end': 0,
+                                          'firstLine': 0,
+                                          'lastLine': 0,
+                                          'firstColumn': 0,
+                                          'lastColumn': 0,
+                                          'symbol': 'reference',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 0,
+                                              'end': 0,
+                                              'firstLine': 0,
+                                              'lastLine': 0,
+                                              'firstColumn': 0,
+                                              'lastColumn': 0,
+                                              'symbol': 'reference',
+                                              'type': 'symbol',
+                                              'children': [
+                                                {
+                                                  'start': 11,
+                                                  'end': 12,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 12,
+                                                  'lastColumn': 13,
+                                                  'symbol': 'reference',
+                                                  'type': 'symbol',
+                                                  'children': [
+                                                    {
+                                                      'start': 11,
+                                                      'end': 12,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 12,
+                                                      'lastColumn': 13,
+                                                      'symbol': 'referenceItem',
+                                                      'type': 'symbol',
+                                                      'children': [
+                                                        {
+                                                          'start': 11,
+                                                          'end': 12,
+                                                          'firstLine': 1,
+                                                          'lastLine': 1,
+                                                          'firstColumn': 12,
+                                                          'lastColumn': 13,
+                                                          'token': 'NAME',
+                                                          'type': 'token',
+                                                          'text': 'F'
+                                                        }
+                                                      ],
+                                                      'ruleIndex': 30,
+                                                      'internalRuleIndex': 11,
+                                                      'id': 44
+                                                    }
+                                                  ],
+                                                  'internalRuleIndex': 86,
+                                                  'id': 42
+                                                },
+                                                {
+                                                  'start': 12,
+                                                  'end': 13,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 13,
+                                                  'lastColumn': 14,
+                                                  'token': 'REF_RANGE_OPERATOR',
+                                                  'type': 'token',
+                                                  'text': ':'
+                                                },
+                                                {
+                                                  'start': 13,
+                                                  'end': 14,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 14,
+                                                  'lastColumn': 15,
+                                                  'symbol': 'reference',
+                                                  'type': 'symbol',
+                                                  'children': [
+                                                    {
+                                                      'start': 13,
+                                                      'end': 14,
+                                                      'firstLine': 1,
+                                                      'lastLine': 1,
+                                                      'firstColumn': 14,
+                                                      'lastColumn': 15,
+                                                      'symbol': 'referenceItem',
+                                                      'type': 'symbol',
+                                                      'children': [
+                                                        {
+                                                          'start': 13,
+                                                          'end': 14,
+                                                          'firstLine': 1,
+                                                          'lastLine': 1,
+                                                          'firstColumn': 14,
+                                                          'lastColumn': 15,
+                                                          'token': 'NAME',
+                                                          'type': 'token',
+                                                          'text': 'F'
+                                                        }
+                                                      ],
+                                                      'ruleIndex': 30,
+                                                      'internalRuleIndex': 11,
+                                                      'id': 47
+                                                    }
+                                                  ],
+                                                  'ruleIndex': 32,
+                                                  'internalRuleIndex': 13,
+                                                  'id': 46
+                                                }
+                                              ],
+                                              'internalRuleIndex': 86,
+                                              'id': 45,
+                                              'label': 'rangeReference'
+                                            }
+                                          ],
+                                          'internalRuleIndex': 83,
+                                          'id': 41
+                                        },
+                                        {
+                                          'start': 15,
+                                          'end': 17,
                                           'firstLine': 1,
                                           'lastLine': 1,
-                                          'firstColumn': 14,
-                                          'lastColumn': 15,
-                                          'token': 'NAME',
-                                          'type': 'token',
-                                          'text': 'F'
+                                          'firstColumn': 16,
+                                          'lastColumn': 18,
+                                          'symbol': 'reference',
+                                          'type': 'symbol',
+                                          'children': [
+                                            {
+                                              'start': 15,
+                                              'end': 17,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
+                                              'firstColumn': 16,
+                                              'lastColumn': 18,
+                                              'symbol': 'referenceItem',
+                                              'type': 'symbol',
+                                              'children': [
+                                                {
+                                                  'start': 15,
+                                                  'end': 17,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
+                                                  'firstColumn': 16,
+                                                  'lastColumn': 18,
+                                                  'token': 'CELL',
+                                                  'type': 'token',
+                                                  'text': 'K8'
+                                                }
+                                              ],
+                                              'ruleIndex': 26,
+                                              'internalRuleIndex': 10,
+                                              'id': 52
+                                            }
+                                          ],
+                                          'internalRuleIndex': 86,
+                                          'id': 53
                                         }
                                       ],
-                                      'ruleIndex': 30
+                                      'internalRuleIndex': 83,
+                                      'id': 49,
+                                      'label': 'intersectionReference'
                                     }
                                   ],
-                                  'ruleIndex': 32
+                                  'internalRuleIndex': 83,
+                                  'id': 54
                                 }
                               ],
-                              'label': 'rangeReference'
-                            },
-                            {
-                              'start': 15,
-                              'end': 17,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 16,
-                              'lastColumn': 18,
-                              'symbol': 'reference',
-                              'type': 'symbol',
-                              'children': [
-                                {
-                                  'start': 15,
-                                  'end': 17,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 16,
-                                  'lastColumn': 18,
-                                  'symbol': 'referenceItem',
-                                  'type': 'symbol',
-                                  'children': [
-                                    {
-                                      'start': 15,
-                                      'end': 17,
-                                      'firstLine': 1,
-                                      'lastLine': 1,
-                                      'firstColumn': 16,
-                                      'lastColumn': 18,
-                                      'token': 'CELL',
-                                      'type': 'token',
-                                      'text': 'K8'
-                                    }
-                                  ],
-                                  'ruleIndex': 26
-                                }
-                              ]
+                              'internalRuleIndex': 80,
+                              'id': 40,
+                              'label': 'unionReference'
                             }
                           ],
-                          'label': 'intersectionReference'
+                          'internalRuleIndex': 80,
+                          'id': 55
                         }
                       ],
-                      'label': 'unionReference'
+                      'ruleIndex': 11,
+                      'internalRuleIndex': 55,
+                      'id': 61
                     },
                     {
                       'start': 17,
@@ -3034,10 +3520,14 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                       'text': ')'
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 67
                 }
               ],
-              'ruleIndex': 40
+              'ruleIndex': 40,
+              'internalRuleIndex': 26,
+              'id': 14
             },
             {
               'start': 18,
@@ -3051,13 +3541,19 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
               'text': ')'
             }
           ],
-          'ruleIndex': 39
+          'ruleIndex': 39,
+          'internalRuleIndex': 22,
+          'id': 13
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 73
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -3166,15 +3662,23 @@ exports[`excel-formula-parser works for row rangge 1`] = `
                               'text': '4:5'
                             }
                           ],
-                          'ruleIndex': 26
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 28
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 31
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 37
                 }
               ],
-              'ruleIndex': 40
+              'ruleIndex': 40,
+              'internalRuleIndex': 26,
+              'id': 14
             },
             {
               'start': 7,
@@ -3188,13 +3692,19 @@ exports[`excel-formula-parser works for row rangge 1`] = `
               'text': ')'
             }
           ],
-          'ruleIndex': 39
+          'ruleIndex': 39,
+          'internalRuleIndex': 22,
+          'id': 13
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 43
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;
 
@@ -3303,12 +3813,18 @@ exports[`excel-formula-parser works for simple 1`] = `
                               'text': 'a1:a2'
                             }
                           ],
-                          'ruleIndex': 26
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 28
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 31
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 37
                 },
                 {
                   'start': 9,
@@ -3363,15 +3879,23 @@ exports[`excel-formula-parser works for simple 1`] = `
                               'text': 'b1'
                             }
                           ],
-                          'ruleIndex': 26
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 10,
+                          'id': 51
                         }
-                      ]
+                      ],
+                      'internalRuleIndex': 80,
+                      'id': 54
                     }
                   ],
-                  'ruleIndex': 11
+                  'ruleIndex': 11,
+                  'internalRuleIndex': 55,
+                  'id': 60
                 }
               ],
-              'ruleIndex': 40
+              'ruleIndex': 40,
+              'internalRuleIndex': 26,
+              'id': 14
             },
             {
               'start': 12,
@@ -3385,12 +3909,18 @@ exports[`excel-formula-parser works for simple 1`] = `
               'text': ')'
             }
           ],
-          'ruleIndex': 39
+          'ruleIndex': 39,
+          'internalRuleIndex': 22,
+          'id': 13
         }
       ],
-      'ruleIndex': 11
+      'ruleIndex': 11,
+      'internalRuleIndex': 55,
+      'id': 66
     }
   ],
-  'ruleIndex': 1
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 3
 }"
 `;

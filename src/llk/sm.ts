@@ -336,7 +336,17 @@ class SymbolState {
 
   getAlternativeStartStates() {
     this.getTransitions();
-    return this.startStates;
+    let startStates: AllState[] = [];
+    const productions = parser.productions;
+    for (const s of this.startStates) {
+      const ruleIndex = s.ruleIndex;
+      const production = productions[ruleIndex];
+      const predict = parser.getProductionPredict(production);
+      if (!predict || predict.call(parser) !== false) {
+        startStates.push(s);
+      }
+    }
+    return startStates;
   }
 
   pushBeforeTransition(endState: State | SymbolState, condition?: Function) {

@@ -1,11 +1,11 @@
 const lexerConfig = require('../common/cal-lexer');
 
-function s(astProcessor, token) {
-  astProcessor.pushStack(token.text);
+function s() {
+  this.astProcessor?.pushStack(this.lexer.getLastToken().text);
 }
 
-function c(astProcessor) {
-  astProcessor.createOpNode();
+function c() {
+  this.astProcessor?.createOpNode();
 }
 
 module.exports = () => ({
@@ -35,8 +35,8 @@ module.exports = () => ({
       rhs: [
         '-',
         'exp',
-        (astProcessor) => {
-          astProcessor.createUnaryNode('-');
+        () => {
+          this.astProcessor?.createUnaryNode('-');
         },
       ],
       precedence: 'UMINUS',
@@ -50,8 +50,8 @@ module.exports = () => ({
       symbol: 'exp',
       rhs: [
         'NUMBER',
-        function (astProcessor, lexer) {
-          astProcessor.pushStack(Number(lexer.text));
+        function () {
+          this.astProcessor?.pushStack(Number(this.lexer.getLastToken().text));
         },
       ],
     },

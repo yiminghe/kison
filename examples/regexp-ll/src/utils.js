@@ -1,6 +1,6 @@
 // @ts-check
 import { StateUnit } from './state.js';
-import * as n from './names';
+import * as n from './names.js';
 
 export function isWord(s) {
   const code = s.charCodeAt(0);

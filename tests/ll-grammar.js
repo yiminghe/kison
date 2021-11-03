@@ -35,7 +35,7 @@ module.exports = () => ({
         '^',
         'exp',
       ],
-      label: 'binary-exp',
+      label: 'binaryExp',
     },
     {
       symbol: 'exp',

@@ -652,7 +652,11 @@ module.exports = {
       [n.REMCOMMENT, new RegExp(REMCOMMENT)],
       [n.COMMENT, new RegExp(COMMENT)],
 
-      ['$HIDDEN', HIDDEN_REG],
+      {
+        token: 'HIDDEN',
+        channel: 'HIDDEN',
+        regexp: HIDDEN_REG,
+      },
 
       [n.STRINGLITERAL, /"[^"\r\n]*"/],
 

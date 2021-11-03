@@ -3,7 +3,8 @@ module.exports = () => ({
     rules: [
       {
         regexp: /^\s+/,
-        token: '$HIDDEN',
+        token: 'HIDDEN',
+        channel: 'HIDDEN',
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,

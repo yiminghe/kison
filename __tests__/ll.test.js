@@ -104,7 +104,8 @@ describe('ll', () => {
         rules: [
           {
             regexp: /^\s+/,
-            token: '$HIDDEN',
+            token: 'HIDDEN',
+            channel: 'HIDDEN',
           },
         ],
       },
@@ -116,116 +117,126 @@ describe('ll', () => {
     });
     expect(ret.error).toBeFalsy();
     expect(prettyJson(ret.ast)).toMatchInlineSnapshot(`
-"{
-  'start': 0,
-  'end': 7,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 8,
-  'symbol': 's2',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 1,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 2,
-      'symbol': 'exp2',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2,
-          'token': '1',
-          'type': 'token',
-          'text': '1'
-        }
-      ],
-      'ruleIndex': 5
-    },
-    {
-      'start': 2,
-      'end': 3,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 3,
-      'lastColumn': 4,
-      'symbol': 'exp2',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 2,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 4,
-          'token': '1',
-          'type': 'token',
-          'text': '1'
-        }
-      ],
-      'ruleIndex': 5
-    },
-    {
-      'start': 4,
-      'end': 5,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 5,
-      'lastColumn': 6,
-      'symbol': 'exp2',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 4,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 6,
-          'token': '1',
-          'type': 'token',
-          'text': '1'
-        }
-      ],
-      'ruleIndex': 5
-    },
-    {
-      'start': 6,
-      'end': 7,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 7,
-      'lastColumn': 8,
-      'symbol': 'exp2',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 6,
-          'end': 7,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 7,
-          'lastColumn': 8,
-          'token': '1',
-          'type': 'token',
-          'text': '1'
-        }
-      ],
-      'ruleIndex': 5
-    }
-  ],
-  'ruleIndex': 3
-}"
-`);
+      "{
+        'start': 0,
+        'end': 7,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 1,
+        'lastColumn': 8,
+        'symbol': 's2',
+        'type': 'symbol',
+        'children': [
+          {
+            'start': 0,
+            'end': 1,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 2,
+            'symbol': 'exp2',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2,
+                'token': '1',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 5,
+            'internalRuleIndex': 7,
+            'id': 3
+          },
+          {
+            'start': 2,
+            'end': 3,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 3,
+            'lastColumn': 4,
+            'symbol': 'exp2',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 2,
+                'end': 3,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 4,
+                'token': '1',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 5,
+            'internalRuleIndex': 7,
+            'id': 4
+          },
+          {
+            'start': 4,
+            'end': 5,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 5,
+            'lastColumn': 6,
+            'symbol': 'exp2',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 4,
+                'end': 5,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 5,
+                'lastColumn': 6,
+                'token': '1',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 5,
+            'internalRuleIndex': 7,
+            'id': 5
+          },
+          {
+            'start': 6,
+            'end': 7,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 7,
+            'lastColumn': 8,
+            'symbol': 'exp2',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 6,
+                'end': 7,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 7,
+                'lastColumn': 8,
+                'token': '1',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 5,
+            'internalRuleIndex': 7,
+            'id': 6
+          }
+        ],
+        'ruleIndex': 3,
+        'internalRuleIndex': 5,
+        'id': 2
+      }"
+    `);
   });
 
   it('eliminate left recursive works', () => {
@@ -404,520 +415,748 @@ describe('ll', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse('1+2+3').ast;
+    const ast = parser.parse('1+2+3', { onAction() {} }).ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'start': 0,
-  'end': 5,
-  'firstLine': 0,
-  'lastLine': 1,
-  'firstColumn': 0,
-  'lastColumn': 6,
-  'symbol': 'exp',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 3,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 4,
-      'symbol': 'exp',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '1'
-        },
-        {
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3,
-          'token': '+',
-          'type': 'token',
-          'text': '+'
-        },
-        {
-          'start': 2,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 4,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '2'
-        }
-      ],
-      'ruleIndex': 4
-    },
-    {
-      'start': 3,
-      'end': 4,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 4,
-      'lastColumn': 5,
-      'token': '+',
-      'type': 'token',
-      'text': '+'
-    },
-    {
-      'start': 4,
-      'end': 5,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 5,
-      'lastColumn': 6,
-      'token': 'NUMBER',
-      'type': 'token',
-      'text': '3'
-    }
-  ],
-  'ruleIndex': 4
-}"
-`);
+      "{
+        'start': 0,
+        'end': 0,
+        'firstLine': 0,
+        'lastLine': 0,
+        'firstColumn': 0,
+        'lastColumn': 0,
+        'symbol': 'exp',
+        'type': 'symbol',
+        'children': [
+          {
+            'start': 0,
+            'end': 0,
+            'firstLine': 0,
+            'lastLine': 0,
+            'firstColumn': 0,
+            'lastColumn': 0,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '1'
+                  }
+                ],
+                'ruleIndex': 4,
+                'internalRuleIndex': 6,
+                'id': 3
+              },
+              {
+                'start': 1,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 2,
+                'lastColumn': 3,
+                'token': '+',
+                'type': 'token',
+                'text': '+'
+              },
+              {
+                'start': 2,
+                'end': 3,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 4,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '2'
+                  }
+                ],
+                'ruleIndex': 7,
+                'internalRuleIndex': 10,
+                'id': 14
+              }
+            ],
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 9
+          },
+          {
+            'start': 3,
+            'end': 4,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 4,
+            'lastColumn': 5,
+            'token': '+',
+            'type': 'token',
+            'text': '+'
+          },
+          {
+            'start': 4,
+            'end': 5,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 5,
+            'lastColumn': 6,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 4,
+                'end': 5,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 5,
+                'lastColumn': 6,
+                'token': 'NUMBER',
+                'type': 'token',
+                'text': '3'
+              }
+            ],
+            'ruleIndex': 7,
+            'internalRuleIndex': 10,
+            'id': 20
+          }
+        ],
+        'ruleIndex': 4,
+        'internalRuleIndex': 6,
+        'id': 21
+      }"
+    `);
   });
 
   it('ast works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse('1+2*3').ast;
+    const ast = parser.parse('1+2*3', { onAction() {} }).ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'start': 0,
-  'end': 0,
-  'firstLine': 1,
-  'lastLine': 0,
-  'firstColumn': 1,
-  'lastColumn': 0,
-  'symbol': 'exp',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 1,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 2,
-      'token': 'NUMBER',
-      'type': 'token',
-      'text': '1'
-    },
-    {
-      'start': 1,
-      'end': 2,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 2,
-      'lastColumn': 3,
-      'token': '+',
-      'type': 'token',
-      'text': '+'
-    },
-    {
-      'start': 2,
-      'end': 5,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 3,
-      'lastColumn': 6,
-      'symbol': 'exp',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 2,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 4,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '2'
-        },
-        {
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5,
-          'token': '*',
-          'type': 'token',
-          'text': '*'
-        },
-        {
-          'start': 4,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 6,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '3'
-        }
-      ],
-      'ruleIndex': 7
-    }
-  ],
-  'ruleIndex': 4
-}"
-`);
+      "{
+        'start': 0,
+        'end': 0,
+        'firstLine': 0,
+        'lastLine': 0,
+        'firstColumn': 0,
+        'lastColumn': 0,
+        'symbol': 'exp',
+        'type': 'symbol',
+        'children': [
+          {
+            'start': 0,
+            'end': 1,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 2,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2,
+                'token': 'NUMBER',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 3
+          },
+          {
+            'start': 1,
+            'end': 2,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 2,
+            'lastColumn': 3,
+            'token': '+',
+            'type': 'token',
+            'text': '+'
+          },
+          {
+            'start': 0,
+            'end': 5,
+            'firstLine': 0,
+            'lastLine': 1,
+            'firstColumn': 0,
+            'lastColumn': 6,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 2,
+                'end': 3,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 4,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '2'
+                  }
+                ],
+                'ruleIndex': 7,
+                'internalRuleIndex': 10,
+                'id': 10
+              },
+              {
+                'start': 3,
+                'end': 4,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 4,
+                'lastColumn': 5,
+                'token': '*',
+                'type': 'token',
+                'text': '*'
+              },
+              {
+                'start': 4,
+                'end': 5,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 5,
+                'lastColumn': 6,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 4,
+                    'end': 5,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 5,
+                    'lastColumn': 6,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '3'
+                  }
+                ],
+                'internalRuleIndex': 13,
+                'id': 15
+              }
+            ],
+            'ruleIndex': 7,
+            'internalRuleIndex': 10,
+            'id': 18
+          }
+        ],
+        'ruleIndex': 4,
+        'internalRuleIndex': 6,
+        'id': 19
+      }"
+    `);
   });
 
   it('ast works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse('1+2*4-5^2^3').ast;
+    const ast = parser.parse('1+2*4-5^2^3', { onAction() {} }).ast;
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'start': 0,
-  'end': 11,
-  'firstLine': 0,
-  'lastLine': 1,
-  'firstColumn': 0,
-  'lastColumn': 12,
-  'symbol': 'exp',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 0,
-      'firstLine': 1,
-      'lastLine': 0,
-      'firstColumn': 1,
-      'lastColumn': 0,
-      'symbol': 'exp',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '1'
-        },
-        {
-          'start': 1,
-          'end': 2,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 2,
-          'lastColumn': 3,
-          'token': '+',
-          'type': 'token',
-          'text': '+'
-        },
-        {
-          'start': 2,
-          'end': 5,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 6,
-          'symbol': 'exp',
-          'type': 'symbol',
-          'children': [
-            {
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4,
-              'token': 'NUMBER',
-              'type': 'token',
-              'text': '2'
-            },
-            {
-              'start': 3,
-              'end': 4,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 4,
-              'lastColumn': 5,
-              'token': '*',
-              'type': 'token',
-              'text': '*'
-            },
-            {
-              'start': 4,
-              'end': 5,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 5,
-              'lastColumn': 6,
-              'token': 'NUMBER',
-              'type': 'token',
-              'text': '4'
-            }
-          ],
-          'ruleIndex': 7
-        }
-      ],
-      'ruleIndex': 4
-    },
-    {
-      'start': 5,
-      'end': 6,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 6,
-      'lastColumn': 7,
-      'token': '-',
-      'type': 'token',
-      'text': '-'
-    },
-    {
-      'start': 6,
-      'end': 11,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 7,
-      'lastColumn': 12,
-      'symbol': 'exp',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 6,
-          'end': 7,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 7,
-          'lastColumn': 8,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '5'
-        },
-        {
-          'start': 7,
-          'end': 8,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 8,
-          'lastColumn': 9,
-          'token': '^',
-          'type': 'token',
-          'text': '^'
-        },
-        {
-          'start': 8,
-          'end': 11,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 9,
-          'lastColumn': 12,
-          'symbol': 'exp',
-          'type': 'symbol',
-          'children': [
-            {
-              'start': 8,
-              'end': 9,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 9,
-              'lastColumn': 10,
-              'token': 'NUMBER',
-              'type': 'token',
-              'text': '2'
-            },
-            {
-              'start': 9,
-              'end': 10,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 10,
-              'lastColumn': 11,
-              'token': '^',
-              'type': 'token',
-              'text': '^'
-            },
-            {
-              'start': 10,
-              'end': 11,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 11,
-              'lastColumn': 12,
-              'token': 'NUMBER',
-              'type': 'token',
-              'text': '3'
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  'ruleIndex': 4
-}"
-`);
+      "{
+        'start': 0,
+        'end': 0,
+        'firstLine': 0,
+        'lastLine': 0,
+        'firstColumn': 0,
+        'lastColumn': 0,
+        'symbol': 'exp',
+        'type': 'symbol',
+        'children': [
+          {
+            'start': 0,
+            'end': 0,
+            'firstLine': 0,
+            'lastLine': 0,
+            'firstColumn': 0,
+            'lastColumn': 0,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 0,
+                    'end': 1,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 1,
+                    'lastColumn': 2,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '1'
+                  }
+                ],
+                'ruleIndex': 4,
+                'internalRuleIndex': 6,
+                'id': 3
+              },
+              {
+                'start': 1,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 2,
+                'lastColumn': 3,
+                'token': '+',
+                'type': 'token',
+                'text': '+'
+              },
+              {
+                'start': 0,
+                'end': 5,
+                'firstLine': 0,
+                'lastLine': 1,
+                'firstColumn': 0,
+                'lastColumn': 6,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4,
+                    'symbol': 'exp',
+                    'type': 'symbol',
+                    'children': [
+                      {
+                        'start': 2,
+                        'end': 3,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 3,
+                        'lastColumn': 4,
+                        'token': 'NUMBER',
+                        'type': 'token',
+                        'text': '2'
+                      }
+                    ],
+                    'ruleIndex': 7,
+                    'internalRuleIndex': 10,
+                    'id': 10
+                  },
+                  {
+                    'start': 3,
+                    'end': 4,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 4,
+                    'lastColumn': 5,
+                    'token': '*',
+                    'type': 'token',
+                    'text': '*'
+                  },
+                  {
+                    'start': 4,
+                    'end': 5,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 5,
+                    'lastColumn': 6,
+                    'symbol': 'exp',
+                    'type': 'symbol',
+                    'children': [
+                      {
+                        'start': 4,
+                        'end': 5,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 5,
+                        'lastColumn': 6,
+                        'token': 'NUMBER',
+                        'type': 'token',
+                        'text': '4'
+                      }
+                    ],
+                    'internalRuleIndex': 13,
+                    'id': 15
+                  }
+                ],
+                'ruleIndex': 7,
+                'internalRuleIndex': 10,
+                'id': 18
+              }
+            ],
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 9
+          },
+          {
+            'start': 5,
+            'end': 6,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 6,
+            'lastColumn': 7,
+            'token': '-',
+            'type': 'token',
+            'text': '-'
+          },
+          {
+            'start': 6,
+            'end': 11,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 7,
+            'lastColumn': 12,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 6,
+                'end': 7,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 7,
+                'lastColumn': 8,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 6,
+                    'end': 7,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 7,
+                    'lastColumn': 8,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '5'
+                  }
+                ],
+                'internalRuleIndex': 14,
+                'id': 22
+              },
+              {
+                'start': 7,
+                'end': 8,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 8,
+                'lastColumn': 9,
+                'token': '^',
+                'type': 'token',
+                'text': '^'
+              },
+              {
+                'start': 8,
+                'end': 11,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 9,
+                'lastColumn': 12,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 8,
+                    'end': 9,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 9,
+                    'lastColumn': 10,
+                    'symbol': 'exp',
+                    'type': 'symbol',
+                    'children': [
+                      {
+                        'start': 8,
+                        'end': 9,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 9,
+                        'lastColumn': 10,
+                        'token': 'NUMBER',
+                        'type': 'token',
+                        'text': '2'
+                      }
+                    ],
+                    'internalRuleIndex': 14,
+                    'id': 25
+                  },
+                  {
+                    'start': 9,
+                    'end': 10,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 10,
+                    'lastColumn': 11,
+                    'token': '^',
+                    'type': 'token',
+                    'text': '^'
+                  },
+                  {
+                    'start': 10,
+                    'end': 11,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 11,
+                    'lastColumn': 12,
+                    'symbol': 'exp',
+                    'type': 'symbol',
+                    'children': [
+                      {
+                        'start': 10,
+                        'end': 11,
+                        'firstLine': 1,
+                        'lastLine': 1,
+                        'firstColumn': 11,
+                        'lastColumn': 12,
+                        'token': 'NUMBER',
+                        'type': 'token',
+                        'text': '3'
+                      }
+                    ],
+                    'internalRuleIndex': 13,
+                    'id': 27
+                  }
+                ],
+                'internalRuleIndex': 13,
+                'id': 24
+              }
+            ],
+            'ruleIndex': 7,
+            'internalRuleIndex': 10,
+            'id': 30
+          }
+        ],
+        'ruleIndex': 4,
+        'internalRuleIndex': 6,
+        'id': 31
+      }"
+    `);
   });
 
   it('error detection works', () => {
     var grammar = new LLGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const { ast, errorNode } = parser.parse('1+2*');
+    const { ast, errorNode } = parser.parse('1+2*', { onAction() {} });
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'start': 0,
-  'end': 4,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 5,
-  'symbol': 'exp',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 1,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 2,
-      'token': 'NUMBER',
-      'type': 'token',
-      'text': '1'
-    },
-    {
-      'start': 1,
-      'end': 2,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 2,
-      'lastColumn': 3,
-      'token': '+',
-      'type': 'token',
-      'text': '+'
-    },
-    {
-      'start': 2,
-      'end': 4,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 3,
-      'lastColumn': 5,
-      'symbol': 'exp',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 2,
-          'end': 3,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 3,
-          'lastColumn': 4,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '2'
-        },
-        {
-          'start': 3,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 4,
-          'lastColumn': 5,
-          'token': '*',
-          'type': 'token',
-          'text': '*'
-        },
-        {
-          'start': 4,
-          'end': 4,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 5,
-          'lastColumn': 5,
-          'token': '$EOF',
-          'type': 'token',
-          'error': {
-            'recovery': false,
-            'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-            'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-            'expected': [
-              '(',
-              'NUMBER',
-              '-'
-            ],
+      "{
+        'start': 0,
+        'end': 0,
+        'firstLine': 0,
+        'lastLine': 0,
+        'firstColumn': 0,
+        'lastColumn': 0,
+        'symbol': 'exp',
+        'type': 'symbol',
+        'children': [
+          {
+            'start': 0,
+            'end': 1,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 2,
             'symbol': 'exp',
-            'lexer': {
-              't': '$EOF',
-              'text': '',
-              'firstLine': 1,
-              'firstColumn': 5,
-              'lastLine': 1,
-              'lastColumn': 5,
-              'token': '$EOF',
-              'start': 4,
-              'end': 4
-            }
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2,
+                'token': 'NUMBER',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 3
           },
-          'text': ''
-        }
-      ],
-      'ruleIndex': 7
-    }
-  ],
-  'ruleIndex': 4
-}"
-`);
+          {
+            'start': 1,
+            'end': 2,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 2,
+            'lastColumn': 3,
+            'token': '+',
+            'type': 'token',
+            'text': '+'
+          },
+          {
+            'start': 0,
+            'end': 4,
+            'firstLine': 0,
+            'lastLine': 1,
+            'firstColumn': 0,
+            'lastColumn': 5,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 2,
+                'end': 3,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 4,
+                'symbol': 'exp',
+                'type': 'symbol',
+                'children': [
+                  {
+                    'start': 2,
+                    'end': 3,
+                    'firstLine': 1,
+                    'lastLine': 1,
+                    'firstColumn': 3,
+                    'lastColumn': 4,
+                    'token': 'NUMBER',
+                    'type': 'token',
+                    'text': '2'
+                  }
+                ],
+                'ruleIndex': 7,
+                'internalRuleIndex': 10,
+                'id': 10
+              },
+              {
+                'start': 3,
+                'end': 4,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 4,
+                'lastColumn': 5,
+                'token': '*',
+                'type': 'token',
+                'text': '*'
+              },
+              {
+                'start': 4,
+                'end': 4,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 5,
+                'lastColumn': 5,
+                'token': '$EOF',
+                'type': 'token',
+                'error': {
+                  'recovery': false,
+                  'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+                  'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+                  'expected': [
+                    '(',
+                    'NUMBER',
+                    '-'
+                  ],
+                  'symbol': 'exp',
+                  'lexer': {
+                    't': '$EOF',
+                    'text': '',
+                    'firstLine': 1,
+                    'firstColumn': 5,
+                    'lastLine': 1,
+                    'lastColumn': 5,
+                    'token': '$EOF',
+                    'start': 4,
+                    'end': 4
+                  }
+                },
+                'text': ''
+              }
+            ],
+            'ruleIndex': 7,
+            'internalRuleIndex': 10,
+            'id': 14
+          }
+        ],
+        'ruleIndex': 4,
+        'internalRuleIndex': 6,
+        'id': 9
+      }"
+    `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
-"{
-  'start': 4,
-  'end': 4,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 5,
-  'lastColumn': 5,
-  'token': '$EOF',
-  'type': 'token',
-  'error': {
-    'recovery': false,
-    'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-    'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
-    'expected': [
-      '(',
-      'NUMBER',
-      '-'
-    ],
-    'symbol': 'exp',
-    'lexer': {
-      't': '$EOF',
-      'text': '',
-      'firstLine': 1,
-      'firstColumn': 5,
-      'lastLine': 1,
-      'lastColumn': 5,
-      'token': '$EOF',
-      'start': 4,
-      'end': 4
-    }
-  },
-  'text': ''
-}"
-`);
+      "{
+        'start': 4,
+        'end': 4,
+        'firstLine': 1,
+        'lastLine': 1,
+        'firstColumn': 5,
+        'lastColumn': 5,
+        'token': '$EOF',
+        'type': 'token',
+        'error': {
+          'recovery': false,
+          'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+          'tip': ''(', 'NUMBER', '-' expected.\\\\ncurrent token: '$EOF'.',
+          'expected': [
+            '(',
+            'NUMBER',
+            '-'
+          ],
+          'symbol': 'exp',
+          'lexer': {
+            't': '$EOF',
+            'text': '',
+            'firstLine': 1,
+            'firstColumn': 5,
+            'lastLine': 1,
+            'lastColumn': 5,
+            'token': '$EOF',
+            'start': 4,
+            'end': 4
+          }
+        },
+        'text': ''
+      }"
+    `);
   });
 
   it('onAction works', () => {
@@ -925,11 +1164,9 @@ describe('ll', () => {
     const code = grammar.genCode();
     const parser = run(code);
     const astProcessor = new AstProcessor();
-    parser.parse('1 + 2*3-2^1^3', {
-      onAction({ action, token }) {
-        action(astProcessor, token);
-      },
-    });
+    parser.astProcessor = astProcessor;
+    parser.parse('1 + 2*3-2^1^3');
+    parser.astProcessor = null;
     expect(astProcessor.stack).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -968,6 +1205,7 @@ describe('ll', () => {
     let errorCalled = 0;
     const parser = run(code);
     parser.parse('1+/2', {
+      onAction() {},
       onErrorRecovery({ errorNode }, { action }) {
         errorCalled = errorNode;
         expect(action).toBe('del');
@@ -1022,6 +1260,7 @@ describe('ll', () => {
     let errorCalled = 0;
     const parser = run(code);
     const { ast, error, errorNode } = parser.parse('1+', {
+      onAction() {},
       onErrorRecovery({ errorNode }, { action }) {
         errorCalled = errorNode;
         if (
@@ -1038,54 +1277,86 @@ describe('ll', () => {
     });
     expect(errorNode).toMatchInlineSnapshot(`undefined`);
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
-"{
-  'start': 0,
-  'end': 2,
-  'firstLine': 1,
-  'lastLine': 1,
-  'firstColumn': 1,
-  'lastColumn': 3,
-  'symbol': 'exp',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 1,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 1,
-      'lastColumn': 2,
-      'token': 'NUMBER',
-      'type': 'token',
-      'text': '1'
-    },
-    {
-      'start': 1,
-      'end': 2,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 2,
-      'lastColumn': 3,
-      'token': '+',
-      'type': 'token',
-      'text': '+'
-    },
-    {
-      'start': 2,
-      'end': 2,
-      'firstLine': 1,
-      'lastLine': 1,
-      'firstColumn': 3,
-      'lastColumn': 3,
-      'token': 'NUMBER',
-      'type': 'token',
-      'text': '0',
-      'recovery': 'add'
-    }
-  ],
-  'ruleIndex': 4
-}"
-`);
+      "{
+        'start': 0,
+        'end': 0,
+        'firstLine': 0,
+        'lastLine': 0,
+        'firstColumn': 0,
+        'lastColumn': 0,
+        'symbol': 'exp',
+        'type': 'symbol',
+        'children': [
+          {
+            'start': 0,
+            'end': 1,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 1,
+            'lastColumn': 2,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 0,
+                'end': 1,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 1,
+                'lastColumn': 2,
+                'token': 'NUMBER',
+                'type': 'token',
+                'text': '1'
+              }
+            ],
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 3
+          },
+          {
+            'start': 1,
+            'end': 2,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 2,
+            'lastColumn': 3,
+            'token': '+',
+            'type': 'token',
+            'text': '+'
+          },
+          {
+            'start': 2,
+            'end': 2,
+            'firstLine': 1,
+            'lastLine': 1,
+            'firstColumn': 3,
+            'lastColumn': 3,
+            'symbol': 'exp',
+            'type': 'symbol',
+            'children': [
+              {
+                'start': 2,
+                'end': 2,
+                'firstLine': 1,
+                'lastLine': 1,
+                'firstColumn': 3,
+                'lastColumn': 3,
+                'token': 'NUMBER',
+                'type': 'token',
+                'text': '0',
+                'recovery': 'add'
+              }
+            ],
+            'ruleIndex': 7,
+            'internalRuleIndex': 10,
+            'id': 14
+          }
+        ],
+        'ruleIndex': 4,
+        'internalRuleIndex': 6,
+        'id': 15
+      }"
+    `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`
       "{
         'recovery': true,

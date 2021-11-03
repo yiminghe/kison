@@ -62,12 +62,11 @@ module.exports = () => ({
   lexer: {
     rules: [
       {
-        regexp: /^\n/,
+        regexp: /^\n+/,
         token: 'NEW_LINE',
       },
       {
-        regexp: /^\s+/,
-        token: '$HIDDEN',
+        regexp: /^\u0020+/,
       },
       {
         regexp: /^[0-9]+(\.[0-9]+)?\b/,

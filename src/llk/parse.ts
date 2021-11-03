@@ -273,7 +273,7 @@ function parse(input: string, options: any) {
                   const c: any =
                     stackTop.children[stackTop.children.length - 1];
                   if (c) {
-                    c.label = label;
+                    c.label = getOriginalSymbol(label);
                   }
                 });
               }

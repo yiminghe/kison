@@ -8,7 +8,7 @@ export type AstNode = AstSymbolNode | AstTokenNode;
 // replace start
 export type AstSymbolNode = Program_Node|Statements_Node|Exp_Node;
 export type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|NUMBER_Node|TOKEN_5_Node|TOKEN_6_Node|NEW_LINE_Node;
-export type LiteralToken = "NEW_LINE"|"$HIDDEN"|"NUMBER"|"$EOF"|"$UNKNOWN"|"+"|"-"|"*"|"/"|"^"|"("|")";
+export type LiteralToken = "NEW_LINE"|"NUMBER"|"$EOF"|"$UNKNOWN"|"+"|"-"|"*"|"/"|"^"|"("|")";
 export type AstRootNode = Program_Node;
 // replace end
 

@@ -2,7 +2,6 @@ import data from '../data';
 import utils from '../utils';
 import type {
   AstTokenNode as AstTokenNodeType,
-  AstSymbolNode as AstSymbolNodeType,
   AstErrorNode as AstErrorNodeType,
 } from '../AstNode';
 import type { Token } from '../parser';
@@ -11,21 +10,24 @@ import * as Utils from './utils';
 import type { Unit, PredictParam } from './sm';
 import type { ParseError } from '../types';
 
-const { AstSymbolNode, AstTokenNode, AstErrorNode } = utils;
-
 const {
+  AstSymbolNode,
+  AstTokenNode,
   isZeroOrMoreSymbol,
   normalizeSymbol,
   isOptionalSymbol,
   defaultTransformAstNode,
   isAddAstNodeFlag,
-  isProductionEndFlag,
-  getParseError,
   getAstRootNode,
   peekStack,
   pushRecoveryTokens,
-  closeAstWhenError,
   getOriginalSymbol,
+  prepareLLParse,
+  endLLParse,
+  reduceLLAction,
+  takeCareLLAction,
+  takeCareLLError,
+  checkLLEndError,
 } = utils;
 
 const { isSymbol } = Utils;
@@ -42,7 +44,8 @@ let {
   lexer,
   productionEndFlag,
   productionSkipAstNodeSet,
-  Lexer,
+  globalSymbolNodeId,
+  astStack,
 } = data;
 
 type SymbolItem = string | number | RuleFlag | Function;
@@ -55,16 +58,11 @@ const {
   findExpectedTokenFromStateMachine,
 } = sm;
 
-function parse(input: string, options: any) {
-  parser.userData = {};
-
-  let id = 0;
+function parse(input: string, options: any = {}) {
+  prepareLLParse();
 
   let recoveryTokens: Token[] = [];
-
   const terminalNodes: AstTokenNodeType[] = [];
-
-  options = options || {};
 
   let error: ParseError | undefined;
 
@@ -92,13 +90,6 @@ function parse(input: string, options: any) {
   lexer.options = lexerOptions;
 
   symbolStack = [startSymbol];
-
-  const astStack: AstSymbolNodeType[] = [
-    new AstSymbolNode({
-      id: 0,
-      children: [],
-    }),
-  ];
 
   lexer.resetInput(input);
 
@@ -185,8 +176,6 @@ function parse(input: string, options: any) {
 
   let production;
 
-  const { EOF_TOKEN } = Lexer.STATIC;
-
   while (1) {
     topSymbol = peekSymbolStack();
 
@@ -194,34 +183,7 @@ function parse(input: string, options: any) {
       break;
     }
 
-    while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
-      let ast = astStack.pop()!;
-      if (isAddAstNodeFlag(topSymbol)) {
-        const stackTop = peekStack(astStack);
-        const wrap = new AstSymbolNode({
-          id: ++id,
-          symbol: ast.symbol,
-          children: [ast],
-          internalRuleIndex: ast.internalRuleIndex,
-        });
-        stackTop.children.pop();
-        stackTop.addChild(wrap);
-        astStack.push(wrap);
-      } else {
-        ast.refreshChildren();
-        const ruleIndex = ast.internalRuleIndex;
-        const production = productions[ruleIndex];
-        const action = parser.getProductionAction(production);
-        if (action) {
-          action.call(parser);
-        }
-      }
-      popSymbolStack();
-      topSymbol = peekSymbolStack();
-      if (!topSymbol) {
-        break;
-      }
-    }
+    topSymbol = reduceLLAction(topSymbol, popSymbolStack, peekSymbolStack);
 
     if (typeof topSymbol === 'string') {
       if (!token) {
@@ -266,17 +228,13 @@ function parse(input: string, options: any) {
           if (label) {
             let newRhs = [];
             for (const r of rhs) {
-              newRhs.push(r);
               if (isAddAstNodeFlag(r)) {
                 newRhs.push(() => {
-                  const stackTop = astStack[astStack.length - 1];
-                  const c: any =
-                    stackTop.children[stackTop.children.length - 1];
-                  if (c) {
-                    c.label = getOriginalSymbol(label);
-                  }
+                  astStack[astStack.length - 1].label =
+                    getOriginalSymbol(label);
                 });
               }
+              newRhs.push(r);
             }
             rhs = newRhs;
           }
@@ -284,7 +242,7 @@ function parse(input: string, options: any) {
         } else {
           const newAst = new AstSymbolNode({
             internalRuleIndex: ruleIndex,
-            id: ++id,
+            id: ++globalSymbolNodeId,
             symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
             label: getOriginalSymbol(getProductionLabel(production)),
             children: [],
@@ -301,108 +259,41 @@ function parse(input: string, options: any) {
       } else if (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol)) {
         popSymbolStack();
       } else {
-        error = {
-          recovery: false,
-          ...getParseError(getExpected),
-          expected: getExpected(),
-          symbol: peekStack(astStack).symbol,
-          lexer: lexer.toJSON(),
-        };
-        if (onErrorRecovery) {
-          const recommendedAction: { action?: string } = {};
-          lexer.stash();
-          const nextToken = lexer.lex();
-          lexer.stashPop();
-          // should delete
-          if (
-            topSymbol === nextToken.t ||
-            predictProductionIndexNextLLK(globalMatch, findSymbolIndex())
-          ) {
-            recommendedAction.action = 'del';
-          } else if (error.expected.length) {
-            recommendedAction.action = 'add';
-          }
-
-          const localErrorNode = new AstErrorNode({
+        let breakToEnd;
+        ({ error, errorNode, token, breakToEnd } = takeCareLLError(
+          getExpected,
+          onErrorRecovery,
+          topSymbol,
+          () => !!predictProductionIndexNextLLK(globalMatch, findSymbolIndex()),
+          transformNode,
+          recoveryTokens,
+          {
             error,
-            ...error.lexer,
-          });
-          peekStack(astStack).addChild(localErrorNode);
-
-          const recovery =
-            onErrorRecovery(
-              {
-                errorNode: localErrorNode,
-                parseTree: getAstRootNode(astStack, transformNode, true),
-              },
-              recommendedAction,
-            ) || {};
-
-          const { action } = recovery;
-
-          peekStack(astStack).children.pop();
-
-          if (!action) {
-            errorNode = closeAstWhenError(error, astStack);
-            break;
-          }
-
-          if (action === 'del') {
-            error.recovery = true;
-            const deleteToken = recoveryTokens.pop()!;
-            deleteToken.recovery = 'del';
-            token = undefined;
-          } else if (action === 'add') {
-            error.recovery = true;
-            token = {
-              ...token,
-              token: recovery.token,
-              text: recovery.text,
-              t: lexer.mapSymbol(recovery.token),
-              recovery: 'add',
-            };
-            lexer.pushToken(token);
-            pushRecoveryTokens(recoveryTokens, token);
-          }
-        } else {
-          errorNode = closeAstWhenError(error, astStack);
+            errorNode,
+            token,
+          },
+        ));
+        if (breakToEnd) {
           break;
         }
       }
     }
 
-    topSymbol = peekSymbolStack();
-
-    while (topSymbol && typeof topSymbol === 'function') {
-      topSymbol.call(parser);
-      popSymbolStack();
-      topSymbol = peekSymbolStack();
-    }
+    topSymbol = takeCareLLAction(popSymbolStack, peekSymbolStack);
 
     if (!symbolStack.length) {
       break;
     }
   }
 
-  if (!error && lexer.getCurrentToken().token !== EOF_TOKEN) {
-    // reduction done but still has input
-    if (!symbolStack.length) {
-      getExpected = () => [EOF_TOKEN];
-    }
-    error = {
-      ...getParseError(getExpected),
-      expected: getExpected(),
-      symbol: peekStack(astStack)?.symbol,
-      lexer: lexer.toJSON(),
-    };
-    errorNode = closeAstWhenError(error, astStack);
-  }
+  ({ error, errorNode } = checkLLEndError(getExpected, {
+    error,
+    errorNode,
+  }));
 
   const ast = getAstRootNode(astStack, transformNode);
 
-  symbolStack = [];
-
-  parser.userData = {};
+  endLLParse();
 
   return {
     ast,

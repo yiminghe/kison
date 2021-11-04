@@ -137,27 +137,27 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                                       ],
                                       'ruleIndex': 17,
                                       'internalRuleIndex': 30,
-                                      'id': 12
+                                      'id': 11
                                     }
                                   ],
                                   'ruleIndex': 16,
                                   'internalRuleIndex': 27,
-                                  'id': 11
+                                  'id': 10
                                 }
                               ],
                               'ruleIndex': 6,
                               'internalRuleIndex': 11,
-                              'id': 10
+                              'id': 9
                             }
                           ],
                           'ruleIndex': 5,
                           'internalRuleIndex': 10,
-                          'id': 9
+                          'id': 8
                         }
                       ],
                       'ruleIndex': 3,
                       'internalRuleIndex': 6,
-                      'id': 8
+                      'id': 7
                     },
                     {
                       'start': 4,
@@ -204,7 +204,7 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                           ],
                           'ruleIndex': 40,
                           'internalRuleIndex': 55,
-                          'id': 14
+                          'id': 13
                         },
                         {
                           'start': 6,
@@ -220,32 +220,32 @@ exports[`regexp parser works for (?:a)+? 1`] = `
                       ],
                       'ruleIndex': 38,
                       'internalRuleIndex': 53,
-                      'id': 13
+                      'id': 12
                     }
                   ],
                   'ruleIndex': 8,
                   'internalRuleIndex': 15,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 7,
               'internalRuleIndex': 12,
-              'id': 6
+              'id': 5
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -375,27 +375,27 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                                       ],
                                       'ruleIndex': 17,
                                       'internalRuleIndex': 30,
-                                      'id': 12
+                                      'id': 11
                                     }
                                   ],
                                   'ruleIndex': 16,
                                   'internalRuleIndex': 27,
-                                  'id': 11
+                                  'id': 10
                                 }
                               ],
                               'ruleIndex': 6,
                               'internalRuleIndex': 11,
-                              'id': 10
+                              'id': 9
                             }
                           ],
                           'ruleIndex': 5,
                           'internalRuleIndex': 10,
-                          'id': 9
+                          'id': 8
                         }
                       ],
                       'ruleIndex': 3,
                       'internalRuleIndex': 6,
-                      'id': 8
+                      'id': 7
                     },
                     {
                       'start': 6,
@@ -411,12 +411,12 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                   ],
                   'ruleIndex': 9,
                   'internalRuleIndex': 18,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 7,
               'internalRuleIndex': 12,
-              'id': 6
+              'id': 5
             },
             {
               'start': 7,
@@ -462,32 +462,32 @@ exports[`regexp parser works for (?<a>c)b 1`] = `
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 30,
-                      'id': 15
+                      'id': 14
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 14
+                  'id': 13
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 13
+              'id': 12
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -617,22 +617,22 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                       ],
                                       'ruleIndex': 17,
                                       'internalRuleIndex': 30,
-                                      'id': 12
+                                      'id': 11
                                     }
                                   ],
                                   'ruleIndex': 16,
                                   'internalRuleIndex': 27,
-                                  'id': 11
+                                  'id': 10
                                 }
                               ],
                               'ruleIndex': 6,
                               'internalRuleIndex': 11,
-                              'id': 10
+                              'id': 9
                             }
                           ],
                           'ruleIndex': 5,
                           'internalRuleIndex': 10,
-                          'id': 9
+                          'id': 8
                         },
                         {
                           'start': 2,
@@ -699,27 +699,27 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                                       ],
                                       'ruleIndex': 17,
                                       'internalRuleIndex': 30,
-                                      'id': 16
+                                      'id': 15
                                     }
                                   ],
                                   'ruleIndex': 16,
                                   'internalRuleIndex': 27,
-                                  'id': 15
+                                  'id': 14
                                 }
                               ],
                               'ruleIndex': 6,
                               'internalRuleIndex': 11,
-                              'id': 14
+                              'id': 13
                             }
                           ],
                           'ruleIndex': 5,
                           'internalRuleIndex': 10,
-                          'id': 13
+                          'id': 12
                         }
                       ],
                       'ruleIndex': 3,
                       'internalRuleIndex': 6,
-                      'id': 8
+                      'id': 7
                     },
                     {
                       'start': 4,
@@ -766,22 +766,22 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                           ],
                           'ruleIndex': 39,
                           'internalRuleIndex': 54,
-                          'id': 18
+                          'id': 17
                         }
                       ],
                       'ruleIndex': 38,
                       'internalRuleIndex': 53,
-                      'id': 17
+                      'id': 16
                     }
                   ],
                   'ruleIndex': 8,
                   'internalRuleIndex': 15,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 7,
               'internalRuleIndex': 12,
-              'id': 6
+              'id': 5
             },
             {
               'start': 6,
@@ -827,32 +827,32 @@ exports[`regexp parser works for (a|b)*z 1`] = `
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 30,
-                      'id': 21
+                      'id': 20
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 20
+                  'id': 19
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 19
+              'id': 18
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -1025,17 +1025,17 @@ exports[`regexp parser works for [^a-z] 1`] = `
                                           ],
                                           'ruleIndex': 35,
                                           'internalRuleIndex': 50,
-                                          'id': 13
+                                          'id': 12
                                         }
                                       ],
                                       'ruleIndex': 28,
                                       'internalRuleIndex': 41,
-                                      'id': 12
+                                      'id': 11
                                     }
                                   ],
                                   'ruleIndex': 26,
                                   'internalRuleIndex': 39,
-                                  'id': 11
+                                  'id': 10
                                 },
                                 {
                                   'start': 5,
@@ -1051,42 +1051,42 @@ exports[`regexp parser works for [^a-z] 1`] = `
                               ],
                               'ruleIndex': 22,
                               'internalRuleIndex': 35,
-                              'id': 10
+                              'id': 9
                             }
                           ],
                           'ruleIndex': 18,
                           'internalRuleIndex': 31,
-                          'id': 9
+                          'id': 8
                         }
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 29,
-                      'id': 8
+                      'id': 7
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 6
+              'id': 5
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -1248,12 +1248,12 @@ exports[`regexp parser works for [a-z] 1`] = `
                                           ],
                                           'ruleIndex': 35,
                                           'internalRuleIndex': 50,
-                                          'id': 13
+                                          'id': 12
                                         }
                                       ],
                                       'ruleIndex': 28,
                                       'internalRuleIndex': 41,
-                                      'id': 12
+                                      'id': 11
                                     },
                                     {
                                       'start': 4,
@@ -1289,17 +1289,17 @@ exports[`regexp parser works for [a-z] 1`] = `
                                           ],
                                           'ruleIndex': 35,
                                           'internalRuleIndex': 50,
-                                          'id': 15
+                                          'id': 14
                                         }
                                       ],
                                       'ruleIndex': 28,
                                       'internalRuleIndex': 41,
-                                      'id': 14
+                                      'id': 13
                                     }
                                   ],
                                   'ruleIndex': 26,
                                   'internalRuleIndex': 39,
-                                  'id': 11
+                                  'id': 10
                                 },
                                 {
                                   'start': 5,
@@ -1315,42 +1315,42 @@ exports[`regexp parser works for [a-z] 1`] = `
                               ],
                               'ruleIndex': 22,
                               'internalRuleIndex': 35,
-                              'id': 10
+                              'id': 9
                             }
                           ],
                           'ruleIndex': 18,
                           'internalRuleIndex': 31,
-                          'id': 9
+                          'id': 8
                         }
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 29,
-                      'id': 8
+                      'id': 7
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 6
+              'id': 5
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -1409,7 +1409,7 @@ exports[`regexp parser works for \\12\\b 1`] = `
               ],
               'ruleIndex': 8,
               'internalRuleIndex': 14,
-              'id': 6
+              'id': 5
             },
             {
               'start': 3,
@@ -1444,27 +1444,27 @@ exports[`regexp parser works for \\12\\b 1`] = `
                     }
                   ],
                   'internalRuleIndex': 62,
-                  'id': 8
+                  'id': 7
                 }
               ],
               'ruleIndex': 8,
               'internalRuleIndex': 13,
-              'id': 7
+              'id': 6
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -1554,7 +1554,7 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 30,
-                      'id': 8
+                      'id': 7
                     },
                     {
                       'start': 2,
@@ -1590,22 +1590,22 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                           ],
                           'ruleIndex': 40,
                           'internalRuleIndex': 55,
-                          'id': 10
+                          'id': 9
                         }
                       ],
                       'ruleIndex': 38,
                       'internalRuleIndex': 53,
-                      'id': 9
+                      'id': 8
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 6
+              'id': 5
             },
             {
               'start': 3,
@@ -1651,17 +1651,17 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 30,
-                      'id': 13
+                      'id': 12
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 12
+                  'id': 11
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 11
+              'id': 10
             },
             {
               'start': 4,
@@ -1696,27 +1696,27 @@ exports[`regexp parser works for ^a+z$ 1`] = `
                     }
                   ],
                   'internalRuleIndex': 68,
-                  'id': 15
+                  'id': 14
                 }
               ],
               'ruleIndex': 8,
               'internalRuleIndex': 13,
-              'id': 14
+              'id': 13
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 1,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -1795,7 +1795,7 @@ exports[`regexp parser works for a{1,2} 1`] = `
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 30,
-                      'id': 8
+                      'id': 7
                     },
                     {
                       'start': 1,
@@ -1875,37 +1875,37 @@ exports[`regexp parser works for a{1,2} 1`] = `
                           ],
                           'ruleIndex': 43,
                           'internalRuleIndex': 58,
-                          'id': 10
+                          'id': 9
                         }
                       ],
                       'ruleIndex': 38,
                       'internalRuleIndex': 53,
-                      'id': 9
+                      'id': 8
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 6
+              'id': 5
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;
 
@@ -1984,7 +1984,7 @@ exports[`regexp parser works for a{1} 1`] = `
                       ],
                       'ruleIndex': 17,
                       'internalRuleIndex': 30,
-                      'id': 8
+                      'id': 7
                     },
                     {
                       'start': 1,
@@ -2042,36 +2042,36 @@ exports[`regexp parser works for a{1} 1`] = `
                           ],
                           'ruleIndex': 43,
                           'internalRuleIndex': 58,
-                          'id': 10
+                          'id': 9
                         }
                       ],
                       'ruleIndex': 38,
                       'internalRuleIndex': 53,
-                      'id': 9
+                      'id': 8
                     }
                   ],
                   'ruleIndex': 16,
                   'internalRuleIndex': 27,
-                  'id': 7
+                  'id': 6
                 }
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 6
+              'id': 5
             }
           ],
           'ruleIndex': 5,
           'internalRuleIndex': 10,
-          'id': 5
+          'id': 4
         }
       ],
       'ruleIndex': 3,
       'internalRuleIndex': 6,
-      'id': 4
+      'id': 3
     }
   ],
   'ruleIndex': 1,
   'internalRuleIndex': 2,
-  'id': 3
+  'id': 2
 }"
 `;

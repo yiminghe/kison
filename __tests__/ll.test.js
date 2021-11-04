@@ -151,7 +151,7 @@ describe('ll', () => {
             ],
             'ruleIndex': 5,
             'internalRuleIndex': 7,
-            'id': 3
+            'id': 2
           },
           {
             'start': 2,
@@ -177,7 +177,7 @@ describe('ll', () => {
             ],
             'ruleIndex': 5,
             'internalRuleIndex': 7,
-            'id': 4
+            'id': 3
           },
           {
             'start': 4,
@@ -203,7 +203,7 @@ describe('ll', () => {
             ],
             'ruleIndex': 5,
             'internalRuleIndex': 7,
-            'id': 5
+            'id': 4
           },
           {
             'start': 6,
@@ -229,12 +229,12 @@ describe('ll', () => {
             ],
             'ruleIndex': 5,
             'internalRuleIndex': 7,
-            'id': 6
+            'id': 5
           }
         ],
         'ruleIndex': 3,
         'internalRuleIndex': 5,
-        'id': 2
+        'id': 1
       }"
     `);
   });
@@ -461,7 +461,7 @@ describe('ll', () => {
                 ],
                 'ruleIndex': 4,
                 'internalRuleIndex': 6,
-                'id': 3
+                'id': 2
               },
               {
                 'start': 1,
@@ -498,12 +498,12 @@ describe('ll', () => {
                 ],
                 'ruleIndex': 7,
                 'internalRuleIndex': 10,
-                'id': 14
+                'id': 13
               }
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 9
+            'id': 8
           },
           {
             'start': 3,
@@ -540,12 +540,12 @@ describe('ll', () => {
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 20
+            'id': 19
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 21
+        'id': 20
       }"
     `);
   });
@@ -590,7 +590,7 @@ describe('ll', () => {
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 3
+            'id': 2
           },
           {
             'start': 1,
@@ -637,7 +637,7 @@ describe('ll', () => {
                 ],
                 'ruleIndex': 7,
                 'internalRuleIndex': 10,
-                'id': 10
+                'id': 9
               },
               {
                 'start': 3,
@@ -673,17 +673,17 @@ describe('ll', () => {
                   }
                 ],
                 'internalRuleIndex': 13,
-                'id': 15
+                'id': 14
               }
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 18
+            'id': 17
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 19
+        'id': 18
       }"
     `);
   });
@@ -738,7 +738,7 @@ describe('ll', () => {
                 ],
                 'ruleIndex': 4,
                 'internalRuleIndex': 6,
-                'id': 3
+                'id': 2
               },
               {
                 'start': 1,
@@ -785,7 +785,7 @@ describe('ll', () => {
                     ],
                     'ruleIndex': 7,
                     'internalRuleIndex': 10,
-                    'id': 10
+                    'id': 9
                   },
                   {
                     'start': 3,
@@ -821,17 +821,17 @@ describe('ll', () => {
                       }
                     ],
                     'internalRuleIndex': 13,
-                    'id': 15
+                    'id': 14
                   }
                 ],
                 'ruleIndex': 7,
                 'internalRuleIndex': 10,
-                'id': 18
+                'id': 17
               }
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 9
+            'id': 8
           },
           {
             'start': 5,
@@ -877,7 +877,7 @@ describe('ll', () => {
                   }
                 ],
                 'internalRuleIndex': 14,
-                'id': 22
+                'id': 21
               },
               {
                 'start': 7,
@@ -923,7 +923,7 @@ describe('ll', () => {
                       }
                     ],
                     'internalRuleIndex': 14,
-                    'id': 25
+                    'id': 24
                   },
                   {
                     'start': 9,
@@ -959,21 +959,21 @@ describe('ll', () => {
                       }
                     ],
                     'internalRuleIndex': 13,
-                    'id': 27
+                    'id': 26
                   }
                 ],
                 'internalRuleIndex': 13,
-                'id': 24
+                'id': 23
               }
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 30
+            'id': 29
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 31
+        'id': 30
       }"
     `);
   });
@@ -1018,7 +1018,7 @@ describe('ll', () => {
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 3
+            'id': 2
           },
           {
             'start': 1,
@@ -1065,7 +1065,7 @@ describe('ll', () => {
                 ],
                 'ruleIndex': 7,
                 'internalRuleIndex': 10,
-                'id': 10
+                'id': 9
               },
               {
                 'start': 3,
@@ -1114,12 +1114,12 @@ describe('ll', () => {
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 14
+            'id': 13
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 9
+        'id': 8
       }"
     `);
     expect(prettyJson(errorNode)).toMatchInlineSnapshot(`
@@ -1311,7 +1311,7 @@ describe('ll', () => {
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 3
+            'id': 2
           },
           {
             'start': 1,
@@ -1349,12 +1349,12 @@ describe('ll', () => {
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 14
+            'id': 13
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 15
+        'id': 14
       }"
     `);
     expect(prettyJson(error)).toMatchInlineSnapshot(`

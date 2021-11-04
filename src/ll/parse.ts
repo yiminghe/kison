@@ -36,6 +36,7 @@ const {
   takeCareLLAction,
   takeCareLLError,
   checkLLEndError,
+  getLabeledRhsForAddNodeFlag,
 } = Utils;
 
 export default function parse(input: string, options: any) {
@@ -134,22 +135,8 @@ export default function parse(input: string, options: any) {
         production = productions[next];
 
         if (productionSkipAstNodeSet?.has(next)) {
-          const label = getProductionLabel(production);
-          let rhs = getProductionRhs(production).concat();
-          if (label) {
-            let newRhs = [];
-            for (const r of rhs) {
-              if (isAddAstNodeFlag(r)) {
-                newRhs.push(() => {
-                  astStack[astStack.length - 1].label =
-                    getOriginalSymbol(label);
-                });
-              }
-              newRhs.push(r);
-            }
-            rhs = newRhs;
-          }
-          symbolStack.push.apply(symbolStack, rhs.reverse());
+          const newRhs = getLabeledRhsForAddNodeFlag(production);
+          symbolStack.push.apply(symbolStack, newRhs.reverse());
         } else {
           const newAst = new AstSymbolNode({
             id: ++globalSymbolNodeId,

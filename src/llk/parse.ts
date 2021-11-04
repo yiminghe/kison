@@ -28,6 +28,7 @@ const {
   takeCareLLAction,
   takeCareLLError,
   checkLLEndError,
+  getLabeledRhsForAddNodeFlag,
 } = utils;
 
 const { isSymbol } = Utils;
@@ -220,25 +221,11 @@ function parse(input: string, options: any = {}) {
         production = productions[ruleIndex];
 
         if (productionSkipAstNodeSet?.has(ruleIndex)) {
-          const label = getProductionLabel(production);
-          let rhs = [
+          const  newRhs = getLabeledRhsForAddNodeFlag(production, [
             ...getProductionRhs(production),
             makeRuleIndexFlag(ruleIndex, unit),
-          ];
-          if (label) {
-            let newRhs = [];
-            for (const r of rhs) {
-              if (isAddAstNodeFlag(r)) {
-                newRhs.push(() => {
-                  astStack[astStack.length - 1].label =
-                    getOriginalSymbol(label);
-                });
-              }
-              newRhs.push(r);
-            }
-            rhs = newRhs;
-          }
-          symbolStack.push.apply(symbolStack, rhs.reverse());
+          ]);
+          symbolStack.push.apply(symbolStack, newRhs.reverse());
         } else {
           const newAst = new AstSymbolNode({
             internalRuleIndex: ruleIndex,

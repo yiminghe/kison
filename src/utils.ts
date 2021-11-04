@@ -9,6 +9,7 @@ import type {
 import data from './data';
 import type { Token } from './parser';
 import type { ParseError, Rhs, TransformNode } from './types';
+import type { ProductionRule } from './Grammar';
 
 const { AstTokenNode, AstErrorNode, BaseAstNode, AstSymbolNode } = AstNodes;
 
@@ -35,6 +36,27 @@ const globalUtils = {
   AstTokenNode,
 
   AstErrorNode,
+
+  getLabeledRhsForAddNodeFlag(production: ProductionRule, extraRhs?: any[]) {
+    let rhs = extraRhs || parser.getProductionRhs(production);
+    const label = parser.getProductionLabel(production);
+    if (label) {
+      let newRhs: any[] = [];
+      for (const r of rhs) {
+        if (isAddAstNodeFlag(r)) {
+          newRhs.push(() => {
+            astStack[astStack.length - 1].label =
+              getOriginalSymbol(label);
+          });
+        }
+        newRhs.push(r);
+      }
+      rhs = newRhs;
+    } else if (!extraRhs) {
+      rhs = [...rhs]
+    }
+    return rhs;
+  },
 
   checkLLEndError(
     getExpected: () => string[],
@@ -278,9 +300,9 @@ const globalUtils = {
     return {
       errorMessage: [
         'syntax error at line ' +
-          lexer.lineNumber +
-          ':\n' +
-          lexer.showDebugInfo(),
+        lexer.lineNumber +
+        ':\n' +
+        lexer.showDebugInfo(),
         ...tips,
       ].join('\n'),
       tip,
@@ -569,6 +591,7 @@ const {
   getParseError,
   getAstRootNode,
   closeAstWhenError,
+  getOriginalSymbol,
   pushRecoveryTokens,
 } = utils;
 

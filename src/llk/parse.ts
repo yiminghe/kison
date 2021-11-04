@@ -220,7 +220,7 @@ function parse(input: string, options: any = {}) {
         production = productions[ruleIndex];
 
         if (productionSkipAstNodeSet?.has(ruleIndex)) {
-          const  newRhs = getLabeledRhsForAddNodeFlag(production, [
+          const newRhs = getLabeledRhsForAddNodeFlag(production, [
             ...getProductionRhs(production),
             makeRuleIndexFlag(ruleIndex, unit),
           ]);

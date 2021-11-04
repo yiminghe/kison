@@ -87,31 +87,31 @@ async function callMemberSub(
 }
 
 registerEvaluators({
-  evaluate_subStmt() {
+  evaluateSubStmt() {
     return;
   },
 
-  evaluate_functionStmt() {
+  evaluateFunctionStmt() {
     return;
   },
 
-  async evaluate_iCS_B_MemberProcedureCall(node, context) {
+  async evaluateICS_B_MemberProcedureCall(node, context) {
     return callMemberSub(node, context, 0);
   },
 
-  async evaluate_eCS_MemberProcedureCall(node, context) {
+  async evaluateECS_MemberProcedureCall(node, context) {
     return callMemberSub(node, context, 1);
   },
 
-  async evaluate_iCS_B_ProcedureCall(node, context) {
+  async evaluateICS_B_ProcedureCall(node, context) {
     return callSub(node, context, 0);
   },
 
-  async evaluate_eCS_ProcedureCall(node, context) {
+  async evaluateECS_ProcedureCall(node, context) {
     return callSub(node, context, 1);
   },
 
-  async evaluate_argsCall(node, context) {
+  async evaluateArgsCall(node, context) {
     const args = [];
     const { children } = node;
     let lastArg = undefined;

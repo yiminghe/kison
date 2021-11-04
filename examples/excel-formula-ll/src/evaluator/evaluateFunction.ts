@@ -9,7 +9,7 @@ import { evaluate, registerEvaluators } from './evaluators';
 import type { All_Type } from './types';
 
 registerEvaluators({
-  evaluate_functionExp(node, context) {
+  evaluateFunctionExp(node, context) {
     const { children } = node;
     const fnName = children[0].text.toLowerCase();
     const fnDef = functions.get(fnName);

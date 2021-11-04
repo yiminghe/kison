@@ -45,15 +45,14 @@ const globalUtils = {
       for (const r of rhs) {
         if (isAddAstNodeFlag(r)) {
           newRhs.push(() => {
-            astStack[astStack.length - 1].label =
-              getOriginalSymbol(label);
+            astStack[astStack.length - 1].label = getOriginalSymbol(label);
           });
         }
         newRhs.push(r);
       }
       rhs = newRhs;
     } else if (!extraRhs) {
-      rhs = [...rhs]
+      rhs = [...rhs];
     }
     return rhs;
   },
@@ -300,9 +299,9 @@ const globalUtils = {
     return {
       errorMessage: [
         'syntax error at line ' +
-        lexer.lineNumber +
-        ':\n' +
-        lexer.showDebugInfo(),
+          lexer.lineNumber +
+          ':\n' +
+          lexer.showDebugInfo(),
         ...tips,
       ].join('\n'),
       tip,

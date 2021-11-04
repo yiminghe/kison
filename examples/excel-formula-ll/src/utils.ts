@@ -31,3 +31,7 @@ export function parseCoord(str: string) {
   }
   return { col, row };
 }
+
+export function captalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}

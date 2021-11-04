@@ -51,7 +51,7 @@ export type TransformNode = (arg: {
 export interface Token extends Position {
   text: string;
   t: string;
-  channel?: string|string[];
+  channel?: string | string[];
   recovery?: string;
   token: LiteralToken;
 }
@@ -102,6 +102,24 @@ export interface LexResult<T = any> {
     stateStack: string[];
   }
 }
+
+export type AstNodeTypeMap = {};
+
+type All_Vistors = Exclude<
+  LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
+  ''
+>;
+
+export type AstVisitor<T extends string, C, R = any> = (
+  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
+  context: C,
+) => R;
+
+export type AstVisitors<T extends string, C, R = any> = {
+  [e in All_Vistors | '' as e extends ''
+  ? T
+  : `${T}${Capitalize<e>}`]?: AstVisitor<e, C, R>;
+};
 
 declare function parse(input: string, options?: ParserOptions): ParseResult;
 

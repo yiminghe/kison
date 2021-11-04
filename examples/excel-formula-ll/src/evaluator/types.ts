@@ -7,7 +7,7 @@ import type {
   NUM_ERROR,
   NAME_ERROR,
 } from '../common/constants';
-import type { AstSymbolNode, LiteralToken, AstNodeTypeMap } from '../parser';
+import type { AstVisitors } from '../parser';
 
 export interface String_Type {
   type: 'string';
@@ -76,18 +76,4 @@ export interface Context {
   getCellValues: (ref: Ref_Type) => Atom_Value_Type[][];
 }
 
-type All_Vistors = Exclude<
-  LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
-  ''
->;
-
-export type AstVisitor<T extends string = ''> = (
-  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
-  context: Context,
-) => All_Type;
-
-export type Evaluators = {
-  [e in All_Vistors | '' as e extends ''
-    ? 'evaluate'
-    : `evaluate_${e}`]?: AstVisitor<e>;
-};
+export type Evaluators = AstVisitors<'evaluate', Context, All_Type>;

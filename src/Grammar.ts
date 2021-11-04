@@ -422,22 +422,28 @@ class Grammar {
         .join('|')};`;
     });
 
-    code.push(`export type AstNodeTypeMap = { ast: AstNode;`);
+    const AstNodeTypeMap: string[] = [];
+
+    AstNodeTypeMap.push(`export type AstNodeTypeMap = { ast: AstNode;`);
 
     for (const symbol of Object.keys(productionsBySymbol)) {
       const { skipAstNode } = productionsBySymbol[symbol];
       if (!skipAstNode) {
-        code.push(`${symbol}: ${getAstNodeClassName(symbol)};`);
+        AstNodeTypeMap.push(`${symbol}: ${getAstNodeClassName(symbol)};`);
       }
     }
     for (const label of Object.keys(productionsByLabel)) {
-      code.push(`${label}: ${getAstNodeClassName(label)};`);
+      AstNodeTypeMap.push(`${label}: ${getAstNodeClassName(label)};`);
     }
     for (const token of tokenAstNodeClassNames.keys()) {
-      code.push(`${token}: ${tokenAstNodeClassNames.get(token)};`);
+      AstNodeTypeMap.push(`${token}: ${tokenAstNodeClassNames.get(token)};`);
     }
 
-    code.push('};');
+    AstNodeTypeMap.push('};');
+
+    base = base.replace(/export type AstNodeTypeMap =[^\n]+/, () =>
+      AstNodeTypeMap.join('\n'),
+    );
 
     return [base, ...code].join('\n');
   }

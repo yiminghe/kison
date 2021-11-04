@@ -9,20 +9,20 @@ import type {
 } from './types';
 
 registerEvaluators({
-  evaluate_NUMBER(node): Number_Type {
+  evaluateNUMBER(node): Number_Type {
     return {
       type: 'number',
       value: Number(node.text),
     };
   },
-  evaluate_STRING(node): String_Type {
+  evaluateSTRING(node): String_Type {
     return {
       type: 'string',
       value: node.text,
     };
   },
 
-  [`evaluate_array`](node, context): Array_Type | Error_Type {
+  evaluateArray(node, context): Array_Type | Error_Type {
     const { children: raw } = node;
     const children = raw.slice(1, -1);
     const ret: Atom_Value_Type[][] = [];

@@ -11,3 +11,7 @@ export function warn(msg: string) {
 export function isSkipToken(name: LiteralToken) {
   return name === 'NEWLINE' || name === 'COMMENT' || name === 'REMCOMMENT';
 }
+
+export function captalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}

@@ -21,15 +21,15 @@ async function loadSub(
 }
 
 registerLoaders({
-  load_subStmt(node, context) {
+  loadSubStmt(node, context) {
     return loadSub(node, context);
   },
 
-  load_functionStmt(node, context) {
+  loadFunctionStmt(node, context) {
     return loadSub(node, context);
   },
 
-  async load_argList(node, context) {
+  async loadArgList(node, context) {
     const ret: ArgInfo[] = [];
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'arg') {
@@ -39,7 +39,7 @@ registerLoaders({
     return ret;
   },
 
-  async load_arg(node, context) {
+  async loadArg(node, context) {
     const argInfo: ArgInfo = {
       byRef: true,
       name: '',

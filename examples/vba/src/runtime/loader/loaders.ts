@@ -1,7 +1,7 @@
-import type { AstNode, LiteralToken } from '../../parser';
+import type { AstNode, LiteralToken, AstVisitor } from '../../parser';
 import type { Context } from '../Context';
-import { Loaders, AstVisitor } from '../types';
-import { isSkipToken, warn } from '../utils';
+import { Loaders } from '../types';
+import { isSkipToken, warn, captalize } from '../utils';
 
 export async function load(ast: AstNode, context: Context): Promise<any> {
   let symbol = '';
@@ -21,11 +21,11 @@ export async function load(ast: AstNode, context: Context): Promise<any> {
   const n1 = symbol || token;
   const n2 = label || n1;
 
-  const m1 = `load_${n1}`;
-  const m2 = `load_${n2}`;
+  const m1 = `load${captalize(n1)}`;
+  const m2 = `load${captalize(n2)}`;
 
   const loaders2 = loaders as any;
-  const fn: AstVisitor = loaders2[m2] || loaders2[m1];
+  const fn: AstVisitor<'', Context> = loaders2[m2] || loaders2[m1];
 
   if (fn) {
     let ret = fn(ast, context);

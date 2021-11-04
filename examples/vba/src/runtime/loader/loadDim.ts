@@ -8,7 +8,7 @@ import { registerLoaders } from './loaders';
 import { evaluate } from '../evaluator/index';
 
 registerLoaders({
-  async load_variableStmt(node, context) {
+  async loadVariableStmt(node, context) {
     const { children } = node;
     const first = children[0];
     let isStatic: boolean = false;

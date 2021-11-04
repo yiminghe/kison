@@ -7,7 +7,7 @@ import { VBObject, VBValue } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
 registerEvaluators({
-  async evaluate_letStmt(node, context) {
+  async evaluateLetStmt(node, context) {
     let { children } = node;
     let index = 0;
     let c: any = children[0];

@@ -19,7 +19,7 @@ import { evaluate, registerEvaluators } from './evaluators';
 import { buildIndexes, checkIndexesInterger } from './common';
 
 registerEvaluators({
-  async evaluate_indexes(node, context) {
+  async evaluateIndexes(node, context) {
     let ret: (VBValue | VBObject)[] = [];
     const { children } = node;
     for (const c of children) {
@@ -30,23 +30,23 @@ registerEvaluators({
     return ret;
   },
 
-  evaluate_INTEGERLITERAL(node) {
+  evaluateINTEGERLITERAL(node) {
     return new VBInteger(parseInt(node.text));
   },
 
-  evaluate_STRINGLITERAL(node) {
+  evaluateSTRINGLITERAL(node) {
     return new VBString(node.text);
   },
 
-  evaluate_NOTHING() {
+  evaluateNOTHING() {
     return VB_NOTHING;
   },
 
-  evaluate_NULL() {
+  evaluateNULL() {
     return VB_NULL;
   },
 
-  async evaluate_iCS_S_MembersCall({ children }, context) {
+  async evaluateICS_S_MembersCall({ children }, context) {
     const valueNodes = [];
 
     for (const c of children) {
@@ -111,7 +111,7 @@ registerEvaluators({
 
   // },
 
-  async evaluate_iCS_S_VariableOrProcedureCall(node, context) {
+  async evaluateICS_S_VariableOrProcedureCall(node, context) {
     let indexes: (VBObject | VBValue)[] | undefined;
 
     for (const c of node.children) {
@@ -154,7 +154,7 @@ registerEvaluators({
     }
     return variable;
   },
-  evaluate_exitStmt(node) {
+  evaluateExitStmt(node) {
     return new ExitResult(node.children[0]);
   },
 });

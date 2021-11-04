@@ -457,11 +457,11 @@ function evaluatePrefixExp(
 }
 
 registerEvaluators({
-  evaluate_binaryExp(node: BinaryExp_Node, context: Context) {
+  evaluateBinaryExp(node: BinaryExp_Node, context: Context) {
     const op = node.children[1].token;
     return evaluateBinaryExp(node, context, opFn[op]);
   },
-  evaluate_percentageExp(node: PercentageExp_Node, context: Context) {
+  evaluatePercentageExp(node: PercentageExp_Node, context: Context) {
     const a = transformToArray(node.children[0], context);
 
     function one(b: Atom_Type): Number_Type | Error_Type {
@@ -484,11 +484,11 @@ registerEvaluators({
     }
     return one(a);
   },
-  evaluate_prefixExp(node: PrefixExp_Node, context: Context) {
+  evaluatePrefixExp(node: PrefixExp_Node, context: Context) {
     const op = node.children[0].token;
     return evaluatePrefixExp(node, context, unaryOp[op]);
   },
-  evaluate_clipExp(node: ClipExp_Node, context: Context) {
+  evaluateClipExp(node: ClipExp_Node, context: Context) {
     // TODO: implicit intersection
     const a = evaluate(node.children[1], context);
     if (a.type === 'array') {

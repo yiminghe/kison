@@ -1,7 +1,7 @@
-import type { AstNode, LiteralToken } from '../../parser';
+import type { AstNode, LiteralToken, AstVisitor } from '../../parser';
 import type { Context } from '../Context';
-import { Evaluators, AstVisitor, VB_EMPTY, ExitResult } from '../types';
-import { isSkipToken, warn } from '../utils';
+import { Evaluators, VB_EMPTY, ExitResult } from '../types';
+import { isSkipToken, warn, captalize } from '../utils';
 
 export async function evaluate(ast: AstNode, context: Context): Promise<any> {
   let symbol = '';
@@ -21,11 +21,11 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
   const n1 = symbol || token;
   const n2 = label || n1;
 
-  const m1 = `evaluate_${n1}`;
-  const m2 = `evaluate_${n2}`;
+  const m1 = `evaluate${captalize(n1)}`;
+  const m2 = `evaluate${captalize(n2)}`;
 
   const evaluators2 = evaluators as any;
-  const fn: AstVisitor = evaluators2[m2] || evaluators2[m1];
+  const fn: AstVisitor<'', Context> = evaluators2[m2] || evaluators2[m1];
 
   if (fn) {
     let ret = fn(ast, context);

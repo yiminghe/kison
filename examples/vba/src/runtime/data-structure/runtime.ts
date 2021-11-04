@@ -1,5 +1,5 @@
 import type { Context } from '../Context';
-import type { AstSymbolNode, LiteralToken, AstNodeTypeMap } from '../../parser';
+import type { AstVisitors } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBObject } from './VBObject';
 import { Visibility_Node } from '../../parserLLK';
@@ -85,27 +85,9 @@ export interface VBVariableInfo {
   value: () => Promise<VBObject> | VBObject;
 }
 
-type All_Vistors = Exclude<
-  LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
-  ''
->;
+export type Evaluators = AstVisitors<'evaluate', Context>;
 
-export type AstVisitor<T extends string = ''> = (
-  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
-  context: Context,
-) => any;
-
-export type Evaluators = {
-  [e in All_Vistors | '' as e extends ''
-    ? 'evaluate'
-    : `evaluate_${e}`]?: AstVisitor<e>;
-};
-
-export type Loaders = {
-  [e in All_Vistors | '' as e extends ''
-    ? 'load'
-    : `load_${e}`]?: AstVisitor<e>;
-};
+export type Loaders = AstVisitors<'load', Context>;
 
 export class FileSymbolTable {
   symbolTable = new Map<SymbolName, SymbolItem>();

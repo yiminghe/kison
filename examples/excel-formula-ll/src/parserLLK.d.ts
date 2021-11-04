@@ -51,7 +51,7 @@ export type TransformNode = (arg: {
 export interface Token extends Position {
   text: string;
   t: string;
-  channel?: string|string[];
+  channel?: string | string[];
   recovery?: string;
   token: LiteralToken;
 }
@@ -102,6 +102,84 @@ export interface LexResult<T = any> {
     stateStack: string[];
   }
 }
+
+export type AstNodeTypeMap = { ast: AstNode;
+formula: Formula_Node;
+exp: Exp_Node;
+referenceItem: ReferenceItem_Node;
+reference: Reference_Node;
+arrayElement: ArrayElement_Node;
+array: Array_Node;
+functionExp: FunctionExp_Node;
+argumentsList: ArgumentsList_Node;
+structureReference: StructureReference_Node;
+tableSpecifier: TableSpecifier_Node;
+tableThisRow: TableThisRow_Node;
+tableSpecifierInner: TableSpecifierInner_Node;
+tableSpecifierItem: TableSpecifierItem_Node;
+tableColumnSpecifier: TableColumnSpecifier_Node;
+binaryExp: BinaryExp_Node;
+prefixExp: PrefixExp_Node;
+clipExp: ClipExp_Node;
+percentageExp: PercentageExp_Node;
+unionReference: UnionReference_Node;
+intersectionReference: IntersectionReference_Node;
+rangeReference: RangeReference_Node;
+$EOF: $EOF_Node;
+$UNKNOWN: $UNKNOWN_Node;
+TOKEN_0: TOKEN_0_Node;
+TOKEN_1: TOKEN_1_Node;
+TOKEN_2: TOKEN_2_Node;
+TOKEN_3: TOKEN_3_Node;
+TOKEN_4: TOKEN_4_Node;
+TOKEN_5: TOKEN_5_Node;
+TOKEN_6: TOKEN_6_Node;
+TOKEN_7: TOKEN_7_Node;
+TOKEN_8: TOKEN_8_Node;
+TOKEN_9: TOKEN_9_Node;
+TOKEN_10: TOKEN_10_Node;
+TOKEN_11: TOKEN_11_Node;
+TOKEN_12: TOKEN_12_Node;
+TOKEN_13: TOKEN_13_Node;
+TOKEN_14: TOKEN_14_Node;
+TOKEN_15: TOKEN_15_Node;
+NUMBER: NUMBER_Node;
+STRING: STRING_Node;
+LOGIC: LOGIC_Node;
+ERROR: ERROR_Node;
+CELL: CELL_Node;
+NAME: NAME_Node;
+REF_UNION_OPERATOR: REF_UNION_OPERATOR_Node;
+REF_RANGE_OPERATOR: REF_RANGE_OPERATOR_Node;
+TOKEN_16: TOKEN_16_Node;
+TOKEN_17: TOKEN_17_Node;
+FUNCTION: FUNCTION_Node;
+TABLE_NAME: TABLE_NAME_Node;
+TABLE_ITEM_SPECIFIER: TABLE_ITEM_SPECIFIER_Node;
+TOKEN_18: TOKEN_18_Node;
+TOKEN_19: TOKEN_19_Node;
+TABLE_AT: TABLE_AT_Node;
+TABLE_COLUMN_SPECIFIER: TABLE_COLUMN_SPECIFIER_Node;
+ARRAY_SEPARATOR: ARRAY_SEPARATOR_Node;
+ARGUMENT_SEPARATOR: ARGUMENT_SEPARATOR_Node;
+SPECIFIER_SEPARATOR: SPECIFIER_SEPARATOR_Node;
+};
+
+type All_Vistors = Exclude<
+  LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
+  ''
+>;
+
+export type AstVisitor<T extends string, C, R = any> = (
+  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
+  context: C,
+) => R;
+
+export type AstVisitors<T extends string, C, R = any> = {
+  [e in All_Vistors | '' as e extends ''
+  ? T
+  : `${T}${Capitalize<e>}`]?: AstVisitor<e, C, R>;
+};
 
 declare function parse(input: string, options?: ParserOptions): ParseResult;
 
@@ -607,64 +685,3 @@ export type PercentageExp_Node = Exp_Node_16;
 export type UnionReference_Node = Reference_Node_26;
 export type IntersectionReference_Node = Reference_Node_27;
 export type RangeReference_Node = Reference_Node_28;
-export type AstNodeTypeMap = { ast: AstNode;
-formula: Formula_Node;
-exp: Exp_Node;
-referenceItem: ReferenceItem_Node;
-reference: Reference_Node;
-arrayElement: ArrayElement_Node;
-array: Array_Node;
-functionExp: FunctionExp_Node;
-argumentsList: ArgumentsList_Node;
-structureReference: StructureReference_Node;
-tableSpecifier: TableSpecifier_Node;
-tableThisRow: TableThisRow_Node;
-tableSpecifierInner: TableSpecifierInner_Node;
-tableSpecifierItem: TableSpecifierItem_Node;
-tableColumnSpecifier: TableColumnSpecifier_Node;
-binaryExp: BinaryExp_Node;
-prefixExp: PrefixExp_Node;
-clipExp: ClipExp_Node;
-percentageExp: PercentageExp_Node;
-unionReference: UnionReference_Node;
-intersectionReference: IntersectionReference_Node;
-rangeReference: RangeReference_Node;
-$EOF: $EOF_Node;
-$UNKNOWN: $UNKNOWN_Node;
-TOKEN_0: TOKEN_0_Node;
-TOKEN_1: TOKEN_1_Node;
-TOKEN_2: TOKEN_2_Node;
-TOKEN_3: TOKEN_3_Node;
-TOKEN_4: TOKEN_4_Node;
-TOKEN_5: TOKEN_5_Node;
-TOKEN_6: TOKEN_6_Node;
-TOKEN_7: TOKEN_7_Node;
-TOKEN_8: TOKEN_8_Node;
-TOKEN_9: TOKEN_9_Node;
-TOKEN_10: TOKEN_10_Node;
-TOKEN_11: TOKEN_11_Node;
-TOKEN_12: TOKEN_12_Node;
-TOKEN_13: TOKEN_13_Node;
-TOKEN_14: TOKEN_14_Node;
-TOKEN_15: TOKEN_15_Node;
-NUMBER: NUMBER_Node;
-STRING: STRING_Node;
-LOGIC: LOGIC_Node;
-ERROR: ERROR_Node;
-CELL: CELL_Node;
-NAME: NAME_Node;
-REF_UNION_OPERATOR: REF_UNION_OPERATOR_Node;
-REF_RANGE_OPERATOR: REF_RANGE_OPERATOR_Node;
-TOKEN_16: TOKEN_16_Node;
-TOKEN_17: TOKEN_17_Node;
-FUNCTION: FUNCTION_Node;
-TABLE_NAME: TABLE_NAME_Node;
-TABLE_ITEM_SPECIFIER: TABLE_ITEM_SPECIFIER_Node;
-TOKEN_18: TOKEN_18_Node;
-TOKEN_19: TOKEN_19_Node;
-TABLE_AT: TABLE_AT_Node;
-TABLE_COLUMN_SPECIFIER: TABLE_COLUMN_SPECIFIER_Node;
-ARRAY_SEPARATOR: ARRAY_SEPARATOR_Node;
-ARGUMENT_SEPARATOR: ARGUMENT_SEPARATOR_Node;
-SPECIFIER_SEPARATOR: SPECIFIER_SEPARATOR_Node;
-};

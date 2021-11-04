@@ -33,7 +33,7 @@ function getNumberFromSubscript(node: VBObject | VBInteger) {
 }
 
 registerEvaluators({
-  async evaluate_subscripts(node, context) {
+  async evaluateSubscripts(node, context) {
     let ret: Subscript[] = [];
     const { children } = node;
     for (const c of children) {
@@ -43,7 +43,7 @@ registerEvaluators({
     }
     return ret;
   },
-  async evaluate_variableListStmt(
+  async evaluateVariableListStmt(
     node: VariableListStmt_Node,
     context: Context,
   ) {
@@ -57,7 +57,7 @@ registerEvaluators({
     return ret;
   },
 
-  async evaluate_variableSubStmt(node, context): Promise<VBVariableInfo> {
+  async evaluateVariableSubStmt(node, context): Promise<VBVariableInfo> {
     const { children } = node;
     const name = collectAmbiguousIdentifier(node, true)!;
     let asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE();
@@ -127,7 +127,7 @@ registerEvaluators({
       name,
     };
   },
-  async evaluate_subscript_(node, context): Promise<Subscript> {
+  async evaluateSubscript_(node, context): Promise<Subscript> {
     let lower = 0;
     let upper = 0;
     const subs: ValueStmt_Node[] = [];
@@ -150,7 +150,7 @@ registerEvaluators({
       one,
     };
   },
-  async evaluate_variableStmt(node, context) {
+  async evaluateVariableStmt(node, context) {
     const { children } = node;
     const first = children[0];
     const variableListStmt = children[children.length - 1];
@@ -183,7 +183,7 @@ registerEvaluators({
     }
   },
 
-  async evaluate_redimSubStmt(node, context): Promise<RedimRet> {
+  async evaluateRedimSubStmt(node, context): Promise<RedimRet> {
     const { children } = node;
     const obj = await evaluate(children[0], context);
     const subscripts = await evaluate(children[2], context);
@@ -199,7 +199,7 @@ registerEvaluators({
     };
   },
 
-  async evaluate_redimStmt(node, context) {
+  async evaluateRedimStmt(node, context) {
     const { children } = node;
     const preserve = children[1].type === 'token';
     for (const c of children) {
@@ -230,7 +230,7 @@ registerEvaluators({
     }
   },
 
-  async evaluate_eraseStmt({ children }, context) {
+  async evaluateEraseStmt({ children }, context) {
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
         const obj: VBObject = await evaluate(c, context);

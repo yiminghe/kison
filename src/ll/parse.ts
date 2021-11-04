@@ -24,7 +24,6 @@ var symbolStack = data.symbolStack as SymbolItem[];
 const {
   AstSymbolNode,
   AstTokenNode,
-  isAddAstNodeFlag,
   defaultTransformAstNode,
   getAstRootNode,
   peekStack,

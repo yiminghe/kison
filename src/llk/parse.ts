@@ -17,7 +17,6 @@ const {
   normalizeSymbol,
   isOptionalSymbol,
   defaultTransformAstNode,
-  isAddAstNodeFlag,
   getAstRootNode,
   peekStack,
   pushRecoveryTokens,

@@ -337,11 +337,11 @@ class SymbolState {
   getAlternativeStartStates() {
     this.getTransitions();
     let startStates: AllState[] = [];
-    const productions = parser.productions;
+    const { productions, getProductionPredict } = parser;
     for (const s of this.startStates) {
       const ruleIndex = s.ruleIndex;
       const production = productions[ruleIndex];
-      const predict = parser.getProductionPredict(production);
+      const predict = getProductionPredict(production);
       if (!predict || predict.call(parser) !== false) {
         startStates.push(s);
       }

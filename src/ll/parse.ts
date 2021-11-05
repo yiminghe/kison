@@ -65,6 +65,7 @@ export default function parse(input: string, options: any) {
   }
 
   var {
+    getProductionIsWrap,
     getProductionSymbol,
     getProductionRhs,
     getProductionLabel,
@@ -137,11 +138,14 @@ export default function parse(input: string, options: any) {
           const newRhs = getLabeledRhsForAddNodeFlag(production);
           symbolStack.push.apply(symbolStack, newRhs.reverse());
         } else {
+          const label = getOriginalSymbol(getProductionLabel(production));
+          const isWrap = getProductionIsWrap(production);
           const newAst = new AstSymbolNode({
             id: ++globalSymbolNodeId,
             internalRuleIndex: next,
             symbol: getOriginalSymbol(topSymbol),
-            label: getOriginalSymbol(getProductionLabel(production)),
+            label,
+            isWrap,
             children: [],
           });
           peekStack(astStack).addChild(newAst);

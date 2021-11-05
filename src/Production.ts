@@ -12,6 +12,7 @@ interface Params {
   skipAstNode?: boolean;
   action?: Function;
   predict?: Function;
+  isWrap?: boolean;
 }
 
 class Production {
@@ -28,6 +29,7 @@ class Production {
   precedence?: string;
   skipAstNode?: boolean;
   label?: string;
+  isWrap?: boolean;
 
   constructor(cfg: Params) {
     Object.assign(this, cfg);

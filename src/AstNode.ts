@@ -20,6 +20,7 @@ interface SymbolParams extends Params {
   children?: AstNode[];
   symbol?: string;
   label?: string;
+  isWrap?: boolean;
   internalRuleIndex?: number;
 }
 
@@ -76,6 +77,8 @@ export class AstSymbolNode extends BaseAstNode {
   children: AstNode[] = [];
   ruleIndex: number = -1;
   internalRuleIndex: number = -1;
+  isWrap?: boolean;
+
   constructor(params: SymbolParams) {
     super();
     Object.assign(this, params);
@@ -97,8 +100,17 @@ export class AstSymbolNode extends BaseAstNode {
     this.setChildren(this.children);
   }
 
-  refreshChildren() {
+  done(): boolean {
+    if (this.isWrap && this.children.length === 1) {
+      const c = this.children[0];
+      if (c.type === 'symbol' && c.symbol === this.symbol) {
+        this.label = c.label;
+        this.setChildren(c.children);
+        return false;
+      }
+    }
     this.setChildren(this.children);
+    return true;
   }
 
   setChildren(cs: AstNode[]) {

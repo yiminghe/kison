@@ -105,18 +105,18 @@ export interface LexResult<T = any> {
 
 export type AstNodeTypeMap = {};
 
-type All_Vistors = Exclude<
+export type All_Names = Exclude<
   LiteralToken | AstSymbolNode['symbol'] | AstSymbolNode['label'],
   ''
 >;
 
 export type AstVisitor<T extends string, C, R = any> = (
-  node: AstNodeTypeMap[T extends All_Vistors ? T : 'ast'],
+  node: AstNodeTypeMap[T extends All_Names ? T : 'ast'],
   context: C,
 ) => R;
 
 export type AstVisitors<T extends string, C, R = any> = {
-  [e in All_Vistors | '' as e extends ''
+  [e in All_Names | '' as e extends ''
   ? T
   : `${T}${Capitalize<e>}`]?: AstVisitor<e, C, R>;
 };

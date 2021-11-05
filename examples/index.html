@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<link rel="icon" type="image/jpg" href="../favicon.ico"/>
+<link rel="icon" type="image/jpg" href="./favicon.ico"/>
 
 <h1>examples</h1>
 
@@ -9,7 +9,11 @@
 </p>
 
 <p>
-    <a href="./cal-ll/">calculator using LL/LL(K)</a>
+    <a href="./cal-ll/action/">calculator using LL/LL(K) and action</a>
+</p>
+
+<p>
+    <a href="./cal-ll/user-data/">calculator using LL/LL(K) and visitor</a>
 </p>
 
 <p>
@@ -24,6 +28,15 @@
     <a href="./vba/">vba engine</a>
 </p>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+<script>
+    setTimeout(() => {
+        document.getElementById('footer').innerHTML = `
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
-<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+title="Fork me on GitHub">Fork me on GitHub</a>
+`;
+    }, 1000);
+</script>
+<div id="footer"></div>

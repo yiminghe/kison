@@ -22,6 +22,10 @@ program
   .option('-g, --grammar <grammar>', 'Set kison grammar file')
   .option('-o, --output [file]', 'output file path')
   .option('--library [library]', 'library name')
+  .option(
+    '--astNodeUserDataTypes [astNodeUserDataTypes]',
+    'astNodeUserDataTypes file',
+  )
   .option('--bnf [bnf]', 'bnf file')
   .option('--declaration [declaration]', 'declaration')
   .option('--declarationDir [declarationDir]', 'declarationDir')
@@ -168,7 +172,15 @@ function genParser() {
       path.join(__dirname, './parser.d.ts'),
       'utf-8',
     );
-    const dts = instance.genDTs(baseDts);
+    let astNodeUserDataTypesPath = program.astNodeUserDataTypes;
+    let astNodeUserDataTypes;
+    if (astNodeUserDataTypesPath) {
+      astNodeUserDataTypesPath = path.resolve(
+        astNodeUserDataTypesPath + '.d.ts',
+      );
+      astNodeUserDataTypes = fs.readFileSync(astNodeUserDataTypesPath, 'utf-8');
+    }
+    const dts = instance.genDTs(baseDts, astNodeUserDataTypes);
     if (dts) {
       fs.writeFileSync(file, dts);
     }

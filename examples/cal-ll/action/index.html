@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<link rel="icon" type="image/jpg" href="../favicon.ico" />
+<link rel="icon" type="image/jpg" href="../../favicon.ico" />
+<h1>calculator using LL/LL(K) and action</h1>
 <div>
     cal ll grammar <a href="./cal-grammar.js">definition</a> and <a href="./cal.xhtml">diagram</a>
 </div>
@@ -106,9 +107,15 @@
         parseResult('1+2*');
     })();
 </script>
-
+<script>
+    setTimeout(() => {
+        document.getElementById('footer').innerHTML = `
 <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
 <a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
-    title="Fork me on GitHub">Fork me on GitHub</a>
+title="Fork me on GitHub">Fork me on GitHub</a>
+`;
+    }, 1000);
+</script>
+<div id="footer"></div>

@@ -8,7 +8,7 @@ cd $SCRIPT_DIR/
 
 npx kison --no-compressSymbol --no-compressLexerState --declaration --bnf=./llk.bnf -m llk -g ./llk-grammar.js
 
-npx kison --declaration -m ll -g ./ll-grammar.js
+npx kison --no-compressSymbol --no-compressLexerState --declaration -m ll -g ./ll-grammar.js
 
 npx kison -g ./lr-grammar.js
 

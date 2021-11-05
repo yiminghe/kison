@@ -3,11 +3,11 @@
 exports[`llk add error recovery works 1`] = `
 "{
   'start': 0,
-  'end': 0,
-  'firstLine': 0,
-  'lastLine': 0,
-  'firstColumn': 0,
-  'lastColumn': 0,
+  'end': 2,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 3,
   'symbol': 'exp',
   'type': 'symbol',
   'children': [
@@ -33,9 +33,10 @@ exports[`llk add error recovery works 1`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
-      'id': 2
+      'ruleIndex': 4,
+      'internalRuleIndex': 7,
+      'id': 3,
+      'isWrap': true
     },
     {
       'start': 1,
@@ -73,12 +74,14 @@ exports[`llk add error recovery works 1`] = `
       ],
       'ruleIndex': 4,
       'internalRuleIndex': 7,
-      'id': 13
+      'id': 7,
+      'isWrap': true
     }
   ],
   'ruleIndex': 2,
   'internalRuleIndex': 4,
-  'id': 14
+  'id': 11,
+  'isWrap': true
 }"
 `;
 
@@ -153,21 +156,21 @@ exports[`llk add error recovery works: undefined 1`] = `undefined`;
 exports[`llk ast works 1`] = `
 "{
   'start': 0,
-  'end': 0,
-  'firstLine': 0,
-  'lastLine': 0,
-  'firstColumn': 0,
-  'lastColumn': 0,
+  'end': 5,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 6,
   'symbol': 'exp',
   'type': 'symbol',
   'children': [
     {
       'start': 0,
-      'end': 0,
-      'firstLine': 0,
-      'lastLine': 0,
-      'firstColumn': 0,
-      'lastColumn': 0,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 4,
       'symbol': 'exp',
       'type': 'symbol',
       'children': [
@@ -193,9 +196,10 @@ exports[`llk ast works 1`] = `
               'text': '1'
             }
           ],
-          'ruleIndex': 2,
-          'internalRuleIndex': 4,
-          'id': 2
+          'ruleIndex': 4,
+          'internalRuleIndex': 7,
+          'id': 3,
+          'isWrap': true
         },
         {
           'start': 1,
@@ -232,12 +236,14 @@ exports[`llk ast works 1`] = `
           ],
           'ruleIndex': 4,
           'internalRuleIndex': 7,
-          'id': 13
+          'id': 7,
+          'isWrap': true
         }
       ],
       'ruleIndex': 2,
       'internalRuleIndex': 4,
-      'id': 8
+      'id': 2,
+      'isWrap': true
     },
     {
       'start': 3,
@@ -274,23 +280,25 @@ exports[`llk ast works 1`] = `
       ],
       'ruleIndex': 4,
       'internalRuleIndex': 7,
-      'id': 19
+      'id': 12,
+      'isWrap': true
     }
   ],
   'ruleIndex': 2,
   'internalRuleIndex': 4,
-  'id': 20
+  'id': 16,
+  'isWrap': true
 }"
 `;
 
 exports[`llk ast works 2`] = `
 "{
   'start': 0,
-  'end': 0,
-  'firstLine': 0,
-  'lastLine': 0,
-  'firstColumn': 0,
-  'lastColumn': 0,
+  'end': 5,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 6,
   'symbol': 'exp',
   'type': 'symbol',
   'children': [
@@ -316,9 +324,10 @@ exports[`llk ast works 2`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
-      'id': 2
+      'ruleIndex': 4,
+      'internalRuleIndex': 7,
+      'id': 3,
+      'isWrap': true
     },
     {
       'start': 1,
@@ -332,11 +341,11 @@ exports[`llk ast works 2`] = `
       'text': '+'
     },
     {
-      'start': 0,
+      'start': 2,
       'end': 5,
-      'firstLine': 0,
+      'firstLine': 1,
       'lastLine': 1,
-      'firstColumn': 0,
+      'firstColumn': 3,
       'lastColumn': 6,
       'symbol': 'exp',
       'type': 'symbol',
@@ -363,9 +372,10 @@ exports[`llk ast works 2`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 7,
-          'id': 9
+          'ruleIndex': 7,
+          'internalRuleIndex': 9,
+          'id': 8,
+          'isWrap': true
         },
         {
           'start': 3,
@@ -402,38 +412,41 @@ exports[`llk ast works 2`] = `
           ],
           'ruleIndex': 7,
           'internalRuleIndex': 9,
-          'id': 14
+          'id': 11,
+          'isWrap': true
         }
       ],
       'ruleIndex': 4,
       'internalRuleIndex': 7,
-      'id': 17
+      'id': 14,
+      'isWrap': true
     }
   ],
   'ruleIndex': 2,
   'internalRuleIndex': 4,
-  'id': 18
+  'id': 15,
+  'isWrap': true
 }"
 `;
 
 exports[`llk ast works 3`] = `
 "{
   'start': 0,
-  'end': 0,
-  'firstLine': 0,
-  'lastLine': 0,
-  'firstColumn': 0,
-  'lastColumn': 0,
+  'end': 11,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 12,
   'symbol': 'exp',
   'type': 'symbol',
   'children': [
     {
       'start': 0,
-      'end': 0,
-      'firstLine': 0,
-      'lastLine': 0,
-      'firstColumn': 0,
-      'lastColumn': 0,
+      'end': 5,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 6,
       'symbol': 'exp',
       'type': 'symbol',
       'children': [
@@ -459,9 +472,10 @@ exports[`llk ast works 3`] = `
               'text': '1'
             }
           ],
-          'ruleIndex': 2,
-          'internalRuleIndex': 4,
-          'id': 2
+          'ruleIndex': 4,
+          'internalRuleIndex': 7,
+          'id': 3,
+          'isWrap': true
         },
         {
           'start': 1,
@@ -475,11 +489,11 @@ exports[`llk ast works 3`] = `
           'text': '+'
         },
         {
-          'start': 0,
+          'start': 2,
           'end': 5,
-          'firstLine': 0,
+          'firstLine': 1,
           'lastLine': 1,
-          'firstColumn': 0,
+          'firstColumn': 3,
           'lastColumn': 6,
           'symbol': 'exp',
           'type': 'symbol',
@@ -506,9 +520,10 @@ exports[`llk ast works 3`] = `
                   'text': '2'
                 }
               ],
-              'ruleIndex': 4,
-              'internalRuleIndex': 7,
-              'id': 9
+              'ruleIndex': 7,
+              'internalRuleIndex': 9,
+              'id': 8,
+              'isWrap': true
             },
             {
               'start': 3,
@@ -545,17 +560,20 @@ exports[`llk ast works 3`] = `
               ],
               'ruleIndex': 7,
               'internalRuleIndex': 9,
-              'id': 14
+              'id': 11,
+              'isWrap': true
             }
           ],
           'ruleIndex': 4,
           'internalRuleIndex': 7,
-          'id': 17
+          'id': 14,
+          'isWrap': true
         }
       ],
       'ruleIndex': 2,
       'internalRuleIndex': 4,
-      'id': 8
+      'id': 2,
+      'isWrap': true
     },
     {
       'start': 5,
@@ -602,7 +620,8 @@ exports[`llk ast works 3`] = `
           ],
           'ruleIndex': 6,
           'internalRuleIndex': 11,
-          'id': 21
+          'id': 18,
+          'isWrap': true
         },
         {
           'start': 7,
@@ -649,7 +668,8 @@ exports[`llk ast works 3`] = `
               ],
               'ruleIndex': 6,
               'internalRuleIndex': 11,
-              'id': 24
+              'id': 21,
+              'isWrap': true
             },
             {
               'start': 9,
@@ -686,22 +706,25 @@ exports[`llk ast works 3`] = `
               ],
               'ruleIndex': 7,
               'internalRuleIndex': 9,
-              'id': 26
+              'id': 23,
+              'isWrap': true
             }
           ],
           'ruleIndex': 7,
           'internalRuleIndex': 10,
-          'id': 23
+          'id': 20
         }
       ],
       'ruleIndex': 4,
       'internalRuleIndex': 7,
-      'id': 29
+      'id': 16,
+      'isWrap': true
     }
   ],
   'ruleIndex': 2,
   'internalRuleIndex': 4,
-  'id': 30
+  'id': 26,
+  'isWrap': true
 }"
 `;
 
@@ -750,9 +773,9 @@ exports[`llk error detection works 1`] = `
 "{
   'start': 0,
   'end': 0,
-  'firstLine': 0,
+  'firstLine': 1,
   'lastLine': 0,
-  'firstColumn': 0,
+  'firstColumn': 1,
   'lastColumn': 0,
   'symbol': 'exp',
   'type': 'symbol',
@@ -779,9 +802,10 @@ exports[`llk error detection works 1`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
-      'id': 2
+      'ruleIndex': 4,
+      'internalRuleIndex': 7,
+      'id': 3,
+      'isWrap': true
     },
     {
       'start': 1,
@@ -795,11 +819,11 @@ exports[`llk error detection works 1`] = `
       'text': '+'
     },
     {
-      'start': 0,
+      'start': 2,
       'end': 4,
-      'firstLine': 0,
+      'firstLine': 1,
       'lastLine': 1,
-      'firstColumn': 0,
+      'firstColumn': 3,
       'lastColumn': 5,
       'symbol': 'exp',
       'type': 'symbol',
@@ -826,9 +850,10 @@ exports[`llk error detection works 1`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 7,
-          'id': 9
+          'ruleIndex': 7,
+          'internalRuleIndex': 9,
+          'id': 8,
+          'isWrap': true
         },
         {
           'start': 3,
@@ -877,12 +902,14 @@ exports[`llk error detection works 1`] = `
       ],
       'ruleIndex': 4,
       'internalRuleIndex': 7,
-      'id': 13
+      'id': 7,
+      'isWrap': true
     }
   ],
   'ruleIndex': 2,
   'internalRuleIndex': 4,
-  'id': 8
+  'id': 2,
+  'isWrap': true
 }"
 `;
 

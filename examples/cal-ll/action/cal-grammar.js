@@ -1,4 +1,4 @@
-const lexerConfig = require('../common/cal-lexer');
+const lexerConfig = require('../../common/cal-lexer');
 
 function s() {
   this.astProcessor?.pushStack(this.lexer.getLastToken().text);

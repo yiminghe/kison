@@ -1,0 +1,4 @@
+exp ::= exp '+' exp
+exp ::= exp '*' exp
+exp ::= '-' exp
+exp ::= 'NUMBER'

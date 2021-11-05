@@ -40,14 +40,17 @@ module.exports = () => ({
     {
       symbol: 'exp',
       rhs: ['-', 'exp'],
+      label: 'prefixExp',
       precedence: 'UMINUS',
     },
     {
       symbol: 'exp',
+      label: 'singleExp',
       rhs: ['NUMBER'],
     },
     {
       symbol: 'exp',
+      label: 'groupExp',
       rhs: ['(', 'exp', ')'],
     },
   ],

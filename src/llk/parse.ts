@@ -67,6 +67,7 @@ function parse(input: string, options: any = {}) {
   let error: ParseError | undefined;
 
   var {
+    getProductionIsWrap,
     productions,
     getProductionSymbol,
     getProductionRhs,
@@ -226,11 +227,14 @@ function parse(input: string, options: any = {}) {
           ]);
           symbolStack.push.apply(symbolStack, newRhs.reverse());
         } else {
+          const label = getOriginalSymbol(getProductionLabel(production));
+          const isWrap = getProductionIsWrap(production);
           const newAst = new AstSymbolNode({
             internalRuleIndex: ruleIndex,
             id: ++globalSymbolNodeId,
             symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
-            label: getOriginalSymbol(getProductionLabel(production)),
+            label,
+            isWrap,
             children: [],
           });
           peekStack(astStack).addChild(newAst);

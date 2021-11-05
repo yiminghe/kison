@@ -10,6 +10,15 @@
     test(cal);
 </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+<script>
+    setTimeout(() => {
+        document.getElementById('footer').innerHTML = `
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
 
-<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+title="Fork me on GitHub">Fork me on GitHub</a>
+`;
+    }, 1000);
+</script>
+<div id="footer"></div>

@@ -54,11 +54,15 @@ export interface ProductionRule {
   predict?: Function;
   precedence?: string;
   action?: Function;
+  label?: string;
+  rhs: Rhs;
+
+  //begin internal: not public api
   flat?: boolean;
   ruleIndex: number;
-  label?: string;
   skipAstNode?: boolean;
-  rhs: Rhs;
+  isWrap?: boolean;
+  // end internal
 }
 
 interface Params {
@@ -125,6 +129,7 @@ class Grammar {
       action: 2,
       label: 3,
       predict: 4,
+      isWrap: 5,
     };
   }
 
@@ -156,7 +161,7 @@ class Grammar {
   }
 
   // parser.d.ts
-  genDTs(base: string) {
+  genDTs(base: string, astNodeUserDataTypes: string) {
     const fake: FakeThis = {
       productions: this.productions.concat(),
     };
@@ -174,6 +179,31 @@ class Grammar {
     const rules = [...this.lexer.rules];
     const tokenAstNodeClassNames = new Map<string, string>();
 
+    function argumentUserDataType(names: string[], cls: string) {
+      if (astNodeUserDataTypes) {
+        return `type ${cls} = ${cls}_ & {userData:AstNodeUserDataType<${JSON.stringify(
+          names,
+        )}>};`;
+      } else {
+        return `type ${cls} = ${cls}_;`;
+      }
+    }
+
+    if (astNodeUserDataTypes) {
+      code.push(astNodeUserDataTypes);
+      code.push(
+        `
+      type SingleAstNodeUserDataType<T extends string> =  T extends keyof AstNodeUserDataTypes?AstNodeUserDataTypes[T]:{};
+
+      type ShiftArray<A extends any[]> = A extends [any,...infer U]?U:[];
+
+      type AstNodeUserDataType<T extends string[], R={}> =  
+      T['length'] extends 0 ?R:AstNodeUserDataType<ShiftArray<T>,R & SingleAstNodeUserDataType<T[0]>>
+      ;
+      `.trim(),
+      );
+    }
+
     for (const token of ['$EOF', '$UNKNOWN']) {
       rules.push({
         token,
@@ -182,11 +212,12 @@ class Grammar {
       const cls = getAstNodeClassName(token);
       tokenAstNodeClassNames.set(token, cls);
       code.push(
-        `export interface ${cls} extends BaseTokenNode {
+        `interface ${cls}_ extends BaseTokenNode {
       token:${JSON.stringify(token)};
       parent:AstSymbolNode;
     }`,
       );
+      code.push('export ' + argumentUserDataType([token, 'token', 'ast'], cls));
     }
 
     for (const r of rules) {
@@ -334,10 +365,11 @@ class Grammar {
           !tokenAstNodeClassNames.has(rhName)
         ) {
           let parents = Array.from(parentMap.get(rhName) || []);
-          code.push(`export interface ${cls} extends BaseTokenNode {
+          code.push(`interface ${cls}_ extends BaseTokenNode {
             token:${JSON.stringify(r)};
             ${parents && parents.length ? `parent:${parents.join(' | ')};` : ''}
           }`);
+          code.push('export ' + argumentUserDataType([r, 'token', 'ast'], cls));
           tokenAstNodeClassNames.set(rhName, cls);
         }
         if (isOneOrMoreSymbol(or)) {
@@ -357,12 +389,17 @@ class Grammar {
           code.push(`type ${className}  = ${childrenType};`);
         } else {
           let parents = Array.from(parentMap.get(p.symbol) || []);
-          code.push(`interface ${className} extends BaseSymbolNode {
+          code.push(`interface ${className}_ extends BaseSymbolNode {
         symbol:${JSON.stringify(p.symbol)};
         ${p.label ? `label:${JSON.stringify(p.label)};` : ''}
         children:${childrenType};
         ${parents && parents.length ? `parent:${parents.join(' | ')};` : ''}
       }`);
+          const names = [p.symbol, 'symbol', 'ast'];
+          if (p.label) {
+            names.unshift(p.label);
+          }
+          code.push(argumentUserDataType(names, className));
         }
       }
     }
@@ -844,14 +881,15 @@ class Grammar {
                 continue;
               }
               slashSymbolSet.add(p2);
-              const rhs = isFlat
-                ? [...p2.rhs, slashSymbol]
-                : [...p2.rhs, productionAddAstNodeFlag, slashSymbol];
+              const rhs = [...p2.rhs, slashSymbol];
+              // do not add extra node ??!!
+              // const rhs = isFlat
+              //   ? [...p2.rhs, slashSymbol]
+              //   : [...p2.rhs, productionAddAstNodeFlag, slashSymbol];
               const newProd = new Production({
-                // do not keep label
-                symbol: p.symbol,
-                ruleIndex: p.ruleIndex,
-                skipAstNode: p.skipAstNode,
+                // // do not keep label
+                ...p2,
+                //label:'',
                 rhs,
               });
               newProductions2.push(newProd);
@@ -971,9 +1009,10 @@ class Grammar {
         if (already.get(expSymbol) === nextSymbol) {
         } else {
           newRelevants.push({
-            // do not keep label
             symbol: expSymbol,
             ruleIndex: p.ruleIndex,
+            // will collapse when node is done(all children computed)
+            isWrap: true,
             rhs: [nextSymbol],
           });
           already.set(expSymbol, nextSymbol);
@@ -1355,6 +1394,9 @@ class Grammar {
   getProductionPredict(p: ProductionRule) {
     return this.getProductionItemByType(p, 'predict');
   }
+  getProductionIsWrap(p: ProductionRule) {
+    return this.getProductionItemByType(p, 'isWrap');
+  }
   getProductionLabel(p: ProductionRule) {
     return this.getProductionItemByType(p, 'label');
   }
@@ -1383,7 +1425,7 @@ class Grammar {
     var productions = [];
     const { productionIndexMap } = this;
     for (const p of this.productionInstances) {
-      var { action, label, predict } = p;
+      var { action, label, predict, isWrap } = p;
       var ret = [];
       ret[productionIndexMap.symbol] = this.mapSymbol(p.symbol);
       ret[productionIndexMap.rhs] = this.mapSymbols(p.rhs);
@@ -1395,6 +1437,9 @@ class Grammar {
       }
       if (predict) {
         ret[productionIndexMap.predict] = predict;
+      }
+      if (isWrap) {
+        ret[productionIndexMap.isWrap] = isWrap;
       }
       productions.push(ret);
     }
@@ -1419,6 +1464,7 @@ class Grammar {
           getProductionRhs: this.getProductionRhs,
           getProductionAction: this.getProductionAction,
           getProductionPredict: this.getProductionPredict,
+          getProductionIsWrap: this.getProductionIsWrap,
           getProductionLabel: this.getProductionLabel,
           isCompress: 1,
         }) +
@@ -1430,6 +1476,8 @@ class Grammar {
       'parser.getProductionRhs=parser.getProductionRhs.bind(parser);',
       'parser.getProductionAction=parser.getProductionAction.bind(parser);',
       'parser.getProductionLabel=parser.getProductionLabel.bind(parser);',
+      'parser.getProductionIsWrap=parser.getProductionIsWrap.bind(parser);',
+      'parser.getProductionPredict=parser.getProductionPredict.bind(parser);',
     );
 
     code.push('parser.lexer = lexer;');

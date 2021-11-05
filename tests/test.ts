@@ -16,6 +16,7 @@ const exp = '1+3+4 \n 1+3*4 \n';
       console.log(ret.error.errorMessage);
     } else {
       const ast = ret.ast;
+      debugger;
       console.log(JSON.stringify(ast, null, 2));
     }
   }

@@ -37,6 +37,7 @@ export default {
     getProductionLabel: (p: ProductionRule) => string;
     getProductionAction: (p: ProductionRule) => Function | undefined;
     getProductionPredict: (p: ProductionRule) => Function | undefined;
+    getProductionIsWrap: (p: ProductionRule) => boolean | undefined;
     productions: ProductionRule[];
   },
   ...gened,

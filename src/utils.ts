@@ -183,19 +183,9 @@ const globalUtils = {
   ) {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
       let ast = astStack.pop()!;
-      if (isAddAstNodeFlag(topSymbol)) {
-        const stackTop = peekStack(astStack);
-        const wrap = new AstSymbolNode({
-          id: ++globalSymbolNodeId,
-          symbol: ast.symbol,
-          children: [ast],
-          internalRuleIndex: ast.internalRuleIndex,
-        });
-        stackTop.children.pop();
-        stackTop.addChild(wrap);
-        astStack.push(wrap);
-      } else {
-        ast.refreshChildren();
+      const needAction = ast.done();
+
+      if (needAction) {
         const ruleIndex = ast.internalRuleIndex;
         const production = parser.productions[ruleIndex];
         const action = parser.getProductionAction(production);
@@ -203,6 +193,21 @@ const globalUtils = {
           action.call(parser);
         }
       }
+
+      if (isAddAstNodeFlag(topSymbol)) {
+        const stackTop = peekStack(astStack);
+        const wrap = new AstSymbolNode({
+          id: ++globalSymbolNodeId,
+          isWrap: true,
+          symbol: ast.symbol,
+          children: [ast],
+          internalRuleIndex: ast.internalRuleIndex,
+        });
+        stackTop.children.pop();
+        stackTop.addChild(wrap);
+        astStack.push(wrap);
+      }
+
       popSymbolStack();
       topSymbol = peekSymbolStack();
       if (!topSymbol) {
@@ -251,6 +256,7 @@ const globalUtils = {
 
   getOriginalSymbol(s: string) {
     let uncompressed = lexer.mapReverseSymbol(s);
+    // return uncompressed;
     return parser.prioritySymbolMap[uncompressed] || uncompressed;
   },
 

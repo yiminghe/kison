@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<link rel="icon" type="image/jpg" href="../../favicon.ico" />
+<script src="../../common/system.js" crossorigin="anonymous"></script>
+<script>
+    (function () {
+        const endsWithFileExtension = /\/?\.[a-zA-Z]{2}$/;
+        const originalResolve = System.constructor.prototype.resolve;
+        System.constructor.prototype.resolve = function () {
+            // apply original resolve to make sure importmaps are resolved first
+            const url = originalResolve.apply(this, arguments);
+            // append .js file extension if url is missing a file extension
+            return endsWithFileExtension.test(url) ? url : (url.match(/\/cal(LL|LLK)$/) ? url + '.js' : url + ".ts");
+        };
+    })();
+</script>
+<script src="../../common/systemjs-babel.js" crossorigin="anonymous"></script>
+<h1>calculator using LL/LL(K) and visitor</h1>
+<div>
+    cal ll grammar <a href="./cal-grammar.js">definition</a> and <a href="./cal.xhtml">diagram</a>
+</div>
+<h2>open devtools console</h2>
+<script>
+    System.import('./app.ts');
+</script>
+
+<script>
+    setTimeout(() => {
+        document.getElementById('footer').innerHTML = `
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+
+<a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+title="Fork me on GitHub">Fork me on GitHub</a>
+`;
+    }, 1000);
+</script>
+<div id="footer"></div>

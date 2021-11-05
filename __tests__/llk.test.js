@@ -1,6 +1,6 @@
 import LLKGrammar from '../src/llk/LLKGrammar';
-import AstProcessor from '../examples/cal-ll/AstProcessor';
-import calGrammar from '../examples/cal-ll/cal-grammar';
+import AstProcessor from '../examples/cal-ll/action/AstProcessor';
+import calGrammar from '../examples/cal-ll/action/cal-grammar';
 import { prettyJson, run } from './utils';
 
 describe('llk', () => {

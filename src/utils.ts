@@ -200,6 +200,7 @@ const globalUtils = {
           id: ++globalSymbolNodeId,
           isWrap: true,
           symbol: ast.symbol,
+          label: ast.label,
           children: [ast],
           internalRuleIndex: ast.internalRuleIndex,
         });

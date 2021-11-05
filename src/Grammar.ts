@@ -812,7 +812,7 @@ class Grammar {
       let newProductions2: Production[] = [];
       let emptySlashSet = new Set<string>();
       const deletedMap = new Set();
-      const slashArgumentMap = new Map();
+      const slashArgumentMap = new Map<string, Set<Production>>();
       const l = productionInstances.length;
       for (let i = 0; i < l; i++) {
         const p = productionInstances[i];
@@ -835,11 +835,15 @@ class Grammar {
           for (let j = 0; j < l; j++) {
             const p2 = productionInstances[j];
             if (p2.symbol === p.symbol && p2.symbol !== p2.rhs[0]) {
-              if (slashArgumentMap.get(slashSymbol) === p2) {
+              let slashSymbolSet = slashArgumentMap.get(slashSymbol);
+              if (!slashSymbolSet) {
+                slashSymbolSet = new Set();
+                slashArgumentMap.set(slashSymbol, slashSymbolSet);
+              }
+              if (slashSymbolSet.has(p2)) {
                 continue;
               }
-
-              slashArgumentMap.set(slashSymbol, p2);
+              slashSymbolSet.add(p2);
               const rhs = isFlat
                 ? [...p2.rhs, slashSymbol]
                 : [...p2.rhs, productionAddAstNodeFlag, slashSymbol];

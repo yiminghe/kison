@@ -459,9 +459,9 @@ describe('ll', () => {
                     'text': '1'
                   }
                 ],
-                'ruleIndex': 7,
-                'internalRuleIndex': 10,
-                'id': 3,
+                'ruleIndex': 4,
+                'internalRuleIndex': 6,
+                'id': 2,
                 'isWrap': true
               },
               {
@@ -499,13 +499,13 @@ describe('ll', () => {
                 ],
                 'ruleIndex': 7,
                 'internalRuleIndex': 10,
-                'id': 7,
+                'id': 13,
                 'isWrap': true
               }
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 2,
+            'id': 8,
             'isWrap': true
           },
           {
@@ -543,13 +543,13 @@ describe('ll', () => {
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 12,
+            'id': 19,
             'isWrap': true
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 16,
+        'id': 20,
         'isWrap': true
       }"
     `);
@@ -593,9 +593,9 @@ describe('ll', () => {
                 'text': '1'
               }
             ],
-            'ruleIndex': 7,
-            'internalRuleIndex': 10,
-            'id': 3,
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 2,
             'isWrap': true
           },
           {
@@ -641,8 +641,10 @@ describe('ll', () => {
                     'text': '2'
                   }
                 ],
-                'internalRuleIndex': 13,
-                'id': 8
+                'ruleIndex': 7,
+                'internalRuleIndex': 10,
+                'id': 9,
+                'isWrap': true
               },
               {
                 'start': 3,
@@ -678,18 +680,18 @@ describe('ll', () => {
                   }
                 ],
                 'internalRuleIndex': 13,
-                'id': 11
+                'id': 14
               }
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 14,
+            'id': 17,
             'isWrap': true
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 15,
+        'id': 18,
         'isWrap': true
       }"
     `);
@@ -743,9 +745,9 @@ describe('ll', () => {
                     'text': '1'
                   }
                 ],
-                'ruleIndex': 7,
-                'internalRuleIndex': 10,
-                'id': 3,
+                'ruleIndex': 4,
+                'internalRuleIndex': 6,
+                'id': 2,
                 'isWrap': true
               },
               {
@@ -791,8 +793,10 @@ describe('ll', () => {
                         'text': '2'
                       }
                     ],
-                    'internalRuleIndex': 13,
-                    'id': 8
+                    'ruleIndex': 7,
+                    'internalRuleIndex': 10,
+                    'id': 9,
+                    'isWrap': true
                   },
                   {
                     'start': 3,
@@ -828,18 +832,18 @@ describe('ll', () => {
                       }
                     ],
                     'internalRuleIndex': 13,
-                    'id': 11
+                    'id': 14
                   }
                 ],
                 'ruleIndex': 7,
                 'internalRuleIndex': 10,
-                'id': 14,
+                'id': 17,
                 'isWrap': true
               }
             ],
             'ruleIndex': 4,
             'internalRuleIndex': 6,
-            'id': 2,
+            'id': 8,
             'isWrap': true
           },
           {
@@ -886,7 +890,7 @@ describe('ll', () => {
                   }
                 ],
                 'internalRuleIndex': 14,
-                'id': 18,
+                'id': 21,
                 'isWrap': true
               },
               {
@@ -933,7 +937,7 @@ describe('ll', () => {
                       }
                     ],
                     'internalRuleIndex': 14,
-                    'id': 21,
+                    'id': 24,
                     'isWrap': true
                   },
                   {
@@ -970,22 +974,22 @@ describe('ll', () => {
                       }
                     ],
                     'internalRuleIndex': 13,
-                    'id': 23
+                    'id': 26
                   }
                 ],
                 'internalRuleIndex': 13,
-                'id': 20
+                'id': 23
               }
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 16,
+            'id': 29,
             'isWrap': true
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 26,
+        'id': 30,
         'isWrap': true
       }"
     `);
@@ -999,11 +1003,11 @@ describe('ll', () => {
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
         'start': 0,
-        'end': 0,
+        'end': 3,
         'firstLine': 1,
-        'lastLine': 0,
+        'lastLine': 1,
         'firstColumn': 1,
-        'lastColumn': 0,
+        'lastColumn': 4,
         'symbol': 'exp',
         'type': 'symbol',
         'children': [
@@ -1029,9 +1033,9 @@ describe('ll', () => {
                 'text': '1'
               }
             ],
-            'ruleIndex': 7,
-            'internalRuleIndex': 10,
-            'id': 3,
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 2,
             'isWrap': true
           },
           {
@@ -1077,8 +1081,10 @@ describe('ll', () => {
                     'text': '2'
                   }
                 ],
-                'internalRuleIndex': 13,
-                'id': 8
+                'ruleIndex': 7,
+                'internalRuleIndex': 10,
+                'id': 9,
+                'isWrap': true
               },
               {
                 'start': 3,
@@ -1127,13 +1133,13 @@ describe('ll', () => {
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 7,
+            'id': 13,
             'isWrap': true
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 2,
+        'id': 8,
         'isWrap': true
       }"
     `);
@@ -1324,9 +1330,9 @@ describe('ll', () => {
                 'text': '1'
               }
             ],
-            'ruleIndex': 7,
-            'internalRuleIndex': 10,
-            'id': 3,
+            'ruleIndex': 4,
+            'internalRuleIndex': 6,
+            'id': 2,
             'isWrap': true
           },
           {
@@ -1365,13 +1371,13 @@ describe('ll', () => {
             ],
             'ruleIndex': 7,
             'internalRuleIndex': 10,
-            'id': 7,
+            'id': 13,
             'isWrap': true
           }
         ],
         'ruleIndex': 4,
         'internalRuleIndex': 6,
-        'id': 11,
+        'id': 14,
         'isWrap': true
       }"
     `);

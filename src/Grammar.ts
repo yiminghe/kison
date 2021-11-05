@@ -881,11 +881,9 @@ class Grammar {
                 continue;
               }
               slashSymbolSet.add(p2);
-              const rhs = [...p2.rhs, slashSymbol];
-              // do not add extra node ??!!
-              // const rhs = isFlat
-              //   ? [...p2.rhs, slashSymbol]
-              //   : [...p2.rhs, productionAddAstNodeFlag, slashSymbol];
+              const rhs = isFlat
+                ? [...p2.rhs, slashSymbol]
+                : [...p2.rhs, productionAddAstNodeFlag, slashSymbol];
               const newProd = new Production({
                 // // do not keep label
                 ...p2,

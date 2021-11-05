@@ -162,8 +162,8 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       'id': 29
                                     }
                                   ],
-                                  'internalRuleIndex': 86,
-                                  'id': 27,
+                                  'internalRuleIndex': 83,
+                                  'id': 26,
                                   'isWrap': true
                                 },
                                 {
@@ -200,18 +200,18 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                                       ],
                                       'ruleIndex': 26,
                                       'internalRuleIndex': 10,
-                                      'id': 32
+                                      'id': 34
                                     }
                                   ],
                                   'internalRuleIndex': 86,
-                                  'id': 30,
+                                  'id': 35,
                                   'isWrap': true
                                 }
                               ],
                               'internalRuleIndex': 80,
-                              'id': 25,
-                              'label': 'intersectionReference',
-                              'isWrap': true
+                              'id': 37,
+                              'isWrap': true,
+                              'label': 'intersectionReference'
                             }
                           ],
                           'internalRuleIndex': 76,
@@ -221,9 +221,9 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
                       ],
                       'ruleIndex': 11,
                       'internalRuleIndex': 55,
-                      'id': 15,
-                      'label': 'clipExp',
-                      'isWrap': true
+                      'id': 43,
+                      'isWrap': true,
+                      'label': 'clipExp'
                     }
                   ],
                   'ruleIndex': 40,
@@ -254,9 +254,9 @@ exports[`excel-formula-parser array formula allow @ and # 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
-      'label': 'clipExp',
-      'isWrap': true
+      'id': 49,
+      'isWrap': true,
+      'label': 'clipExp'
     }
   ],
   'ruleIndex': 1,
@@ -521,13 +521,13 @@ exports[`excel-formula-parser structure reference works 1`] = `
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 23,
+                      'id': 36,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 14,
+                  'id': 42,
                   'isWrap': true
                 },
                 {
@@ -657,17 +657,17 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                               ],
                                               'ruleIndex': 50,
                                               'internalRuleIndex': 37,
-                                              'id': 52
+                                              'id': 61
                                             }
                                           ],
                                           'ruleIndex': 50,
                                           'internalRuleIndex': 42,
-                                          'id': 51
+                                          'id': 60
                                         }
                                       ],
                                       'ruleIndex': 50,
                                       'internalRuleIndex': 36,
-                                      'id': 50
+                                      'id': 59
                                     },
                                     {
                                       'start': 23,
@@ -683,27 +683,27 @@ exports[`excel-formula-parser structure reference works 1`] = `
                                   ],
                                   'ruleIndex': 45,
                                   'internalRuleIndex': 31,
-                                  'id': 49
+                                  'id': 58
                                 }
                               ],
                               'ruleIndex': 42,
                               'internalRuleIndex': 28,
-                              'id': 48
+                              'id': 57
                             }
                           ],
                           'ruleIndex': 31,
                           'internalRuleIndex': 12,
-                          'id': 47
+                          'id': 56
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 43,
+                      'id': 64,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 34,
+                  'id': 70,
                   'isWrap': true
                 }
               ],
@@ -730,7 +730,7 @@ exports[`excel-formula-parser structure reference works 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 76,
       'isWrap': true
     }
   ],
@@ -907,13 +907,13 @@ exports[`excel-formula-parser structure reference works for Reference operators 
             }
           ],
           'internalRuleIndex': 80,
-          'id': 12,
+          'id': 24,
           'isWrap': true
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 30,
       'isWrap': true
     }
   ],
@@ -1099,8 +1099,8 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'id': 16
                 }
               ],
-              'internalRuleIndex': 83,
-              'id': 13,
+              'internalRuleIndex': 80,
+              'id': 12,
               'isWrap': true
             },
             {
@@ -1220,17 +1220,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       ],
                                       'ruleIndex': 50,
                                       'internalRuleIndex': 37,
-                                      'id': 30
+                                      'id': 33
                                     }
                                   ],
                                   'ruleIndex': 50,
                                   'internalRuleIndex': 42,
-                                  'id': 29
+                                  'id': 32
                                 }
                               ],
                               'ruleIndex': 50,
                               'internalRuleIndex': 36,
-                              'id': 28
+                              'id': 31
                             },
                             {
                               'start': 51,
@@ -1246,33 +1246,33 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                           ],
                           'ruleIndex': 45,
                           'internalRuleIndex': 31,
-                          'id': 27
+                          'id': 30
                         }
                       ],
                       'ruleIndex': 42,
                       'internalRuleIndex': 28,
-                      'id': 26
+                      'id': 29
                     }
                   ],
                   'ruleIndex': 31,
                   'internalRuleIndex': 12,
-                  'id': 25
+                  'id': 28
                 }
               ],
               'internalRuleIndex': 83,
-              'id': 22,
+              'id': 35,
               'isWrap': true
             }
           ],
           'internalRuleIndex': 80,
-          'id': 31,
+          'id': 36,
           'isWrap': true,
           'label': 'unionReference'
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 42,
       'isWrap': true
     }
   ],
@@ -1458,8 +1458,8 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                   'id': 16
                 }
               ],
-              'internalRuleIndex': 86,
-              'id': 14,
+              'internalRuleIndex': 83,
+              'id': 13,
               'isWrap': true
             },
             {
@@ -1568,17 +1568,17 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                                       ],
                                       'ruleIndex': 50,
                                       'internalRuleIndex': 37,
-                                      'id': 29
+                                      'id': 31
                                     }
                                   ],
                                   'ruleIndex': 50,
                                   'internalRuleIndex': 42,
-                                  'id': 28
+                                  'id': 30
                                 }
                               ],
                               'ruleIndex': 50,
                               'internalRuleIndex': 36,
-                              'id': 27
+                              'id': 29
                             },
                             {
                               'start': 74,
@@ -1594,33 +1594,33 @@ exports[`excel-formula-parser structure reference works for Reference operators 
                           ],
                           'ruleIndex': 45,
                           'internalRuleIndex': 31,
-                          'id': 26
+                          'id': 28
                         }
                       ],
                       'ruleIndex': 42,
                       'internalRuleIndex': 28,
-                      'id': 25
+                      'id': 27
                     }
                   ],
                   'ruleIndex': 31,
                   'internalRuleIndex': 12,
-                  'id': 24
+                  'id': 26
                 }
               ],
               'internalRuleIndex': 86,
-              'id': 22,
+              'id': 32,
               'isWrap': true
             }
           ],
           'internalRuleIndex': 80,
-          'id': 12,
-          'label': 'intersectionReference',
-          'isWrap': true
+          'id': 34,
+          'isWrap': true,
+          'label': 'intersectionReference'
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 40,
       'isWrap': true
     }
   ],
@@ -1797,13 +1797,13 @@ exports[`excel-formula-parser structure reference works for space inside column 
             }
           ],
           'internalRuleIndex': 80,
-          'id': 12,
+          'id': 24,
           'isWrap': true
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 30,
       'isWrap': true
     }
   ],
@@ -1976,13 +1976,13 @@ exports[`excel-formula-parser structure reference works for thisRow 1`] = `
             }
           ],
           'internalRuleIndex': 80,
-          'id': 12,
+          'id': 23,
           'isWrap': true
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 29,
       'isWrap': true
     }
   ],
@@ -2155,13 +2155,13 @@ exports[`excel-formula-parser structure reference works for thisRow 2`] = `
             }
           ],
           'internalRuleIndex': 80,
-          'id': 12,
+          'id': 23,
           'isWrap': true
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 29,
       'isWrap': true
     }
   ],
@@ -2375,13 +2375,13 @@ exports[`excel-formula-parser structure reference works for thisRow 3`] = `
             }
           ],
           'internalRuleIndex': 80,
-          'id': 12,
+          'id': 25,
           'isWrap': true
         }
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 31,
       'isWrap': true
     }
   ],
@@ -2502,13 +2502,13 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 23,
+                      'id': 30,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 14,
+                  'id': 36,
                   'isWrap': true
                 }
               ],
@@ -2535,7 +2535,7 @@ exports[`excel-formula-parser works for 3d reference 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 42,
       'isWrap': true
     }
   ],
@@ -2656,13 +2656,13 @@ exports[`excel-formula-parser works for env 1`] = `
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 23,
+                      'id': 30,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 14,
+                  'id': 36,
                   'isWrap': true
                 },
                 {
@@ -2720,17 +2720,17 @@ exports[`excel-formula-parser works for env 1`] = `
                           ],
                           'ruleIndex': 26,
                           'internalRuleIndex': 10,
-                          'id': 41
+                          'id': 50
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 37,
+                      'id': 53,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 28,
+                  'id': 59,
                   'isWrap': true
                 }
               ],
@@ -2757,7 +2757,7 @@ exports[`excel-formula-parser works for env 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 65,
       'isWrap': true
     }
   ],
@@ -2856,8 +2856,8 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                       'id': 25
                     }
                   ],
-                  'internalRuleIndex': 83,
-                  'id': 22,
+                  'internalRuleIndex': 80,
+                  'id': 21,
                   'isWrap': true
                 },
                 {
@@ -2925,12 +2925,12 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                               ],
                               'ruleIndex': 30,
                               'internalRuleIndex': 11,
-                              'id': 29
+                              'id': 32
                             }
                           ],
-                          'ruleIndex': 32,
-                          'internalRuleIndex': 13,
-                          'id': 28
+                          'internalRuleIndex': 86,
+                          'id': 30,
+                          'isWrap': true
                         },
                         {
                           'start': 8,
@@ -2977,18 +2977,18 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                               ],
                               'ruleIndex': 30,
                               'internalRuleIndex': 11,
-                              'id': 31
+                              'id': 35
                             }
                           ],
                           'ruleIndex': 32,
                           'internalRuleIndex': 13,
-                          'id': 30
+                          'id': 34
                         }
                       ],
-                      'internalRuleIndex': 86,
-                      'id': 32,
-                      'isWrap': true,
-                      'label': 'rangeReference'
+                      'internalRuleIndex': 83,
+                      'id': 29,
+                      'label': 'rangeReference',
+                      'isWrap': true
                     },
                     {
                       'start': 11,
@@ -3024,29 +3024,29 @@ exports[`excel-formula-parser works for reference operation 1`] = `
                           ],
                           'ruleIndex': 26,
                           'internalRuleIndex': 10,
-                          'id': 35
+                          'id': 40
                         }
                       ],
                       'internalRuleIndex': 86,
-                      'id': 33,
+                      'id': 41,
                       'isWrap': true
                     }
                   ],
                   'internalRuleIndex': 83,
-                  'id': 36,
+                  'id': 42,
                   'isWrap': true,
                   'label': 'intersectionReference'
                 }
               ],
               'internalRuleIndex': 80,
-              'id': 37,
+              'id': 43,
               'isWrap': true,
               'label': 'unionReference'
             }
           ],
           'ruleIndex': 11,
           'internalRuleIndex': 55,
-          'id': 12,
+          'id': 49,
           'isWrap': true
         },
         {
@@ -3063,7 +3063,7 @@ exports[`excel-formula-parser works for reference operation 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 55,
       'isWrap': true
     }
   ],
@@ -3214,8 +3214,8 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                   'id': 36
                                 }
                               ],
-                              'internalRuleIndex': 83,
-                              'id': 33,
+                              'internalRuleIndex': 80,
+                              'id': 32,
                               'isWrap': true
                             },
                             {
@@ -3283,12 +3283,12 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                           ],
                                           'ruleIndex': 30,
                                           'internalRuleIndex': 11,
-                                          'id': 40
+                                          'id': 43
                                         }
                                       ],
-                                      'ruleIndex': 32,
-                                      'internalRuleIndex': 13,
-                                      'id': 39
+                                      'internalRuleIndex': 86,
+                                      'id': 41,
+                                      'isWrap': true
                                     },
                                     {
                                       'start': 12,
@@ -3335,18 +3335,18 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                           ],
                                           'ruleIndex': 30,
                                           'internalRuleIndex': 11,
-                                          'id': 42
+                                          'id': 46
                                         }
                                       ],
                                       'ruleIndex': 32,
                                       'internalRuleIndex': 13,
-                                      'id': 41
+                                      'id': 45
                                     }
                                   ],
-                                  'internalRuleIndex': 86,
-                                  'id': 43,
-                                  'isWrap': true,
-                                  'label': 'rangeReference'
+                                  'internalRuleIndex': 83,
+                                  'id': 40,
+                                  'label': 'rangeReference',
+                                  'isWrap': true
                                 },
                                 {
                                   'start': 15,
@@ -3382,29 +3382,29 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                                       ],
                                       'ruleIndex': 26,
                                       'internalRuleIndex': 10,
-                                      'id': 46
+                                      'id': 51
                                     }
                                   ],
                                   'internalRuleIndex': 86,
-                                  'id': 44,
+                                  'id': 52,
                                   'isWrap': true
                                 }
                               ],
                               'internalRuleIndex': 83,
-                              'id': 47,
+                              'id': 53,
                               'isWrap': true,
                               'label': 'intersectionReference'
                             }
                           ],
                           'internalRuleIndex': 80,
-                          'id': 48,
+                          'id': 54,
                           'isWrap': true,
                           'label': 'unionReference'
                         }
                       ],
                       'ruleIndex': 11,
                       'internalRuleIndex': 55,
-                      'id': 23,
+                      'id': 60,
                       'isWrap': true
                     },
                     {
@@ -3421,7 +3421,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 14,
+                  'id': 66,
                   'isWrap': true
                 }
               ],
@@ -3448,7 +3448,7 @@ exports[`excel-formula-parser works for reference operation as argument 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 72,
       'isWrap': true
     }
   ],
@@ -3569,13 +3569,13 @@ exports[`excel-formula-parser works for row rangge 1`] = `
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 23,
+                      'id': 30,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 14,
+                  'id': 36,
                   'isWrap': true
                 }
               ],
@@ -3602,7 +3602,7 @@ exports[`excel-formula-parser works for row rangge 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 42,
       'isWrap': true
     }
   ],
@@ -3723,13 +3723,13 @@ exports[`excel-formula-parser works for simple 1`] = `
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 23,
+                      'id': 30,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 14,
+                  'id': 36,
                   'isWrap': true
                 },
                 {
@@ -3787,17 +3787,17 @@ exports[`excel-formula-parser works for simple 1`] = `
                           ],
                           'ruleIndex': 26,
                           'internalRuleIndex': 10,
-                          'id': 41
+                          'id': 50
                         }
                       ],
                       'internalRuleIndex': 80,
-                      'id': 37,
+                      'id': 53,
                       'isWrap': true
                     }
                   ],
                   'ruleIndex': 11,
                   'internalRuleIndex': 55,
-                  'id': 28,
+                  'id': 59,
                   'isWrap': true
                 }
               ],
@@ -3824,7 +3824,7 @@ exports[`excel-formula-parser works for simple 1`] = `
       ],
       'ruleIndex': 11,
       'internalRuleIndex': 55,
-      'id': 3,
+      'id': 65,
       'isWrap': true
     }
   ],

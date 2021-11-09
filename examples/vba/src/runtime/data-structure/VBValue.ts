@@ -166,6 +166,9 @@ export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();
 export const VB_EMPTY = new VBEmpty();
 
+export const VB_TRUE = new VBBoolean(true);
+export const VB_FALSE = new VBBoolean(false);
+
 export interface AsTypeClauseInfo {
   type?: VBValidPrimitiveType;
   isArray: boolean;

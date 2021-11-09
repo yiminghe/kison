@@ -2,10 +2,8 @@ import {
   parser,
   Context,
   VariableBinder,
-  VBInteger,
   SubBinder,
   ClassBinder,
-  VBString,
 } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 
@@ -190,9 +188,9 @@ require(['vs/editor/editor.main'], () => {
           }
           const v = d[method]();
           if (typeof v === 'string') {
-            return new VBString(v);
+            return Context.createString(v);
           } else if (typeof v === 'number') {
-            return new VBInteger(v);
+            return Context.createInteger(v);
           }
           throw new Error('only allow string/number return type');
         },
@@ -210,7 +208,7 @@ require(['vs/editor/editor.main'], () => {
 
   const vbModalBinder: VariableBinder = {
     name: 'vbModal',
-    value: new VBInteger(1),
+    value: Context.createInteger(1),
   };
 
   $('evaluate').addEventListener('click', async () => {
@@ -234,7 +232,7 @@ require(['vs/editor/editor.main'], () => {
             args.msg2?.value.value || '',
           );
           // await wait(100);
-          return new VBInteger(1);
+          return Context.createInteger(1);
         },
         name: 'debug.print',
       });

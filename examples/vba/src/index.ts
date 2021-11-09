@@ -11,8 +11,6 @@ import { Context } from './runtime/Context';
 //   })
 // };
 
-export { VBBoolean, VBString, VBInteger } from './runtime/types';
-
 export type {
   UserSubBinder as SubBinder,
   UserVariableBinder as VariableBinder,

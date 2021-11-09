@@ -1,11 +1,4 @@
-import {
-  Context,
-  SubBinder,
-  ClassBinder,
-  VBString,
-  VariableBinder,
-  VBInteger,
-} from '../src/';
+import { Context, SubBinder, ClassBinder, VariableBinder } from '../src/';
 import { VBFile } from '../src/runtime/types';
 
 function upperFirst(name: string) {
@@ -14,7 +7,7 @@ function upperFirst(name: string) {
 
 const vbModal: VariableBinder = {
   name: 'vbModal',
-  value: new VBInteger(1),
+  value: Context.createInteger(1),
 };
 
 const JSDateBinder: ClassBinder = {
@@ -25,9 +18,9 @@ const JSDateBinder: ClassBinder = {
       get(name) {
         const v = d[`get${upperFirst(name)}`]();
         if (typeof v === 'string') {
-          return new VBString(v);
+          return Context.createString(v);
         } else if (typeof v === 'number') {
-          return new VBInteger(v);
+          return Context.createInteger(v);
         }
         throw new Error('only allow string/number return type');
       },
@@ -74,7 +67,7 @@ export async function runs(
     ],
     async value(args) {
       ret.push(args.msg?.value.value);
-      return new VBInteger(1);
+      return Context.createInteger(1);
     },
   });
 

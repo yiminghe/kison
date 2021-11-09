@@ -10,6 +10,8 @@ import {
   UserVariableBinder,
   UserClassBinder,
   VBNativeObject,
+  VB_TRUE,
+  VB_FALSE,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -26,6 +28,8 @@ import {
   FileSymbolTable,
   ClassBinder,
   BinderMap,
+  VBInteger,
+  VBString,
 } from './types';
 import { last } from './utils';
 
@@ -346,5 +350,17 @@ export class Context {
     }
 
     return this.callSubBinder(subDef, args);
+  }
+
+  static createInteger(value: number) {
+    return new VBInteger(value);
+  }
+
+  static createString(value: string) {
+    return new VBString(value);
+  }
+
+  static createBoolean(value: boolean) {
+    return value ? VB_TRUE : VB_FALSE;
   }
 }

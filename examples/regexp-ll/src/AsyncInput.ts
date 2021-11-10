@@ -58,7 +58,6 @@ export default class Input {
   }
 
   async getCharCode() {
-    debugger;
     if (this.index >= this.buffer.length) {
       const chars = await this.getCharAsync();
       if (!Array.isArray(chars)) {

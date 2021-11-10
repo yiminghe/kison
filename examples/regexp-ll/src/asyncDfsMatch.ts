@@ -25,7 +25,6 @@ export default async function dfsMatch(
   if (!state.asyncTransitions.length) {
     return input;
   }
-  debugger;
   for (const t of state.asyncTransitions) {
     let newInput = input.clone();
     const find = await t.perform(newInput);

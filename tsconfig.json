@@ -1,7 +1,8 @@
 {
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
-    "resolveJsonModule":true
+    "resolveJsonModule":true,
+    "moduleResolution": "node"
   },
   "include": [
     "src/**/*",

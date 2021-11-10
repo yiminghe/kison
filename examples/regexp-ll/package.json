@@ -1,25 +1,28 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "author": "yiminghe <yiminghe@gmail.com>",
   "description": "match regular expression asynchronously",
-  "files": [
-    "index.js"
-  ],
   "keywords": [
     "regular expression",
     "stream",
     "asynchronously"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yiminghe/kison.git"
+  },
   "license": "MIT",
   "@pika/pack": {
     "pipeline": [
       [
-        "@pika/plugin-standard-pkg",
+        "pika-plugin-ts-types",
         {
-          "exclude": [
-            "__tests__/**/*"
-          ]
+          "args": [
+            "--rootDir",
+            "src"
+          ],
+          "tsconfig": "tsconfig.build.json"
         }
       ],
       [
@@ -42,14 +45,9 @@
   "scripts": {
     "test": "rm -rf pkg && jest",
     "test-debug": "jest -i",
-    "check":"tsc --noEmit",
-    "build": "pika-pack build",
+    "check": "tsc --noEmit",
+    "build": "npm run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh && rm -rf pkg"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:yiminghe/kison.git"
-  },
-  "main": "index.js"
+  }
 }

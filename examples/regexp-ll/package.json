@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/regexp",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "yiminghe <yiminghe@gmail.com>",
   "description": "match regular expression asynchronously",
   "files": [
@@ -40,8 +40,9 @@
     ]
   },
   "scripts": {
-    "test": "jest",
+    "test": "rm -rf pkg && jest",
     "test-debug": "jest -i",
+    "check":"tsc --noEmit",
     "build": "pika-pack build",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh && rm -rf pkg"

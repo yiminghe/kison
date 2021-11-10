@@ -1,17 +1,19 @@
 // import { compile } from "@yiminghe/regexp";
-import { compile } from '../src/index.js';
+import { compile } from '../src/index';
 
-const asyncPattern = document.getElementById('asyncPattern');
-const startAsync = document.getElementById('startAsync');
-const stopAsync = document.getElementById('stopAsync');
+const asyncPattern = document.getElementById(
+  'asyncPattern',
+) as HTMLInputElement;
+const startAsync = document.getElementById('startAsync')!;
+const stopAsync = document.getElementById('stopAsync')!;
 
 asyncPattern.value = `a{2}b`;
 
-let promise;
+let promise: { resolve: Function } | null;
 
-let buffer;
+let buffer: string[];
 
-function onKeyDown(e) {
+function onKeyDown(e: KeyboardEvent) {
   const key = e.key;
   if (key.length == 1) {
     buffer.push(key);
@@ -39,8 +41,8 @@ startAsync.addEventListener('click', async () => {
   const matcher = patternInstance.matcherAsync(() => {
     return new Promise((resolve) => {
       function r() {
-        if (buffer.length) {
-          resolve([buffer.shift()]);
+        if (buffer && buffer.length) {
+          resolve([buffer.shift()!]);
         }
       }
       if (buffer.length) {

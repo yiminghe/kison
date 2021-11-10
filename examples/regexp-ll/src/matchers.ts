@@ -1,71 +1,80 @@
-// @ts-check
-import { isWord, isNumber } from './utils.js';
-import { AsyncMatcher, Matcher } from './match.js';
-import * as n from './names.js';
+import { isWord, isNumber } from './utils';
+import { Matcher } from './match';
+import Input from './Input';
+import { AstNode, AstSymbolNode, CharacterGroupInner_Node } from './parser';
+import Compiler from './Compiler';
 
-export const asyncAnchorMatchers = {
-  '^'(input) {
-    return true;
+export const anchorMatchers = {
+  '^'(input: Input) {
+    return !!(
+      !input.index ||
+      (input.options.multiline && input.getPrevChar() === '\n')
+    );
   },
-  anchorWordBoundary(input) {
+  anchorWordBoundary(input: Input) {
     return input.isAtWordBoundary();
   },
-  async anchorNonWordBoundary(input) {
-    return !(await input.isAtWordBoundary());
+  anchorNonWordBoundary(input: Input) {
+    return !input.isAtWordBoundary();
   },
-  anchorStartOfStringOnly(input) {
-    return true;
+  anchorStartOfStringOnly(input: Input) {
+    return !input.index;
   },
-  anchorEndOfStringOnlyNotNewline(input) {
-    return false;
+  anchorEndOfStringOnlyNotNewline(input: Input) {
+    return input.isEnd();
   },
-  async $(input) {
-    return input.options.multiline && (await input.getChar()) === '\n';
+  $(input: Input) {
+    return (
+      input.isEnd() || (input.options.multiline && input.getChar() === '\n')
+    );
   },
-  async anchorEndOfStringOnly(input) {
-    return input.isAtLastIndex() && (await input.getChar()) === '\n';
+  anchorEndOfStringOnly(input: Input) {
+    return input.isEnd() || (input.isAtLastIndex() && input.getChar() === '\n');
   },
-  anchorPreviousMatchEnd(input) {
-    return false;
+  anchorPreviousMatchEnd(input: Input) {
+    return input.index === input.previousMatchIndex;
   },
 };
 
-export const asyncStringMatcher = (str) => {
-  return async (input) => {
+export const stringMatcher = (str: string) => {
+  return (input: Input) => {
     if (input.isEnd()) {
       return null;
     }
-    let ret = await input.matchString(str);
+    let ret = input.matchString(str);
     return ret ? { count: str.length } : null;
   };
 };
 
-export const asyncBackreferenceMatcher = (index, named) => {
-  return async (input) => {
+export const backreferenceMatcher = (index: number | string) => {
+  return (input: Input) => {
     if (input.isEnd()) {
-      return null;
+      return false;
     }
-    const group = named ? input.namedGroups[index] : input.groups[index - 1];
+    const group =
+      typeof index === 'string'
+        ? input.namedGroups[index]
+        : input.groups[index - 1];
     if (!group) {
-      return null;
+      return false;
     }
     const { match } = group;
-    return (await input.matchString(match)) ? { count: match.length } : null;
+    return input.matchString(match) ? { count: match.length } : false;
   };
 };
 
-const linefeeds = {
+const linefeeds: Record<string, number> = {
   '\n': 1,
   '\r': 1,
   '\u2028': 1,
   '\u2029': 1,
 };
 
-export const asyncAnyCharMatcher = async (input) => {
+export const anyCharMatcher = (input: Input) => {
   if (input.isEnd()) {
     return null;
   }
-  const char = await input.getChar();
+  const char = input.getChar();
   if (linefeeds[char]) {
     return input.options.dotMatchesLineSeparators
       ? { count: char.length }
@@ -74,22 +83,25 @@ export const asyncAnyCharMatcher = async (input) => {
   return { count: char.length };
 };
 
-export const asyncCharGroupMatcher = (items, invert) => {
-  return async (input) => {
+export const charGroupMatcher = (
+  items: CharacterGroupInner_Node['children'],
+  invert?: boolean,
+) => {
+  return (input: Input) => {
     if (input.isEnd()) {
       return null;
     }
     let ret = !!invert;
-    const current = await input.getChar();
+    const current = input.getChar();
     for (const item of items) {
       const child = item.children[0];
-      if (child.symbol === n.CharacterClass) {
+      if (child.type === 'symbol' && child.symbol === 'CharacterClass') {
         const cls = child.children[0].token;
-        if (await asyncCharacterClassMatcher[cls](input)) {
+        if (characterClassMatcher[cls](input)) {
           ret = !ret;
           break;
         }
-      } else if (child.symbol === n.CharacterRange) {
+      } else if (child.type === 'symbol' && child.symbol === 'CharacterRange') {
         const chars = child.children.map((c) => c.text);
         const lower = chars[0];
         let upper = chars[2];
@@ -115,7 +127,7 @@ export const asyncCharGroupMatcher = (items, invert) => {
 };
 
 // \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff
-const whitespaceCharacters = {
+const whitespaceCharacters: Record<string, number> = {
   ...linefeeds,
 
   ' ': 1,
@@ -134,49 +146,50 @@ for (let code = 0x2000; code < 0x200b; code++) {
   whitespaceCharacters[String.fromCharCode(code)] = 1;
 }
 
-export const asyncCharacterClassMatcher = {
-  async characterClassAnyWord(input) {
-    let char = await input.getChar();
+export const characterClassMatcher = {
+  characterClassAnyWord(input: Input) {
+    let char = input.getChar();
     return isWord(char) ? { count: char.length } : null;
   },
-  async characterClassAnyWordInverted(input) {
-    let char = await input.getChar();
+  characterClassAnyWordInverted(input: Input) {
+    let char = input.getChar();
     return !isWord(char) ? { count: char.length } : null;
   },
-  async characterClassAnyDecimalDigit(input) {
-    let char = await input.getChar();
+  characterClassAnyDecimalDigit(input: Input) {
+    let char = input.getChar();
     return isNumber(char) ? { count: char.length } : null;
   },
-  async characterClassAnyDecimalDigitInverted(input) {
-    let char = await input.getChar();
+  characterClassAnyDecimalDigitInverted(input: Input) {
+    let char = input.getChar();
     return !isNumber(char) ? { count: char.length } : null;
   },
-  async whitespaceCharacter(input) {
+  whitespaceCharacter(input: Input) {
     if (input.isEnd()) {
       return false;
     }
-    let char = await input.getChar();
+    let char = input.getChar();
     return whitespaceCharacters[char] ? { count: char.length } : null;
   },
-  async whitespaceCharacterInverted(input) {
+  whitespaceCharacterInverted(input: Input) {
     if (input.isEnd()) {
       return false;
     }
-    let char = await input.getChar();
+    let char = input.getChar();
     return !whitespaceCharacters[char] ? { count: char.length } : null;
   },
 };
 
-export const asyncAssertionMatcher = {
-  lookahead(exp, compiler, invert) {
+export const assertionMatcher = {
+  lookahead(exp: AstNode, compiler: Compiler, invert?: boolean) {
     const unit = compiler.compile(exp);
-    const matcher = new AsyncMatcher(compiler);
-    return async (input) => {
+    const matcher = new Matcher(compiler);
+    return (input: Input) => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       // @ts-ignore
-      let match = await matcher.matchInternal({
+      let match = matcher.matchInternal({
         startState: unit.start,
+        sticky: true,
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -190,22 +203,23 @@ export const asyncAssertionMatcher = {
       return false;
     };
   },
-  negativeLookahead(exp, compiler) {
-    return asyncAssertionMatcher.lookahead(exp, compiler, true);
+  negativeLookahead(exp: AstNode, compiler: Compiler) {
+    return assertionMatcher.lookahead(exp, compiler, true);
   },
-  lookbehind(exp, compiler, invert) {
+  lookbehind(exp: AstNode, compiler: Compiler, invert?: boolean) {
     compiler.setInverted(true);
     const unit = compiler.compile(exp);
     compiler.setInverted(false);
     const matcher = new Matcher(compiler);
-    return async (input) => {
+    return (input: Input) => {
       matcher.setOptions(input.options);
       matcher.input = input.clone();
       matcher.input.setInverted();
       matcher.input.advance();
       // @ts-ignore
-      let match = await matcher.matchInternal({
+      let match = matcher.matchInternal({
         startState: unit.start,
+        sticky: true,
       });
       if (invert) {
         return match ? false : { count: 0 };
@@ -219,7 +233,7 @@ export const asyncAssertionMatcher = {
       return false;
     };
   },
-  negativeLookbehind(exp, compiler) {
-    return asyncAssertionMatcher.lookbehind(exp, compiler, true);
+  negativeLookbehind(exp: AstNode, compiler: Compiler) {
+    return assertionMatcher.lookbehind(exp, compiler, true);
   },
 };

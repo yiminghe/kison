@@ -1,5 +1,14 @@
-// @ts-check
-export default async function dfsMatch(input, state, callSiteMap = new Map()) {
+import Input from './Input';
+import { Matcher } from './match';
+import { State } from './state';
+
+export default function dfsMatch(
+  this: Matcher,
+  input: Input,
+  state: State,
+  _: any,
+  callSiteMap: Map<State, number> = new Map(),
+): false | Input {
   // avoid already failed match
   if (this.getCacheResultIndexMap(input).get(state) === false) {
     return false;
@@ -20,12 +29,12 @@ export default async function dfsMatch(input, state, callSiteMap = new Map()) {
 
   for (const t of state.transitions) {
     let newInput = input.clone();
-    const find = await t.perform(newInput);
+    const find = t.perform(newInput);
     if (find) {
       if (find.count) {
-        await newInput.advance(find.count);
+        newInput.advance(find.count);
       }
-      const ret = await dfsMatch.call(this, newInput, t.to, callSiteMap);
+      const ret = dfsMatch.call(this, newInput, t.to, _, callSiteMap);
       if (ret) {
         return ret;
       }

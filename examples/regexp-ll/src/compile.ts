@@ -1,11 +1,14 @@
-// @ts-check
-import Compiler from './Compiler.js';
-import { AsyncMatcher, Matcher } from './match.js';
+import Compiler, { CompilerOptions } from './Compiler';
+import { AsyncMatcher, Matcher } from './match';
+import type { GetCharAsync } from './AsyncInput';
 
-export default function compile(pattern, compilerOptions = {}) {
+export default function compile(
+  pattern: string,
+  compilerOptions: CompilerOptions = {},
+) {
   const compiler = new Compiler(compilerOptions).initWithPattern(pattern);
   return {
-    matcher(str, options = {}) {
+    matcher(str: string, options: CompilerOptions = {}) {
       if (compilerOptions.async) {
         throw new Error('Can only call matcherStream');
       }
@@ -15,7 +18,7 @@ export default function compile(pattern, compilerOptions = {}) {
       });
     },
     // TODO match infinite stream ...
-    matcherAsync(getCharAsync, options = {}) {
+    matcherAsync(getCharAsync: GetCharAsync, options: CompilerOptions = {}) {
       if (!compilerOptions.async) {
         throw new Error('Can only call matcher');
       }

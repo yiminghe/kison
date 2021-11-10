@@ -1,16 +1,17 @@
-import { parse, compile } from '../src/index.js';
+import { parse, compile } from '../src/index';
+import type { AstNode, ParseResult } from '../src/index';
 
-let currentText;
-let currentAst;
+let currentText: string;
+let currentAst: ParseResult;
 
-function getAst(value) {
+function getAst(value: string) {
   if (currentText === value) {
     return currentAst;
   }
   console.log('parse ***********************', value);
   currentText = value;
   currentAst = parse(value, {
-    lexerOptions: { unicode: $('unicode').checked },
+    lexerOptions: { unicode: ($('unicode') as HTMLInputElement).checked },
   });
   console.log(currentAst);
   if (currentAst.error) {
@@ -20,25 +21,28 @@ function getAst(value) {
   return currentAst;
 }
 
-function $(id) {
+function $(id: string) {
   return document.getElementById(id);
 }
 
-const pattern = $('pattern');
-const input = $('input');
-const parseBtn = $('parseBtn');
-const evaluate = $('evaluate');
-const g = $('g');
-const evaluate2 = $('evaluate2');
+const pattern = $('pattern') as HTMLInputElement;
+const input = $('input') as HTMLInputElement;
+const parseBtn = $('parseBtn')!;
+const range = $('range')!;
+const evaluate = $('evaluate')!;
+const g = $('g') as HTMLInputElement;
+const evaluate2 = $('evaluate2')!;
 
 function getOptions() {
   return {
-    bfs: $('bfs').checked,
-    caseInsensitive: $('caseInsensitive').checked,
-    multiline: $('multiline').checked,
-    sticky: $('sticky').checked,
-    unicode: $('unicode').checked,
-    dotMatchesLineSeparators: $('dotMatchesLineSeparators').checked,
+    bfs: ($('bfs') as HTMLInputElement).checked,
+    caseInsensitive: ($('caseInsensitive') as HTMLInputElement).checked,
+    multiline: ($('multiline') as HTMLInputElement).checked,
+    sticky: ($('sticky') as HTMLInputElement).checked,
+    unicode: ($('unicode') as HTMLInputElement).checked,
+    dotMatchesLineSeparators: (
+      $('dotMatchesLineSeparators') as HTMLInputElement
+    ).checked,
   };
 }
 
@@ -119,91 +123,91 @@ range.addEventListener('click', () => {
   input.value = 'ababab';
 });
 
-$('lazy').addEventListener('click', () => {
+$('lazy')!.addEventListener('click', () => {
   pattern.value = 'a*?a';
   input.value = 'aaa';
 });
 
-$('evil').addEventListener('click', () => {
+$('evil')!.addEventListener('click', () => {
   pattern.value = '(a*)*c';
   input.value = 'a';
 });
 
-$('backreference').addEventListener('click', () => {
+$('backreference')!.addEventListener('click', () => {
   pattern.value = '(a)(?<c>b)\\1\\k<c>';
   input.value = 'ababab';
 });
 
-$('lookahead').addEventListener('click', () => {
+$('lookahead')!.addEventListener('click', () => {
   pattern.value = '(?=(a))(\\w)';
   input.value = 'aba';
 });
-$('nagativeLookahead').addEventListener('click', () => {
+$('nagativeLookahead')!.addEventListener('click', () => {
   pattern.value = '(?!(b))(\\w)';
   input.value = 'aba';
 });
 
-$('lookbehind').addEventListener('click', () => {
+$('lookbehind')!.addEventListener('click', () => {
   pattern.value = '(?<=(b)(a))(\\w)';
   input.value = 'dbacbac';
 });
 
-$('nagativeLookbehind').addEventListener('click', () => {
+$('nagativeLookbehind')!.addEventListener('click', () => {
   pattern.value = '(?<!(d)(b))(\\w)';
   input.value = 'dbacbac';
 });
 
-$('characterGroup').addEventListener('click', () => {
+$('characterGroup')!.addEventListener('click', () => {
   pattern.value = '[1-9a.]';
   input.value = '222accbcc';
 });
 
-$('sticky_tc1').addEventListener('click', () => {
+$('sticky_tc1')!.addEventListener('click', () => {
   pattern.value = 'a';
   input.value = 'aaxa';
 });
 
-$('unicode_tc1').addEventListener('click', () => {
+$('unicode_tc1')!.addEventListener('click', () => {
   pattern.value = '\\uD83D';
   input.value = '\uD83D\uDC2A';
 });
 
-$('unicode_tc2').addEventListener('click', () => {
+$('unicode_tc2')!.addEventListener('click', () => {
   pattern.value = '\uD83D';
   input.value = '\uD83D\uDC2A \uD83D';
 });
 
-$('unicode_tc3').addEventListener('click', () => {
+$('unicode_tc3')!.addEventListener('click', () => {
   pattern.value = '^[\uD83D\uDC2A]$';
   input.value = '\uD83D\uDC2A';
 });
 
-$('unicode_tc4').addEventListener('click', () => {
+$('unicode_tc4')!.addEventListener('click', () => {
   pattern.value = '^[\\uD83D\\uDC2A]$';
   input.value = '\uD83D';
 });
 
-$('unicode_tc5').addEventListener('click', () => {
+$('unicode_tc5')!.addEventListener('click', () => {
   pattern.value = '.';
   input.value = '\uD83D\uDE80';
 });
 
-$('unicode_tc6').addEventListener('click', () => {
+$('unicode_tc6')!.addEventListener('click', () => {
   pattern.value = '\uD83D\uDE80{2}';
   input.value = '\uD83D\uDE80\uD83D\uDE80';
 });
 
-$('unicode_tc7').addEventListener('click', () => {
+$('unicode_tc7')!.addEventListener('click', () => {
   pattern.value = '\\uD83D\\uDE80{2}';
   input.value = '\uD83D\uDE80\uD83D\uDE80';
 });
 
-$('bfs_btn').addEventListener('click', () => {
+$('bfs_btn')!.addEventListener('click', () => {
   pattern.value = '(a|ab)b+';
   input.value = 'abbb';
 });
 
-$('bfs_group_bug').addEventListener('click', () => {
+$('bfs_group_bug')!.addEventListener('click', () => {
   pattern.value = '((x)|(x|y))y';
   input.value = 'xy';
 });
@@ -211,7 +215,7 @@ $('bfs_group_bug').addEventListener('click', () => {
 parseBtn.addEventListener(
   'click',
   () => {
-    currentText = undefined;
+    currentText = '';
     getAst(pattern.value);
   },
   false,

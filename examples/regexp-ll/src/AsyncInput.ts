@@ -1,12 +1,26 @@
-// @ts-check
-import { isWord } from './utils.js';
+import { MatchResult } from './match';
+import { isWord } from './utils';
+import type { CompilerOptions } from './Compiler';
+import type { GroupValue, GroupIndex } from './Input';
+import Compiler from './Compiler';
+import { State } from './state';
+
+export type GetCharAsync = () => Promise<string[]>;
 
 export default class Input {
-  constructor(str, options) {
-    this.str = str;
-    this.options = options;
-    this.endIndex = str.length - 1;
-    this.inverted = false;
+  buffer: string[] = [];
+  inverted: boolean = false;
+  startIndex: number = 0;
+  index: number = 0;
+  previousMatchIndex: number = 0;
+  namedGroups: Record<string, GroupValue> = {};
+  startGroupIndex: GroupIndex[] = [];
+  groups: GroupValue[] = [];
+
+  constructor(
+    public getCharAsync: GetCharAsync,
+    public options: CompilerOptions,
+  ) {
     this.reset();
   }
 
@@ -27,9 +41,9 @@ export default class Input {
     this.groups = [];
   }
 
-  getChar() {
-    const code = this.getCharCode();
-    if (isNaN(code) || code === undefined) {
+  async getChar() {
+    const code = await this.getCharCode();
+    if (code === undefined || isNaN(code)) {
       return '';
     }
     return String.fromCodePoint(code);
@@ -37,51 +51,53 @@ export default class Input {
 
   getPrevChar() {
     const code = this.getPrevCharCode();
-    if (isNaN(code) || code === undefined) {
+    if (code === undefined || isNaN(code)) {
       return '';
     }
     return String.fromCodePoint(code);
   }
 
-  getCharCode() {
-    return this.options.unicode
-      ? this.str.codePointAt(this.index)
-      : this.str.charCodeAt(this.index);
+  async getCharCode() {
+    debugger;
+    if (this.index >= this.buffer.length) {
+      const chars = await this.getCharAsync();
+      if (!Array.isArray(chars)) {
+        throw new Error('async getChar must resolve array of chars');
+      }
+      this.buffer.push(...chars);
+    }
+    return this.buffer[this.index].codePointAt(0);
   }
 
   getPrevCharCode() {
-    if (this.options.unicode) {
-      if (this.index > 1 && this.isPartUnicode(this.index - 1, true)) {
-        return this.str.codePointAt(this.index - 2);
-      }
-      return this.str.codePointAt(this.index - 1);
-    }
-    return this.str.charCodeAt(this.index - 1);
+    return this.buffer[this.index - 1].codePointAt(0);
   }
 
-  matchString(otherStr) {
+  async matchString(otherStr: string) {
     let index = 0;
     let m;
-    let str = this.str;
+    let buffer = this.buffer;
     if (this.options.caseInsensitive) {
-      str = str.toLowerCase();
       otherStr = otherStr.toLowerCase();
     }
-    if (this.options.unicode) {
-      while ((m = otherStr.codePointAt(index)) !== undefined) {
-        let strIndex = this.inverted ? this.index - index : this.index + index;
-        if (m !== str.codePointAt(strIndex)) {
-          return false;
-        }
-        index += String.fromCharCode(m).length;
+    while ((m = otherStr.codePointAt(index)) !== undefined) {
+      let strIndex = this.inverted ? this.index - index : this.index + index;
+      if (!this.inverted) {
+        await this.getChar();
       }
-      return true;
-    } else {
-      return this.getString(otherStr.length).toLowerCase() === otherStr;
+      let char = buffer[strIndex];
+      if (this.options.caseInsensitive) {
+        char = char.toLowerCase();
+      }
+      if (m !== char.codePointAt(0)) {
+        return false;
+      }
+      index += 1;
     }
+    return true;
   }
 
-  injectGroups(match) {
+  injectGroups(match: MatchResult) {
     if (match.groups) {
       for (let i = 0; i < match.groups.length; i++) {
         if (match.groups[i]) {
@@ -94,50 +110,23 @@ export default class Input {
     }
   }
 
-  isPartUnicode(index, inverted) {
-    if (inverted) {
-      return (
-        index > 0 &&
-        String.fromCodePoint(this.str.codePointAt(index - 1)).length > 1
-      );
-    }
-    return (
-      index <= this.endIndex &&
-      String.fromCodePoint(this.str.codePointAt(index)).length > 1
-    );
-  }
-
   advance(count = 1) {
     if (this.inverted) {
       this.index -= count;
-      if (
-        this.options.unicode &&
-        count === 1 &&
-        this.isPartUnicode(this.index, true)
-      ) {
-        this.index--;
-      }
     } else {
-      if (this.options.unicode && count === 1) {
-        count = this.getChar().length;
-      }
       this.index += count;
     }
   }
 
   advanceStartIndex() {
-    if (this.options.unicode && this.isPartUnicode(this.startIndex)) {
-      this.startIndex++;
-    }
-    this.startIndex++;
-    this.index = this.startIndex;
+    this.index = 0;
+    this.buffer.shift();
     this.resetState();
   }
 
   advanceMatch() {
-    const { index } = this;
-    this.previousMatchIndex = index;
-    this.startIndex = index;
+    this.buffer = this.buffer.slice(this.index);
+    this.index = 0;
     this.resetState();
   }
 
@@ -153,34 +142,33 @@ export default class Input {
     if (start > end) {
       [start, end] = [end, start];
     }
-    return this.str.slice(start, end);
+    return this.buffer.slice(start, end).join('');
   }
 
   clone() {
-    const input = new Input(this.str, this.options);
-    input.previousMatchIndex = this.previousMatchIndex;
+    const input = new Input(this.getCharAsync, this.options);
     input.index = this.index;
     input.inverted = this.inverted;
-    input.startIndex = this.startIndex;
     input.startGroupIndex = this.startGroupIndex.concat();
     input.groups = this.groups.concat();
     input.namedGroups = { ...this.namedGroups };
+    input.buffer = this.buffer;
     return input;
   }
 
   isEnd() {
-    return this.index < 0 || this.index > this.endIndex;
+    return false;
   }
 
   isAtLastIndex() {
-    return this.index === this.endIndex;
+    return false;
   }
 
-  isAtWordBoundary() {
+  async isAtWordBoundary() {
     if (this.isEnd()) {
       return true;
     }
-    const c = this.getChar();
+    const c = await this.getChar();
     const l = this.index > 0 ? this.getPrevChar() : ' ';
     if (isWord(c)) {
       return !isWord(l);
@@ -189,7 +177,7 @@ export default class Input {
     }
   }
 
-  checkGroup(compiler, state) {
+  checkGroup(compiler: Compiler, state: State) {
     const input = this;
     let groupStartIndex = compiler.groupStartIndex(state);
     if (groupStartIndex) {
@@ -212,9 +200,9 @@ export default class Input {
         endIndex.index = s + 1;
       }
       let name = groupEndIndex.name;
-      let value = {
+      let value: GroupValue = {
         index: startIndex.index,
-        match: input.str.slice(startIndex.index, endIndex.index),
+        match: input.buffer.slice(startIndex.index, endIndex.index).join(''),
       };
       if (startIndex.name) {
         value.name = startIndex.name;

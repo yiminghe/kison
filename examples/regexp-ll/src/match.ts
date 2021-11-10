@@ -1,31 +1,48 @@
-// @ts-check
-import Input from './Input.js';
-import dfsMatch from './dfsMatch.js';
-import bfsMatch from './bfsMatch.js';
+import Input from './Input';
+import type { GroupValue } from './Input';
+import dfsMatch from './dfsMatch';
+import bfsMatch from './bfsMatch';
 
-import AsyncInput from './AsyncInput.js';
-import asyncDfsMatch from './asyncDfsMatch.js';
+import AsyncInput, { GetCharAsync } from './AsyncInput';
+import asyncDfsMatch from './asyncDfsMatch';
+import { State } from './state';
+import Compiler, { CompilerOptions } from './Compiler';
+
+export interface MatchResult {
+  match: string;
+  index: number;
+  input: string;
+  groups?: GroupValue[];
+  namedGroups?: Record<string, GroupValue>;
+}
 
 export class Matcher {
-  constructor(compiler, string, options = {}) {
-    this.input = string ? new Input(string, options) : null;
-    this.compiler = compiler;
+  cacheResult: Map<State, boolean>[] = [];
+  startState: State | undefined;
+  input: null | Input;
+  matchFn: typeof bfsMatch | typeof dfsMatch;
+
+  constructor(
+    public compiler: Compiler,
+    str?: string,
+    public options: CompilerOptions = {},
+  ) {
+    this.input = str ? new Input(str, options) : null;
     this.startState = this.compiler.startState;
-    this.cacheResult = [];
-    this.setOptions(options);
+    this.matchFn = options.bfs ? bfsMatch : dfsMatch;
   }
 
-  setOptions(options) {
+  setOptions(options: CompilerOptions) {
     this.options = options;
     this.matchFn = options.bfs ? bfsMatch : dfsMatch;
   }
 
   reset() {
-    this.input.reset();
+    this.input!.reset();
     this.cacheResult = [];
   }
 
-  getCacheResultIndexMap(input) {
+  getCacheResultIndexMap(input: Input) {
     const cacheMap = (this.cacheResult[input.index] =
       this.cacheResult[input.index] || new Map());
     return cacheMap;
@@ -49,7 +66,7 @@ export class Matcher {
   }
   // @ts-ignore
   matchInternal({ startState, sticky, onlyMatch, reset } = {}) {
-    let { input } = this;
+    let input = this.input!;
 
     do {
       this.cacheResult = [];
@@ -63,7 +80,7 @@ export class Matcher {
         this.input = input;
         const { startIndex, index } = input;
         const matchString = input.getString(startIndex - index);
-        const ret = {
+        const ret: MatchResult = {
           match: matchString,
           index: startIndex,
           input: input.str,
@@ -95,14 +112,23 @@ export class Matcher {
 }
 
 export class AsyncMatcher {
-  constructor(compiler, getCharAsync, options = {}) {
+  startState?: State;
+  stopped?: boolean;
+  input: AsyncInput | null;
+  matchFn: typeof asyncDfsMatch;
+  cacheResult: Map<State, boolean>[] = [];
+
+  constructor(
+    public compiler: Compiler,
+    getCharAsync?: GetCharAsync,
+    public options: CompilerOptions = {},
+  ) {
     this.input = getCharAsync ? new AsyncInput(getCharAsync, options) : null;
-    this.compiler = compiler;
     this.startState = this.compiler.startState;
-    this.setOptions(options);
+    this.matchFn = asyncDfsMatch;
   }
 
-  setOptions(options) {
+  setOptions(options: CompilerOptions) {
     this.options = options;
     this.matchFn = asyncDfsMatch;
   }
@@ -111,7 +137,7 @@ export class AsyncMatcher {
     this.stopped = true;
   }
 
-  getCacheResultIndexMap(input) {
+  getCacheResultIndexMap(input: AsyncInput) {
     const cacheMap = (this.cacheResult[input.index] =
       this.cacheResult[input.index] || new Map());
     return cacheMap;
@@ -122,8 +148,8 @@ export class AsyncMatcher {
   }
 
   // @ts-ignore
-  async matchInternal({ startState, onlyMatch } = {}) {
-    let { input } = this;
+  async matchInternal({ startState, onlyMatch } = {}): MatchResult {
+    let input = this.input!;
 
     do {
       this.cacheResult = [];
@@ -137,8 +163,10 @@ export class AsyncMatcher {
         this.input = input;
         const { index } = input;
         const matchString = input.getString(-index);
-        const ret = {
+        const ret: MatchResult = {
           match: matchString,
+          index: -1,
+          input: '',
         };
         if (input.groups.length) {
           ret.groups = input.groups;

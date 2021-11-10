@@ -16,8 +16,8 @@ console.log('******************');
   let index = 0;
   let length = fakeData.length;
 
-  let promise;
-  let stream = [];
+  let promise: { resolve: Function } | null;
+  let stream: string[] = [];
   // push data to steam
   setInterval(() => {
     stream.push(fakeData[index++ % length]);

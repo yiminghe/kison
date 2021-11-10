@@ -1,7 +1,19 @@
-// @ts-check
-export default function bfsMatch(input, startState, onlyMatch) {
+import type Input from './Input';
+import { Matcher } from './match';
+import type { State, Transition } from './state';
+
+interface MatchedInput {
+  matchedInput?: Input;
+}
+
+export default function bfsMatch(
+  this: Matcher,
+  input: Input,
+  startState: State,
+  onlyMatch?: boolean,
+) {
   let reachableStates = [startState];
-  let ret = {};
+  let ret: MatchedInput = {};
   while (1) {
     reachableStates = getNextReachableStates.call(
       this,
@@ -22,16 +34,21 @@ export default function bfsMatch(input, startState, onlyMatch) {
   return false;
 }
 
-function getNextReachableStates(input, reachableStates, ret, onlyMatch) {
-  const stack = [];
+function getNextReachableStates(
+  this: Matcher,
+  input: Input,
+  reachableStates: State[],
+  ret: MatchedInput,
+  onlyMatch?: boolean,
+) {
+  const stack: State[] = [];
   const newReachableStates = [];
   const { compiler } = this;
   const encountered = new Set();
   for (const currentState of reachableStates) {
     stack.push(currentState);
-    let state;
     while (stack.length) {
-      state = stack.pop();
+      const state = stack.pop()!;
       if (encountered.has(state)) {
         continue;
       }

@@ -2,10 +2,12 @@
 if (!String.prototype.codePointAt) {
   (function () {
     'use strict'; // 严格模式，needed to support `apply`/`call` with `undefined`/`null`
-    var codePointAt = function (position) {
+    var codePointAt = function (position: number) {
+      // @ts-ignore
       if (this == null) {
         throw TypeError();
       }
+      // @ts-ignore
       var string = String(this);
       var size = string.length;
       // 变成整数
@@ -50,7 +52,7 @@ if (!String.prototype.codePointAt) {
 
 if (!String.fromCodePoint)
   (function (stringFromCharCode) {
-    var fromCodePoint = function (_) {
+    var fromCodePoint = function (_: number) {
       var codeUnits = [],
         codeLen = 0,
         result = '';

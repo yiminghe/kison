@@ -1,30 +1,7 @@
 {
+  "extends": "@tsconfig/recommended",
   "compilerOptions": {
-    "outDir": "lib",
-    "module": "ESNext",
-    "target": "ES2020",
-    "lib": [
-      "es2016",
-      "dom",
-      "es5"
-    ],
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "isolatedModules": true,
-    "skipLibCheck": true,
-    "noImplicitThis":true,
-    "noImplicitOverride": true,
-    "strictNullChecks": true,
-    "declaration": true,
-    "strictFunctionTypes": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "strict": true,
-    "strictPropertyInitialization": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "resolveJsonModule":true
   },
   "include": [
     "src/**/*",

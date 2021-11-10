@@ -1,4 +1,4 @@
-import { parse, compile } from '../src/index';
+import { parse, compile, CompilerOptions } from '../src/index';
 import { prettyJson } from '../../../__tests__/utils';
 
 describe('regexp', () => {
@@ -22,8 +22,13 @@ describe('regexp', () => {
     }
   });
 
-  function runTest(input, pattern, options = {}, noCompare) {
-    const ret = { native: [], js: [] };
+  function runTest(
+    input: string,
+    pattern: string,
+    options: CompilerOptions = {},
+    noCompare?: boolean,
+  ) {
+    const ret: any = { native: [], js: [] };
 
     const nativeArr = [];
     const jsArr = [];
@@ -63,14 +68,14 @@ describe('regexp', () => {
     }
 
     {
-      const patternInstance = compile(pattern);
+      const patternInstance = compile(pattern, options);
       const matcher = patternInstance.matcher(input, options);
       let m;
       while ((m = matcher.match())) {
         const r = [];
         r.push(m.index);
         r.push(m.match);
-        delete m.input;
+        delete (m as any).input;
         if (m.groups) {
           for (const g of m.groups) {
             if (!g) {
@@ -88,7 +93,7 @@ describe('regexp', () => {
             delete m.namedGroups;
           }
           if (m.namedGroups) {
-            let s = {};
+            let s: any = {};
             for (const key of Object.keys(m.namedGroups)) {
               s[key] = m.namedGroups[key].match;
             }
@@ -965,31 +970,42 @@ describe('regexp', () => {
     });
 
     it('unicode works', () => {
-      function unicodePair(input, pattern) {
-        const ret = [
+      function unicodePair(input: string, pattern: string) {
+        return [
           runTest(input, pattern),
           runTest(input, pattern, {
             unicode: true,
           }),
         ];
-        expect(unicodePair('\uD83D\uDC2A', '\\uD83D')).toMatchInlineSnapshot();
-        expect(
-          unicodePair('\uD83D\uDC2A \uD83D', '\uD83D'),
-        ).toMatchInlineSnapshot();
-        expect(
-          unicodePair('\uD83D\uDC2A', '^[\uD83D\uDC2A]$'),
-        ).toMatchInlineSnapshot();
-        expect(
-          unicodePair('\uD83D', '^[\\uD83D\\uDC2A]$'),
-        ).toMatchInlineSnapshot();
-        expect(unicodePair('\uD83D\uDE80', '.')).toMatchInlineSnapshot();
-        expect(
-          unicodePair('\uD83D\uDE80\uD83D\uDE80', '\uD83D\uDE80{2}'),
-        ).toMatchInlineSnapshot();
-        expect(
-          unicodePair('\uD83D\uDE80\uD83D\uDE80', '\\uD83D\\uDE80{2}'),
-        ).toMatchInlineSnapshot();
       }
+      unicodePair('\uD83D\uDC2A', '\\uD83D');
+      unicodePair('\uD83D\uDC2A \uD83D', '\uD83D');
+      unicodePair('\uD83D\uDC2A', '^[\uD83D\uDC2A]$');
+      unicodePair('\uD83D', '^[\\uD83D\\uDC2A]$');
+      unicodePair('\uD83D\uDE80', '.');
+      expect(unicodePair('\uD83D\uDE80\uD83D\uDE80', '\uD83D\uDE80{2}'))
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "js": Array [],
+            "native": Array [],
+          },
+          Object {
+            "js": Array [
+              Object {
+                "index": 0,
+                "match": "🚀🚀",
+              },
+            ],
+            "native": Array [
+              Array [
+                "🚀🚀",
+              ],
+            ],
+          },
+        ]
+      `);
+      unicodePair('\uD83D\uDE80\uD83D\uDE80', '\\uD83D\\uDE80{2}');
     });
   });
 

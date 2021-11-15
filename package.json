@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.5.26",
+  "version": "0.5.27",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -59,7 +59,7 @@
     "pub": "npm run check && rm -rf lib && npm run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
-    "test": "rm -rf lib && jest",
+    "test": "jest",
     "test-debug": "rm -rf lib && jest -i"
   },
   "bin": {

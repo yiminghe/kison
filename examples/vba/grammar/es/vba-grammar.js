@@ -20,7 +20,7 @@ function generateLexerRulesByKeywords(arr) {
   const rules = [];
   for (const token of arr) {
     const reg = token.replace(/^macro_/i, '#').replace(/_/g, ' ');
-    const regexp = new RegExp(RegexEscape(reg + '\\b'), 'i');
+    const regexp = new RegExp(RegexEscape(reg) + '\\b', 'i');
     rules.push([token, regexp]);
   }
   return rules;

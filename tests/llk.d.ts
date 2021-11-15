@@ -67,6 +67,7 @@ export interface ParseError {
 
 export interface LexerOptions<T = any> {
   env?: string;
+  unicode?:boolean;
   state?: {
     userData?: T,
     stateStack?: string[];

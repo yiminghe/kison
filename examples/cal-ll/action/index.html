@@ -27,6 +27,7 @@
                 try {
                     ret = cal.parse(input, {
                         ...options,
+                        parseTree:false,
                     });
                 } catch (e) {
                     console.error(e);

@@ -6,10 +6,10 @@ type ZeroOrMore<T> = T extends Array<infer U> ? U[] : T[];
 export type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
-export type AstSymbolNode = Exp_Node;
-export type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|TOKEN_4_Node|TOKEN_5_Node|TOKEN_6_Node|NUMBER_Node;
+export type AstSymbolNode = Ast_Exp_Node;
+export type AstTokenNode = Ast_$EOF_Node|Ast_$UNKNOWN_Node|Ast_TOKEN_0_Node|Ast_TOKEN_1_Node|Ast_TOKEN_2_Node|Ast_TOKEN_3_Node|Ast_TOKEN_4_Node|Ast_TOKEN_5_Node|Ast_TOKEN_6_Node|Ast_NUMBER_Node;
 export type LiteralToken = "HIDDEN"|"NUMBER"|"$EOF"|"$UNKNOWN"|"("|")"|"+"|"-"|"*"|"/"|"^";
-export type AstRootNode = Exp_Node;
+export type AstRootNode = Ast_Exp_Node;
 // replace end
 
 export type AstErrorNode = AstTokenNode & {
@@ -46,11 +46,12 @@ export type TransformNode = (arg: {
   node: AstNode;
   parent: AstSymbolNode;
   defaultTransformNode: TransformNode;
-}) => AstNode | null;
+}) => AstNode | AstNode[] | null;
 
 export interface Token extends Position {
   text: string;
   t: string;
+  more?: boolean;
   channel?: string | string[];
   recovery?: string;
   token: LiteralToken;
@@ -67,7 +68,7 @@ export interface ParseError {
 
 export interface LexerOptions<T = any> {
   env?: string;
-  unicode?:boolean;
+  unicode?: boolean;
   state?: {
     userData?: T,
     stateStack?: string[];
@@ -79,6 +80,8 @@ export interface ParserOptions {
   globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
+  startSymbol?: string;
+  parseTree?: boolean;
   onErrorRecovery?: (args: {
     parseTree: AstNode;
     errorNode: AstErrorNode;
@@ -105,17 +108,17 @@ export interface LexResult<T = any> {
 }
 
 export type AstNodeTypeMap = { ast: AstNode;
-exp: Exp_Node;
-$EOF: $EOF_Node;
-$UNKNOWN: $UNKNOWN_Node;
-TOKEN_0: TOKEN_0_Node;
-TOKEN_1: TOKEN_1_Node;
-TOKEN_2: TOKEN_2_Node;
-TOKEN_3: TOKEN_3_Node;
-TOKEN_4: TOKEN_4_Node;
-TOKEN_5: TOKEN_5_Node;
-TOKEN_6: TOKEN_6_Node;
-NUMBER: NUMBER_Node;
+exp: Ast_Exp_Node;
+$EOF: Ast_$EOF_Node;
+$UNKNOWN: Ast_$UNKNOWN_Node;
+TOKEN_0: Ast_TOKEN_0_Node;
+TOKEN_1: Ast_TOKEN_1_Node;
+TOKEN_2: Ast_TOKEN_2_Node;
+TOKEN_3: Ast_TOKEN_3_Node;
+TOKEN_4: Ast_TOKEN_4_Node;
+TOKEN_5: Ast_TOKEN_5_Node;
+TOKEN_6: Ast_TOKEN_6_Node;
+NUMBER: Ast_NUMBER_Node;
 };
 
 export type All_Names = Exclude<
@@ -138,114 +141,119 @@ declare function parse(input: string, options?: ParserOptions): ParseResult;
 
 declare function lex<T = any>(input: string, options?: LexerOptions<T>): LexResult<T>;
 
-declare const parser: { parse: typeof parse, lex: typeof lex };
+declare const parser: {
+  parse: typeof parse, lex: typeof lex, lexer: {
+    getCurrentToken: Token;
+    getLastToken(filter?: (token: Token) => boolean): Token;
+  }
+};
 
 export default parser;
 
-interface $EOF_Node_ extends BaseTokenNode {
+interface Ast_$EOF_Node_ extends BaseTokenNode {
       token:"$EOF";
       parent:AstSymbolNode;
     }
-export type $EOF_Node = $EOF_Node_;
-interface $UNKNOWN_Node_ extends BaseTokenNode {
+export type Ast_$EOF_Node = Ast_$EOF_Node_;
+interface Ast_$UNKNOWN_Node_ extends BaseTokenNode {
       token:"$UNKNOWN";
       parent:AstSymbolNode;
     }
-export type $UNKNOWN_Node = $UNKNOWN_Node_;
-interface TOKEN_0_Node_ extends BaseTokenNode {
+export type Ast_$UNKNOWN_Node = Ast_$UNKNOWN_Node_;
+interface Ast_TOKEN_0_Node_ extends BaseTokenNode {
             token:"(";
-            parent:Exp_Node_0;
+            parent:Ast_Exp_Node_0;
           }
-export type TOKEN_0_Node = TOKEN_0_Node_;
-interface TOKEN_1_Node_ extends BaseTokenNode {
+export type Ast_TOKEN_0_Node = Ast_TOKEN_0_Node_;
+interface Ast_TOKEN_1_Node_ extends BaseTokenNode {
             token:")";
-            parent:Exp_Node_0;
+            parent:Ast_Exp_Node_0;
           }
-export type TOKEN_1_Node = TOKEN_1_Node_;
-interface Exp_Node_0_ extends BaseSymbolNode {
+export type Ast_TOKEN_1_Node = Ast_TOKEN_1_Node_;
+interface Ast_Exp_Node_0_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[TOKEN_0_Node,Exp_Node,TOKEN_1_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_TOKEN_0_Node,Ast_Exp_Node,Ast_TOKEN_1_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_0 = Exp_Node_0_;
-interface TOKEN_2_Node_ extends BaseTokenNode {
+type Ast_Exp_Node_0 = Ast_Exp_Node_0_;
+interface Ast_TOKEN_2_Node_ extends BaseTokenNode {
             token:"+";
-            parent:Exp_Node_1;
+            parent:Ast_Exp_Node_1;
           }
-export type TOKEN_2_Node = TOKEN_2_Node_;
-interface Exp_Node_1_ extends BaseSymbolNode {
+export type Ast_TOKEN_2_Node = Ast_TOKEN_2_Node_;
+interface Ast_Exp_Node_1_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[Exp_Node,TOKEN_2_Node,Exp_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_Exp_Node,Ast_TOKEN_2_Node,Ast_Exp_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_1 = Exp_Node_1_;
-interface TOKEN_3_Node_ extends BaseTokenNode {
+type Ast_Exp_Node_1 = Ast_Exp_Node_1_;
+interface Ast_TOKEN_3_Node_ extends BaseTokenNode {
             token:"-";
-            parent:Exp_Node_2 | Exp_Node_5;
+            parent:Ast_Exp_Node_2 | Ast_Exp_Node_5;
           }
-export type TOKEN_3_Node = TOKEN_3_Node_;
-interface Exp_Node_2_ extends BaseSymbolNode {
+export type Ast_TOKEN_3_Node = Ast_TOKEN_3_Node_;
+interface Ast_Exp_Node_2_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[Exp_Node,TOKEN_3_Node,Exp_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_Exp_Node,Ast_TOKEN_3_Node,Ast_Exp_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_2 = Exp_Node_2_;
-interface TOKEN_4_Node_ extends BaseTokenNode {
+type Ast_Exp_Node_2 = Ast_Exp_Node_2_;
+interface Ast_TOKEN_4_Node_ extends BaseTokenNode {
             token:"*";
-            parent:Exp_Node_3;
+            parent:Ast_Exp_Node_3;
           }
-export type TOKEN_4_Node = TOKEN_4_Node_;
-interface Exp_Node_3_ extends BaseSymbolNode {
+export type Ast_TOKEN_4_Node = Ast_TOKEN_4_Node_;
+interface Ast_Exp_Node_3_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[Exp_Node,TOKEN_4_Node,Exp_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_Exp_Node,Ast_TOKEN_4_Node,Ast_Exp_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_3 = Exp_Node_3_;
-interface TOKEN_5_Node_ extends BaseTokenNode {
+type Ast_Exp_Node_3 = Ast_Exp_Node_3_;
+interface Ast_TOKEN_5_Node_ extends BaseTokenNode {
             token:"/";
-            parent:Exp_Node_4;
+            parent:Ast_Exp_Node_4;
           }
-export type TOKEN_5_Node = TOKEN_5_Node_;
-interface Exp_Node_4_ extends BaseSymbolNode {
+export type Ast_TOKEN_5_Node = Ast_TOKEN_5_Node_;
+interface Ast_Exp_Node_4_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[Exp_Node,TOKEN_5_Node,Exp_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_Exp_Node,Ast_TOKEN_5_Node,Ast_Exp_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_4 = Exp_Node_4_;
-interface Exp_Node_5_ extends BaseSymbolNode {
+type Ast_Exp_Node_4 = Ast_Exp_Node_4_;
+interface Ast_Exp_Node_5_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[TOKEN_3_Node,Exp_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_TOKEN_3_Node,Ast_Exp_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_5 = Exp_Node_5_;
-interface TOKEN_6_Node_ extends BaseTokenNode {
+type Ast_Exp_Node_5 = Ast_Exp_Node_5_;
+interface Ast_TOKEN_6_Node_ extends BaseTokenNode {
             token:"^";
-            parent:Exp_Node_6;
+            parent:Ast_Exp_Node_6;
           }
-export type TOKEN_6_Node = TOKEN_6_Node_;
-interface Exp_Node_6_ extends BaseSymbolNode {
+export type Ast_TOKEN_6_Node = Ast_TOKEN_6_Node_;
+interface Ast_Exp_Node_6_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[Exp_Node,TOKEN_6_Node,Exp_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_Exp_Node,Ast_TOKEN_6_Node,Ast_Exp_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_6 = Exp_Node_6_;
-interface NUMBER_Node_ extends BaseTokenNode {
+type Ast_Exp_Node_6 = Ast_Exp_Node_6_;
+interface Ast_NUMBER_Node_ extends BaseTokenNode {
             token:"NUMBER";
-            parent:Exp_Node_7;
+            parent:Ast_Exp_Node_7;
           }
-export type NUMBER_Node = NUMBER_Node_;
-interface Exp_Node_7_ extends BaseSymbolNode {
+export type Ast_NUMBER_Node = Ast_NUMBER_Node_;
+interface Ast_Exp_Node_7_ extends BaseSymbolNode {
         symbol:"exp";
         
-        children:[NUMBER_Node];
-        parent:Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6;
+        children:[Ast_NUMBER_Node];
+        parent:Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6;
       }
-type Exp_Node_7 = Exp_Node_7_;
-export type Exp_Node = Exp_Node_0 | Exp_Node_1 | Exp_Node_2 | Exp_Node_3 | Exp_Node_4 | Exp_Node_5 | Exp_Node_6 | Exp_Node_7;
+type Ast_Exp_Node_7 = Ast_Exp_Node_7_;
+export type Ast_Exp_Node = Ast_Exp_Node_0 | Ast_Exp_Node_1 | Ast_Exp_Node_2 | Ast_Exp_Node_3 | Ast_Exp_Node_4 | Ast_Exp_Node_5 | Ast_Exp_Node_6 | Ast_Exp_Node_7;

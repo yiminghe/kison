@@ -9,10 +9,10 @@ import {
 
 import type {
   AstSymbolNode,
-  BinaryExp_Node,
-  ClipExp_Node,
-  PercentageExp_Node,
-  PrefixExp_Node,
+  Ast_BinaryExp_Node,
+  Ast_ClipExp_Node,
+  Ast_PercentageExp_Node,
+  Ast_PrefixExp_Node,
 } from '../parser';
 
 import { evaluate, registerEvaluators } from './evaluators';
@@ -111,7 +111,7 @@ type BinaryDef = {
 };
 
 function evaluateBinaryExp(
-  node: BinaryExp_Node,
+  node: Ast_BinaryExp_Node,
   context: Context,
   def: BinaryDef,
 ): All_Type {
@@ -436,7 +436,7 @@ const unaryOp: Record<
   },
 };
 function evaluatePrefixExp(
-  node: PrefixExp_Node,
+  node: Ast_PrefixExp_Node,
   context: Context,
   { fn }: { fn: (arg: Array_Element_Type) => Number_Type | Error_Type },
 ): All_Type {
@@ -457,11 +457,11 @@ function evaluatePrefixExp(
 }
 
 registerEvaluators({
-  evaluateBinaryExp(node: BinaryExp_Node, context: Context) {
+  evaluateBinaryExp(node: Ast_BinaryExp_Node, context: Context) {
     const op = node.children[1].token;
     return evaluateBinaryExp(node, context, opFn[op]);
   },
-  evaluatePercentageExp(node: PercentageExp_Node, context: Context) {
+  evaluatePercentageExp(node: Ast_PercentageExp_Node, context: Context) {
     const a = transformToArray(node.children[0], context);
 
     function one(b: Atom_Type): Number_Type | Error_Type {
@@ -484,11 +484,11 @@ registerEvaluators({
     }
     return one(a);
   },
-  evaluatePrefixExp(node: PrefixExp_Node, context: Context) {
+  evaluatePrefixExp(node: Ast_PrefixExp_Node, context: Context) {
     const op = node.children[0].token;
     return evaluatePrefixExp(node, context, unaryOp[op]);
   },
-  evaluateClipExp(node: ClipExp_Node, context: Context) {
+  evaluateClipExp(node: Ast_ClipExp_Node, context: Context) {
     // TODO: implicit intersection
     const a = evaluate(node.children[1], context);
     if (a.type === 'array') {

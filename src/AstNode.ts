@@ -54,6 +54,7 @@ export class AstTokenNode extends BaseAstNode {
   t: string = '';
   recovery?: string;
   type: 'token' = 'token';
+  text: string = '';
   constructor(params: TokenParams) {
     super();
     Object.assign(this, params);

@@ -21,10 +21,13 @@ const nonSerializedMethods: Record<string, number> = {
 var lexer: Lexer;
 
 export interface LexerRule {
-  token: string;
+  token?: string;
   channel?: string | string[];
   regexp: Function | RegExp;
   action?: Function;
+  predict?: Function;
+  state?: string[];
+  more?: boolean;
 }
 
 interface Params {
@@ -105,7 +108,7 @@ class Lexer {
     UNKNOWN_TOKEN: '$UNKNOWN',
   };
 
-  getRuleItem: Function = () => {};
+  getRuleItem: Function = () => { };
 
   isCompress = undefined;
 
@@ -181,9 +184,10 @@ class Lexer {
       token: 0,
       regexp: 1,
       action: 2,
-      filter: 3,
+      predict: 3,
       state: 4,
       channel: 5,
+      more: 6,
     });
     const STATIC = Lexer.STATIC;
     this.tokenSet = new Set([STATIC.EOF_TOKEN, STATIC.UNKNOWN_TOKEN]);
@@ -338,8 +342,9 @@ class Lexer {
           var state = v.hasOwnProperty('state') && v.state,
             regexp = v.hasOwnProperty('regexp') && v.regexp,
             channel = v.hasOwnProperty('channel') && v.channel,
-            filter = v.hasOwnProperty('filter') && v.filter,
+            predict = v.hasOwnProperty('predict') && v.predict,
             action = v.hasOwnProperty('action') && v.action,
+            more = v.hasOwnProperty('more') && v.more,
             token = v.hasOwnProperty('token') && v.token;
 
           if (token && compressSymbol) {
@@ -355,11 +360,14 @@ class Lexer {
           if (action) {
             ret[lexerRuleIndexMap.action] = action;
           }
-          if (filter) {
-            ret[lexerRuleIndexMap.filter] = filter;
+          if (predict) {
+            ret[lexerRuleIndexMap.predict] = predict;
           }
           if (channel) {
             ret[lexerRuleIndexMap.channel] = channel;
+          }
+          if (more) {
+            ret[lexerRuleIndexMap.more] = more;
           }
           if (compressState && state) {
             state = state.map((s: string) => {
@@ -399,13 +407,6 @@ class Lexer {
     var currentState = this.stateStack[this.stateStack.length - 1],
       rules = [];
     for (const r of this.rules) {
-      var filter = this.getRuleItem(r, 'filter');
-      if (filter) {
-        if (filter.call(this)) {
-          rules.push(r);
-        }
-        continue;
-      }
       var state = this.getRuleItem(r, 'state');
       if (!state) {
         if (currentState === Lexer.STATIC.INITIAL_STATE) {
@@ -441,11 +442,11 @@ class Lexer {
 
     matched = matched.slice(0, matched.length - match.length);
     var past =
-        (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
-        matched
-          .slice(0 - DEBUG_CONTEXT_LIMIT)
-          .split('\n')
-          .join(' '),
+      (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
+      matched
+        .slice(0 - DEBUG_CONTEXT_LIMIT)
+        .split('\n')
+        .join(' '),
       next = match + input.slice(this.end);
     //#JSCOVERAGE_ENDIF
     next =
@@ -533,16 +534,21 @@ class Lexer {
     this.tokens.length = this.stashIndex;
   }
 
-  matchRegExp(regexp: Function | RegExp) {
+  matchRegExp(predict: Function, regexp: Function | RegExp) {
+    let ret;
     if (typeof regexp !== 'function') {
       regexp.lastIndex = this.end;
-      const ret = regexp.exec(this.input);
+      ret = regexp.exec(this.input);
       if (ret && ret.index !== this.end) {
         return null;
       }
-      return ret;
+    } else {
+      ret = regexp.call(this, this);
     }
-    return regexp.call(this, this);
+    if (ret && predict?.call(this, ret) === false) {
+      return null;
+    }
+    return ret;
   }
 
   pushToken(token: Token) {
@@ -556,7 +562,15 @@ class Lexer {
   lex(): Token {
     const { EOF_TOKEN } = Lexer.STATIC;
 
-    const token = this.nextToken();
+    let token = this.nextToken();
+    while (token.more) {
+      const nextToken = this.nextToken();
+      nextToken.start = token.start;
+      nextToken.firstLine = token.firstLine;
+      nextToken.firstColumn = token.firstColumn;
+      nextToken.text = token.text + nextToken.text;
+      token = nextToken;
+    }
     const tokens = this.tokens;
     const lastToken = tokens[tokens.length - 1];
     if (
@@ -574,14 +588,19 @@ class Lexer {
   }
 
   getCurrentToken() {
-    if (this.tokens[this.tokens.length - 1]) {
-      return this.tokens[this.tokens.length - 1];
-    }
-    return this.lex();
+    const { tokens } = this;
+    return tokens[tokens.length - 1] || this.lex();
   }
 
-  getLastToken() {
-    return this.tokens[this.tokens.length - 2] || this.getCurrentToken();
+  getLastToken(filter?: (token: Token) => boolean) {
+    const { tokens } = this;
+    let index = tokens.length - 2;
+    if (filter) {
+      while (index >= 0 && filter(tokens[index]) === false) {
+        index--;
+      }
+    }
+    return tokens[index] || this.getCurrentToken();
   }
 
   nextChar(index = 0) {
@@ -670,10 +689,12 @@ class Lexer {
 
     for (i = 0; i < rules.length; i++) {
       rule = rules[i];
-      var regexp = this.getRuleItem(rule, 'regexp'),
-        token = this.getRuleItem(rule, 'token'),
-        channel = this.getRuleItem(rule, 'channel'),
-        action = this.getRuleItem(rule, 'action');
+      let regexp = this.getRuleItem(rule, 'regexp');
+      let token = this.getRuleItem(rule, 'token');
+      let channel = this.getRuleItem(rule, 'channel');
+      let action = this.getRuleItem(rule, 'action');
+      let more = this.getRuleItem(rule, 'more');
+      let predict = this.getRuleItem(rule, 'predict');
 
       if (
         typeof regexp !== 'function' &&
@@ -689,25 +710,26 @@ class Lexer {
       }
 
       //#JSCOVERAGE_ENDIF
-      if ((m = this.matchRegExp(regexp))) {
-        this.start = this.end;
-        this.end += m[0].length;
+      if ((m = this.matchRegExp(predict, regexp))) {
+        const start = this.end;
+        const end = this.end + m[0].length;
         lines = m[0].split('\n');
         lines.shift();
-        this.lineNumber += lines.length;
-        const position = {
-          start: this.start,
-          end: this.end,
+        const lineNumber = this.lineNumber + lines.length;
+        const position: any = {
+          start: start,
+          end: end,
           firstLine: this.lastLine,
-          lastLine: this.lineNumber,
+          lastLine: lineNumber,
           firstColumn: this.lastColumn,
           lastColumn: lines.length
             ? lines[lines.length - 1].length + 1
             : this.lastColumn + m[0].length,
         };
-
+        if (more) {
+          position.more = more;
+        }
         Object.assign(this, position);
-
         var match;
         // for error report
         match = this.match = m[0];

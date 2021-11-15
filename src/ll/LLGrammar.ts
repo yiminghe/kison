@@ -140,6 +140,8 @@ class LLGrammar extends Grammar {
   }
 
   override expandProductionsInternal() {
+    this.expandProductionAlternative();
+    this.expandProductionGroup();
     this.expandOptionalSymbol();
     this.expandOneOrMoreSymbol();
     this.expandZeroOrMoreSymbol();

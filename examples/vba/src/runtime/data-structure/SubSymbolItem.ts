@@ -1,12 +1,12 @@
 import type { Context } from '../Context';
-import type { Block_Node, SubStmt_Node, FunctionStmt_Node } from '../../parser';
+import type { Ast_Block_Node, Ast_SubStmt_Node, Ast_FunctionStmt_Node } from '../../parser';
 import { load } from '../loader/loaders';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
 import { VBObject } from './VBObject';
 import type { VBFile, ArgInfo, Visibility } from './runtime';
 
 export class SubSymbolItem {
-  block: Block_Node;
+  block: Ast_Block_Node;
   name: string = '';
   private _argumentsInfo?: ArgInfo[];
   private _returnInfo?: AsTypeClauseInfo;
@@ -29,7 +29,7 @@ export class SubSymbolItem {
   }
 
   constructor(
-    public sub: SubStmt_Node | FunctionStmt_Node,
+    public sub: Ast_SubStmt_Node | Ast_FunctionStmt_Node,
     public context: Context,
   ) {
     this.file = context.currentFile;

@@ -153,6 +153,46 @@ current token: '$EOF'.",
 
 exports[`llk add error recovery works: undefined 1`] = `undefined`;
 
+exports[`llk any works 1`] = `
+"{
+  'start': 0,
+  'end': 2,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 3,
+  'symbol': 'program',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 1,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 2,
+      'token': '+',
+      'type': 'token',
+      'text': '+'
+    },
+    {
+      'start': 1,
+      'end': 2,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 2,
+      'lastColumn': 3,
+      'token': 'NUM',
+      'type': 'token',
+      'text': '1'
+    }
+  ],
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 2
+}"
+`;
+
 exports[`llk ast works 1`] = `
 "{
   'start': 0,
@@ -875,6 +915,7 @@ exports[`llk error detection works 1`] = `
           'lastColumn': 5,
           'token': '$EOF',
           'type': 'token',
+          'text': '',
           'error': {
             'recovery': false,
             'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
@@ -896,8 +937,7 @@ exports[`llk error detection works 1`] = `
               'start': 4,
               'end': 4
             }
-          },
-          'text': ''
+          }
         }
       ],
       'ruleIndex': 4,
@@ -923,6 +963,7 @@ exports[`llk error detection works 2`] = `
   'lastColumn': 5,
   'token': '$EOF',
   'type': 'token',
+  'text': '',
   'error': {
     'recovery': false,
     'errorMessage': 'syntax error at line 1:\\\\n1+2*\\\\n----^\\\\n'-', 'NUMBER', '(' expected.\\\\ncurrent token: '$EOF'.',
@@ -944,8 +985,7 @@ exports[`llk error detection works 2`] = `
       'start': 4,
       'end': 4
     }
-  },
-  'text': ''
+  }
 }"
 `;
 
@@ -1913,260 +1953,4 @@ exports[`llk support parse from startSymbol 1`] = `
   'internalRuleIndex': 3,
   'id': 1
 }"
-`;
-
-exports[`llk support predict 1`] = `
-"{
-  'start': 0,
-  'end': 0,
-  'firstLine': 1,
-  'lastLine': 0,
-  'firstColumn': 1,
-  'lastColumn': 0,
-  'symbol': 'program',
-  'type': 'symbol',
-  'children': [
-    {
-      'start': 0,
-      'end': 0,
-      'firstLine': 1,
-      'lastLine': 0,
-      'firstColumn': 1,
-      'lastColumn': 0,
-      'symbol': 'sequence',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 0,
-          'end': 1,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 1,
-          'lastColumn': 2,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '2'
-        },
-        {
-          'start': 2,
-          'end': 0,
-          'firstLine': 1,
-          'lastLine': 0,
-          'firstColumn': 3,
-          'lastColumn': 0,
-          'symbol': 'sequence2',
-          'type': 'symbol',
-          'children': [
-            {
-              'start': 2,
-              'end': 3,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 3,
-              'lastColumn': 4,
-              'token': 'NUMBER',
-              'type': 'token',
-              'text': '1'
-            },
-            {
-              'start': 4,
-              'end': 0,
-              'firstLine': 1,
-              'lastLine': 0,
-              'firstColumn': 5,
-              'lastColumn': 0,
-              'symbol': 'sequence2',
-              'type': 'symbol',
-              'children': [
-                {
-                  'start': 4,
-                  'end': 5,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 5,
-                  'lastColumn': 6,
-                  'token': 'NUMBER',
-                  'type': 'token',
-                  'text': '1'
-                },
-                {
-                  'start': 0,
-                  'end': 0,
-                  'firstLine': 0,
-                  'lastLine': 0,
-                  'firstColumn': 0,
-                  'lastColumn': 0,
-                  'symbol': 'sequence2',
-                  'type': 'symbol',
-                  'children': [],
-                  'ruleIndex': 4,
-                  'internalRuleIndex': 4,
-                  'id': 6
-                }
-              ],
-              'ruleIndex': 3,
-              'internalRuleIndex': 3,
-              'id': 5
-            }
-          ],
-          'ruleIndex': 3,
-          'internalRuleIndex': 3,
-          'id': 4
-        }
-      ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 2,
-      'id': 3
-    },
-    {
-      'start': 6,
-      'end': 0,
-      'firstLine': 1,
-      'lastLine': 0,
-      'firstColumn': 7,
-      'lastColumn': 0,
-      'symbol': 'sequence',
-      'type': 'symbol',
-      'children': [
-        {
-          'start': 6,
-          'end': 7,
-          'firstLine': 1,
-          'lastLine': 1,
-          'firstColumn': 7,
-          'lastColumn': 8,
-          'token': 'NUMBER',
-          'type': 'token',
-          'text': '3'
-        },
-        {
-          'start': 8,
-          'end': 0,
-          'firstLine': 1,
-          'lastLine': 0,
-          'firstColumn': 9,
-          'lastColumn': 0,
-          'symbol': 'sequence2',
-          'type': 'symbol',
-          'children': [
-            {
-              'start': 8,
-              'end': 9,
-              'firstLine': 1,
-              'lastLine': 1,
-              'firstColumn': 9,
-              'lastColumn': 10,
-              'token': 'NUMBER',
-              'type': 'token',
-              'text': '1'
-            },
-            {
-              'start': 10,
-              'end': 0,
-              'firstLine': 1,
-              'lastLine': 0,
-              'firstColumn': 11,
-              'lastColumn': 0,
-              'symbol': 'sequence2',
-              'type': 'symbol',
-              'children': [
-                {
-                  'start': 10,
-                  'end': 11,
-                  'firstLine': 1,
-                  'lastLine': 1,
-                  'firstColumn': 11,
-                  'lastColumn': 12,
-                  'token': 'NUMBER',
-                  'type': 'token',
-                  'text': '1'
-                },
-                {
-                  'start': 12,
-                  'end': 0,
-                  'firstLine': 1,
-                  'lastLine': 0,
-                  'firstColumn': 13,
-                  'lastColumn': 0,
-                  'symbol': 'sequence2',
-                  'type': 'symbol',
-                  'children': [
-                    {
-                      'start': 12,
-                      'end': 13,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 13,
-                      'lastColumn': 14,
-                      'token': 'NUMBER',
-                      'type': 'token',
-                      'text': '1'
-                    },
-                    {
-                      'start': 0,
-                      'end': 0,
-                      'firstLine': 0,
-                      'lastLine': 0,
-                      'firstColumn': 0,
-                      'lastColumn': 0,
-                      'symbol': 'sequence2',
-                      'type': 'symbol',
-                      'children': [],
-                      'ruleIndex': 4,
-                      'internalRuleIndex': 4,
-                      'id': 11
-                    }
-                  ],
-                  'ruleIndex': 3,
-                  'internalRuleIndex': 3,
-                  'id': 10
-                }
-              ],
-              'ruleIndex': 3,
-              'internalRuleIndex': 3,
-              'id': 9
-            }
-          ],
-          'ruleIndex': 3,
-          'internalRuleIndex': 3,
-          'id': 8
-        }
-      ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 2,
-      'id': 7
-    }
-  ],
-  'ruleIndex': 1,
-  'internalRuleIndex': 1,
-  'id': 2
-}"
-`;
-
-exports[`llk support predict 2`] = `
-Object {
-  "errorMessage": "syntax error at line 1:
-2 1 1 3 1 1 
-------------^
-'NUMBER' expected.
-current token: '$EOF'.",
-  "expected": Array [
-    "NUMBER",
-  ],
-  "lexer": Object {
-    "end": 12,
-    "firstColumn": 13,
-    "firstLine": 1,
-    "lastColumn": 13,
-    "lastLine": 1,
-    "start": 12,
-    "t": "$EOF",
-    "text": "",
-    "token": "$EOF",
-  },
-  "recovery": false,
-  "symbol": "sequence2",
-  "tip": "'NUMBER' expected.
-current token: '$EOF'.",
-}
 `;

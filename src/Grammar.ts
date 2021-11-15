@@ -8,7 +8,12 @@ import data from './data';
 import { Rh, Rhs } from './types';
 import ItemSet from './lalr/ItemSet';
 
-const { productionAddAstNodeFlag, gened: dataGened, START_TAG } = data;
+const {
+  productionAddAstNodeFlag,
+  gened: dataGened,
+  START_TAG,
+  astStack,
+} = data;
 const {
   isOneOrMoreSymbol,
   isOptionalSymbol,
@@ -17,8 +22,10 @@ const {
 } = Utils;
 
 const startGroupMarker = `'('`;
+const startPredictGroupMarker = `'(?'`;
 const endGroupMarker = `')'`;
 const alterMark = `'|'`;
+const alterPredictMark = `'|?'`;
 
 function setSize(set3: any) {
   return Object.keys(set3).length;
@@ -59,7 +66,7 @@ export interface ProductionRule {
 
   //begin internal: not public api
   flat?: boolean;
-  ruleIndex: number;
+  ruleIndex?: number;
   skipAstNode?: boolean;
   isWrap?: boolean;
   // end internal
@@ -73,6 +80,35 @@ interface Params {
 }
 
 type FakeThis = { productions: ProductionRule[] };
+
+function arrayEqual<T>(a1: T[], a2: T[]) {
+  const l = a1.length;
+  if (a2.length !== l) {
+    return false;
+  }
+  for (let i = 0; i < l; i++) {
+    if (a1[i] !== a2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function findIdenticalProductionRule(
+  localPs: ProductionRule[],
+  rhs: Rhs,
+  skipNode: boolean,
+  predict: Function | undefined,
+  action: Function | undefined,
+) {
+  for (const p of localPs) {
+    if (p.skipAstNode === skipNode
+      && p.action === action
+      && arrayEqual(p.rhs, rhs) && p.predict == predict) {
+      return p;
+    }
+  }
+}
 
 class Grammar {
   prioritySymbolMap: Record<string, string> = {};
@@ -165,9 +201,9 @@ class Grammar {
     const fake: FakeThis = {
       productions: this.productions.concat(),
     };
-
-    this.expandProductionAlternative(fake);
-    this.expandProductionGroup(fake);
+    this.expandProductionAlternativeAndGroup(fake);
+    // this.expandProductionAlternative(fake);
+    // this.expandProductionGroup(fake);
     this.expandOptionalSymbol(fake);
 
     let code = [];
@@ -414,8 +450,7 @@ class Grammar {
       }
       if (ruleIndexes.length > 1) {
         code.push(
-          `${
-            skipAstNode ? '' : 'export '
+          `${skipAstNode ? '' : 'export '
           }type ${normalizeClassName} = ${ruleIndexes
             .map((index) => {
               return getAstClass(productions[index], index);
@@ -537,9 +572,9 @@ class Grammar {
 
   getProductionItemByType(p: any, itemType: string | number) {
     if (this.isCompress) {
-      return p[this.productionIndexMap[itemType]];
+      return p && p[this.productionIndexMap[itemType]];
     }
-    return p[itemType];
+    return p && p[itemType];
   }
 
   __expandProductions = 0;
@@ -549,8 +584,6 @@ class Grammar {
       return;
     }
     this.__expandProductions = 1;
-    this.expandProductionAlternative();
-    this.expandProductionGroup();
     this.expandProductionsInternal();
   }
 
@@ -572,6 +605,218 @@ class Grammar {
       newPs.push(...this.expandOneProductionAlternative(p));
     }
     fake.productions = newPs;
+  }
+
+  __expandProductionAlternativeAndGroup = 0;
+
+  expandProductionAlternativeAndGroup(fake?: FakeThis) {
+    if (!fake && this.__expandProductionAlternativeAndGroup) {
+      return;
+    }
+
+    if (!fake) {
+      this.__expandProductionAlternativeAndGroup = 1;
+    }
+
+    fake = fake || this;
+
+    let newPs: ProductionRule[] = [];
+    const uuid = { id: 1 };
+    for (const p of fake.productions) {
+      this.expandOneProductionAlternativeAndGroup(p, uuid, newPs);
+    }
+    fake.productions = newPs;
+  }
+
+  expandOneProductionAlternativeAndGroup(p: ProductionRule, uuid: { id: number }, newPs: ProductionRule[]) {
+    const { rhs } = p;
+
+    type Node = {
+      predict: boolean;
+      rh: Rh;
+      tail: Node;
+      groupEnd: Node | undefined;
+      childIndex: number;
+      children: Node[];
+    };
+
+    const rhsRoot: Node = {
+      predict: false,
+      rh: '',
+      tail: null!,
+      groupEnd: undefined,
+      childIndex: -1,
+      children: [],
+    };
+
+    function wrapRh(rh: Rh, predict: boolean): Node {
+      return {
+        predict,
+        rh,
+        groupEnd: undefined,
+        tail: null!,
+        childIndex: -1,
+        children: [],
+      };
+    }
+
+    function addChildren(node: Node, child: Node) {
+      if (node.rh === startGroupMarker || node.rh === startPredictGroupMarker || !node.rh) {
+        child.childIndex = node.children.length;
+      } else if (node.childIndex !== undefined) {
+        child.childIndex = node.childIndex;
+      }
+      node.children.push(child);
+    }
+
+    let stack = [rhsRoot];
+    let current = stack[0];
+    let predict = false;
+
+    for (const rh of rhs) {
+      if (rh === alterMark || rh === alterPredictMark) {
+        current = stack[stack.length - 1];
+        if (rh === alterPredictMark) {
+          predict = true;
+        }
+        continue;
+      }
+
+      if (typeof rh === 'string' && rh.startsWith(endGroupMarker)) {
+        let newChild = wrapRh(rh, false);
+        const parent = stack.pop()!;
+        for (const c of parent.children) {
+          addChildren(c.tail, newChild);
+          c.groupEnd = newChild;
+        }
+        newChild.childIndex = parent.childIndex;
+        current = newChild;
+      } else {
+        let newChild = wrapRh(rh, predict);
+        addChildren(current, newChild);
+        current = newChild;
+        if (predict) {
+          if (typeof rh !== 'function') {
+            throw new Error('expect predict function!');
+          }
+
+          predict = false;
+        }
+      }
+
+      const topItem = stack[stack.length - 1];
+      topItem.children[current.childIndex].tail = current;
+
+      if (rh === startGroupMarker || rh === startPredictGroupMarker) {
+        stack.push(current);
+        if (rh === startPredictGroupMarker) {
+          predict = true;
+        }
+      }
+    }
+
+    function collect(node: Node, end: Node | undefined, ret: { predict?: any, rhs: Rh[] }): void {
+      if (node === end) {
+        return;
+      }
+      const { rh } = node;
+
+      function pushNode() {
+        if (node.rh && (typeof node.rh !== 'string' || !node.rh.startsWith(endGroupMarker))) {
+          if (node.predict) {
+            ret.predict = node.rh;
+          } else {
+            ret.rhs.push(node.rh);
+          }
+        }
+      }
+
+      if (!node.children.length) {
+        pushNode();
+      } else {
+        const child = node.children[0];
+        if (node.children.length === 1) {
+          if (rh === startGroupMarker || rh === startPredictGroupMarker) {
+            const crh = child.groupEnd?.rh;
+            if (typeof crh !== 'string' || crh === endGroupMarker || !crh.startsWith(endGroupMarker)) {
+              return collect(child, child.groupEnd, ret);
+            }
+          } else {
+            pushNode();
+            return collect(child, end, ret);
+          }
+        }
+        let subEnd;
+        if (child.groupEnd) {
+          subEnd = child.groupEnd
+        }
+        const quantifier = subEnd ? (subEnd.rh as string).slice(endGroupMarker.length) : '';
+
+        let groupSymbol = `${p.symbol}_group_${uuid.id++}`;
+
+        for (const c of node.children) {
+          const subRet = { predict: undefined, rhs: [] };
+
+          collect(c, subEnd, subRet);
+          const existingP = findIdenticalProductionRule(
+            newPs,
+            subRet.rhs,
+            true,
+            subRet.predict,
+            undefined,
+          );
+
+          let newSymbol =
+            existingP?.symbol || `${p.symbol}_group_def_${uuid.id++}`;
+
+
+          if (!existingP) {
+            newPs.push({
+              ruleIndex: p.ruleIndex,
+              symbol: newSymbol,
+              rhs: subRet.rhs,
+              skipAstNode: true,
+            });
+          }
+
+          if (node.children.length === 1 && !subRet.predict) {
+            groupSymbol = newSymbol;
+          } else {
+            newPs.push({
+              symbol: groupSymbol,
+              predict: subRet.predict,
+              ruleIndex: p.ruleIndex,
+              rhs: [newSymbol],
+              skipAstNode: true,
+            });
+          }
+        }
+
+        ret.rhs.push(groupSymbol + quantifier);
+
+        if (subEnd) {
+          collect(subEnd, end, ret);
+        }
+      }
+    }
+    function processOneRoot(node: Node) {
+      const ret = { predict: undefined, rhs: [] };
+
+      collect(node, undefined, ret);
+
+      newPs.push({
+        ...p,
+        ...ret,
+      });
+    }
+
+    if (rhsRoot.children.length > 1 && !rhsRoot.children[0].groupEnd) {
+      for(const c of rhsRoot.children){
+        processOneRoot(c);
+      }
+    } else {
+      processOneRoot(rhsRoot);
+    }
   }
 
   expandOneProductionAlternative(p: ProductionRule) {
@@ -601,7 +846,7 @@ class Grammar {
     }
 
     function addChildren(node: Node, child: Node) {
-      if (node.rh === startGroupMarker || !node.rh) {
+      if (node.rh === startGroupMarker || node.rh === startPredictGroupMarker || !node.rh) {
         child.childIndex = node.children.length;
       } else if (node.childIndex !== undefined) {
         child.childIndex = node.childIndex;
@@ -611,6 +856,7 @@ class Grammar {
 
     let stack = [rhsRoot];
     let current = stack[0];
+
     for (const rh of rhs) {
       if (rh === alterMark) {
         current = stack[stack.length - 1];
@@ -633,7 +879,7 @@ class Grammar {
       const topItem = stack[stack.length - 1];
       topItem.children[current.childIndex].tail = current;
 
-      if (rh === startGroupMarker) {
+      if (rh === startGroupMarker || rh === startPredictGroupMarker) {
         stack.push(current);
       }
     }
@@ -690,7 +936,7 @@ class Grammar {
         const newRhs = [];
         for (let i = 0; i < rhs.length; i++) {
           const rh = rhs[i];
-          if (rh === startGroupMarker) {
+          if (rh === startGroupMarker || rh === startPredictGroupMarker) {
             changed = true;
             const start = i;
             i++;
@@ -703,7 +949,7 @@ class Grammar {
                 typeof subRh !== 'string' ||
                 !subRh.startsWith(endGroupMarker))
             ) {
-              if (subRh === startGroupMarker) {
+              if (subRh === startGroupMarker || subRh === startPredictGroupMarker) {
                 nest++;
               } else if (
                 typeof subRh === 'string' &&
@@ -718,12 +964,12 @@ class Grammar {
             if (typeof subRh !== 'string') {
               throw new Error('unexpected rh: ' + subRh);
             }
-            const quantifier = subRh.slice(startGroupMarker.length);
+            const quantifier = subRh.slice(endGroupMarker.length);
             const validRhs = subRhs.filter((rh) => {
               if (typeof rh !== 'string') {
                 return false;
               }
-              if (rh === startGroupMarker || rh === endGroupMarker) {
+              if (rh === startGroupMarker || rh === startPredictGroupMarker || rh === endGroupMarker) {
                 return false;
               }
               return true;
@@ -748,6 +994,8 @@ class Grammar {
               [...newPs, ...addedPs, ...ps],
               subRhs,
               true,
+              undefined,
+              undefined,
             );
 
             let newSymbol =
@@ -778,34 +1026,14 @@ class Grammar {
       ps = newPs.concat(addedPs);
     }
 
-    function arrayEqual<T>(a1: T[], a2: T[]) {
-      const l = a1.length;
-      if (a2.length !== l) {
-        return false;
-      }
-      for (let i = 0; i < l; i++) {
-        if (a1[i] !== a2[i]) {
-          return false;
-        }
-      }
-      return true;
-    }
 
-    function findIdenticalProductionRule(
-      localPs: ProductionRule[],
-      rhs: Rhs,
-      skipNode: boolean,
-    ) {
-      for (const p of localPs) {
-        if (p.skipAstNode === skipNode && arrayEqual(p.rhs, rhs)) {
-          return p;
-        }
-      }
-    }
+
+
+
     fake.productions = newPs;
   }
 
-  expandProductionsInternal() {}
+  expandProductionsInternal() { }
 
   getPrecedenceTerminal(p: ProductionRule) {
     if (p.precedence) {
@@ -1230,7 +1458,7 @@ class Grammar {
     this.buildMeta();
   }
 
-  buildProductions() {}
+  buildProductions() { }
 
   buildNonTerminals() {
     var { lexer, nonTerminals } = this;
@@ -1399,6 +1627,10 @@ class Grammar {
     return this.getProductionItemByType(p, 'label');
   }
 
+  getCurrentSymbolNode() {
+    return astStack[astStack.length - 1];
+  }
+
   mapSymbol(s: Rh): Rh {
     if (typeof s === 'string') {
       return this.lexer.mapSymbol(s);
@@ -1415,8 +1647,10 @@ class Grammar {
     return '';
   }
 
-  genCode(cfg: any) {
-    cfg = cfg || {};
+  genCode(cfg: {
+    compressSymbol?: boolean;
+    compressState?: boolean;
+  } = {}) {
     var { lexer } = this;
     var lexerCode = lexer.genCode(cfg);
     this.build();
@@ -1452,30 +1686,34 @@ class Grammar {
       code.push(`var my = ${serializeObject(this.my)};`);
     }
     code.push(lexerCode);
+
+    const methodKeys = [
+      'getProductionItemByType',
+      'getProductionSymbol',
+      'getProductionRhs',
+      'getProductionAction',
+      'getProductionPredict',
+      'getProductionIsWrap',
+      'getProductionLabel',
+      'getCurrentSymbolNode'
+    ];
+
     code.push(
       'var parser = ' +
-        serializeObject({
-          productions,
-          productionIndexMap,
-          getProductionItemByType: this.getProductionItemByType,
-          getProductionSymbol: this.getProductionSymbol,
-          getProductionRhs: this.getProductionRhs,
-          getProductionAction: this.getProductionAction,
-          getProductionPredict: this.getProductionPredict,
-          getProductionIsWrap: this.getProductionIsWrap,
-          getProductionLabel: this.getProductionLabel,
-          isCompress: 1,
-        }) +
-        ';',
+      serializeObject({
+        productions,
+        productionIndexMap,
+        isCompress: 1,
+        ...methodKeys.reduce((ret: any, m) => {
+          ret[m] = (this as any)[m];
+          return ret;
+        }, {} as any)
+      }) +
+      ';',
     );
 
     code.push(
-      'parser.getProductionSymbol=parser.getProductionSymbol.bind(parser);',
-      'parser.getProductionRhs=parser.getProductionRhs.bind(parser);',
-      'parser.getProductionAction=parser.getProductionAction.bind(parser);',
-      'parser.getProductionLabel=parser.getProductionLabel.bind(parser);',
-      'parser.getProductionIsWrap=parser.getProductionIsWrap.bind(parser);',
-      'parser.getProductionPredict=parser.getProductionPredict.bind(parser);',
+      ...methodKeys.map(m => `parser.${m}=parser.${m}.bind(parser);`)
     );
 
     code.push('parser.lexer = lexer;');
@@ -1483,8 +1721,8 @@ class Grammar {
 
     code.push(
       'parser.prioritySymbolMap = ' +
-        serializeObject(this.prioritySymbolMap) +
-        ';',
+      serializeObject(this.prioritySymbolMap) +
+      ';',
     );
 
     const productionSkipAstNodeSet: number[] = [];
@@ -1506,7 +1744,7 @@ class Grammar {
     let index = 0;
 
     for (const p of this.productions) {
-      this.productionRuleIndexMap[index++] = p.ruleIndex;
+      this.productionRuleIndexMap[index++] = p.ruleIndex!;
     }
 
     internalCode +=

@@ -6,10 +6,10 @@ type ZeroOrMore<T> = T extends Array<infer U> ? U[] : T[];
 export type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
-export type AstSymbolNode = Regexp_Node|Expression_Node|SubExpression_Node|ExpressionItem_Node|Group_Node|Match_Node|MatchItem_Node|MatchCharacterClass_Node|CharacterGroup_Node|CharacterGroupInner_Node|CharacterGroupItem_Node|CharacterClass_Node|CharacterRange_Node|Quantifier_Node|QuantifierType_Node|Anchor_Node;
-export type AstTokenNode = $EOF_Node|$UNKNOWN_Node|TOKEN_0_Node|Backreference_Node|TOKEN_1_Node|TOKEN_2_Node|TOKEN_3_Node|NamedGroupPrefix_Node|AnyChar_Node|Char_Node|TOKEN_4_Node|TOKEN_5_Node|CharacterClassAnyWordInverted_Node|CharacterClassAnyWord_Node|CharacterClassAnyDecimalDigit_Node|CharacterClassAnyDecimalDigitInverted_Node|WhitespaceCharacter_Node|WhitespaceCharacterInverted_Node|TOKEN_6_Node|OPTIONAL_Node|TOKEN_7_Node|TOKEN_8_Node|TOKEN_9_Node|Int_Node|TOKEN_10_Node|TOKEN_11_Node|AnchorWordBoundary_Node|AnchorNonWordBoundary_Node|AnchorStartOfStringOnly_Node|AnchorEndOfStringOnlyNotNewline_Node|AnchorEndOfStringOnly_Node|AnchorPreviousMatchEnd_Node|$_Node|Lookahead_Node|NegativeLookahead_Node|Lookbehind_Node|NegativeLookbehind_Node|TOKEN_12_Node;
-export type LiteralToken = "characterClassAnyWord"|"characterClassAnyWordInverted"|"whitespaceCharacter"|"whitespaceCharacterInverted"|"characterClassAnyDecimalDigit"|"characterClassAnyDecimalDigitInverted"|"anchorWordBoundary"|"anchorNonWordBoundary"|"anchorStartOfStringOnly"|"anchorEndOfStringOnlyNotNewline"|"anchorEndOfStringOnly"|"anchorPreviousMatchEnd"|"backreference"|"char"|"lookahead"|"negativeLookahead"|"lookbehind"|"negativeLookbehind"|"namedGroupPrefix"|"$"|"OPTIONAL"|"anyChar"|"int"|"$EOF"|"$UNKNOWN"|"^"|"("|"?:"|")"|"["|"]"|"-"|"*"|"+"|"{"|"}"|","|"|";
-export type AstRootNode = Regexp_Node;
+export type AstSymbolNode = Ast_Regexp_Node|Ast_Expression_Node|Ast_SubExpression_Node|Ast_ExpressionItem_Node|Ast_Group_Node|Ast_Match_Node|Ast_MatchItem_Node|Ast_MatchCharacterClass_Node|Ast_CharacterGroup_Node|Ast_CharacterGroupInner_Node|Ast_CharacterGroupItem_Node|Ast_CharacterClass_Node|Ast_CharacterRange_Node|Ast_Quantifier_Node|Ast_QuantifierType_Node|Ast_Anchor_Node;
+export type AstTokenNode = Ast_$EOF_Node|Ast_$UNKNOWN_Node|Ast_TOKEN_0_Node|Ast_TOKEN_1_Node|Ast_Backreference_Node|Ast_TOKEN_2_Node|Ast_TOKEN_3_Node|Ast_TOKEN_4_Node|Ast_NamedGroupPrefix_Node|Ast_AnyChar_Node|Ast_Char_Node|Ast_TOKEN_5_Node|Ast_TOKEN_6_Node|Ast_CharacterClassAnyWordInverted_Node|Ast_CharacterClassAnyWord_Node|Ast_CharacterClassAnyDecimalDigit_Node|Ast_CharacterClassAnyDecimalDigitInverted_Node|Ast_WhitespaceCharacter_Node|Ast_WhitespaceCharacterInverted_Node|Ast_TOKEN_7_Node|Ast_OPTIONAL_Node|Ast_TOKEN_8_Node|Ast_TOKEN_9_Node|Ast_TOKEN_10_Node|Ast_Int_Node|Ast_TOKEN_11_Node|Ast_TOKEN_12_Node|Ast_AnchorWordBoundary_Node|Ast_AnchorNonWordBoundary_Node|Ast_AnchorStartOfStringOnly_Node|Ast_AnchorEndOfStringOnlyNotNewline_Node|Ast_AnchorEndOfStringOnly_Node|Ast_AnchorPreviousMatchEnd_Node|Ast_$_Node|Ast_Lookahead_Node|Ast_NegativeLookahead_Node|Ast_Lookbehind_Node|Ast_NegativeLookbehind_Node;
+export type LiteralToken = "characterClassAnyWord"|"characterClassAnyWordInverted"|"whitespaceCharacter"|"whitespaceCharacterInverted"|"characterClassAnyDecimalDigit"|"characterClassAnyDecimalDigitInverted"|"anchorWordBoundary"|"anchorNonWordBoundary"|"anchorStartOfStringOnly"|"anchorEndOfStringOnlyNotNewline"|"anchorEndOfStringOnly"|"anchorPreviousMatchEnd"|"backreference"|"char"|"lookahead"|"negativeLookahead"|"lookbehind"|"negativeLookbehind"|"namedGroupPrefix"|"$"|"OPTIONAL"|"anyChar"|"int"|"$EOF"|"$UNKNOWN"|"^"|"|"|"("|"?:"|")"|"["|"]"|"-"|"*"|"+"|"{"|"}"|",";
+export type AstRootNode = Ast_Regexp_Node;
 // replace end
 
 export type AstErrorNode = AstTokenNode & {
@@ -46,11 +46,12 @@ export type TransformNode = (arg: {
   node: AstNode;
   parent: AstSymbolNode;
   defaultTransformNode: TransformNode;
-}) => AstNode | null;
+}) => AstNode | AstNode[] | null;
 
 export interface Token extends Position {
   text: string;
   t: string;
+  more?: boolean;
   channel?: string | string[];
   recovery?: string;
   token: LiteralToken;
@@ -67,7 +68,7 @@ export interface ParseError {
 
 export interface LexerOptions<T = any> {
   env?: string;
-  unicode?:boolean;
+  unicode?: boolean;
   state?: {
     userData?: T,
     stateStack?: string[];
@@ -79,6 +80,8 @@ export interface ParserOptions {
   globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
+  startSymbol?: string;
+  parseTree?: boolean;
   onErrorRecovery?: (args: {
     parseTree: AstNode;
     errorNode: AstErrorNode;
@@ -105,60 +108,60 @@ export interface LexResult<T = any> {
 }
 
 export type AstNodeTypeMap = { ast: AstNode;
-Regexp: Regexp_Node;
-Expression: Expression_Node;
-SubExpression: SubExpression_Node;
-ExpressionItem: ExpressionItem_Node;
-Group: Group_Node;
-Match: Match_Node;
-MatchItem: MatchItem_Node;
-MatchCharacterClass: MatchCharacterClass_Node;
-CharacterGroup: CharacterGroup_Node;
-CharacterGroupInner: CharacterGroupInner_Node;
-CharacterGroupItem: CharacterGroupItem_Node;
-CharacterClass: CharacterClass_Node;
-CharacterRange: CharacterRange_Node;
-Quantifier: Quantifier_Node;
-QuantifierType: QuantifierType_Node;
-Anchor: Anchor_Node;
-$EOF: $EOF_Node;
-$UNKNOWN: $UNKNOWN_Node;
-TOKEN_0: TOKEN_0_Node;
-backreference: Backreference_Node;
-TOKEN_1: TOKEN_1_Node;
-TOKEN_2: TOKEN_2_Node;
-TOKEN_3: TOKEN_3_Node;
-namedGroupPrefix: NamedGroupPrefix_Node;
-anyChar: AnyChar_Node;
-char: Char_Node;
-TOKEN_4: TOKEN_4_Node;
-TOKEN_5: TOKEN_5_Node;
-characterClassAnyWordInverted: CharacterClassAnyWordInverted_Node;
-characterClassAnyWord: CharacterClassAnyWord_Node;
-characterClassAnyDecimalDigit: CharacterClassAnyDecimalDigit_Node;
-characterClassAnyDecimalDigitInverted: CharacterClassAnyDecimalDigitInverted_Node;
-whitespaceCharacter: WhitespaceCharacter_Node;
-whitespaceCharacterInverted: WhitespaceCharacterInverted_Node;
-TOKEN_6: TOKEN_6_Node;
-OPTIONAL: OPTIONAL_Node;
-TOKEN_7: TOKEN_7_Node;
-TOKEN_8: TOKEN_8_Node;
-TOKEN_9: TOKEN_9_Node;
-int: Int_Node;
-TOKEN_10: TOKEN_10_Node;
-TOKEN_11: TOKEN_11_Node;
-anchorWordBoundary: AnchorWordBoundary_Node;
-anchorNonWordBoundary: AnchorNonWordBoundary_Node;
-anchorStartOfStringOnly: AnchorStartOfStringOnly_Node;
-anchorEndOfStringOnlyNotNewline: AnchorEndOfStringOnlyNotNewline_Node;
-anchorEndOfStringOnly: AnchorEndOfStringOnly_Node;
-anchorPreviousMatchEnd: AnchorPreviousMatchEnd_Node;
-$: $_Node;
-lookahead: Lookahead_Node;
-negativeLookahead: NegativeLookahead_Node;
-lookbehind: Lookbehind_Node;
-negativeLookbehind: NegativeLookbehind_Node;
-TOKEN_12: TOKEN_12_Node;
+Regexp: Ast_Regexp_Node;
+Expression: Ast_Expression_Node;
+SubExpression: Ast_SubExpression_Node;
+ExpressionItem: Ast_ExpressionItem_Node;
+Group: Ast_Group_Node;
+Match: Ast_Match_Node;
+MatchItem: Ast_MatchItem_Node;
+MatchCharacterClass: Ast_MatchCharacterClass_Node;
+CharacterGroup: Ast_CharacterGroup_Node;
+CharacterGroupInner: Ast_CharacterGroupInner_Node;
+CharacterGroupItem: Ast_CharacterGroupItem_Node;
+CharacterClass: Ast_CharacterClass_Node;
+CharacterRange: Ast_CharacterRange_Node;
+Quantifier: Ast_Quantifier_Node;
+QuantifierType: Ast_QuantifierType_Node;
+Anchor: Ast_Anchor_Node;
+$EOF: Ast_$EOF_Node;
+$UNKNOWN: Ast_$UNKNOWN_Node;
+TOKEN_0: Ast_TOKEN_0_Node;
+TOKEN_1: Ast_TOKEN_1_Node;
+backreference: Ast_Backreference_Node;
+TOKEN_2: Ast_TOKEN_2_Node;
+TOKEN_3: Ast_TOKEN_3_Node;
+TOKEN_4: Ast_TOKEN_4_Node;
+namedGroupPrefix: Ast_NamedGroupPrefix_Node;
+anyChar: Ast_AnyChar_Node;
+char: Ast_Char_Node;
+TOKEN_5: Ast_TOKEN_5_Node;
+TOKEN_6: Ast_TOKEN_6_Node;
+characterClassAnyWordInverted: Ast_CharacterClassAnyWordInverted_Node;
+characterClassAnyWord: Ast_CharacterClassAnyWord_Node;
+characterClassAnyDecimalDigit: Ast_CharacterClassAnyDecimalDigit_Node;
+characterClassAnyDecimalDigitInverted: Ast_CharacterClassAnyDecimalDigitInverted_Node;
+whitespaceCharacter: Ast_WhitespaceCharacter_Node;
+whitespaceCharacterInverted: Ast_WhitespaceCharacterInverted_Node;
+TOKEN_7: Ast_TOKEN_7_Node;
+OPTIONAL: Ast_OPTIONAL_Node;
+TOKEN_8: Ast_TOKEN_8_Node;
+TOKEN_9: Ast_TOKEN_9_Node;
+TOKEN_10: Ast_TOKEN_10_Node;
+int: Ast_Int_Node;
+TOKEN_11: Ast_TOKEN_11_Node;
+TOKEN_12: Ast_TOKEN_12_Node;
+anchorWordBoundary: Ast_AnchorWordBoundary_Node;
+anchorNonWordBoundary: Ast_AnchorNonWordBoundary_Node;
+anchorStartOfStringOnly: Ast_AnchorStartOfStringOnly_Node;
+anchorEndOfStringOnlyNotNewline: Ast_AnchorEndOfStringOnlyNotNewline_Node;
+anchorEndOfStringOnly: Ast_AnchorEndOfStringOnly_Node;
+anchorPreviousMatchEnd: Ast_AnchorPreviousMatchEnd_Node;
+$: Ast_$_Node;
+lookahead: Ast_Lookahead_Node;
+negativeLookahead: Ast_NegativeLookahead_Node;
+lookbehind: Ast_Lookbehind_Node;
+negativeLookbehind: Ast_NegativeLookbehind_Node;
 };
 
 export type All_Names = Exclude<
@@ -181,7 +184,12 @@ declare function parse(input: string, options?: ParserOptions): ParseResult;
 
 declare function lex<T = any>(input: string, options?: LexerOptions<T>): LexResult<T>;
 
-declare const parser: { parse: typeof parse, lex: typeof lex };
+declare const parser: {
+  parse: typeof parse, lex: typeof lex, lexer: {
+    getCurrentToken: Token;
+    getLastToken(filter?: (token: Token) => boolean): Token;
+  }
+};
 
 export default parser;
 
@@ -200,584 +208,584 @@ type SingleAstNodeUserDataType<T extends string> =  T extends keyof AstNodeUserD
       type AstNodeUserDataType<T extends string[], R={}> =  
       T['length'] extends 0 ?R:AstNodeUserDataType<ShiftArray<T>,R & SingleAstNodeUserDataType<T[0]>>
       ;
-interface $EOF_Node_ extends BaseTokenNode {
+interface Ast_$EOF_Node_ extends BaseTokenNode {
       token:"$EOF";
       parent:AstSymbolNode;
     }
-export type $EOF_Node = $EOF_Node_ & {userData:AstNodeUserDataType<["$EOF","token","ast"]>};
-interface $UNKNOWN_Node_ extends BaseTokenNode {
+export type Ast_$EOF_Node = Ast_$EOF_Node_ & {userData:AstNodeUserDataType<["$EOF","token","ast"]>};
+interface Ast_$UNKNOWN_Node_ extends BaseTokenNode {
       token:"$UNKNOWN";
       parent:AstSymbolNode;
     }
-export type $UNKNOWN_Node = $UNKNOWN_Node_ & {userData:AstNodeUserDataType<["$UNKNOWN","token","ast"]>};
+export type Ast_$UNKNOWN_Node = Ast_$UNKNOWN_Node_ & {userData:AstNodeUserDataType<["$UNKNOWN","token","ast"]>};
 
-        type Expression_3_group_1_Parent_Node = Expression_Node;
+        type Ast_Expression_group_def_2_Parent_Node = Ast_Expression_Node;
         
-interface TOKEN_0_Node_ extends BaseTokenNode {
+interface Ast_TOKEN_0_Node_ extends BaseTokenNode {
             token:"^";
-            parent:Regexp_Node_0 | CharacterGroup_Node_21;
+            parent:Ast_Regexp_Node_0 | Ast_CharacterGroup_Node_22;
           }
-export type TOKEN_0_Node = TOKEN_0_Node_ & {userData:AstNodeUserDataType<["^","token","ast"]>};
-interface Regexp_Node_0_ extends BaseSymbolNode {
+export type Ast_TOKEN_0_Node = Ast_TOKEN_0_Node_ & {userData:AstNodeUserDataType<["^","token","ast"]>};
+interface Ast_Regexp_Node_0_ extends BaseSymbolNode {
         symbol:"Regexp";
         
-        children:[TOKEN_0_Node,Expression_Node];
+        children:[Ast_TOKEN_0_Node,Ast_Expression_Node];
         
       }
-type Regexp_Node_0 = Regexp_Node_0_ & {userData:AstNodeUserDataType<["Regexp","symbol","ast"]>};
-interface Regexp_Node_1_ extends BaseSymbolNode {
+type Ast_Regexp_Node_0 = Ast_Regexp_Node_0_ & {userData:AstNodeUserDataType<["Regexp","symbol","ast"]>};
+interface Ast_Regexp_Node_1_ extends BaseSymbolNode {
         symbol:"Regexp";
         
-        children:[Expression_Node];
+        children:[Ast_Expression_Node];
         
       }
-type Regexp_Node_1 = Regexp_Node_1_ & {userData:AstNodeUserDataType<["Regexp","symbol","ast"]>};
-interface Expression_Node_ extends BaseSymbolNode {
+type Ast_Regexp_Node_1 = Ast_Regexp_Node_1_ & {userData:AstNodeUserDataType<["Regexp","symbol","ast"]>};
+interface Ast_TOKEN_1_Node_ extends BaseTokenNode {
+            token:"|";
+            parent:Ast_Expression_group_def_2_Parent_Node;
+          }
+export type Ast_TOKEN_1_Node = Ast_TOKEN_1_Node_ & {userData:AstNodeUserDataType<["|","token","ast"]>};
+type Ast_Expression_group_def_2_Node  = [Ast_TOKEN_1_Node,Ast_SubExpression_Node];
+interface Ast_Expression_Node_ extends BaseSymbolNode {
         symbol:"Expression";
         
-        children:[SubExpression_Node,...ZeroOrMore<Expression_3_group_1_Node>];
-        parent:Regexp_Node_0 | Regexp_Node_1 | Group_Node_8 | Group_Node_9 | Group_Node_10 | Group_Node_11 | Group_Node_12 | Group_Node_13 | Anchor_Node_49 | Anchor_Node_50 | Anchor_Node_51 | Anchor_Node_52;
+        children:[Ast_SubExpression_Node,...ZeroOrMore<Ast_Expression_group_def_2_Node>];
+        parent:Ast_Regexp_Node_0 | Ast_Regexp_Node_1 | Ast_Group_Node_9 | Ast_Group_Node_10 | Ast_Group_Node_11 | Ast_Group_Node_12 | Ast_Group_Node_13 | Ast_Group_Node_14 | Ast_Anchor_Node_50 | Ast_Anchor_Node_51 | Ast_Anchor_Node_52 | Ast_Anchor_Node_53;
       }
-type Expression_Node = Expression_Node_ & {userData:AstNodeUserDataType<["Expression","symbol","ast"]>};
-interface SubExpression_Node_ extends BaseSymbolNode {
+type Ast_Expression_Node = Ast_Expression_Node_ & {userData:AstNodeUserDataType<["Expression","symbol","ast"]>};
+interface Ast_SubExpression_Node_ extends BaseSymbolNode {
         symbol:"SubExpression";
         
-        children:[...ZeroOrMore<ExpressionItem_Node>];
-        parent:Expression_Node | Expression_3_group_1_Parent_Node;
+        children:[...ZeroOrMore<Ast_ExpressionItem_Node>];
+        parent:Ast_Expression_group_def_2_Parent_Node | Ast_Expression_Node;
       }
-type SubExpression_Node = SubExpression_Node_ & {userData:AstNodeUserDataType<["SubExpression","symbol","ast"]>};
-interface ExpressionItem_Node_4_ extends BaseSymbolNode {
+type Ast_SubExpression_Node = Ast_SubExpression_Node_ & {userData:AstNodeUserDataType<["SubExpression","symbol","ast"]>};
+interface Ast_ExpressionItem_Node_5_ extends BaseSymbolNode {
         symbol:"ExpressionItem";
         
-        children:[Match_Node];
-        parent:SubExpression_Node;
+        children:[Ast_Match_Node];
+        parent:Ast_SubExpression_Node;
       }
-type ExpressionItem_Node_4 = ExpressionItem_Node_4_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
-interface ExpressionItem_Node_5_ extends BaseSymbolNode {
+type Ast_ExpressionItem_Node_5 = Ast_ExpressionItem_Node_5_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
+interface Ast_ExpressionItem_Node_6_ extends BaseSymbolNode {
         symbol:"ExpressionItem";
         
-        children:[Group_Node];
-        parent:SubExpression_Node;
+        children:[Ast_Group_Node];
+        parent:Ast_SubExpression_Node;
       }
-type ExpressionItem_Node_5 = ExpressionItem_Node_5_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
-interface ExpressionItem_Node_6_ extends BaseSymbolNode {
+type Ast_ExpressionItem_Node_6 = Ast_ExpressionItem_Node_6_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
+interface Ast_ExpressionItem_Node_7_ extends BaseSymbolNode {
         symbol:"ExpressionItem";
         
-        children:[Anchor_Node];
-        parent:SubExpression_Node;
+        children:[Ast_Anchor_Node];
+        parent:Ast_SubExpression_Node;
       }
-type ExpressionItem_Node_6 = ExpressionItem_Node_6_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
-interface Backreference_Node_ extends BaseTokenNode {
+type Ast_ExpressionItem_Node_7 = Ast_ExpressionItem_Node_7_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
+interface Ast_Backreference_Node_ extends BaseTokenNode {
             token:"backreference";
-            parent:ExpressionItem_Node_7;
+            parent:Ast_ExpressionItem_Node_8;
           }
-export type Backreference_Node = Backreference_Node_ & {userData:AstNodeUserDataType<["backreference","token","ast"]>};
-interface ExpressionItem_Node_7_ extends BaseSymbolNode {
+export type Ast_Backreference_Node = Ast_Backreference_Node_ & {userData:AstNodeUserDataType<["backreference","token","ast"]>};
+interface Ast_ExpressionItem_Node_8_ extends BaseSymbolNode {
         symbol:"ExpressionItem";
         
-        children:[Backreference_Node];
-        parent:SubExpression_Node;
+        children:[Ast_Backreference_Node];
+        parent:Ast_SubExpression_Node;
       }
-type ExpressionItem_Node_7 = ExpressionItem_Node_7_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
-interface TOKEN_1_Node_ extends BaseTokenNode {
+type Ast_ExpressionItem_Node_8 = Ast_ExpressionItem_Node_8_ & {userData:AstNodeUserDataType<["ExpressionItem","symbol","ast"]>};
+interface Ast_TOKEN_2_Node_ extends BaseTokenNode {
             token:"(";
-            parent:Group_Node_8 | Group_Node_9 | Group_Node_10 | Group_Node_11;
+            parent:Ast_Group_Node_9 | Ast_Group_Node_10 | Ast_Group_Node_11 | Ast_Group_Node_12;
           }
-export type TOKEN_1_Node = TOKEN_1_Node_ & {userData:AstNodeUserDataType<["(","token","ast"]>};
-interface TOKEN_2_Node_ extends BaseTokenNode {
+export type Ast_TOKEN_2_Node = Ast_TOKEN_2_Node_ & {userData:AstNodeUserDataType<["(","token","ast"]>};
+interface Ast_TOKEN_3_Node_ extends BaseTokenNode {
             token:"?:";
-            parent:Group_Node_8 | Group_Node_9;
+            parent:Ast_Group_Node_9 | Ast_Group_Node_10;
           }
-export type TOKEN_2_Node = TOKEN_2_Node_ & {userData:AstNodeUserDataType<["?:","token","ast"]>};
-interface TOKEN_3_Node_ extends BaseTokenNode {
+export type Ast_TOKEN_3_Node = Ast_TOKEN_3_Node_ & {userData:AstNodeUserDataType<["?:","token","ast"]>};
+interface Ast_TOKEN_4_Node_ extends BaseTokenNode {
             token:")";
-            parent:Group_Node_8 | Group_Node_9 | Group_Node_10 | Group_Node_11 | Group_Node_12 | Group_Node_13 | Anchor_Node_49 | Anchor_Node_50 | Anchor_Node_51 | Anchor_Node_52;
+            parent:Ast_Group_Node_9 | Ast_Group_Node_10 | Ast_Group_Node_11 | Ast_Group_Node_12 | Ast_Group_Node_13 | Ast_Group_Node_14 | Ast_Anchor_Node_50 | Ast_Anchor_Node_51 | Ast_Anchor_Node_52 | Ast_Anchor_Node_53;
           }
-export type TOKEN_3_Node = TOKEN_3_Node_ & {userData:AstNodeUserDataType<[")","token","ast"]>};
-interface Group_Node_8_ extends BaseSymbolNode {
+export type Ast_TOKEN_4_Node = Ast_TOKEN_4_Node_ & {userData:AstNodeUserDataType<[")","token","ast"]>};
+interface Ast_Group_Node_9_ extends BaseSymbolNode {
         symbol:"Group";
         
-        children:[TOKEN_1_Node,TOKEN_2_Node,Expression_Node,TOKEN_3_Node,Quantifier_Node];
-        parent:ExpressionItem_Node_5;
+        children:[Ast_TOKEN_2_Node,Ast_TOKEN_3_Node,Ast_Expression_Node,Ast_TOKEN_4_Node,Ast_Quantifier_Node];
+        parent:Ast_ExpressionItem_Node_6;
       }
-type Group_Node_8 = Group_Node_8_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
-interface Group_Node_9_ extends BaseSymbolNode {
+type Ast_Group_Node_9 = Ast_Group_Node_9_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
+interface Ast_Group_Node_10_ extends BaseSymbolNode {
         symbol:"Group";
         
-        children:[TOKEN_1_Node,TOKEN_2_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_5;
+        children:[Ast_TOKEN_2_Node,Ast_TOKEN_3_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_6;
       }
-type Group_Node_9 = Group_Node_9_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
-interface Group_Node_10_ extends BaseSymbolNode {
+type Ast_Group_Node_10 = Ast_Group_Node_10_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
+interface Ast_Group_Node_11_ extends BaseSymbolNode {
         symbol:"Group";
         
-        children:[TOKEN_1_Node,Expression_Node,TOKEN_3_Node,Quantifier_Node];
-        parent:ExpressionItem_Node_5;
+        children:[Ast_TOKEN_2_Node,Ast_Expression_Node,Ast_TOKEN_4_Node,Ast_Quantifier_Node];
+        parent:Ast_ExpressionItem_Node_6;
       }
-type Group_Node_10 = Group_Node_10_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
-interface Group_Node_11_ extends BaseSymbolNode {
+type Ast_Group_Node_11 = Ast_Group_Node_11_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
+interface Ast_Group_Node_12_ extends BaseSymbolNode {
         symbol:"Group";
         
-        children:[TOKEN_1_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_5;
+        children:[Ast_TOKEN_2_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_6;
       }
-type Group_Node_11 = Group_Node_11_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
-interface NamedGroupPrefix_Node_ extends BaseTokenNode {
+type Ast_Group_Node_12 = Ast_Group_Node_12_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
+interface Ast_NamedGroupPrefix_Node_ extends BaseTokenNode {
             token:"namedGroupPrefix";
-            parent:Group_Node_12 | Group_Node_13;
+            parent:Ast_Group_Node_13 | Ast_Group_Node_14;
           }
-export type NamedGroupPrefix_Node = NamedGroupPrefix_Node_ & {userData:AstNodeUserDataType<["namedGroupPrefix","token","ast"]>};
-interface Group_Node_12_ extends BaseSymbolNode {
+export type Ast_NamedGroupPrefix_Node = Ast_NamedGroupPrefix_Node_ & {userData:AstNodeUserDataType<["namedGroupPrefix","token","ast"]>};
+interface Ast_Group_Node_13_ extends BaseSymbolNode {
         symbol:"Group";
         
-        children:[NamedGroupPrefix_Node,Expression_Node,TOKEN_3_Node,Quantifier_Node];
-        parent:ExpressionItem_Node_5;
+        children:[Ast_NamedGroupPrefix_Node,Ast_Expression_Node,Ast_TOKEN_4_Node,Ast_Quantifier_Node];
+        parent:Ast_ExpressionItem_Node_6;
       }
-type Group_Node_12 = Group_Node_12_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
-interface Group_Node_13_ extends BaseSymbolNode {
+type Ast_Group_Node_13 = Ast_Group_Node_13_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
+interface Ast_Group_Node_14_ extends BaseSymbolNode {
         symbol:"Group";
         
-        children:[NamedGroupPrefix_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_5;
+        children:[Ast_NamedGroupPrefix_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_6;
       }
-type Group_Node_13 = Group_Node_13_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
-interface Match_Node_14_ extends BaseSymbolNode {
+type Ast_Group_Node_14 = Ast_Group_Node_14_ & {userData:AstNodeUserDataType<["Group","symbol","ast"]>};
+interface Ast_Match_Node_15_ extends BaseSymbolNode {
         symbol:"Match";
         
-        children:[MatchItem_Node,Quantifier_Node];
-        parent:ExpressionItem_Node_4;
+        children:[Ast_MatchItem_Node,Ast_Quantifier_Node];
+        parent:Ast_ExpressionItem_Node_5;
       }
-type Match_Node_14 = Match_Node_14_ & {userData:AstNodeUserDataType<["Match","symbol","ast"]>};
-interface Match_Node_15_ extends BaseSymbolNode {
+type Ast_Match_Node_15 = Ast_Match_Node_15_ & {userData:AstNodeUserDataType<["Match","symbol","ast"]>};
+interface Ast_Match_Node_16_ extends BaseSymbolNode {
         symbol:"Match";
         
-        children:[MatchItem_Node];
-        parent:ExpressionItem_Node_4;
+        children:[Ast_MatchItem_Node];
+        parent:Ast_ExpressionItem_Node_5;
       }
-type Match_Node_15 = Match_Node_15_ & {userData:AstNodeUserDataType<["Match","symbol","ast"]>};
-interface AnyChar_Node_ extends BaseTokenNode {
+type Ast_Match_Node_16 = Ast_Match_Node_16_ & {userData:AstNodeUserDataType<["Match","symbol","ast"]>};
+interface Ast_AnyChar_Node_ extends BaseTokenNode {
             token:"anyChar";
-            parent:MatchItem_Node_16;
+            parent:Ast_MatchItem_Node_17;
           }
-export type AnyChar_Node = AnyChar_Node_ & {userData:AstNodeUserDataType<["anyChar","token","ast"]>};
-interface MatchItem_Node_16_ extends BaseSymbolNode {
+export type Ast_AnyChar_Node = Ast_AnyChar_Node_ & {userData:AstNodeUserDataType<["anyChar","token","ast"]>};
+interface Ast_MatchItem_Node_17_ extends BaseSymbolNode {
         symbol:"MatchItem";
         
-        children:[AnyChar_Node];
-        parent:Match_Node_14 | Match_Node_15;
+        children:[Ast_AnyChar_Node];
+        parent:Ast_Match_Node_15 | Ast_Match_Node_16;
       }
-type MatchItem_Node_16 = MatchItem_Node_16_ & {userData:AstNodeUserDataType<["MatchItem","symbol","ast"]>};
-interface MatchItem_Node_17_ extends BaseSymbolNode {
+type Ast_MatchItem_Node_17 = Ast_MatchItem_Node_17_ & {userData:AstNodeUserDataType<["MatchItem","symbol","ast"]>};
+interface Ast_MatchItem_Node_18_ extends BaseSymbolNode {
         symbol:"MatchItem";
         
-        children:[MatchCharacterClass_Node];
-        parent:Match_Node_14 | Match_Node_15;
+        children:[Ast_MatchCharacterClass_Node];
+        parent:Ast_Match_Node_15 | Ast_Match_Node_16;
       }
-type MatchItem_Node_17 = MatchItem_Node_17_ & {userData:AstNodeUserDataType<["MatchItem","symbol","ast"]>};
-interface Char_Node_ extends BaseTokenNode {
+type Ast_MatchItem_Node_18 = Ast_MatchItem_Node_18_ & {userData:AstNodeUserDataType<["MatchItem","symbol","ast"]>};
+interface Ast_Char_Node_ extends BaseTokenNode {
             token:"char";
-            parent:MatchItem_Node_18 | CharacterRange_Node_32 | CharacterRange_Node_33;
+            parent:Ast_MatchItem_Node_19 | Ast_CharacterRange_Node_33 | Ast_CharacterRange_Node_34;
           }
-export type Char_Node = Char_Node_ & {userData:AstNodeUserDataType<["char","token","ast"]>};
-interface MatchItem_Node_18_ extends BaseSymbolNode {
+export type Ast_Char_Node = Ast_Char_Node_ & {userData:AstNodeUserDataType<["char","token","ast"]>};
+interface Ast_MatchItem_Node_19_ extends BaseSymbolNode {
         symbol:"MatchItem";
         
-        children:[Char_Node];
-        parent:Match_Node_14 | Match_Node_15;
+        children:[Ast_Char_Node];
+        parent:Ast_Match_Node_15 | Ast_Match_Node_16;
       }
-type MatchItem_Node_18 = MatchItem_Node_18_ & {userData:AstNodeUserDataType<["MatchItem","symbol","ast"]>};
-interface MatchCharacterClass_Node_19_ extends BaseSymbolNode {
+type Ast_MatchItem_Node_19 = Ast_MatchItem_Node_19_ & {userData:AstNodeUserDataType<["MatchItem","symbol","ast"]>};
+interface Ast_MatchCharacterClass_Node_20_ extends BaseSymbolNode {
         symbol:"MatchCharacterClass";
         
-        children:[CharacterGroup_Node];
-        parent:MatchItem_Node_17;
+        children:[Ast_CharacterGroup_Node];
+        parent:Ast_MatchItem_Node_18;
       }
-type MatchCharacterClass_Node_19 = MatchCharacterClass_Node_19_ & {userData:AstNodeUserDataType<["MatchCharacterClass","symbol","ast"]>};
-interface MatchCharacterClass_Node_20_ extends BaseSymbolNode {
+type Ast_MatchCharacterClass_Node_20 = Ast_MatchCharacterClass_Node_20_ & {userData:AstNodeUserDataType<["MatchCharacterClass","symbol","ast"]>};
+interface Ast_MatchCharacterClass_Node_21_ extends BaseSymbolNode {
         symbol:"MatchCharacterClass";
         
-        children:[CharacterClass_Node];
-        parent:MatchItem_Node_17;
+        children:[Ast_CharacterClass_Node];
+        parent:Ast_MatchItem_Node_18;
       }
-type MatchCharacterClass_Node_20 = MatchCharacterClass_Node_20_ & {userData:AstNodeUserDataType<["MatchCharacterClass","symbol","ast"]>};
-interface TOKEN_4_Node_ extends BaseTokenNode {
+type Ast_MatchCharacterClass_Node_21 = Ast_MatchCharacterClass_Node_21_ & {userData:AstNodeUserDataType<["MatchCharacterClass","symbol","ast"]>};
+interface Ast_TOKEN_5_Node_ extends BaseTokenNode {
             token:"[";
-            parent:CharacterGroup_Node_21 | CharacterGroup_Node_22;
+            parent:Ast_CharacterGroup_Node_22 | Ast_CharacterGroup_Node_23;
           }
-export type TOKEN_4_Node = TOKEN_4_Node_ & {userData:AstNodeUserDataType<["[","token","ast"]>};
-interface TOKEN_5_Node_ extends BaseTokenNode {
+export type Ast_TOKEN_5_Node = Ast_TOKEN_5_Node_ & {userData:AstNodeUserDataType<["[","token","ast"]>};
+interface Ast_TOKEN_6_Node_ extends BaseTokenNode {
             token:"]";
-            parent:CharacterGroup_Node_21 | CharacterGroup_Node_22;
+            parent:Ast_CharacterGroup_Node_22 | Ast_CharacterGroup_Node_23;
           }
-export type TOKEN_5_Node = TOKEN_5_Node_ & {userData:AstNodeUserDataType<["]","token","ast"]>};
-interface CharacterGroup_Node_21_ extends BaseSymbolNode {
+export type Ast_TOKEN_6_Node = Ast_TOKEN_6_Node_ & {userData:AstNodeUserDataType<["]","token","ast"]>};
+interface Ast_CharacterGroup_Node_22_ extends BaseSymbolNode {
         symbol:"CharacterGroup";
         
-        children:[TOKEN_4_Node,TOKEN_0_Node,CharacterGroupInner_Node,TOKEN_5_Node];
-        parent:MatchCharacterClass_Node_19;
+        children:[Ast_TOKEN_5_Node,Ast_TOKEN_0_Node,Ast_CharacterGroupInner_Node,Ast_TOKEN_6_Node];
+        parent:Ast_MatchCharacterClass_Node_20;
       }
-type CharacterGroup_Node_21 = CharacterGroup_Node_21_ & {userData:AstNodeUserDataType<["CharacterGroup","symbol","ast"]>};
-interface CharacterGroup_Node_22_ extends BaseSymbolNode {
+type Ast_CharacterGroup_Node_22 = Ast_CharacterGroup_Node_22_ & {userData:AstNodeUserDataType<["CharacterGroup","symbol","ast"]>};
+interface Ast_CharacterGroup_Node_23_ extends BaseSymbolNode {
         symbol:"CharacterGroup";
         
-        children:[TOKEN_4_Node,CharacterGroupInner_Node,TOKEN_5_Node];
-        parent:MatchCharacterClass_Node_19;
+        children:[Ast_TOKEN_5_Node,Ast_CharacterGroupInner_Node,Ast_TOKEN_6_Node];
+        parent:Ast_MatchCharacterClass_Node_20;
       }
-type CharacterGroup_Node_22 = CharacterGroup_Node_22_ & {userData:AstNodeUserDataType<["CharacterGroup","symbol","ast"]>};
-interface CharacterGroupInner_Node_ extends BaseSymbolNode {
+type Ast_CharacterGroup_Node_23 = Ast_CharacterGroup_Node_23_ & {userData:AstNodeUserDataType<["CharacterGroup","symbol","ast"]>};
+interface Ast_CharacterGroupInner_Node_ extends BaseSymbolNode {
         symbol:"CharacterGroupInner";
         
-        children:[...ZeroOrMore<CharacterGroupItem_Node>];
-        parent:CharacterGroup_Node_21 | CharacterGroup_Node_22;
+        children:[...ZeroOrMore<Ast_CharacterGroupItem_Node>];
+        parent:Ast_CharacterGroup_Node_22 | Ast_CharacterGroup_Node_23;
       }
-type CharacterGroupInner_Node = CharacterGroupInner_Node_ & {userData:AstNodeUserDataType<["CharacterGroupInner","symbol","ast"]>};
-interface CharacterGroupItem_Node_24_ extends BaseSymbolNode {
+type Ast_CharacterGroupInner_Node = Ast_CharacterGroupInner_Node_ & {userData:AstNodeUserDataType<["CharacterGroupInner","symbol","ast"]>};
+interface Ast_CharacterGroupItem_Node_25_ extends BaseSymbolNode {
         symbol:"CharacterGroupItem";
         
-        children:[CharacterClass_Node];
-        parent:CharacterGroupInner_Node;
+        children:[Ast_CharacterClass_Node];
+        parent:Ast_CharacterGroupInner_Node;
       }
-type CharacterGroupItem_Node_24 = CharacterGroupItem_Node_24_ & {userData:AstNodeUserDataType<["CharacterGroupItem","symbol","ast"]>};
-interface CharacterGroupItem_Node_25_ extends BaseSymbolNode {
+type Ast_CharacterGroupItem_Node_25 = Ast_CharacterGroupItem_Node_25_ & {userData:AstNodeUserDataType<["CharacterGroupItem","symbol","ast"]>};
+interface Ast_CharacterGroupItem_Node_26_ extends BaseSymbolNode {
         symbol:"CharacterGroupItem";
         
-        children:[CharacterRange_Node];
-        parent:CharacterGroupInner_Node;
+        children:[Ast_CharacterRange_Node];
+        parent:Ast_CharacterGroupInner_Node;
       }
-type CharacterGroupItem_Node_25 = CharacterGroupItem_Node_25_ & {userData:AstNodeUserDataType<["CharacterGroupItem","symbol","ast"]>};
-interface CharacterClassAnyWordInverted_Node_ extends BaseTokenNode {
+type Ast_CharacterGroupItem_Node_26 = Ast_CharacterGroupItem_Node_26_ & {userData:AstNodeUserDataType<["CharacterGroupItem","symbol","ast"]>};
+interface Ast_CharacterClassAnyWordInverted_Node_ extends BaseTokenNode {
             token:"characterClassAnyWordInverted";
-            parent:CharacterClass_Node_26;
+            parent:Ast_CharacterClass_Node_27;
           }
-export type CharacterClassAnyWordInverted_Node = CharacterClassAnyWordInverted_Node_ & {userData:AstNodeUserDataType<["characterClassAnyWordInverted","token","ast"]>};
-interface CharacterClass_Node_26_ extends BaseSymbolNode {
+export type Ast_CharacterClassAnyWordInverted_Node = Ast_CharacterClassAnyWordInverted_Node_ & {userData:AstNodeUserDataType<["characterClassAnyWordInverted","token","ast"]>};
+interface Ast_CharacterClass_Node_27_ extends BaseSymbolNode {
         symbol:"CharacterClass";
         
-        children:[CharacterClassAnyWordInverted_Node];
-        parent:MatchCharacterClass_Node_20 | CharacterGroupItem_Node_24;
+        children:[Ast_CharacterClassAnyWordInverted_Node];
+        parent:Ast_MatchCharacterClass_Node_21 | Ast_CharacterGroupItem_Node_25;
       }
-type CharacterClass_Node_26 = CharacterClass_Node_26_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
-interface CharacterClassAnyWord_Node_ extends BaseTokenNode {
+type Ast_CharacterClass_Node_27 = Ast_CharacterClass_Node_27_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
+interface Ast_CharacterClassAnyWord_Node_ extends BaseTokenNode {
             token:"characterClassAnyWord";
-            parent:CharacterClass_Node_27;
+            parent:Ast_CharacterClass_Node_28;
           }
-export type CharacterClassAnyWord_Node = CharacterClassAnyWord_Node_ & {userData:AstNodeUserDataType<["characterClassAnyWord","token","ast"]>};
-interface CharacterClass_Node_27_ extends BaseSymbolNode {
+export type Ast_CharacterClassAnyWord_Node = Ast_CharacterClassAnyWord_Node_ & {userData:AstNodeUserDataType<["characterClassAnyWord","token","ast"]>};
+interface Ast_CharacterClass_Node_28_ extends BaseSymbolNode {
         symbol:"CharacterClass";
         
-        children:[CharacterClassAnyWord_Node];
-        parent:MatchCharacterClass_Node_20 | CharacterGroupItem_Node_24;
+        children:[Ast_CharacterClassAnyWord_Node];
+        parent:Ast_MatchCharacterClass_Node_21 | Ast_CharacterGroupItem_Node_25;
       }
-type CharacterClass_Node_27 = CharacterClass_Node_27_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
-interface CharacterClassAnyDecimalDigit_Node_ extends BaseTokenNode {
+type Ast_CharacterClass_Node_28 = Ast_CharacterClass_Node_28_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
+interface Ast_CharacterClassAnyDecimalDigit_Node_ extends BaseTokenNode {
             token:"characterClassAnyDecimalDigit";
-            parent:CharacterClass_Node_28;
+            parent:Ast_CharacterClass_Node_29;
           }
-export type CharacterClassAnyDecimalDigit_Node = CharacterClassAnyDecimalDigit_Node_ & {userData:AstNodeUserDataType<["characterClassAnyDecimalDigit","token","ast"]>};
-interface CharacterClass_Node_28_ extends BaseSymbolNode {
+export type Ast_CharacterClassAnyDecimalDigit_Node = Ast_CharacterClassAnyDecimalDigit_Node_ & {userData:AstNodeUserDataType<["characterClassAnyDecimalDigit","token","ast"]>};
+interface Ast_CharacterClass_Node_29_ extends BaseSymbolNode {
         symbol:"CharacterClass";
         
-        children:[CharacterClassAnyDecimalDigit_Node];
-        parent:MatchCharacterClass_Node_20 | CharacterGroupItem_Node_24;
+        children:[Ast_CharacterClassAnyDecimalDigit_Node];
+        parent:Ast_MatchCharacterClass_Node_21 | Ast_CharacterGroupItem_Node_25;
       }
-type CharacterClass_Node_28 = CharacterClass_Node_28_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
-interface CharacterClassAnyDecimalDigitInverted_Node_ extends BaseTokenNode {
+type Ast_CharacterClass_Node_29 = Ast_CharacterClass_Node_29_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
+interface Ast_CharacterClassAnyDecimalDigitInverted_Node_ extends BaseTokenNode {
             token:"characterClassAnyDecimalDigitInverted";
-            parent:CharacterClass_Node_29;
+            parent:Ast_CharacterClass_Node_30;
           }
-export type CharacterClassAnyDecimalDigitInverted_Node = CharacterClassAnyDecimalDigitInverted_Node_ & {userData:AstNodeUserDataType<["characterClassAnyDecimalDigitInverted","token","ast"]>};
-interface CharacterClass_Node_29_ extends BaseSymbolNode {
+export type Ast_CharacterClassAnyDecimalDigitInverted_Node = Ast_CharacterClassAnyDecimalDigitInverted_Node_ & {userData:AstNodeUserDataType<["characterClassAnyDecimalDigitInverted","token","ast"]>};
+interface Ast_CharacterClass_Node_30_ extends BaseSymbolNode {
         symbol:"CharacterClass";
         
-        children:[CharacterClassAnyDecimalDigitInverted_Node];
-        parent:MatchCharacterClass_Node_20 | CharacterGroupItem_Node_24;
+        children:[Ast_CharacterClassAnyDecimalDigitInverted_Node];
+        parent:Ast_MatchCharacterClass_Node_21 | Ast_CharacterGroupItem_Node_25;
       }
-type CharacterClass_Node_29 = CharacterClass_Node_29_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
-interface WhitespaceCharacter_Node_ extends BaseTokenNode {
+type Ast_CharacterClass_Node_30 = Ast_CharacterClass_Node_30_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
+interface Ast_WhitespaceCharacter_Node_ extends BaseTokenNode {
             token:"whitespaceCharacter";
-            parent:CharacterClass_Node_30;
+            parent:Ast_CharacterClass_Node_31;
           }
-export type WhitespaceCharacter_Node = WhitespaceCharacter_Node_ & {userData:AstNodeUserDataType<["whitespaceCharacter","token","ast"]>};
-interface CharacterClass_Node_30_ extends BaseSymbolNode {
+export type Ast_WhitespaceCharacter_Node = Ast_WhitespaceCharacter_Node_ & {userData:AstNodeUserDataType<["whitespaceCharacter","token","ast"]>};
+interface Ast_CharacterClass_Node_31_ extends BaseSymbolNode {
         symbol:"CharacterClass";
         
-        children:[WhitespaceCharacter_Node];
-        parent:MatchCharacterClass_Node_20 | CharacterGroupItem_Node_24;
+        children:[Ast_WhitespaceCharacter_Node];
+        parent:Ast_MatchCharacterClass_Node_21 | Ast_CharacterGroupItem_Node_25;
       }
-type CharacterClass_Node_30 = CharacterClass_Node_30_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
-interface WhitespaceCharacterInverted_Node_ extends BaseTokenNode {
+type Ast_CharacterClass_Node_31 = Ast_CharacterClass_Node_31_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
+interface Ast_WhitespaceCharacterInverted_Node_ extends BaseTokenNode {
             token:"whitespaceCharacterInverted";
-            parent:CharacterClass_Node_31;
+            parent:Ast_CharacterClass_Node_32;
           }
-export type WhitespaceCharacterInverted_Node = WhitespaceCharacterInverted_Node_ & {userData:AstNodeUserDataType<["whitespaceCharacterInverted","token","ast"]>};
-interface CharacterClass_Node_31_ extends BaseSymbolNode {
+export type Ast_WhitespaceCharacterInverted_Node = Ast_WhitespaceCharacterInverted_Node_ & {userData:AstNodeUserDataType<["whitespaceCharacterInverted","token","ast"]>};
+interface Ast_CharacterClass_Node_32_ extends BaseSymbolNode {
         symbol:"CharacterClass";
         
-        children:[WhitespaceCharacterInverted_Node];
-        parent:MatchCharacterClass_Node_20 | CharacterGroupItem_Node_24;
+        children:[Ast_WhitespaceCharacterInverted_Node];
+        parent:Ast_MatchCharacterClass_Node_21 | Ast_CharacterGroupItem_Node_25;
       }
-type CharacterClass_Node_31 = CharacterClass_Node_31_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
-interface CharacterRange_Node_32_ extends BaseSymbolNode {
+type Ast_CharacterClass_Node_32 = Ast_CharacterClass_Node_32_ & {userData:AstNodeUserDataType<["CharacterClass","symbol","ast"]>};
+interface Ast_CharacterRange_Node_33_ extends BaseSymbolNode {
         symbol:"CharacterRange";
         
-        children:[Char_Node];
-        parent:CharacterGroupItem_Node_25;
+        children:[Ast_Char_Node];
+        parent:Ast_CharacterGroupItem_Node_26;
       }
-type CharacterRange_Node_32 = CharacterRange_Node_32_ & {userData:AstNodeUserDataType<["CharacterRange","symbol","ast"]>};
-interface TOKEN_6_Node_ extends BaseTokenNode {
+type Ast_CharacterRange_Node_33 = Ast_CharacterRange_Node_33_ & {userData:AstNodeUserDataType<["CharacterRange","symbol","ast"]>};
+interface Ast_TOKEN_7_Node_ extends BaseTokenNode {
             token:"-";
-            parent:CharacterRange_Node_33;
+            parent:Ast_CharacterRange_Node_34;
           }
-export type TOKEN_6_Node = TOKEN_6_Node_ & {userData:AstNodeUserDataType<["-","token","ast"]>};
-interface CharacterRange_Node_33_ extends BaseSymbolNode {
+export type Ast_TOKEN_7_Node = Ast_TOKEN_7_Node_ & {userData:AstNodeUserDataType<["-","token","ast"]>};
+interface Ast_CharacterRange_Node_34_ extends BaseSymbolNode {
         symbol:"CharacterRange";
         
-        children:[Char_Node,TOKEN_6_Node,Char_Node];
-        parent:CharacterGroupItem_Node_25;
+        children:[Ast_Char_Node,Ast_TOKEN_7_Node,Ast_Char_Node];
+        parent:Ast_CharacterGroupItem_Node_26;
       }
-type CharacterRange_Node_33 = CharacterRange_Node_33_ & {userData:AstNodeUserDataType<["CharacterRange","symbol","ast"]>};
-interface OPTIONAL_Node_ extends BaseTokenNode {
+type Ast_CharacterRange_Node_34 = Ast_CharacterRange_Node_34_ & {userData:AstNodeUserDataType<["CharacterRange","symbol","ast"]>};
+interface Ast_OPTIONAL_Node_ extends BaseTokenNode {
             token:"OPTIONAL";
-            parent:Quantifier_Node_34 | QuantifierType_Node_38;
+            parent:Ast_Quantifier_Node_35 | Ast_QuantifierType_Node_39;
           }
-export type OPTIONAL_Node = OPTIONAL_Node_ & {userData:AstNodeUserDataType<["OPTIONAL","token","ast"]>};
-interface Quantifier_Node_34_ extends BaseSymbolNode {
+export type Ast_OPTIONAL_Node = Ast_OPTIONAL_Node_ & {userData:AstNodeUserDataType<["OPTIONAL","token","ast"]>};
+interface Ast_Quantifier_Node_35_ extends BaseSymbolNode {
         symbol:"Quantifier";
         
-        children:[QuantifierType_Node,OPTIONAL_Node];
-        parent:Group_Node_8 | Group_Node_10 | Group_Node_12 | Match_Node_14;
+        children:[Ast_QuantifierType_Node,Ast_OPTIONAL_Node];
+        parent:Ast_Group_Node_9 | Ast_Group_Node_11 | Ast_Group_Node_13 | Ast_Match_Node_15;
       }
-type Quantifier_Node_34 = Quantifier_Node_34_ & {userData:AstNodeUserDataType<["Quantifier","symbol","ast"]>};
-interface Quantifier_Node_35_ extends BaseSymbolNode {
+type Ast_Quantifier_Node_35 = Ast_Quantifier_Node_35_ & {userData:AstNodeUserDataType<["Quantifier","symbol","ast"]>};
+interface Ast_Quantifier_Node_36_ extends BaseSymbolNode {
         symbol:"Quantifier";
         
-        children:[QuantifierType_Node];
-        parent:Group_Node_8 | Group_Node_10 | Group_Node_12 | Match_Node_14;
+        children:[Ast_QuantifierType_Node];
+        parent:Ast_Group_Node_9 | Ast_Group_Node_11 | Ast_Group_Node_13 | Ast_Match_Node_15;
       }
-type Quantifier_Node_35 = Quantifier_Node_35_ & {userData:AstNodeUserDataType<["Quantifier","symbol","ast"]>};
-interface TOKEN_7_Node_ extends BaseTokenNode {
+type Ast_Quantifier_Node_36 = Ast_Quantifier_Node_36_ & {userData:AstNodeUserDataType<["Quantifier","symbol","ast"]>};
+interface Ast_TOKEN_8_Node_ extends BaseTokenNode {
             token:"*";
-            parent:QuantifierType_Node_36;
+            parent:Ast_QuantifierType_Node_37;
           }
-export type TOKEN_7_Node = TOKEN_7_Node_ & {userData:AstNodeUserDataType<["*","token","ast"]>};
-interface QuantifierType_Node_36_ extends BaseSymbolNode {
+export type Ast_TOKEN_8_Node = Ast_TOKEN_8_Node_ & {userData:AstNodeUserDataType<["*","token","ast"]>};
+interface Ast_QuantifierType_Node_37_ extends BaseSymbolNode {
         symbol:"QuantifierType";
         
-        children:[TOKEN_7_Node];
-        parent:Quantifier_Node_34 | Quantifier_Node_35;
+        children:[Ast_TOKEN_8_Node];
+        parent:Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
       }
-type QuantifierType_Node_36 = QuantifierType_Node_36_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
-interface TOKEN_8_Node_ extends BaseTokenNode {
+type Ast_QuantifierType_Node_37 = Ast_QuantifierType_Node_37_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
+interface Ast_TOKEN_9_Node_ extends BaseTokenNode {
             token:"+";
-            parent:QuantifierType_Node_37;
+            parent:Ast_QuantifierType_Node_38;
           }
-export type TOKEN_8_Node = TOKEN_8_Node_ & {userData:AstNodeUserDataType<["+","token","ast"]>};
-interface QuantifierType_Node_37_ extends BaseSymbolNode {
+export type Ast_TOKEN_9_Node = Ast_TOKEN_9_Node_ & {userData:AstNodeUserDataType<["+","token","ast"]>};
+interface Ast_QuantifierType_Node_38_ extends BaseSymbolNode {
         symbol:"QuantifierType";
         
-        children:[TOKEN_8_Node];
-        parent:Quantifier_Node_34 | Quantifier_Node_35;
+        children:[Ast_TOKEN_9_Node];
+        parent:Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
       }
-type QuantifierType_Node_37 = QuantifierType_Node_37_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
-interface QuantifierType_Node_38_ extends BaseSymbolNode {
+type Ast_QuantifierType_Node_38 = Ast_QuantifierType_Node_38_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
+interface Ast_QuantifierType_Node_39_ extends BaseSymbolNode {
         symbol:"QuantifierType";
         
-        children:[OPTIONAL_Node];
-        parent:Quantifier_Node_34 | Quantifier_Node_35;
+        children:[Ast_OPTIONAL_Node];
+        parent:Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
       }
-type QuantifierType_Node_38 = QuantifierType_Node_38_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
-interface TOKEN_9_Node_ extends BaseTokenNode {
+type Ast_QuantifierType_Node_39 = Ast_QuantifierType_Node_39_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
+interface Ast_TOKEN_10_Node_ extends BaseTokenNode {
             token:"{";
-            parent:QuantifierType_Node_39 | QuantifierType_Node_40 | QuantifierType_Node_41;
+            parent:Ast_QuantifierType_Node_40 | Ast_QuantifierType_Node_41 | Ast_QuantifierType_Node_42;
           }
-export type TOKEN_9_Node = TOKEN_9_Node_ & {userData:AstNodeUserDataType<["{","token","ast"]>};
-interface Int_Node_ extends BaseTokenNode {
+export type Ast_TOKEN_10_Node = Ast_TOKEN_10_Node_ & {userData:AstNodeUserDataType<["{","token","ast"]>};
+interface Ast_Int_Node_ extends BaseTokenNode {
             token:"int";
-            parent:QuantifierType_Node_39 | QuantifierType_Node_40 | QuantifierType_Node_41;
+            parent:Ast_QuantifierType_Node_40 | Ast_QuantifierType_Node_41 | Ast_QuantifierType_Node_42;
           }
-export type Int_Node = Int_Node_ & {userData:AstNodeUserDataType<["int","token","ast"]>};
-interface TOKEN_10_Node_ extends BaseTokenNode {
+export type Ast_Int_Node = Ast_Int_Node_ & {userData:AstNodeUserDataType<["int","token","ast"]>};
+interface Ast_TOKEN_11_Node_ extends BaseTokenNode {
             token:"}";
-            parent:QuantifierType_Node_39 | QuantifierType_Node_40 | QuantifierType_Node_41;
+            parent:Ast_QuantifierType_Node_40 | Ast_QuantifierType_Node_41 | Ast_QuantifierType_Node_42;
           }
-export type TOKEN_10_Node = TOKEN_10_Node_ & {userData:AstNodeUserDataType<["}","token","ast"]>};
-interface QuantifierType_Node_39_ extends BaseSymbolNode {
+export type Ast_TOKEN_11_Node = Ast_TOKEN_11_Node_ & {userData:AstNodeUserDataType<["}","token","ast"]>};
+interface Ast_QuantifierType_Node_40_ extends BaseSymbolNode {
         symbol:"QuantifierType";
         
-        children:[TOKEN_9_Node,Int_Node,TOKEN_10_Node];
-        parent:Quantifier_Node_34 | Quantifier_Node_35;
+        children:[Ast_TOKEN_10_Node,Ast_Int_Node,Ast_TOKEN_11_Node];
+        parent:Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
       }
-type QuantifierType_Node_39 = QuantifierType_Node_39_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
-interface TOKEN_11_Node_ extends BaseTokenNode {
+type Ast_QuantifierType_Node_40 = Ast_QuantifierType_Node_40_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
+interface Ast_TOKEN_12_Node_ extends BaseTokenNode {
             token:",";
-            parent:QuantifierType_Node_40 | QuantifierType_Node_41;
+            parent:Ast_QuantifierType_Node_41 | Ast_QuantifierType_Node_42;
           }
-export type TOKEN_11_Node = TOKEN_11_Node_ & {userData:AstNodeUserDataType<[",","token","ast"]>};
-interface QuantifierType_Node_40_ extends BaseSymbolNode {
+export type Ast_TOKEN_12_Node = Ast_TOKEN_12_Node_ & {userData:AstNodeUserDataType<[",","token","ast"]>};
+interface Ast_QuantifierType_Node_41_ extends BaseSymbolNode {
         symbol:"QuantifierType";
         
-        children:[TOKEN_9_Node,Int_Node,TOKEN_11_Node,Int_Node,TOKEN_10_Node];
-        parent:Quantifier_Node_34 | Quantifier_Node_35;
+        children:[Ast_TOKEN_10_Node,Ast_Int_Node,Ast_TOKEN_12_Node,Ast_Int_Node,Ast_TOKEN_11_Node];
+        parent:Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
       }
-type QuantifierType_Node_40 = QuantifierType_Node_40_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
-interface QuantifierType_Node_41_ extends BaseSymbolNode {
+type Ast_QuantifierType_Node_41 = Ast_QuantifierType_Node_41_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
+interface Ast_QuantifierType_Node_42_ extends BaseSymbolNode {
         symbol:"QuantifierType";
         
-        children:[TOKEN_9_Node,Int_Node,TOKEN_11_Node,TOKEN_10_Node];
-        parent:Quantifier_Node_34 | Quantifier_Node_35;
+        children:[Ast_TOKEN_10_Node,Ast_Int_Node,Ast_TOKEN_12_Node,Ast_TOKEN_11_Node];
+        parent:Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
       }
-type QuantifierType_Node_41 = QuantifierType_Node_41_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
-interface AnchorWordBoundary_Node_ extends BaseTokenNode {
+type Ast_QuantifierType_Node_42 = Ast_QuantifierType_Node_42_ & {userData:AstNodeUserDataType<["QuantifierType","symbol","ast"]>};
+interface Ast_AnchorWordBoundary_Node_ extends BaseTokenNode {
             token:"anchorWordBoundary";
-            parent:Anchor_Node_42;
+            parent:Ast_Anchor_Node_43;
           }
-export type AnchorWordBoundary_Node = AnchorWordBoundary_Node_ & {userData:AstNodeUserDataType<["anchorWordBoundary","token","ast"]>};
-interface Anchor_Node_42_ extends BaseSymbolNode {
+export type Ast_AnchorWordBoundary_Node = Ast_AnchorWordBoundary_Node_ & {userData:AstNodeUserDataType<["anchorWordBoundary","token","ast"]>};
+interface Ast_Anchor_Node_43_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[AnchorWordBoundary_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_AnchorWordBoundary_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_42 = Anchor_Node_42_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface AnchorNonWordBoundary_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_43 = Ast_Anchor_Node_43_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_AnchorNonWordBoundary_Node_ extends BaseTokenNode {
             token:"anchorNonWordBoundary";
-            parent:Anchor_Node_43;
+            parent:Ast_Anchor_Node_44;
           }
-export type AnchorNonWordBoundary_Node = AnchorNonWordBoundary_Node_ & {userData:AstNodeUserDataType<["anchorNonWordBoundary","token","ast"]>};
-interface Anchor_Node_43_ extends BaseSymbolNode {
+export type Ast_AnchorNonWordBoundary_Node = Ast_AnchorNonWordBoundary_Node_ & {userData:AstNodeUserDataType<["anchorNonWordBoundary","token","ast"]>};
+interface Ast_Anchor_Node_44_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[AnchorNonWordBoundary_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_AnchorNonWordBoundary_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_43 = Anchor_Node_43_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface AnchorStartOfStringOnly_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_44 = Ast_Anchor_Node_44_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_AnchorStartOfStringOnly_Node_ extends BaseTokenNode {
             token:"anchorStartOfStringOnly";
-            parent:Anchor_Node_44;
+            parent:Ast_Anchor_Node_45;
           }
-export type AnchorStartOfStringOnly_Node = AnchorStartOfStringOnly_Node_ & {userData:AstNodeUserDataType<["anchorStartOfStringOnly","token","ast"]>};
-interface Anchor_Node_44_ extends BaseSymbolNode {
+export type Ast_AnchorStartOfStringOnly_Node = Ast_AnchorStartOfStringOnly_Node_ & {userData:AstNodeUserDataType<["anchorStartOfStringOnly","token","ast"]>};
+interface Ast_Anchor_Node_45_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[AnchorStartOfStringOnly_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_AnchorStartOfStringOnly_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_44 = Anchor_Node_44_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface AnchorEndOfStringOnlyNotNewline_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_45 = Ast_Anchor_Node_45_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_AnchorEndOfStringOnlyNotNewline_Node_ extends BaseTokenNode {
             token:"anchorEndOfStringOnlyNotNewline";
-            parent:Anchor_Node_45;
+            parent:Ast_Anchor_Node_46;
           }
-export type AnchorEndOfStringOnlyNotNewline_Node = AnchorEndOfStringOnlyNotNewline_Node_ & {userData:AstNodeUserDataType<["anchorEndOfStringOnlyNotNewline","token","ast"]>};
-interface Anchor_Node_45_ extends BaseSymbolNode {
+export type Ast_AnchorEndOfStringOnlyNotNewline_Node = Ast_AnchorEndOfStringOnlyNotNewline_Node_ & {userData:AstNodeUserDataType<["anchorEndOfStringOnlyNotNewline","token","ast"]>};
+interface Ast_Anchor_Node_46_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[AnchorEndOfStringOnlyNotNewline_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_AnchorEndOfStringOnlyNotNewline_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_45 = Anchor_Node_45_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface AnchorEndOfStringOnly_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_46 = Ast_Anchor_Node_46_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_AnchorEndOfStringOnly_Node_ extends BaseTokenNode {
             token:"anchorEndOfStringOnly";
-            parent:Anchor_Node_46;
+            parent:Ast_Anchor_Node_47;
           }
-export type AnchorEndOfStringOnly_Node = AnchorEndOfStringOnly_Node_ & {userData:AstNodeUserDataType<["anchorEndOfStringOnly","token","ast"]>};
-interface Anchor_Node_46_ extends BaseSymbolNode {
+export type Ast_AnchorEndOfStringOnly_Node = Ast_AnchorEndOfStringOnly_Node_ & {userData:AstNodeUserDataType<["anchorEndOfStringOnly","token","ast"]>};
+interface Ast_Anchor_Node_47_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[AnchorEndOfStringOnly_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_AnchorEndOfStringOnly_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_46 = Anchor_Node_46_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface AnchorPreviousMatchEnd_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_47 = Ast_Anchor_Node_47_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_AnchorPreviousMatchEnd_Node_ extends BaseTokenNode {
             token:"anchorPreviousMatchEnd";
-            parent:Anchor_Node_47;
+            parent:Ast_Anchor_Node_48;
           }
-export type AnchorPreviousMatchEnd_Node = AnchorPreviousMatchEnd_Node_ & {userData:AstNodeUserDataType<["anchorPreviousMatchEnd","token","ast"]>};
-interface Anchor_Node_47_ extends BaseSymbolNode {
+export type Ast_AnchorPreviousMatchEnd_Node = Ast_AnchorPreviousMatchEnd_Node_ & {userData:AstNodeUserDataType<["anchorPreviousMatchEnd","token","ast"]>};
+interface Ast_Anchor_Node_48_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[AnchorPreviousMatchEnd_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_AnchorPreviousMatchEnd_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_47 = Anchor_Node_47_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface $_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_48 = Ast_Anchor_Node_48_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_$_Node_ extends BaseTokenNode {
             token:"$";
-            parent:Anchor_Node_48;
+            parent:Ast_Anchor_Node_49;
           }
-export type $_Node = $_Node_ & {userData:AstNodeUserDataType<["$","token","ast"]>};
-interface Anchor_Node_48_ extends BaseSymbolNode {
+export type Ast_$_Node = Ast_$_Node_ & {userData:AstNodeUserDataType<["$","token","ast"]>};
+interface Ast_Anchor_Node_49_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[$_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_$_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_48 = Anchor_Node_48_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface Lookahead_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_49 = Ast_Anchor_Node_49_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_Lookahead_Node_ extends BaseTokenNode {
             token:"lookahead";
-            parent:Anchor_Node_49;
+            parent:Ast_Anchor_Node_50;
           }
-export type Lookahead_Node = Lookahead_Node_ & {userData:AstNodeUserDataType<["lookahead","token","ast"]>};
-interface Anchor_Node_49_ extends BaseSymbolNode {
+export type Ast_Lookahead_Node = Ast_Lookahead_Node_ & {userData:AstNodeUserDataType<["lookahead","token","ast"]>};
+interface Ast_Anchor_Node_50_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[Lookahead_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_Lookahead_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_49 = Anchor_Node_49_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface NegativeLookahead_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_50 = Ast_Anchor_Node_50_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_NegativeLookahead_Node_ extends BaseTokenNode {
             token:"negativeLookahead";
-            parent:Anchor_Node_50;
+            parent:Ast_Anchor_Node_51;
           }
-export type NegativeLookahead_Node = NegativeLookahead_Node_ & {userData:AstNodeUserDataType<["negativeLookahead","token","ast"]>};
-interface Anchor_Node_50_ extends BaseSymbolNode {
+export type Ast_NegativeLookahead_Node = Ast_NegativeLookahead_Node_ & {userData:AstNodeUserDataType<["negativeLookahead","token","ast"]>};
+interface Ast_Anchor_Node_51_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[NegativeLookahead_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_NegativeLookahead_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_50 = Anchor_Node_50_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface Lookbehind_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_51 = Ast_Anchor_Node_51_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_Lookbehind_Node_ extends BaseTokenNode {
             token:"lookbehind";
-            parent:Anchor_Node_51;
+            parent:Ast_Anchor_Node_52;
           }
-export type Lookbehind_Node = Lookbehind_Node_ & {userData:AstNodeUserDataType<["lookbehind","token","ast"]>};
-interface Anchor_Node_51_ extends BaseSymbolNode {
+export type Ast_Lookbehind_Node = Ast_Lookbehind_Node_ & {userData:AstNodeUserDataType<["lookbehind","token","ast"]>};
+interface Ast_Anchor_Node_52_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[Lookbehind_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_Lookbehind_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_51 = Anchor_Node_51_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface NegativeLookbehind_Node_ extends BaseTokenNode {
+type Ast_Anchor_Node_52 = Ast_Anchor_Node_52_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+interface Ast_NegativeLookbehind_Node_ extends BaseTokenNode {
             token:"negativeLookbehind";
-            parent:Anchor_Node_52;
+            parent:Ast_Anchor_Node_53;
           }
-export type NegativeLookbehind_Node = NegativeLookbehind_Node_ & {userData:AstNodeUserDataType<["negativeLookbehind","token","ast"]>};
-interface Anchor_Node_52_ extends BaseSymbolNode {
+export type Ast_NegativeLookbehind_Node = Ast_NegativeLookbehind_Node_ & {userData:AstNodeUserDataType<["negativeLookbehind","token","ast"]>};
+interface Ast_Anchor_Node_53_ extends BaseSymbolNode {
         symbol:"Anchor";
         
-        children:[NegativeLookbehind_Node,Expression_Node,TOKEN_3_Node];
-        parent:ExpressionItem_Node_6;
+        children:[Ast_NegativeLookbehind_Node,Ast_Expression_Node,Ast_TOKEN_4_Node];
+        parent:Ast_ExpressionItem_Node_7;
       }
-type Anchor_Node_52 = Anchor_Node_52_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
-interface TOKEN_12_Node_ extends BaseTokenNode {
-            token:"|";
-            parent:Expression_3_group_1_Parent_Node;
-          }
-export type TOKEN_12_Node = TOKEN_12_Node_ & {userData:AstNodeUserDataType<["|","token","ast"]>};
-type Expression_3_group_1_Node  = [TOKEN_12_Node,SubExpression_Node];
-export type Regexp_Node = Regexp_Node_0 | Regexp_Node_1;
-export type { Expression_Node };
-export type { SubExpression_Node };
-export type ExpressionItem_Node = ExpressionItem_Node_4 | ExpressionItem_Node_5 | ExpressionItem_Node_6 | ExpressionItem_Node_7;
-export type Group_Node = Group_Node_8 | Group_Node_9 | Group_Node_10 | Group_Node_11 | Group_Node_12 | Group_Node_13;
-export type Match_Node = Match_Node_14 | Match_Node_15;
-export type MatchItem_Node = MatchItem_Node_16 | MatchItem_Node_17 | MatchItem_Node_18;
-export type MatchCharacterClass_Node = MatchCharacterClass_Node_19 | MatchCharacterClass_Node_20;
-export type CharacterGroup_Node = CharacterGroup_Node_21 | CharacterGroup_Node_22;
-export type { CharacterGroupInner_Node };
-export type CharacterGroupItem_Node = CharacterGroupItem_Node_24 | CharacterGroupItem_Node_25;
-export type CharacterClass_Node = CharacterClass_Node_26 | CharacterClass_Node_27 | CharacterClass_Node_28 | CharacterClass_Node_29 | CharacterClass_Node_30 | CharacterClass_Node_31;
-export type CharacterRange_Node = CharacterRange_Node_32 | CharacterRange_Node_33;
-export type Quantifier_Node = Quantifier_Node_34 | Quantifier_Node_35;
-export type QuantifierType_Node = QuantifierType_Node_36 | QuantifierType_Node_37 | QuantifierType_Node_38 | QuantifierType_Node_39 | QuantifierType_Node_40 | QuantifierType_Node_41;
-export type Anchor_Node = Anchor_Node_42 | Anchor_Node_43 | Anchor_Node_44 | Anchor_Node_45 | Anchor_Node_46 | Anchor_Node_47 | Anchor_Node_48 | Anchor_Node_49 | Anchor_Node_50 | Anchor_Node_51 | Anchor_Node_52;
+type Ast_Anchor_Node_53 = Ast_Anchor_Node_53_ & {userData:AstNodeUserDataType<["Anchor","symbol","ast"]>};
+export type Ast_Regexp_Node = Ast_Regexp_Node_0 | Ast_Regexp_Node_1;
+export type { Ast_Expression_Node };
+export type { Ast_SubExpression_Node };
+export type Ast_ExpressionItem_Node = Ast_ExpressionItem_Node_5 | Ast_ExpressionItem_Node_6 | Ast_ExpressionItem_Node_7 | Ast_ExpressionItem_Node_8;
+export type Ast_Group_Node = Ast_Group_Node_9 | Ast_Group_Node_10 | Ast_Group_Node_11 | Ast_Group_Node_12 | Ast_Group_Node_13 | Ast_Group_Node_14;
+export type Ast_Match_Node = Ast_Match_Node_15 | Ast_Match_Node_16;
+export type Ast_MatchItem_Node = Ast_MatchItem_Node_17 | Ast_MatchItem_Node_18 | Ast_MatchItem_Node_19;
+export type Ast_MatchCharacterClass_Node = Ast_MatchCharacterClass_Node_20 | Ast_MatchCharacterClass_Node_21;
+export type Ast_CharacterGroup_Node = Ast_CharacterGroup_Node_22 | Ast_CharacterGroup_Node_23;
+export type { Ast_CharacterGroupInner_Node };
+export type Ast_CharacterGroupItem_Node = Ast_CharacterGroupItem_Node_25 | Ast_CharacterGroupItem_Node_26;
+export type Ast_CharacterClass_Node = Ast_CharacterClass_Node_27 | Ast_CharacterClass_Node_28 | Ast_CharacterClass_Node_29 | Ast_CharacterClass_Node_30 | Ast_CharacterClass_Node_31 | Ast_CharacterClass_Node_32;
+export type Ast_CharacterRange_Node = Ast_CharacterRange_Node_33 | Ast_CharacterRange_Node_34;
+export type Ast_Quantifier_Node = Ast_Quantifier_Node_35 | Ast_Quantifier_Node_36;
+export type Ast_QuantifierType_Node = Ast_QuantifierType_Node_37 | Ast_QuantifierType_Node_38 | Ast_QuantifierType_Node_39 | Ast_QuantifierType_Node_40 | Ast_QuantifierType_Node_41 | Ast_QuantifierType_Node_42;
+export type Ast_Anchor_Node = Ast_Anchor_Node_43 | Ast_Anchor_Node_44 | Ast_Anchor_Node_45 | Ast_Anchor_Node_46 | Ast_Anchor_Node_47 | Ast_Anchor_Node_48 | Ast_Anchor_Node_49 | Ast_Anchor_Node_50 | Ast_Anchor_Node_51 | Ast_Anchor_Node_52 | Ast_Anchor_Node_53;

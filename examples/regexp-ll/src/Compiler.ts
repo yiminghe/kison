@@ -28,7 +28,7 @@ import parser from './parser';
 import type {
   AstNode,
   AstVisitors,
-  Quantifier_Node,
+  Ast_Quantifier_Node,
   ParserOptions,
 } from './parser';
 import { GroupIndex } from './Input';
@@ -330,7 +330,7 @@ export default class Compiler {
     return this.captureGroupStateEndMap.get(state);
   }
 
-  _compileQuantifier(getUnit: GetUnit, quantifier: Quantifier_Node) {
+  _compileQuantifier(getUnit: GetUnit, quantifier: Ast_Quantifier_Node) {
     const lazy = quantifier.children[1]?.text === '?';
     const typeNodes = quantifier.children[0].children;
     const type = typeNodes[0].text;

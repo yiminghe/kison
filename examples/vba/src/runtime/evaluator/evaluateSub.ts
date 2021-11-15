@@ -1,10 +1,10 @@
 import type {
-  ICS_B_ProcedureCall_Node,
-  ECS_ProcedureCall_Node,
+  Ast_ICS_B_ProcedureCall_Node,
+  Ast_ECS_ProcedureCall_Node,
 } from '../../parser';
 import {
-  ECS_MemberProcedureCall_Node,
-  ICS_B_MemberProcedureCall_Node,
+  Ast_ECS_MemberProcedureCall_Node,
+  Ast_ICS_B_MemberProcedureCall_Node,
 } from '../../parserLLK';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
@@ -19,7 +19,7 @@ import { evaluate, registerEvaluators } from './evaluators';
 import { buildArgs, buildIndexes, checkIndexesInterger } from './common';
 
 async function callSub(
-  node: ICS_B_ProcedureCall_Node | ECS_ProcedureCall_Node,
+  node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,
   context: Context,
   tokenIndex: number,
 ) {
@@ -34,7 +34,7 @@ async function callSub(
 }
 
 async function callMemberSub(
-  node: ICS_B_MemberProcedureCall_Node | ECS_MemberProcedureCall_Node,
+  node: Ast_ICS_B_MemberProcedureCall_Node | Ast_ECS_MemberProcedureCall_Node,
   context: Context,
   callerIndex: number,
 ) {

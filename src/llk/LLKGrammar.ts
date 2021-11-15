@@ -15,6 +15,7 @@ class LLKGrammar extends Grammar {
   }
 
   override expandProductionsInternal() {
+    this.expandProductionAlternativeAndGroup();
     this.expandOneOrMoreSymbol();
     this.expandProductionPriority();
   }

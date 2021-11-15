@@ -1,4 +1,4 @@
-import { FunctionStmt_Node, SubStmt_Node } from '../../parser';
+import { Ast_FunctionStmt_Node, Ast_SubStmt_Node } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
 import { evaluate } from '../evaluator/index';
@@ -6,7 +6,7 @@ import { ArgInfo, SubSymbolItem } from '../types';
 import { registerLoaders, load } from './loaders';
 
 async function loadSub(
-  node: FunctionStmt_Node | SubStmt_Node,
+  node: Ast_FunctionStmt_Node | Ast_SubStmt_Node,
   context: Context,
 ) {
   for (const c of node.children) {

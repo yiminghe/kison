@@ -1,10 +1,10 @@
 import type {
-  EXIT_DO_Node,
-  EXIT_FOR_Node,
-  EXIT_FUNCTION_Node,
-  EXIT_PROPERTY_Node,
-  EXIT_SUB_Node,
-  END_Node,
+  Ast_EXIT_DO_Node,
+  Ast_EXIT_FOR_Node,
+  Ast_EXIT_FUNCTION_Node,
+  Ast_EXIT_PROPERTY_Node,
+  Ast_EXIT_SUB_Node,
+  Ast_END_Node,
 } from '../../parser';
 import type { VBClass } from './VBClass';
 import type { VBArray } from './VBArray';
@@ -99,18 +99,18 @@ export class ExitResult {
   type: 'Exit' = 'Exit';
   constructor(
     public token:
-      | EXIT_DO_Node
-      | EXIT_FOR_Node
-      | EXIT_FUNCTION_Node
-      | EXIT_PROPERTY_Node
-      | EXIT_SUB_Node
-      | END_Node,
+      | Ast_EXIT_DO_Node
+      | Ast_EXIT_FOR_Node
+      | Ast_EXIT_FUNCTION_Node
+      | Ast_EXIT_PROPERTY_Node
+      | Ast_EXIT_SUB_Node
+      | Ast_END_Node,
   ) {}
 }
 
 export const END_EXIT_RESULT = new ExitResult({
   token: 'END',
-} as END_Node);
+} as Ast_END_Node);
 
 export class VBNothing {
   type: 'Nothing' = 'Nothing';

@@ -5,7 +5,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
   'start': 0,
   'end': 57,
   'firstLine': 1,
-  'lastLine': 12,
+  'lastLine': 2,
   'firstColumn': 1,
   'lastColumn': 1,
   'symbol': 'progam',
@@ -41,7 +41,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
       'start': 1,
       'end': 57,
       'firstLine': 2,
-      'lastLine': 12,
+      'lastLine': 2,
       'firstColumn': 1,
       'lastColumn': 1,
       'symbol': 'moduleBody',
@@ -51,7 +51,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
           'start': 1,
           'end': 56,
           'firstLine': 2,
-          'lastLine': 11,
+          'lastLine': 1,
           'firstColumn': 1,
           'lastColumn': 8,
           'symbol': 'moduleBodyElement',
@@ -61,7 +61,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
               'start': 1,
               'end': 56,
               'firstLine': 2,
-              'lastLine': 11,
+              'lastLine': 1,
               'firstColumn': 1,
               'lastColumn': 8,
               'symbol': 'subStmt',
@@ -71,7 +71,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                   'start': 1,
                   'end': 4,
                   'firstLine': 2,
-                  'lastLine': 2,
+                  'lastLine': 1,
                   'firstColumn': 1,
                   'lastColumn': 4,
                   'token': 'SUB',
@@ -81,8 +81,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                 {
                   'start': 5,
                   'end': 9,
-                  'firstLine': 2,
-                  'lastLine': 2,
+                  'firstLine': 1,
+                  'lastLine': 1,
                   'firstColumn': 5,
                   'lastColumn': 9,
                   'symbol': 'ambiguousIdentifier',
@@ -91,8 +91,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 5,
                       'end': 9,
-                      'firstLine': 2,
-                      'lastLine': 2,
+                      'firstLine': 1,
+                      'lastLine': 1,
                       'firstColumn': 5,
                       'lastColumn': 9,
                       'token': 'IDENTIFIER',
@@ -101,14 +101,14 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 54,
-                  'internalRuleIndex': 109,
+                  'internalRuleIndex': 153,
                   'id': 7
                 },
                 {
                   'start': 9,
                   'end': 40,
-                  'firstLine': 2,
-                  'lastLine': 8,
+                  'firstLine': 1,
+                  'lastLine': 3,
                   'firstColumn': 9,
                   'lastColumn': 1,
                   'symbol': 'endOfStatement',
@@ -117,8 +117,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 9,
                       'end': 10,
-                      'firstLine': 2,
-                      'lastLine': 3,
+                      'firstLine': 1,
+                      'lastLine': 2,
                       'firstColumn': 9,
                       'lastColumn': 1,
                       'symbol': 'endOfLine',
@@ -127,8 +127,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 9,
                           'end': 10,
-                          'firstLine': 2,
-                          'lastLine': 3,
+                          'firstLine': 1,
+                          'lastLine': 2,
                           'firstColumn': 9,
                           'lastColumn': 1,
                           'token': 'NEWLINE',
@@ -143,8 +143,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 10,
                       'end': 23,
-                      'firstLine': 3,
-                      'lastLine': 4,
+                      'firstLine': 2,
+                      'lastLine': 2,
                       'firstColumn': 1,
                       'lastColumn': 8,
                       'symbol': 'endOfLine',
@@ -153,8 +153,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 10,
                           'end': 23,
-                          'firstLine': 3,
-                          'lastLine': 4,
+                          'firstLine': 2,
+                          'lastLine': 2,
                           'firstColumn': 1,
                           'lastColumn': 8,
                           'token': 'COMMENT',
@@ -169,8 +169,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 23,
                       'end': 24,
-                      'firstLine': 4,
-                      'lastLine': 5,
+                      'firstLine': 2,
+                      'lastLine': 2,
                       'firstColumn': 8,
                       'lastColumn': 1,
                       'symbol': 'endOfLine',
@@ -179,8 +179,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 23,
                           'end': 24,
-                          'firstLine': 4,
-                          'lastLine': 5,
+                          'firstLine': 2,
+                          'lastLine': 2,
                           'firstColumn': 8,
                           'lastColumn': 1,
                           'token': 'NEWLINE',
@@ -195,8 +195,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 24,
                       'end': 38,
-                      'firstLine': 5,
-                      'lastLine': 6,
+                      'firstLine': 2,
+                      'lastLine': 2,
                       'firstColumn': 1,
                       'lastColumn': 4,
                       'symbol': 'endOfLine',
@@ -205,8 +205,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 24,
                           'end': 38,
-                          'firstLine': 5,
-                          'lastLine': 6,
+                          'firstLine': 2,
+                          'lastLine': 2,
                           'firstColumn': 1,
                           'lastColumn': 4,
                           'token': 'REMCOMMENT',
@@ -221,8 +221,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 38,
                       'end': 40,
-                      'firstLine': 6,
-                      'lastLine': 8,
+                      'firstLine': 2,
+                      'lastLine': 3,
                       'firstColumn': 4,
                       'lastColumn': 1,
                       'symbol': 'endOfLine',
@@ -231,8 +231,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 38,
                           'end': 40,
-                          'firstLine': 6,
-                          'lastLine': 8,
+                          'firstLine': 2,
+                          'lastLine': 3,
                           'firstColumn': 4,
                           'lastColumn': 1,
                           'token': 'NEWLINE',
@@ -246,14 +246,14 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 3,
-                  'internalRuleIndex': 5,
+                  'internalRuleIndex': 9,
                   'id': 8
                 },
                 {
                   'start': 40,
                   'end': 49,
-                  'firstLine': 8,
-                  'lastLine': 11,
+                  'firstLine': 3,
+                  'lastLine': 3,
                   'firstColumn': 1,
                   'lastColumn': 1,
                   'symbol': 'block',
@@ -262,8 +262,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     {
                       'start': 40,
                       'end': 47,
-                      'firstLine': 8,
-                      'lastLine': 9,
+                      'firstLine': 3,
+                      'lastLine': 1,
                       'firstColumn': 1,
                       'lastColumn': 2,
                       'symbol': 'blockStmt',
@@ -272,8 +272,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 40,
                           'end': 47,
-                          'firstLine': 8,
-                          'lastLine': 9,
+                          'firstLine': 3,
+                          'lastLine': 1,
                           'firstColumn': 1,
                           'lastColumn': 2,
                           'symbol': 'letStmt',
@@ -282,8 +282,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                             {
                               'start': 40,
                               'end': 41,
-                              'firstLine': 8,
-                              'lastLine': 8,
+                              'firstLine': 3,
+                              'lastLine': 1,
                               'firstColumn': 1,
                               'lastColumn': 2,
                               'symbol': 'implicitCallStmt_InStmt',
@@ -292,8 +292,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                 {
                                   'start': 40,
                                   'end': 41,
-                                  'firstLine': 8,
-                                  'lastLine': 8,
+                                  'firstLine': 3,
+                                  'lastLine': 1,
                                   'firstColumn': 1,
                                   'lastColumn': 2,
                                   'symbol': 'iCS_S_VariableOrProcedureCall',
@@ -302,8 +302,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                     {
                                       'start': 40,
                                       'end': 41,
-                                      'firstLine': 8,
-                                      'lastLine': 8,
+                                      'firstLine': 3,
+                                      'lastLine': 1,
                                       'firstColumn': 1,
                                       'lastColumn': 2,
                                       'symbol': 'ambiguousIdentifier',
@@ -312,8 +312,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                         {
                                           'start': 40,
                                           'end': 41,
-                                          'firstLine': 8,
-                                          'lastLine': 8,
+                                          'firstLine': 3,
+                                          'lastLine': 1,
                                           'firstColumn': 1,
                                           'lastColumn': 2,
                                           'token': 'IDENTIFIER',
@@ -322,24 +322,24 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                         }
                                       ],
                                       'ruleIndex': 54,
-                                      'internalRuleIndex': 109,
+                                      'internalRuleIndex': 153,
                                       'id': 19
                                     }
                                   ],
                                   'ruleIndex': 43,
-                                  'internalRuleIndex': 80,
+                                  'internalRuleIndex': 116,
                                   'id': 18
                                 }
                               ],
                               'ruleIndex': 39,
-                              'internalRuleIndex': 71,
+                              'internalRuleIndex': 101,
                               'id': 17
                             },
                             {
                               'start': 42,
                               'end': 43,
-                              'firstLine': 8,
-                              'lastLine': 8,
+                              'firstLine': 1,
+                              'lastLine': 1,
                               'firstColumn': 3,
                               'lastColumn': 4,
                               'token': 'EQ',
@@ -349,8 +349,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                             {
                               'start': 46,
                               'end': 47,
-                              'firstLine': 9,
-                              'lastLine': 9,
+                              'firstLine': 2,
+                              'lastLine': 1,
                               'firstColumn': 1,
                               'lastColumn': 2,
                               'symbol': 'valueStmt',
@@ -359,8 +359,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                 {
                                   'start': 46,
                                   'end': 47,
-                                  'firstLine': 9,
-                                  'lastLine': 9,
+                                  'firstLine': 2,
+                                  'lastLine': 1,
                                   'firstColumn': 1,
                                   'lastColumn': 2,
                                   'symbol': 'literal',
@@ -369,8 +369,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                     {
                                       'start': 46,
                                       'end': 47,
-                                      'firstLine': 9,
-                                      'lastLine': 9,
+                                      'firstLine': 2,
+                                      'lastLine': 1,
                                       'firstColumn': 1,
                                       'lastColumn': 2,
                                       'token': 'INTEGERLITERAL',
@@ -379,29 +379,29 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                     }
                                   ],
                                   'ruleIndex': 45,
-                                  'internalRuleIndex': 82,
+                                  'internalRuleIndex': 118,
                                   'id': 21
                                 }
                               ],
                               'ruleIndex': 38,
-                              'internalRuleIndex': 68,
+                              'internalRuleIndex': 98,
                               'id': 20
                             }
                           ],
                           'ruleIndex': 20,
-                          'internalRuleIndex': 42,
+                          'internalRuleIndex': 56,
                           'id': 16
                         }
                       ],
                       'ruleIndex': 15,
-                      'internalRuleIndex': 30,
+                      'internalRuleIndex': 36,
                       'id': 15
                     },
                     {
                       'start': 47,
                       'end': 49,
-                      'firstLine': 9,
-                      'lastLine': 11,
+                      'firstLine': 1,
+                      'lastLine': 3,
                       'firstColumn': 2,
                       'lastColumn': 1,
                       'symbol': 'endOfStatement',
@@ -410,8 +410,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         {
                           'start': 47,
                           'end': 49,
-                          'firstLine': 9,
-                          'lastLine': 11,
+                          'firstLine': 1,
+                          'lastLine': 3,
                           'firstColumn': 2,
                           'lastColumn': 1,
                           'symbol': 'endOfLine',
@@ -420,8 +420,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                             {
                               'start': 47,
                               'end': 49,
-                              'firstLine': 9,
-                              'lastLine': 11,
+                              'firstLine': 1,
+                              'lastLine': 3,
                               'firstColumn': 2,
                               'lastColumn': 1,
                               'token': 'NEWLINE',
@@ -435,19 +435,19 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                         }
                       ],
                       'ruleIndex': 3,
-                      'internalRuleIndex': 5,
+                      'internalRuleIndex': 9,
                       'id': 22
                     }
                   ],
                   'ruleIndex': 14,
-                  'internalRuleIndex': 24,
+                  'internalRuleIndex': 30,
                   'id': 14
                 },
                 {
                   'start': 49,
                   'end': 56,
-                  'firstLine': 11,
-                  'lastLine': 11,
+                  'firstLine': 3,
+                  'lastLine': 1,
                   'firstColumn': 1,
                   'lastColumn': 8,
                   'token': 'END_SUB',
@@ -456,19 +456,19 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                 }
               ],
               'ruleIndex': 9,
-              'internalRuleIndex': 19,
+              'internalRuleIndex': 24,
               'id': 6
             }
           ],
           'ruleIndex': 7,
-          'internalRuleIndex': 14,
+          'internalRuleIndex': 19,
           'id': 5
         },
         {
           'start': 56,
           'end': 57,
-          'firstLine': 11,
-          'lastLine': 12,
+          'firstLine': 1,
+          'lastLine': 2,
           'firstColumn': 8,
           'lastColumn': 1,
           'symbol': 'endOfLine',
@@ -477,8 +477,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
             {
               'start': 56,
               'end': 57,
-              'firstLine': 11,
-              'lastLine': 12,
+              'firstLine': 1,
+              'lastLine': 2,
               'firstColumn': 8,
               'lastColumn': 1,
               'token': 'NEWLINE',
@@ -492,8 +492,19 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
         }
       ],
       'ruleIndex': 6,
-      'internalRuleIndex': 9,
+      'internalRuleIndex': 14,
       'id': 4
+    },
+    {
+      'start': 57,
+      'end': 57,
+      'firstLine': 2,
+      'lastLine': 2,
+      'firstColumn': 1,
+      'lastColumn': 1,
+      'token': '$EOF',
+      'type': 'token',
+      'text': ''
     }
   ],
   'ruleIndex': 1,
@@ -507,7 +518,7 @@ exports[`vba parser parse correctly 2`] = `
   'start': 0,
   'end': 27,
   'firstLine': 1,
-  'lastLine': 5,
+  'lastLine': 2,
   'firstColumn': 1,
   'lastColumn': 1,
   'symbol': 'progam',
@@ -543,7 +554,7 @@ exports[`vba parser parse correctly 2`] = `
       'start': 1,
       'end': 27,
       'firstLine': 2,
-      'lastLine': 5,
+      'lastLine': 2,
       'firstColumn': 1,
       'lastColumn': 1,
       'symbol': 'moduleBody',
@@ -553,7 +564,7 @@ exports[`vba parser parse correctly 2`] = `
           'start': 1,
           'end': 26,
           'firstLine': 2,
-          'lastLine': 4,
+          'lastLine': 1,
           'firstColumn': 1,
           'lastColumn': 8,
           'symbol': 'moduleBodyElement',
@@ -563,7 +574,7 @@ exports[`vba parser parse correctly 2`] = `
               'start': 1,
               'end': 26,
               'firstLine': 2,
-              'lastLine': 4,
+              'lastLine': 1,
               'firstColumn': 1,
               'lastColumn': 8,
               'symbol': 'subStmt',
@@ -573,7 +584,7 @@ exports[`vba parser parse correctly 2`] = `
                   'start': 1,
                   'end': 4,
                   'firstLine': 2,
-                  'lastLine': 2,
+                  'lastLine': 1,
                   'firstColumn': 1,
                   'lastColumn': 4,
                   'token': 'SUB',
@@ -583,8 +594,8 @@ exports[`vba parser parse correctly 2`] = `
                 {
                   'start': 5,
                   'end': 9,
-                  'firstLine': 2,
-                  'lastLine': 2,
+                  'firstLine': 1,
+                  'lastLine': 1,
                   'firstColumn': 5,
                   'lastColumn': 9,
                   'symbol': 'ambiguousIdentifier',
@@ -593,8 +604,8 @@ exports[`vba parser parse correctly 2`] = `
                     {
                       'start': 5,
                       'end': 9,
-                      'firstLine': 2,
-                      'lastLine': 2,
+                      'firstLine': 1,
+                      'lastLine': 1,
                       'firstColumn': 5,
                       'lastColumn': 9,
                       'token': 'IDENTIFIER',
@@ -603,14 +614,14 @@ exports[`vba parser parse correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 54,
-                  'internalRuleIndex': 109,
+                  'internalRuleIndex': 153,
                   'id': 7
                 },
                 {
                   'start': 9,
                   'end': 10,
-                  'firstLine': 2,
-                  'lastLine': 3,
+                  'firstLine': 1,
+                  'lastLine': 2,
                   'firstColumn': 9,
                   'lastColumn': 1,
                   'symbol': 'endOfStatement',
@@ -619,8 +630,8 @@ exports[`vba parser parse correctly 2`] = `
                     {
                       'start': 9,
                       'end': 10,
-                      'firstLine': 2,
-                      'lastLine': 3,
+                      'firstLine': 1,
+                      'lastLine': 2,
                       'firstColumn': 9,
                       'lastColumn': 1,
                       'symbol': 'endOfLine',
@@ -629,8 +640,8 @@ exports[`vba parser parse correctly 2`] = `
                         {
                           'start': 9,
                           'end': 10,
-                          'firstLine': 2,
-                          'lastLine': 3,
+                          'firstLine': 1,
+                          'lastLine': 2,
                           'firstColumn': 9,
                           'lastColumn': 1,
                           'token': 'NEWLINE',
@@ -644,14 +655,14 @@ exports[`vba parser parse correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 3,
-                  'internalRuleIndex': 5,
+                  'internalRuleIndex': 9,
                   'id': 8
                 },
                 {
                   'start': 10,
                   'end': 19,
-                  'firstLine': 3,
-                  'lastLine': 4,
+                  'firstLine': 2,
+                  'lastLine': 2,
                   'firstColumn': 1,
                   'lastColumn': 1,
                   'symbol': 'block',
@@ -660,8 +671,8 @@ exports[`vba parser parse correctly 2`] = `
                     {
                       'start': 10,
                       'end': 18,
-                      'firstLine': 3,
-                      'lastLine': 3,
+                      'firstLine': 2,
+                      'lastLine': 1,
                       'firstColumn': 1,
                       'lastColumn': 9,
                       'symbol': 'blockStmt',
@@ -670,8 +681,8 @@ exports[`vba parser parse correctly 2`] = `
                         {
                           'start': 10,
                           'end': 18,
-                          'firstLine': 3,
-                          'lastLine': 3,
+                          'firstLine': 2,
+                          'lastLine': 1,
                           'firstColumn': 1,
                           'lastColumn': 9,
                           'symbol': 'implicitCallStmt_InBlock',
@@ -680,8 +691,8 @@ exports[`vba parser parse correctly 2`] = `
                             {
                               'start': 10,
                               'end': 18,
-                              'firstLine': 3,
-                              'lastLine': 3,
+                              'firstLine': 2,
+                              'lastLine': 1,
                               'firstColumn': 1,
                               'lastColumn': 9,
                               'symbol': 'iCS_B_ProcedureCall',
@@ -690,8 +701,8 @@ exports[`vba parser parse correctly 2`] = `
                                 {
                                   'start': 10,
                                   'end': 16,
-                                  'firstLine': 3,
-                                  'lastLine': 3,
+                                  'firstLine': 2,
+                                  'lastLine': 1,
                                   'firstColumn': 1,
                                   'lastColumn': 7,
                                   'symbol': 'ambiguousIdentifier',
@@ -700,8 +711,8 @@ exports[`vba parser parse correctly 2`] = `
                                     {
                                       'start': 10,
                                       'end': 16,
-                                      'firstLine': 3,
-                                      'lastLine': 3,
+                                      'firstLine': 2,
+                                      'lastLine': 1,
                                       'firstColumn': 1,
                                       'lastColumn': 7,
                                       'token': 'IDENTIFIER',
@@ -710,14 +721,14 @@ exports[`vba parser parse correctly 2`] = `
                                     }
                                   ],
                                   'ruleIndex': 54,
-                                  'internalRuleIndex': 109,
+                                  'internalRuleIndex': 153,
                                   'id': 14
                                 },
                                 {
                                   'start': 17,
                                   'end': 18,
-                                  'firstLine': 3,
-                                  'lastLine': 3,
+                                  'firstLine': 1,
+                                  'lastLine': 1,
                                   'firstColumn': 8,
                                   'lastColumn': 9,
                                   'symbol': 'argsCall',
@@ -726,8 +737,8 @@ exports[`vba parser parse correctly 2`] = `
                                     {
                                       'start': 17,
                                       'end': 18,
-                                      'firstLine': 3,
-                                      'lastLine': 3,
+                                      'firstLine': 1,
+                                      'lastLine': 1,
                                       'firstColumn': 8,
                                       'lastColumn': 9,
                                       'symbol': 'argCall',
@@ -736,8 +747,8 @@ exports[`vba parser parse correctly 2`] = `
                                         {
                                           'start': 17,
                                           'end': 18,
-                                          'firstLine': 3,
-                                          'lastLine': 3,
+                                          'firstLine': 1,
+                                          'lastLine': 1,
                                           'firstColumn': 8,
                                           'lastColumn': 9,
                                           'symbol': 'valueStmt',
@@ -746,8 +757,8 @@ exports[`vba parser parse correctly 2`] = `
                                             {
                                               'start': 17,
                                               'end': 18,
-                                              'firstLine': 3,
-                                              'lastLine': 3,
+                                              'firstLine': 1,
+                                              'lastLine': 1,
                                               'firstColumn': 8,
                                               'lastColumn': 9,
                                               'symbol': 'literal',
@@ -756,8 +767,8 @@ exports[`vba parser parse correctly 2`] = `
                                                 {
                                                   'start': 17,
                                                   'end': 18,
-                                                  'firstLine': 3,
-                                                  'lastLine': 3,
+                                                  'firstLine': 1,
+                                                  'lastLine': 1,
                                                   'firstColumn': 8,
                                                   'lastColumn': 9,
                                                   'token': 'INTEGERLITERAL',
@@ -766,44 +777,44 @@ exports[`vba parser parse correctly 2`] = `
                                                 }
                                               ],
                                               'ruleIndex': 45,
-                                              'internalRuleIndex': 82,
+                                              'internalRuleIndex': 118,
                                               'id': 18
                                             }
                                           ],
                                           'ruleIndex': 38,
-                                          'internalRuleIndex': 68,
+                                          'internalRuleIndex': 98,
                                           'id': 17
                                         }
                                       ],
                                       'ruleIndex': 29,
-                                      'internalRuleIndex': 55,
+                                      'internalRuleIndex': 77,
                                       'id': 16
                                     }
                                   ],
                                   'ruleIndex': 28,
-                                  'internalRuleIndex': 54,
+                                  'internalRuleIndex': 70,
                                   'id': 15
                                 }
                               ],
                               'ruleIndex': 27,
-                              'internalRuleIndex': 53,
+                              'internalRuleIndex': 68,
                               'id': 13
                             }
                           ],
                           'ruleIndex': 25,
-                          'internalRuleIndex': 51,
+                          'internalRuleIndex': 65,
                           'id': 12
                         }
                       ],
                       'ruleIndex': 15,
-                      'internalRuleIndex': 32,
+                      'internalRuleIndex': 38,
                       'id': 11
                     },
                     {
                       'start': 18,
                       'end': 19,
-                      'firstLine': 3,
-                      'lastLine': 4,
+                      'firstLine': 1,
+                      'lastLine': 2,
                       'firstColumn': 9,
                       'lastColumn': 1,
                       'symbol': 'endOfStatement',
@@ -812,8 +823,8 @@ exports[`vba parser parse correctly 2`] = `
                         {
                           'start': 18,
                           'end': 19,
-                          'firstLine': 3,
-                          'lastLine': 4,
+                          'firstLine': 1,
+                          'lastLine': 2,
                           'firstColumn': 9,
                           'lastColumn': 1,
                           'symbol': 'endOfLine',
@@ -822,8 +833,8 @@ exports[`vba parser parse correctly 2`] = `
                             {
                               'start': 18,
                               'end': 19,
-                              'firstLine': 3,
-                              'lastLine': 4,
+                              'firstLine': 1,
+                              'lastLine': 2,
                               'firstColumn': 9,
                               'lastColumn': 1,
                               'token': 'NEWLINE',
@@ -837,19 +848,19 @@ exports[`vba parser parse correctly 2`] = `
                         }
                       ],
                       'ruleIndex': 3,
-                      'internalRuleIndex': 5,
+                      'internalRuleIndex': 9,
                       'id': 19
                     }
                   ],
                   'ruleIndex': 14,
-                  'internalRuleIndex': 24,
+                  'internalRuleIndex': 30,
                   'id': 10
                 },
                 {
                   'start': 19,
                   'end': 26,
-                  'firstLine': 4,
-                  'lastLine': 4,
+                  'firstLine': 2,
+                  'lastLine': 1,
                   'firstColumn': 1,
                   'lastColumn': 8,
                   'token': 'END_SUB',
@@ -858,19 +869,19 @@ exports[`vba parser parse correctly 2`] = `
                 }
               ],
               'ruleIndex': 9,
-              'internalRuleIndex': 19,
+              'internalRuleIndex': 24,
               'id': 6
             }
           ],
           'ruleIndex': 7,
-          'internalRuleIndex': 14,
+          'internalRuleIndex': 19,
           'id': 5
         },
         {
           'start': 26,
           'end': 27,
-          'firstLine': 4,
-          'lastLine': 5,
+          'firstLine': 1,
+          'lastLine': 2,
           'firstColumn': 8,
           'lastColumn': 1,
           'symbol': 'endOfLine',
@@ -879,8 +890,8 @@ exports[`vba parser parse correctly 2`] = `
             {
               'start': 26,
               'end': 27,
-              'firstLine': 4,
-              'lastLine': 5,
+              'firstLine': 1,
+              'lastLine': 2,
               'firstColumn': 8,
               'lastColumn': 1,
               'token': 'NEWLINE',
@@ -894,8 +905,19 @@ exports[`vba parser parse correctly 2`] = `
         }
       ],
       'ruleIndex': 6,
-      'internalRuleIndex': 9,
+      'internalRuleIndex': 14,
       'id': 4
+    },
+    {
+      'start': 27,
+      'end': 27,
+      'firstLine': 2,
+      'lastLine': 2,
+      'firstColumn': 1,
+      'lastColumn': 1,
+      'token': '$EOF',
+      'type': 'token',
+      'text': ''
     }
   ],
   'ruleIndex': 1,

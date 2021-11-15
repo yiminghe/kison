@@ -1,7 +1,7 @@
 import { isWord, isNumber } from './utils';
 import { AsyncMatcher, Matcher } from './match';
 import type AsyncInput from './AsyncInput';
-import { AstNode, CharacterGroupInner_Node } from './parser';
+import { AstNode, Ast_CharacterGroupInner_Node } from './parser';
 import Compiler from './Compiler';
 
 export const asyncAnchorMatchers = {
@@ -79,7 +79,7 @@ export const asyncAnyCharMatcher = async (input: AsyncInput) => {
 };
 
 export const asyncCharGroupMatcher = (
-  items: CharacterGroupInner_Node['children'],
+  items: Ast_CharacterGroupInner_Node['children'],
   invert?: boolean,
 ) => {
   return async (input: AsyncInput) => {

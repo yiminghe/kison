@@ -8,7 +8,7 @@ interface Params {
   symbol: string;
   rhs: Rhs;
   label?: string;
-  ruleIndex: number;
+  ruleIndex?: number;
   skipAstNode?: boolean;
   action?: Function;
   predict?: Function;
@@ -33,7 +33,7 @@ class Production {
 
   constructor(cfg: Params) {
     Object.assign(this, cfg);
-    this.ruleIndex = cfg.ruleIndex;
+    this.ruleIndex = cfg.ruleIndex!;
   }
 
   equals(other: Production) {

@@ -46,11 +46,12 @@ export type TransformNode = (arg: {
   node: AstNode;
   parent: AstSymbolNode;
   defaultTransformNode: TransformNode;
-}) => AstNode | null;
+}) => AstNode | AstNode[] | null;
 
 export interface Token extends Position {
   text: string;
   t: string;
+  more?: boolean;
   channel?: string | string[];
   recovery?: string;
   token: LiteralToken;
@@ -67,7 +68,7 @@ export interface ParseError {
 
 export interface LexerOptions<T = any> {
   env?: string;
-  unicode?:boolean;
+  unicode?: boolean;
   state?: {
     userData?: T,
     stateStack?: string[];
@@ -79,6 +80,8 @@ export interface ParserOptions {
   globalMatch?: boolean;
   lexerOptions?: LexerOptions;
   transformNode?: TransformNode | false;
+  startSymbol?: string;
+  parseTree?: boolean;
   onErrorRecovery?: (args: {
     parseTree: AstNode;
     errorNode: AstErrorNode;
@@ -126,6 +129,11 @@ declare function parse(input: string, options?: ParserOptions): ParseResult;
 
 declare function lex<T = any>(input: string, options?: LexerOptions<T>): LexResult<T>;
 
-declare const parser: { parse: typeof parse, lex: typeof lex };
+declare const parser: {
+  parse: typeof parse, lex: typeof lex, lexer: {
+    getCurrentToken: Token;
+    getLastToken(filter?: (token: Token) => boolean): Token;
+  }
+};
 
 export default parser;

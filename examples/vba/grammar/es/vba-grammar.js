@@ -49,6 +49,7 @@ module.exports = {
       n.endOfLineZeroOrMore,
       n.moduleBodyOptional,
       n.endOfLineZeroOrMore,
+      '$EOF'
     ],
     [
       n.endOfLine,

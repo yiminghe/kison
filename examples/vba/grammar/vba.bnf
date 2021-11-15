@@ -1,4 +1,4 @@
-progam ::= moduleDeclarations? endOfLine* moduleBody? endOfLine*
+progam ::= moduleDeclarations? endOfLine* moduleBody? endOfLine* '$EOF'
 endOfLine ::= 'NEWLINE' | 'COMMENT' | 'REMCOMMENT'
 endOfStatement ::= ( endOfLine | 'COLON' )*
 moduleDeclarations ::= moduleDeclarationsElement ( endOfLine+ moduleDeclarationsElement )* endOfLine*

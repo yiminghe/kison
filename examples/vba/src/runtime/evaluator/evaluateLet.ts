@@ -1,7 +1,7 @@
 import type {
   AstTokenNode,
-  ImplicitCallStmt_InStmt_Node,
-  ValueStmt_Node,
+  Ast_ImplicitCallStmt_InStmt_Node,
+  Ast_ValueStmt_Node,
 } from '../../parser';
 import { VBObject, VBValue } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
@@ -15,9 +15,9 @@ registerEvaluators({
       ++index;
       c = children[index];
     }
-    const left: ImplicitCallStmt_InStmt_Node = c;
+    const left: Ast_ImplicitCallStmt_InStmt_Node = c;
     const op = children[++index] as AstTokenNode;
-    const right = children[++index] as ValueStmt_Node;
+    const right = children[++index] as Ast_ValueStmt_Node;
     const leftVariable: VBObject = await evaluate(left, context);
     if (leftVariable.type !== 'Object') {
       throw new Error('unexpect let left side operator!');

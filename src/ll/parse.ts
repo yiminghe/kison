@@ -1,6 +1,6 @@
 import Utils from '../utils';
 import { Table } from './LLGrammar';
-import type { Token } from '../parser';
+import type { Token, ParserOptions } from '../parser';
 import type { ParseError } from '../types';
 import type {
   AstTokenNode as AstTokenNodeType,
@@ -38,7 +38,7 @@ const {
   getLabeledRhsForAddNodeFlag,
 } = Utils;
 
-export default function parse(input: string, options: any) {
+export default function parse(input: string, options: ParserOptions) {
   prepareLLParse();
 
   const recoveryTokens: Token[] = [];
@@ -58,10 +58,11 @@ export default function parse(input: string, options: any) {
     lexerOptions = {},
     transformNode,
     startSymbol,
+    parseTree = true,
   } = options;
 
   if (transformNode !== false && !transformNode) {
-    transformNode = defaultTransformAstNode;
+    transformNode = defaultTransformAstNode as any;
   }
 
   var {
@@ -114,20 +115,22 @@ export default function parse(input: string, options: any) {
       break;
     }
 
-    topSymbol = reduceLLAction(topSymbol, popSymbolStack, peekSymbolStack);
+    topSymbol = reduceLLAction(parseTree, topSymbol, popSymbolStack, peekSymbolStack);
 
     if (typeof topSymbol === 'string') {
       if (!token) {
         token = lexer.lex();
         pushRecoveryTokens(recoveryTokens, token);
       }
-      if (topSymbol === token.t) {
+      if (topSymbol === `$ANY` || topSymbol === token.t) {
         symbolStack.pop();
-        const terminalNode = new AstTokenNode(token);
-        terminalNode.type = 'token';
-        terminalNodes.push(terminalNode);
-        const parent = peekStack(astStack);
-        parent.addChild(terminalNode);
+        if (parseTree) {
+          const terminalNode = new AstTokenNode(token);
+          terminalNode.type = 'token';
+          terminalNodes.push(terminalNode);
+          const parent = peekStack(astStack);
+          parent.addChild(terminalNode);
+        }
         token = lexer.lex();
         pushRecoveryTokens(recoveryTokens, token);
       } else if ((next = getTableVal(topSymbol, token.t)) !== undefined) {
@@ -140,16 +143,18 @@ export default function parse(input: string, options: any) {
         } else {
           const label = getOriginalSymbol(getProductionLabel(production));
           const isWrap = getProductionIsWrap(production);
-          const newAst = new AstSymbolNode({
-            id: ++globalSymbolNodeId,
-            internalRuleIndex: next,
-            symbol: getOriginalSymbol(topSymbol),
-            label,
-            isWrap,
-            children: [],
-          });
-          peekStack(astStack).addChild(newAst);
-          astStack.push(newAst);
+          if (parseTree) {
+            const newAst = new AstSymbolNode({
+              id: ++globalSymbolNodeId,
+              internalRuleIndex: next,
+              symbol: getOriginalSymbol(topSymbol),
+              label,
+              isWrap,
+              children: [],
+            });
+            peekStack(astStack).addChild(newAst);
+            astStack.push(newAst);
+          }
           symbolStack.push.apply(
             symbolStack,
             getProductionRhs(production).concat(productionEndFlag).reverse(),
@@ -158,13 +163,14 @@ export default function parse(input: string, options: any) {
       } else {
         let breakToEnd;
         ({ error, errorNode, token, breakToEnd } = takeCareLLError(
+          parseTree,
           getExpected,
           onErrorRecovery,
           topSymbol,
           (nextToken) =>
             typeof topSymbol === 'string' &&
             getTableVal(topSymbol, nextToken.t) !== undefined,
-          transformNode,
+          transformNode as any,
           recoveryTokens,
           {
             error,
@@ -185,12 +191,16 @@ export default function parse(input: string, options: any) {
     }
   }
 
-  ({ error, errorNode } = checkLLEndError(getExpected, {
-    error,
-    errorNode,
-  }));
+  ({ error, errorNode } = checkLLEndError(
+    parseTree,
+    getExpected,
+    {
+      error,
+      errorNode,
+    }
+  ));
 
-  const ast = getAstRootNode(astStack, transformNode);
+  const ast = parseTree ? getAstRootNode(astStack, transformNode as any) : null;
 
   endLLParse();
 

@@ -1,4 +1,4 @@
-import type { VariableListStmt_Node, ValueStmt_Node } from '../../parser';
+import type { Ast_VariableListStmt_Node, Ast_ValueStmt_Node } from '../../parser';
 import {
   collect_asTypeClause,
   collectAmbiguousIdentifier,
@@ -44,7 +44,7 @@ registerEvaluators({
     return ret;
   },
   async evaluateVariableListStmt(
-    node: VariableListStmt_Node,
+    node: Ast_VariableListStmt_Node,
     context: Context,
   ) {
     const ret: VBVariableInfo[] = [];
@@ -130,7 +130,7 @@ registerEvaluators({
   async evaluateSubscript_(node, context): Promise<Subscript> {
     let lower = 0;
     let upper = 0;
-    const subs: ValueStmt_Node[] = [];
+    const subs: Ast_ValueStmt_Node[] = [];
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
         subs.push(c);

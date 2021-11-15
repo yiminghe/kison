@@ -1,6 +1,8 @@
 import LALRGrammar from '../src/lalr/LALRGrammar';
+// @ts-ignore
 import getGrammar from '../examples/cal/cal-grammar';
 import { prettyJson, run } from './utils';
+import Lexer from '../src/Lexer';
 
 describe('lalr', function () {
   // 4-41 文法 GOTO 图
@@ -133,7 +135,7 @@ describe('lalr', function () {
         ],
       },
     });
-    var code = grammar.genCode(true);
+    var code = grammar.genCode();
     expect(run(code).parse('ccdd')).not.toEqual(false);
   });
 
@@ -215,7 +217,7 @@ describe('lalr', function () {
     expect(function () {
       const parser = run(
         grammar.genCode({
-          compressSymbol: 1,
+          compressSymbol: true,
         }),
       );
       parser.parse('dc');
@@ -226,13 +228,13 @@ describe('lalr', function () {
 
   describe('state', function () {
     it('can parse', function () {
-      var log = [];
+      var log: any[] = [];
       var grammar = new LALRGrammar({
         productions: [
           {
             symbol: 'S',
             rhs: ['a', 'b'],
-            action() {
+            action(this: any) {
               this.yy.log.push(this.$1);
               this.yy.log.push(this.$2);
             },
@@ -243,7 +245,7 @@ describe('lalr', function () {
             {
               regexp: /^a/,
               token: 'a',
-              action() {
+              action(this: Lexer) {
                 this.pushState('b');
               },
             },
@@ -251,7 +253,7 @@ describe('lalr', function () {
               regexp: /^b/,
               state: ['b'],
               token: 'b',
-              action() {
+              action(this: Lexer) {
                 this.popState();
               },
             },
@@ -261,7 +263,7 @@ describe('lalr', function () {
 
       var parser = run(
         grammar.genCode({
-          compressSymbol: 0,
+          compressSymbol: false,
         }),
       );
 
@@ -281,13 +283,13 @@ describe('lalr', function () {
     });
 
     it('can not parse', function () {
-      var log = [];
+      var log: any[] = [];
       var grammar = new LALRGrammar({
         productions: [
           {
             symbol: 'S',
             rhs: ['a', 'b', 'b'],
-            action() {
+            action(this: any) {
               this.yy.log.push(this.$1);
               this.yy.log.push(this.$2);
             },
@@ -298,7 +300,7 @@ describe('lalr', function () {
             {
               regexp: /^a/,
               token: 'a',
-              action() {
+              action(this: Lexer) {
                 this.pushState('b');
               },
             },
@@ -306,7 +308,7 @@ describe('lalr', function () {
               regexp: /^b/,
               state: ['b'],
               token: 'b',
-              action() {
+              action(this: Lexer) {
                 this.popState();
               },
             },
@@ -315,7 +317,7 @@ describe('lalr', function () {
       });
       var parser = run(
         grammar.genCode({
-          compressSymbol: 1,
+          compressSymbol: true,
         }),
       );
 
@@ -329,13 +331,13 @@ describe('lalr', function () {
     });
 
     it('can not parse when compress', function () {
-      var log = [];
+      var log: any[] = [];
       var grammar = new LALRGrammar({
         productions: [
           {
             symbol: 'S',
             rhs: ['a', 'b', 'b'],
-            action() {
+            action(this: any) {
               this.yy.log.push(this.$1);
               this.yy.log.push(this.$2);
             },
@@ -346,7 +348,7 @@ describe('lalr', function () {
             {
               regexp: /^a/,
               token: 'a',
-              action() {
+              action(this: Lexer) {
                 this.pushState('b');
               },
             },
@@ -354,7 +356,7 @@ describe('lalr', function () {
               regexp: /^b/,
               state: ['b'],
               token: 'b',
-              action() {
+              action(this: Lexer) {
                 this.popState();
               },
             },
@@ -363,7 +365,7 @@ describe('lalr', function () {
       });
       var parser = run(
         grammar.genCode({
-          compressSymbol: 0,
+          compressSymbol: false,
         }),
       );
 
@@ -390,13 +392,19 @@ describe('lalr', function () {
     // C => cC
     // C => d
 
+    var log: any = [];
+
+    const g: any = global;
+
+    g.log = log;
+
     var grammar = new LALRGrammar({
       productions: [
         {
           symbol: 'S0',
           rhs: ['S'],
-          action() {
-            var ret = global.TEST_RET || (global.TEST_RET = []);
+          action(this: any) {
+            var ret = log;
             ret.push('S0 => S');
             ret.push('|_____ ' + this.$1 + ' -> S0');
             ret.push('');
@@ -405,8 +413,8 @@ describe('lalr', function () {
         {
           symbol: 'S',
           rhs: ['C', 'C'],
-          action() {
-            var ret = global.TEST_RET || (global.TEST_RET = []);
+          action(this: any) {
+            var ret = log;
             ret.push('S => C C');
             ret.push('|_____ ' + this.$1 + ' + ' + this.$2 + ' -> S');
             ret.push('');
@@ -416,8 +424,8 @@ describe('lalr', function () {
         {
           symbol: 'C',
           rhs: ['c', 'C'],
-          action() {
-            var ret = global.TEST_RET || (global.TEST_RET = []);
+          action(this: any) {
+            var ret = log;
             ret.push('C => c C');
             ret.push('|_____ ' + this.$1 + ' + ' + this.$2 + ' -> C');
             ret.push('');
@@ -427,8 +435,8 @@ describe('lalr', function () {
         {
           symbol: 'C',
           rhs: ['d'],
-          action() {
-            var ret = global.TEST_RET || (global.TEST_RET = []);
+          action(this: any) {
+            var ret = log;
             ret.push('C => d');
             ret.push('|_____ ' + this.$1 + ' -> C');
             ret.push('');
@@ -455,6 +463,8 @@ describe('lalr', function () {
     expect(function () {
       run(code).parse('ccdd');
     }).not.toThrow(undefined);
+
+    g.log = [];
   });
 
   it('precedence works', function () {

@@ -9,7 +9,7 @@ export function warn(msg: string) {
 }
 
 export function isSkipToken(name: LiteralToken) {
-  return name === 'NEWLINE' || name === 'COMMENT' || name === 'REMCOMMENT';
+  return name === 'NEWLINE' || name === 'COMMENT' || name === 'REMCOMMENT' || name ==='$EOF';
 }
 
 export function captalize(s: string) {

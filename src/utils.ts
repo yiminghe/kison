@@ -58,6 +58,7 @@ const globalUtils = {
   },
 
   checkLLEndError(
+    parseTree: boolean,
     getExpected: () => string[],
     ret: {
       error: ParseError | undefined;
@@ -77,17 +78,18 @@ const globalUtils = {
         symbol: peekStack(astStack)?.symbol,
         lexer: lexer.toJSON(),
       };
-      ret.errorNode = closeAstWhenError(ret.error, astStack);
+      ret.errorNode = closeAstWhenError(parseTree, ret.error, astStack);
     }
     return ret;
   },
 
   takeCareLLError(
+    parseTree: boolean,
     getExpected: () => string[],
     onErrorRecovery: any,
     topSymbol: any,
     shouldDelete: (nextToken: Token) => boolean,
-    transformNode: TransformNode,
+    transformNode: TransformNode | undefined | false,
     recoveryTokens: Token[],
     ret: {
       breakToEnd?: boolean;
@@ -119,8 +121,9 @@ const globalUtils = {
         error: ret.error,
         ...ret.error.lexer,
       });
-      peekStack(astStack).addChild(localErrorNode);
-
+      if (parseTree) {
+        peekStack(astStack).addChild(localErrorNode);
+      }
       const recovery =
         onErrorRecovery(
           {
@@ -135,7 +138,7 @@ const globalUtils = {
       peekStack(astStack).children.pop();
 
       if (!action) {
-        ret.errorNode = closeAstWhenError(ret.error, astStack);
+        ret.errorNode = closeAstWhenError(parseTree, ret.error, astStack);
         ret.breakToEnd = true;
         return ret;
       }
@@ -158,7 +161,7 @@ const globalUtils = {
         pushRecoveryTokens(recoveryTokens, ret.token);
       }
     } else {
-      ret.errorNode = closeAstWhenError(ret.error, astStack);
+      ret.errorNode = closeAstWhenError(parseTree, ret.error, astStack);
       ret.breakToEnd = true;
     }
     return ret;
@@ -177,38 +180,38 @@ const globalUtils = {
   },
 
   reduceLLAction<T>(
+    parseTree: boolean,
     topSymbol: T,
     popSymbolStack: Function,
     peekSymbolStack: () => T,
   ) {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
-      let ast = astStack.pop()!;
-      const needAction = ast.done();
-
-      if (needAction) {
-        const ruleIndex = ast.internalRuleIndex;
-        const production = parser.productions[ruleIndex];
-        const action = parser.getProductionAction(production);
-        if (action) {
-          action.call(parser);
+      if (parseTree) {
+        let ast = astStack.pop()!;
+        const needAction = ast.done();
+        if (needAction) {
+          const ruleIndex = ast.internalRuleIndex;
+          const production = parser.productions[ruleIndex];
+          const action = parser.getProductionAction(production);
+          if (action) {
+            action.call(parser);
+          }
+        }
+        if (isAddAstNodeFlag(topSymbol)) {
+          const stackTop = peekStack(astStack);
+          const wrap = new AstSymbolNode({
+            id: ++globalSymbolNodeId,
+            isWrap: true,
+            symbol: ast.symbol,
+            label: ast.label,
+            children: [ast],
+            internalRuleIndex: ast.internalRuleIndex,
+          });
+          stackTop.children.pop();
+          stackTop.addChild(wrap);
+          astStack.push(wrap);
         }
       }
-
-      if (isAddAstNodeFlag(topSymbol)) {
-        const stackTop = peekStack(astStack);
-        const wrap = new AstSymbolNode({
-          id: ++globalSymbolNodeId,
-          isWrap: true,
-          symbol: ast.symbol,
-          label: ast.label,
-          children: [ast],
-          internalRuleIndex: ast.internalRuleIndex,
-        });
-        stackTop.children.pop();
-        stackTop.addChild(wrap);
-        astStack.push(wrap);
-      }
-
       popSymbolStack();
       topSymbol = peekSymbolStack();
       if (!topSymbol) {
@@ -261,22 +264,24 @@ const globalUtils = {
     return parser.prioritySymbolMap[uncompressed] || uncompressed;
   },
 
-  closeAstWhenError(error: ParseError, astStack: AstNodeType[]) {
+  closeAstWhenError(parseTree: boolean, error: ParseError, astStack: AstNodeType[]) {
     const errorNode = new AstErrorNode({
       error,
       ...error.lexer,
     });
-    const top = peekStack(astStack);
-    if (top.type === 'symbol') {
-      top.addChild(errorNode);
-    }
-    while (astStack.length > 1) {
-      const ast = astStack.pop();
-      if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
-        const topAst = peekStack(astStack);
-        if (topAst.type === 'symbol') {
-          topAst.children.pop();
-          topAst.addChildren(ast.children);
+    if (parseTree) {
+      const top = peekStack(astStack);
+      if (top.type === 'symbol') {
+        top.addChild(errorNode);
+      }
+      while (astStack.length > 1) {
+        const ast = astStack.pop();
+        if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
+          const topAst = peekStack(astStack);
+          if (topAst.type === 'symbol') {
+            topAst.children.pop();
+            topAst.addChildren(ast.children);
+          }
         }
       }
     }
@@ -306,9 +311,9 @@ const globalUtils = {
     return {
       errorMessage: [
         'syntax error at line ' +
-          lexer.lineNumber +
-          ':\n' +
-          lexer.showDebugInfo(),
+        lexer.lineNumber +
+        ':\n' +
+        lexer.showDebugInfo(),
         ...tips,
       ].join('\n'),
       tip,
@@ -317,7 +322,7 @@ const globalUtils = {
 
   cleanAst(
     ast: AstSymbolNodeType,
-    transformNode: TransformNode,
+    transformNode: TransformNode | undefined | false,
   ): AstSymbolNodeType {
     if (!transformNode) {
       return ast;
@@ -366,7 +371,7 @@ const globalUtils = {
 
   getAstRootNode(
     astStack: AstNodeType[],
-    transformNode: TransformNode,
+    transformNode: TransformNode | undefined | false,
     raw?: boolean,
   ) {
     let ast: AstNodeType | undefined = astStack[0];
@@ -494,7 +499,7 @@ const utils = {
   },
 
   getAstNodeClassName(str: string) {
-    return util.ucfirst(util.camelCase(str)) + '_Node';
+    return 'Ast_' + util.ucfirst(util.camelCase(str)) + '_Node';
   },
 
   serializeObject(

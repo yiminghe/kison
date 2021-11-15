@@ -4,7 +4,7 @@ import type {
   AstTokenNode as AstTokenNodeType,
   AstErrorNode as AstErrorNodeType,
 } from '../AstNode';
-import type { Token } from '../parser';
+import type { Token, ParserOptions } from '../parser';
 import * as sm from './sm';
 import * as Utils from './utils';
 import type { Unit, PredictParam } from './sm';
@@ -58,7 +58,7 @@ const {
   findExpectedTokenFromStateMachine,
 } = sm;
 
-function parse(input: string, options: any = {}) {
+function parse(input: string, options: ParserOptions = {}) {
   prepareLLParse();
 
   let recoveryTokens: Token[] = [];
@@ -79,13 +79,14 @@ function parse(input: string, options: any = {}) {
     onErrorRecovery,
     lexerOptions = {},
     transformNode,
+    parseTree = true,
     startSymbol = getProductionSymbol(productions[0]),
   } = options;
 
   startSymbol = lexer.mapSymbol(startSymbol);
 
   if (transformNode !== false && !transformNode) {
-    transformNode = defaultTransformAstNode;
+    transformNode = defaultTransformAstNode as any;
   }
 
   lexer.options = lexerOptions;
@@ -184,7 +185,7 @@ function parse(input: string, options: any = {}) {
       break;
     }
 
-    topSymbol = reduceLLAction(topSymbol, popSymbolStack, peekSymbolStack);
+    topSymbol = reduceLLAction(parseTree, topSymbol, popSymbolStack, peekSymbolStack);
 
     if (typeof topSymbol === 'string') {
       if (!token) {
@@ -198,7 +199,7 @@ function parse(input: string, options: any = {}) {
 
       if (isSymbol(normalizedSymbol)) {
         next = predictProductionIndexLLK(globalMatch, findSymbolIndex());
-      } else if (normalizedSymbol === token.t) {
+      } else if (normalizedSymbol === token.t || normalizedSymbol === `$ANY`) {
         if (!isZeroOrMoreSymbol(topSymbol)) {
           popSymbolStack();
         }
@@ -229,16 +230,20 @@ function parse(input: string, options: any = {}) {
         } else {
           const label = getOriginalSymbol(getProductionLabel(production));
           const isWrap = getProductionIsWrap(production);
-          const newAst = new AstSymbolNode({
-            internalRuleIndex: ruleIndex,
-            id: ++globalSymbolNodeId,
-            symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
-            label,
-            isWrap,
-            children: [],
-          });
-          peekStack(astStack).addChild(newAst);
-          astStack.push(newAst);
+
+          if (parseTree) {
+            const newAst = new AstSymbolNode({
+              internalRuleIndex: ruleIndex,
+              id: ++globalSymbolNodeId,
+              symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
+              label,
+              isWrap,
+              children: [],
+            });
+            peekStack(astStack).addChild(newAst);
+            astStack.push(newAst);
+          }
+
           const newRhs: SymbolItem[] = [
             ...getProductionRhs(production),
             makeRuleIndexFlag(ruleIndex, unit),
@@ -251,11 +256,12 @@ function parse(input: string, options: any = {}) {
       } else {
         let breakToEnd;
         ({ error, errorNode, token, breakToEnd } = takeCareLLError(
+          parseTree,
           getExpected,
           onErrorRecovery,
           topSymbol,
           () => !!predictProductionIndexNextLLK(globalMatch, findSymbolIndex()),
-          transformNode,
+          transformNode as any,
           recoveryTokens,
           {
             error,
@@ -276,12 +282,16 @@ function parse(input: string, options: any = {}) {
     }
   }
 
-  ({ error, errorNode } = checkLLEndError(getExpected, {
-    error,
-    errorNode,
-  }));
+  ({ error, errorNode } = checkLLEndError(
+    parseTree,
+    getExpected,
+    {
+      error,
+      errorNode,
+    }
+  ));
 
-  const ast = getAstRootNode(astStack, transformNode);
+  const ast = parseTree ? getAstRootNode(astStack, transformNode as any) : null;
 
   endLLParse();
 

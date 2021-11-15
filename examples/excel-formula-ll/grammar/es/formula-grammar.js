@@ -362,14 +362,14 @@ module.exports = () => ({
         },
       },
       {
-        filter() {
+        predict() {
           return !!this.userData.a;
         },
         regexp: { en: /^[,;]/, de: /^[\\;]/ },
         token: n.ARRAY_SEPARATOR,
       },
       {
-        filter() {
+        predict() {
           const lastItem = my.last(this.userData.markParen);
           return !lastItem || !lastItem.func;
         },

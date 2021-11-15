@@ -2,7 +2,7 @@ import type { Context } from '../Context';
 import type { AstVisitors } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBObject } from './VBObject';
-import { Visibility_Node } from '../../parserLLK';
+import { Ast_Visibility_Node } from '../../parserLLK';
 import type { SubSymbolItem } from './SubSymbolItem';
 import { VBNamespaceBinder } from './VBNamespace';
 
@@ -34,7 +34,7 @@ export class VariableSymbolItem {
   }
 }
 
-export type Visibility = Visibility_Node['children'][0]['token'];
+export type Visibility = Ast_Visibility_Node['children'][0]['token'];
 
 export type SubBinderReturnType =
   | VBValue

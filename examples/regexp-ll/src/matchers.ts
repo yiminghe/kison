@@ -1,7 +1,7 @@
 import { isWord, isNumber } from './utils';
 import { Matcher } from './match';
 import Input from './Input';
-import { AstNode, AstSymbolNode, CharacterGroupInner_Node } from './parser';
+import { AstNode, AstSymbolNode, Ast_CharacterGroupInner_Node } from './parser';
 import Compiler from './Compiler';
 
 export const anchorMatchers = {
@@ -84,7 +84,7 @@ export const anyCharMatcher = (input: Input) => {
 };
 
 export const charGroupMatcher = (
-  items: CharacterGroupInner_Node['children'],
+  items: Ast_CharacterGroupInner_Node['children'],
   invert?: boolean,
 ) => {
   return (input: Input) => {

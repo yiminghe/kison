@@ -1,5 +1,5 @@
-import type { AsTypeClause_Node, Type__Node } from '../../parser';
-import { AstNode, Indexes_Node } from '../../parserLLK';
+import type { Ast_AsTypeClause_Node, Ast_Type__Node } from '../../parser';
+import { AstNode, Ast_Indexes_Node } from '../../parserLLK';
 import { Context } from '../Context';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
 
@@ -30,7 +30,7 @@ export function collectAmbiguousIdentifier(
 export function collectIndexesNode(
   node: AstNode,
   breadth: boolean = false,
-): Indexes_Node | undefined {
+): Ast_Indexes_Node | undefined {
   if (node.type === 'symbol') {
     if (node.symbol === 'indexes') {
       return node;
@@ -52,7 +52,7 @@ export function collectIndexesNode(
 }
 
 export function collect_asTypeClause(
-  node: AsTypeClause_Node,
+  node: Ast_AsTypeClause_Node,
   context: Context,
 ) {
   let asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE();
@@ -68,7 +68,7 @@ export function collect_asTypeClause(
   return asType;
 }
 
-export function collect_type_(node: Type__Node, context: Context) {
+export function collect_type_(node: Ast_Type__Node, context: Context) {
   const asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE();
   for (const c of node.children) {
     if (c.type === 'symbol' && c.symbol === 'baseType') {

@@ -715,12 +715,12 @@ class Lexer {
         const end = this.end + m[0].length;
         lines = m[0].split('\n');
         lines.shift();
-        const lineNumber = this.lineNumber + lines.length;
+        this.lineNumber += lines.length;
         const position: any = {
           start: start,
           end: end,
           firstLine: this.lastLine,
-          lastLine: lineNumber,
+          lastLine: this.lineNumber,
           firstColumn: this.lastColumn,
           lastColumn: lines.length
             ? lines[lines.length - 1].length + 1

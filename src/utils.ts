@@ -264,7 +264,11 @@ const globalUtils = {
     return parser.prioritySymbolMap[uncompressed] || uncompressed;
   },
 
-  closeAstWhenError(parseTree: boolean, error: ParseError, astStack: AstNodeType[]) {
+  closeAstWhenError(
+    parseTree: boolean,
+    error: ParseError,
+    astStack: AstNodeType[],
+  ) {
     const errorNode = new AstErrorNode({
       error,
       ...error.lexer,
@@ -311,9 +315,9 @@ const globalUtils = {
     return {
       errorMessage: [
         'syntax error at line ' +
-        lexer.lineNumber +
-        ':\n' +
-        lexer.showDebugInfo(),
+          lexer.lineNumber +
+          ':\n' +
+          lexer.showDebugInfo(),
         ...tips,
       ].join('\n'),
       tip,

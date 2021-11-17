@@ -69,8 +69,8 @@ import parserLLK from './calLLK';
 
   {
     console.log('LLK:');
-    const {ast} = parserLLK.parse(exp);
-    
+    const { ast } = parserLLK.parse(exp);
+
     console.log(ast);
 
     visit(ast);

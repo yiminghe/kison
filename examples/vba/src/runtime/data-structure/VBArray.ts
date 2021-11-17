@@ -5,6 +5,7 @@ import {
   VBPrimitiveTypeClass,
 } from './VBValue';
 import { VBObject, VBNativeObject } from './VBObject';
+import { IndexType } from './runtime';
 
 type ArrayElement = VBObject | VBObject[];
 
@@ -23,7 +24,7 @@ export class VBArray {
     }
   }
 
-  getElement(indexes: number[]) {
+  getElement(indexes: IndexType[]) {
     let { value, elementType, subscripts } = this;
     if (indexes.length !== subscripts.length) {
       throw new Error(ARRAY_ACCESS_ERROR);
@@ -31,6 +32,9 @@ export class VBArray {
     let element = value[0];
     for (let i = 0; i < indexes.length; i++) {
       const index = indexes[i];
+      if (typeof index !== 'number') {
+        throw new Error('expect number index for array!');
+      }
       const subscript = subscripts[i];
       if (!subscript) {
         throw new Error(ARRAY_ACCESS_ERROR);
@@ -55,7 +59,7 @@ export class VBArray {
     return element as VBObject;
   }
 
-  setElement(indexes: number[], value: VBValue) {
+  setElement(indexes: IndexType[], value: VBValue) {
     this.getElement(indexes).value = value;
   }
 }

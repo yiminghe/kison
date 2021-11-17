@@ -1,6 +1,6 @@
 {
   "name": "vba",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "vba typescript/javascript runtime",
   "author": "yiminghe <yiminghe@gmail.com>",
   "repository": {
@@ -22,13 +22,15 @@
       [
         "pika-plugin-build-web-babel",
         {
-          "format": "cjs"
+          "format": "cjs",
+          "sourcemap":false
         }
       ],
       [
         "pika-plugin-build-web-babel",
         {
-          "mjs": true
+          "mjs": true,
+          "sourcemap":false
         }
       ],
       [

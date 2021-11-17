@@ -1,4 +1,4 @@
-import { VBBindProperty } from './VBClass';
+import { VBBindIndex, VBBindProperty } from './VBClass';
 import {
   VBValue,
   AsTypeClauseInfo,
@@ -6,14 +6,12 @@ import {
   VB_EMPTY,
 } from './VBValue';
 
-export type VBObject = VBNativeObject | VBBindProperty;
+export type VBObject = VBNativeObject | VBBindProperty | VBBindIndex;
 
 // address
 export class VBNativeObject {
   type: 'Object' = 'Object';
   subType: 'address' = 'address';
-
-  isProperty: boolean = false;
   dynamicArray: boolean = false;
 
   constructor(
@@ -37,7 +35,6 @@ export class VBNativeObject {
   clone() {
     const newObj = new VBNativeObject(this._value, this.asType);
     newObj.dynamicArray = this.dynamicArray;
-    newObj.isProperty = this.isProperty;
     return newObj;
   }
 
@@ -67,7 +64,7 @@ export class VBNativeObject {
         obj._value = value;
       }
     } else {
-      obj.value = value;
+      obj.setValue(value);
     }
   }
 }

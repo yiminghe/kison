@@ -16,7 +16,7 @@ var $parser = (function (undefined) {
       const ret = {};
 
       for (const k of Object.keys(this)) {
-        if (k !== "parent" && k !== "t") {
+        if (k !== 'parent' && k !== 't') {
           const v = this[k];
 
           if (v !== undefined) {
@@ -29,8 +29,8 @@ var $parser = (function (undefined) {
     }
   };
   var AstSymbolNode = class AstSymbolNode extends BaseAstNode {
-    symbol = "";
-    type = "symbol";
+    symbol = '';
+    type = 'symbol';
     children = [];
     ruleIndex = -1;
     internalRuleIndex = -1;
@@ -62,7 +62,7 @@ var $parser = (function (undefined) {
       if (this.isWrap && this.children.length === 1) {
         const c = this.children[0];
 
-        if (c.type === "symbol" && c.symbol === this.symbol) {
+        if (c.type === 'symbol' && c.symbol === this.symbol) {
           this.label = c.label;
           this.setChildren(c.children);
           return false;
@@ -95,10 +95,10 @@ var $parser = (function (undefined) {
     }
   };
   var AstTokenNode = class AstTokenNode extends BaseAstNode {
-    token = "";
-    t = "";
-    type = "token";
-    text = "";
+    token = '';
+    t = '';
+    type = 'token';
+    text = '';
 
     constructor(params) {
       super();
@@ -170,7 +170,7 @@ var $parser = (function (undefined) {
     shouldDelete,
     transformNode,
     recoveryTokens,
-    ret
+    ret,
   ) {
     ret.error = {
       recovery: false,
@@ -187,9 +187,9 @@ var $parser = (function (undefined) {
       lexer.stashPop(); // should delete
 
       if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
-        recommendedAction.action = "del";
+        recommendedAction.action = 'del';
       } else if (ret.error.expected.length) {
-        recommendedAction.action = "add";
+        recommendedAction.action = 'add';
       }
 
       const localErrorNode = new AstErrorNode({
@@ -207,7 +207,7 @@ var $parser = (function (undefined) {
             errorNode: localErrorNode,
             parseTree: getAstRootNode(astStack, transformNode, true),
           },
-          recommendedAction
+          recommendedAction,
         ) || {};
       const { action } = recovery;
       peekStack(astStack).children.pop();
@@ -218,19 +218,19 @@ var $parser = (function (undefined) {
         return ret;
       }
 
-      if (action === "del") {
+      if (action === 'del') {
         ret.error.recovery = true;
         const deleteToken = recoveryTokens.pop();
-        deleteToken.recovery = "del";
+        deleteToken.recovery = 'del';
         ret.token = undefined;
-      } else if (action === "add") {
+      } else if (action === 'add') {
         ret.error.recovery = true;
         ret.token = {
           ...ret.token,
           token: recovery.token,
           text: recovery.text,
           t: lexer.mapSymbol(recovery.token),
-          recovery: "add",
+          recovery: 'add',
         };
         lexer.pushToken(ret.token);
         pushRecoveryTokens(recoveryTokens, ret.token);
@@ -245,7 +245,7 @@ var $parser = (function (undefined) {
   var takeCareLLAction = function (popSymbolStack, peekSymbolStack) {
     let topSymbol = peekSymbolStack();
 
-    while (topSymbol && typeof topSymbol === "function") {
+    while (topSymbol && typeof topSymbol === 'function') {
       topSymbol.call(parser);
       popSymbolStack();
       topSymbol = peekSymbolStack();
@@ -257,7 +257,7 @@ var $parser = (function (undefined) {
     parseTree,
     topSymbol,
     popSymbolStack,
-    peekSymbolStack
+    peekSymbolStack,
   ) {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
       if (parseTree) {
@@ -321,7 +321,7 @@ var $parser = (function (undefined) {
     const ret = [];
 
     for (const r of rhs) {
-      if (typeof r === "string") {
+      if (typeof r === 'string') {
         ret.push(r);
       }
     }
@@ -348,17 +348,17 @@ var $parser = (function (undefined) {
     if (parseTree) {
       const top = peekStack(astStack);
 
-      if (top.type === "symbol") {
+      if (top.type === 'symbol') {
         top.addChild(errorNode);
       }
 
       while (astStack.length > 1) {
         const ast = astStack.pop();
 
-        if (ast && ast.type === "symbol" && isExtraAstNode(ast)) {
+        if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
           const topAst = peekStack(astStack);
 
-          if (topAst.type === "symbol") {
+          if (topAst.type === 'symbol') {
             topAst.children.pop();
             topAst.addChildren(ast.children);
           }
@@ -398,15 +398,15 @@ var $parser = (function (undefined) {
     }
 
     tips.push("current token: '" + lexer.getCurrentToken().token + "'.");
-    const tip = tips.join("\n");
+    const tip = tips.join('\n');
     return {
       errorMessage: [
-        "syntax error at line " +
+        'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo(),
         ...tips,
-      ].join("\n"),
+      ].join('\n'),
       tip,
     };
   };
@@ -454,7 +454,7 @@ var $parser = (function (undefined) {
         cleanAst(ast.parent, transformNode);
       } else {
         for (const c of children) {
-          if (c.type === "symbol") {
+          if (c.type === 'symbol') {
             cleanAst(c, transformNode);
           }
         }
@@ -472,7 +472,7 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast.type !== "symbol") {
+    if (ast.type !== 'symbol') {
       return ast;
     }
 
@@ -483,7 +483,7 @@ var $parser = (function (undefined) {
         ? void 0
         : _ast$children[0];
 
-    if (ast && ast.type === "symbol" && ast.symbol === START_TAG) {
+    if (ast && ast.type === 'symbol' && ast.symbol === START_TAG) {
       var _ast2, _ast2$children;
 
       ast =
@@ -503,14 +503,14 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast && ast.type === "token") {
+    if (ast && ast.type === 'token') {
       return ast;
     }
 
     return ast && cleanAst(ast, transformNode);
   };
   var defaultTransformAstNode = function ({ node, parent }) {
-    if (node.type === "token" || node.symbol !== parent.symbol) {
+    if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
 
@@ -534,31 +534,31 @@ var $parser = (function (undefined) {
   };
   var isZeroOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "*?" && s.length > 1 && !!s.match(/\*\??$/)
+      typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
     );
   };
   var isOneOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "+?" && s.length > 1 && !!s.match(/\+\??$/)
+      typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
     );
   };
   var isLazySymbol = function (s) {
-    const match = typeof s === "string" && s.match(/(\*|\+|\?)\?$/);
+    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
     return match && s.length !== 2;
   };
   var isOptionalSymbol = function (s) {
-    return typeof s === "string" && s.length > 1 && !!s.match(/\??\?/);
+    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
   };
   var normalizeSymbol = function (s) {
     const ret =
       isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
-        ? s.replace(/(\*|\+|\?)?\??$/, "")
+        ? s.replace(/(\*|\+|\?)?\??$/, '')
         : s; // ??
 
     return ret || (s && s.slice(0, -1));
   };
   var VIRTUAL_OPTIONAL_RULE_INDEX = -100;
-  var START_TAG = "$START";
+  var START_TAG = '$START';
   var smUnitBySymbol = {};
   var productionSkipAstNodeSet = undefined;
   var symbolStack = [{}];
@@ -572,7 +572,7 @@ var $parser = (function (undefined) {
 
     if (Lexer.supportSticky === undefined) {
       try {
-        Lexer.supportSticky = typeof /(?:)/.sticky == "boolean";
+        Lexer.supportSticky = typeof /(?:)/.sticky == 'boolean';
       } catch (e) {
         Lexer.supportSticky = false;
       }
@@ -595,7 +595,7 @@ var $parser = (function (undefined) {
     this.rules = this.rules.concat();
     this.regexpIndex = this.isCompress
       ? this.lexerRuleIndexMap.regexp
-      : "regexp";
+      : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -607,7 +607,7 @@ var $parser = (function (undefined) {
     });
 
     for (const rule of this.rules) {
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
@@ -630,16 +630,16 @@ var $parser = (function (undefined) {
       if (pattern.test) {
         let source = pattern.source;
 
-        if (source.startsWith("^")) {
+        if (source.startsWith('^')) {
           source = source.slice(1);
         }
 
-        var flags = Lexer.supportSticky && !disableSticky ? "gy" : "g";
-        if (pattern.multiline) flags += "m";
-        if (pattern.ignoreCase) flags += "i";
-        if (pattern.unicode) flags += "u";
+        var flags = Lexer.supportSticky && !disableSticky ? 'gy' : 'g';
+        if (pattern.multiline) flags += 'm';
+        if (pattern.ignoreCase) flags += 'i';
+        if (pattern.unicode) flags += 'u';
         obj[p] = new RegExp(source, flags);
-      } else if (typeof pattern === "object") {
+      } else if (typeof pattern === 'object') {
         for (const k of Object.keys(pattern)) {
           this.transformRegExp(pattern, k);
         }
@@ -662,22 +662,22 @@ var $parser = (function (undefined) {
     },
     addRule: function (rule) {
       this.rules.push(rule);
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
       }
     },
     resetInput: function (input) {
-      this.token = "";
+      this.token = '';
       this.nextTokens = [];
       this.tokens = [];
       this.userData = {};
       this.input = input;
-      this.matched = "";
+      this.matched = '';
       this.stateStack = [Lexer.STATIC.INITIAL_STATE];
-      this.match = "";
-      this.text = "";
+      this.match = '';
+      this.text = '';
       this.firstLine = 1;
       this.lineNumber = 1;
       this.lastLine = 1;
@@ -697,7 +697,7 @@ var $parser = (function (undefined) {
         rules = [];
 
       for (const r of this.rules) {
-        var state = this.getRuleItem(r, "state");
+        var state = this.getRuleItem(r, 'state');
 
         if (!state) {
           if (currentState === Lexer.STATIC.INITIAL_STATE) {
@@ -731,17 +731,17 @@ var $parser = (function (undefined) {
       var { matched, match, input } = this;
       matched = matched.slice(0, matched.length - match.length);
       var past =
-          (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+          (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
           matched
             .slice(0 - DEBUG_CONTEXT_LIMIT)
-            .split("\n")
-            .join(" "),
+            .split('\n')
+            .join(' '),
         next = match + input.slice(this.end); //#JSCOVERAGE_ENDIF
 
       next =
-        next.slice(0, DEBUG_CONTEXT_LIMIT).split("\n").join(" ") +
-        (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-      return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
+        (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
+      return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
     },
     mapSymbol: function (t) {
       return (this.symbolMap && this.symbolMap[t]) || t;
@@ -810,7 +810,7 @@ var $parser = (function (undefined) {
     matchRegExp: function (predict, regexp) {
       let ret;
 
-      if (typeof regexp !== "function") {
+      if (typeof regexp !== 'function') {
         regexp.lastIndex = this.end;
         ret = regexp.exec(this.input);
 
@@ -924,7 +924,7 @@ var $parser = (function (undefined) {
         const code = this.input.codePointAt(index);
 
         if (code === undefined || isNaN(code)) {
-          return "";
+          return '';
         }
 
         return String.fromCodePoint(code);
@@ -955,7 +955,7 @@ var $parser = (function (undefined) {
         rules = this.getCurrentRules();
       var { input } = this;
       var { env = this.defaultEnv } = this.options;
-      this.match = this.text = "";
+      this.match = this.text = '';
 
       if (this.end >= input.length) {
         this.token = Lexer.STATIC.EOF_TOKEN;
@@ -963,7 +963,7 @@ var $parser = (function (undefined) {
         this.firstLine = this.lastLine;
         this.firstColumn = this.lastColumn;
         return {
-          text: "",
+          text: '',
           t: this.mapSymbol(this.token),
           token: this.token,
           start: this.start,
@@ -977,18 +977,18 @@ var $parser = (function (undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        let regexp = this.getRuleItem(rule, "regexp");
-        let token = this.getRuleItem(rule, "token");
-        let channel = this.getRuleItem(rule, "channel");
-        let action = this.getRuleItem(rule, "action");
-        let more = this.getRuleItem(rule, "more");
-        let predict = this.getRuleItem(rule, "predict");
+        let regexp = this.getRuleItem(rule, 'regexp');
+        let token = this.getRuleItem(rule, 'token');
+        let channel = this.getRuleItem(rule, 'channel');
+        let action = this.getRuleItem(rule, 'action');
+        let more = this.getRuleItem(rule, 'more');
+        let predict = this.getRuleItem(rule, 'predict');
 
         if (
-          typeof regexp !== "function" &&
+          typeof regexp !== 'function' &&
           regexp &&
           env &&
-          typeof regexp.test !== "function"
+          typeof regexp.test !== 'function'
         ) {
           regexp = regexp[env];
         }
@@ -1000,7 +1000,7 @@ var $parser = (function (undefined) {
         if ((m = this.matchRegExp(predict, regexp))) {
           const start = this.end;
           const end = this.end + m[0].length;
-          lines = m[0].split("\n");
+          lines = m[0].split('\n');
           lines.shift();
           this.lineNumber += lines.length;
           const position = {
@@ -1052,32 +1052,32 @@ var $parser = (function (undefined) {
         }
       }
 
-      throw new Error("no match lexer");
+      throw new Error('no match lexer');
     },
   };
   Lexer.STATIC = {
-    INITIAL_STATE: "I",
+    INITIAL_STATE: 'I',
     DEBUG_CONTEXT_LIMIT: 20,
-    EOF_TOKEN: "$EOF",
-    UNKNOWN_TOKEN: "$UNKNOWN",
+    EOF_TOKEN: '$EOF',
+    UNKNOWN_TOKEN: '$UNKNOWN',
   };
   var lexer = new Lexer({
     rules: [
-      ["a", /\s+/g, undefined, undefined, undefined, "HIDDEN"],
-      ["b", /[0-9]+(\.[0-9]+)?\b/g],
-      ["c", /\^/g],
-      ["d", /\-/g],
-      ["e", /\*/g],
-      ["f", /\//g],
-      ["g", /\+/g],
-      ["h", /\(/g],
-      ["i", /\)/g],
+      ['a', /\s+/g, undefined, undefined, undefined, 'HIDDEN'],
+      ['b', /[0-9]+(\.[0-9]+)?\b/g],
+      ['c', /\^/g],
+      ['d', /\-/g],
+      ['e', /\*/g],
+      ['f', /\//g],
+      ['g', /\+/g],
+      ['h', /\(/g],
+      ['i', /\)/g],
     ],
     isCompress: 1,
     defaultEnv: undefined,
   });
   lexer.stateMap = {
-    I: "I",
+    I: 'I',
   };
   function lex(input, options = {}) {
     lexer.options = options;
@@ -1106,65 +1106,65 @@ var $parser = (function (undefined) {
   }
   var parser = {
     productions: [
-      ["j", ["k"]],
-      ["k", ["l"]],
+      ['j', ['k']],
+      ['k', ['l']],
       [
-        "k",
-        ["k", "c", "k"],
+        'k',
+        ['k', 'c', 'k'],
         function () {
           return {
             v: Math.pow(this.$1.v, this.$3.v),
             l: this.$1,
             r: this.$3,
-            op: "^",
+            op: '^',
           };
         },
       ],
       [
-        "k",
-        ["k", "d", "k"],
+        'k',
+        ['k', 'd', 'k'],
         function () {
-          return { v: this.$1.v - this.$3.v, l: this.$1, r: this.$3, op: "-" };
+          return { v: this.$1.v - this.$3.v, l: this.$1, r: this.$3, op: '-' };
         },
       ],
       [
-        "k",
-        ["k", "e", "k"],
+        'k',
+        ['k', 'e', 'k'],
         function () {
-          return { v: this.$1.v * this.$3.v, l: this.$1, r: this.$3, op: "*" };
+          return { v: this.$1.v * this.$3.v, l: this.$1, r: this.$3, op: '*' };
         },
       ],
       [
-        "k",
-        ["k", "f", "k"],
+        'k',
+        ['k', 'f', 'k'],
         function () {
-          return { v: this.$1.v / this.$3.v, l: this.$1, r: this.$3, op: "/" };
+          return { v: this.$1.v / this.$3.v, l: this.$1, r: this.$3, op: '/' };
         },
       ],
       [
-        "k",
-        ["d", "k"],
+        'k',
+        ['d', 'k'],
         function () {
-          return { v: -this.$2.v, op: "UMINUS" };
+          return { v: -this.$2.v, op: 'UMINUS' };
         },
       ],
       [
-        "k",
-        ["k", "g", "k"],
+        'k',
+        ['k', 'g', 'k'],
         function () {
-          return { v: this.$1.v + this.$3.v, l: this.$1, r: this.$3, op: "+" };
+          return { v: this.$1.v + this.$3.v, l: this.$1, r: this.$3, op: '+' };
         },
       ],
       [
-        "l",
-        ["h", "k", "i"],
+        'l',
+        ['h', 'k', 'i'],
         function () {
           return this.$2;
         },
       ],
       [
-        "l",
-        ["b"],
+        'l',
+        ['b'],
         function () {
           return { v: Number(this.$1) };
         },
@@ -1187,22 +1187,22 @@ var $parser = (function (undefined) {
       return p && p[itemType];
     },
     getProductionSymbol: function (p) {
-      return this.getProductionItemByType(p, "symbol");
+      return this.getProductionItemByType(p, 'symbol');
     },
     getProductionRhs: function (p) {
-      return this.getProductionItemByType(p, "rhs");
+      return this.getProductionItemByType(p, 'rhs');
     },
     getProductionAction: function (p) {
-      return this.getProductionItemByType(p, "action");
+      return this.getProductionItemByType(p, 'action');
     },
     getProductionPredict: function (p) {
-      return this.getProductionItemByType(p, "predict");
+      return this.getProductionItemByType(p, 'predict');
     },
     getProductionIsWrap: function (p) {
-      return this.getProductionItemByType(p, "isWrap");
+      return this.getProductionItemByType(p, 'isWrap');
     },
     getProductionLabel: function (p) {
-      return this.getProductionItemByType(p, "label");
+      return this.getProductionItemByType(p, 'label');
     },
     getCurrentSymbolNode: function () {
       return astStack[astStack.length - 1];
@@ -1222,7 +1222,7 @@ var $parser = (function (undefined) {
   function peekStack(stack, n = 1) {
     return stack[stack.length - n];
   }
-  var ActionTypeMap = ["accept", "shift", "reduce"];
+  var ActionTypeMap = ['accept', 'shift', 'reduce'];
   var GrammarConst = {
     SHIFT_TYPE: 1,
     REDUCE_TYPE: 2,
@@ -1418,7 +1418,7 @@ var $parser = (function (undefined) {
     var table = parser.table;
     var { gotos, action: tableAction } = table; // for debug info
 
-    var prefix = filename ? "in file: " + filename + " " : "";
+    var prefix = filename ? 'in file: ' + filename + ' ' : '';
     var valueStack = [];
     var stateStack = [0];
     var symbolStack = [];
@@ -1453,19 +1453,19 @@ var $parser = (function (undefined) {
             const arr = (expected[actionStr] = expected[actionStr] || []);
             const s = lexer.mapReverseSymbol(symbolForState);
             arr.push(s);
-            expectedInfo.push(actionStr + ":" + s);
+            expectedInfo.push(actionStr + ':' + s);
           }
         }
 
         const error =
           prefix +
-          "syntax error at line " +
+          'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo() +
-          "\n" +
-          "expect " +
-          expectedInfo.join(", ");
+          '\n' +
+          'expect ' +
+          expectedInfo.join(', ');
         throw new Error(error);
       }
 
@@ -1492,7 +1492,7 @@ var $parser = (function (undefined) {
           p.$$ = $$;
 
           for (var i = 0; i < len; i++) {
-            p["$" + (len - i)] = peekStack(valueStack, i + 1);
+            p['$' + (len - i)] = peekStack(valueStack, i + 1);
           }
 
           if (reducedAction) {
@@ -1533,19 +1533,19 @@ var $parser = (function (undefined) {
     9: 9,
   };
   lexer.symbolMap = {
-    HIDDEN: "a",
-    NUMBER: "b",
-    "^": "c",
-    "-": "d",
-    "*": "e",
-    "/": "f",
-    "+": "g",
-    "(": "h",
-    ")": "i",
-    $START: "j",
-    exp: "k",
-    primaryExpression: "l",
-    $EOF: "m",
+    HIDDEN: 'a',
+    NUMBER: 'b',
+    '^': 'c',
+    '-': 'd',
+    '*': 'e',
+    '/': 'f',
+    '+': 'g',
+    '(': 'h',
+    ')': 'i',
+    $START: 'j',
+    exp: 'k',
+    primaryExpression: 'l',
+    $EOF: 'm',
   };
   return parser;
 })();

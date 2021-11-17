@@ -27,6 +27,22 @@ export function collectAmbiguousIdentifier(
   }
 }
 
+export function collectAmbiguousIdentifiers(
+  node: AstNode,
+  ret: string[] = [],
+): string[] {
+  if (node.type === 'symbol') {
+    if (node.symbol === 'ambiguousIdentifier') {
+      ret.push(node.children[0].text);
+    } else {
+      for (const c of node.children) {
+        collectAmbiguousIdentifiers(c, ret);
+      }
+    }
+  }
+  return ret;
+}
+
 export function collectIndexesNode(
   node: AstNode,
   breadth: boolean = false,
@@ -83,6 +99,7 @@ export function collect_type_(node: Ast_Type__Node, context: Context) {
           classType.push(id.children[0].text);
         }
       }
+      asType.className = classType.join('.');
       classType[0] = context.getFileIdFromFileName(classType[0])!;
       asType.classType = classType;
       asType.type = undefined;

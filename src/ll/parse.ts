@@ -115,7 +115,12 @@ export default function parse(input: string, options: ParserOptions) {
       break;
     }
 
-    topSymbol = reduceLLAction(parseTree, topSymbol, popSymbolStack, peekSymbolStack);
+    topSymbol = reduceLLAction(
+      parseTree,
+      topSymbol,
+      popSymbolStack,
+      peekSymbolStack,
+    );
 
     if (typeof topSymbol === 'string') {
       if (!token) {
@@ -191,14 +196,10 @@ export default function parse(input: string, options: ParserOptions) {
     }
   }
 
-  ({ error, errorNode } = checkLLEndError(
-    parseTree,
-    getExpected,
-    {
-      error,
-      errorNode,
-    }
-  ));
+  ({ error, errorNode } = checkLLEndError(parseTree, getExpected, {
+    error,
+    errorNode,
+  }));
 
   const ast = parseTree ? getAstRootNode(astStack, transformNode as any) : null;
 

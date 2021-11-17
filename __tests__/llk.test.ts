@@ -23,13 +23,13 @@ describe('llk', () => {
           HIDDEN_LEXER_RULE,
           {
             regexp: /\d+/,
-            token: "NUM"
+            token: 'NUM',
           },
           {
             regexp: /\+/,
-            token: "+"
-          }
-        ]
+            token: '+',
+          },
+        ],
       },
     });
     var code = grammar.genCode();
@@ -262,7 +262,7 @@ describe('llk', () => {
     var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse('1+2+3', { onAction() { } }).ast;
+    const ast = parser.parse('1+2+3', { onAction() {} }).ast;
     expect(prettyJson(ast)).toMatchSnapshot();
   });
 
@@ -270,7 +270,7 @@ describe('llk', () => {
     var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse('1+2*3', { onAction() { } }).ast;
+    const ast = parser.parse('1+2*3', { onAction() {} }).ast;
     expect(prettyJson(ast)).toMatchSnapshot();
   });
 
@@ -278,7 +278,7 @@ describe('llk', () => {
     var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const ast = parser.parse('1+2*4-5^2^3', { onAction() { } }).ast;
+    const ast = parser.parse('1+2*4-5^2^3', { onAction() {} }).ast;
     expect(prettyJson(ast)).toMatchSnapshot();
   });
 
@@ -286,7 +286,7 @@ describe('llk', () => {
     var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    const { ast, errorNode } = parser.parse('1+2*', { onAction() { } });
+    const { ast, errorNode } = parser.parse('1+2*', { onAction() {} });
     expect(prettyJson(ast)).toMatchSnapshot();
     expect(prettyJson(errorNode)).toMatchSnapshot();
   });

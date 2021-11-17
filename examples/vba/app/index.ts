@@ -1,11 +1,6 @@
-import {
-  parser,
-  Context,
-  VariableBinder,
-  SubBinder,
-  ClassBinder,
-} from '../src/index';
+import { parser } from '../src/index';
 import type * as Manaco from 'monaco-editor';
+import { runs2 } from '../tests/utils';
 
 declare var require: any;
 declare var monacoBase: string;
@@ -124,7 +119,16 @@ require(['vs/editor/editor.main'], () => {
 
   function getCurrentAst() {
     const value = getCurrentCode();
-    return { value, ret: parser.parse(value, {}) };
+    let start = Date.now();
+    const ret = { value, ret: parser.parse(value, {}) };
+    if (ret.ret.error) {
+      console.error(ret.ret.error.errorMessage);
+    } else {
+      console.log(ret.ret);
+    }
+    console.log('parse duration: ' + (Date.now() - start));
+    console.log('');
+    return ret;
   }
   $('resetCode').addEventListener('click', () => {
     localStorage.clear();
@@ -135,130 +139,43 @@ require(['vs/editor/editor.main'], () => {
     console.log(parser.lex(value));
   });
   $('parse').addEventListener('click', () => {
-    let start = Date.now();
-    const { ret } = getCurrentAst();
-    console.log(ret);
-    if (ret.error) {
-      console.error(ret.error.errorMessage);
-    }
-    console.log('parse duration: ' + (Date.now() - start));
-    console.log('');
+    getCurrentAst();
   });
 
-  // function wait(ms: number) {
-  //   return new Promise((resolve) => {
-  //     setTimeout(resolve, ms);
-  //   });
-  // }
-
-  const MsgBoxBinder: SubBinder = {
-    name: 'msgbox',
-    argumentsInfo: [
-      {
-        name: 'msg',
-      },
-      {
-        name: 'msg2',
-      },
-    ],
-    async value(args) {
-      console.log(
-        `Call ${MsgBoxBinder.name}: `,
-        args.msg?.value.value,
-        args.msg2?.value.value || '',
-      );
-      // await wait(100);
-      return undefined;
-    },
-  };
-
-  function upperFirst(name: string) {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  }
-
-  const JSDateBinder: ClassBinder = {
-    name: 'js.Date',
-    async value() {
-      const d: any = new Date();
-      return {
-        get(name) {
-          const method = `get${upperFirst(name)}`;
-          if (!d[method]) {
-            throw new Error('no property getter ' + name + ' in js.Date!');
+  $('stmt').addEventListener('click', () => {
+    const { ret } = getCurrentAst();
+    const { ast } = ret;
+    const { children } = ast;
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'moduleBody') {
+        for (const c2 of c.children[0].children[0].children) {
+          if (c2.type === 'symbol' && c2.symbol === 'block') {
+            console.log(c2.children[0].children[0].children);
           }
-          const v = d[method]();
-          if (typeof v === 'string') {
-            return Context.createString(v);
-          } else if (typeof v === 'number') {
-            return Context.createInteger(v);
-          }
-          throw new Error('only allow string/number return type');
-        },
-        set(name, value) {
-          const method = `set${upperFirst(name)}`;
-          if (!d[method]) {
-            throw new Error('no property setter ' + name + ' in js.Date!');
-          }
-          let v = value.value;
-          d[method](v);
-        },
-      };
-    },
-  };
-
-  const vbModalBinder: VariableBinder = {
-    name: 'vbModal',
-    value: Context.createInteger(1),
-  };
+        }
+      }
+    }
+  });
 
   $('evaluate').addEventListener('click', async () => {
     try {
-      const context = new Context();
-      context.registerClassBinder(JSDateBinder);
-      context.registerSubBinder(MsgBoxBinder);
-      context.registerSubBinder({
-        argumentsInfo: [
-          {
-            name: 'msg',
-          },
-          {
-            name: 'msg2',
-          },
-        ],
-        async value(args) {
-          console.log(
-            `Call ${'debug.print'}: `,
-            args.msg?.value.value,
-            args.msg2?.value.value || '',
-          );
-          // await wait(100);
-          return Context.createInteger(1);
-        },
-        name: 'debug.print',
-      });
-
-      context.registerVariableBinder(vbModalBinder);
-      context.registerVariableBinder({
-        ...vbModalBinder,
-        name: 'VBA.FormShowConstants.' + vbModalBinder.name,
-      });
-
       const { classCode, moduleCode } = getAllCodes();
       let start = Date.now();
-      await context.load(classCode, {
-        id: 'MyClass',
-        name: 'MyClass',
-        type: 'class',
-      });
-      await context.load(moduleCode, {
-        id: 'module',
-        name: 'module',
-        type: 'module',
-      });
-      console.log('parse duration: ' + (Date.now() - start));
-      console.log('');
-      start = Date.now();
-      await context.callSub($('sub').value);
+      const ret = await runs2(
+        $('sub').value,
+        [moduleCode],
+        [
+          {
+            id: 'MyClass',
+            name: 'MyClass',
+            type: 'class',
+            code: classCode,
+          },
+        ],
+      );
+      for (const r of ret) {
+        console.log(r);
+      }
       console.log('');
       console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {

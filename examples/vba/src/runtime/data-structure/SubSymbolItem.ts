@@ -1,5 +1,9 @@
 import type { Context } from '../Context';
-import type { Ast_Block_Node, Ast_SubStmt_Node, Ast_FunctionStmt_Node } from '../../parser';
+import type {
+  Ast_Block_Node,
+  Ast_SubStmt_Node,
+  Ast_FunctionStmt_Node,
+} from '../../parser';
 import { load } from '../loader/loaders';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
 import { VBObject } from './VBObject';

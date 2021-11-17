@@ -5,6 +5,7 @@ import type {
 } from '../../parser';
 import { VBObject, VBValue } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
+import { collectAmbiguousIdentifiers } from '../collect/collectType';
 
 registerEvaluators({
   async evaluateLetStmt(node, context) {
@@ -24,6 +25,26 @@ registerEvaluators({
     }
     const rightValue: VBValue | VBObject = await evaluate(right, context);
     if (op.token === 'EQ') {
+      leftVariable.setValue(rightValue);
+    }
+  },
+
+  async evaluateSetStmt(node, context) {
+    let { children } = node;
+    const leftVariable: VBObject = await evaluate(children[1], context);
+    if (leftVariable.type !== 'Object') {
+      throw new Error('unexpect let left side operator!');
+    }
+    const c3 = children[3];
+    if (c3.children[0].type === 'token' && c3.children[0].token === 'NEW') {
+      const classChild = c3.children[1];
+      if (classChild) {
+        const classTypes = collectAmbiguousIdentifiers(classChild);
+        const rightValue = await context.createObject(classTypes.join('.'));
+        leftVariable.setValue(rightValue);
+      }
+    } else {
+      const rightValue = await evaluate(c3.children[0], context);
       leftVariable.setValue(rightValue);
     }
   },

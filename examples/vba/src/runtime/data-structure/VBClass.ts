@@ -1,7 +1,7 @@
 import type { Context } from '../Context';
 import { VBString, VBValue, VB_EMPTY } from './VBValue';
 import { VBObject } from './VBObject';
-import { ClassBinder, InstanceBinder } from './runtime';
+import { ClassBinder, IndexType, InstanceBinder } from './runtime';
 
 // user class
 export class VBNativeClass {
@@ -61,8 +61,6 @@ export class VBBindProperty {
 
   subType: 'bindProperty' = 'bindProperty';
 
-  isProperty: boolean = true;
-
   _value: VBValue = VB_EMPTY;
 
   public constructor(public instance: VBBindClass, public name: string) {}
@@ -84,6 +82,40 @@ export class VBBindProperty {
   }
 }
 
+export class VBBindIndex {
+  type: 'Object' = 'Object';
+
+  subType: 'bindIndex' = 'bindIndex';
+
+  _value: VBValue = VB_EMPTY;
+
+  public constructor(
+    public instance: VBBindClass,
+    public indexes: IndexType[],
+  ) {
+    if (!instance.instance.getElement) {
+      throw new Error('no getElement on ClassBinder!');
+    }
+    this._value = instance.instance.getElement(indexes);
+  }
+
+  _getObject() {
+    return this;
+  }
+
+  get value(): VBValue {
+    return this._value;
+  }
+
+  setValue(value: VBObject | VBValue) {
+    this.value = value;
+  }
+
+  set value(value: VBObject | VBValue) {
+    this.instance.setElement(this.indexes, value);
+  }
+}
+
 export class VBBindClass {
   type: 'Class' = 'Class';
   subType: 'bind' = 'bind';
@@ -91,7 +123,7 @@ export class VBBindClass {
 
   _value: VBString;
 
-  private instance: InstanceBinder = null!;
+  instance: InstanceBinder = null!;
 
   private properties = new Map<string, VBBindProperty>();
 
@@ -129,6 +161,21 @@ export class VBBindClass {
     }
     obj._value = this.instance.get(name);
     return obj;
+  }
+  getElement(indexes: IndexType[]) {
+    return new VBBindIndex(this, indexes);
+  }
+  setElement(indexes: IndexType[], value: VBObject | VBValue) {
+    let v: VBValue;
+    if (value.type === 'Object') {
+      v = value.value;
+    } else {
+      v = value;
+    }
+    if (!this.instance.setElement) {
+      throw new Error('no setElement on ClassBinder!');
+    }
+    return this.instance.setElement(indexes, v);
   }
 
   callSub() {}

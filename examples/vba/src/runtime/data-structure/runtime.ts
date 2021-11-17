@@ -46,6 +46,7 @@ export interface SubBinder {
   type: 'SubBinder';
   value: (
     args: Record<string, VBObject>,
+    context: Context,
   ) => Promise<SubBinderReturnType> | SubBinderReturnType;
   argumentsInfo?: ArgInfo[];
   name: string;
@@ -57,7 +58,11 @@ export interface VariableBinder {
   name: string;
 }
 
+export type IndexType = string | number;
+
 export interface InstanceBinder {
+  getElement?(indexes: IndexType[]): VBValue;
+  setElement?(indexes: IndexType[], value: VBValue): void;
   get(name: string): VBValue;
   set(name: string, value: VBValue): void;
 }

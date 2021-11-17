@@ -174,6 +174,7 @@ export interface AsTypeClauseInfo {
   isArray: boolean;
   isNew?: boolean;
   classType?: string[];
+  className?: string;
 }
 
 export const getDEFAULT_AS_TYPE: () => AsTypeClauseInfo = () => ({

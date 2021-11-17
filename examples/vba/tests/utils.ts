@@ -1,5 +1,5 @@
-import { Context, SubBinder, ClassBinder, VariableBinder } from '../src/';
-import { VBFile } from '../src/runtime/types';
+import { Context, SubBinder, ClassBinder, VariableBinder } from '../src/index';
+import type { VBFile } from '../src/runtime/types';
 
 function upperFirst(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
@@ -32,11 +32,48 @@ const JSDateBinder: ClassBinder = {
   },
 };
 
+const ExcelRange: ClassBinder = {
+  name: 'excel.Range',
+  async value() {
+    const d = [Context.createInteger(1), Context.createInteger(2)];
+    return {
+      get(name) {
+        throw new Error('only allow index access');
+      },
+      set(name, value) {
+        throw new Error('only allow index access');
+      },
+      getElement(indexes) {
+        const index: number = parseInt(indexes[0] + '', 10);
+        return d[index];
+      },
+      setElement(indexes, value) {
+        const index: number = parseInt(indexes[0] + '', 10);
+        if (value.type === 'Integer') d[index] = value;
+      },
+    };
+  },
+};
+
+const createRange: SubBinder = {
+  name: 'createRange',
+  async value(args, context) {
+    return context.createObject('excel.Range');
+  },
+};
 export async function run(moduleCode: string) {
   return runs([moduleCode]);
 }
 
 export async function runs(
+  moduleCodes: string[],
+  classCode: (VBFile & { code: string })[] = [],
+) {
+  return runs2('main', moduleCodes, classCode);
+}
+
+export async function runs2(
+  mainSub: string,
   moduleCodes: string[],
   classCode: (VBFile & { code: string })[] = [],
 ) {
@@ -58,6 +95,7 @@ export async function runs(
 
   const context = new Context();
   context.registerSubBinder(MsgBoxSub);
+  context.registerSubBinder(createRange);
   context.registerSubBinder({
     name: 'debug.print',
     argumentsInfo: [
@@ -72,6 +110,7 @@ export async function runs(
   });
 
   context.registerClassBinder(JSDateBinder);
+  context.registerClassBinder(ExcelRange);
 
   context.registerVariableBinder(vbModal);
   context.registerVariableBinder({
@@ -92,6 +131,6 @@ export async function runs(
     await context.load(c.code.trim(), c);
   }
 
-  await context.callSub('main');
+  await context.callSub(mainSub);
   return ret;
 }

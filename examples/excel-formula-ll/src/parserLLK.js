@@ -16,7 +16,7 @@ var formulaParser = (function (undefined) {
       const ret = {};
 
       for (const k of Object.keys(this)) {
-        if (k !== "parent" && k !== "t") {
+        if (k !== 'parent' && k !== 't') {
           const v = this[k];
 
           if (v !== undefined) {
@@ -29,8 +29,8 @@ var formulaParser = (function (undefined) {
     }
   };
   var AstSymbolNode = class AstSymbolNode extends BaseAstNode {
-    symbol = "";
-    type = "symbol";
+    symbol = '';
+    type = 'symbol';
     children = [];
     ruleIndex = -1;
     internalRuleIndex = -1;
@@ -62,7 +62,7 @@ var formulaParser = (function (undefined) {
       if (this.isWrap && this.children.length === 1) {
         const c = this.children[0];
 
-        if (c.type === "symbol" && c.symbol === this.symbol) {
+        if (c.type === 'symbol' && c.symbol === this.symbol) {
           this.label = c.label;
           this.setChildren(c.children);
           return false;
@@ -95,10 +95,10 @@ var formulaParser = (function (undefined) {
     }
   };
   var AstTokenNode = class AstTokenNode extends BaseAstNode {
-    token = "";
-    t = "";
-    type = "token";
-    text = "";
+    token = '';
+    t = '';
+    type = 'token';
+    text = '';
 
     constructor(params) {
       super();
@@ -170,7 +170,7 @@ var formulaParser = (function (undefined) {
     shouldDelete,
     transformNode,
     recoveryTokens,
-    ret
+    ret,
   ) {
     ret.error = {
       recovery: false,
@@ -187,9 +187,9 @@ var formulaParser = (function (undefined) {
       lexer.stashPop(); // should delete
 
       if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
-        recommendedAction.action = "del";
+        recommendedAction.action = 'del';
       } else if (ret.error.expected.length) {
-        recommendedAction.action = "add";
+        recommendedAction.action = 'add';
       }
 
       const localErrorNode = new AstErrorNode({
@@ -207,7 +207,7 @@ var formulaParser = (function (undefined) {
             errorNode: localErrorNode,
             parseTree: getAstRootNode(astStack, transformNode, true),
           },
-          recommendedAction
+          recommendedAction,
         ) || {};
       const { action } = recovery;
       peekStack(astStack).children.pop();
@@ -218,19 +218,19 @@ var formulaParser = (function (undefined) {
         return ret;
       }
 
-      if (action === "del") {
+      if (action === 'del') {
         ret.error.recovery = true;
         const deleteToken = recoveryTokens.pop();
-        deleteToken.recovery = "del";
+        deleteToken.recovery = 'del';
         ret.token = undefined;
-      } else if (action === "add") {
+      } else if (action === 'add') {
         ret.error.recovery = true;
         ret.token = {
           ...ret.token,
           token: recovery.token,
           text: recovery.text,
           t: lexer.mapSymbol(recovery.token),
-          recovery: "add",
+          recovery: 'add',
         };
         lexer.pushToken(ret.token);
         pushRecoveryTokens(recoveryTokens, ret.token);
@@ -245,7 +245,7 @@ var formulaParser = (function (undefined) {
   var takeCareLLAction = function (popSymbolStack, peekSymbolStack) {
     let topSymbol = peekSymbolStack();
 
-    while (topSymbol && typeof topSymbol === "function") {
+    while (topSymbol && typeof topSymbol === 'function') {
       topSymbol.call(parser);
       popSymbolStack();
       topSymbol = peekSymbolStack();
@@ -257,7 +257,7 @@ var formulaParser = (function (undefined) {
     parseTree,
     topSymbol,
     popSymbolStack,
-    peekSymbolStack
+    peekSymbolStack,
   ) {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
       if (parseTree) {
@@ -321,7 +321,7 @@ var formulaParser = (function (undefined) {
     const ret = [];
 
     for (const r of rhs) {
-      if (typeof r === "string") {
+      if (typeof r === 'string') {
         ret.push(r);
       }
     }
@@ -348,17 +348,17 @@ var formulaParser = (function (undefined) {
     if (parseTree) {
       const top = peekStack(astStack);
 
-      if (top.type === "symbol") {
+      if (top.type === 'symbol') {
         top.addChild(errorNode);
       }
 
       while (astStack.length > 1) {
         const ast = astStack.pop();
 
-        if (ast && ast.type === "symbol" && isExtraAstNode(ast)) {
+        if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
           const topAst = peekStack(astStack);
 
-          if (topAst.type === "symbol") {
+          if (topAst.type === 'symbol') {
             topAst.children.pop();
             topAst.addChildren(ast.children);
           }
@@ -398,15 +398,15 @@ var formulaParser = (function (undefined) {
     }
 
     tips.push("current token: '" + lexer.getCurrentToken().token + "'.");
-    const tip = tips.join("\n");
+    const tip = tips.join('\n');
     return {
       errorMessage: [
-        "syntax error at line " +
+        'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo(),
         ...tips,
-      ].join("\n"),
+      ].join('\n'),
       tip,
     };
   };
@@ -454,7 +454,7 @@ var formulaParser = (function (undefined) {
         cleanAst(ast.parent, transformNode);
       } else {
         for (const c of children) {
-          if (c.type === "symbol") {
+          if (c.type === 'symbol') {
             cleanAst(c, transformNode);
           }
         }
@@ -472,7 +472,7 @@ var formulaParser = (function (undefined) {
       return ast;
     }
 
-    if (ast.type !== "symbol") {
+    if (ast.type !== 'symbol') {
       return ast;
     }
 
@@ -483,7 +483,7 @@ var formulaParser = (function (undefined) {
         ? void 0
         : _ast$children[0];
 
-    if (ast && ast.type === "symbol" && ast.symbol === START_TAG) {
+    if (ast && ast.type === 'symbol' && ast.symbol === START_TAG) {
       var _ast2, _ast2$children;
 
       ast =
@@ -503,14 +503,14 @@ var formulaParser = (function (undefined) {
       return ast;
     }
 
-    if (ast && ast.type === "token") {
+    if (ast && ast.type === 'token') {
       return ast;
     }
 
     return ast && cleanAst(ast, transformNode);
   };
   var defaultTransformAstNode = function ({ node, parent }) {
-    if (node.type === "token" || node.symbol !== parent.symbol) {
+    if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
 
@@ -534,31 +534,31 @@ var formulaParser = (function (undefined) {
   };
   var isZeroOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "*?" && s.length > 1 && !!s.match(/\*\??$/)
+      typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
     );
   };
   var isOneOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "+?" && s.length > 1 && !!s.match(/\+\??$/)
+      typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
     );
   };
   var isLazySymbol = function (s) {
-    const match = typeof s === "string" && s.match(/(\*|\+|\?)\?$/);
+    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
     return match && s.length !== 2;
   };
   var isOptionalSymbol = function (s) {
-    return typeof s === "string" && s.length > 1 && !!s.match(/\??\?/);
+    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
   };
   var normalizeSymbol = function (s) {
     const ret =
       isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
-        ? s.replace(/(\*|\+|\?)?\??$/, "")
+        ? s.replace(/(\*|\+|\?)?\??$/, '')
         : s; // ??
 
     return ret || (s && s.slice(0, -1));
   };
   var VIRTUAL_OPTIONAL_RULE_INDEX = -100;
-  var START_TAG = "$START";
+  var START_TAG = '$START';
   var smUnitBySymbol = {};
   var productionSkipAstNodeSet = undefined;
   var symbolStack = [{}];
@@ -568,7 +568,7 @@ var formulaParser = (function (undefined) {
   var productionEndFlag = 2;
   var globalSymbolNodeId = 0;
   var my = {
-    insideStructureRef: "inside structure reference",
+    insideStructureRef: 'inside structure reference',
     markType: function (self, type, enter = true) {
       const { userData } = self;
       userData[type] = userData[type] || 0;
@@ -588,7 +588,7 @@ var formulaParser = (function (undefined) {
 
     if (Lexer.supportSticky === undefined) {
       try {
-        Lexer.supportSticky = typeof /(?:)/.sticky == "boolean";
+        Lexer.supportSticky = typeof /(?:)/.sticky == 'boolean';
       } catch (e) {
         Lexer.supportSticky = false;
       }
@@ -611,7 +611,7 @@ var formulaParser = (function (undefined) {
     this.rules = this.rules.concat();
     this.regexpIndex = this.isCompress
       ? this.lexerRuleIndexMap.regexp
-      : "regexp";
+      : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -623,7 +623,7 @@ var formulaParser = (function (undefined) {
     });
 
     for (const rule of this.rules) {
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
@@ -646,16 +646,16 @@ var formulaParser = (function (undefined) {
       if (pattern.test) {
         let source = pattern.source;
 
-        if (source.startsWith("^")) {
+        if (source.startsWith('^')) {
           source = source.slice(1);
         }
 
-        var flags = Lexer.supportSticky && !disableSticky ? "gy" : "g";
-        if (pattern.multiline) flags += "m";
-        if (pattern.ignoreCase) flags += "i";
-        if (pattern.unicode) flags += "u";
+        var flags = Lexer.supportSticky && !disableSticky ? 'gy' : 'g';
+        if (pattern.multiline) flags += 'm';
+        if (pattern.ignoreCase) flags += 'i';
+        if (pattern.unicode) flags += 'u';
         obj[p] = new RegExp(source, flags);
-      } else if (typeof pattern === "object") {
+      } else if (typeof pattern === 'object') {
         for (const k of Object.keys(pattern)) {
           this.transformRegExp(pattern, k);
         }
@@ -678,22 +678,22 @@ var formulaParser = (function (undefined) {
     },
     addRule: function (rule) {
       this.rules.push(rule);
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
       }
     },
     resetInput: function (input) {
-      this.token = "";
+      this.token = '';
       this.nextTokens = [];
       this.tokens = [];
       this.userData = {};
       this.input = input;
-      this.matched = "";
+      this.matched = '';
       this.stateStack = [Lexer.STATIC.INITIAL_STATE];
-      this.match = "";
-      this.text = "";
+      this.match = '';
+      this.text = '';
       this.firstLine = 1;
       this.lineNumber = 1;
       this.lastLine = 1;
@@ -713,7 +713,7 @@ var formulaParser = (function (undefined) {
         rules = [];
 
       for (const r of this.rules) {
-        var state = this.getRuleItem(r, "state");
+        var state = this.getRuleItem(r, 'state');
 
         if (!state) {
           if (currentState === Lexer.STATIC.INITIAL_STATE) {
@@ -747,17 +747,17 @@ var formulaParser = (function (undefined) {
       var { matched, match, input } = this;
       matched = matched.slice(0, matched.length - match.length);
       var past =
-          (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+          (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
           matched
             .slice(0 - DEBUG_CONTEXT_LIMIT)
-            .split("\n")
-            .join(" "),
+            .split('\n')
+            .join(' '),
         next = match + input.slice(this.end); //#JSCOVERAGE_ENDIF
 
       next =
-        next.slice(0, DEBUG_CONTEXT_LIMIT).split("\n").join(" ") +
-        (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-      return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
+        (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
+      return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
     },
     mapSymbol: function (n) {
       return n;
@@ -798,7 +798,7 @@ var formulaParser = (function (undefined) {
     matchRegExp: function (predict, regexp) {
       let ret;
 
-      if (typeof regexp !== "function") {
+      if (typeof regexp !== 'function') {
         regexp.lastIndex = this.end;
         ret = regexp.exec(this.input);
 
@@ -912,7 +912,7 @@ var formulaParser = (function (undefined) {
         const code = this.input.codePointAt(index);
 
         if (code === undefined || isNaN(code)) {
-          return "";
+          return '';
         }
 
         return String.fromCodePoint(code);
@@ -943,7 +943,7 @@ var formulaParser = (function (undefined) {
         rules = this.getCurrentRules();
       var { input } = this;
       var { env = this.defaultEnv } = this.options;
-      this.match = this.text = "";
+      this.match = this.text = '';
 
       if (this.end >= input.length) {
         this.token = Lexer.STATIC.EOF_TOKEN;
@@ -951,7 +951,7 @@ var formulaParser = (function (undefined) {
         this.firstLine = this.lastLine;
         this.firstColumn = this.lastColumn;
         return {
-          text: "",
+          text: '',
           t: this.mapSymbol(this.token),
           token: this.token,
           start: this.start,
@@ -965,18 +965,18 @@ var formulaParser = (function (undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        let regexp = this.getRuleItem(rule, "regexp");
-        let token = this.getRuleItem(rule, "token");
-        let channel = this.getRuleItem(rule, "channel");
-        let action = this.getRuleItem(rule, "action");
-        let more = this.getRuleItem(rule, "more");
-        let predict = this.getRuleItem(rule, "predict");
+        let regexp = this.getRuleItem(rule, 'regexp');
+        let token = this.getRuleItem(rule, 'token');
+        let channel = this.getRuleItem(rule, 'channel');
+        let action = this.getRuleItem(rule, 'action');
+        let more = this.getRuleItem(rule, 'more');
+        let predict = this.getRuleItem(rule, 'predict');
 
         if (
-          typeof regexp !== "function" &&
+          typeof regexp !== 'function' &&
           regexp &&
           env &&
-          typeof regexp.test !== "function"
+          typeof regexp.test !== 'function'
         ) {
           regexp = regexp[env];
         }
@@ -988,7 +988,7 @@ var formulaParser = (function (undefined) {
         if ((m = this.matchRegExp(predict, regexp))) {
           const start = this.end;
           const end = this.end + m[0].length;
-          lines = m[0].split("\n");
+          lines = m[0].split('\n');
           lines.shift();
           this.lineNumber += lines.length;
           const position = {
@@ -1040,27 +1040,27 @@ var formulaParser = (function (undefined) {
         }
       }
 
-      throw new Error("no match lexer");
+      throw new Error('no match lexer');
     },
   };
   Lexer.STATIC = {
-    INITIAL_STATE: "I",
+    INITIAL_STATE: 'I',
     DEBUG_CONTEXT_LIMIT: 20,
-    EOF_TOKEN: "$EOF",
-    UNKNOWN_TOKEN: "$UNKNOWN",
+    EOF_TOKEN: '$EOF',
+    UNKNOWN_TOKEN: '$UNKNOWN',
   };
   var lexer = new Lexer({
     rules: [
       [
-        "HIDDEN",
+        'HIDDEN',
         /\s+/g,
         undefined,
         undefined,
-        ["inside structure reference", "I"],
-        "HIDDEN",
+        ['inside structure reference', 'I'],
+        'HIDDEN',
       ],
       [
-        "(",
+        '(',
         /\(/g,
         function () {
           var _this$tokens;
@@ -1069,7 +1069,7 @@ var formulaParser = (function (undefined) {
             ((_this$tokens = this.tokens[this.tokens.length - 1]) === null ||
             _this$tokens === void 0
               ? void 0
-              : _this$tokens.token) === "FUNCTION"
+              : _this$tokens.token) === 'FUNCTION'
           ) {
             return;
           }
@@ -1082,7 +1082,7 @@ var formulaParser = (function (undefined) {
         },
       ],
       [
-        ")",
+        ')',
         /\)/g,
         function () {
           const { userData } = this;
@@ -1091,62 +1091,62 @@ var formulaParser = (function (undefined) {
         },
       ],
       [
-        "{",
+        '{',
         /\{/g,
         function () {
           // array constants
-          my.markType(this, "a");
+          my.markType(this, 'a');
         },
       ],
       [
-        "}",
+        '}',
         /\}/g,
         function () {
-          my.markType(this, "a", false);
+          my.markType(this, 'a', false);
         },
       ],
       [
-        "SPECIFIER_SEPARATOR",
+        'SPECIFIER_SEPARATOR',
         /,/g,
         undefined,
         undefined,
-        ["inside structure reference"],
+        ['inside structure reference'],
       ],
       [
-        "TABLE_ITEM_SPECIFIER",
+        'TABLE_ITEM_SPECIFIER',
         /\[#('.|[^\]#])+\]/g,
         undefined,
         undefined,
-        ["inside structure reference", "I"],
+        ['inside structure reference', 'I'],
       ],
-      ["TABLE_AT", /@/g, undefined, undefined, ["inside structure reference"]],
+      ['TABLE_AT', /@/g, undefined, undefined, ['inside structure reference']],
       [
-        "TABLE_COLUMN_SPECIFIER",
+        'TABLE_COLUMN_SPECIFIER',
         /(?:(?:(?:\[(?:'.|[^\]'#])+\])(?:\:(?:\[(?:'.|[^\]'#])+\]))?)|(?:'.|[^\]#'])+)/g,
         undefined,
         undefined,
-        ["inside structure reference"],
+        ['inside structure reference'],
       ],
       [
-        "[",
+        '[',
         /\[/g,
         function () {
           this.pushState(my.insideStructureRef);
         },
         undefined,
-        ["inside structure reference", "I"],
+        ['inside structure reference', 'I'],
       ],
       [
-        "]",
+        ']',
         /\]/g,
         function () {
           this.popState();
         },
         undefined,
-        ["inside structure reference"],
+        ['inside structure reference'],
       ],
       [
-        "ARRAY_SEPARATOR",
+        'ARRAY_SEPARATOR',
         {
           en: /[,;]/g,
           de: /[\\;]/g,
@@ -1157,7 +1157,7 @@ var formulaParser = (function (undefined) {
         },
       ],
       [
-        "REF_UNION_OPERATOR",
+        'REF_UNION_OPERATOR',
         /,/g,
         undefined,
         function () {
@@ -1165,23 +1165,23 @@ var formulaParser = (function (undefined) {
           return !lastItem || !lastItem.func;
         },
       ],
-      ["REF_RANGE_OPERATOR", /:/g],
+      ['REF_RANGE_OPERATOR', /:/g],
       [
-        "ARGUMENT_SEPARATOR",
+        'ARGUMENT_SEPARATOR',
         {
           en: /,/g,
           de: /;/g,
         },
       ],
       [
-        "STRING",
+        'STRING',
         /"(?:""|[^"])*"/g,
         function () {
           this.text = this.text.slice(1, -1).replace(/""/g, '"');
         },
       ],
       [
-        "FUNCTION",
+        'FUNCTION',
         /(?:(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*)(?:\.(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*))*)(?=[(])/g,
         function () {
           const { userData } = this;
@@ -1192,46 +1192,46 @@ var formulaParser = (function (undefined) {
         },
       ],
       [
-        "TABLE_NAME",
+        'TABLE_NAME',
         /(?:(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*)(?:\.(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*))*)(?=[\[])/g,
       ],
-      ["ERROR", /#[A-Z0-9\/]+(!|\?)? /g],
+      ['ERROR', /#[A-Z0-9\/]+(!|\?)? /g],
       [
-        "CELL",
+        'CELL',
         /(?:(?:(?:'(?:''|[^'])*')|(?:(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*)(?:\:(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*))?))!)?(?:(?:(?:\$?[A-Za-z]+\$?[0-9]+)(?:\s*\:\s*(?:\$?[A-Za-z]+\$?[0-9]+))?#?)|(?:\d+\:\d+))/g,
       ],
-      ["LOGIC", /(TRUE|FALSE)(?=\b)/gi],
+      ['LOGIC', /(TRUE|FALSE)(?=\b)/gi],
       [
-        "NAME",
+        'NAME',
         /(?:(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*)(?:\.(?:[_A-Za-z一-龥]+[_A-Za-z_0-9一-龥]*))*)/g,
       ],
       [
-        "NUMBER",
+        'NUMBER',
         {
           en: /(?:0|[1-9][0-9]*)?\.(?:[0-9][0-9]*)(?:[eE][+-]?[0-9]+)?/g,
           de: /(?:0|[1-9][0-9]*)?,(?:[0-9][0-9]*)(?:[eE][+-]?[0-9]+)?/g,
         },
       ],
-      ["NUMBER", /(?:0|[1-9][0-9]*)(?:[eE][+-]?[0-9]+)?/g],
-      ["=", /=/g],
-      ["<=", /<=/g],
-      [">=", />=/g],
-      ["<>", /<>/g],
-      [">", />/g],
-      ["<", /</g],
-      ["&", /&/g],
-      ["+", /\+/g],
-      ["-", /\-/g],
-      ["*", /\*/g],
-      ["/", /\//g],
-      ["^", /\^/g],
-      ["@", /@/g],
-      ["%", /%/g],
+      ['NUMBER', /(?:0|[1-9][0-9]*)(?:[eE][+-]?[0-9]+)?/g],
+      ['=', /=/g],
+      ['<=', /<=/g],
+      ['>=', />=/g],
+      ['<>', /<>/g],
+      ['>', />/g],
+      ['<', /</g],
+      ['&', /&/g],
+      ['+', /\+/g],
+      ['-', /\-/g],
+      ['*', /\*/g],
+      ['/', /\//g],
+      ['^', /\^/g],
+      ['@', /@/g],
+      ['%', /%/g],
       ["'('", /'\('/g],
       ["')'", /'\)'/g],
     ],
     isCompress: 1,
-    defaultEnv: "en",
+    defaultEnv: 'en',
   });
   function lex(input, options = {}) {
     lexer.options = options;
@@ -1260,187 +1260,187 @@ var formulaParser = (function (undefined) {
   }
   var parser = {
     productions: [
-      ["$START", ["formula"]],
-      ["formula", ["exp"]],
-      ["exp_p_end", ["(", "exp", ")"]],
-      ["exp_p_end", ["NUMBER"]],
-      ["exp_p_end", ["STRING"]],
-      ["exp_p_end", ["LOGIC"]],
-      ["exp_p_end", ["ERROR"]],
-      ["exp_p_end", ["reference"]],
-      ["referenceItem", ["CELL"]],
-      ["referenceItem", ["NAME"]],
-      ["referenceItem", ["structureReference"]],
-      ["reference_p_end", ["referenceItem"]],
-      ["exp_p_end", ["functionExp"]],
-      ["exp_p_end", ["array"]],
-      ["arrayElement", ["STRING"]],
-      ["arrayElement", ["NUMBER"]],
-      ["arrayElement", ["LOGIC"]],
-      ["arrayElement", ["ERROR"]],
-      ["array_group_def_2", ["ARRAY_SEPARATOR", "arrayElement"]],
-      ["array", ["{", "arrayElement", "array_group_def_2*", "}"]],
-      ["functionExp", ["FUNCTION", "(", "argumentsList", ")"]],
-      ["argumentsList_group_def_4", ["ARGUMENT_SEPARATOR", "exp?"]],
-      ["argumentsList", ["exp?", "argumentsList_group_def_4*"]],
-      ["structureReference", ["TABLE_NAME", "tableSpecifier"]],
-      ["structureReference", ["tableSpecifier"]],
-      ["tableSpecifier", ["TABLE_ITEM_SPECIFIER"]],
-      ["tableSpecifier", ["[", "tableSpecifierInner", "]"]],
-      ["tableThisRow", ["TABLE_AT"]],
-      ["tableThisRow", ["TABLE_AT", "TABLE_COLUMN_SPECIFIER"]],
-      ["tableSpecifierInner", ["tableThisRow"]],
-      ["tableSpecifierInner", ["tableColumnSpecifier"]],
-      ["tableSpecifierItem", ["TABLE_COLUMN_SPECIFIER"]],
-      ["tableSpecifierItem", ["TABLE_ITEM_SPECIFIER"]],
+      ['$START', ['formula']],
+      ['formula', ['exp']],
+      ['exp_p_end', ['(', 'exp', ')']],
+      ['exp_p_end', ['NUMBER']],
+      ['exp_p_end', ['STRING']],
+      ['exp_p_end', ['LOGIC']],
+      ['exp_p_end', ['ERROR']],
+      ['exp_p_end', ['reference']],
+      ['referenceItem', ['CELL']],
+      ['referenceItem', ['NAME']],
+      ['referenceItem', ['structureReference']],
+      ['reference_p_end', ['referenceItem']],
+      ['exp_p_end', ['functionExp']],
+      ['exp_p_end', ['array']],
+      ['arrayElement', ['STRING']],
+      ['arrayElement', ['NUMBER']],
+      ['arrayElement', ['LOGIC']],
+      ['arrayElement', ['ERROR']],
+      ['array_group_def_2', ['ARRAY_SEPARATOR', 'arrayElement']],
+      ['array', ['{', 'arrayElement', 'array_group_def_2*', '}']],
+      ['functionExp', ['FUNCTION', '(', 'argumentsList', ')']],
+      ['argumentsList_group_def_4', ['ARGUMENT_SEPARATOR', 'exp?']],
+      ['argumentsList', ['exp?', 'argumentsList_group_def_4*']],
+      ['structureReference', ['TABLE_NAME', 'tableSpecifier']],
+      ['structureReference', ['tableSpecifier']],
+      ['tableSpecifier', ['TABLE_ITEM_SPECIFIER']],
+      ['tableSpecifier', ['[', 'tableSpecifierInner', ']']],
+      ['tableThisRow', ['TABLE_AT']],
+      ['tableThisRow', ['TABLE_AT', 'TABLE_COLUMN_SPECIFIER']],
+      ['tableSpecifierInner', ['tableThisRow']],
+      ['tableSpecifierInner', ['tableColumnSpecifier']],
+      ['tableSpecifierItem', ['TABLE_COLUMN_SPECIFIER']],
+      ['tableSpecifierItem', ['TABLE_ITEM_SPECIFIER']],
       [
-        "tableColumnSpecifier_group_def_6",
-        ["SPECIFIER_SEPARATOR", "tableSpecifierItem"],
+        'tableColumnSpecifier_group_def_6',
+        ['SPECIFIER_SEPARATOR', 'tableSpecifierItem'],
       ],
       [
-        "tableColumnSpecifier",
-        ["tableSpecifierItem", "tableColumnSpecifier_group_def_6*"],
+        'tableColumnSpecifier',
+        ['tableSpecifierItem', 'tableColumnSpecifier_group_def_6*'],
       ],
-      ["(exp)1_", ["=", "exp_p_2", 1, "(exp)1_"], undefined, "binaryExp"],
-      ["exp", ["exp_p_2", 1, "(exp)1_"], undefined, undefined, undefined, true],
-      ["(exp)1_", ["<=", "exp_p_2", 1, "(exp)1_"], undefined, "binaryExp"],
-      ["(exp)1_", [">=", "exp_p_2", 1, "(exp)1_"], undefined, "binaryExp"],
-      ["(exp)1_", ["<>", "exp_p_2", 1, "(exp)1_"], undefined, "binaryExp"],
-      ["(exp)1_", [">", "exp_p_2", 1, "(exp)1_"], undefined, "binaryExp"],
-      ["(exp)1_", ["<", "exp_p_2", 1, "(exp)1_"], undefined, "binaryExp"],
+      ['(exp)1_', ['=', 'exp_p_2', 1, '(exp)1_'], undefined, 'binaryExp'],
+      ['exp', ['exp_p_2', 1, '(exp)1_'], undefined, undefined, undefined, true],
+      ['(exp)1_', ['<=', 'exp_p_2', 1, '(exp)1_'], undefined, 'binaryExp'],
+      ['(exp)1_', ['>=', 'exp_p_2', 1, '(exp)1_'], undefined, 'binaryExp'],
+      ['(exp)1_', ['<>', 'exp_p_2', 1, '(exp)1_'], undefined, 'binaryExp'],
+      ['(exp)1_', ['>', 'exp_p_2', 1, '(exp)1_'], undefined, 'binaryExp'],
+      ['(exp)1_', ['<', 'exp_p_2', 1, '(exp)1_'], undefined, 'binaryExp'],
       [
-        "(exp_p_2)1_",
-        ["&", "exp_p_3", 1, "(exp_p_2)1_"],
+        '(exp_p_2)1_',
+        ['&', 'exp_p_3', 1, '(exp_p_2)1_'],
         undefined,
-        "binaryExp",
+        'binaryExp',
       ],
       [
-        "exp_p_2",
-        ["exp_p_3", 1, "(exp_p_2)1_"],
+        'exp_p_2',
+        ['exp_p_3', 1, '(exp_p_2)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
       [
-        "(exp_p_3)1_",
-        ["+", "exp_p_4", 1, "(exp_p_3)1_"],
+        '(exp_p_3)1_',
+        ['+', 'exp_p_4', 1, '(exp_p_3)1_'],
         undefined,
-        "binaryExp",
+        'binaryExp',
       ],
       [
-        "exp_p_3",
-        ["exp_p_4", 1, "(exp_p_3)1_"],
+        'exp_p_3',
+        ['exp_p_4', 1, '(exp_p_3)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
       [
-        "(exp_p_3)1_",
-        ["-", "exp_p_4", 1, "(exp_p_3)1_"],
+        '(exp_p_3)1_',
+        ['-', 'exp_p_4', 1, '(exp_p_3)1_'],
         undefined,
-        "binaryExp",
+        'binaryExp',
       ],
       [
-        "(exp_p_4)1_",
-        ["*", "exp_p_5", 1, "(exp_p_4)1_"],
+        '(exp_p_4)1_',
+        ['*', 'exp_p_5', 1, '(exp_p_4)1_'],
         undefined,
-        "binaryExp",
+        'binaryExp',
       ],
       [
-        "exp_p_4",
-        ["exp_p_5", 1, "(exp_p_4)1_"],
+        'exp_p_4',
+        ['exp_p_5', 1, '(exp_p_4)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
       [
-        "(exp_p_4)1_",
-        ["/", "exp_p_5", 1, "(exp_p_4)1_"],
+        '(exp_p_4)1_',
+        ['/', 'exp_p_5', 1, '(exp_p_4)1_'],
         undefined,
-        "binaryExp",
+        'binaryExp',
       ],
       [
-        "(exp_p_5)1_",
-        ["^", "exp_p_6", 1, "(exp_p_5)1_"],
+        '(exp_p_5)1_',
+        ['^', 'exp_p_6', 1, '(exp_p_5)1_'],
         undefined,
-        "binaryExp",
+        'binaryExp',
       ],
       [
-        "exp_p_5",
-        ["exp_p_6", 1, "(exp_p_5)1_"],
+        'exp_p_5',
+        ['exp_p_6', 1, '(exp_p_5)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
-      ["(exp_p_6)1_", ["%", 1, "(exp_p_6)1_"], undefined, "percentageExp"],
+      ['(exp_p_6)1_', ['%', 1, '(exp_p_6)1_'], undefined, 'percentageExp'],
       [
-        "exp_p_6",
-        ["exp_p_7", 1, "(exp_p_6)1_"],
+        'exp_p_6',
+        ['exp_p_7', 1, '(exp_p_6)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
-      ["exp_p_7", ["exp_p_8"], undefined, undefined, undefined, true],
-      ["exp_p_7", ["+", "exp_p_7"], undefined, "prefixExp"],
-      ["exp_p_7", ["-", "exp_p_7"], undefined, "prefixExp"],
-      ["exp_p_8", ["exp_p_end"], undefined, undefined, undefined, true],
-      ["exp_p_8", ["@", "exp_p_8"], undefined, "clipExp"],
+      ['exp_p_7', ['exp_p_8'], undefined, undefined, undefined, true],
+      ['exp_p_7', ['+', 'exp_p_7'], undefined, 'prefixExp'],
+      ['exp_p_7', ['-', 'exp_p_7'], undefined, 'prefixExp'],
+      ['exp_p_8', ['exp_p_end'], undefined, undefined, undefined, true],
+      ['exp_p_8', ['@', 'exp_p_8'], undefined, 'clipExp'],
       [
-        "(reference)1_",
-        ["REF_UNION_OPERATOR", "reference_p_10", 1, "(reference)1_"],
+        '(reference)1_',
+        ['REF_UNION_OPERATOR', 'reference_p_10', 1, '(reference)1_'],
         undefined,
-        "unionReference",
+        'unionReference',
       ],
       [
-        "reference",
-        ["reference_p_10", 1, "(reference)1_"],
-        undefined,
-        undefined,
-        undefined,
-        true,
-      ],
-      [
-        "(reference_p_10)1_",
-        ["reference_p_11", 1, "(reference_p_10)1_"],
-        undefined,
-        "intersectionReference",
-      ],
-      [
-        "reference_p_10",
-        ["reference_p_11", 1, "(reference_p_10)1_"],
+        'reference',
+        ['reference_p_10', 1, '(reference)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
       [
-        "(reference_p_11)1_",
-        ["REF_RANGE_OPERATOR", "reference_p_end", 1, "(reference_p_11)1_"],
+        '(reference_p_10)1_',
+        ['reference_p_11', 1, '(reference_p_10)1_'],
         undefined,
-        "rangeReference",
+        'intersectionReference',
       ],
       [
-        "reference_p_11",
-        ["reference_p_end", 1, "(reference_p_11)1_"],
+        'reference_p_10',
+        ['reference_p_11', 1, '(reference_p_10)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
-      ["(exp)1_", []],
-      ["(exp_p_2)1_", []],
-      ["(exp_p_3)1_", []],
-      ["(exp_p_4)1_", []],
-      ["(exp_p_5)1_", []],
-      ["(exp_p_6)1_", []],
-      ["(reference)1_", []],
-      ["(reference_p_10)1_", []],
-      ["(reference_p_11)1_", []],
+      [
+        '(reference_p_11)1_',
+        ['REF_RANGE_OPERATOR', 'reference_p_end', 1, '(reference_p_11)1_'],
+        undefined,
+        'rangeReference',
+      ],
+      [
+        'reference_p_11',
+        ['reference_p_end', 1, '(reference_p_11)1_'],
+        undefined,
+        undefined,
+        undefined,
+        true,
+      ],
+      ['(exp)1_', []],
+      ['(exp_p_2)1_', []],
+      ['(exp_p_3)1_', []],
+      ['(exp_p_4)1_', []],
+      ['(exp_p_5)1_', []],
+      ['(exp_p_6)1_', []],
+      ['(reference)1_', []],
+      ['(reference_p_10)1_', []],
+      ['(reference_p_11)1_', []],
     ],
     productionIndexMap: {
       symbol: 0,
@@ -1459,22 +1459,22 @@ var formulaParser = (function (undefined) {
       return p && p[itemType];
     },
     getProductionSymbol: function (p) {
-      return this.getProductionItemByType(p, "symbol");
+      return this.getProductionItemByType(p, 'symbol');
     },
     getProductionRhs: function (p) {
-      return this.getProductionItemByType(p, "rhs");
+      return this.getProductionItemByType(p, 'rhs');
     },
     getProductionAction: function (p) {
-      return this.getProductionItemByType(p, "action");
+      return this.getProductionItemByType(p, 'action');
     },
     getProductionPredict: function (p) {
-      return this.getProductionItemByType(p, "predict");
+      return this.getProductionItemByType(p, 'predict');
     },
     getProductionIsWrap: function (p) {
-      return this.getProductionItemByType(p, "isWrap");
+      return this.getProductionItemByType(p, 'isWrap');
     },
     getProductionLabel: function (p) {
-      return this.getProductionItemByType(p, "label");
+      return this.getProductionItemByType(p, 'label');
     },
     getCurrentSymbolNode: function () {
       return astStack[astStack.length - 1];
@@ -1491,19 +1491,19 @@ var formulaParser = (function (undefined) {
   parser.lexer = lexer;
   parser.lex = lex;
   parser.prioritySymbolMap = {
-    exp_p_end: "exp",
-    exp_p_1: "exp",
-    exp_p_2: "exp",
-    exp_p_3: "exp",
-    exp_p_4: "exp",
-    exp_p_5: "exp",
-    exp_p_6: "exp",
-    exp_p_7: "exp",
-    exp_p_8: "exp",
-    reference_p_end: "reference",
-    reference_p_9: "reference",
-    reference_p_10: "reference",
-    reference_p_11: "reference",
+    exp_p_end: 'exp',
+    exp_p_1: 'exp',
+    exp_p_2: 'exp',
+    exp_p_3: 'exp',
+    exp_p_4: 'exp',
+    exp_p_5: 'exp',
+    exp_p_6: 'exp',
+    exp_p_7: 'exp',
+    exp_p_8: 'exp',
+    reference_p_end: 'reference',
+    reference_p_9: 'reference',
+    reference_p_10: 'reference',
+    reference_p_11: 'reference',
   };
   productionSkipAstNodeSet = new Set([
     18, 21, 33, 35, 37, 38, 39, 40, 41, 42, 44, 46, 47, 49, 50, 52, 59, 61, 63,
@@ -1549,8 +1549,8 @@ var formulaParser = (function (undefined) {
 
       while (
         currentSymbolItem &&
-        typeof currentSymbolItem === "object" &&
-        currentSymbolItem.type === "rule"
+        typeof currentSymbolItem === 'object' &&
+        currentSymbolItem.type === 'rule'
       ) {
         index--;
         currentSymbolItem = symbolStack[index];
@@ -1563,7 +1563,7 @@ var formulaParser = (function (undefined) {
       while (true) {
         const t = symbolStack.pop();
 
-        if (!t || typeof t !== "object" || t.type !== "rule") {
+        if (!t || typeof t !== 'object' || t.type !== 'rule') {
           break;
         }
       }
@@ -1573,8 +1573,8 @@ var formulaParser = (function (undefined) {
 
       while (
         current &&
-        typeof current === "object" &&
-        current.type === "rule"
+        typeof current === 'object' &&
+        current.type === 'rule'
       ) {
         symbolStack.pop();
         current = symbolStack[--l];
@@ -1584,18 +1584,18 @@ var formulaParser = (function (undefined) {
     let getExpected = function () {
       const s = topSymbol;
 
-      if (typeof s === "string" && !isSymbol(s)) {
+      if (typeof s === 'string' && !isSymbol(s)) {
         return [lexer.mapReverseSymbol(s)];
       } // get expected tokens from state machine
 
       return findExpectedTokenFromStateMachine(findSymbolIndex()).map((s) =>
-        lexer.mapReverseSymbol(s)
+        lexer.mapReverseSymbol(s),
       );
     };
 
     function makeRuleIndexFlag(ruleIndex, ruleUnit) {
       return {
-        type: "rule",
+        type: 'rule',
         ruleUnit,
         tokensLength: lexer.getTokensLength(),
         ruleIndex,
@@ -1615,9 +1615,9 @@ var formulaParser = (function (undefined) {
 
       while (
         current &&
-        (typeof current !== "object" || current.type !== "rule")
+        (typeof current !== 'object' || current.type !== 'rule')
       ) {
-        if (typeof current === "string") {
+        if (typeof current === 'string') {
           i++;
         }
 
@@ -1625,7 +1625,7 @@ var formulaParser = (function (undefined) {
         current = symbolStack[top];
       }
 
-      if (current && typeof current === "object" && current.type === "rule") {
+      if (current && typeof current === 'object' && current.type === 'rule') {
         ruleIndex = current.ruleIndex;
       }
 
@@ -1649,10 +1649,10 @@ var formulaParser = (function (undefined) {
         parseTree,
         topSymbol,
         popSymbolStack,
-        peekSymbolStack
+        peekSymbolStack,
       );
 
-      if (typeof topSymbol === "string") {
+      if (typeof topSymbol === 'string') {
         if (!token) {
           token = lexer.lex();
           pushRecoveryTokens(recoveryTokens, token);
@@ -1742,7 +1742,7 @@ var formulaParser = (function (undefined) {
               error,
               errorNode,
               token,
-            }
+            },
           ));
 
           if (breakToEnd) {
@@ -1777,7 +1777,7 @@ var formulaParser = (function (undefined) {
     // expensive
     globalMatch,
     { childReverseIndex, ruleIndex, topSymbol },
-    fn
+    fn,
   ) {
     let unit;
     let lastUnit;
@@ -1789,7 +1789,7 @@ var formulaParser = (function (undefined) {
       let parentSymbolItem = getParentSymbolItem();
 
       if (!parentSymbolItem) {
-        throw new Error("no parent symbol");
+        throw new Error('no parent symbol');
       }
 
       const parentUnit = parentSymbolItem.ruleUnit;
@@ -1813,16 +1813,16 @@ var formulaParser = (function (undefined) {
       if (!states) {
         u.checkStates = states = [];
         const skipStartState = new State(
-          "startOfSkip$" + childSymbol,
+          'startOfSkip$' + childSymbol,
           null,
-          VIRTUAL_OPTIONAL_RULE_INDEX
+          VIRTUAL_OPTIONAL_RULE_INDEX,
         );
         skipStartState.pushTransition(unit.end);
         const symbolUnit = new SymbolStateUnit(childSymbol, -2);
         symbolUnit.end.pushTransition(unit.end);
         states.push(
           skipStartState,
-          ...symbolUnit.start.getAlternativeStartStates()
+          ...symbolUnit.start.getAlternativeStartStates(),
         );
       }
 
@@ -1852,7 +1852,7 @@ var formulaParser = (function (undefined) {
       const ruleIndexes = findBestAlternation(
         childSymbol,
         states,
-        globalMatch ? null : endState
+        globalMatch ? null : endState,
       );
       lexer.stashPop();
 
@@ -1865,8 +1865,8 @@ var formulaParser = (function (undefined) {
       } else {
         startState = unit.start.transitions[0].to;
 
-        if (startState.classType !== "SymbolState") {
-          throw new Error("expect SymbolState!");
+        if (startState.classType !== 'SymbolState') {
+          throw new Error('expect SymbolState!');
         }
 
         nextUnits = startState.getUnits();
@@ -1874,14 +1874,14 @@ var formulaParser = (function (undefined) {
       }
     }
 
-    const canSkipped = unitType === "zeroOrMore" || unitType === "optional";
+    const canSkipped = unitType === 'zeroOrMore' || unitType === 'optional';
     let startStates = [];
 
     if (canSkipped) {
       startState = unit.start.transitions[0].to;
 
-      if (startState.classType !== "SymbolState") {
-        throw new Error("expect SymbolState!");
+      if (startState.classType !== 'SymbolState') {
+        throw new Error('expect SymbolState!');
       }
 
       nextUnits = startState.getUnits();
@@ -1891,8 +1891,8 @@ var formulaParser = (function (undefined) {
       const alternatives = productionsBySymbol[childSymbol];
       startState = unit.start;
 
-      if (startState.classType !== "SymbolState") {
-        throw new Error("expect SymbolState!");
+      if (startState.classType !== 'SymbolState') {
+        throw new Error('expect SymbolState!');
       }
 
       nextUnits = startState.getUnits();
@@ -1901,7 +1901,7 @@ var formulaParser = (function (undefined) {
         const ruleIndex = alternatives.ruleIndexes[0];
 
         if (ruleIndex === undefined) {
-          throw new Error("no predict!");
+          throw new Error('no predict!');
         }
 
         return returnNext(ruleIndex);
@@ -1920,7 +1920,7 @@ var formulaParser = (function (undefined) {
     const ruleIndexes = findBestAlternation(
       childSymbol,
       startStates,
-      globalMatch ? null : endState
+      globalMatch ? null : endState,
     );
     lexer.stashPop();
 
@@ -1942,7 +1942,7 @@ var formulaParser = (function (undefined) {
     start = null;
     end = null;
     lazy = false;
-    unitType = "rootSymbol";
+    unitType = 'rootSymbol';
 
     constructor(type, ruleIndex) {
       this.type = type;
@@ -1950,7 +1950,7 @@ var formulaParser = (function (undefined) {
     }
   };
   var State = class State {
-    classType = "State";
+    classType = 'State';
     transitions = [];
 
     constructor(type, unit, ruleIndex) {
@@ -1966,7 +1966,7 @@ var formulaParser = (function (undefined) {
   };
   var StateUnit = class StateUnit {
     units = undefined;
-    unitType = "token";
+    unitType = 'token';
     lazy = false;
 
     constructor(type, ruleIndex) {
@@ -1977,7 +1977,7 @@ var formulaParser = (function (undefined) {
     }
   };
   var SymbolState = class SymbolState {
-    classType = "SymbolState";
+    classType = 'SymbolState';
     units = {};
     _afterTransitions = [];
     _beforeTransitions = [];
@@ -1999,7 +1999,7 @@ var formulaParser = (function (undefined) {
         const myProductions = productionsBySymbol[symbol];
 
         if (!myProductions) {
-          throw new Error("unexpected productionsBySymbol: " + symbol);
+          throw new Error('unexpected productionsBySymbol: ' + symbol);
         }
 
         for (const i of myProductions.ruleIndexes) {
@@ -2058,7 +2058,7 @@ var formulaParser = (function (undefined) {
     }
   };
   var SymbolStateUnit = class SymbolStateUnit {
-    unitType = "symbol";
+    unitType = 'symbol';
     lazy = false;
 
     constructor(type, ruleIndex) {
@@ -2106,7 +2106,7 @@ var formulaParser = (function (undefined) {
     const units = [];
 
     for (const r of rhs) {
-      if (typeof r !== "string") {
+      if (typeof r !== 'string') {
         continue;
       }
 
@@ -2116,7 +2116,7 @@ var formulaParser = (function (undefined) {
         const rr = normalizeSymbol(r);
         const unit = getUnit(rr);
         finalUnit = new StateUnit(rr, ruleIndex);
-        finalUnit.unitType = "optional";
+        finalUnit.unitType = 'optional';
 
         if (isLazySymbol(r)) {
           finalUnit.lazy = true;
@@ -2129,7 +2129,7 @@ var formulaParser = (function (undefined) {
         const rr = normalizeSymbol(r);
         const unit = getUnit(rr);
         finalUnit = new StateUnit(rr, ruleIndex);
-        finalUnit.unitType = "zeroOrMore";
+        finalUnit.unitType = 'zeroOrMore';
 
         if (isLazySymbol(r)) {
           finalUnit.lazy = true;
@@ -2172,7 +2172,7 @@ var formulaParser = (function (undefined) {
   };
   var findExpectedTokenFromStateMachine = function (
     { childReverseIndex },
-    stack = new Set()
+    stack = new Set(),
   ) {
     const ret = new Set();
     const { ruleUnit: parentUnit } = getParentSymbolItem();
@@ -2215,7 +2215,7 @@ var formulaParser = (function (undefined) {
     for (let i = symbolStack.length - 1; i >= 0; i--) {
       const s = symbolStack[i];
 
-      if ((s === null || s === void 0 ? void 0 : s.type) === "rule") {
+      if ((s === null || s === void 0 ? void 0 : s.type) === 'rule') {
         parentSymbolItem = s;
         break;
       }
@@ -2255,7 +2255,7 @@ var formulaParser = (function (undefined) {
         reachableStates,
         ruleIndexes,
         endState,
-        count
+        count,
       );
 
       if (
@@ -2316,7 +2316,7 @@ var formulaParser = (function (undefined) {
     reachableStates,
     ruleIndexes,
     endState,
-    count
+    count,
   ) {
     // function last<T>(arr: T[], n = 1) {
     //   return arr[arr.length - n];

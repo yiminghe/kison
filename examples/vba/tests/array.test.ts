@@ -24,12 +24,7 @@ sub test2(byVal a as Integer, b as Integer)
 end sub
     `;
     ret = await run(code);
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        1,
-        2,
-      ]
-    `);
+    expect(ret).toEqual([1, 2]);
   });
 
   it('multi dimension works', async () => {
@@ -43,12 +38,7 @@ sub main
 end sub   
   `;
     ret = await run(code);
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        1,
-        2,
-      ]
-    `);
+    expect(ret).toEqual([1, 2]);
 
     code = `
 sub main
@@ -112,14 +102,7 @@ msgbox x(0)
 msgbox x(3)
 end sub     
      `);
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        1,
-        0,
-        1,
-        1,
-      ]
-    `);
+    expect(ret).toEqual([1, 0, 1, 1]);
   });
 
   it('erase works', async () => {
@@ -132,12 +115,7 @@ erase y
 msgbox y(0)
 end sub     
      `);
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        1,
-        0,
-      ]
-    `);
+    expect(ret).toEqual([1, 0]);
 
     try {
       await run(`
@@ -155,5 +133,27 @@ end sub
     }
 
     expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
+  });
+
+  it('support chained member access', async () => {
+    ret = await run(`
+  Sub main()
+    Dim a As Variant
+    a = test()
+    Debug.Print a(1)(1)
+    Debug.Print test()(1)(1)  
+  End Sub
+   
+  Function test()
+    Dim a(1 To 2) As Variant
+    Dim a2(1 To 2) As Variant
+    Dim b(1 To 2) As Integer
+    b(1) = 10
+    a2(1) = b
+    a(1) = a2(1)
+    test = a
+  End Function
+         `);
+    expect(ret).toEqual([10, 10]);
   });
 });

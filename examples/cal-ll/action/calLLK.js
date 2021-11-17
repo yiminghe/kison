@@ -16,7 +16,7 @@ var $parser = (function (undefined) {
       const ret = {};
 
       for (const k of Object.keys(this)) {
-        if (k !== "parent" && k !== "t") {
+        if (k !== 'parent' && k !== 't') {
           const v = this[k];
 
           if (v !== undefined) {
@@ -29,8 +29,8 @@ var $parser = (function (undefined) {
     }
   };
   var AstSymbolNode = class AstSymbolNode extends BaseAstNode {
-    symbol = "";
-    type = "symbol";
+    symbol = '';
+    type = 'symbol';
     children = [];
     ruleIndex = -1;
     internalRuleIndex = -1;
@@ -62,7 +62,7 @@ var $parser = (function (undefined) {
       if (this.isWrap && this.children.length === 1) {
         const c = this.children[0];
 
-        if (c.type === "symbol" && c.symbol === this.symbol) {
+        if (c.type === 'symbol' && c.symbol === this.symbol) {
           this.label = c.label;
           this.setChildren(c.children);
           return false;
@@ -95,10 +95,10 @@ var $parser = (function (undefined) {
     }
   };
   var AstTokenNode = class AstTokenNode extends BaseAstNode {
-    token = "";
-    t = "";
-    type = "token";
-    text = "";
+    token = '';
+    t = '';
+    type = 'token';
+    text = '';
 
     constructor(params) {
       super();
@@ -170,7 +170,7 @@ var $parser = (function (undefined) {
     shouldDelete,
     transformNode,
     recoveryTokens,
-    ret
+    ret,
   ) {
     ret.error = {
       recovery: false,
@@ -187,9 +187,9 @@ var $parser = (function (undefined) {
       lexer.stashPop(); // should delete
 
       if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
-        recommendedAction.action = "del";
+        recommendedAction.action = 'del';
       } else if (ret.error.expected.length) {
-        recommendedAction.action = "add";
+        recommendedAction.action = 'add';
       }
 
       const localErrorNode = new AstErrorNode({
@@ -207,7 +207,7 @@ var $parser = (function (undefined) {
             errorNode: localErrorNode,
             parseTree: getAstRootNode(astStack, transformNode, true),
           },
-          recommendedAction
+          recommendedAction,
         ) || {};
       const { action } = recovery;
       peekStack(astStack).children.pop();
@@ -218,19 +218,19 @@ var $parser = (function (undefined) {
         return ret;
       }
 
-      if (action === "del") {
+      if (action === 'del') {
         ret.error.recovery = true;
         const deleteToken = recoveryTokens.pop();
-        deleteToken.recovery = "del";
+        deleteToken.recovery = 'del';
         ret.token = undefined;
-      } else if (action === "add") {
+      } else if (action === 'add') {
         ret.error.recovery = true;
         ret.token = {
           ...ret.token,
           token: recovery.token,
           text: recovery.text,
           t: lexer.mapSymbol(recovery.token),
-          recovery: "add",
+          recovery: 'add',
         };
         lexer.pushToken(ret.token);
         pushRecoveryTokens(recoveryTokens, ret.token);
@@ -245,7 +245,7 @@ var $parser = (function (undefined) {
   var takeCareLLAction = function (popSymbolStack, peekSymbolStack) {
     let topSymbol = peekSymbolStack();
 
-    while (topSymbol && typeof topSymbol === "function") {
+    while (topSymbol && typeof topSymbol === 'function') {
       topSymbol.call(parser);
       popSymbolStack();
       topSymbol = peekSymbolStack();
@@ -257,7 +257,7 @@ var $parser = (function (undefined) {
     parseTree,
     topSymbol,
     popSymbolStack,
-    peekSymbolStack
+    peekSymbolStack,
   ) {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
       if (parseTree) {
@@ -321,7 +321,7 @@ var $parser = (function (undefined) {
     const ret = [];
 
     for (const r of rhs) {
-      if (typeof r === "string") {
+      if (typeof r === 'string') {
         ret.push(r);
       }
     }
@@ -348,17 +348,17 @@ var $parser = (function (undefined) {
     if (parseTree) {
       const top = peekStack(astStack);
 
-      if (top.type === "symbol") {
+      if (top.type === 'symbol') {
         top.addChild(errorNode);
       }
 
       while (astStack.length > 1) {
         const ast = astStack.pop();
 
-        if (ast && ast.type === "symbol" && isExtraAstNode(ast)) {
+        if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
           const topAst = peekStack(astStack);
 
-          if (topAst.type === "symbol") {
+          if (topAst.type === 'symbol') {
             topAst.children.pop();
             topAst.addChildren(ast.children);
           }
@@ -398,15 +398,15 @@ var $parser = (function (undefined) {
     }
 
     tips.push("current token: '" + lexer.getCurrentToken().token + "'.");
-    const tip = tips.join("\n");
+    const tip = tips.join('\n');
     return {
       errorMessage: [
-        "syntax error at line " +
+        'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo(),
         ...tips,
-      ].join("\n"),
+      ].join('\n'),
       tip,
     };
   };
@@ -454,7 +454,7 @@ var $parser = (function (undefined) {
         cleanAst(ast.parent, transformNode);
       } else {
         for (const c of children) {
-          if (c.type === "symbol") {
+          if (c.type === 'symbol') {
             cleanAst(c, transformNode);
           }
         }
@@ -472,7 +472,7 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast.type !== "symbol") {
+    if (ast.type !== 'symbol') {
       return ast;
     }
 
@@ -483,7 +483,7 @@ var $parser = (function (undefined) {
         ? void 0
         : _ast$children[0];
 
-    if (ast && ast.type === "symbol" && ast.symbol === START_TAG) {
+    if (ast && ast.type === 'symbol' && ast.symbol === START_TAG) {
       var _ast2, _ast2$children;
 
       ast =
@@ -503,14 +503,14 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast && ast.type === "token") {
+    if (ast && ast.type === 'token') {
       return ast;
     }
 
     return ast && cleanAst(ast, transformNode);
   };
   var defaultTransformAstNode = function ({ node, parent }) {
-    if (node.type === "token" || node.symbol !== parent.symbol) {
+    if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
 
@@ -534,31 +534,31 @@ var $parser = (function (undefined) {
   };
   var isZeroOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "*?" && s.length > 1 && !!s.match(/\*\??$/)
+      typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
     );
   };
   var isOneOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "+?" && s.length > 1 && !!s.match(/\+\??$/)
+      typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
     );
   };
   var isLazySymbol = function (s) {
-    const match = typeof s === "string" && s.match(/(\*|\+|\?)\?$/);
+    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
     return match && s.length !== 2;
   };
   var isOptionalSymbol = function (s) {
-    return typeof s === "string" && s.length > 1 && !!s.match(/\??\?/);
+    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
   };
   var normalizeSymbol = function (s) {
     const ret =
       isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
-        ? s.replace(/(\*|\+|\?)?\??$/, "")
+        ? s.replace(/(\*|\+|\?)?\??$/, '')
         : s; // ??
 
     return ret || (s && s.slice(0, -1));
   };
   var VIRTUAL_OPTIONAL_RULE_INDEX = -100;
-  var START_TAG = "$START";
+  var START_TAG = '$START';
   var smUnitBySymbol = {};
   var productionSkipAstNodeSet = undefined;
   var symbolStack = [{}];
@@ -572,7 +572,7 @@ var $parser = (function (undefined) {
 
     if (Lexer.supportSticky === undefined) {
       try {
-        Lexer.supportSticky = typeof /(?:)/.sticky == "boolean";
+        Lexer.supportSticky = typeof /(?:)/.sticky == 'boolean';
       } catch (e) {
         Lexer.supportSticky = false;
       }
@@ -595,7 +595,7 @@ var $parser = (function (undefined) {
     this.rules = this.rules.concat();
     this.regexpIndex = this.isCompress
       ? this.lexerRuleIndexMap.regexp
-      : "regexp";
+      : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -607,7 +607,7 @@ var $parser = (function (undefined) {
     });
 
     for (const rule of this.rules) {
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
@@ -630,16 +630,16 @@ var $parser = (function (undefined) {
       if (pattern.test) {
         let source = pattern.source;
 
-        if (source.startsWith("^")) {
+        if (source.startsWith('^')) {
           source = source.slice(1);
         }
 
-        var flags = Lexer.supportSticky && !disableSticky ? "gy" : "g";
-        if (pattern.multiline) flags += "m";
-        if (pattern.ignoreCase) flags += "i";
-        if (pattern.unicode) flags += "u";
+        var flags = Lexer.supportSticky && !disableSticky ? 'gy' : 'g';
+        if (pattern.multiline) flags += 'm';
+        if (pattern.ignoreCase) flags += 'i';
+        if (pattern.unicode) flags += 'u';
         obj[p] = new RegExp(source, flags);
-      } else if (typeof pattern === "object") {
+      } else if (typeof pattern === 'object') {
         for (const k of Object.keys(pattern)) {
           this.transformRegExp(pattern, k);
         }
@@ -662,22 +662,22 @@ var $parser = (function (undefined) {
     },
     addRule: function (rule) {
       this.rules.push(rule);
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
       }
     },
     resetInput: function (input) {
-      this.token = "";
+      this.token = '';
       this.nextTokens = [];
       this.tokens = [];
       this.userData = {};
       this.input = input;
-      this.matched = "";
+      this.matched = '';
       this.stateStack = [Lexer.STATIC.INITIAL_STATE];
-      this.match = "";
-      this.text = "";
+      this.match = '';
+      this.text = '';
       this.firstLine = 1;
       this.lineNumber = 1;
       this.lastLine = 1;
@@ -697,7 +697,7 @@ var $parser = (function (undefined) {
         rules = [];
 
       for (const r of this.rules) {
-        var state = this.getRuleItem(r, "state");
+        var state = this.getRuleItem(r, 'state');
 
         if (!state) {
           if (currentState === Lexer.STATIC.INITIAL_STATE) {
@@ -731,17 +731,17 @@ var $parser = (function (undefined) {
       var { matched, match, input } = this;
       matched = matched.slice(0, matched.length - match.length);
       var past =
-          (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+          (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
           matched
             .slice(0 - DEBUG_CONTEXT_LIMIT)
-            .split("\n")
-            .join(" "),
+            .split('\n')
+            .join(' '),
         next = match + input.slice(this.end); //#JSCOVERAGE_ENDIF
 
       next =
-        next.slice(0, DEBUG_CONTEXT_LIMIT).split("\n").join(" ") +
-        (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-      return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
+        (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
+      return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
     },
     mapSymbol: function (n) {
       return n;
@@ -782,7 +782,7 @@ var $parser = (function (undefined) {
     matchRegExp: function (predict, regexp) {
       let ret;
 
-      if (typeof regexp !== "function") {
+      if (typeof regexp !== 'function') {
         regexp.lastIndex = this.end;
         ret = regexp.exec(this.input);
 
@@ -896,7 +896,7 @@ var $parser = (function (undefined) {
         const code = this.input.codePointAt(index);
 
         if (code === undefined || isNaN(code)) {
-          return "";
+          return '';
         }
 
         return String.fromCodePoint(code);
@@ -927,7 +927,7 @@ var $parser = (function (undefined) {
         rules = this.getCurrentRules();
       var { input } = this;
       var { env = this.defaultEnv } = this.options;
-      this.match = this.text = "";
+      this.match = this.text = '';
 
       if (this.end >= input.length) {
         this.token = Lexer.STATIC.EOF_TOKEN;
@@ -935,7 +935,7 @@ var $parser = (function (undefined) {
         this.firstLine = this.lastLine;
         this.firstColumn = this.lastColumn;
         return {
-          text: "",
+          text: '',
           t: this.mapSymbol(this.token),
           token: this.token,
           start: this.start,
@@ -949,18 +949,18 @@ var $parser = (function (undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        let regexp = this.getRuleItem(rule, "regexp");
-        let token = this.getRuleItem(rule, "token");
-        let channel = this.getRuleItem(rule, "channel");
-        let action = this.getRuleItem(rule, "action");
-        let more = this.getRuleItem(rule, "more");
-        let predict = this.getRuleItem(rule, "predict");
+        let regexp = this.getRuleItem(rule, 'regexp');
+        let token = this.getRuleItem(rule, 'token');
+        let channel = this.getRuleItem(rule, 'channel');
+        let action = this.getRuleItem(rule, 'action');
+        let more = this.getRuleItem(rule, 'more');
+        let predict = this.getRuleItem(rule, 'predict');
 
         if (
-          typeof regexp !== "function" &&
+          typeof regexp !== 'function' &&
           regexp &&
           env &&
-          typeof regexp.test !== "function"
+          typeof regexp.test !== 'function'
         ) {
           regexp = regexp[env];
         }
@@ -972,7 +972,7 @@ var $parser = (function (undefined) {
         if ((m = this.matchRegExp(predict, regexp))) {
           const start = this.end;
           const end = this.end + m[0].length;
-          lines = m[0].split("\n");
+          lines = m[0].split('\n');
           lines.shift();
           this.lineNumber += lines.length;
           const position = {
@@ -1024,26 +1024,26 @@ var $parser = (function (undefined) {
         }
       }
 
-      throw new Error("no match lexer");
+      throw new Error('no match lexer');
     },
   };
   Lexer.STATIC = {
-    INITIAL_STATE: "I",
+    INITIAL_STATE: 'I',
     DEBUG_CONTEXT_LIMIT: 20,
-    EOF_TOKEN: "$EOF",
-    UNKNOWN_TOKEN: "$UNKNOWN",
+    EOF_TOKEN: '$EOF',
+    UNKNOWN_TOKEN: '$UNKNOWN',
   };
   var lexer = new Lexer({
     rules: [
-      ["HIDDEN", /\s+/g, undefined, undefined, undefined, "HIDDEN"],
-      ["NUMBER", /[0-9]+(\.[0-9]+)?\b/g],
-      ["(", /\(/g],
-      [")", /\)/g],
-      ["+", /\+/g],
-      ["-", /\-/g],
-      ["*", /\*/g],
-      ["/", /\//g],
-      ["^", /\^/g],
+      ['HIDDEN', /\s+/g, undefined, undefined, undefined, 'HIDDEN'],
+      ['NUMBER', /[0-9]+(\.[0-9]+)?\b/g],
+      ['(', /\(/g],
+      [')', /\)/g],
+      ['+', /\+/g],
+      ['-', /\-/g],
+      ['*', /\*/g],
+      ['/', /\//g],
+      ['^', /\^/g],
     ],
     isCompress: 1,
     defaultEnv: undefined,
@@ -1075,116 +1075,116 @@ var $parser = (function (undefined) {
   }
   var parser = {
     productions: [
-      ["$START", ["exp"]],
-      ["exp_p_end", ["(", "exp", ")"]],
+      ['$START', ['exp']],
+      ['exp_p_end', ['(', 'exp', ')']],
       [
-        "exp_p_end",
+        'exp_p_end',
         [
-          "NUMBER",
+          'NUMBER',
           function () {
             this.astProcessor?.pushStack(
-              Number(this.lexer.getLastToken().text)
+              Number(this.lexer.getLastToken().text),
             );
           },
         ],
       ],
       [
-        "(exp)1_",
+        '(exp)1_',
         [
-          "+",
+          '+',
           function () {
             this.astProcessor?.pushStack(this.lexer.getLastToken().text);
           },
-          "exp_p_2",
+          'exp_p_2',
           function () {
             this.astProcessor?.createOpNode();
           },
           1,
-          "(exp)1_",
+          '(exp)1_',
         ],
       ],
-      ["exp", ["exp_p_2", 1, "(exp)1_"], undefined, undefined, undefined, true],
+      ['exp', ['exp_p_2', 1, '(exp)1_'], undefined, undefined, undefined, true],
       [
-        "(exp)1_",
+        '(exp)1_',
         [
-          "-",
+          '-',
           function () {
             this.astProcessor?.pushStack(this.lexer.getLastToken().text);
           },
-          "exp_p_2",
+          'exp_p_2',
           function () {
             this.astProcessor?.createOpNode();
           },
           1,
-          "(exp)1_",
+          '(exp)1_',
         ],
       ],
       [
-        "(exp_p_2)1_",
+        '(exp_p_2)1_',
         [
-          "*",
+          '*',
           function () {
             this.astProcessor?.pushStack(this.lexer.getLastToken().text);
           },
-          "exp_p_3",
+          'exp_p_3',
           function () {
             this.astProcessor?.createOpNode();
           },
           1,
-          "(exp_p_2)1_",
+          '(exp_p_2)1_',
         ],
       ],
       [
-        "exp_p_2",
-        ["exp_p_3", 1, "(exp_p_2)1_"],
+        'exp_p_2',
+        ['exp_p_3', 1, '(exp_p_2)1_'],
         undefined,
         undefined,
         undefined,
         true,
       ],
       [
-        "(exp_p_2)1_",
+        '(exp_p_2)1_',
         [
-          "/",
+          '/',
           function () {
             this.astProcessor?.pushStack(this.lexer.getLastToken().text);
           },
-          "exp_p_3",
+          'exp_p_3',
           function () {
             this.astProcessor?.createOpNode();
           },
           1,
-          "(exp_p_2)1_",
+          '(exp_p_2)1_',
         ],
       ],
-      ["exp_p_3", ["exp_p_4"], undefined, undefined, undefined, true],
+      ['exp_p_3', ['exp_p_4'], undefined, undefined, undefined, true],
       [
-        "exp_p_3",
+        'exp_p_3',
         [
-          "exp_p_4",
-          "^",
+          'exp_p_4',
+          '^',
           function () {
             this.astProcessor?.pushStack(this.lexer.getLastToken().text);
           },
-          "exp_p_3",
+          'exp_p_3',
           function () {
             this.astProcessor?.createOpNode();
           },
         ],
       ],
-      ["exp_p_4", ["exp_p_end"], undefined, undefined, undefined, true],
+      ['exp_p_4', ['exp_p_end'], undefined, undefined, undefined, true],
       [
-        "exp_p_4",
+        'exp_p_4',
         [
-          "-",
-          "exp_p_4",
+          '-',
+          'exp_p_4',
           () => {
-            this.astProcessor?.createUnaryNode("-");
+            this.astProcessor?.createUnaryNode('-');
           },
         ],
       ],
-      ["(exp)1_", []],
-      ["(exp_p_2)1_", []],
+      ['(exp)1_', []],
+      ['(exp_p_2)1_', []],
     ],
     productionIndexMap: {
       symbol: 0,
@@ -1203,22 +1203,22 @@ var $parser = (function (undefined) {
       return p && p[itemType];
     },
     getProductionSymbol: function (p) {
-      return this.getProductionItemByType(p, "symbol");
+      return this.getProductionItemByType(p, 'symbol');
     },
     getProductionRhs: function (p) {
-      return this.getProductionItemByType(p, "rhs");
+      return this.getProductionItemByType(p, 'rhs');
     },
     getProductionAction: function (p) {
-      return this.getProductionItemByType(p, "action");
+      return this.getProductionItemByType(p, 'action');
     },
     getProductionPredict: function (p) {
-      return this.getProductionItemByType(p, "predict");
+      return this.getProductionItemByType(p, 'predict');
     },
     getProductionIsWrap: function (p) {
-      return this.getProductionItemByType(p, "isWrap");
+      return this.getProductionItemByType(p, 'isWrap');
     },
     getProductionLabel: function (p) {
-      return this.getProductionItemByType(p, "label");
+      return this.getProductionItemByType(p, 'label');
     },
     getCurrentSymbolNode: function () {
       return astStack[astStack.length - 1];
@@ -1235,11 +1235,11 @@ var $parser = (function (undefined) {
   parser.lexer = lexer;
   parser.lex = lex;
   parser.prioritySymbolMap = {
-    exp_p_end: "exp",
-    exp_p_1: "exp",
-    exp_p_2: "exp",
-    exp_p_3: "exp",
-    exp_p_4: "exp",
+    exp_p_end: 'exp',
+    exp_p_1: 'exp',
+    exp_p_2: 'exp',
+    exp_p_3: 'exp',
+    exp_p_4: 'exp',
   };
   productionSkipAstNodeSet = new Set([3, 5, 6, 8, 13, 14]);
   var parse = function (input, options = {}) {
@@ -1282,8 +1282,8 @@ var $parser = (function (undefined) {
 
       while (
         currentSymbolItem &&
-        typeof currentSymbolItem === "object" &&
-        currentSymbolItem.type === "rule"
+        typeof currentSymbolItem === 'object' &&
+        currentSymbolItem.type === 'rule'
       ) {
         index--;
         currentSymbolItem = symbolStack[index];
@@ -1296,7 +1296,7 @@ var $parser = (function (undefined) {
       while (true) {
         const t = symbolStack.pop();
 
-        if (!t || typeof t !== "object" || t.type !== "rule") {
+        if (!t || typeof t !== 'object' || t.type !== 'rule') {
           break;
         }
       }
@@ -1306,8 +1306,8 @@ var $parser = (function (undefined) {
 
       while (
         current &&
-        typeof current === "object" &&
-        current.type === "rule"
+        typeof current === 'object' &&
+        current.type === 'rule'
       ) {
         symbolStack.pop();
         current = symbolStack[--l];
@@ -1317,18 +1317,18 @@ var $parser = (function (undefined) {
     let getExpected = function () {
       const s = topSymbol;
 
-      if (typeof s === "string" && !isSymbol(s)) {
+      if (typeof s === 'string' && !isSymbol(s)) {
         return [lexer.mapReverseSymbol(s)];
       } // get expected tokens from state machine
 
       return findExpectedTokenFromStateMachine(findSymbolIndex()).map((s) =>
-        lexer.mapReverseSymbol(s)
+        lexer.mapReverseSymbol(s),
       );
     };
 
     function makeRuleIndexFlag(ruleIndex, ruleUnit) {
       return {
-        type: "rule",
+        type: 'rule',
         ruleUnit,
         tokensLength: lexer.getTokensLength(),
         ruleIndex,
@@ -1348,9 +1348,9 @@ var $parser = (function (undefined) {
 
       while (
         current &&
-        (typeof current !== "object" || current.type !== "rule")
+        (typeof current !== 'object' || current.type !== 'rule')
       ) {
-        if (typeof current === "string") {
+        if (typeof current === 'string') {
           i++;
         }
 
@@ -1358,7 +1358,7 @@ var $parser = (function (undefined) {
         current = symbolStack[top];
       }
 
-      if (current && typeof current === "object" && current.type === "rule") {
+      if (current && typeof current === 'object' && current.type === 'rule') {
         ruleIndex = current.ruleIndex;
       }
 
@@ -1382,10 +1382,10 @@ var $parser = (function (undefined) {
         parseTree,
         topSymbol,
         popSymbolStack,
-        peekSymbolStack
+        peekSymbolStack,
       );
 
-      if (typeof topSymbol === "string") {
+      if (typeof topSymbol === 'string') {
         if (!token) {
           token = lexer.lex();
           pushRecoveryTokens(recoveryTokens, token);
@@ -1475,7 +1475,7 @@ var $parser = (function (undefined) {
               error,
               errorNode,
               token,
-            }
+            },
           ));
 
           if (breakToEnd) {
@@ -1510,7 +1510,7 @@ var $parser = (function (undefined) {
     // expensive
     globalMatch,
     { childReverseIndex, ruleIndex, topSymbol },
-    fn
+    fn,
   ) {
     let unit;
     let lastUnit;
@@ -1522,7 +1522,7 @@ var $parser = (function (undefined) {
       let parentSymbolItem = getParentSymbolItem();
 
       if (!parentSymbolItem) {
-        throw new Error("no parent symbol");
+        throw new Error('no parent symbol');
       }
 
       const parentUnit = parentSymbolItem.ruleUnit;
@@ -1546,16 +1546,16 @@ var $parser = (function (undefined) {
       if (!states) {
         u.checkStates = states = [];
         const skipStartState = new State(
-          "startOfSkip$" + childSymbol,
+          'startOfSkip$' + childSymbol,
           null,
-          VIRTUAL_OPTIONAL_RULE_INDEX
+          VIRTUAL_OPTIONAL_RULE_INDEX,
         );
         skipStartState.pushTransition(unit.end);
         const symbolUnit = new SymbolStateUnit(childSymbol, -2);
         symbolUnit.end.pushTransition(unit.end);
         states.push(
           skipStartState,
-          ...symbolUnit.start.getAlternativeStartStates()
+          ...symbolUnit.start.getAlternativeStartStates(),
         );
       }
 
@@ -1585,7 +1585,7 @@ var $parser = (function (undefined) {
       const ruleIndexes = findBestAlternation(
         childSymbol,
         states,
-        globalMatch ? null : endState
+        globalMatch ? null : endState,
       );
       lexer.stashPop();
 
@@ -1598,8 +1598,8 @@ var $parser = (function (undefined) {
       } else {
         startState = unit.start.transitions[0].to;
 
-        if (startState.classType !== "SymbolState") {
-          throw new Error("expect SymbolState!");
+        if (startState.classType !== 'SymbolState') {
+          throw new Error('expect SymbolState!');
         }
 
         nextUnits = startState.getUnits();
@@ -1607,14 +1607,14 @@ var $parser = (function (undefined) {
       }
     }
 
-    const canSkipped = unitType === "zeroOrMore" || unitType === "optional";
+    const canSkipped = unitType === 'zeroOrMore' || unitType === 'optional';
     let startStates = [];
 
     if (canSkipped) {
       startState = unit.start.transitions[0].to;
 
-      if (startState.classType !== "SymbolState") {
-        throw new Error("expect SymbolState!");
+      if (startState.classType !== 'SymbolState') {
+        throw new Error('expect SymbolState!');
       }
 
       nextUnits = startState.getUnits();
@@ -1624,8 +1624,8 @@ var $parser = (function (undefined) {
       const alternatives = productionsBySymbol[childSymbol];
       startState = unit.start;
 
-      if (startState.classType !== "SymbolState") {
-        throw new Error("expect SymbolState!");
+      if (startState.classType !== 'SymbolState') {
+        throw new Error('expect SymbolState!');
       }
 
       nextUnits = startState.getUnits();
@@ -1634,7 +1634,7 @@ var $parser = (function (undefined) {
         const ruleIndex = alternatives.ruleIndexes[0];
 
         if (ruleIndex === undefined) {
-          throw new Error("no predict!");
+          throw new Error('no predict!');
         }
 
         return returnNext(ruleIndex);
@@ -1653,7 +1653,7 @@ var $parser = (function (undefined) {
     const ruleIndexes = findBestAlternation(
       childSymbol,
       startStates,
-      globalMatch ? null : endState
+      globalMatch ? null : endState,
     );
     lexer.stashPop();
 
@@ -1675,7 +1675,7 @@ var $parser = (function (undefined) {
     start = null;
     end = null;
     lazy = false;
-    unitType = "rootSymbol";
+    unitType = 'rootSymbol';
 
     constructor(type, ruleIndex) {
       this.type = type;
@@ -1683,7 +1683,7 @@ var $parser = (function (undefined) {
     }
   };
   var State = class State {
-    classType = "State";
+    classType = 'State';
     transitions = [];
 
     constructor(type, unit, ruleIndex) {
@@ -1699,7 +1699,7 @@ var $parser = (function (undefined) {
   };
   var StateUnit = class StateUnit {
     units = undefined;
-    unitType = "token";
+    unitType = 'token';
     lazy = false;
 
     constructor(type, ruleIndex) {
@@ -1710,7 +1710,7 @@ var $parser = (function (undefined) {
     }
   };
   var SymbolState = class SymbolState {
-    classType = "SymbolState";
+    classType = 'SymbolState';
     units = {};
     _afterTransitions = [];
     _beforeTransitions = [];
@@ -1732,7 +1732,7 @@ var $parser = (function (undefined) {
         const myProductions = productionsBySymbol[symbol];
 
         if (!myProductions) {
-          throw new Error("unexpected productionsBySymbol: " + symbol);
+          throw new Error('unexpected productionsBySymbol: ' + symbol);
         }
 
         for (const i of myProductions.ruleIndexes) {
@@ -1791,7 +1791,7 @@ var $parser = (function (undefined) {
     }
   };
   var SymbolStateUnit = class SymbolStateUnit {
-    unitType = "symbol";
+    unitType = 'symbol';
     lazy = false;
 
     constructor(type, ruleIndex) {
@@ -1839,7 +1839,7 @@ var $parser = (function (undefined) {
     const units = [];
 
     for (const r of rhs) {
-      if (typeof r !== "string") {
+      if (typeof r !== 'string') {
         continue;
       }
 
@@ -1849,7 +1849,7 @@ var $parser = (function (undefined) {
         const rr = normalizeSymbol(r);
         const unit = getUnit(rr);
         finalUnit = new StateUnit(rr, ruleIndex);
-        finalUnit.unitType = "optional";
+        finalUnit.unitType = 'optional';
 
         if (isLazySymbol(r)) {
           finalUnit.lazy = true;
@@ -1862,7 +1862,7 @@ var $parser = (function (undefined) {
         const rr = normalizeSymbol(r);
         const unit = getUnit(rr);
         finalUnit = new StateUnit(rr, ruleIndex);
-        finalUnit.unitType = "zeroOrMore";
+        finalUnit.unitType = 'zeroOrMore';
 
         if (isLazySymbol(r)) {
           finalUnit.lazy = true;
@@ -1905,7 +1905,7 @@ var $parser = (function (undefined) {
   };
   var findExpectedTokenFromStateMachine = function (
     { childReverseIndex },
-    stack = new Set()
+    stack = new Set(),
   ) {
     const ret = new Set();
     const { ruleUnit: parentUnit } = getParentSymbolItem();
@@ -1948,7 +1948,7 @@ var $parser = (function (undefined) {
     for (let i = symbolStack.length - 1; i >= 0; i--) {
       const s = symbolStack[i];
 
-      if ((s === null || s === void 0 ? void 0 : s.type) === "rule") {
+      if ((s === null || s === void 0 ? void 0 : s.type) === 'rule') {
         parentSymbolItem = s;
         break;
       }
@@ -1988,7 +1988,7 @@ var $parser = (function (undefined) {
         reachableStates,
         ruleIndexes,
         endState,
-        count
+        count,
       );
 
       if (
@@ -2049,7 +2049,7 @@ var $parser = (function (undefined) {
     reachableStates,
     ruleIndexes,
     endState,
-    count
+    count,
   ) {
     // function last<T>(arr: T[], n = 1) {
     //   return arr[arr.length - n];

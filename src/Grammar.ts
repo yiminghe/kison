@@ -102,9 +102,12 @@ function findIdenticalProductionRule(
   action: Function | undefined,
 ) {
   for (const p of localPs) {
-    if (p.skipAstNode === skipNode
-      && p.action === action
-      && arrayEqual(p.rhs, rhs) && p.predict == predict) {
+    if (
+      p.skipAstNode === skipNode &&
+      p.action === action &&
+      arrayEqual(p.rhs, rhs) &&
+      p.predict == predict
+    ) {
       return p;
     }
   }
@@ -450,7 +453,8 @@ class Grammar {
       }
       if (ruleIndexes.length > 1) {
         code.push(
-          `${skipAstNode ? '' : 'export '
+          `${
+            skipAstNode ? '' : 'export '
           }type ${normalizeClassName} = ${ruleIndexes
             .map((index) => {
               return getAstClass(productions[index], index);
@@ -628,7 +632,11 @@ class Grammar {
     fake.productions = newPs;
   }
 
-  expandOneProductionAlternativeAndGroup(p: ProductionRule, uuid: { id: number }, newPs: ProductionRule[]) {
+  expandOneProductionAlternativeAndGroup(
+    p: ProductionRule,
+    uuid: { id: number },
+    newPs: ProductionRule[],
+  ) {
     const { rhs } = p;
 
     type Node = {
@@ -661,7 +669,11 @@ class Grammar {
     }
 
     function addChildren(node: Node, child: Node) {
-      if (node.rh === startGroupMarker || node.rh === startPredictGroupMarker || !node.rh) {
+      if (
+        node.rh === startGroupMarker ||
+        node.rh === startPredictGroupMarker ||
+        !node.rh
+      ) {
         child.childIndex = node.children.length;
       } else if (node.childIndex !== undefined) {
         child.childIndex = node.childIndex;
@@ -715,14 +727,21 @@ class Grammar {
       }
     }
 
-    function collect(node: Node, end: Node | undefined, ret: { predict?: any, rhs: Rh[] }): void {
+    function collect(
+      node: Node,
+      end: Node | undefined,
+      ret: { predict?: any; rhs: Rh[] },
+    ): void {
       if (node === end) {
         return;
       }
       const { rh } = node;
 
       function pushNode() {
-        if (node.rh && (typeof node.rh !== 'string' || !node.rh.startsWith(endGroupMarker))) {
+        if (
+          node.rh &&
+          (typeof node.rh !== 'string' || !node.rh.startsWith(endGroupMarker))
+        ) {
           if (node.predict) {
             ret.predict = node.rh;
           } else {
@@ -738,7 +757,11 @@ class Grammar {
         if (node.children.length === 1) {
           if (rh === startGroupMarker || rh === startPredictGroupMarker) {
             const crh = child.groupEnd?.rh;
-            if (typeof crh !== 'string' || crh === endGroupMarker || !crh.startsWith(endGroupMarker)) {
+            if (
+              typeof crh !== 'string' ||
+              crh === endGroupMarker ||
+              !crh.startsWith(endGroupMarker)
+            ) {
               return collect(child, child.groupEnd, ret);
             }
           } else {
@@ -748,9 +771,11 @@ class Grammar {
         }
         let subEnd;
         if (child.groupEnd) {
-          subEnd = child.groupEnd
+          subEnd = child.groupEnd;
         }
-        const quantifier = subEnd ? (subEnd.rh as string).slice(endGroupMarker.length) : '';
+        const quantifier = subEnd
+          ? (subEnd.rh as string).slice(endGroupMarker.length)
+          : '';
 
         let groupSymbol = `${p.symbol}_group_${uuid.id++}`;
 
@@ -768,7 +793,6 @@ class Grammar {
 
           let newSymbol =
             existingP?.symbol || `${p.symbol}_group_def_${uuid.id++}`;
-
 
           if (!existingP) {
             newPs.push({
@@ -811,7 +835,7 @@ class Grammar {
     }
 
     if (rhsRoot.children.length > 1 && !rhsRoot.children[0].groupEnd) {
-      for(const c of rhsRoot.children){
+      for (const c of rhsRoot.children) {
         processOneRoot(c);
       }
     } else {
@@ -846,7 +870,11 @@ class Grammar {
     }
 
     function addChildren(node: Node, child: Node) {
-      if (node.rh === startGroupMarker || node.rh === startPredictGroupMarker || !node.rh) {
+      if (
+        node.rh === startGroupMarker ||
+        node.rh === startPredictGroupMarker ||
+        !node.rh
+      ) {
         child.childIndex = node.children.length;
       } else if (node.childIndex !== undefined) {
         child.childIndex = node.childIndex;
@@ -949,7 +977,10 @@ class Grammar {
                 typeof subRh !== 'string' ||
                 !subRh.startsWith(endGroupMarker))
             ) {
-              if (subRh === startGroupMarker || subRh === startPredictGroupMarker) {
+              if (
+                subRh === startGroupMarker ||
+                subRh === startPredictGroupMarker
+              ) {
                 nest++;
               } else if (
                 typeof subRh === 'string' &&
@@ -969,7 +1000,11 @@ class Grammar {
               if (typeof rh !== 'string') {
                 return false;
               }
-              if (rh === startGroupMarker || rh === startPredictGroupMarker || rh === endGroupMarker) {
+              if (
+                rh === startGroupMarker ||
+                rh === startPredictGroupMarker ||
+                rh === endGroupMarker
+              ) {
                 return false;
               }
               return true;
@@ -1026,14 +1061,10 @@ class Grammar {
       ps = newPs.concat(addedPs);
     }
 
-
-
-
-
     fake.productions = newPs;
   }
 
-  expandProductionsInternal() { }
+  expandProductionsInternal() {}
 
   getPrecedenceTerminal(p: ProductionRule) {
     if (p.precedence) {
@@ -1458,7 +1489,7 @@ class Grammar {
     this.buildMeta();
   }
 
-  buildProductions() { }
+  buildProductions() {}
 
   buildNonTerminals() {
     var { lexer, nonTerminals } = this;
@@ -1647,10 +1678,12 @@ class Grammar {
     return '';
   }
 
-  genCode(cfg: {
-    compressSymbol?: boolean;
-    compressState?: boolean;
-  } = {}) {
+  genCode(
+    cfg: {
+      compressSymbol?: boolean;
+      compressState?: boolean;
+    } = {},
+  ) {
     var { lexer } = this;
     var lexerCode = lexer.genCode(cfg);
     this.build();
@@ -1695,25 +1728,25 @@ class Grammar {
       'getProductionPredict',
       'getProductionIsWrap',
       'getProductionLabel',
-      'getCurrentSymbolNode'
+      'getCurrentSymbolNode',
     ];
 
     code.push(
       'var parser = ' +
-      serializeObject({
-        productions,
-        productionIndexMap,
-        isCompress: 1,
-        ...methodKeys.reduce((ret: any, m) => {
-          ret[m] = (this as any)[m];
-          return ret;
-        }, {} as any)
-      }) +
-      ';',
+        serializeObject({
+          productions,
+          productionIndexMap,
+          isCompress: 1,
+          ...methodKeys.reduce((ret: any, m) => {
+            ret[m] = (this as any)[m];
+            return ret;
+          }, {} as any),
+        }) +
+        ';',
     );
 
     code.push(
-      ...methodKeys.map(m => `parser.${m}=parser.${m}.bind(parser);`)
+      ...methodKeys.map((m) => `parser.${m}=parser.${m}.bind(parser);`),
     );
 
     code.push('parser.lexer = lexer;');
@@ -1721,8 +1754,8 @@ class Grammar {
 
     code.push(
       'parser.prioritySymbolMap = ' +
-      serializeObject(this.prioritySymbolMap) +
-      ';',
+        serializeObject(this.prioritySymbolMap) +
+        ';',
     );
 
     const productionSkipAstNodeSet: number[] = [];

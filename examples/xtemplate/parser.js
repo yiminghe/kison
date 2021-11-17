@@ -16,7 +16,7 @@ var $parser = (function (undefined) {
       const ret = {};
 
       for (const k of Object.keys(this)) {
-        if (k !== "parent" && k !== "t") {
+        if (k !== 'parent' && k !== 't') {
           const v = this[k];
 
           if (v !== undefined) {
@@ -29,8 +29,8 @@ var $parser = (function (undefined) {
     }
   };
   var AstSymbolNode = class AstSymbolNode extends BaseAstNode {
-    symbol = "";
-    type = "symbol";
+    symbol = '';
+    type = 'symbol';
     children = [];
     ruleIndex = -1;
     internalRuleIndex = -1;
@@ -62,7 +62,7 @@ var $parser = (function (undefined) {
       if (this.isWrap && this.children.length === 1) {
         const c = this.children[0];
 
-        if (c.type === "symbol" && c.symbol === this.symbol) {
+        if (c.type === 'symbol' && c.symbol === this.symbol) {
           this.label = c.label;
           this.setChildren(c.children);
           return false;
@@ -95,10 +95,10 @@ var $parser = (function (undefined) {
     }
   };
   var AstTokenNode = class AstTokenNode extends BaseAstNode {
-    token = "";
-    t = "";
-    type = "token";
-    text = "";
+    token = '';
+    t = '';
+    type = 'token';
+    text = '';
 
     constructor(params) {
       super();
@@ -170,7 +170,7 @@ var $parser = (function (undefined) {
     shouldDelete,
     transformNode,
     recoveryTokens,
-    ret
+    ret,
   ) {
     ret.error = {
       recovery: false,
@@ -187,9 +187,9 @@ var $parser = (function (undefined) {
       lexer.stashPop(); // should delete
 
       if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
-        recommendedAction.action = "del";
+        recommendedAction.action = 'del';
       } else if (ret.error.expected.length) {
-        recommendedAction.action = "add";
+        recommendedAction.action = 'add';
       }
 
       const localErrorNode = new AstErrorNode({
@@ -207,7 +207,7 @@ var $parser = (function (undefined) {
             errorNode: localErrorNode,
             parseTree: getAstRootNode(astStack, transformNode, true),
           },
-          recommendedAction
+          recommendedAction,
         ) || {};
       const { action } = recovery;
       peekStack(astStack).children.pop();
@@ -218,19 +218,19 @@ var $parser = (function (undefined) {
         return ret;
       }
 
-      if (action === "del") {
+      if (action === 'del') {
         ret.error.recovery = true;
         const deleteToken = recoveryTokens.pop();
-        deleteToken.recovery = "del";
+        deleteToken.recovery = 'del';
         ret.token = undefined;
-      } else if (action === "add") {
+      } else if (action === 'add') {
         ret.error.recovery = true;
         ret.token = {
           ...ret.token,
           token: recovery.token,
           text: recovery.text,
           t: lexer.mapSymbol(recovery.token),
-          recovery: "add",
+          recovery: 'add',
         };
         lexer.pushToken(ret.token);
         pushRecoveryTokens(recoveryTokens, ret.token);
@@ -245,7 +245,7 @@ var $parser = (function (undefined) {
   var takeCareLLAction = function (popSymbolStack, peekSymbolStack) {
     let topSymbol = peekSymbolStack();
 
-    while (topSymbol && typeof topSymbol === "function") {
+    while (topSymbol && typeof topSymbol === 'function') {
       topSymbol.call(parser);
       popSymbolStack();
       topSymbol = peekSymbolStack();
@@ -257,7 +257,7 @@ var $parser = (function (undefined) {
     parseTree,
     topSymbol,
     popSymbolStack,
-    peekSymbolStack
+    peekSymbolStack,
   ) {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
       if (parseTree) {
@@ -321,7 +321,7 @@ var $parser = (function (undefined) {
     const ret = [];
 
     for (const r of rhs) {
-      if (typeof r === "string") {
+      if (typeof r === 'string') {
         ret.push(r);
       }
     }
@@ -348,17 +348,17 @@ var $parser = (function (undefined) {
     if (parseTree) {
       const top = peekStack(astStack);
 
-      if (top.type === "symbol") {
+      if (top.type === 'symbol') {
         top.addChild(errorNode);
       }
 
       while (astStack.length > 1) {
         const ast = astStack.pop();
 
-        if (ast && ast.type === "symbol" && isExtraAstNode(ast)) {
+        if (ast && ast.type === 'symbol' && isExtraAstNode(ast)) {
           const topAst = peekStack(astStack);
 
-          if (topAst.type === "symbol") {
+          if (topAst.type === 'symbol') {
             topAst.children.pop();
             topAst.addChildren(ast.children);
           }
@@ -398,15 +398,15 @@ var $parser = (function (undefined) {
     }
 
     tips.push("current token: '" + lexer.getCurrentToken().token + "'.");
-    const tip = tips.join("\n");
+    const tip = tips.join('\n');
     return {
       errorMessage: [
-        "syntax error at line " +
+        'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo(),
         ...tips,
-      ].join("\n"),
+      ].join('\n'),
       tip,
     };
   };
@@ -454,7 +454,7 @@ var $parser = (function (undefined) {
         cleanAst(ast.parent, transformNode);
       } else {
         for (const c of children) {
-          if (c.type === "symbol") {
+          if (c.type === 'symbol') {
             cleanAst(c, transformNode);
           }
         }
@@ -472,7 +472,7 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast.type !== "symbol") {
+    if (ast.type !== 'symbol') {
       return ast;
     }
 
@@ -483,7 +483,7 @@ var $parser = (function (undefined) {
         ? void 0
         : _ast$children[0];
 
-    if (ast && ast.type === "symbol" && ast.symbol === START_TAG) {
+    if (ast && ast.type === 'symbol' && ast.symbol === START_TAG) {
       var _ast2, _ast2$children;
 
       ast =
@@ -503,14 +503,14 @@ var $parser = (function (undefined) {
       return ast;
     }
 
-    if (ast && ast.type === "token") {
+    if (ast && ast.type === 'token') {
       return ast;
     }
 
     return ast && cleanAst(ast, transformNode);
   };
   var defaultTransformAstNode = function ({ node, parent }) {
-    if (node.type === "token" || node.symbol !== parent.symbol) {
+    if (node.type === 'token' || node.symbol !== parent.symbol) {
       return node;
     }
 
@@ -534,31 +534,31 @@ var $parser = (function (undefined) {
   };
   var isZeroOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "*?" && s.length > 1 && !!s.match(/\*\??$/)
+      typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
     );
   };
   var isOneOrMoreSymbol = function (s) {
     return (
-      typeof s === "string" && s !== "+?" && s.length > 1 && !!s.match(/\+\??$/)
+      typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
     );
   };
   var isLazySymbol = function (s) {
-    const match = typeof s === "string" && s.match(/(\*|\+|\?)\?$/);
+    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
     return match && s.length !== 2;
   };
   var isOptionalSymbol = function (s) {
-    return typeof s === "string" && s.length > 1 && !!s.match(/\??\?/);
+    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
   };
   var normalizeSymbol = function (s) {
     const ret =
       isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
-        ? s.replace(/(\*|\+|\?)?\??$/, "")
+        ? s.replace(/(\*|\+|\?)?\??$/, '')
         : s; // ??
 
     return ret || (s && s.slice(0, -1));
   };
   var VIRTUAL_OPTIONAL_RULE_INDEX = -100;
-  var START_TAG = "$START";
+  var START_TAG = '$START';
   var smUnitBySymbol = {};
   var productionSkipAstNodeSet = undefined;
   var symbolStack = [{}];
@@ -572,7 +572,7 @@ var $parser = (function (undefined) {
 
     if (Lexer.supportSticky === undefined) {
       try {
-        Lexer.supportSticky = typeof /(?:)/.sticky == "boolean";
+        Lexer.supportSticky = typeof /(?:)/.sticky == 'boolean';
       } catch (e) {
         Lexer.supportSticky = false;
       }
@@ -595,7 +595,7 @@ var $parser = (function (undefined) {
     this.rules = this.rules.concat();
     this.regexpIndex = this.isCompress
       ? this.lexerRuleIndexMap.regexp
-      : "regexp";
+      : 'regexp';
     this.getRuleItem = this.isCompress
       ? this.getRuleItemCompress
       : this.getRuleItemNoCompress;
@@ -607,7 +607,7 @@ var $parser = (function (undefined) {
     });
 
     for (const rule of this.rules) {
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
@@ -630,16 +630,16 @@ var $parser = (function (undefined) {
       if (pattern.test) {
         let source = pattern.source;
 
-        if (source.startsWith("^")) {
+        if (source.startsWith('^')) {
           source = source.slice(1);
         }
 
-        var flags = Lexer.supportSticky && !disableSticky ? "gy" : "g";
-        if (pattern.multiline) flags += "m";
-        if (pattern.ignoreCase) flags += "i";
-        if (pattern.unicode) flags += "u";
+        var flags = Lexer.supportSticky && !disableSticky ? 'gy' : 'g';
+        if (pattern.multiline) flags += 'm';
+        if (pattern.ignoreCase) flags += 'i';
+        if (pattern.unicode) flags += 'u';
         obj[p] = new RegExp(source, flags);
-      } else if (typeof pattern === "object") {
+      } else if (typeof pattern === 'object') {
         for (const k of Object.keys(pattern)) {
           this.transformRegExp(pattern, k);
         }
@@ -662,22 +662,22 @@ var $parser = (function (undefined) {
     },
     addRule: function (rule) {
       this.rules.push(rule);
-      const token = this.getRuleItem(rule, "token");
+      const token = this.getRuleItem(rule, 'token');
 
       if (token) {
         this.tokenSet.add(token);
       }
     },
     resetInput: function (input) {
-      this.token = "";
+      this.token = '';
       this.nextTokens = [];
       this.tokens = [];
       this.userData = {};
       this.input = input;
-      this.matched = "";
+      this.matched = '';
       this.stateStack = [Lexer.STATIC.INITIAL_STATE];
-      this.match = "";
-      this.text = "";
+      this.match = '';
+      this.text = '';
       this.firstLine = 1;
       this.lineNumber = 1;
       this.lastLine = 1;
@@ -697,7 +697,7 @@ var $parser = (function (undefined) {
         rules = [];
 
       for (const r of this.rules) {
-        var state = this.getRuleItem(r, "state");
+        var state = this.getRuleItem(r, 'state');
 
         if (!state) {
           if (currentState === Lexer.STATIC.INITIAL_STATE) {
@@ -731,17 +731,17 @@ var $parser = (function (undefined) {
       var { matched, match, input } = this;
       matched = matched.slice(0, matched.length - match.length);
       var past =
-          (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+          (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
           matched
             .slice(0 - DEBUG_CONTEXT_LIMIT)
-            .split("\n")
-            .join(" "),
+            .split('\n')
+            .join(' '),
         next = match + input.slice(this.end); //#JSCOVERAGE_ENDIF
 
       next =
-        next.slice(0, DEBUG_CONTEXT_LIMIT).split("\n").join(" ") +
-        (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-      return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
+        (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
+      return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
     },
     mapSymbol: function (t) {
       return (this.symbolMap && this.symbolMap[t]) || t;
@@ -810,7 +810,7 @@ var $parser = (function (undefined) {
     matchRegExp: function (predict, regexp) {
       let ret;
 
-      if (typeof regexp !== "function") {
+      if (typeof regexp !== 'function') {
         regexp.lastIndex = this.end;
         ret = regexp.exec(this.input);
 
@@ -924,7 +924,7 @@ var $parser = (function (undefined) {
         const code = this.input.codePointAt(index);
 
         if (code === undefined || isNaN(code)) {
-          return "";
+          return '';
         }
 
         return String.fromCodePoint(code);
@@ -955,7 +955,7 @@ var $parser = (function (undefined) {
         rules = this.getCurrentRules();
       var { input } = this;
       var { env = this.defaultEnv } = this.options;
-      this.match = this.text = "";
+      this.match = this.text = '';
 
       if (this.end >= input.length) {
         this.token = Lexer.STATIC.EOF_TOKEN;
@@ -963,7 +963,7 @@ var $parser = (function (undefined) {
         this.firstLine = this.lastLine;
         this.firstColumn = this.lastColumn;
         return {
-          text: "",
+          text: '',
           t: this.mapSymbol(this.token),
           token: this.token,
           start: this.start,
@@ -977,18 +977,18 @@ var $parser = (function (undefined) {
 
       for (i = 0; i < rules.length; i++) {
         rule = rules[i];
-        let regexp = this.getRuleItem(rule, "regexp");
-        let token = this.getRuleItem(rule, "token");
-        let channel = this.getRuleItem(rule, "channel");
-        let action = this.getRuleItem(rule, "action");
-        let more = this.getRuleItem(rule, "more");
-        let predict = this.getRuleItem(rule, "predict");
+        let regexp = this.getRuleItem(rule, 'regexp');
+        let token = this.getRuleItem(rule, 'token');
+        let channel = this.getRuleItem(rule, 'channel');
+        let action = this.getRuleItem(rule, 'action');
+        let more = this.getRuleItem(rule, 'more');
+        let predict = this.getRuleItem(rule, 'predict');
 
         if (
-          typeof regexp !== "function" &&
+          typeof regexp !== 'function' &&
           regexp &&
           env &&
-          typeof regexp.test !== "function"
+          typeof regexp.test !== 'function'
         ) {
           regexp = regexp[env];
         }
@@ -1000,7 +1000,7 @@ var $parser = (function (undefined) {
         if ((m = this.matchRegExp(predict, regexp))) {
           const start = this.end;
           const end = this.end + m[0].length;
-          lines = m[0].split("\n");
+          lines = m[0].split('\n');
           lines.shift();
           this.lineNumber += lines.length;
           const position = {
@@ -1052,14 +1052,14 @@ var $parser = (function (undefined) {
         }
       }
 
-      throw new Error("no match lexer");
+      throw new Error('no match lexer');
     },
   };
   Lexer.STATIC = {
-    INITIAL_STATE: "I",
+    INITIAL_STATE: 'I',
     DEBUG_CONTEXT_LIMIT: 20,
-    EOF_TOKEN: "$EOF",
-    UNKNOWN_TOKEN: "$UNKNOWN",
+    EOF_TOKEN: '$EOF',
+    UNKNOWN_TOKEN: '$UNKNOWN',
   };
   var lexer = new Lexer({
     rules: [
@@ -1076,70 +1076,70 @@ var $parser = (function (undefined) {
             n = m[0].length;
           }
           if (n % 2) {
-            self.pushState("et");
+            self.pushState('et');
             text = text.slice(0, -1);
           } else {
-            self.pushState("t");
+            self.pushState('t');
           }
           if (n) {
             text = text.replace(/\\+$/g, function (m) {
-              return new Array(m.length / 2 + 1).join("\\");
+              return new Array(m.length / 2 + 1).join('\\');
             });
           }
           // https://github.com/kissyteam/kissy/issues/330
           // return even empty
           self.text = text;
-          return "CONTENT";
+          return 'CONTENT';
         },
       ],
-      ["a", /[\s\S]+/g],
+      ['a', /[\s\S]+/g],
       [
-        "a",
+        'a',
         /[\s\S]{2,}?(?:(?={{)|$)/g,
         function () {
           this.popState();
         },
         undefined,
-        ["a"],
+        ['a'],
       ],
       [
-        "b",
+        'b',
         /{{{?(?:#|@)/g,
         function () {
           var self = this,
             text = self.text;
           if (text.length === 4) {
-            self.pushState("p");
+            self.pushState('p');
           } else {
-            self.pushState("e");
+            self.pushState('e');
           }
         },
         undefined,
-        ["b"],
+        ['b'],
       ],
       [
-        "c",
+        'c',
         /{{{?\//g,
         function () {
           var self = this,
             text = self.text;
           if (text.length === 4) {
-            self.pushState("p");
+            self.pushState('p');
           } else {
-            self.pushState("e");
+            self.pushState('e');
           }
         },
         undefined,
-        ["b"],
+        ['b'],
       ],
       [
-        "d",
+        'd',
         /{{\s*else\s*}}/g,
         function () {
           this.popState();
         },
         undefined,
-        ["b"],
+        ['b'],
       ],
       [
         undefined,
@@ -1148,126 +1148,126 @@ var $parser = (function (undefined) {
           this.popState();
         },
         undefined,
-        ["b"],
+        ['b'],
       ],
       [
-        "a",
+        'a',
         /{{%([\s\S]*?)%}}/g,
         function () {
           // return to content mode
-          this.text = this.matches[1] || "";
+          this.text = this.matches[1] || '';
           this.popState();
         },
         undefined,
-        ["b"],
+        ['b'],
       ],
       [
-        "e",
+        'e',
         /{{{?/g,
         function () {
           var self = this,
             text = self.text;
           if (text.length === 3) {
-            self.pushState("p");
+            self.pushState('p');
           } else {
-            self.pushState("e");
+            self.pushState('e');
           }
         },
         undefined,
-        ["b"],
+        ['b'],
       ],
-      [undefined, /\s+/g, undefined, undefined, ["c", "d"]],
-      ["f", /,/g, undefined, undefined, ["c", "d"]],
+      [undefined, /\s+/g, undefined, undefined, ['c', 'd']],
+      ['f', /,/g, undefined, undefined, ['c', 'd']],
       [
-        "g",
+        'g',
         /}}}/g,
         function () {
           this.popState(2);
         },
         undefined,
-        ["c"],
+        ['c'],
       ],
       [
-        "g",
+        'g',
         /}}/g,
         function () {
           this.popState(2);
         },
         undefined,
-        ["d"],
+        ['d'],
       ],
-      ["h", /\(/g, undefined, undefined, ["c", "d"]],
-      ["i", /\)/g, undefined, undefined, ["c", "d"]],
-      ["j", /\|\|/g, undefined, undefined, ["c", "d"]],
-      ["k", /&&/g, undefined, undefined, ["c", "d"]],
-      ["l", /===/g, undefined, undefined, ["c", "d"]],
-      ["m", /!==/g, undefined, undefined, ["c", "d"]],
-      ["n", />=/g, undefined, undefined, ["c", "d"]],
-      ["o", /<=/g, undefined, undefined, ["c", "d"]],
-      ["p", />/g, undefined, undefined, ["c", "d"]],
-      ["q", /</g, undefined, undefined, ["c", "d"]],
-      ["r", /\+/g, undefined, undefined, ["c", "d"]],
-      ["s", /-/g, undefined, undefined, ["c", "d"]],
-      ["t", /\*/g, undefined, undefined, ["c", "d"]],
-      ["u", /\//g, undefined, undefined, ["c", "d"]],
-      ["v", /%/g, undefined, undefined, ["c", "d"]],
-      ["w", /!/g, undefined, undefined, ["c", "d"]],
+      ['h', /\(/g, undefined, undefined, ['c', 'd']],
+      ['i', /\)/g, undefined, undefined, ['c', 'd']],
+      ['j', /\|\|/g, undefined, undefined, ['c', 'd']],
+      ['k', /&&/g, undefined, undefined, ['c', 'd']],
+      ['l', /===/g, undefined, undefined, ['c', 'd']],
+      ['m', /!==/g, undefined, undefined, ['c', 'd']],
+      ['n', />=/g, undefined, undefined, ['c', 'd']],
+      ['o', /<=/g, undefined, undefined, ['c', 'd']],
+      ['p', />/g, undefined, undefined, ['c', 'd']],
+      ['q', /</g, undefined, undefined, ['c', 'd']],
+      ['r', /\+/g, undefined, undefined, ['c', 'd']],
+      ['s', /-/g, undefined, undefined, ['c', 'd']],
+      ['t', /\*/g, undefined, undefined, ['c', 'd']],
+      ['u', /\//g, undefined, undefined, ['c', 'd']],
+      ['v', /%/g, undefined, undefined, ['c', 'd']],
+      ['w', /!/g, undefined, undefined, ['c', 'd']],
       [
-        "x",
+        'x',
         /"(\\[\s\S]|[^\\"])*"/g,
         function () {
           this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
         },
         undefined,
-        ["c", "d"],
+        ['c', 'd'],
       ],
       [
-        "x",
+        'x',
         /'(\\[\s\S]|[^\\'])*'/g,
         function () {
           this.text = this.text.slice(1, -1).replace(/\\'/g, "'");
         },
         undefined,
-        ["c", "d"],
+        ['c', 'd'],
       ],
-      ["y", /true/g, undefined, undefined, ["c", "d"]],
-      ["y", /false/g, undefined, undefined, ["c", "d"]],
-      ["z", /\d+(?:\.\d+)?(?:e-?\d+)?/gi, undefined, undefined, ["c", "d"]],
-      ["aa", /=/g, undefined, undefined, ["c", "d"]],
+      ['y', /true/g, undefined, undefined, ['c', 'd']],
+      ['y', /false/g, undefined, undefined, ['c', 'd']],
+      ['z', /\d+(?:\.\d+)?(?:e-?\d+)?/gi, undefined, undefined, ['c', 'd']],
+      ['aa', /=/g, undefined, undefined, ['c', 'd']],
       [
-        "ab",
+        'ab',
         /\.\./g,
         function () {
           // wait for '/'
-          this.pushState("ws");
+          this.pushState('ws');
         },
         undefined,
-        ["c", "d"],
+        ['c', 'd'],
       ],
       [
-        "ac",
+        'ac',
         /\//g,
         function () {
           this.popState();
         },
         undefined,
-        ["e"],
+        ['e'],
       ],
-      ["ac", /\./g, undefined, undefined, ["c", "d"]],
-      ["ad", /\[/g, undefined, undefined, ["c", "d"]],
-      ["ae", /\]/g, undefined, undefined, ["c", "d"]],
-      ["ab", /[a-zA-Z0-9_$]+/g, undefined, undefined, ["c", "d"]],
+      ['ac', /\./g, undefined, undefined, ['c', 'd']],
+      ['ad', /\[/g, undefined, undefined, ['c', 'd']],
+      ['ae', /\]/g, undefined, undefined, ['c', 'd']],
+      ['ab', /[a-zA-Z0-9_$]+/g, undefined, undefined, ['c', 'd']],
     ],
     isCompress: 1,
     defaultEnv: undefined,
   });
   lexer.stateMap = {
-    I: "I",
-    et: "a",
-    t: "b",
-    p: "c",
-    e: "d",
-    ws: "e",
+    I: 'I',
+    et: 'a',
+    t: 'b',
+    p: 'c',
+    e: 'd',
+    ws: 'e',
   };
   function lex(input, options = {}) {
     lexer.options = options;
@@ -1296,269 +1296,269 @@ var $parser = (function (undefined) {
   }
   var parser = {
     productions: [
-      ["af", ["ag"]],
+      ['af', ['ag']],
       [
-        "ag",
-        ["ah", "d", "ah"],
+        'ag',
+        ['ah', 'd', 'ah'],
         function () {
           return new this.yy.ProgramNode(
             this.lexer.lineNumber,
             this.$1,
-            this.$3
+            this.$3,
           );
         },
       ],
       [
-        "ag",
-        ["ah"],
+        'ag',
+        ['ah'],
         function () {
           return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1);
         },
       ],
       [
-        "ah",
-        ["ai"],
+        'ah',
+        ['ai'],
         function () {
           return [this.$1];
         },
       ],
       [
-        "ah",
-        ["ah", "ai"],
+        'ah',
+        ['ah', 'ai'],
         function () {
           this.$1.push(this.$2);
         },
       ],
       [
-        "ai",
-        ["b", "aj", "g", "ag", "c", "ak", "g"],
+        'ai',
+        ['b', 'aj', 'g', 'ag', 'c', 'ak', 'g'],
         function () {
           return new this.yy.BlockStatement(
             this.lexer.lineNumber,
             this.$2,
             this.$4,
             this.$6,
-            this.$1.length !== 4
+            this.$1.length !== 4,
           );
         },
       ],
       [
-        "ai",
-        ["e", "al", "g"],
+        'ai',
+        ['e', 'al', 'g'],
         function () {
           return new this.yy.ExpressionStatement(
             this.lexer.lineNumber,
             this.$2,
-            this.$1.length !== 3
+            this.$1.length !== 3,
           );
         },
       ],
       [
-        "ai",
-        ["a"],
+        'ai',
+        ['a'],
         function () {
           return new this.yy.ContentStatement(this.lexer.lineNumber, this.$1);
         },
       ],
       [
-        "aj",
-        ["ak", "h", "am", "f", "an", "i"],
+        'aj',
+        ['ak', 'h', 'am', 'f', 'an', 'i'],
         function () {
           return new this.yy.Function(
             this.lexer.lineNumber,
             this.$1,
             this.$3,
-            this.$5
+            this.$5,
           );
         },
       ],
       [
-        "aj",
-        ["ak", "h", "am", "i"],
+        'aj',
+        ['ak', 'h', 'am', 'i'],
         function () {
           return new this.yy.Function(this.lexer.lineNumber, this.$1, this.$3);
         },
       ],
       [
-        "aj",
-        ["ak", "h", "an", "i"],
+        'aj',
+        ['ak', 'h', 'an', 'i'],
         function () {
           return new this.yy.Function(
             this.lexer.lineNumber,
             this.$1,
             null,
-            this.$3
+            this.$3,
           );
         },
       ],
       [
-        "aj",
-        ["ak", "h", "i"],
+        'aj',
+        ['ak', 'h', 'i'],
         function () {
           return new this.yy.Function(this.lexer.lineNumber, this.$1);
         },
       ],
       [
-        "am",
-        ["am", "f", "ao"],
+        'am',
+        ['am', 'f', 'ao'],
         function () {
           this.$1.push(this.$3);
         },
       ],
       [
-        "am",
-        ["ao"],
+        'am',
+        ['ao'],
         function () {
           return [this.$1];
         },
       ],
-      ["ao", ["al"]],
-      ["al", ["ap"]],
-      ["ap", ["aq"]],
+      ['ao', ['al']],
+      ['al', ['ap']],
+      ['ap', ['aq']],
       [
-        "ap",
-        ["ap", "j", "aq"],
+        'ap',
+        ['ap', 'j', 'aq'],
         function () {
           return new this.yy.ConditionalOrExpression(this.$1, this.$3);
         },
       ],
-      ["aq", ["ar"]],
+      ['aq', ['ar']],
       [
-        "aq",
-        ["aq", "k", "ar"],
+        'aq',
+        ['aq', 'k', 'ar'],
         function () {
           return new this.yy.ConditionalAndExpression(this.$1, this.$3);
         },
       ],
-      ["ar", ["as"]],
+      ['ar', ['as']],
       [
-        "ar",
-        ["ar", "l", "as"],
+        'ar',
+        ['ar', 'l', 'as'],
         function () {
-          return new this.yy.EqualityExpression(this.$1, "===", this.$3);
+          return new this.yy.EqualityExpression(this.$1, '===', this.$3);
         },
       ],
       [
-        "ar",
-        ["ar", "m", "as"],
+        'ar',
+        ['ar', 'm', 'as'],
         function () {
-          return new this.yy.EqualityExpression(this.$1, "!==", this.$3);
+          return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
         },
       ],
-      ["as", ["at"]],
+      ['as', ['at']],
       [
-        "as",
-        ["as", "q", "at"],
+        'as',
+        ['as', 'q', 'at'],
         function () {
-          return new this.yy.RelationalExpression(this.$1, "<", this.$3);
-        },
-      ],
-      [
-        "as",
-        ["as", "p", "at"],
-        function () {
-          return new this.yy.RelationalExpression(this.$1, ">", this.$3);
+          return new this.yy.RelationalExpression(this.$1, '<', this.$3);
         },
       ],
       [
-        "as",
-        ["as", "o", "at"],
+        'as',
+        ['as', 'p', 'at'],
         function () {
-          return new this.yy.RelationalExpression(this.$1, "<=", this.$3);
+          return new this.yy.RelationalExpression(this.$1, '>', this.$3);
         },
       ],
       [
-        "as",
-        ["as", "n", "at"],
+        'as',
+        ['as', 'o', 'at'],
         function () {
-          return new this.yy.RelationalExpression(this.$1, ">=", this.$3);
-        },
-      ],
-      ["at", ["au"]],
-      [
-        "at",
-        ["at", "r", "au"],
-        function () {
-          return new this.yy.AdditiveExpression(this.$1, "+", this.$3);
+          return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
         },
       ],
       [
-        "at",
-        ["at", "s", "au"],
+        'as',
+        ['as', 'n', 'at'],
         function () {
-          return new this.yy.AdditiveExpression(this.$1, "-", this.$3);
+          return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
         },
       ],
-      ["au", ["av"]],
+      ['at', ['au']],
       [
-        "au",
-        ["au", "t", "av"],
+        'at',
+        ['at', 'r', 'au'],
         function () {
-          return new this.yy.MultiplicativeExpression(this.$1, "*", this.$3);
-        },
-      ],
-      [
-        "au",
-        ["au", "u", "av"],
-        function () {
-          return new this.yy.MultiplicativeExpression(this.$1, "/", this.$3);
+          return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
         },
       ],
       [
-        "au",
-        ["au", "v", "av"],
+        'at',
+        ['at', 's', 'au'],
         function () {
-          return new this.yy.MultiplicativeExpression(this.$1, "%", this.$3);
+          return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
+        },
+      ],
+      ['au', ['av']],
+      [
+        'au',
+        ['au', 't', 'av'],
+        function () {
+          return new this.yy.MultiplicativeExpression(this.$1, '*', this.$3);
         },
       ],
       [
-        "av",
-        ["w", "av"],
+        'au',
+        ['au', 'u', 'av'],
         function () {
-          return new this.yy.UnaryExpression(this.$1, this.$2);
+          return new this.yy.MultiplicativeExpression(this.$1, '/', this.$3);
         },
       ],
       [
-        "av",
-        ["s", "av"],
+        'au',
+        ['au', 'v', 'av'],
+        function () {
+          return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
+        },
+      ],
+      [
+        'av',
+        ['w', 'av'],
         function () {
           return new this.yy.UnaryExpression(this.$1, this.$2);
         },
       ],
-      ["av", ["aw"]],
-      ["aw", ["aj"]],
       [
-        "aw",
-        ["x"],
+        'av',
+        ['s', 'av'],
+        function () {
+          return new this.yy.UnaryExpression(this.$1, this.$2);
+        },
+      ],
+      ['av', ['aw']],
+      ['aw', ['aj']],
+      [
+        'aw',
+        ['x'],
         function () {
           return new this.yy.String(this.lexer.lineNumber, this.$1);
         },
       ],
       [
-        "aw",
-        ["z"],
+        'aw',
+        ['z'],
         function () {
           return new this.yy.Number(this.lexer.lineNumber, this.$1);
         },
       ],
       [
-        "aw",
-        ["y"],
+        'aw',
+        ['y'],
         function () {
           return new this.yy.Boolean(this.lexer.lineNumber, this.$1);
         },
       ],
-      ["aw", ["ak"]],
+      ['aw', ['ak']],
       [
-        "aw",
-        ["h", "al", "i"],
+        'aw',
+        ['h', 'al', 'i'],
         function () {
           return this.$2;
         },
       ],
       [
-        "an",
-        ["an", "f", "ax"],
+        'an',
+        ['an', 'f', 'ax'],
         function () {
           var hash = this.$1,
             seg = this.$3;
@@ -1566,8 +1566,8 @@ var $parser = (function (undefined) {
         },
       ],
       [
-        "an",
-        ["ax"],
+        'an',
+        ['ax'],
         function () {
           var hash = new this.yy.Hash(this.lexer.lineNumber),
             $1 = this.$1;
@@ -1576,36 +1576,36 @@ var $parser = (function (undefined) {
         },
       ],
       [
-        "ax",
-        ["ab", "aa", "al"],
+        'ax',
+        ['ab', 'aa', 'al'],
         function () {
           return [this.$1, this.$3];
         },
       ],
       [
-        "ak",
-        ["ay"],
+        'ak',
+        ['ay'],
         function () {
           return new this.yy.Id(this.lexer.lineNumber, this.$1);
         },
       ],
       [
-        "ay",
-        ["ay", "ac", "ab"],
+        'ay',
+        ['ay', 'ac', 'ab'],
         function () {
           this.$1.push(this.$3);
         },
       ],
       [
-        "ay",
-        ["ay", "ad", "al", "ae"],
+        'ay',
+        ['ay', 'ad', 'al', 'ae'],
         function () {
           this.$1.push(this.$3);
         },
       ],
       [
-        "ay",
-        ["ab"],
+        'ay',
+        ['ab'],
         function () {
           return [this.$1];
         },
@@ -1628,22 +1628,22 @@ var $parser = (function (undefined) {
       return p && p[itemType];
     },
     getProductionSymbol: function (p) {
-      return this.getProductionItemByType(p, "symbol");
+      return this.getProductionItemByType(p, 'symbol');
     },
     getProductionRhs: function (p) {
-      return this.getProductionItemByType(p, "rhs");
+      return this.getProductionItemByType(p, 'rhs');
     },
     getProductionAction: function (p) {
-      return this.getProductionItemByType(p, "action");
+      return this.getProductionItemByType(p, 'action');
     },
     getProductionPredict: function (p) {
-      return this.getProductionItemByType(p, "predict");
+      return this.getProductionItemByType(p, 'predict');
     },
     getProductionIsWrap: function (p) {
-      return this.getProductionItemByType(p, "isWrap");
+      return this.getProductionItemByType(p, 'isWrap');
     },
     getProductionLabel: function (p) {
-      return this.getProductionItemByType(p, "label");
+      return this.getProductionItemByType(p, 'label');
     },
     getCurrentSymbolNode: function () {
       return astStack[astStack.length - 1];
@@ -1663,7 +1663,7 @@ var $parser = (function (undefined) {
   function peekStack(stack, n = 1) {
     return stack[stack.length - n];
   }
-  var ActionTypeMap = ["accept", "shift", "reduce"];
+  var ActionTypeMap = ['accept', 'shift', 'reduce'];
   var GrammarConst = {
     SHIFT_TYPE: 1,
     REDUCE_TYPE: 2,
@@ -2933,7 +2933,7 @@ var $parser = (function (undefined) {
     var table = parser.table;
     var { gotos, action: tableAction } = table; // for debug info
 
-    var prefix = filename ? "in file: " + filename + " " : "";
+    var prefix = filename ? 'in file: ' + filename + ' ' : '';
     var valueStack = [];
     var stateStack = [0];
     var symbolStack = [];
@@ -2968,19 +2968,19 @@ var $parser = (function (undefined) {
             const arr = (expected[actionStr] = expected[actionStr] || []);
             const s = lexer.mapReverseSymbol(symbolForState);
             arr.push(s);
-            expectedInfo.push(actionStr + ":" + s);
+            expectedInfo.push(actionStr + ':' + s);
           }
         }
 
         const error =
           prefix +
-          "syntax error at line " +
+          'syntax error at line ' +
           lexer.lineNumber +
-          ":\n" +
+          ':\n' +
           lexer.showDebugInfo() +
-          "\n" +
-          "expect " +
-          expectedInfo.join(", ");
+          '\n' +
+          'expect ' +
+          expectedInfo.join(', ');
         throw new Error(error);
       }
 
@@ -3007,7 +3007,7 @@ var $parser = (function (undefined) {
           p.$$ = $$;
 
           for (var i = 0; i < len; i++) {
-            p["$" + (len - i)] = peekStack(valueStack, i + 1);
+            p['$' + (len - i)] = peekStack(valueStack, i + 1);
           }
 
           if (reducedAction) {
@@ -3089,62 +3089,62 @@ var $parser = (function (undefined) {
     50: 50,
   };
   lexer.symbolMap = {
-    CONTENT: "a",
-    OPEN_BLOCK: "b",
-    OPEN_CLOSE_BLOCK: "c",
-    INVERSE: "d",
-    OPEN_TPL: "e",
-    COMMA: "f",
-    CLOSE: "g",
-    LPAREN: "h",
-    RPAREN: "i",
-    OR: "j",
-    AND: "k",
-    LOGIC_EQUALS: "l",
-    LOGIC_NOT_EQUALS: "m",
-    GE: "n",
-    LE: "o",
-    GT: "p",
-    LT: "q",
-    PLUS: "r",
-    MINUS: "s",
-    MULTIPLY: "t",
-    DIVIDE: "u",
-    MODULUS: "v",
-    NOT: "w",
-    STRING: "x",
-    BOOLEAN: "y",
-    NUMBER: "z",
-    EQUALS: "aa",
-    ID: "ab",
-    SEP: "ac",
-    REF_START: "ad",
-    REF_END: "ae",
-    $START: "af",
-    program: "ag",
-    statements: "ah",
-    statement: "ai",
-    function: "aj",
-    id: "ak",
-    expression: "al",
-    params: "am",
-    hash: "an",
-    param: "ao",
-    conditionalOrExpression: "ap",
-    conditionalAndExpression: "aq",
-    equalityExpression: "ar",
-    relationalExpression: "as",
-    additiveExpression: "at",
-    multiplicativeExpression: "au",
-    unaryExpression: "av",
-    primaryExpression: "aw",
-    hashSegment: "ax",
-    idSegments: "ay",
-    $EOF: "az",
+    CONTENT: 'a',
+    OPEN_BLOCK: 'b',
+    OPEN_CLOSE_BLOCK: 'c',
+    INVERSE: 'd',
+    OPEN_TPL: 'e',
+    COMMA: 'f',
+    CLOSE: 'g',
+    LPAREN: 'h',
+    RPAREN: 'i',
+    OR: 'j',
+    AND: 'k',
+    LOGIC_EQUALS: 'l',
+    LOGIC_NOT_EQUALS: 'm',
+    GE: 'n',
+    LE: 'o',
+    GT: 'p',
+    LT: 'q',
+    PLUS: 'r',
+    MINUS: 's',
+    MULTIPLY: 't',
+    DIVIDE: 'u',
+    MODULUS: 'v',
+    NOT: 'w',
+    STRING: 'x',
+    BOOLEAN: 'y',
+    NUMBER: 'z',
+    EQUALS: 'aa',
+    ID: 'ab',
+    SEP: 'ac',
+    REF_START: 'ad',
+    REF_END: 'ae',
+    $START: 'af',
+    program: 'ag',
+    statements: 'ah',
+    statement: 'ai',
+    function: 'aj',
+    id: 'ak',
+    expression: 'al',
+    params: 'am',
+    hash: 'an',
+    param: 'ao',
+    conditionalOrExpression: 'ap',
+    conditionalAndExpression: 'aq',
+    equalityExpression: 'ar',
+    relationalExpression: 'as',
+    additiveExpression: 'at',
+    multiplicativeExpression: 'au',
+    unaryExpression: 'av',
+    primaryExpression: 'aw',
+    hashSegment: 'ax',
+    idSegments: 'ay',
+    $EOF: 'az',
   };
   return parser;
 })();
 
-if (typeof module !== "undefined") {
+if (typeof module !== 'undefined') {
   module.exports = $parser;
 }

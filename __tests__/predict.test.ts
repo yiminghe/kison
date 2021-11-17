@@ -1,4 +1,3 @@
-
 import LLKGrammar from '../src/llk/LLKGrammar';
 import { prettyJson, run, HIDDEN_LEXER_RULE } from './utils';
 import Lexer from '../src/Lexer';
@@ -85,7 +84,6 @@ describe('llk predict', () => {
     expect(ret.error).toMatchSnapshot();
   });
 
-
   it('support group predict', () => {
     var grammar = new LLKGrammar({
       productions: [
@@ -96,35 +94,34 @@ describe('llk predict', () => {
 
         {
           symbol: 'sequence',
-          rhs: ['NUMBER',
+          rhs: [
+            'NUMBER',
 
             startPredictGroupMarker,
 
-            function (this:typeof Parser){
-              const token = this.lexer.getLastToken((t)=>!t.channel);
-              return token.text==='3';
+            function (this: typeof Parser) {
+              const token = this.lexer.getLastToken((t) => !t.channel);
+              return token.text === '3';
             },
             'sequence3',
             alterPredictMark,
-            function (this:typeof Parser){
-              const token = this.lexer.getLastToken((t)=>!t.channel);
-              return token.text==='2';
+            function (this: typeof Parser) {
+              const token = this.lexer.getLastToken((t) => !t.channel);
+              return token.text === '2';
             },
             'sequence2',
             alterMark,
             'sequence1',
             endGroupMarker,
-          ]
-        },
-        {
-          symbol: 'sequence1',
-          rhs: [
-            'NUMBER',
           ],
         },
         {
+          symbol: 'sequence1',
+          rhs: ['NUMBER'],
+        },
+        {
           symbol: 'sequence2',
-          rhs: ['NUMBER', 'NUMBER',],
+          rhs: ['NUMBER', 'NUMBER'],
         },
         {
           symbol: 'sequence3',
@@ -141,7 +138,6 @@ describe('llk predict', () => {
         ],
       },
     });
-
 
     const code = grammar.genCode();
     const parser = run(code);

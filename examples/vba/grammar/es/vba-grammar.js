@@ -49,7 +49,7 @@ module.exports = {
       n.endOfLineZeroOrMore,
       n.moduleBodyOptional,
       n.endOfLineZeroOrMore,
-      '$EOF'
+      '$EOF',
     ],
     [
       n.endOfLine,
@@ -291,7 +291,7 @@ module.exports = {
       n.LPAREN,
       n.indexes,
       n.RPAREN,
-      n.groupEndOptionalMark,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [
@@ -309,7 +309,7 @@ module.exports = {
       n.LPAREN,
       n.indexes,
       n.RPAREN,
-      n.groupEndOptionalMark,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [
@@ -331,7 +331,7 @@ module.exports = {
       n.LPAREN,
       n.indexes,
       n.RPAREN,
-      n.groupEndOptionalMark,
+      n.groupEndZeroOrMoreMark,
     ],
     [
       n.iCS_B_ProcedureCall,
@@ -339,7 +339,7 @@ module.exports = {
       n.argsCallOptional,
       n.groupStartMark,
       n.LPAREN,
-      n.subscripts,
+      n.indexes,
       n.RPAREN,
       n.groupEndOptionalMark,
     ],
@@ -450,7 +450,15 @@ module.exports = {
       n.RPAREN,
     ],
 
-    [n.valueStmt, n.literal, n.alternationMark, n.implicitCallStmt_InStmt],
+    [
+      n.valueStmt,
+      n.literal,
+      n.alternationMark,
+      n.implicitCallStmt_InStmt,
+      n.alternationMark,
+      n.NEW,
+      n.valueStmt,
+    ],
 
     [
       n.implicitCallStmt_InStmt,
@@ -474,7 +482,7 @@ module.exports = {
       n.LPAREN,
       n.indexes,
       n.RPAREN,
-      n.groupEndOptionalMark,
+      n.groupEndZeroOrMoreMark,
     ],
     [
       n.iCS_S_MemberCall,
@@ -501,7 +509,7 @@ module.exports = {
       n.LPAREN,
       n.indexes,
       n.RPAREN,
-      n.groupEndOptionalMark,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [
@@ -513,7 +521,7 @@ module.exports = {
       n.LPAREN,
       n.indexes,
       n.RPAREN,
-      n.groupEndOptionalMark,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [n.dictionaryCallStmt, '!', n.ambiguousIdentifier, n.typeHintOptional],

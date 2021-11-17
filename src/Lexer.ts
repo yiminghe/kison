@@ -108,7 +108,7 @@ class Lexer {
     UNKNOWN_TOKEN: '$UNKNOWN',
   };
 
-  getRuleItem: Function = () => { };
+  getRuleItem: Function = () => {};
 
   isCompress = undefined;
 
@@ -442,11 +442,11 @@ class Lexer {
 
     matched = matched.slice(0, matched.length - match.length);
     var past =
-      (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
-      matched
-        .slice(0 - DEBUG_CONTEXT_LIMIT)
-        .split('\n')
-        .join(' '),
+        (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
+        matched
+          .slice(0 - DEBUG_CONTEXT_LIMIT)
+          .split('\n')
+          .join(' '),
       next = match + input.slice(this.end);
     //#JSCOVERAGE_ENDIF
     next =

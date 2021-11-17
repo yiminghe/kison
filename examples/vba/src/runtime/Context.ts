@@ -1,6 +1,8 @@
 import parser from '../parser';
 import type { AstRootNode } from '../parser';
 import {
+  VBNativeClass,
+  VBBindClass,
   VBValue,
   SubBinder,
   VBFile,
@@ -12,10 +14,7 @@ import {
   VBNativeObject,
   VB_TRUE,
   VB_FALSE,
-} from './types';
-import { evaluate } from './evaluator/index';
-import { load } from './loader/index';
-import {
+  AsTypeClauseInfo,
   SymbolItem,
   VBScope,
   ArgInfo,
@@ -31,6 +30,8 @@ import {
   VBInteger,
   VBString,
 } from './types';
+import { evaluate } from './evaluator/index';
+import { load } from './loader/index';
 import { last } from './utils';
 
 const defaultFileId: VBFile = {
@@ -203,7 +204,10 @@ export class Context {
         return file.id;
       }
     }
-    throw new Error('Can not find file name: ' + name);
+    if (name !== 'object') {
+      throw new Error('Can not find file name: ' + name);
+    }
+    return name;
   }
 
   _setupScope(
@@ -286,7 +290,7 @@ export class Context {
         },
       });
     }
-    const ret = await subDef.value(passedArgs);
+    const ret = await subDef.value(passedArgs, this);
     if (ret === false) {
       return END_EXIT_RESULT;
     }
@@ -362,5 +366,25 @@ export class Context {
 
   static createBoolean(value: boolean) {
     return value ? VB_TRUE : VB_FALSE;
+  }
+
+  async createObject(name: string) {
+    const classType = name.toLowerCase().split('.');
+    const binder = this.getBinder(classType);
+    let value: VBClass | undefined;
+    if (binder && binder.type === 'ClassBinder') {
+      value = new VBBindClass(binder);
+    } else if (classType.length === 1) {
+      const classId = this.getFileIdFromFileName(classType[0]);
+      const symbolItem = this.symbolTable.get(classId);
+      if (symbolItem && symbolItem.type === 'class') {
+        value = new VBNativeClass(classId, this);
+      }
+    }
+    if (!value) {
+      throw new Error('Can not find class: ' + classType.join('.'));
+    }
+    await value.init();
+    return value;
   }
 }

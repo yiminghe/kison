@@ -1,4 +1,7 @@
-import type { Ast_VariableListStmt_Node, Ast_ValueStmt_Node } from '../../parser';
+import type {
+  Ast_VariableListStmt_Node,
+  Ast_ValueStmt_Node,
+} from '../../parser';
 import {
   collect_asTypeClause,
   collectAmbiguousIdentifier,
@@ -13,11 +16,8 @@ import {
   VBObject,
   VBPrimitiveTypeClass,
   getDEFAULT_AS_TYPE,
-  VBClass,
   VB_EMPTY,
   VBNativeObject,
-  VBBindClass,
-  VBNativeClass,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -74,7 +74,7 @@ registerEvaluators({
       asType = collect_asTypeClause(lastChild, context);
     }
 
-    const { type, classType, isNew } = asType;
+    const { type, isNew, className } = asType;
     let value: VBVariableInfo['value'] | undefined;
 
     if (type) {
@@ -91,25 +91,13 @@ registerEvaluators({
           return new VBNativeObject(value, asType);
         };
       }
-    } else if (classType) {
-      const classId = classType[0];
+    } else if (className) {
       if (isNew) {
         value = async () => {
-          const binder = context.getBinder(classType);
-          let value: VBClass | undefined;
-          if (binder && binder.type === 'ClassBinder') {
-            value = new VBBindClass(binder);
-          } else if (classType.length === 1) {
-            const symbolItem = context.symbolTable.get(classId);
-            if (symbolItem && symbolItem.type === 'class') {
-              value = new VBNativeClass(classId, context);
-            }
-          }
-          if (!value) {
-            throw new Error('Can not find class: ' + classType.join('.'));
-          }
-          await value.init();
-          return new VBNativeObject(value, asType);
+          return new VBNativeObject(
+            await context.createObject(className),
+            asType,
+          );
         };
       } else {
         value = () => {

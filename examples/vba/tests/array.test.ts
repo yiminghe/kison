@@ -55,7 +55,9 @@ end sub
       error = e;
     }
 
-    expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
+    expect(error.message).toMatchInlineSnapshot(
+      `"Subscript out of Range (line 5 at file m1)"`,
+    );
   });
 
   it('redim works', async () => {
@@ -70,7 +72,9 @@ end sub
       error = e;
     }
 
-    expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
+    expect(error.message).toMatchInlineSnapshot(
+      `"Subscript out of Range (line 3 at file m1)"`,
+    );
 
     error = undefined;
 
@@ -85,7 +89,9 @@ end sub
       error = e;
     }
 
-    expect(error.message).toMatchInlineSnapshot(`"unexpected redim!"`);
+    expect(error.message).toMatchInlineSnapshot(
+      `"unexpected redim! (line 3 at file m1)"`,
+    );
 
     ret = await run(`
 sub main
@@ -132,7 +138,9 @@ end sub
       error = e;
     }
 
-    expect(error.message).toMatchInlineSnapshot(`"Subscript out of Range"`);
+    expect(error.message).toMatchInlineSnapshot(
+      `"Subscript out of Range (line 7 at file m1)"`,
+    );
   });
 
   it('support chained member access', async () => {

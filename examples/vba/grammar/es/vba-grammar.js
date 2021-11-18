@@ -346,7 +346,8 @@ module.exports = {
 
     [
       n.argsCall,
-      n.argCallOptional,
+      ',*',
+      n.argCall,
       n.groupStartMark,
       ',',
       n.argCallOptional,

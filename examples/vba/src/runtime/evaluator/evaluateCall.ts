@@ -39,63 +39,46 @@ async function callSub(
     throw new Error('unexpected');
   }
   const subName = token.children[0].text;
-  let args: (VBValue | VBObject)[] = await buildArgs(node, context);
+  let args: (VBValue | VBObject)[] | undefined = await buildArgs(node, context);
   return await context.callSubInternal(subName, args);
 }
 
 async function callMemberSub(
   node: Ast_ICS_B_MemberProcedureCall_Node | Ast_ECS_MemberProcedureCall_Node,
   context: Context,
-  callerIndex: number,
 ) {
   const { children } = node;
-  let v: VBObject | VBValue | VBNamespaceBinder | SubBinder | undefined;
-  const callerNode = children[callerIndex];
-  if (
-    callerNode.type === 'symbol' &&
-    callerNode.symbol === 'implicitCallStmt_InStmt'
-  ) {
-    v = await evaluate(callerNode, context);
-  }
-  if (!v) {
-    throw new Error('TODO with!');
-  }
 
-  const indexes: (VBValue | VBObject)[] = (
-    await buildIndexes(node, context)
-  )[0];
-  let args: (VBValue | VBObject)[] = await buildArgs(node, context);
+  let subName = '';
 
-  const id = collectAmbiguousIdentifier(node, true)!;
-  let subOrArray: undefined | BinderValue;
+  let parent: VBObject | VBValue | undefined;
 
-  if (v.type === 'Object' && v.value.type === 'Class') {
-    return v.value.callSub(id, args);
-  }
-  if (v.type === 'Class') {
-    return v.callSub(id, args);
-  }
-
-  if (v.type === 'Namespace') {
-    subOrArray = v.get(id);
-  }
-
-  if (subOrArray) {
-    if (subOrArray.type === 'SubBinder') {
-      return context.callSubBinder(subOrArray, args.length ? args : indexes);
-    } else if (
-      subOrArray.type === 'Object' &&
-      subOrArray.value.type === 'Array'
-    ) {
-      const numberIndexes = checkIndexesInterger(indexes);
-      if (!numberIndexes.length) {
-        throw new Error('unexpected array access!');
-      }
-      return subOrArray.value.getElement(numberIndexes);
+  for (const c of children) {
+    if (c.type === 'symbol' && c.symbol === 'implicitCallStmt_InStmt') {
+      parent = await evaluate(c, context);
+    } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+      subName = c.children[0].text;
     }
   }
 
-  throw new Error('invalid member access!');
+  if (!parent) {
+    throw new Error('unexpected member access!');
+  }
+
+  const argsCall = await buildArgs(node, context);
+
+  const indexes = await buildIndexes(node, context);
+
+  if (argsCall) {
+    indexes.unshift(argsCall);
+  }
+
+  return callSubOrGetElementWithIndexesAndArgs(
+    parent,
+    subName,
+    indexes,
+    context,
+  );
 }
 
 registerEvaluators({
@@ -103,16 +86,18 @@ registerEvaluators({
     return;
   },
 
+  'evaluate.'() {},
+
   evaluateFunctionStmt() {
     return;
   },
 
   async evaluateICS_B_MemberProcedureCall(node, context) {
-    return callMemberSub(node, context, 0);
+    return callMemberSub(node, context);
   },
 
   async evaluateECS_MemberProcedureCall(node, context) {
-    return callMemberSub(node, context, 1);
+    return callMemberSub(node, context);
   },
 
   async evaluateICS_B_ProcedureCall(node, context) {
@@ -133,7 +118,9 @@ registerEvaluators({
         lastArg = undefined;
         continue;
       }
+      context.stashMember();
       lastArg = await evaluate(c, context);
+      context.popMember();
     }
     if (children.length) {
       args.push(lastArg);
@@ -141,64 +128,46 @@ registerEvaluators({
     return args;
   },
 
-  async evaluateICS_S_MembersCall({ children }, context) {
-    const valueNodes = [];
+  async evaluateICS_S_MembersCall(node, context) {
+    const { children } = node;
+
+    if (children[0].symbol !== 'iCS_S_MemberCall') {
+      const parent: VBObject | VBValue | undefined = (context.parentMember =
+        await evaluate(children[0], context));
+      if (
+        !parent ||
+        (parent.type === 'Object' && parent.value.type === 'Empty') ||
+        parent.type === 'Empty'
+      ) {
+        throw new Error('invalid member access!');
+      }
+    }
 
     for (const c of children) {
-      if (c.type === 'symbol' && c.symbol === 'iCS_S_VariableOrProcedureCall') {
-        valueNodes.push(c);
-      } else if (c.type === 'symbol' && c.symbol === 'iCS_S_MemberCall') {
-        for (const c2 of c.children) {
-          if (
-            c2.type === 'symbol' &&
-            c2.symbol === 'iCS_S_VariableOrProcedureCall'
-          ) {
-            valueNodes.push(c);
-          }
-        }
+      if (c.type === 'symbol' && c.symbol === 'iCS_S_MemberCall') {
+        context.parentMember = await evaluate(c, context);
       }
     }
 
-    let v:
-      | VBObject
-      | VBValue
-      | SubBinder
-      | ClassBinder
-      | VBNamespaceBinder
-      | undefined = await evaluate(valueNodes[0], context);
+    let parent = context.parentMember;
 
-    for (let i = 1; i < valueNodes.length; i++) {
-      if (!v) {
-        throw new Error('unexpected member access!');
-      }
-      const valueNode = valueNodes[i];
-      const indexesNode = collectIndexesNode(valueNode);
-      const id = collectAmbiguousIdentifier(valueNode)!;
-      if (v.type === 'Object' && v.value.type === 'Class') {
-        v = v.value.get(id);
-      } else if (v.type === 'Namespace' || v.type === 'Class') {
-        v = v.get(id);
-      } else {
-        throw new Error('unexpected member access!');
-      }
-      if (indexesNode && v) {
-        const indexesValues = (
-          await buildIndexes({ children: [indexesNode] }, context)
-        )[0];
-        if (v.type === 'Object' && v.value.type === 'Array') {
-          const indexes = checkIndexesInterger(indexesValues);
-          v = v.value.getElement(indexes);
-        } else if (v.type === 'SubBinder') {
-          const ret = await context.callSubBinder(v, indexesValues);
-          if (ret?.type === 'Exit') {
-            return ret;
-          }
-          v = ret;
-        }
-      }
+    context.parentMember = undefined;
+
+    const indexes = await buildIndexes(node, context);
+
+    let v;
+    if (parent && indexes.length) {
+      v = await callSubOrGetElementWithIndexesAndArgs(
+        parent,
+        '',
+        indexes,
+        context,
+      );
+    } else {
+      v = parent;
     }
 
-    return v || VB_EMPTY;
+    return v;
   },
 
   async evaluateICS_S_ProcedureOrArrayCall(node, context) {
@@ -208,6 +177,7 @@ registerEvaluators({
       indexes.unshift(args);
     }
     return callSubOrGetElementWithIndexesAndArgs(
+      context.parentMember,
       collectAmbiguousIdentifier(node, true)!,
       indexes,
       context,
@@ -217,8 +187,13 @@ registerEvaluators({
   async evaluateICS_S_VariableOrProcedureCall({ children }, context) {
     const subName = children[0].children[0].text;
     const indexes = await buildIndexes({ children }, context);
-    if (indexes.length) {
-      return callSubOrGetElementWithIndexesAndArgs(subName, indexes, context);
+    if (indexes.length || context.parentMember) {
+      return callSubOrGetElementWithIndexesAndArgs(
+        context.parentMember,
+        subName,
+        indexes,
+        context,
+      );
     } else {
       // variable
       return context.getCurrentScope().getVariable(subName);

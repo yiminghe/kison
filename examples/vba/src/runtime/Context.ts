@@ -44,7 +44,15 @@ export interface CallOptions {
   logError?: boolean;
 }
 
+interface MemberItem {
+  parentMember?: VBObject | VBValue | undefined;
+}
+
 export class Context {
+  parentMember?: VBObject | VBValue | undefined;
+
+  memberStack: MemberItem[] = [];
+
   astMap = new Map<VBFile, AstRootNode>();
 
   bindersMap: BinderMap = new Map();
@@ -56,6 +64,21 @@ export class Context {
   scopeStack: VBScope[] = [];
 
   currentAstNode: AstNode | undefined;
+
+  stashMember() {
+    this.memberStack.push({
+      parentMember: this.parentMember,
+    });
+    this.parentMember = undefined;
+  }
+
+  popMember() {
+    const item = this.memberStack.pop();
+    if (!item) {
+      throw new Error('Internal Error at popMember');
+    }
+    this.parentMember = item.parentMember;
+  }
 
   load(code: string, file: VBFile = defaultFileId) {
     file.name = file.name.toLowerCase();

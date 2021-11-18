@@ -15,7 +15,9 @@ registerEvaluators({
     const { children } = node;
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
+        context.stashMember();
         ret.push(await evaluate(c, context));
+        context.popMember();
       }
     }
     return ret;

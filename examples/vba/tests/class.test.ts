@@ -31,11 +31,14 @@ end sub
       ],
     );
 
-    expect(ret).toMatchInlineSnapshot(`
+    expect(ret).toMatchInlineSnapshot(
+      [2],
+      `
       Array [
         2,
       ]
-    `);
+    `,
+    );
   });
 
   it('support bind class', async () => {
@@ -63,5 +66,53 @@ end sub
   end sub
          `);
     expect(ret).toEqual([currentDate, 10]);
+  });
+
+  it('sub and property works', async () => {
+    const moduleCode = `
+    sub main
+    dim c as New MyClass
+    msgbox c.getM()
+    c.setM(10)
+    msgbox c.getM()
+    msgbox c.x
+    c.x=11
+    msgbox c.x
+  end sub  
+    `;
+
+    const classCode = `
+    public m as Integer
+
+    function getM
+      getM=m
+    end function
+    
+    sub setM(v)
+      m=v
+    end sub
+    
+    Property Get x()
+      x = m
+    End Property
+    
+    Property Let x(value)
+      m = value
+    End Property  
+  `;
+
+    ret = await runs(
+      [moduleCode],
+      [
+        {
+          code: classCode,
+          name: 'MyClass',
+          id: '1',
+          type: 'class',
+        },
+      ],
+    );
+
+    expect(ret).toEqual([0, 10, 10, 11]);
   });
 });

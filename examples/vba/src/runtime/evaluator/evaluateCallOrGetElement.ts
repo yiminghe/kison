@@ -25,7 +25,6 @@ import {
   buildArgs,
   buildIndexes,
   callSubOrGetElementWithIndexesAndArgs,
-  checkIndexesInterger,
 } from './common';
 
 async function callSub(
@@ -136,7 +135,8 @@ registerEvaluators({
         await evaluate(children[0], context));
       if (
         !parent ||
-        (parent.type === 'Object' && parent.value.type === 'Empty') ||
+        (parent.type === 'Object' &&
+          (await parent.getValue()).type === 'Empty') ||
         parent.type === 'Empty'
       ) {
         throw new Error('invalid member access!');
@@ -196,7 +196,7 @@ registerEvaluators({
       );
     } else {
       // variable
-      return context.getCurrentScope().getVariable(subName);
+      return await context.getCurrentScope().getVariable(subName);
     }
   },
 });

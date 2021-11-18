@@ -35,7 +35,12 @@ sub main
 
   dim c as New MyClass
   debug.print c.m
-
+  msgbox c.getM()
+  c.setM(12)
+  msgbox c.m
+  c.x = 13
+  msgbox c.x
+  
   dim d as New js.Date
   debug.print d.date
   d.date = 10
@@ -53,6 +58,22 @@ msgbox VBA.FormShowConstants.vbModal
 msgbox vbModal
 m = 2
 end sub
+
+function getM
+  getM=m
+end function
+
+sub setM(v)
+  m=v
+end sub
+
+Property Get x()
+  x = m
+End Property
+
+Property Let x(value)
+  m = value
+End Property
 `.trim();
 
 require(['vs/editor/editor.main'], () => {
@@ -173,7 +194,7 @@ require(['vs/editor/editor.main'], () => {
       },
     ],
     async value(args) {
-      console.log(`call ${name}:`, args.msg?.value.value);
+      console.log(`call ${name}:`, (await args.getValue('msg'))?.value);
       return undefined;
     },
   });

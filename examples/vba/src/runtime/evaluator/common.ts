@@ -41,23 +41,6 @@ export async function buildIndexes(
   return args;
 }
 
-export function checkIndexesInterger(indexes: (VBObject | VBValue)[]) {
-  const ret: number[] = [];
-  for (const i of indexes) {
-    let v: VBValue;
-    if (i.type === 'Object') {
-      v = i.value;
-    } else {
-      v = i;
-    }
-    if (v.type !== 'Integer') {
-      return [];
-    }
-    ret.push(v.value);
-  }
-  return ret;
-}
-
 export async function callSubOrGetElementWithIndexesAndArgs(
   parent: VBValue | VBObject | VBNamespaceBinder | undefined,
   subName: string,
@@ -66,20 +49,20 @@ export async function callSubOrGetElementWithIndexesAndArgs(
 ) {
   const scope = context.getCurrentScope();
 
-  function getElements(
+  async function getElements(
     obj: VBObject | VBValue | VBNamespaceBinder | BinderValue,
     indexes: (VBObject | VBValue)[][],
   ) {
     let ret = obj;
     for (const i of indexes) {
-      const valueIndex = transformToIndexType(i);
-      const value = ret.type === 'Object' ? ret.value : ret;
+      const valueIndex = await transformToIndexType(i);
+      const value = ret.type === 'Object' ? await ret.getValue() : ret;
       if (
         value &&
         (value.type === 'Array' ||
           (value.type === 'Class' && value.subType === 'bind'))
       ) {
-        ret = value.getElement(valueIndex);
+        ret = await value.getElement(valueIndex);
       } else {
         throw new Error('unexpected index access!');
       }
@@ -99,9 +82,16 @@ export async function callSubOrGetElementWithIndexesAndArgs(
       if (parent.type === 'Namespace') {
         v = parent.get(subName);
       } else {
-        const value = getVBValue(parent);
+        const value = await getVBValue(parent);
         if (value.type === 'Class') {
-          v = value.get(subName);
+          v = await value.get(subName);
+          if (!v) {
+            if (!indexes.length) {
+              throw new Error('unexpected class function call!');
+            }
+            v = await value.callSub(subName, indexes[0]);
+            indexes.shift();
+          }
         }
       }
       if (!v) {
@@ -124,8 +114,9 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     }
   }
 
-  if (scope.hasVariable(subName)) {
-    const variable = scope.getVariable(subName);
+  const isVariable = await scope.hasVariable(subName);
+  if (isVariable) {
+    const variable = await scope.getVariable(subName);
     if (variable.type === 'Namespace') {
       return variable;
     }
@@ -136,15 +127,17 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     return getElements(value, indexes.slice(1));
   }
 }
-export function getVBValue(v: VBObject | VBValue): VBObject | VBValue;
-export function getVBValue(
+export async function getVBValue(
+  v: VBObject | VBValue,
+): Promise<VBObject | VBValue>;
+export async function getVBValue(
   v: VBObject | VBValue | undefined,
-): VBObject | VBValue | undefined {
+): Promise<VBObject | VBValue | undefined> {
   if (!v) {
     return v;
   }
   if (v.type === 'Object') {
-    return v.value;
+    return v.getValue();
   }
   return v;
 }

@@ -1,4 +1,4 @@
-import type { Context } from '../Context';
+import type { Context, VBArguments } from '../Context';
 import type { AstVisitors } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBObject } from './VBObject';
@@ -45,7 +45,7 @@ export type SubBinderReturnType =
 export interface SubBinder {
   type: 'SubBinder';
   value: (
-    args: Record<string, VBObject>,
+    args: VBArguments,
     context: Context,
   ) => Promise<SubBinderReturnType> | SubBinderReturnType;
   argumentsInfo?: ArgInfo[];
@@ -61,10 +61,11 @@ export interface VariableBinder {
 export type IndexType = string | number;
 
 export interface InstanceBinder {
-  getElement?(indexes: IndexType[]): VBValue;
-  setElement?(indexes: IndexType[], value: VBValue): void;
-  get(name: string): VBValue;
-  set(name: string, value: VBValue): void;
+  getElement?(indexes: IndexType[]): Promise<VBValue>;
+  setElement?(indexes: IndexType[], value: VBValue): Promise<void>;
+  get(name: string): Promise<VBValue>;
+  set(name: string, value: VBValue): Promise<void>;
+  subs?: Record<string, Exclude<UserSubBinder, 'name'>>;
 }
 
 export interface ClassBinder {

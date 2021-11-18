@@ -21,9 +21,9 @@ import {
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
-function getNumberFromSubscript(node: VBObject | VBInteger) {
+async function getNumberFromSubscript(node: VBObject | VBInteger) {
   if (node.type === 'Object') {
-    const vbValue = node.value;
+    const vbValue = await node.getValue();
     if (vbValue.type !== 'Integer') {
       throw new Error('unexpected array dimision!');
     }
@@ -126,11 +126,11 @@ registerEvaluators({
     }
     let one = false;
     if (subs.length === 2) {
-      lower = getNumberFromSubscript(await evaluate(subs[0], context));
-      upper = getNumberFromSubscript(await evaluate(subs[1], context));
+      lower = await getNumberFromSubscript(await evaluate(subs[0], context));
+      upper = await getNumberFromSubscript(await evaluate(subs[1], context));
     } else if (subs.length === 1) {
       one = true;
-      upper = getNumberFromSubscript(await evaluate(subs[0], context));
+      upper = await getNumberFromSubscript(await evaluate(subs[0], context));
     }
     return {
       lower,
@@ -196,7 +196,7 @@ registerEvaluators({
           c,
           context,
         );
-        const objValue = obj.value;
+        const objValue = await obj.getValue();
         if (objValue.type === 'Array' && obj.subType === 'address') {
           if (obj.dynamicArray) {
             objValue.dynamic = true;
@@ -222,14 +222,13 @@ registerEvaluators({
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
         const obj: VBObject = await evaluate(c, context);
-        if (
-          obj.type === 'Object' &&
-          obj.subType === 'address' &&
-          obj.value.type === 'Array'
-        ) {
-          obj.value.value = [];
-          if (obj.dynamicArray) {
-            obj.value.subscripts = [];
+        if (obj.type === 'Object' && obj.subType === 'address') {
+          const value = await obj.getValue();
+          if (value.type === 'Array') {
+            value.value = [];
+            if (obj.dynamicArray) {
+              value.subscripts = [];
+            }
           }
         }
       }

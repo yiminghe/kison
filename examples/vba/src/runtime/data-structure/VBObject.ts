@@ -1,4 +1,4 @@
-import { VBBindIndex, VBBindProperty } from './VBClass';
+import { VBBindIndex, VBBindProperty, VBNativeProperty } from './VBClass';
 import {
   VBValue,
   AsTypeClauseInfo,
@@ -6,7 +6,11 @@ import {
   VB_EMPTY,
 } from './VBValue';
 
-export type VBObject = VBNativeObject | VBBindProperty | VBBindIndex;
+export type VBObject =
+  | VBNativeObject
+  | VBBindProperty
+  | VBBindIndex
+  | VBNativeProperty;
 
 // address
 export class VBNativeObject {
@@ -28,19 +32,15 @@ export class VBNativeObject {
     }
   }
 
-  setValue(value: VBObject | VBValue) {
-    this.value = value;
-  }
-
   clone() {
     const newObj = new VBNativeObject(this._value, this.asType);
     newObj.dynamicArray = this.dynamicArray;
     return newObj;
   }
 
-  get value(): VBValue {
+  async getValue(): Promise<VBValue> {
     if (this._value.type === 'Object') {
-      return this._value.value;
+      return this._value.getValue();
     }
     return this._value;
   }
@@ -52,19 +52,19 @@ export class VBNativeObject {
     return this;
   }
 
-  set value(value: VBValue | VBObject) {
+  async setValue(value: VBValue | VBObject) {
     if (this.constant) {
       throw new Error('Can not set const variable!');
     }
     const obj = this._getObject();
     if (obj.subType === 'address') {
       if (value.type === 'Object') {
-        obj._value = value.value;
+        obj._value = await value.getValue();
       } else {
         obj._value = value;
       }
     } else {
-      obj.setValue(value);
+      await obj.setValue(value);
     }
   }
 }

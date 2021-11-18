@@ -48,6 +48,22 @@ interface MemberItem {
   parentMember?: VBObject | VBValue | undefined;
 }
 
+export class VBArguments {
+  constructor(public scope: VBScope) {}
+  async getValue(name: string) {
+    const obj = await this.scope.getVariable(name);
+    if (obj.type === 'Object') {
+      return obj.getValue();
+    }
+  }
+  async setValue(name: string, value: VBValue) {
+    const obj = await this.scope.getVariable(name);
+    if (obj.type === 'Object') {
+      return obj.setValue(value);
+    }
+  }
+}
+
 export class Context {
   parentMember?: VBObject | VBValue | undefined;
 
@@ -239,7 +255,7 @@ export class Context {
     return name;
   }
 
-  _setupScope(
+  async _setupScope(
     subName: string,
     args: (VBValue | VBObject)[],
     argumentsInfo: ArgInfo[],
@@ -254,18 +270,24 @@ export class Context {
         continue;
       }
       if (a.type === 'Object' && argInfo.byRef) {
-        scope.setVariable(argInfo.name, new VBNativeObject(a, argInfo.asType));
+        await scope.setVariable(
+          argInfo.name,
+          new VBNativeObject(a, argInfo.asType),
+        );
       } else {
-        scope.setVariableValue(argInfo.name, a);
+        await scope.setVariableValue(argInfo.name, a);
       }
     }
     while (i < argumentsInfo.length) {
       const argInfo = argumentsInfo[i];
       if (argInfo) {
         if (argInfo.optional && argInfo.defaultValue) {
-          scope.setVariableValue(
+          await scope.setVariableValue(
             argInfo.name,
-            new VBNativeObject(argInfo.defaultValue.value, argInfo.asType),
+            new VBNativeObject(
+              await argInfo.defaultValue.getValue(),
+              argInfo.asType,
+            ),
           );
         }
       }
@@ -279,10 +301,11 @@ export class Context {
     args: (VBValue | VBObject)[] = [],
     classObj?: VBClass,
   ) {
+    this.stashMember();
     this.currentFile = subSymbolItem.file;
     const argumentsInfo = subSymbolItem.arugmentsInfo;
     const subName = subSymbolItem.name;
-    this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
+    await this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
     if (classObj) {
       last(this.scopeStack).classObj = classObj;
     }
@@ -294,10 +317,15 @@ export class Context {
       }
     }
     if (subSymbolItem.type === 'function') {
-      ret = last(this.scopeStack).getVariable(subName).value;
+      const obj = await last(this.scopeStack).getVariable(subName);
+      if (obj.type === 'Namespace') {
+        throw new Error('unexpected return namespace!');
+      }
+      ret = await obj.getValue();
     } else {
       ret = VBEmpty;
     }
+    this.popMember();
     this.scopeStack.pop();
     return ret;
   }
@@ -306,25 +334,15 @@ export class Context {
     subDef: SubBinder,
     args: (VBValue | VBObject)[] = [],
   ): Promise<VBValue | VBNamespaceBinder | typeof END_EXIT_RESULT> {
-    this._setupScope(subDef.name, args, subDef.argumentsInfo || []);
-    const passedArgs: Record<string, VBObject> = {};
+    this.stashMember();
+    await this._setupScope(subDef.name, args, subDef.argumentsInfo || []);
     const scope = this.getCurrentScope();
-    for (const name of scope.variableMap.keys()) {
-      Object.defineProperty(passedArgs, name, {
-        get() {
-          const v = scope.getVariable(name);
-          if (v.type === 'Object') {
-            return v;
-          }
-          return undefined;
-        },
-      });
-    }
-    const ret = await subDef.value(passedArgs, this);
+    const ret = await subDef.value(new VBArguments(scope), this);
+    this.popMember();
+    this.scopeStack.pop();
     if (ret === false) {
       return END_EXIT_RESULT;
     }
-    this.scopeStack.pop();
     if (ret !== undefined) {
       return ret;
     }
@@ -423,7 +441,7 @@ export class Context {
     const binder = this.getBinder(classType);
     let value: VBClass | undefined;
     if (binder && binder.type === 'ClassBinder') {
-      value = new VBBindClass(binder);
+      value = new VBBindClass(binder, this);
     } else if (classType.length === 1) {
       const classId = this.getFileIdFromFileName(classType[0]);
       const symbolItem = this.symbolTable.get(classId);

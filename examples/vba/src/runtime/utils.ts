@@ -22,10 +22,10 @@ export function captalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-export function transformToIndexType(values: (VBObject | VBValue)[]) {
+export async function transformToIndexType(values: (VBObject | VBValue)[]) {
   const ret: IndexType[] = [];
   for (let v_ of values) {
-    const v = v_.type === 'Object' ? v_.value : v_;
+    const v = v_.type === 'Object' ? await v_.getValue() : v_;
     if (v.type === 'Integer' || v.type === 'String') {
       ret.push(v.value);
     } else {
@@ -33,4 +33,21 @@ export function transformToIndexType(values: (VBObject | VBValue)[]) {
     }
   }
   return ret;
+}
+
+// lowercase
+const prefix = '$vba_p_';
+const propertyGetPrefix = prefix + 'g_';
+const propertySetPrefix = prefix + 's_';
+
+export function getPropertyGetSubName(t: string) {
+  return propertyGetPrefix + t;
+}
+
+export function getPropertySetSubName(t: string) {
+  return propertySetPrefix + t;
+}
+
+export function isClassProperty(t: string) {
+  return t.startsWith(prefix);
 }

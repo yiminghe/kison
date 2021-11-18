@@ -24,7 +24,7 @@ export class VBArray {
     }
   }
 
-  getElement(indexes: IndexType[]) {
+  async getElement(indexes: IndexType[]) {
     let { value, elementType, subscripts } = this;
     if (indexes.length !== subscripts.length) {
       throw new Error(ARRAY_ACCESS_ERROR);
@@ -59,7 +59,8 @@ export class VBArray {
     return element as VBObject;
   }
 
-  setElement(indexes: IndexType[], value: VBValue) {
-    this.getElement(indexes).value = value;
+  async setElement(indexes: IndexType[], value: VBValue) {
+    const obj = await this.getElement(indexes);
+    return obj.setValue(value);
   }
 }

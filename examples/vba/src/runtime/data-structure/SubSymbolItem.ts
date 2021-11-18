@@ -3,6 +3,9 @@ import type {
   Ast_Block_Node,
   Ast_SubStmt_Node,
   Ast_FunctionStmt_Node,
+  Ast_PropertyGetStmt_Node,
+  Ast_PropertyLetStmt_Node,
+  Ast_PropertySetStmt_Node,
 } from '../../parser';
 import { load } from '../loader/loaders';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
@@ -14,7 +17,7 @@ export class SubSymbolItem {
   name: string = '';
   private _argumentsInfo?: ArgInfo[];
   private _returnInfo?: AsTypeClauseInfo;
-  type: 'sub' | 'function' | 'propertyGet' | 'propertyLet' | 'propertySet';
+  type: 'sub' | 'function';
   private _visibility?: Visibility;
   file: VBFile;
   _static?: boolean;
@@ -33,11 +36,22 @@ export class SubSymbolItem {
   }
 
   constructor(
-    public sub: Ast_SubStmt_Node | Ast_FunctionStmt_Node,
+    public sub:
+      | Ast_FunctionStmt_Node
+      | Ast_SubStmt_Node
+      | Ast_PropertyGetStmt_Node
+      | Ast_PropertyLetStmt_Node
+      | Ast_PropertySetStmt_Node,
     public context: Context,
   ) {
     this.file = context.currentFile;
-    this.type = this.sub.symbol === 'subStmt' ? 'sub' : 'function';
+    const subSymbol = this.sub.symbol;
+    this.type =
+      subSymbol === 'subStmt' ||
+      subSymbol === 'propertyLetStmt' ||
+      subSymbol === 'propertySetStmt'
+        ? 'sub'
+        : 'function';
     let block;
     for (const c of sub.children) {
       if (c.type === 'symbol' && c.symbol === 'block') {

@@ -21,7 +21,7 @@ const JSDateBinder: ClassBinder = {
   async value() {
     const d: any = new Date();
     return {
-      get(name) {
+      async get(name) {
         const v = d[`get${upperFirst(name)}`]();
         if (typeof v === 'string') {
           return Context.createString(v);
@@ -30,7 +30,7 @@ const JSDateBinder: ClassBinder = {
         }
         throw new Error('only allow string/number return type');
       },
-      set(name, value) {
+      async set(name, value) {
         let v = value.value;
         d[`set${upperFirst(name)}`](v);
       },
@@ -43,17 +43,17 @@ const ExcelRange: ClassBinder = {
   async value() {
     const d = [Context.createInteger(1), Context.createInteger(2)];
     return {
-      get(name) {
+      async get(name) {
         throw new Error('only allow index access');
       },
-      set(name, value) {
+      async set(name, value) {
         throw new Error('only allow index access');
       },
-      getElement(indexes) {
+      async getElement(indexes) {
         const index: number = parseInt(indexes[0] + '', 10);
         return d[index];
       },
-      setElement(indexes, value) {
+      async setElement(indexes, value) {
         const index: number = parseInt(indexes[0] + '', 10);
         if (value.type === 'Integer') d[index] = value;
       },
@@ -85,7 +85,7 @@ export async function runs(
       },
     ],
     async value(args) {
-      ret.push(args.msg?.value.value);
+      ret.push((await args.getValue('msg'))?.value);
       return undefined;
     },
   };
@@ -104,7 +104,7 @@ export async function runs(
           },
         ],
         async value(args) {
-          ret.push(args.msg?.value.value);
+          ret.push((await args.getValue('msg'))?.value);
           return Context.createInteger(1);
         },
       });

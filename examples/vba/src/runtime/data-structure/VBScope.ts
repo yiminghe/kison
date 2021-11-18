@@ -4,6 +4,7 @@ import type { VBValue } from './VBValue';
 import type { VBClass } from './VBClass';
 import { VBObject, VBNativeObject } from './VBObject';
 import { VBNamespaceBinder } from './VBNamespace';
+import { last } from '../utils';
 
 export class VBScope {
   constructor(
@@ -11,15 +12,20 @@ export class VBScope {
     public subName: string,
     public context: Context,
     public classObj?: VBClass,
-  ) {}
+  ) {
+    const returnName = last(subName.split('.'));
+    this.variableMap.set(returnName, new VBNativeObject());
+  }
 
   variableMap = new Map<string, VBObject>();
 
-  hasVariable(name: string) {
-    return !!this._getVariable(name);
+  async hasVariable(name: string) {
+    return !!(await this._getVariable(name));
   }
 
-  _getVariable(name: string): VBObject | VBNamespaceBinder | undefined {
+  async _getVariable(
+    name: string,
+  ): Promise<VBObject | VBNamespaceBinder | undefined> {
     const { variableMap, context, classObj, file, subName } = this;
 
     // local scope variable
@@ -27,6 +33,7 @@ export class VBScope {
     if (v) {
       return v;
     }
+
     const subItem = context.getSymbolItemFromFile(subName, file.id);
 
     // static variable
@@ -39,7 +46,7 @@ export class VBScope {
 
     // class member
     if (classObj) {
-      v = classObj.get(name);
+      v = await classObj.get(name);
     }
 
     if (v) {
@@ -64,8 +71,8 @@ export class VBScope {
     return v;
   }
 
-  getVariable(name: string): VBObject | VBNamespaceBinder {
-    let v = this._getVariable(name);
+  async getVariable(name: string): Promise<VBObject | VBNamespaceBinder> {
+    let v = await this._getVariable(name);
     if (v) {
       return v;
     }
@@ -74,15 +81,19 @@ export class VBScope {
     return v;
   }
 
-  setVariable(name: string, value: VBObject) {
+  async setVariable(name: string, value: VBObject) {
     this.variableMap.set(name, value);
     return value;
   }
 
-  setVariableValue(name: string, value: VBValue | VBObject) {
-    let v = this.getVariable(name);
-    const setValue = value.type === 'Object' ? value.value : value;
-    v.value = setValue;
+  async setVariableValue(name: string, value: VBValue | VBObject) {
+    let v = await this.getVariable(name);
+    const setValue = value.type === 'Object' ? await value.getValue() : value;
+    if (v.type === 'Object') {
+      await v.setValue(setValue);
+    } else {
+      throw new Error('unexpected namespace!');
+    }
     return v;
   }
 }

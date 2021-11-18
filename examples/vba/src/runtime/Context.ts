@@ -1,5 +1,5 @@
 import parser from '../parser';
-import type { AstRootNode } from '../parser';
+import type { AstRootNode, AstNode } from '../parser';
 import {
   VBNativeClass,
   VBBindClass,
@@ -50,6 +50,8 @@ export class Context {
   symbolTable = new Map<string, FileSymbolTable>();
 
   scopeStack: VBScope[] = [];
+
+  currentAstNode: AstNode | undefined;
 
   load(code: string, file: VBFile = defaultFileId) {
     file.name = file.name.toLowerCase();
@@ -250,6 +252,7 @@ export class Context {
     args: (VBValue | VBObject)[] = [],
     classObj?: VBClass,
   ) {
+    this.currentFile = subSymbolItem.file;
     const argumentsInfo = subSymbolItem.arugmentsInfo;
     const subName = subSymbolItem.name;
     this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
@@ -302,6 +305,20 @@ export class Context {
   }
 
   async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
+    try {
+      return await this.callSubInternal(subName, args);
+    } catch (e: unknown) {
+      console.error(e);
+      if (e instanceof Error && this.currentAstNode && this.currentFile) {
+        throw new Error(
+          e.message +
+            ` (line ${this.currentAstNode.firstLine} at file ${this.currentFile.name})`,
+        );
+      }
+    }
+  }
+
+  async callSubInternal(subName: string, args: (VBValue | VBObject)[] = []) {
     function getItemFromFile(file: string, noCheck: boolean = false) {
       const item = symbolTable.get(file);
       if (item && item.type === 'module') {

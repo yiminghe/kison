@@ -28,6 +28,7 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
   const fn: AstVisitor<'', Context> = evaluators2[m2] || evaluators2[m1];
 
   if (fn) {
+    context.currentAstNode = ast;
     let ret = fn(ast, context);
     if (ret && ret.then) {
       ret = await ret;

@@ -80,7 +80,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     return getElements(variable, indexes);
   } else {
     const args = indexes[0] || [];
-    const value = await context.callSub(subName, args);
+    const value = await context.callSubInternal(subName, args);
     return getElements(value, indexes.slice(1));
   }
 }

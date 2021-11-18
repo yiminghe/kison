@@ -40,7 +40,7 @@ async function callSub(
   }
   const subName = token.children[0].text;
   let args: (VBValue | VBObject)[] = await buildArgs(node, context);
-  return await context.callSub(subName, args);
+  return await context.callSubInternal(subName, args);
 }
 
 async function callMemberSub(

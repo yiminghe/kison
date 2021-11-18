@@ -28,6 +28,7 @@ export async function load(ast: AstNode, context: Context): Promise<any> {
   const fn: AstVisitor<'', Context> = loaders2[m2] || loaders2[m1];
 
   if (fn) {
+    context.currentAstNode = ast;
     let ret = fn(ast, context);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;

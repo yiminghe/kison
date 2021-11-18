@@ -1,4 +1,4 @@
-import { parser } from '../src/index';
+import { parser, SubBinder } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 import { runs2 } from '../tests/utils';
 
@@ -157,11 +157,32 @@ require(['vs/editor/editor.main'], () => {
     }
   });
 
+  const Debugger: SubBinder = {
+    name: 'debugger',
+    async value(args, context) {
+      debugger;
+      return undefined;
+    },
+  };
+
+  const LogSub: (name: string) => SubBinder = (name) => ({
+    name,
+    argumentsInfo: [
+      {
+        name: 'msg',
+      },
+    ],
+    async value(args) {
+      console.log(`call ${name}:`, args.msg?.value.value);
+      return undefined;
+    },
+  });
+
   $('evaluate').addEventListener('click', async () => {
     try {
       const { classCode, moduleCode } = getAllCodes();
       let start = Date.now();
-      const ret = await runs2(
+      await runs2(
         $('sub').value,
         [moduleCode],
         [
@@ -172,10 +193,12 @@ require(['vs/editor/editor.main'], () => {
             code: classCode,
           },
         ],
+        (context) => {
+          context.registerSubBinder(LogSub('msgbox'));
+          context.registerSubBinder(LogSub('debug.print'));
+          context.registerSubBinder(Debugger);
+        },
       );
-      for (const r of ret) {
-        console.log(r);
-      }
       console.log('');
       console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {

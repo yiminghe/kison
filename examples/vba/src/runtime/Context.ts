@@ -40,6 +40,10 @@ const defaultFileId: VBFile = {
   type: 'module',
 };
 
+export interface CallOptions {
+  logError?: boolean;
+}
+
 export class Context {
   astMap = new Map<VBFile, AstRootNode>();
 
@@ -304,11 +308,17 @@ export class Context {
     return VB_EMPTY;
   }
 
-  async callSub(subName: string, args: (VBValue | VBObject)[] = []) {
+  async callSub(
+    subName: string,
+    args: (VBValue | VBObject)[] = [],
+    options: CallOptions = {},
+  ) {
     try {
       return await this.callSubInternal(subName, args);
     } catch (e: unknown) {
-      console.error(e);
+      if (options.logError !== false) {
+        console.error(e);
+      }
       if (e instanceof Error && this.currentAstNode && this.currentFile) {
         throw new Error(
           e.message +

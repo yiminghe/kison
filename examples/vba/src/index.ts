@@ -1,5 +1,4 @@
 import parser from './parser';
-import { Context } from './runtime/Context';
 
 // // @ts-ignore
 // const parse = parser.parse;
@@ -16,5 +15,5 @@ export type {
   UserVariableBinder as VariableBinder,
   UserClassBinder as ClassBinder,
 } from './runtime/types';
-
-export { parser, Context };
+export { parser };
+export * from './runtime/Context';

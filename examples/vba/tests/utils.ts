@@ -1,4 +1,10 @@
-import { Context, SubBinder, ClassBinder, VariableBinder } from '../src/index';
+import {
+  Context,
+  SubBinder,
+  ClassBinder,
+  VariableBinder,
+  CallOptions,
+} from '../src/index';
 import type { VBFile } from '../src/runtime/types';
 
 function upperFirst(name: string) {
@@ -61,6 +67,7 @@ const createRange: SubBinder = {
     return context.createObject('excel.Range');
   },
 };
+
 export async function run(moduleCode: string) {
   return runs([moduleCode]);
 }
@@ -69,17 +76,7 @@ export async function runs(
   moduleCodes: string[],
   classCode: (VBFile & { code: string })[] = [],
 ) {
-  return runs2('main', moduleCodes, classCode);
-}
-
-export async function runs2(
-  mainSub: string,
-  moduleCodes: string[],
-  classCode: (VBFile & { code: string })[] = [],
-) {
   const ret: any[] = [];
-  let id = 0;
-
   const MsgBoxSub: SubBinder = {
     name: 'MsgBox',
     argumentsInfo: [
@@ -93,21 +90,45 @@ export async function runs2(
     },
   };
 
-  const context = new Context();
-  context.registerSubBinder(MsgBoxSub);
-  context.registerSubBinder(createRange);
-  context.registerSubBinder({
-    name: 'debug.print',
-    argumentsInfo: [
-      {
-        name: 'msg',
-      },
-    ],
-    async value(args) {
-      ret.push(args.msg?.value.value);
-      return Context.createInteger(1);
+  await runs2(
+    'main',
+    moduleCodes,
+    classCode,
+    (context) => {
+      context.registerSubBinder(MsgBoxSub);
+      context.registerSubBinder({
+        name: 'debug.print',
+        argumentsInfo: [
+          {
+            name: 'msg',
+          },
+        ],
+        async value(args) {
+          ret.push(args.msg?.value.value);
+          return Context.createInteger(1);
+        },
+      });
     },
-  });
+    {
+      logError: false,
+    },
+  );
+
+  return ret;
+}
+
+export async function runs2(
+  mainSub: string,
+  moduleCodes: string[],
+  classCode: (VBFile & { code: string })[] = [],
+  callback: (context: Context) => void = () => {},
+  options: CallOptions,
+) {
+  let id = 0;
+
+  const context = new Context();
+
+  context.registerSubBinder(createRange);
 
   context.registerClassBinder(JSDateBinder);
   context.registerClassBinder(ExcelRange);
@@ -117,6 +138,8 @@ export async function runs2(
     ...vbModal,
     name: 'VBA.FormShowConstants.' + vbModal.name,
   });
+
+  await callback(context);
 
   for (const m of moduleCodes) {
     const name = 'm' + ++id;
@@ -131,6 +154,5 @@ export async function runs2(
     await context.load(c.code.trim(), c);
   }
 
-  await context.callSub(mainSub);
-  return ret;
+  await context.callSub(mainSub, [], options);
 }

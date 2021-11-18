@@ -122,7 +122,7 @@ export async function runs2(
   moduleCodes: string[],
   classCode: (VBFile & { code: string })[] = [],
   callback: (context: Context) => void = () => {},
-  options: CallOptions,
+  options: CallOptions = {},
 ) {
   let id = 0;
 

@@ -5,6 +5,8 @@ import {
   VB_NULL,
   VBValue,
   VBObject,
+  VB_FALSE,
+  VB_TRUE,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -34,12 +36,19 @@ registerEvaluators({
     return VB_NOTHING;
   },
 
+  evaluateTRUE() {
+    return VB_TRUE;
+  },
+  evaluateFALSE() {
+    return VB_FALSE;
+  },
+
   evaluateNULL() {
     return VB_NULL;
   },
 
   evaluateExitStmt(node) {
-    const exit=node.children[0];
+    const exit = node.children[0];
     throw exit;
   },
 });

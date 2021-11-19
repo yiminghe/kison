@@ -40,9 +40,7 @@ export class VBVariable {
 
 export type Visibility = Ast_Visibility_Node['children'][0]['token'];
 
-export type SubBinderReturnType =
-  | VBValue
-  | void;
+export type SubBinderReturnType = VBValue | void;
 
 export interface SubBinder {
   type: 'SubBinder';

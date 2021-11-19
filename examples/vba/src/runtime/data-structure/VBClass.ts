@@ -123,7 +123,7 @@ export class VBNativeProperty {
     public classObj: VBNativeClass,
     public name: string,
     public _value: () => Promise<VBValue>,
-  ) { }
+  ) {}
 
   _getObject() {
     return this;
@@ -145,7 +145,7 @@ export class VBBindProperty {
 
   _value: VBValue = VB_EMPTY;
 
-  public constructor(public instance: VBBindClass, public name: string) { }
+  public constructor(public instance: VBBindClass, public name: string) {}
 
   _getObject() {
     return this;
@@ -170,7 +170,7 @@ export class VBBindIndex {
   public constructor(
     public instance: VBBindClass,
     public indexes: IndexType[],
-  ) { }
+  ) {}
 
   _getObject() {
     return this;

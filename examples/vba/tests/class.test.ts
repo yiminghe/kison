@@ -16,6 +16,10 @@ end sub
 sub main
 dim c as new MyClass
 msgbox c.m
+c.m = 3
+msgbox c.m
+set c = nothing
+msgbox c.m
 end sub    
     `;
 
@@ -31,14 +35,7 @@ end sub
       ],
     );
 
-    expect(ret).toMatchInlineSnapshot(
-      [2],
-      `
-      Array [
-        2,
-      ]
-    `,
-    );
+    expect(ret).toEqual([2, 3, 2]);
   });
 
   it('support bind class', async () => {

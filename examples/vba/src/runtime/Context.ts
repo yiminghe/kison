@@ -48,7 +48,7 @@ interface MemberItem {
 }
 
 export class VBArguments {
-  constructor(public scope: VBScope) { }
+  constructor(public scope: VBScope) {}
   async getValue(name: string) {
     const obj = await this.scope.getVariable(name);
     if (obj.type === 'Object') {
@@ -256,7 +256,12 @@ export class Context {
     this.currentFile = subSymbolItem.file;
     const argumentsInfo = subSymbolItem.arugmentsInfo;
     const subName = subSymbolItem.name;
-    const currentScope = await this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
+    const currentScope = await this._setupScope(
+      subName,
+      args,
+      argumentsInfo,
+      subSymbolItem.file,
+    );
     if (classObj) {
       currentScope.classObj = classObj;
     }
@@ -265,7 +270,13 @@ export class Context {
       ret = await evaluate(subSymbolItem.block, this);
     } catch (e: unknown) {
       const exitNode = e as AstTokenNode;
-      if (exitNode && exitNode.type === 'token' && (exitNode.token === 'EXIT_FUNCTION' || exitNode.token === 'EXIT_PROPERTY' || exitNode.token === 'EXIT_SUB')) {
+      if (
+        exitNode &&
+        exitNode.type === 'token' &&
+        (exitNode.token === 'EXIT_FUNCTION' ||
+          exitNode.token === 'EXIT_PROPERTY' ||
+          exitNode.token === 'EXIT_SUB')
+      ) {
         // just exit sub
       } else {
         throw e;
@@ -292,7 +303,11 @@ export class Context {
     args: (VBValue | VBObject)[] = [],
   ): Promise<VBValue> {
     this.stashMemberInternal();
-    const scope = await this._setupScope(subDef.name, args, subDef.argumentsInfo || []);
+    const scope = await this._setupScope(
+      subDef.name,
+      args,
+      subDef.argumentsInfo || [],
+    );
     const ret = await subDef.value(new VBArguments(scope), this);
     this.popMemberInternal();
     this.scopeStack.pop();
@@ -302,7 +317,10 @@ export class Context {
     return VB_EMPTY;
   }
 
-  async callSubInternal(subName: string, args: (VBValue | VBObject)[] = []): Promise<VBValue> {
+  async callSubInternal(
+    subName: string,
+    args: (VBValue | VBObject)[] = [],
+  ): Promise<VBValue> {
     const { bindersMap: subBindersMap, symbolTable } = this;
 
     let subSymbolItem: VBSub | VBVariable | undefined =
@@ -415,24 +433,24 @@ export class Context {
     try {
       return await this.callSubInternal(subName, args);
     } catch (e: unknown) {
-
       if (e instanceof Error && this.currentAstNode && this.currentFile) {
         if (options.logError !== false) {
           console.error(e);
         }
         throw new Error(
           e.message +
-          ` (line ${this.currentAstNode.firstLine} at file ${this.currentFile.name})`,
+            ` (line ${this.currentAstNode.firstLine} at file ${this.currentFile.name})`,
         );
       }
 
       const exit: Ast_END_Node = e as Ast_END_Node;
 
       if (exit.type === 'token' && exit.token === 'END') {
-      
       } else {
         // unknown error
-        console.error(`unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`);
+        console.error(
+          `unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`,
+        );
         throw exit;
       }
     }

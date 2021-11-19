@@ -51,8 +51,18 @@ registerEvaluators({
       }
     } else {
       context.stashMemberInternal();
-      const rightValue = await evaluate(c3.children[0], context);
+      let rightValue: VBValue | VBObject = await evaluate(
+        c3.children[0],
+        context,
+      );
       context.popMemberInternal();
+      if (
+        rightValue.type === 'Nothing' &&
+        leftVariable.subType === 'address' &&
+        leftVariable.asType.isNew
+      ) {
+        rightValue = await context.createObject(leftVariable.asType.className!);
+      }
       await leftVariable.setValue(rightValue);
     }
   },

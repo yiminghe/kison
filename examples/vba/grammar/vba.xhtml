@@ -2712,7 +2712,7 @@
             <xhtml:li><xhtml:a href="#iCS_S_ProcedureOrArrayCall" title="iCS_S_ProcedureOrArrayCall">iCS_S_ProcedureOrArrayCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#iCS_S_VariableOrProcedureCall" title="iCS_S_VariableOrProcedureCall">iCS_S_VariableOrProcedureCall</xhtml:a></xhtml:li>
          </xhtml:ul>
-      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="literal">literal:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="237" height="81">
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="literal">literal:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="237" height="257">
          <defs>
             <style type="text/css">
     @namespace "http://www.w3.org/2000/svg";
@@ -2750,12 +2750,28 @@
          <rect x="51" y="47" width="130" height="32" rx="10"></rect>
          <rect x="49" y="45" width="130" height="32" class="terminal" rx="10"></rect>
          <text class="terminal" x="59" y="65">STRINGLITERAL</text>
-         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m138 0 h10 m-178 0 h20 m158 0 h20 m-198 0 q10 0 10 10 m178 0 q0 -10 10 -10 m-188 10 v24 m178 0 v-24 m-178 24 q0 10 10 10 m158 0 q10 0 10 -10 m-168 10 h10 m130 0 h10 m0 0 h8 m23 -44 h-3"></svg:path>
+         <rect x="51" y="91" width="86" height="32" rx="10"></rect>
+         <rect x="49" y="89" width="86" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="59" y="109">NOTHING</text>
+         <rect x="51" y="135" width="56" height="32" rx="10"></rect>
+         <rect x="49" y="133" width="56" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="59" y="153">NULL</text>
+         <rect x="51" y="179" width="56" height="32" rx="10"></rect>
+         <rect x="49" y="177" width="56" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="59" y="197">TRUE</text>
+         <rect x="51" y="223" width="62" height="32" rx="10"></rect>
+         <rect x="49" y="221" width="62" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="59" y="241">FALSE</text>
+         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m138 0 h10 m-178 0 h20 m158 0 h20 m-198 0 q10 0 10 10 m178 0 q0 -10 10 -10 m-188 10 v24 m178 0 v-24 m-178 24 q0 10 10 10 m158 0 q10 0 10 -10 m-168 10 h10 m130 0 h10 m0 0 h8 m-168 -10 v20 m178 0 v-20 m-178 20 v24 m178 0 v-24 m-178 24 q0 10 10 10 m158 0 q10 0 10 -10 m-168 10 h10 m86 0 h10 m0 0 h52 m-168 -10 v20 m178 0 v-20 m-178 20 v24 m178 0 v-24 m-178 24 q0 10 10 10 m158 0 q10 0 10 -10 m-168 10 h10 m56 0 h10 m0 0 h82 m-168 -10 v20 m178 0 v-20 m-178 20 v24 m178 0 v-24 m-178 24 q0 10 10 10 m158 0 q10 0 10 -10 m-168 10 h10 m56 0 h10 m0 0 h82 m-168 -10 v20 m178 0 v-20 m-178 20 v24 m178 0 v-24 m-178 24 q0 10 10 10 m158 0 q10 0 10 -10 m-168 10 h10 m62 0 h10 m0 0 h76 m23 -220 h-3"></svg:path>
          <polygon points="227 17 235 13 235 21"></polygon>
          <polygon points="227 17 219 13 219 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
          <xhtml:div class="ebnf"><xhtml:code>
                <div><a href="#literal" title="literal">literal</a>  ::= 'INTEGERLITERAL'</div>
-               <div>           | 'STRINGLITERAL'</div></xhtml:code></xhtml:div>
+               <div>           | 'STRINGLITERAL'</div>
+               <div>           | 'NOTHING'</div>
+               <div>           | 'NULL'</div>
+               <div>           | 'TRUE'</div>
+               <div>           | 'FALSE'</div></xhtml:code></xhtml:div>
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>

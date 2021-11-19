@@ -1,11 +1,6 @@
 import { AstNode, AstSymbolNode } from '../../parserLLK';
 import type { Context } from '../Context';
-import {
-  BinderValue,
-  VBNamespaceBinder,
-  VBObject,
-  VBValue,
-} from '../types';
+import { BinderValue, VBNamespaceBinder, VBObject, VBValue } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
 
@@ -69,12 +64,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
   }
 
   if (parent) {
-    let v:
-      | VBObject
-      | VBValue
-      | VBNamespaceBinder
-      | BinderValue
-      | undefined;
+    let v: VBObject | VBValue | VBNamespaceBinder | BinderValue | undefined;
     if (subName) {
       if (parent.type === 'Namespace') {
         v = parent.get(subName);
@@ -114,7 +104,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     if (variable.type === 'Namespace') {
       return variable;
     }
- 
+
     return getElements(variable, indexes);
   } else {
     const args = indexes[0] || [];

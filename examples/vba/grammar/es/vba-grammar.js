@@ -527,7 +527,20 @@ module.exports = {
 
     [n.dictionaryCallStmt, '!', n.ambiguousIdentifier, n.typeHintOptional],
 
-    [n.literal, n.INTEGERLITERAL, n.alternationMark, n.STRINGLITERAL],
+    [
+      n.literal,
+      n.INTEGERLITERAL,
+      n.alternationMark,
+      n.STRINGLITERAL,
+      n.alternationMark,
+      n.NOTHING,
+      n.alternationMark,
+      n.NULL,
+      n.alternationMark,
+      n.TRUE,
+      n.alternationMark,
+      n.FALSE,
+    ],
 
     [
       n.typeHint,

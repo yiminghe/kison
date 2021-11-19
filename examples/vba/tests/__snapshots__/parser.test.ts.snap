@@ -101,7 +101,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 54,
-                  'internalRuleIndex': 153,
+                  'internalRuleIndex': 157,
                   'id': 7
                 },
                 {
@@ -322,7 +322,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                         }
                                       ],
                                       'ruleIndex': 54,
-                                      'internalRuleIndex': 153,
+                                      'internalRuleIndex': 157,
                                       'id': 19
                                     }
                                   ],
@@ -614,7 +614,7 @@ exports[`vba parser parse correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 54,
-                  'internalRuleIndex': 153,
+                  'internalRuleIndex': 157,
                   'id': 7
                 },
                 {
@@ -721,7 +721,7 @@ exports[`vba parser parse correctly 2`] = `
                                     }
                                   ],
                                   'ruleIndex': 54,
-                                  'internalRuleIndex': 153,
+                                  'internalRuleIndex': 157,
                                   'id': 14
                                 },
                                 {

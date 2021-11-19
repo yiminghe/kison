@@ -3,7 +3,6 @@ import {
   VBString,
   VB_NOTHING,
   VB_NULL,
-  ExitResult,
   VBValue,
   VBObject,
 } from '../types';
@@ -15,9 +14,9 @@ registerEvaluators({
     const { children } = node;
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
-        context.stashMember();
+        context.stashMemberInternal();
         ret.push(await evaluate(c, context));
-        context.popMember();
+        context.popMemberInternal();
       }
     }
     return ret;
@@ -40,6 +39,7 @@ registerEvaluators({
   },
 
   evaluateExitStmt(node) {
-    return new ExitResult(node.children[0]);
+    const exit=node.children[0];
+    throw exit;
   },
 });

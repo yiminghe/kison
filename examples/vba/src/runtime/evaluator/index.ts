@@ -1,5 +1,5 @@
 import './evaluateValues';
-import './evaluateCallOrGetElement';
+import './evaluateSubOrGetElement';
 import './evaluateDim';
 import './evaluateLet';
 

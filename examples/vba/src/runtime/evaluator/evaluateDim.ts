@@ -150,7 +150,7 @@ registerEvaluators({
     if (first.type === 'token') {
       isStatic = first.token === 'STATIC';
     }
-    const currentScope = context.getCurrentScope();
+    const currentScope = context.getCurrentScopeInternal();
     const subSymbolItem = context.symbolTable
       .get(currentScope.file.id)
       ?.symbolTable.get(currentScope.subName);

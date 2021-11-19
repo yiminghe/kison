@@ -19,15 +19,15 @@ registerEvaluators({
     const left: Ast_ImplicitCallStmt_InStmt_Node = c;
     const op = children[++index] as AstTokenNode;
     const right = children[++index] as Ast_ValueStmt_Node;
-    context.stashMember();
+    context.stashMemberInternal();
     const leftVariable: VBObject = await evaluate(left, context);
-    context.popMember();
+    context.popMemberInternal();
     if (leftVariable.type !== 'Object') {
       throw new Error('unexpect let left side operator!');
     }
-    context.stashMember();
+    context.stashMemberInternal();
     const rightValue: VBValue | VBObject = await evaluate(right, context);
-    context.popMember();
+    context.popMemberInternal();
     if (op.token === 'EQ') {
       await leftVariable.setValue(rightValue);
     }
@@ -35,9 +35,9 @@ registerEvaluators({
 
   async evaluateSetStmt(node, context) {
     let { children } = node;
-    context.stashMember();
+    context.stashMemberInternal();
     const leftVariable: VBObject = await evaluate(children[1], context);
-    context.popMember();
+    context.popMemberInternal();
     if (leftVariable.type !== 'Object') {
       throw new Error('unexpect let left side operator!');
     }
@@ -50,9 +50,9 @@ registerEvaluators({
         await leftVariable.setValue(rightValue);
       }
     } else {
-      context.stashMember();
+      context.stashMemberInternal();
       const rightValue = await evaluate(c3.children[0], context);
-      context.popMember();
+      context.popMemberInternal();
       await leftVariable.setValue(rightValue);
     }
   },

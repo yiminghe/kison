@@ -117,9 +117,9 @@ registerEvaluators({
         lastArg = undefined;
         continue;
       }
-      context.stashMember();
+      context.stashMemberInternal();
       lastArg = await evaluate(c, context);
-      context.popMember();
+      context.popMemberInternal();
     }
     if (children.length) {
       args.push(lastArg);
@@ -196,7 +196,7 @@ registerEvaluators({
       );
     } else {
       // variable
-      return await context.getCurrentScope().getVariable(subName);
+      return await context.getCurrentScopeInternal().getVariable(subName);
     }
   },
 });

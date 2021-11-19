@@ -1,6 +1,6 @@
 import type { AstNode, LiteralToken, AstVisitor } from '../../parser';
 import type { Context } from '../Context';
-import { Evaluators, VB_EMPTY, ExitResult } from '../types';
+import { Evaluators, VB_EMPTY } from '../types';
 import { isSkipToken, warn, captalize } from '../utils';
 
 export async function evaluate(ast: AstNode, context: Context): Promise<any> {
@@ -50,9 +50,6 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
     ret = evaluate(c, context);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;
-    }
-    if (ret && (ret as ExitResult).type === 'Exit') {
-      return ret;
     }
   }
   return ret || VB_EMPTY;

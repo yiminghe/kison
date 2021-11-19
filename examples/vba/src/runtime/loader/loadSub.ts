@@ -8,7 +8,7 @@ import type {
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
 import { evaluate } from '../evaluator/index';
-import { ArgInfo, SubSymbolItem } from '../types';
+import { ArgInfo, VBSub } from '../types';
 import { getPropertyGetSubName, getPropertySetSubName } from '../utils';
 import { registerLoaders, load } from './loaders';
 
@@ -23,8 +23,8 @@ async function loadCall(
 ) {
   for (const c of node.children) {
     if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
-      const subSymbolItem = new SubSymbolItem(node, context);
-      await subSymbolItem.init();
+      const vbSub = new VBSub(node, context);
+      await vbSub.init();
       let name = c.children[0].text;
       if (node.symbol === 'propertyGetStmt') {
         name = getPropertyGetSubName(name);
@@ -34,7 +34,7 @@ async function loadCall(
       ) {
         name = getPropertySetSubName(name);
       }
-      context.registerSymbolItem(name, subSymbolItem);
+      context.registerSymbolItemInternal(name, vbSub);
       return;
     }
   }

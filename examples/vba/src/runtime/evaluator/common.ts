@@ -1,12 +1,10 @@
 import { AstNode, AstSymbolNode } from '../../parserLLK';
 import type { Context } from '../Context';
 import {
-  VBClass,
   BinderValue,
   VBNamespaceBinder,
   VBObject,
   VBValue,
-  ExitResult,
 } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
@@ -47,7 +45,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
   indexes: (VBObject | VBValue)[][],
   context: Context,
 ) {
-  const scope = context.getCurrentScope();
+  const scope = context.getCurrentScopeInternal();
 
   async function getElements(
     obj: VBObject | VBValue | VBNamespaceBinder | BinderValue,
@@ -76,7 +74,6 @@ export async function callSubOrGetElementWithIndexesAndArgs(
       | VBValue
       | VBNamespaceBinder
       | BinderValue
-      | ExitResult
       | undefined;
     if (subName) {
       if (parent.type === 'Namespace') {
@@ -102,11 +99,8 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     }
     if (indexes.length) {
       if (v.type === 'SubBinder') {
-        v = await context.callSubBinder(v, indexes[0]);
+        v = await context.callSubBinderInternal(v, indexes[0]);
         indexes.shift();
-      }
-      if (v?.type === 'Exit') {
-        return v;
       }
       return getElements(v, indexes);
     } else {
@@ -120,6 +114,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     if (variable.type === 'Namespace') {
       return variable;
     }
+ 
     return getElements(variable, indexes);
   } else {
     const args = indexes[0] || [];

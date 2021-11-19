@@ -12,8 +12,8 @@ import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
 import { VBObject } from './VBObject';
 import type { VBFile, ArgInfo, Visibility } from './runtime';
 
-export class SubSymbolItem {
-  block: Ast_Block_Node;
+export class VBSub {
+  block: Ast_Block_Node | undefined;
   name: string = '';
   private _argumentsInfo?: ArgInfo[];
   private _returnInfo?: AsTypeClauseInfo;
@@ -60,9 +60,6 @@ export class SubSymbolItem {
         this.name = c.children[0].text;
       }
     }
-    if (!block) {
-      throw new Error('unexpected SubSymbolItem');
-    }
     this.block = block;
   }
 
@@ -89,6 +86,10 @@ export class SubSymbolItem {
       this._visibility = access.token;
     }
     return this._visibility;
+  }
+
+  isPrivate() {
+    return this.visibility === 'PRIVATE';
   }
 
   async init() {

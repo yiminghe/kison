@@ -86,7 +86,6 @@ export async function runs(
     ],
     async value(args) {
       ret.push((await args.getValue('msg'))?.value);
-      return undefined;
     },
   };
 

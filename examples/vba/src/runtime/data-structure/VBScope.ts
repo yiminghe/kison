@@ -34,7 +34,7 @@ export class VBScope {
       return v;
     }
 
-    const subItem = context.getSymbolItemFromFile(subName, file.id);
+    const subItem = context.getSymbolItemFromFileInternal(subName, file.id);
 
     // static variable
     if (subItem && subItem.type !== 'variable') {
@@ -64,7 +64,7 @@ export class VBScope {
       }
     }
 
-    const vItem = context.getSymbolItem(name, file);
+    const vItem = context.getSymbolItemInternal(name, file);
     if (vItem && vItem.type === 'variable') {
       v = vItem.value;
     }

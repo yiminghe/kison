@@ -100,7 +100,7 @@ export function collect_type_(node: Ast_Type__Node, context: Context) {
         }
       }
       asType.className = classType.join('.');
-      classType[0] = context.getFileIdFromFileName(classType[0])!;
+      classType[0] = context.getFileIdFromFileNameInternal(classType[0])!;
       asType.classType = classType;
       asType.type = undefined;
     } else if (c.type === 'token' && c.token === 'RPAREN') {

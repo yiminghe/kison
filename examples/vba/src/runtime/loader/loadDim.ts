@@ -1,9 +1,4 @@
-import {
-  VBVariableInfo,
-  Visibility,
-  VariableSymbolItem,
-  VBObject,
-} from '../types';
+import { VBVariableInfo, Visibility, VBVariable, VBObject } from '../types';
 import { registerLoaders } from './loaders';
 import { evaluate } from '../evaluator/index';
 
@@ -15,7 +10,7 @@ registerLoaders({
     if (first.type === 'token') {
       isStatic = first.token === 'STATIC';
     }
-    let visibility: Visibility = 'PUBLIC';
+    let visibility: Visibility = 'PRIVATE';
     if (first.type === 'symbol') {
       visibility = first.children[0].token;
     }
@@ -28,12 +23,15 @@ registerLoaders({
     for (const v of variables) {
       values.push(await v.value());
     }
-    const variableSymbolItems = variables.map(
+    const vbVariables = variables.map(
       (v, index) =>
-        new VariableSymbolItem(values[index], v, isStatic, visibility, context),
+        new VBVariable(values[index], v, isStatic, visibility, context),
     );
-    for (const item of variableSymbolItems) {
-      context.registerSymbolItem(item.variableInfo.name, item);
+    for (const vbVariable of vbVariables) {
+      context.registerSymbolItemInternal(
+        vbVariable.variableInfo.name,
+        vbVariable,
+      );
     }
   },
 });

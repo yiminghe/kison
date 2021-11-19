@@ -25,7 +25,6 @@ const MsgBoxSub: SubBinder = {
   ],
   async value(args) {
     console.log((await args.getValue('msg'))?.value);
-    return undefined;
   },
 };
 

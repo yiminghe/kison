@@ -182,7 +182,6 @@ require(['vs/editor/editor.main'], () => {
     name: 'debugger',
     async value(args, context) {
       debugger;
-      return undefined;
     },
   };
 
@@ -195,7 +194,6 @@ require(['vs/editor/editor.main'], () => {
     ],
     async value(args) {
       console.log(`call ${name}:`, (await args.getValue('msg'))?.value);
-      return undefined;
     },
   });
 

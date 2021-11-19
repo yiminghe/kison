@@ -3,7 +3,7 @@ import type { AstVisitors } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBObject } from './VBObject';
 import { Ast_Visibility_Node } from '../../parserLLK';
-import type { SubSymbolItem } from './SubSymbolItem';
+import type { VBSub } from './VBSub';
 import { VBNamespaceBinder } from './VBNamespace';
 
 export interface VBFile {
@@ -14,9 +14,9 @@ export interface VBFile {
 
 export type SymbolName = string;
 
-export type SymbolItem = SubSymbolItem | VariableSymbolItem;
+export type SymbolItem = VBSub | VBVariable;
 
-export class VariableSymbolItem {
+export class VBVariable {
   type: 'variable' = 'variable';
   file: VBFile;
   constructor(
@@ -32,15 +32,17 @@ export class VariableSymbolItem {
   get name() {
     return this.variableInfo.name;
   }
+
+  isPrivate() {
+    return this.visibility === 'PRIVATE';
+  }
 }
 
 export type Visibility = Ast_Visibility_Node['children'][0]['token'];
 
 export type SubBinderReturnType =
   | VBValue
-  | undefined
-  | false
-  | VBNamespaceBinder;
+  | void;
 
 export interface SubBinder {
   type: 'SubBinder';

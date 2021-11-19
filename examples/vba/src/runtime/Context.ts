@@ -6,7 +6,7 @@ import {
   VBValue,
   SubBinder,
   VBFile,
-  SubSymbolItem,
+  VBSub,
   VBClass,
   VariableBinder,
   UserVariableBinder,
@@ -14,25 +14,23 @@ import {
   VBNativeObject,
   VB_TRUE,
   VB_FALSE,
-  AsTypeClauseInfo,
   SymbolItem,
   VBScope,
   ArgInfo,
   VBNamespaceBinder,
   VB_EMPTY,
   VBObject,
-  ExitResult,
-  VBEmpty,
-  END_EXIT_RESULT,
   FileSymbolTable,
   ClassBinder,
   BinderMap,
   VBInteger,
   VBString,
+  VBVariable,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
+import { AstTokenNode, Ast_END_Node } from '../parserLLK';
 
 const defaultFileId: VBFile = {
   id: Math.random() + '',
@@ -42,6 +40,7 @@ const defaultFileId: VBFile = {
 
 export interface CallOptions {
   logError?: boolean;
+  file?: VBFile;
 }
 
 interface MemberItem {
@@ -49,7 +48,7 @@ interface MemberItem {
 }
 
 export class VBArguments {
-  constructor(public scope: VBScope) {}
+  constructor(public scope: VBScope) { }
   async getValue(name: string) {
     const obj = await this.scope.getVariable(name);
     if (obj.type === 'Object') {
@@ -69,7 +68,7 @@ export class Context {
 
   memberStack: MemberItem[] = [];
 
-  astMap = new Map<VBFile, AstRootNode>();
+  astMap = new Map<string, AstRootNode>();
 
   bindersMap: BinderMap = new Map();
 
@@ -81,14 +80,14 @@ export class Context {
 
   currentAstNode: AstNode | undefined;
 
-  stashMember() {
+  stashMemberInternal() {
     this.memberStack.push({
       parentMember: this.parentMember,
     });
     this.parentMember = undefined;
   }
 
-  popMember() {
+  popMemberInternal() {
     const item = this.memberStack.pop();
     if (!item) {
       throw new Error('Internal Error at popMember');
@@ -96,52 +95,10 @@ export class Context {
     this.parentMember = item.parentMember;
   }
 
-  load(code: string, file: VBFile = defaultFileId) {
-    file.name = file.name.toLowerCase();
-    if (!code) {
-      this.symbolTable.delete(file.id);
-    }
-    const { ast, error } = parser.parse(code);
-    if (error) {
-      throw new Error(error.errorMessage);
-    }
-    this.astMap.set(file, ast);
-    this.currentFile = file;
-    this.symbolTable.set(file.id, new FileSymbolTable(file));
-    return load(ast, this);
-  }
-
-  registerSymbolItem(name: string, item: SymbolItem) {
+  registerSymbolItemInternal(name: string, item: SymbolItem) {
     const { symbolTable, currentFile: currentFileId } = this;
     const currentTable = symbolTable.get(currentFileId.id)!;
     currentTable.symbolTable.set(name.toLowerCase(), item);
-  }
-
-  registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {
-    const binder: SubBinder = {
-      ...subBinder,
-      type: 'SubBinder',
-      name: subBinder.name.toLowerCase(),
-    };
-    this._registerBinder(binder);
-  }
-
-  registerVariableBinder(variableBinder: UserVariableBinder) {
-    const binder: VariableBinder = {
-      ...variableBinder,
-      type: 'VariableBinder',
-      name: variableBinder.name.toLowerCase(),
-    };
-    this._registerBinder(binder);
-  }
-
-  registerClassBinder(classBinder: UserClassBinder) {
-    const binder: ClassBinder = {
-      type: 'ClassBinder',
-      ...classBinder,
-      name: classBinder.name.toLowerCase(),
-    };
-    this._registerBinder(binder);
   }
 
   _registerBinder(userBinder: VariableBinder | SubBinder | ClassBinder) {
@@ -183,7 +140,7 @@ export class Context {
     return null;
   }
 
-  getBinder(names: string[]) {
+  _getBinder(names: string[]) {
     const namespace = this._findBind(names);
     if (namespace) {
       return namespace.get(last(names));
@@ -192,38 +149,27 @@ export class Context {
     }
   }
 
-  getCurrentScope() {
+  getCurrentScopeInternal() {
     return last(this.scopeStack)!;
   }
 
-  renameFile(id: string, name: string) {
-    name = name.toLowerCase();
-    const { symbolTable } = this;
-    for (const fileSymbolTable of symbolTable.values()) {
-      const { file } = fileSymbolTable;
-      if (file.id === id) {
-        file.name = name;
-      }
-    }
-  }
-
-  getSymbolItem(name: string, myFile?: VBFile) {
+  getSymbolItemInternal(name: string, myFile?: VBFile) {
     const { symbolTable } = this;
     if (myFile) {
-      const item = this.getSymbolItemFromFile(name, myFile.id, true);
+      const item = this.getSymbolItemFromFileInternal(name, myFile.id, true);
       if (item) {
         return item;
       }
     }
     for (const file of symbolTable.keys()) {
-      const item = this.getSymbolItemFromFile(name, file);
+      const item = this.getSymbolItemFromFileInternal(name, file);
       if (item) {
         return item;
       }
     }
   }
 
-  getSymbolItemFromFile(
+  getSymbolItemFromFileInternal(
     name: string,
     file: string,
     noCheckPublic: boolean = false,
@@ -232,14 +178,14 @@ export class Context {
     if (item && item.type === 'module') {
       const sub = item.symbolTable.get(name);
       if (sub) {
-        if (noCheckPublic || sub.visibility === 'PUBLIC') {
+        if (noCheckPublic || !sub.isPrivate()) {
           return sub;
         }
       }
     }
   }
 
-  getFileIdFromFileName(name: string) {
+  getFileIdFromFileNameInternal(name: string) {
     if (this.bindersMap.get(name)?.type === 'Namespace') {
       return name;
     }
@@ -294,110 +240,94 @@ export class Context {
       ++i;
     }
     this.scopeStack.push(scope);
+    return scope;
   }
 
-  async callSubSymbolItem(
-    subSymbolItem: SubSymbolItem,
+  async callVBSubInternal(
+    subSymbolItem: VBSub,
     args: (VBValue | VBObject)[] = [],
     classObj?: VBClass,
   ) {
-    this.stashMember();
+    if (!subSymbolItem.block) {
+      return VB_EMPTY;
+    }
+    this.stashMemberInternal();
+    const currentFile = this.currentFile;
     this.currentFile = subSymbolItem.file;
     const argumentsInfo = subSymbolItem.arugmentsInfo;
     const subName = subSymbolItem.name;
-    await this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
+    const currentScope = await this._setupScope(subName, args, argumentsInfo, subSymbolItem.file);
     if (classObj) {
-      last(this.scopeStack).classObj = classObj;
+      currentScope.classObj = classObj;
     }
-    let ret = await evaluate(subSymbolItem.block, this);
-    if (ret && (ret as ExitResult).type === 'Exit') {
-      const exit: ExitResult = ret;
-      if (exit.token.token === 'END') {
-        return exit;
+    let ret: VBValue = VB_EMPTY;
+    try {
+      ret = await evaluate(subSymbolItem.block, this);
+    } catch (e: unknown) {
+      const exitNode = e as AstTokenNode;
+      if (exitNode && exitNode.type === 'token' && (exitNode.token === 'EXIT_FUNCTION' || exitNode.token === 'EXIT_PROPERTY' || exitNode.token === 'EXIT_SUB')) {
+        // just exit sub
+      } else {
+        throw e;
       }
     }
+    this.currentFile = currentFile;
+    this.popMemberInternal();
+    this.scopeStack.pop();
     if (subSymbolItem.type === 'function') {
-      const obj = await last(this.scopeStack).getVariable(subName);
+      const obj = await currentScope.getVariable(subName);
       if (obj.type === 'Namespace') {
         throw new Error('unexpected return namespace!');
       }
       ret = await obj.getValue();
     } else {
-      ret = VBEmpty;
+      ret = VB_EMPTY;
     }
-    this.popMember();
-    this.scopeStack.pop();
+
     return ret;
   }
 
-  async callSubBinder(
+  async callSubBinderInternal(
     subDef: SubBinder,
     args: (VBValue | VBObject)[] = [],
-  ): Promise<VBValue | VBNamespaceBinder | typeof END_EXIT_RESULT> {
-    this.stashMember();
-    await this._setupScope(subDef.name, args, subDef.argumentsInfo || []);
-    const scope = this.getCurrentScope();
+  ): Promise<VBValue> {
+    this.stashMemberInternal();
+    const scope = await this._setupScope(subDef.name, args, subDef.argumentsInfo || []);
     const ret = await subDef.value(new VBArguments(scope), this);
-    this.popMember();
+    this.popMemberInternal();
     this.scopeStack.pop();
-    if (ret === false) {
-      return END_EXIT_RESULT;
-    }
     if (ret !== undefined) {
       return ret;
     }
     return VB_EMPTY;
   }
 
-  async callSub(
-    subName: string,
-    args: (VBValue | VBObject)[] = [],
-    options: CallOptions = {},
-  ) {
-    try {
-      return await this.callSubInternal(subName, args);
-    } catch (e: unknown) {
-      if (options.logError !== false) {
-        console.error(e);
-      }
-      if (e instanceof Error && this.currentAstNode && this.currentFile) {
-        throw new Error(
-          e.message +
-            ` (line ${this.currentAstNode.firstLine} at file ${this.currentFile.name})`,
-        );
-      }
-    }
-  }
-
-  async callSubInternal(subName: string, args: (VBValue | VBObject)[] = []) {
-    function getItemFromFile(file: string, noCheck: boolean = false) {
-      const item = symbolTable.get(file);
-      if (item && item.type === 'module') {
-        const sub = item.symbolTable.get(subName);
-        if (sub && sub.type !== 'variable') {
-          if (noCheck || sub.visibility === 'PUBLIC') {
-            return sub;
-          }
-        }
-      }
-    }
-
+  async callSubInternal(subName: string, args: (VBValue | VBObject)[] = []): Promise<VBValue> {
     const { bindersMap: subBindersMap, symbolTable } = this;
-    let subSymbolItem: SubSymbolItem | undefined = getItemFromFile(
-      this.currentFile.id,
-      true,
-    );
+
+    let subSymbolItem: VBSub | VBVariable | undefined =
+      this.getSymbolItemFromFileInternal(subName, this.currentFile.id, true);
+
+    if (subSymbolItem?.type === 'variable') {
+      subSymbolItem = undefined;
+    }
+
     if (!subSymbolItem) {
-      for (const file of symbolTable.keys()) {
-        subSymbolItem = getItemFromFile(file);
+      for (const fileId of symbolTable.keys()) {
+        subSymbolItem = this.getSymbolItemFromFileInternal(subName, fileId);
+        if (subSymbolItem?.type === 'variable') {
+          subSymbolItem = undefined;
+        }
         if (subSymbolItem) {
           break;
         }
       }
     }
+
     if (subSymbolItem) {
-      return this.callSubSymbolItem(subSymbolItem, args);
+      return this.callVBSubInternal(subSymbolItem, args);
     }
+
     const names = subName.split('.');
 
     let defMap = subBindersMap;
@@ -421,36 +351,138 @@ export class Context {
       throw new Error('Can not find sub definition: ' + subName);
     }
 
-    return this.callSubBinder(subDef, args);
+    return this.callSubBinderInternal(subDef, args);
   }
 
-  static createInteger(value: number) {
+  public async load(code: string, file: VBFile = defaultFileId) {
+    if (!code) {
+      this.symbolTable.delete(file.id);
+      return;
+    }
+    file = this.getFileById(file.id) || file;
+    file.name = file.name.toLowerCase();
+    const { ast, error } = parser.parse(code);
+    if (error) {
+      throw new Error(error.errorMessage);
+    }
+    this.astMap.set(file.id, ast);
+    this.currentFile = file;
+    this.symbolTable.set(file.id, new FileSymbolTable(file));
+    return load(ast, this);
+  }
+
+  public registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {
+    const binder: SubBinder = {
+      ...subBinder,
+      type: 'SubBinder',
+      name: subBinder.name.toLowerCase(),
+    };
+    this._registerBinder(binder);
+  }
+
+  public registerVariableBinder(variableBinder: UserVariableBinder) {
+    const binder: VariableBinder = {
+      ...variableBinder,
+      type: 'VariableBinder',
+      name: variableBinder.name.toLowerCase(),
+    };
+    this._registerBinder(binder);
+  }
+
+  public registerClassBinder(classBinder: UserClassBinder) {
+    const binder: ClassBinder = {
+      type: 'ClassBinder',
+      ...classBinder,
+      name: classBinder.name.toLowerCase(),
+    };
+    this._registerBinder(binder);
+  }
+
+  public async callSub(
+    subName: string,
+    args: (VBValue | VBObject)[] = [],
+    options: CallOptions = {},
+  ) {
+    const { currentFile } = this;
+    if (options.file) {
+      const { file } = options;
+      const existingFile = this.getFileById(file.id);
+      if (!existingFile) {
+        throw new Error('Can not find file id:' + file.id);
+      }
+      this.currentFile = existingFile;
+    }
+    try {
+      return await this.callSubInternal(subName, args);
+    } catch (e: unknown) {
+
+      if (e instanceof Error && this.currentAstNode && this.currentFile) {
+        if (options.logError !== false) {
+          console.error(e);
+        }
+        throw new Error(
+          e.message +
+          ` (line ${this.currentAstNode.firstLine} at file ${this.currentFile.name})`,
+        );
+      }
+
+      const exit: Ast_END_Node = e as Ast_END_Node;
+
+      if (exit.type === 'token' && exit.token === 'END') {
+      
+      } else {
+        // unknown error
+        console.error(`unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`);
+        throw exit;
+      }
+    }
+    this.currentFile = currentFile;
+  }
+
+  public renameFile(id: string, name: string) {
+    const file = this.getFileById(id);
+    if (file) {
+      file.name = name.toLowerCase();
+    }
+  }
+
+  public getFileById(id: string) {
+    const { symbolTable } = this;
+    for (const fileSymbolTable of symbolTable.values()) {
+      const { file } = fileSymbolTable;
+      if (file.id === id) {
+        return file;
+      }
+    }
+  }
+
+  public static createInteger(value: number) {
     return new VBInteger(value);
   }
 
-  static createString(value: string) {
+  public static createString(value: string) {
     return new VBString(value);
   }
 
-  static createBoolean(value: boolean) {
+  public static createBoolean(value: boolean) {
     return value ? VB_TRUE : VB_FALSE;
   }
 
-  async createObject(name: string) {
+  public async createObject(name: string) {
     const classType = name.toLowerCase().split('.');
-    const binder = this.getBinder(classType);
+    const binder = this._getBinder(classType);
     let value: VBClass | undefined;
     if (binder && binder.type === 'ClassBinder') {
       value = new VBBindClass(binder, this);
     } else if (classType.length === 1) {
-      const classId = this.getFileIdFromFileName(classType[0]);
+      const classId = this.getFileIdFromFileNameInternal(classType[0]);
       const symbolItem = this.symbolTable.get(classId);
       if (symbolItem && symbolItem.type === 'class') {
         value = new VBNativeClass(classId, this);
       }
     }
     if (!value) {
-      throw new Error('Can not find class: ' + classType.join('.'));
+      throw new Error('Can not find class: ' + name);
     }
     await value.init();
     return value;

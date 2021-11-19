@@ -9,16 +9,6 @@ import type {
 import type { VBClass } from './VBClass';
 import type { VBArray } from './VBArray';
 
-export class VBCollection {
-  type: 'Collection' = 'Collection';
-  value = new Set<VBValue>();
-}
-
-export class VBDictionary {
-  type: 'Dictionary' = 'Dictionary';
-  value = new Map<VBValue, VBValue>();
-}
-
 export class VBByte {
   type: 'Byte' = 'Byte';
   constructor(public value: number = 0) {}
@@ -95,23 +85,6 @@ export interface Subscript {
   one: boolean;
 }
 
-export class ExitResult {
-  type: 'Exit' = 'Exit';
-  constructor(
-    public token:
-      | Ast_EXIT_DO_Node
-      | Ast_EXIT_FOR_Node
-      | Ast_EXIT_FUNCTION_Node
-      | Ast_EXIT_PROPERTY_Node
-      | Ast_EXIT_SUB_Node
-      | Ast_END_Node,
-  ) {}
-}
-
-export const END_EXIT_RESULT = new ExitResult({
-  token: 'END',
-} as Ast_END_Node);
-
 export class VBNothing {
   type: 'Nothing' = 'Nothing';
   value: undefined;
@@ -119,13 +92,11 @@ export class VBNothing {
 
 export type VBPrimitive =
   | VBByte
-  | VBCollection
   | VBCurrency
   | VBDate
   | VBDecimal
   | VBInteger
   | VBDouble
-  | VBDictionary
   | VBLong
   | VBLongLong
   | VBSingle
@@ -141,11 +112,9 @@ export const VBPrimitiveTypeClass = {
   Integer: VBInteger,
   Boolean: VBBoolean,
   Byte: VBByte,
-  Collection: VBCollection,
   Currency: VBCurrency,
   Date: VBDate,
   Decimal: VBDecimal,
-  Dictionary: VBDictionary,
   Double: VBDouble,
   Long: VBLong,
   LongLong: VBLongLong,

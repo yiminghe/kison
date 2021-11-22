@@ -1,5 +1,10 @@
 import parser from '../parser';
-import type { AstRootNode, AstNode } from '../parser';
+import type {
+  AstRootNode,
+  AstNode,
+  AstTokenNode,
+  Ast_END_Node,
+} from '../parser';
 import {
   VBNativeClass,
   VBBindClass,
@@ -30,7 +35,6 @@ import {
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
-import { AstTokenNode, Ast_END_Node } from '../parserLLK';
 
 const defaultFileId: VBFile = {
   id: Math.random() + '',

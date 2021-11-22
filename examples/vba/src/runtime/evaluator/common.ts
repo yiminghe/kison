@@ -1,4 +1,4 @@
-import { AstNode, AstSymbolNode } from '../../parserLLK';
+import type { AstNode, AstSymbolNode } from '../../parser';
 import type { Context } from '../Context';
 import { BinderValue, VBNamespaceBinder, VBObject, VBValue } from '../types';
 import { evaluate } from './evaluators';

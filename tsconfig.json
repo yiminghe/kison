@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
+    "isolatedModules": true,
     "resolveJsonModule":true,
     "moduleResolution": "node"
   },

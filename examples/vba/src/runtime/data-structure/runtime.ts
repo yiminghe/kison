@@ -1,10 +1,8 @@
 import type { Context, VBArguments } from '../Context';
-import type { AstVisitors } from '../../parser';
+import type { AstVisitors, Ast_Visibility_Node } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBObject } from './VBObject';
-import { Ast_Visibility_Node } from '../../parserLLK';
 import type { VBSub } from './VBSub';
-import { VBNamespaceBinder } from './VBNamespace';
 
 export interface VBFile {
   id: string;

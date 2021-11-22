@@ -1,5 +1,9 @@
-import type { Ast_AsTypeClause_Node, Ast_Type__Node } from '../../parser';
-import { AstNode, Ast_Indexes_Node } from '../../parserLLK';
+import type {
+  Ast_AsTypeClause_Node,
+  Ast_Type__Node,
+  AstNode,
+  Ast_Indexes_Node,
+} from '../../parser';
 import { Context } from '../Context';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
 

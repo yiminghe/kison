@@ -93,3 +93,5 @@ if (!String.fromCodePoint)
       String.fromCodePoint = fromCodePoint;
     }
   })(String.fromCharCode);
+
+export {};

@@ -1,6 +1,6 @@
 import type { Context } from '../Context';
-import { VBString, VBValue, VB_EMPTY } from './VBValue';
-import { VBNativeObject, VBObject } from './VBObject';
+import { VBValue, VB_EMPTY } from './VBValue';
+import { VBObject } from './VBObject';
 import { ClassBinder, IndexType, InstanceBinder } from './runtime';
 import { getVBValue } from '../evaluator/common';
 import {

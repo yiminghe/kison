@@ -6,7 +6,7 @@ import type {
 } from '../../parser';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
-import { VBObject, VBValue } from '../types';
+import { VBPointer, VBValue } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
   buildArgs,
@@ -25,7 +25,10 @@ async function callSub(
     throw new Error('unexpected');
   }
   const subName = token.children[0].text;
-  let args: (VBValue | VBObject)[] | undefined = await buildArgs(node, context);
+  let args: (VBValue | VBPointer)[] | undefined = await buildArgs(
+    node,
+    context,
+  );
   return await context.callSubInternal(subName, args);
 }
 
@@ -37,7 +40,7 @@ async function callMemberSub(
 
   let subName = '';
 
-  let parent: VBObject | VBValue | undefined;
+  let parent: VBPointer | VBValue | undefined;
 
   for (const c of children) {
     if (c.type === 'symbol' && c.symbol === 'implicitCallStmt_InStmt') {
@@ -118,11 +121,11 @@ registerEvaluators({
     const { children } = node;
 
     if (children[0].symbol !== 'iCS_S_MemberCall') {
-      const parent: VBObject | VBValue | undefined = (context.parentMember =
+      const parent: VBPointer | VBValue | undefined = (context.parentMember =
         await evaluate(children[0], context));
       if (
         !parent ||
-        (parent.type === 'Object' &&
+        (parent.type === 'Pointer' &&
           (await parent.getValue()).type === 'Empty') ||
         parent.type === 'Empty'
       ) {

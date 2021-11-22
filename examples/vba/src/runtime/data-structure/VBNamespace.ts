@@ -1,24 +1,20 @@
-import type { VBObject } from './VBObject';
+import type { VBPointer } from './VBPointer';
 import type { SubBinder, ClassBinder } from './runtime';
 
-export type BinderValue =
-  | VBObject
-  | SubBinder
-  | ClassBinder
-  | VBNamespaceBinder;
+export type NamespaceValue = VBPointer | SubBinder | ClassBinder | VBNamespace;
 
-export type BinderMap = Map<string, BinderValue>;
+export type NamespaceMap = Map<string, NamespaceValue>;
 
-export class VBNamespaceBinder {
+export class VBNamespace {
   type: 'Namespace' = 'Namespace';
-  value: BinderMap = new Map();
+  value: NamespaceMap = new Map();
   constructor(public name: string) {}
 
   get(name: string) {
     return this.value.get(name);
   }
 
-  set(name: string, value: VBObject) {
+  set(name: string, value: VBPointer) {
     return this.value.set(name, value);
   }
 }

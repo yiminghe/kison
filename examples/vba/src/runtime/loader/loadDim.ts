@@ -1,4 +1,4 @@
-import { VBVariableInfo, Visibility, VBVariable, VBObject } from '../types';
+import { VBVariableInfo, Visibility, VBVariable, VBPointer } from '../types';
 import { registerLoaders } from './loaders';
 import { evaluate } from '../evaluator/index';
 
@@ -19,7 +19,7 @@ registerLoaders({
       variableListStmt,
       context,
     );
-    const values: VBObject[] = [];
+    const values: VBPointer[] = [];
     for (const v of variables) {
       values.push(await v.value());
     }

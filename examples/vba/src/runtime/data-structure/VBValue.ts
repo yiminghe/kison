@@ -3,22 +3,22 @@ import type { VBArray } from './VBArray';
 
 export class VBByte {
   type: 'Byte' = 'Byte';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBDouble {
   type: 'Double' = 'Double';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBSingle {
   type: 'Single' = 'Single';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBInteger {
   type: 'Integer' = 'Integer';
-  value: number = 0;
+  readonly value: number = 0;
   constructor(value: number = 0) {
     this.value = value & 0xffff;
   }
@@ -26,49 +26,49 @@ export class VBInteger {
 
 export class VBLongLong {
   type: 'LongLong' = 'LongLong';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export const VBLongPtr = VBLongLong;
 
 export class VBLong {
   type: 'Long' = 'Long';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBCurrency {
   type: 'Currency' = 'Currency';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBDate {
   type: 'Date' = 'Date';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBDecimal {
   type: 'Decimal' = 'Decimal';
-  constructor(public value: number = 0) {}
+  constructor(public readonly value: number = 0) {}
 }
 
 export class VBString {
   type: 'String' = 'String';
-  constructor(public value: string = '') {}
+  constructor(public readonly value: string = '') {}
 }
 
 export class VBNull {
   type: 'Null' = 'Null';
-  value = null;
+  readonly value = null;
 }
 
 export class VBEmpty {
   type: 'Empty' = 'Empty';
-  value = undefined;
+  readonly value = undefined;
 }
 
 export class VBBoolean {
   type: 'Boolean' = 'Boolean';
-  constructor(public value: boolean = false) {}
+  constructor(public readonly value: boolean = false) {}
 }
 
 export interface Subscript {
@@ -79,7 +79,7 @@ export interface Subscript {
 
 export class VBNothing {
   type: 'Nothing' = 'Nothing';
-  value: undefined;
+  readonly value: undefined;
 }
 
 export type VBPrimitive =

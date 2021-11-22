@@ -16,18 +16,18 @@ import {
   VariableBinder,
   UserVariableBinder,
   UserClassBinder,
-  VBNativeObject,
+  VBValuePointer,
   VB_TRUE,
   VB_FALSE,
   SymbolItem,
   VBScope,
   ArgInfo,
-  VBNamespaceBinder,
+  VBNamespace,
   VB_EMPTY,
-  VBObject,
+  VBPointer,
   FileSymbolTable,
   ClassBinder,
-  BinderMap,
+  NamespaceMap,
   VBInteger,
   VBString,
   VBVariable,
@@ -48,33 +48,33 @@ export interface CallOptions {
 }
 
 interface MemberItem {
-  parentMember?: VBObject | VBValue | undefined;
+  parentMember?: VBPointer | VBValue | undefined;
 }
 
 export class VBArguments {
   constructor(public scope: VBScope) {}
   async getValue(name: string) {
     const obj = await this.scope.getVariable(name);
-    if (obj.type === 'Object') {
+    if (obj.type === 'Pointer') {
       return obj.getValue();
     }
   }
   async setValue(name: string, value: VBValue) {
     const obj = await this.scope.getVariable(name);
-    if (obj.type === 'Object') {
+    if (obj.type === 'Pointer') {
       return obj.setValue(value);
     }
   }
 }
 
 export class Context {
-  parentMember?: VBObject | VBValue | undefined;
+  parentMember?: VBPointer | VBValue | undefined;
 
   memberStack: MemberItem[] = [];
 
   astMap = new Map<string, AstRootNode>();
 
-  bindersMap: BinderMap = new Map();
+  bindersMap: NamespaceMap = new Map();
 
   currentFile: VBFile = defaultFileId;
 
@@ -112,7 +112,7 @@ export class Context {
       const name = last(names);
       let binder;
       if (userBinder.type === 'VariableBinder') {
-        binder = new VBNativeObject(userBinder.value, undefined, true);
+        binder = new VBValuePointer(userBinder.value, undefined, true);
       } else {
         binder = userBinder;
       }
@@ -122,7 +122,7 @@ export class Context {
     }
   }
 
-  _findBind(names: string[]): BinderMap | null {
+  _findBind(names: string[]): NamespaceMap | null {
     let namespace = this.bindersMap;
     const len = names.length;
     for (let i = 0; i < names.length; i++) {
@@ -131,7 +131,7 @@ export class Context {
         return namespace;
       } else {
         if (!namespace.get(name)) {
-          const newNamespace = new VBNamespaceBinder(name);
+          const newNamespace = new VBNamespace(name);
           namespace.set(name, newNamespace);
         }
         const n2 = namespace.get(name);
@@ -207,7 +207,7 @@ export class Context {
 
   async _setupScope(
     subName: string,
-    args: (VBValue | VBObject)[],
+    args: (VBValue | VBPointer)[],
     argumentsInfo: ArgInfo[],
     file: VBFile = this.currentFile,
   ) {
@@ -219,10 +219,10 @@ export class Context {
       if (!argInfo) {
         continue;
       }
-      if (a.type === 'Object' && argInfo.byRef) {
+      if (a.type === 'Pointer' && argInfo.byRef) {
         await scope.setVariable(
           argInfo.name,
-          new VBNativeObject(a, argInfo.asType),
+          new VBValuePointer(a, argInfo.asType),
         );
       } else {
         await scope.setVariableValue(argInfo.name, a);
@@ -234,7 +234,7 @@ export class Context {
         if (argInfo.optional && argInfo.defaultValue) {
           await scope.setVariableValue(
             argInfo.name,
-            new VBNativeObject(
+            new VBValuePointer(
               await argInfo.defaultValue.getValue(),
               argInfo.asType,
             ),
@@ -249,7 +249,7 @@ export class Context {
 
   async callVBSubInternal(
     subSymbolItem: VBSub,
-    args: (VBValue | VBObject)[] = [],
+    args: (VBValue | VBPointer)[] = [],
     classObj?: VBClass,
   ) {
     if (!subSymbolItem.block) {
@@ -304,7 +304,7 @@ export class Context {
 
   async callSubBinderInternal(
     subDef: SubBinder,
-    args: (VBValue | VBObject)[] = [],
+    args: (VBValue | VBPointer)[] = [],
   ): Promise<VBValue> {
     this.stashMemberInternal();
     const scope = await this._setupScope(
@@ -323,7 +323,7 @@ export class Context {
 
   async callSubInternal(
     subName: string,
-    args: (VBValue | VBObject)[] = [],
+    args: (VBValue | VBPointer)[] = [],
   ): Promise<VBValue> {
     const { bindersMap: subBindersMap, symbolTable } = this;
 
@@ -422,7 +422,7 @@ export class Context {
 
   public async callSub(
     subName: string,
-    args: (VBValue | VBObject)[] = [],
+    args: (VBValue | VBPointer)[] = [],
     options: CallOptions = {},
   ) {
     const { currentFile } = this;

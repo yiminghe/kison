@@ -9,7 +9,7 @@ import type {
 } from '../../parser';
 import { load } from '../loader/loaders';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
-import { VBObject } from './VBObject';
+import { VBPointer } from './VBPointer';
 import type { VBFile, ArgInfo, Visibility } from './runtime';
 
 export class VBSub {
@@ -21,9 +21,9 @@ export class VBSub {
   private _visibility?: Visibility;
   file: VBFile;
   _static?: boolean;
-  staticVariables: Map<string, VBObject> = new Map();
+  staticVariables: Map<string, VBPointer> = new Map();
 
-  addStaticVariable(name: string, value: VBObject) {
+  addStaticVariable(name: string, value: VBPointer) {
     this.staticVariables.set(name, value);
   }
 

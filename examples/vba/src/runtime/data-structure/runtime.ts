@@ -1,7 +1,7 @@
 import type { Context, VBArguments } from '../Context';
 import type { AstVisitors, Ast_Visibility_Node } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
-import { VBObject } from './VBObject';
+import { VBPointer } from './VBPointer';
 import type { VBSub } from './VBSub';
 
 export interface VBFile {
@@ -18,7 +18,7 @@ export class VBVariable {
   type: 'variable' = 'variable';
   file: VBFile;
   constructor(
-    public value: VBObject,
+    public value: VBPointer,
     public variableInfo: VBVariableInfo,
     public isStatic: boolean,
     public visibility: Visibility,
@@ -81,12 +81,12 @@ export interface ArgInfo {
   name: string;
   asType?: AsTypeClauseInfo;
   optional?: boolean;
-  defaultValue?: VBObject;
+  defaultValue?: VBPointer;
 }
 
 export interface VBVariableInfo {
   name: string;
-  value: () => Promise<VBObject> | VBObject;
+  value: () => Promise<VBPointer> | VBPointer;
 }
 
 export type Evaluators = AstVisitors<'evaluate', Context>;

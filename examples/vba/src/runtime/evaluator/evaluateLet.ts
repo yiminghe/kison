@@ -3,7 +3,7 @@ import type {
   Ast_ImplicitCallStmt_InStmt_Node,
   Ast_ValueStmt_Node,
 } from '../../parser';
-import { VBObject, VBValue } from '../types';
+import { VBPointer, VBValue } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import { collectAmbiguousIdentifiers } from '../collect/collectType';
 
@@ -20,13 +20,13 @@ registerEvaluators({
     const op = children[++index] as AstTokenNode;
     const right = children[++index] as Ast_ValueStmt_Node;
     context.stashMemberInternal();
-    const leftVariable: VBObject = await evaluate(left, context);
+    const leftVariable: VBPointer = await evaluate(left, context);
     context.popMemberInternal();
-    if (leftVariable.type !== 'Object') {
+    if (leftVariable.type !== 'Pointer') {
       throw new Error('unexpect let left side operator!');
     }
     context.stashMemberInternal();
-    const rightValue: VBValue | VBObject = await evaluate(right, context);
+    const rightValue: VBValue | VBPointer = await evaluate(right, context);
     context.popMemberInternal();
     if (op.token === 'EQ') {
       await leftVariable.setValue(rightValue);
@@ -36,9 +36,9 @@ registerEvaluators({
   async evaluateSetStmt(node, context) {
     let { children } = node;
     context.stashMemberInternal();
-    const leftVariable: VBObject = await evaluate(children[1], context);
+    const leftVariable: VBPointer = await evaluate(children[1], context);
     context.popMemberInternal();
-    if (leftVariable.type !== 'Object') {
+    if (leftVariable.type !== 'Pointer') {
       throw new Error('unexpect let left side operator!');
     }
     const c3 = children[3];
@@ -51,14 +51,14 @@ registerEvaluators({
       }
     } else {
       context.stashMemberInternal();
-      let rightValue: VBValue | VBObject = await evaluate(
+      let rightValue: VBValue | VBPointer = await evaluate(
         c3.children[0],
         context,
       );
       context.popMemberInternal();
       if (
         rightValue.type === 'Nothing' &&
-        leftVariable.subType === 'address' &&
+        leftVariable.subType === 'Value' &&
         leftVariable.asType.isNew
       ) {
         rightValue = await context.createObject(leftVariable.asType.className!);

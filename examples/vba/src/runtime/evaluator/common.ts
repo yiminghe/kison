@@ -1,11 +1,11 @@
 import type { AstNode, AstSymbolNode } from '../../parser';
 import type { Context } from '../Context';
-import { BinderValue, VBNamespaceBinder, VBObject, VBValue } from '../types';
+import { NamespaceValue, VBNamespace, VBPointer, VBValue } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
 
 export async function buildArgs({ children }: AstSymbolNode, context: Context) {
-  let args: (VBValue | VBObject)[] | undefined;
+  let args: (VBValue | VBPointer)[] | undefined;
   for (let i = 0; i < children.length; i++) {
     const f = children[i];
     if (f.type === 'token' && f.token === 'LPAREN') {
@@ -25,7 +25,7 @@ export async function buildIndexes(
   { children }: { children: AstNode[] },
   context: Context,
 ) {
-  let args: (VBValue | VBObject)[][] = [];
+  let args: (VBValue | VBPointer)[][] = [];
   for (const f of children) {
     if (f.type === 'symbol' && f.symbol === 'indexes') {
       args.push(await evaluate(f, context));
@@ -35,21 +35,21 @@ export async function buildIndexes(
 }
 
 export async function callSubOrGetElementWithIndexesAndArgs(
-  parent: VBValue | VBObject | VBNamespaceBinder | undefined,
+  parent: VBValue | VBPointer | VBNamespace | undefined,
   subName: string,
-  indexes: (VBObject | VBValue)[][],
+  indexes: (VBPointer | VBValue)[][],
   context: Context,
 ) {
   const scope = context.getCurrentScopeInternal();
 
   async function getElements(
-    obj: VBObject | VBValue | VBNamespaceBinder | BinderValue,
-    indexes: (VBObject | VBValue)[][],
+    obj: VBPointer | VBValue | VBNamespace | NamespaceValue,
+    indexes: (VBPointer | VBValue)[][],
   ) {
     let ret = obj;
     for (const i of indexes) {
       const valueIndex = await transformToIndexType(i);
-      const value = ret.type === 'Object' ? await ret.getValue() : ret;
+      const value = ret.type === 'Pointer' ? await ret.getValue() : ret;
       if (
         value &&
         (value.type === 'Array' ||
@@ -64,7 +64,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
   }
 
   if (parent) {
-    let v: VBObject | VBValue | VBNamespaceBinder | BinderValue | undefined;
+    let v: VBPointer | VBValue | VBNamespace | NamespaceValue | undefined;
     if (subName) {
       if (parent.type === 'Namespace') {
         v = parent.get(subName);
@@ -113,15 +113,15 @@ export async function callSubOrGetElementWithIndexesAndArgs(
   }
 }
 export async function getVBValue(
-  v: VBObject | VBValue,
-): Promise<VBObject | VBValue>;
+  v: VBPointer | VBValue,
+): Promise<VBPointer | VBValue>;
 export async function getVBValue(
-  v: VBObject | VBValue | undefined,
-): Promise<VBObject | VBValue | undefined> {
+  v: VBPointer | VBValue | undefined,
+): Promise<VBPointer | VBValue | undefined> {
   if (!v) {
     return v;
   }
-  if (v.type === 'Object') {
+  if (v.type === 'Pointer') {
     return v.getValue();
   }
   return v;

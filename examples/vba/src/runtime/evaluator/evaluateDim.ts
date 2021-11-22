@@ -13,16 +13,16 @@ import {
   VBInteger,
   VBVariableInfo,
   Subscript,
-  VBObject,
+  VBPointer,
   VBPrimitiveTypeClass,
   getDEFAULT_AS_TYPE,
   VB_EMPTY,
-  VBNativeObject,
+  VBValuePointer,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
-async function getNumberFromSubscript(node: VBObject | VBInteger) {
-  if (node.type === 'Object') {
+async function getNumberFromSubscript(node: VBPointer | VBInteger) {
+  if (node.type === 'Pointer') {
     const vbValue = await node.getValue();
     if (vbValue.type !== 'Integer') {
       throw new Error('unexpected array dimision!');
@@ -83,25 +83,25 @@ registerEvaluators({
       if (subscripts) {
         value = () => {
           const value = new VBArray(lowerType, subscripts!);
-          return new VBNativeObject(value, asType);
+          return new VBValuePointer(value, asType);
         };
       } else if (PrimitiveClass) {
         value = () => {
           const value = new PrimitiveClass();
-          return new VBNativeObject(value, asType);
+          return new VBValuePointer(value, asType);
         };
       }
     } else if (className) {
       if (isNew) {
         value = async () => {
-          return new VBNativeObject(
+          return new VBValuePointer(
             await context.createObject(className),
             asType,
           );
         };
       } else {
         value = () => {
-          return new VBNativeObject(VB_EMPTY, asType);
+          return new VBValuePointer(VB_EMPTY, asType);
         };
       }
     }
@@ -197,7 +197,7 @@ registerEvaluators({
           context,
         );
         const objValue = await obj.getValue();
-        if (objValue.type === 'Array' && obj.subType === 'address') {
+        if (objValue.type === 'Array' && obj.subType === 'Value') {
           if (obj.dynamicArray) {
             objValue.dynamic = true;
             objValue.subscripts = subscripts;
@@ -221,8 +221,8 @@ registerEvaluators({
   async evaluateEraseStmt({ children }, context) {
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {
-        const obj: VBObject = await evaluate(c, context);
-        if (obj.type === 'Object' && obj.subType === 'address') {
+        const obj: VBPointer = await evaluate(c, context);
+        if (obj.type === 'Pointer' && obj.subType === 'Value') {
           const value = await obj.getValue();
           if (value.type === 'Array') {
             value.value = [];
@@ -237,7 +237,7 @@ registerEvaluators({
 });
 
 type RedimRet = {
-  obj: VBObject;
+  obj: VBPointer;
   subscripts: Subscript[];
   asType?: AsTypeClauseInfo;
 };

@@ -1,6 +1,6 @@
 import type { Context } from '../Context';
 import { VBValue, VB_EMPTY } from './VBValue';
-import { VBObject } from './VBObject';
+import { VBPointer } from './VBPointer';
 import { ClassBinder, IndexType, InstanceBinder } from './runtime';
 import { getVBValue } from '../evaluator/common';
 import {
@@ -11,14 +11,14 @@ import {
 import { SubBinder } from '../types';
 
 interface VBClassMember {
-  value: VBObject;
+  value: VBPointer;
   isPrivate: boolean;
 }
 
 // user class
 export class VBNativeClass {
   type: 'Class' = 'Class';
-  subType: 'native' = 'native';
+  subType: 'Native' = 'Native';
   _init: boolean = false;
   members = new Map<string, VBClassMember>();
   value: string;
@@ -44,7 +44,7 @@ export class VBNativeClass {
     for (const vbVariable of fileSymbolTable.symbolTable.values()) {
       if (
         vbVariable.type === 'variable' &&
-        vbVariable.value.subType === 'address'
+        vbVariable.value.subType === 'Value'
       ) {
         members.set(vbVariable.name, {
           value: vbVariable.value!.clone(),
@@ -62,7 +62,7 @@ export class VBNativeClass {
 
   async callSub(
     name: string,
-    args: (VBValue | VBObject)[] = [],
+    args: (VBValue | VBPointer)[] = [],
     check: boolean = true,
   ) {
     name = name.toLowerCase();
@@ -82,7 +82,7 @@ export class VBNativeClass {
     return VB_EMPTY;
   }
 
-  async set(name: string, value: VBObject | VBValue): Promise<void> {
+  async set(name: string, value: VBPointer | VBValue): Promise<void> {
     if (this.members.has(name)) {
       const member = this.members.get(name)!;
       if (this.context.currentFile.id !== this.id && member.isPrivate) {
@@ -106,7 +106,7 @@ export class VBNativeClass {
     } else {
       const propertyName = getPropertyGetSubName(name);
       if (this.fileSymbolTable.symbolTable.has(propertyName)) {
-        return new VBNativeProperty(this, name, () =>
+        return new VBPropertyPointer(this, name, () =>
           this.callSub(propertyName),
         );
       }
@@ -114,10 +114,10 @@ export class VBNativeClass {
   }
 }
 
-export class VBNativeProperty {
-  type: 'Object' = 'Object';
+export class VBPropertyPointer {
+  type: 'Pointer' = 'Pointer';
 
-  subType: 'nativeProperty' = 'nativeProperty';
+  subType: 'Property' = 'Property';
 
   public constructor(
     public classObj: VBNativeClass,
@@ -133,15 +133,15 @@ export class VBNativeProperty {
     return this._value();
   }
 
-  async setValue(value: VBObject | VBValue) {
+  async setValue(value: VBPointer | VBValue) {
     return this.classObj.set(this.name, value);
   }
 }
 
-export class VBBindProperty {
-  type: 'Object' = 'Object';
+export class VBBindPropertyPointer {
+  type: 'Pointer' = 'Pointer';
 
-  subType: 'bindProperty' = 'bindProperty';
+  subType: 'BindProperty' = 'BindProperty';
 
   _value: VBValue = VB_EMPTY;
 
@@ -155,15 +155,15 @@ export class VBBindProperty {
     return (await this.instance.get(this.name))._value;
   }
 
-  async setValue(value: VBObject | VBValue) {
+  async setValue(value: VBPointer | VBValue) {
     return this.instance.set(this.name, value);
   }
 }
 
-export class VBBindIndex {
-  type: 'Object' = 'Object';
+export class VBBindIndexPointer {
+  type: 'Pointer' = 'Pointer';
 
-  subType: 'bindIndex' = 'bindIndex';
+  subType: 'BindIndex' = 'BindIndex';
 
   _value: VBValue | undefined;
 
@@ -186,7 +186,7 @@ export class VBBindIndex {
     return this._value;
   }
 
-  async setValue(value: VBObject | VBValue) {
+  async setValue(value: VBPointer | VBValue) {
     return this.instance.setElement(this.indexes, value);
   }
 }
@@ -200,7 +200,7 @@ export class VBBindClass {
 
   instance: InstanceBinder = null!;
 
-  private properties = new Map<string, VBBindProperty>();
+  private properties = new Map<string, VBBindPropertyPointer>();
 
   constructor(public binder: ClassBinder, public context: Context) {
     this.value = `[class ${binder.name}]`;
@@ -214,30 +214,30 @@ export class VBBindClass {
     this.instance = await this.binder.value();
   }
 
-  async set(name: string, value: VBObject | VBValue) {
+  async set(name: string, value: VBPointer | VBValue) {
     let v: VBValue;
-    if (value.type === 'Object') {
+    if (value.type === 'Pointer') {
       v = await value.getValue();
     } else {
       v = value;
     }
     return this.instance.set(name, v);
   }
-  async get(name: string): Promise<VBBindProperty> {
+  async get(name: string): Promise<VBBindPropertyPointer> {
     let obj = this.properties.get(name);
     if (!obj) {
-      obj = new VBBindProperty(this, name);
+      obj = new VBBindPropertyPointer(this, name);
       this.properties.set(name, obj);
     }
     obj._value = await this.instance.get(name);
     return obj;
   }
   async getElement(indexes: IndexType[]) {
-    return new VBBindIndex(this, indexes);
+    return new VBBindIndexPointer(this, indexes);
   }
-  async setElement(indexes: IndexType[], value: VBObject | VBValue) {
+  async setElement(indexes: IndexType[], value: VBPointer | VBValue) {
     let v: VBValue;
-    if (value.type === 'Object') {
+    if (value.type === 'Pointer') {
       v = await value.getValue();
     } else {
       v = value;
@@ -248,7 +248,7 @@ export class VBBindClass {
     return this.instance.setElement(indexes, v);
   }
 
-  async callSub(name: string, args: (VBValue | VBObject)[] = []) {
+  async callSub(name: string, args: (VBValue | VBPointer)[] = []) {
     const subs = this.instance.subs || {};
     const sub: SubBinder = {
       ...subs[name],

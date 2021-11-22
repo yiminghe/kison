@@ -1,5 +1,5 @@
 import type { LiteralToken } from '../parser';
-import type { IndexType, VBObject, VBValue } from './types';
+import type { IndexType, VBPointer, VBValue } from './types';
 
 export function last<T>(stack: T[], n = 1) {
   return stack[stack.length - n];
@@ -22,10 +22,10 @@ export function captalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-export async function transformToIndexType(values: (VBObject | VBValue)[]) {
+export async function transformToIndexType(values: (VBPointer | VBValue)[]) {
   const ret: IndexType[] = [];
   for (let v_ of values) {
-    const v = v_.type === 'Object' ? await v_.getValue() : v_;
+    const v = v_.type === 'Pointer' ? await v_.getValue() : v_;
     if (v.type === 'Integer' || v.type === 'String') {
       ret.push(v.value);
     } else {

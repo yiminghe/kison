@@ -4,10 +4,10 @@ import {
   VBValue,
   VBPrimitiveTypeClass,
 } from './VBValue';
-import { VBObject, VBNativeObject } from './VBObject';
+import { VBPointer, VBValuePointer } from './VBPointer';
 import { IndexType } from './runtime';
 
-type ArrayElement = VBObject | VBObject[];
+type ArrayElement = VBPointer | VBPointer[];
 
 const ARRAY_ACCESS_ERROR = `Subscript out of Range`;
 
@@ -47,16 +47,16 @@ export class VBArray {
           value[index] = [];
         } else {
           const VBPrimitiveClass = VBPrimitiveTypeClass[elementType];
-          value[index] = new VBNativeObject(new VBPrimitiveClass(), {
+          value[index] = new VBValuePointer(new VBPrimitiveClass(), {
             type: elementType,
             isArray: false,
           });
         }
       }
       element = value[index];
-      value = value[index] as (VBObject | VBObject[])[];
+      value = value[index] as (VBPointer | VBPointer[])[];
     }
-    return element as VBObject;
+    return element as VBPointer;
   }
 
   async setElement(indexes: IndexType[], value: VBValue) {

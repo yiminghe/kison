@@ -1,4 +1,8 @@
-import { VBBindIndex, VBBindProperty, VBNativeProperty } from './VBClass';
+import {
+  VBBindIndexPointer,
+  VBBindPropertyPointer,
+  VBPropertyPointer,
+} from './VBClass';
 import {
   VBValue,
   AsTypeClauseInfo,
@@ -6,21 +10,21 @@ import {
   VB_EMPTY,
 } from './VBValue';
 
-export type VBObject =
-  | VBNativeObject
-  | VBBindProperty
-  | VBBindIndex
-  | VBNativeProperty;
+export type VBPointer =
+  | VBValuePointer
+  | VBBindPropertyPointer
+  | VBBindIndexPointer
+  | VBPropertyPointer;
 
 // address
-export class VBNativeObject {
-  type: 'Object' = 'Object';
-  subType: 'address' = 'address';
+export class VBValuePointer {
+  type: 'Pointer' = 'Pointer';
+  subType: 'Value' = 'Value';
   dynamicArray: boolean = false;
 
   constructor(
     // nested address or value
-    private _value: VBValue | VBObject = VB_EMPTY,
+    private _value: VBValue | VBPointer = VB_EMPTY,
     public asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE(),
     public constant: boolean = false,
   ) {
@@ -33,32 +37,32 @@ export class VBNativeObject {
   }
 
   clone() {
-    const newObj = new VBNativeObject(this._value, this.asType);
+    const newObj = new VBValuePointer(this._value, this.asType);
     newObj.dynamicArray = this.dynamicArray;
     return newObj;
   }
 
   async getValue(): Promise<VBValue> {
-    if (this._value.type === 'Object') {
+    if (this._value.type === 'Pointer') {
       return this._value.getValue();
     }
     return this._value;
   }
 
-  _getObject(): VBObject {
-    if (this._value.type === 'Object') {
+  _getObject(): VBPointer {
+    if (this._value.type === 'Pointer') {
       return this._value._getObject();
     }
     return this;
   }
 
-  async setValue(value: VBValue | VBObject) {
+  async setValue(value: VBValue | VBPointer) {
     if (this.constant) {
       throw new Error('Can not set const variable!');
     }
     const obj = this._getObject();
-    if (obj.subType === 'address') {
-      if (value.type === 'Object') {
+    if (obj.subType === 'Value') {
+      if (value.type === 'Pointer') {
         obj._value = await value.getValue();
       } else {
         obj._value = value;

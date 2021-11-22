@@ -16,4 +16,5 @@ export type {
   UserClassBinder as ClassBinder,
 } from './runtime/types';
 export { parser };
-export * from './runtime/Context';
+export { Context } from './runtime/Context';
+export type { CallOptions, VBArguments } from './runtime/Context';

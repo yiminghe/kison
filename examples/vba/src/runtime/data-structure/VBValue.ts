@@ -72,9 +72,8 @@ export class VBBoolean {
 }
 
 export interface Subscript {
-  lower: number;
+  lower?: number;
   upper: number;
-  one: boolean;
 }
 
 export class VBNothing {

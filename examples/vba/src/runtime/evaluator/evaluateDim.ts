@@ -131,11 +131,12 @@ registerEvaluators({
       one = true;
       upper = await getNumberFromSubscript(await evaluate(subs[0], context));
     }
-    return {
-      lower,
-      upper,
-      one,
-    };
+    return one
+      ? { upper }
+      : {
+          lower,
+          upper,
+        };
   },
   async evaluateVariableStmt(node, context) {
     const { children } = node;

@@ -4,6 +4,7 @@ import {
   ClassBinder,
   VariableBinder,
   CallOptions,
+  VBArray,
 } from '../src/index';
 import type { VBFile } from '../src/runtime/types';
 
@@ -99,11 +100,15 @@ export async function runs(
         name: 'debug.print',
         argumentsInfo: [
           {
-            name: 'msg',
+            name: 'msgs',
+            paramArray: true,
           },
         ],
         async value(args) {
-          ret.push((await args.getValue('msg'))?.value);
+          const msgs = (await args.getValue('msgs')) as unknown as VBArray;
+          for (let i = 0; i <= msgs.jsUBound(); i++) {
+            ret.push((await (await msgs.getElement([i])).getValue()).value);
+          }
           return Context.createInteger(1);
         },
       });

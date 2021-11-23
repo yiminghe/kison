@@ -88,29 +88,57 @@ registerLoaders({
         isArray: false,
       },
     };
+    let existParamArray = false;
     for (const c of node.children) {
-      if (c.type === 'token' && c.token === 'BYVAL') {
-        argInfo.byRef = false;
-      } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
-        argInfo.name = c.children[0].text;
-      } else if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
-        argInfo.asType = collect_asTypeClause(c, context);
-      } else if (c.type === 'token' && c.token === 'OPTIONAL') {
-        argInfo.optional = true;
-      } else if (c.type === 'symbol' && c.symbol === 'argDefaultValue') {
-        const defaultValue: VBPointer | VBValue = await evaluate(
-          c.children[1],
-          context,
-        );
-        if (defaultValue.type === 'Pointer') {
-          argInfo.defaultValue = await defaultValue.getValue();
-        } else {
-          argInfo.defaultValue = defaultValue;
+      let lp = false;
+      if (existParamArray) {
+        throw new Error('paramArray must be the last argument!');
+      }
+      if (c.type === 'token') {
+        const { token } = c;
+        if (token === 'BYVAL') {
+          argInfo.byRef = false;
+        } else if (token === 'OPTIONAL') {
+          argInfo.optional = true;
+        } else if (token === 'PARAMARRAY') {
+          argInfo.paramArray = true;
+          existParamArray = true;
+        } else if (token === 'LPAREN') {
+          lp = true;
+        }
+      } else if (c.type === 'symbol') {
+        const { symbol } = c;
+        if (symbol === 'ambiguousIdentifier') {
+          argInfo.name = c.children[0].text;
+        } else if (symbol === 'asTypeClause') {
+          argInfo.asType = collect_asTypeClause(c, context);
+        } else if (symbol === 'argDefaultValue') {
+          const defaultValue: VBPointer | VBValue = await evaluate(
+            c.children[1],
+            context,
+          );
+          if (defaultValue.type === 'Pointer') {
+            argInfo.defaultValue = await defaultValue.getValue();
+          } else {
+            argInfo.defaultValue = defaultValue;
+          }
         }
       }
+      if (!lp && existParamArray) {
+        throw new Error('paramArray must be ...()!');
+      }
     }
+    const type = argInfo.asType?.type || 'Variant';
+    if (argInfo.paramArray) {
+      if (argInfo.byRef === false) {
+        throw new Error('paramArray must be byRef!');
+      }
+      if (type !== 'Variant') {
+        throw new Error('paramArray must be Variant!');
+      }
+    }
+
     if (argInfo.optional && !argInfo.defaultValue) {
-      const type = argInfo.asType?.type || 'Variant';
       const PrimitiveClass = (VBPrimitiveTypeClass as any)[type];
       if (!PrimitiveClass) {
         throw new Error('optional parameter defaultValue must be basic type!');

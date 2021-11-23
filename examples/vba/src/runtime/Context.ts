@@ -19,6 +19,7 @@ import {
   VBValuePointer,
   VB_TRUE,
   VB_FALSE,
+  VBArray,
   SymbolItem,
   VBScope,
   ArgInfo,
@@ -234,6 +235,20 @@ export class Context {
     for (; i < args.length; i++) {
       const a = args[i];
       const argInfo = argumentsInfo[i];
+      if (argInfo.paramArray) {
+        const params = Context.createArray('Variant', [
+          { upper: args.length - i - 1 },
+        ]);
+        for (let j = 0; j + i < args.length; j++) {
+          const nest = args[j + i];
+          // The parameter array is always zero based and
+          // is not effected by the Option Base statement.
+          params.setElement([j], nest);
+        }
+        await scope.setVariable(argInfo.name, new VBValuePointer(params));
+        i = argumentsInfo.length;
+        break;
+      }
       if (!argInfo) {
         throw new Error('argument size is not same with parameter size!');
       }
@@ -502,6 +517,10 @@ export class Context {
     return value ? VB_TRUE : VB_FALSE;
   }
 
+  public static createArray(...args: ConstructorParameters<typeof VBArray>) {
+    return new VBArray(...args);
+  }
+
   public createInteger(value: number) {
     return Context.createInteger(value);
   }
@@ -512,6 +531,10 @@ export class Context {
 
   public createBoolean(value: boolean) {
     return Context.createBoolean(value);
+  }
+
+  public createArray(...args: ConstructorParameters<typeof VBArray>) {
+    return Context.createArray(...args);
   }
 
   public async createObject(name: string) {

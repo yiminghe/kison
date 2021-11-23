@@ -82,6 +82,7 @@ export interface ArgInfo {
   asType?: AsTypeClauseInfo;
   optional?: boolean;
   defaultValue?: VBValue;
+  paramArray?: boolean;
 }
 
 export interface VBVariableInfo {

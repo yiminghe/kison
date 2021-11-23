@@ -11,6 +11,7 @@ import parser from './parser';
 // };
 
 export type {
+  VBArray,
   UserSubBinder as SubBinder,
   UserVariableBinder as VariableBinder,
   UserClassBinder as ClassBinder,

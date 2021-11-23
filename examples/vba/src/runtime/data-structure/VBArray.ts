@@ -3,6 +3,7 @@ import {
   Subscript,
   VBValue,
   VBPrimitiveTypeClass,
+  VBInteger,
 } from './VBValue';
 import { VBPointer, VBValuePointer } from './VBPointer';
 import { IndexType } from './runtime';
@@ -15,13 +16,32 @@ export class VBArray {
   type: 'Array' = 'Array';
   value: ArrayElement[] = [];
   dynamic: boolean = false;
+
   constructor(
     public elementType: VBValidPrimitiveType,
-    public subscripts: Subscript[],
+    public subscripts: Subscript[] = [],
+    public base: number = 0,
   ) {
     if (!subscripts.length) {
       this.dynamic = true;
     }
+  }
+
+  jsUBound(i: number = 0) {
+    return this.subscripts[i].upper;
+  }
+
+  jsLBound(i: number = 0) {
+    const subscript = this.subscripts[i];
+    return subscript.lower === undefined ? this.base : subscript.lower;
+  }
+
+  lbound(i: number = 0) {
+    return new VBInteger(this.jsLBound(i));
+  }
+
+  ubound(i: number = 0) {
+    return new VBInteger(this.jsUBound(i));
   }
 
   async getElement(indexes: IndexType[]) {
@@ -39,7 +59,9 @@ export class VBArray {
       if (!subscript) {
         throw new Error(ARRAY_ACCESS_ERROR);
       }
-      if (index < subscript.lower || index > subscript.upper) {
+      const lbound = this.jsLBound(i);
+      const ubound = this.jsUBound(i);
+      if (index < lbound || index > ubound) {
         throw new Error(ARRAY_ACCESS_ERROR);
       }
       if (value[index] === undefined) {
@@ -59,7 +81,7 @@ export class VBArray {
     return element as VBPointer;
   }
 
-  async setElement(indexes: IndexType[], value: VBValue) {
+  async setElement(indexes: IndexType[], value: VBValue | VBPointer) {
     const obj = await this.getElement(indexes);
     return obj.setValue(value);
   }

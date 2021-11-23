@@ -1,4 +1,4 @@
-import { parser, SubBinder } from '../src/index';
+import { parser, SubBinder, VBArray } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 import { runs2 } from '../tests/utils';
 
@@ -190,10 +190,16 @@ require(['vs/editor/editor.main'], () => {
     argumentsInfo: [
       {
         name: 'msg',
+        paramArray: true,
       },
     ],
     async value(args) {
-      console.log(`call ${name}:`, (await args.getValue('msg'))?.value);
+      const ret = [];
+      const msgs = (await args.getValue('msg')) as unknown as VBArray;
+      for (let i = 0; i <= msgs.jsUBound(); i++) {
+        ret.push((await (await msgs.getElement([i])).getValue()).value);
+      }
+      console.log(`call ${name}:`, ret);
     },
   });
 

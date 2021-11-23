@@ -109,4 +109,25 @@ End Sub
 
     expect(ret).toEqual([false, true]);
   });
+
+  it('paramarray works', async () => {
+    const ret = await run(`
+    Public Sub Procedure_Five(ByVal iConstant As Integer, _
+      ParamArray aArgumentsArray() As Variant)
+
+Dim vArg As Variant
+vArg = aArgumentsArray(0)(1)
+Debug.Print vArg
+End Sub
+
+Public Sub main()
+dim a(1) as Integer
+a(0)=1
+a(1)=2
+Call Procedure_Five(100, a)
+End Sub
+        `);
+
+    expect(ret).toEqual([2]);
+  });
 });

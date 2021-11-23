@@ -73,7 +73,13 @@ registerLoaders({
     const ret: ArgInfo[] = [];
     for (const c of node.children) {
       if (c.type === 'symbol' && c.symbol === 'arg') {
-        ret.push(await load(c, context));
+        const argInfo = await load(c, context);
+        ret.push(argInfo);
+      }
+    }
+    for (let i = 0; i < ret.length; i++) {
+      if (ret[i].paramArray && i !== ret.length - 1) {
+        throw new Error('paramarray must be last argument!');
       }
     }
     return ret;
@@ -88,12 +94,8 @@ registerLoaders({
         isArray: false,
       },
     };
-    let existParamArray = false;
+    let lp = false;
     for (const c of node.children) {
-      let lp = false;
-      if (existParamArray) {
-        throw new Error('paramArray must be the last argument!');
-      }
       if (c.type === 'token') {
         const { token } = c;
         if (token === 'BYVAL') {
@@ -102,7 +104,6 @@ registerLoaders({
           argInfo.optional = true;
         } else if (token === 'PARAMARRAY') {
           argInfo.paramArray = true;
-          existParamArray = true;
         } else if (token === 'LPAREN') {
           lp = true;
         }
@@ -124,9 +125,9 @@ registerLoaders({
           }
         }
       }
-      if (!lp && existParamArray) {
-        throw new Error('paramArray must be ...()!');
-      }
+    }
+    if (!lp && argInfo.paramArray) {
+      throw new Error('paramArray parameter must be of array type!');
     }
     const type = argInfo.asType?.type || 'Variant';
     if (argInfo.paramArray) {

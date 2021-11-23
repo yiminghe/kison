@@ -78,11 +78,10 @@ registerEvaluators({
     let value: VBVariableInfo['value'] | undefined;
 
     if (type) {
-      const lowerType = type.toLowerCase() as any;
-      const PrimitiveClass = (VBPrimitiveTypeClass as any)[lowerType];
+      const PrimitiveClass = (VBPrimitiveTypeClass as any)[type];
       if (subscripts) {
         value = () => {
-          const value = new VBArray(lowerType, subscripts!);
+          const value = new VBArray(type, subscripts!);
           return new VBValuePointer(value, asType);
         };
       } else if (PrimitiveClass) {

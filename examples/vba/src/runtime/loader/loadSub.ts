@@ -8,7 +8,13 @@ import type {
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
 import { evaluate } from '../evaluator/index';
-import { ArgInfo, VBSub } from '../types';
+import {
+  ArgInfo,
+  VBPointer,
+  VBPrimitiveTypeClass,
+  VBSub,
+  VBValue,
+} from '../types';
 import { getPropertyGetSubName, getPropertySetSubName } from '../utils';
 import { registerLoaders, load } from './loaders';
 
@@ -91,8 +97,24 @@ registerLoaders({
       } else if (c.type === 'token' && c.token === 'OPTIONAL') {
         argInfo.optional = true;
       } else if (c.type === 'symbol' && c.symbol === 'argDefaultValue') {
-        argInfo.defaultValue = await evaluate(c, context);
+        const defaultValue: VBPointer | VBValue = await evaluate(
+          c.children[1],
+          context,
+        );
+        if (defaultValue.type === 'Pointer') {
+          argInfo.defaultValue = await defaultValue.getValue();
+        } else {
+          argInfo.defaultValue = defaultValue;
+        }
       }
+    }
+    if (argInfo.optional && !argInfo.defaultValue) {
+      const type = argInfo.asType?.type || 'Variant';
+      const PrimitiveClass = (VBPrimitiveTypeClass as any)[type];
+      if (!PrimitiveClass) {
+        throw new Error('optional parameter defaultValue must be basic type!');
+      }
+      argInfo.defaultValue = new PrimitiveClass();
     }
     return argInfo;
   },

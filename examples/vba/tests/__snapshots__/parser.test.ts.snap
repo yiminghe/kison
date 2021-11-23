@@ -100,8 +100,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 54,
-                  'internalRuleIndex': 157,
+                  'ruleIndex': 55,
+                  'internalRuleIndex': 162,
                   'id': 7
                 },
                 {
@@ -321,18 +321,18 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                           'text': 'x'
                                         }
                                       ],
-                                      'ruleIndex': 54,
-                                      'internalRuleIndex': 157,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 162,
                                       'id': 19
                                     }
                                   ],
-                                  'ruleIndex': 43,
-                                  'internalRuleIndex': 116,
+                                  'ruleIndex': 44,
+                                  'internalRuleIndex': 122,
                                   'id': 18
                                 }
                               ],
-                              'ruleIndex': 39,
-                              'internalRuleIndex': 101,
+                              'ruleIndex': 40,
+                              'internalRuleIndex': 107,
                               'id': 17
                             },
                             {
@@ -378,23 +378,23 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 45,
-                                  'internalRuleIndex': 118,
+                                  'ruleIndex': 46,
+                                  'internalRuleIndex': 124,
                                   'id': 21
                                 }
                               ],
-                              'ruleIndex': 38,
-                              'internalRuleIndex': 97,
+                              'ruleIndex': 39,
+                              'internalRuleIndex': 103,
                               'id': 20
                             }
                           ],
-                          'ruleIndex': 20,
-                          'internalRuleIndex': 56,
+                          'ruleIndex': 21,
+                          'internalRuleIndex': 62,
                           'id': 16
                         }
                       ],
-                      'ruleIndex': 15,
-                      'internalRuleIndex': 36,
+                      'ruleIndex': 16,
+                      'internalRuleIndex': 42,
                       'id': 15
                     },
                     {
@@ -439,8 +439,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'id': 22
                     }
                   ],
-                  'ruleIndex': 14,
-                  'internalRuleIndex': 30,
+                  'ruleIndex': 15,
+                  'internalRuleIndex': 36,
                   'id': 14
                 },
                 {
@@ -455,13 +455,13 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                   'text': 'end sub'
                 }
               ],
-              'ruleIndex': 9,
-              'internalRuleIndex': 24,
+              'ruleIndex': 10,
+              'internalRuleIndex': 30,
               'id': 6
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 19,
+          'ruleIndex': 8,
+          'internalRuleIndex': 25,
           'id': 5
         },
         {
@@ -491,8 +491,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
           'id': 24
         }
       ],
-      'ruleIndex': 6,
-      'internalRuleIndex': 14,
+      'ruleIndex': 7,
+      'internalRuleIndex': 20,
       'id': 4
     },
     {
@@ -613,8 +613,8 @@ exports[`vba parser parse correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 54,
-                  'internalRuleIndex': 157,
+                  'ruleIndex': 55,
+                  'internalRuleIndex': 162,
                   'id': 7
                 },
                 {
@@ -720,8 +720,8 @@ exports[`vba parser parse correctly 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 54,
-                                  'internalRuleIndex': 157,
+                                  'ruleIndex': 55,
+                                  'internalRuleIndex': 162,
                                   'id': 14
                                 },
                                 {
@@ -776,38 +776,38 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 45,
-                                              'internalRuleIndex': 118,
+                                              'ruleIndex': 46,
+                                              'internalRuleIndex': 124,
                                               'id': 18
                                             }
                                           ],
-                                          'ruleIndex': 38,
-                                          'internalRuleIndex': 97,
+                                          'ruleIndex': 39,
+                                          'internalRuleIndex': 103,
                                           'id': 17
                                         }
                                       ],
-                                      'ruleIndex': 29,
-                                      'internalRuleIndex': 76,
+                                      'ruleIndex': 30,
+                                      'internalRuleIndex': 82,
                                       'id': 16
                                     }
                                   ],
-                                  'ruleIndex': 28,
-                                  'internalRuleIndex': 69,
+                                  'ruleIndex': 29,
+                                  'internalRuleIndex': 75,
                                   'id': 15
                                 }
                               ],
-                              'ruleIndex': 27,
-                              'internalRuleIndex': 67,
+                              'ruleIndex': 28,
+                              'internalRuleIndex': 73,
                               'id': 13
                             }
                           ],
-                          'ruleIndex': 25,
-                          'internalRuleIndex': 65,
+                          'ruleIndex': 26,
+                          'internalRuleIndex': 71,
                           'id': 12
                         }
                       ],
-                      'ruleIndex': 15,
-                      'internalRuleIndex': 38,
+                      'ruleIndex': 16,
+                      'internalRuleIndex': 44,
                       'id': 11
                     },
                     {
@@ -852,8 +852,8 @@ exports[`vba parser parse correctly 2`] = `
                       'id': 19
                     }
                   ],
-                  'ruleIndex': 14,
-                  'internalRuleIndex': 30,
+                  'ruleIndex': 15,
+                  'internalRuleIndex': 36,
                   'id': 10
                 },
                 {
@@ -868,13 +868,13 @@ exports[`vba parser parse correctly 2`] = `
                   'text': 'end sub'
                 }
               ],
-              'ruleIndex': 9,
-              'internalRuleIndex': 24,
+              'ruleIndex': 10,
+              'internalRuleIndex': 30,
               'id': 6
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 19,
+          'ruleIndex': 8,
+          'internalRuleIndex': 25,
           'id': 5
         },
         {
@@ -904,8 +904,8 @@ exports[`vba parser parse correctly 2`] = `
           'id': 21
         }
       ],
-      'ruleIndex': 6,
-      'internalRuleIndex': 14,
+      'ruleIndex': 7,
+      'internalRuleIndex': 20,
       'id': 4
     },
     {

@@ -81,7 +81,7 @@ export interface ArgInfo {
   name: string;
   asType?: AsTypeClauseInfo;
   optional?: boolean;
-  defaultValue?: VBPointer;
+  defaultValue?: VBValue;
 }
 
 export interface VBVariableInfo {

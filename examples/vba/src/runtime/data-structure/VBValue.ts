@@ -82,6 +82,11 @@ export class VBNothing {
   readonly value: undefined;
 }
 
+export class VBMissingArgument {
+  type: 'MissingArgument' = 'MissingArgument';
+  readonly value: undefined;
+}
+
 export type VBPrimitive =
   | VBByte
   | VBCurrency
@@ -96,6 +101,7 @@ export type VBPrimitive =
   | VBBoolean
   | VBString
   | VBNothing
+  | VBMissingArgument
   | VBEmpty;
 
 export const VBPrimitiveTypeClass = {
@@ -126,7 +132,7 @@ export type VBValue = VBPrimitive | VBArray | VBClass;
 export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();
 export const VB_EMPTY = new VBEmpty();
-
+export const VB_MISSING_ARGUMENT = new VBMissingArgument();
 export const VB_TRUE = new VBBoolean(true);
 export const VB_FALSE = new VBBoolean(false);
 

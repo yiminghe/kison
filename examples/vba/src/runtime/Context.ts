@@ -211,12 +211,27 @@ export class Context {
     argumentsInfo: ArgInfo[],
     file: VBFile = this.currentFile,
   ) {
+    async function fillOptionalArgument(argInfo: ArgInfo) {
+      if (argInfo.optional && argInfo.defaultValue) {
+        await scope.setVariableValue(
+          argInfo.name,
+          new VBValuePointer(argInfo.defaultValue, argInfo.asType),
+        );
+        return;
+      }
+      throw new Error('No optional argument: ' + argInfo.name);
+    }
+
     const scope = new VBScope(file, subName, this);
-    let i = -1;
-    for (const a of args) {
-      ++i;
+    let i = 0;
+    for (; i < args.length; i++) {
+      const a = args[i];
       const argInfo = argumentsInfo[i];
       if (!argInfo) {
+        throw new Error('argument size is not same with parameter size!');
+      }
+      if (a.type === 'MissingArgument') {
+        await fillOptionalArgument(argInfo);
         continue;
       }
       if (a.type === 'Pointer' && argInfo.byRef) {
@@ -230,17 +245,7 @@ export class Context {
     }
     while (i < argumentsInfo.length) {
       const argInfo = argumentsInfo[i];
-      if (argInfo) {
-        if (argInfo.optional && argInfo.defaultValue) {
-          await scope.setVariableValue(
-            argInfo.name,
-            new VBValuePointer(
-              await argInfo.defaultValue.getValue(),
-              argInfo.asType,
-            ),
-          );
-        }
-      }
+      await fillOptionalArgument(argInfo);
       ++i;
     }
     this.scopeStack.push(scope);

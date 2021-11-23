@@ -1,11 +1,3 @@
-export const ACCESS = 'ACCESS';
-export const ACCESSOptional = 'ACCESS?';
-export const ACCESSZeroOrMore = 'ACCESS*';
-export const ACCESSOneOrMore = 'ACCESS+';
-export const ADDRESSOF = 'ADDRESSOF';
-export const ADDRESSOFOptional = 'ADDRESSOF?';
-export const ADDRESSOFZeroOrMore = 'ADDRESSOF*';
-export const ADDRESSOFOneOrMore = 'ADDRESSOF+';
 export const ALIAS = 'ALIAS';
 export const ALIASOptional = 'ALIAS?';
 export const ALIASZeroOrMore = 'ALIAS*';
@@ -18,14 +10,6 @@ export const ATTRIBUTE = 'ATTRIBUTE';
 export const ATTRIBUTEOptional = 'ATTRIBUTE?';
 export const ATTRIBUTEZeroOrMore = 'ATTRIBUTE*';
 export const ATTRIBUTEOneOrMore = 'ATTRIBUTE+';
-export const APPACTIVATE = 'APPACTIVATE';
-export const APPACTIVATEOptional = 'APPACTIVATE?';
-export const APPACTIVATEZeroOrMore = 'APPACTIVATE*';
-export const APPACTIVATEOneOrMore = 'APPACTIVATE+';
-export const APPEND = 'APPEND';
-export const APPENDOptional = 'APPEND?';
-export const APPENDZeroOrMore = 'APPEND*';
-export const APPENDOneOrMore = 'APPEND+';
 export const AS = 'AS';
 export const ASOptional = 'AS?';
 export const ASZeroOrMore = 'AS*';
@@ -34,14 +18,6 @@ export const BEGIN = 'BEGIN';
 export const BEGINOptional = 'BEGIN?';
 export const BEGINZeroOrMore = 'BEGIN*';
 export const BEGINOneOrMore = 'BEGIN+';
-export const BEEP = 'BEEP';
-export const BEEPOptional = 'BEEP?';
-export const BEEPZeroOrMore = 'BEEP*';
-export const BEEPOneOrMore = 'BEEP+';
-export const BINARY = 'BINARY';
-export const BINARYOptional = 'BINARY?';
-export const BINARYZeroOrMore = 'BINARY*';
-export const BINARYOneOrMore = 'BINARY+';
 export const BOOLEAN = 'BOOLEAN';
 export const BOOLEANOptional = 'BOOLEAN?';
 export const BOOLEANZeroOrMore = 'BOOLEAN*';
@@ -66,34 +42,10 @@ export const CASE = 'CASE';
 export const CASEOptional = 'CASE?';
 export const CASEZeroOrMore = 'CASE*';
 export const CASEOneOrMore = 'CASE+';
-export const CHDIR = 'CHDIR';
-export const CHDIROptional = 'CHDIR?';
-export const CHDIRZeroOrMore = 'CHDIR*';
-export const CHDIROneOrMore = 'CHDIR+';
-export const CHDRIVE = 'CHDRIVE';
-export const CHDRIVEOptional = 'CHDRIVE?';
-export const CHDRIVEZeroOrMore = 'CHDRIVE*';
-export const CHDRIVEOneOrMore = 'CHDRIVE+';
-export const CLASS = 'CLASS';
-export const CLASSOptional = 'CLASS?';
-export const CLASSZeroOrMore = 'CLASS*';
-export const CLASSOneOrMore = 'CLASS+';
-export const CLOSE = 'CLOSE';
-export const CLOSEOptional = 'CLOSE?';
-export const CLOSEZeroOrMore = 'CLOSE*';
-export const CLOSEOneOrMore = 'CLOSE+';
-export const COLLECTION = 'COLLECTION';
-export const COLLECTIONOptional = 'COLLECTION?';
-export const COLLECTIONZeroOrMore = 'COLLECTION*';
-export const COLLECTIONOneOrMore = 'COLLECTION+';
 export const CONST = 'CONST';
 export const CONSTOptional = 'CONST?';
 export const CONSTZeroOrMore = 'CONST*';
 export const CONSTOneOrMore = 'CONST+';
-export const DATABASE = 'DATABASE';
-export const DATABASEOptional = 'DATABASE?';
-export const DATABASEZeroOrMore = 'DATABASE*';
-export const DATABASEOneOrMore = 'DATABASE+';
 export const DECLARE = 'DECLARE';
 export const DECLAREOptional = 'DECLARE?';
 export const DECLAREZeroOrMore = 'DECLARE*';
@@ -146,10 +98,6 @@ export const DEFVAR = 'DEFVAR';
 export const DEFVAROptional = 'DEFVAR?';
 export const DEFVARZeroOrMore = 'DEFVAR*';
 export const DEFVAROneOrMore = 'DEFVAR+';
-export const DELETESETTING = 'DELETESETTING';
-export const DELETESETTINGOptional = 'DELETESETTING?';
-export const DELETESETTINGZeroOrMore = 'DELETESETTING*';
-export const DELETESETTINGOneOrMore = 'DELETESETTING+';
 export const DIM = 'DIM';
 export const DIMOptional = 'DIM?';
 export const DIMZeroOrMore = 'DIM*';
@@ -254,10 +202,6 @@ export const FALSE = 'FALSE';
 export const FALSEOptional = 'FALSE?';
 export const FALSEZeroOrMore = 'FALSE*';
 export const FALSEOneOrMore = 'FALSE+';
-export const FILECOPY = 'FILECOPY';
-export const FILECOPYOptional = 'FILECOPY?';
-export const FILECOPYZeroOrMore = 'FILECOPY*';
-export const FILECOPYOneOrMore = 'FILECOPY+';
 export const FRIEND = 'FRIEND';
 export const FRIENDOptional = 'FRIEND?';
 export const FRIENDZeroOrMore = 'FRIEND*';
@@ -290,10 +234,6 @@ export const IF = 'IF';
 export const IFOptional = 'IF?';
 export const IFZeroOrMore = 'IF*';
 export const IFOneOrMore = 'IF+';
-export const IMP = 'IMP';
-export const IMPOptional = 'IMP?';
-export const IMPZeroOrMore = 'IMP*';
-export const IMPOneOrMore = 'IMP+';
 export const IMPLEMENTS = 'IMPLEMENTS';
 export const IMPLEMENTSOptional = 'IMPLEMENTS?';
 export const IMPLEMENTSZeroOrMore = 'IMPLEMENTS*';
@@ -302,10 +242,6 @@ export const IN = 'IN';
 export const INOptional = 'IN?';
 export const INZeroOrMore = 'IN*';
 export const INOneOrMore = 'IN+';
-export const INPUT = 'INPUT';
-export const INPUTOptional = 'INPUT?';
-export const INPUTZeroOrMore = 'INPUT*';
-export const INPUTOneOrMore = 'INPUT+';
 export const IS = 'IS';
 export const ISOptional = 'IS?';
 export const ISZeroOrMore = 'IS*';
@@ -314,18 +250,6 @@ export const INTEGER = 'INTEGER';
 export const INTEGEROptional = 'INTEGER?';
 export const INTEGERZeroOrMore = 'INTEGER*';
 export const INTEGEROneOrMore = 'INTEGER+';
-export const KILL = 'KILL';
-export const KILLOptional = 'KILL?';
-export const KILLZeroOrMore = 'KILL*';
-export const KILLOneOrMore = 'KILL+';
-export const LOAD = 'LOAD';
-export const LOADOptional = 'LOAD?';
-export const LOADZeroOrMore = 'LOAD*';
-export const LOADOneOrMore = 'LOAD+';
-export const LOCK = 'LOCK';
-export const LOCKOptional = 'LOCK?';
-export const LOCKZeroOrMore = 'LOCK*';
-export const LOCKOneOrMore = 'LOCK+';
 export const LONG = 'LONG';
 export const LONGOptional = 'LONG?';
 export const LONGZeroOrMore = 'LONG*';
@@ -350,22 +274,6 @@ export const LIKE = 'LIKE';
 export const LIKEOptional = 'LIKE?';
 export const LIKEZeroOrMore = 'LIKE*';
 export const LIKEOneOrMore = 'LIKE+';
-export const LINE_INPUT = 'LINE_INPUT';
-export const LINE_INPUTOptional = 'LINE_INPUT?';
-export const LINE_INPUTZeroOrMore = 'LINE_INPUT*';
-export const LINE_INPUTOneOrMore = 'LINE_INPUT+';
-export const LOCK_READ = 'LOCK_READ';
-export const LOCK_READOptional = 'LOCK_READ?';
-export const LOCK_READZeroOrMore = 'LOCK_READ*';
-export const LOCK_READOneOrMore = 'LOCK_READ+';
-export const LOCK_WRITE = 'LOCK_WRITE';
-export const LOCK_WRITEOptional = 'LOCK_WRITE?';
-export const LOCK_WRITEZeroOrMore = 'LOCK_WRITE*';
-export const LOCK_WRITEOneOrMore = 'LOCK_WRITE+';
-export const LOCK_READ_WRITE = 'LOCK_READ_WRITE';
-export const LOCK_READ_WRITEOptional = 'LOCK_READ_WRITE?';
-export const LOCK_READ_WRITEZeroOrMore = 'LOCK_READ_WRITE*';
-export const LOCK_READ_WRITEOneOrMore = 'LOCK_READ_WRITE+';
 export const LSET = 'LSET';
 export const LSETOptional = 'LSET?';
 export const LSETZeroOrMore = 'LSET*';
@@ -390,26 +298,10 @@ export const MACRO_END_IF = 'MACRO_END_IF';
 export const MACRO_END_IFOptional = 'MACRO_END_IF?';
 export const MACRO_END_IFZeroOrMore = 'MACRO_END_IF*';
 export const MACRO_END_IFOneOrMore = 'MACRO_END_IF+';
-export const ME = 'ME';
-export const MEOptional = 'ME?';
-export const MEZeroOrMore = 'ME*';
-export const MEOneOrMore = 'ME+';
-export const MID = 'MID';
-export const MIDOptional = 'MID?';
-export const MIDZeroOrMore = 'MID*';
-export const MIDOneOrMore = 'MID+';
-export const MKDIR = 'MKDIR';
-export const MKDIROptional = 'MKDIR?';
-export const MKDIRZeroOrMore = 'MKDIR*';
-export const MKDIROneOrMore = 'MKDIR+';
 export const MOD = 'MOD';
 export const MODOptional = 'MOD?';
 export const MODZeroOrMore = 'MOD*';
 export const MODOneOrMore = 'MOD+';
-export const NAME = 'NAME';
-export const NAMEOptional = 'NAME?';
-export const NAMEZeroOrMore = 'NAME*';
-export const NAMEOneOrMore = 'NAME+';
 export const NEXT = 'NEXT';
 export const NEXTOptional = 'NEXT?';
 export const NEXTZeroOrMore = 'NEXT*';
@@ -442,10 +334,6 @@ export const ON_LOCAL_ERROR = 'ON_LOCAL_ERROR';
 export const ON_LOCAL_ERROROptional = 'ON_LOCAL_ERROR?';
 export const ON_LOCAL_ERRORZeroOrMore = 'ON_LOCAL_ERROR*';
 export const ON_LOCAL_ERROROneOrMore = 'ON_LOCAL_ERROR+';
-export const OPEN = 'OPEN';
-export const OPENOptional = 'OPEN?';
-export const OPENZeroOrMore = 'OPEN*';
-export const OPENOneOrMore = 'OPEN+';
 export const OPTIONAL = 'OPTIONAL';
 export const OPTIONALOptional = 'OPTIONAL?';
 export const OPTIONALZeroOrMore = 'OPTIONAL*';
@@ -470,10 +358,6 @@ export const OR = 'OR';
 export const OROptional = 'OR?';
 export const ORZeroOrMore = 'OR*';
 export const OROneOrMore = 'OR+';
-export const OUTPUT = 'OUTPUT';
-export const OUTPUTOptional = 'OUTPUT?';
-export const OUTPUTZeroOrMore = 'OUTPUT*';
-export const OUTPUTOneOrMore = 'OUTPUT+';
 export const PARAMARRAY = 'PARAMARRAY';
 export const PARAMARRAYOptional = 'PARAMARRAY?';
 export const PARAMARRAYZeroOrMore = 'PARAMARRAY*';
@@ -506,30 +390,10 @@ export const PUBLIC = 'PUBLIC';
 export const PUBLICOptional = 'PUBLIC?';
 export const PUBLICZeroOrMore = 'PUBLIC*';
 export const PUBLICOneOrMore = 'PUBLIC+';
-export const PUT = 'PUT';
-export const PUTOptional = 'PUT?';
-export const PUTZeroOrMore = 'PUT*';
-export const PUTOneOrMore = 'PUT+';
-export const RANDOM = 'RANDOM';
-export const RANDOMOptional = 'RANDOM?';
-export const RANDOMZeroOrMore = 'RANDOM*';
-export const RANDOMOneOrMore = 'RANDOM+';
-export const RANDOMIZE = 'RANDOMIZE';
-export const RANDOMIZEOptional = 'RANDOMIZE?';
-export const RANDOMIZEZeroOrMore = 'RANDOMIZE*';
-export const RANDOMIZEOneOrMore = 'RANDOMIZE+';
 export const RAISEEVENT = 'RAISEEVENT';
 export const RAISEEVENTOptional = 'RAISEEVENT?';
 export const RAISEEVENTZeroOrMore = 'RAISEEVENT*';
 export const RAISEEVENTOneOrMore = 'RAISEEVENT+';
-export const READ = 'READ';
-export const READOptional = 'READ?';
-export const READZeroOrMore = 'READ*';
-export const READOneOrMore = 'READ+';
-export const READ_WRITE = 'READ_WRITE';
-export const READ_WRITEOptional = 'READ_WRITE?';
-export const READ_WRITEZeroOrMore = 'READ_WRITE*';
-export const READ_WRITEOneOrMore = 'READ_WRITE+';
 export const REDIM = 'REDIM';
 export const REDIMOptional = 'REDIM?';
 export const REDIMZeroOrMore = 'REDIM*';
@@ -546,54 +410,18 @@ export const RETURN = 'RETURN';
 export const RETURNOptional = 'RETURN?';
 export const RETURNZeroOrMore = 'RETURN*';
 export const RETURNOneOrMore = 'RETURN+';
-export const RMDIR = 'RMDIR';
-export const RMDIROptional = 'RMDIR?';
-export const RMDIRZeroOrMore = 'RMDIR*';
-export const RMDIROneOrMore = 'RMDIR+';
-export const RSET = 'RSET';
-export const RSETOptional = 'RSET?';
-export const RSETZeroOrMore = 'RSET*';
-export const RSETOneOrMore = 'RSET+';
-export const SAVEPICTURE = 'SAVEPICTURE';
-export const SAVEPICTUREOptional = 'SAVEPICTURE?';
-export const SAVEPICTUREZeroOrMore = 'SAVEPICTURE*';
-export const SAVEPICTUREOneOrMore = 'SAVEPICTURE+';
-export const SAVESETTING = 'SAVESETTING';
-export const SAVESETTINGOptional = 'SAVESETTING?';
-export const SAVESETTINGZeroOrMore = 'SAVESETTING*';
-export const SAVESETTINGOneOrMore = 'SAVESETTING+';
-export const SEEK = 'SEEK';
-export const SEEKOptional = 'SEEK?';
-export const SEEKZeroOrMore = 'SEEK*';
-export const SEEKOneOrMore = 'SEEK+';
 export const SELECT = 'SELECT';
 export const SELECTOptional = 'SELECT?';
 export const SELECTZeroOrMore = 'SELECT*';
 export const SELECTOneOrMore = 'SELECT+';
-export const SENDKEYS = 'SENDKEYS';
-export const SENDKEYSOptional = 'SENDKEYS?';
-export const SENDKEYSZeroOrMore = 'SENDKEYS*';
-export const SENDKEYSOneOrMore = 'SENDKEYS+';
 export const SET = 'SET';
 export const SETOptional = 'SET?';
 export const SETZeroOrMore = 'SET*';
 export const SETOneOrMore = 'SET+';
-export const SETATTR = 'SETATTR';
-export const SETATTROptional = 'SETATTR?';
-export const SETATTRZeroOrMore = 'SETATTR*';
-export const SETATTROneOrMore = 'SETATTR+';
-export const SHARED = 'SHARED';
-export const SHAREDOptional = 'SHARED?';
-export const SHAREDZeroOrMore = 'SHARED*';
-export const SHAREDOneOrMore = 'SHARED+';
 export const SINGLE = 'SINGLE';
 export const SINGLEOptional = 'SINGLE?';
 export const SINGLEZeroOrMore = 'SINGLE*';
 export const SINGLEOneOrMore = 'SINGLE+';
-export const SPC = 'SPC';
-export const SPCOptional = 'SPC?';
-export const SPCZeroOrMore = 'SPC*';
-export const SPCOneOrMore = 'SPC+';
 export const STATIC = 'STATIC';
 export const STATICOptional = 'STATIC?';
 export const STATICZeroOrMore = 'STATIC*';
@@ -614,22 +442,10 @@ export const SUB = 'SUB';
 export const SUBOptional = 'SUB?';
 export const SUBZeroOrMore = 'SUB*';
 export const SUBOneOrMore = 'SUB+';
-export const TAB = 'TAB';
-export const TABOptional = 'TAB?';
-export const TABZeroOrMore = 'TAB*';
-export const TABOneOrMore = 'TAB+';
-export const TEXT = 'TEXT';
-export const TEXTOptional = 'TEXT?';
-export const TEXTZeroOrMore = 'TEXT*';
-export const TEXTOneOrMore = 'TEXT+';
 export const THEN = 'THEN';
 export const THENOptional = 'THEN?';
 export const THENZeroOrMore = 'THEN*';
 export const THENOneOrMore = 'THEN+';
-export const TIME = 'TIME';
-export const TIMEOptional = 'TIME?';
-export const TIMEZeroOrMore = 'TIME*';
-export const TIMEOneOrMore = 'TIME+';
 export const TO = 'TO';
 export const TOOptional = 'TO?';
 export const TOZeroOrMore = 'TO*';
@@ -638,22 +454,10 @@ export const TRUE = 'TRUE';
 export const TRUEOptional = 'TRUE?';
 export const TRUEZeroOrMore = 'TRUE*';
 export const TRUEOneOrMore = 'TRUE+';
-export const TYPE = 'TYPE';
-export const TYPEOptional = 'TYPE?';
-export const TYPEZeroOrMore = 'TYPE*';
-export const TYPEOneOrMore = 'TYPE+';
 export const TYPEOF = 'TYPEOF';
 export const TYPEOFOptional = 'TYPEOF?';
 export const TYPEOFZeroOrMore = 'TYPEOF*';
 export const TYPEOFOneOrMore = 'TYPEOF+';
-export const UNLOAD = 'UNLOAD';
-export const UNLOADOptional = 'UNLOAD?';
-export const UNLOADZeroOrMore = 'UNLOAD*';
-export const UNLOADOneOrMore = 'UNLOAD+';
-export const UNLOCK = 'UNLOCK';
-export const UNLOCKOptional = 'UNLOCK?';
-export const UNLOCKZeroOrMore = 'UNLOCK*';
-export const UNLOCKOneOrMore = 'UNLOCK+';
 export const UNTIL = 'UNTIL';
 export const UNTILOptional = 'UNTIL?';
 export const UNTILZeroOrMore = 'UNTIL*';
@@ -662,10 +466,6 @@ export const VARIANT = 'VARIANT';
 export const VARIANTOptional = 'VARIANT?';
 export const VARIANTZeroOrMore = 'VARIANT*';
 export const VARIANTOneOrMore = 'VARIANT+';
-export const VERSION = 'VERSION';
-export const VERSIONOptional = 'VERSION?';
-export const VERSIONZeroOrMore = 'VERSION*';
-export const VERSIONOneOrMore = 'VERSION+';
 export const WEND = 'WEND';
 export const WENDOptional = 'WEND?';
 export const WENDZeroOrMore = 'WEND*';
@@ -674,10 +474,6 @@ export const WHILE = 'WHILE';
 export const WHILEOptional = 'WHILE?';
 export const WHILEZeroOrMore = 'WHILE*';
 export const WHILEOneOrMore = 'WHILE+';
-export const WIDTH = 'WIDTH';
-export const WIDTHOptional = 'WIDTH?';
-export const WIDTHZeroOrMore = 'WIDTH*';
-export const WIDTHOneOrMore = 'WIDTH+';
 export const WITH = 'WITH';
 export const WITHOptional = 'WITH?';
 export const WITHZeroOrMore = 'WITH*';
@@ -686,14 +482,14 @@ export const WITHEVENTS = 'WITHEVENTS';
 export const WITHEVENTSOptional = 'WITHEVENTS?';
 export const WITHEVENTSZeroOrMore = 'WITHEVENTS*';
 export const WITHEVENTSOneOrMore = 'WITHEVENTS+';
-export const WRITE = 'WRITE';
-export const WRITEOptional = 'WRITE?';
-export const WRITEZeroOrMore = 'WRITE*';
-export const WRITEOneOrMore = 'WRITE+';
 export const XOR = 'XOR';
 export const XOROptional = 'XOR?';
 export const XORZeroOrMore = 'XOR*';
 export const XOROneOrMore = 'XOR+';
+export const $EOF = '$EOF';
+export const $EOFOptional = '$EOF?';
+export const $EOFZeroOrMore = '$EOF*';
+export const $EOFOneOrMore = '$EOF+';
 export const IDENTIFIER = 'IDENTIFIER';
 export const IDENTIFIEROptional = 'IDENTIFIER?';
 export const IDENTIFIERZeroOrMore = 'IDENTIFIER*';
@@ -1035,6 +831,10 @@ export const propertyLetStmt = 'propertyLetStmt';
 export const propertyLetStmtOptional = 'propertyLetStmt?';
 export const propertyLetStmtZeroOrMore = 'propertyLetStmt*';
 export const propertyLetStmtOneOrMore = 'propertyLetStmt+';
+export const moduleOption = 'moduleOption';
+export const moduleOptionOptional = 'moduleOption?';
+export const moduleOptionZeroOrMore = 'moduleOption*';
+export const moduleOptionOneOrMore = 'moduleOption+';
 export const groupStartMark = "'('";
 export const groupEndMark = "')'";
 export const groupEndOptionalMark = "')'?";
@@ -1042,30 +842,18 @@ export const groupEndZeroOrMoreMark = "')'*";
 export const groupEndOneOrMoreMark = "')'+";
 export const alternationMark = "'|'";
 export const KEYWORDS = [
-  'ACCESS',
-  'ADDRESSOF',
   'ALIAS',
   'AND',
   'ATTRIBUTE',
-  'APPACTIVATE',
-  'APPEND',
   'AS',
   'BEGIN',
-  'BEEP',
-  'BINARY',
   'BOOLEAN',
   'BYVAL',
   'BYREF',
   'BYTE',
   'CALL',
   'CASE',
-  'CHDIR',
-  'CHDRIVE',
-  'CLASS',
-  'CLOSE',
-  'COLLECTION',
   'CONST',
-  'DATABASE',
   'DECLARE',
   'DEFBOOL',
   'DEFBYTE',
@@ -1079,7 +867,6 @@ export const KEYWORDS = [
   'DEFSNG',
   'DEFSTR',
   'DEFVAR',
-  'DELETESETTING',
   'DIM',
   'DO',
   'DOUBLE',
@@ -1106,7 +893,6 @@ export const KEYWORDS = [
   'EXIT_PROPERTY',
   'EXIT_SUB',
   'FALSE',
-  'FILECOPY',
   'FRIEND',
   'FOR',
   'FUNCTION',
@@ -1115,36 +901,23 @@ export const KEYWORDS = [
   'GOSUB',
   'GOTO',
   'IF',
-  'IMP',
   'IMPLEMENTS',
   'IN',
-  'INPUT',
   'IS',
   'INTEGER',
-  'KILL',
-  'LOAD',
-  'LOCK',
   'LONG',
   'LOOP',
   'LEN',
   'LET',
   'LIB',
   'LIKE',
-  'LINE_INPUT',
-  'LOCK_READ',
-  'LOCK_WRITE',
-  'LOCK_READ_WRITE',
   'LSET',
   'MACRO_CONST',
   'MACRO_IF',
   'MACRO_ELSEIF',
   'MACRO_ELSE',
   'MACRO_END_IF',
-  'ME',
-  'MID',
-  'MKDIR',
   'MOD',
-  'NAME',
   'NEXT',
   'NEW',
   'NOT',
@@ -1153,14 +926,12 @@ export const KEYWORDS = [
   'ON',
   'ON_ERROR',
   'ON_LOCAL_ERROR',
-  'OPEN',
   'OPTIONAL',
   'OPTION_BASE',
   'OPTION_EXPLICIT',
   'OPTION_COMPARE',
   'OPTION_PRIVATE_MODULE',
   'OR',
-  'OUTPUT',
   'PARAMARRAY',
   'PRESERVE',
   'PRIVATE',
@@ -1169,53 +940,31 @@ export const KEYWORDS = [
   'PROPERTY_SET',
   'PTRSAFE',
   'PUBLIC',
-  'PUT',
-  'RANDOM',
-  'RANDOMIZE',
   'RAISEEVENT',
-  'READ',
-  'READ_WRITE',
   'REDIM',
   'RESET',
   'RESUME',
   'RETURN',
-  'RMDIR',
-  'RSET',
-  'SAVEPICTURE',
-  'SAVESETTING',
-  'SEEK',
   'SELECT',
-  'SENDKEYS',
   'SET',
-  'SETATTR',
-  'SHARED',
   'SINGLE',
-  'SPC',
   'STATIC',
   'STEP',
   'STOP',
   'STRING',
   'SUB',
-  'TAB',
-  'TEXT',
   'THEN',
-  'TIME',
   'TO',
   'TRUE',
-  'TYPE',
   'TYPEOF',
-  'UNLOAD',
-  'UNLOCK',
   'UNTIL',
   'VARIANT',
-  'VERSION',
   'WEND',
   'WHILE',
-  'WIDTH',
   'WITH',
   'WITHEVENTS',
-  'WRITE',
   'XOR',
+  '$EOF',
 ];
 
 export const makeProductions = (arr) => {

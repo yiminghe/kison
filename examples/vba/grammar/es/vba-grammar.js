@@ -49,7 +49,7 @@ module.exports = {
       n.endOfLineZeroOrMore,
       n.moduleBodyOptional,
       n.endOfLineZeroOrMore,
-      '$EOF',
+      n.$EOF,
     ],
     [
       n.endOfLine,
@@ -78,7 +78,27 @@ module.exports = {
       n.endOfLineZeroOrMore,
     ],
 
-    [n.moduleDeclarationsElement, n.variableStmt],
+    [
+      n.moduleDeclarationsElement,
+      n.COMMENT,
+      n.alternationMark,
+      n.variableStmt,
+      n.alternationMark,
+      n.moduleOption,
+    ],
+
+    [
+      n.moduleOption,
+      n.OPTION_BASE,
+      n.INTEGERLITERAL,
+      n.alternationMark,
+      n.OPTION_COMPARE,
+      n.IDENTIFIER,
+      n.alternationMark,
+      n.OPTION_EXPLICIT,
+      n.alternationMark,
+      n.OPTION_PRIVATE_MODULE,
+    ],
 
     [
       n.moduleBody,
@@ -296,7 +316,6 @@ module.exports = {
 
     [
       n.eCS_ProcedureCall,
-      // CALL WS ambiguousIdentifier typeHint? (WS? LPAREN WS? argsCall WS? RPAREN)? (WS? LPAREN indexes RPAREN)*;
       n.CALL,
       n.ambiguousIdentifier,
       n.typeHintOptional,
@@ -611,8 +630,6 @@ module.exports = {
       n.BOOLEAN,
       n.alternationMark,
       n.BYTE,
-      n.alternationMark,
-      n.COLLECTION,
       n.alternationMark,
       n.DOUBLE,
       n.alternationMark,

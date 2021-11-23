@@ -6,7 +6,7 @@ import type {
 } from '../../parser';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
-import { VBPointer, VBValue } from '../types';
+import { VBPointer, VBValue, VB_EMPTY, VB_MISSING_ARGUMENT } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
   buildArgs,
@@ -100,11 +100,11 @@ registerEvaluators({
   async evaluateArgsCall(node, context) {
     const args = [];
     const { children } = node;
-    let lastArg = undefined;
+    let lastArg = VB_MISSING_ARGUMENT;
     for (const c of children) {
       if (c.type === 'token' && c.text === ',') {
         args.push(lastArg);
-        lastArg = undefined;
+        lastArg = VB_MISSING_ARGUMENT;
         continue;
       }
       context.stashMemberInternal();

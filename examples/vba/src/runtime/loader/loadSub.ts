@@ -10,6 +10,7 @@ import { Context } from '../Context';
 import { evaluate } from '../evaluator/index';
 import {
   ArgInfo,
+  VBMissingArgument,
   VBPointer,
   VBPrimitiveTypeClass,
   VBSub,
@@ -114,7 +115,11 @@ registerLoaders({
       if (!PrimitiveClass) {
         throw new Error('optional parameter defaultValue must be basic type!');
       }
-      argInfo.defaultValue = new PrimitiveClass();
+      if (type === 'Variant') {
+        argInfo.defaultValue = new VBMissingArgument();
+      } else {
+        argInfo.defaultValue = new PrimitiveClass();
+      }
     }
     return argInfo;
   },

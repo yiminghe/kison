@@ -35,6 +35,7 @@ import {
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
+import bindings from './binding/bindings';
 
 const defaultFileId: VBFile = {
   id: Math.random() + '',
@@ -83,6 +84,12 @@ export class Context {
   scopeStack: VBScope[] = [];
 
   currentAstNode: AstNode | undefined;
+
+  constructor() {
+    for (const b of bindings) {
+      this._registerBinder(b);
+    }
+  }
 
   stashMemberInternal() {
     this.memberStack.push({
@@ -493,6 +500,18 @@ export class Context {
 
   public static createBoolean(value: boolean) {
     return value ? VB_TRUE : VB_FALSE;
+  }
+
+  public createInteger(value: number) {
+    return Context.createInteger(value);
+  }
+
+  public createString(value: string) {
+    return Context.createString(value);
+  }
+
+  public createBoolean(value: boolean) {
+    return Context.createBoolean(value);
   }
 
   public async createObject(name: string) {

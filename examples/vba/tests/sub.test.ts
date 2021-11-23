@@ -48,7 +48,7 @@ end sub
     `);
   });
 
-  it('optional Parameters works', async () => {
+  it('optional Parameters works for basic type', async () => {
     const ret = await run(`
     ' https://excelmacromastery.com/
 Sub Multi(marks As Integer _
@@ -89,5 +89,24 @@ End Sub
       // calll
       6, 10, 2, 8,
     ]);
+  });
+
+  it('optional parameter works for variant type', async () => {
+    const ret = await run(`
+Sub main()
+    ' Prints "Parameter not missing"
+    CalcValues 6
+    
+    ' Prints "Parameter missing"   
+    CalcValues
+End Sub
+
+Sub CalcValues(Optional x)
+    ' Check for the parameter
+    msgbox IsMissing(x)
+End Sub    
+    `);
+
+    expect(ret).toEqual([false, true]);
   });
 });

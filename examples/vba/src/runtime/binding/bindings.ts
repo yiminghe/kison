@@ -1,3 +1,3 @@
 import { isMissing } from './isMissing';
-
-export default [isMissing];
+import { ubound, lbound } from './ulbound';
+export default [isMissing, ubound, lbound];

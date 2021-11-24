@@ -230,23 +230,33 @@ export class Context {
       throw new Error('No optional argument: ' + argInfo.name);
     }
 
-    const scope = new VBScope(file, subName, this);
-    let i = 0;
-    for (; i < args.length; i++) {
-      const a = args[i];
-      const argInfo = argumentsInfo[i];
-      if (argInfo.paramArray) {
+    async function fillParamArrayArgument(
+      argInfo: ArgInfo,
+      getArgs: () => (VBValue | VBPointer)[],
+    ) {
+      if (argInfo?.paramArray) {
+        const args = getArgs();
         const params = Context.createArray('Variant', [
-          { upper: args.length - i - 1 },
+          { upper: args.length - 1 },
         ]);
-        for (let j = 0; j + i < args.length; j++) {
-          const nest = args[j + i];
+        for (let j = 0; j < args.length; j++) {
+          const nest = args[j];
           // The parameter array is always zero based and
           // is not effected by the Option Base statement.
           params.setElement([j], nest);
         }
         await scope.setVariable(argInfo.name, new VBValuePointer(params));
         i = argumentsInfo.length;
+        return true;
+      }
+    }
+
+    const scope = new VBScope(file, subName, this);
+    let i = 0;
+    for (; i < args.length; i++) {
+      const a = args[i];
+      const argInfo = argumentsInfo[i];
+      if (await fillParamArrayArgument(argInfo, () => args.slice(i))) {
         break;
       }
       if (!argInfo) {
@@ -267,7 +277,9 @@ export class Context {
     }
     while (i < argumentsInfo.length) {
       const argInfo = argumentsInfo[i];
-      await fillOptionalArgument(argInfo);
+      if (!(await fillParamArrayArgument(argInfo, () => []))) {
+        await fillOptionalArgument(argInfo);
+      }
       ++i;
     }
     this.scopeStack.push(scope);

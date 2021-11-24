@@ -20,7 +20,7 @@ export class VBInteger {
   type: 'Integer' = 'Integer';
   readonly value: number = 0;
   constructor(value: number = 0) {
-    this.value = value & 0xffff;
+    this.value = value | 0;
   }
 }
 

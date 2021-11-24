@@ -28,11 +28,19 @@ export class VBArray {
   }
 
   jsUBound(i: number = 0) {
-    return this.subscripts[i].upper;
+    const { subscripts } = this;
+    if (!subscripts.length) {
+      throw new Error('unexpected index access!');
+    }
+    return subscripts[i].upper;
   }
 
   jsLBound(i: number = 0) {
-    const subscript = this.subscripts[i];
+    const { subscripts } = this;
+    if (!subscripts.length) {
+      throw new Error('unexpected index access!');
+    }
+    const subscript = subscripts[i];
     return subscript.lower === undefined ? this.base : subscript.lower;
   }
 

@@ -118,6 +118,7 @@ End Sub
 Dim vArg As Variant
 vArg = aArgumentsArray(0)(1)
 Debug.Print vArg
+
 End Sub
 
 Public Sub main()
@@ -129,5 +130,23 @@ End Sub
         `);
 
     expect(ret).toEqual([2]);
+  });
+
+  it('paramarray can be optional', async () => {
+    const ret = await run(`
+Public Sub Procedure_Five(ByVal iConstant As Integer, _
+  ParamArray aArgumentsArray() As Variant)
+
+Debug.Print iConstant, UBound(aArgumentsArray), LBound(aArgumentsArray)
+
+End Sub
+
+Public Sub main()
+
+Call Procedure_Five(100)
+
+End Sub
+`);
+    expect(ret).toEqual([100, -1, 0]);
   });
 });

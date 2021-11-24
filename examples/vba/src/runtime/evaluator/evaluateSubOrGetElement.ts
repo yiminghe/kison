@@ -6,7 +6,7 @@ import type {
 } from '../../parser';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
-import { VBPointer, VBValue, VB_EMPTY, VB_MISSING_ARGUMENT } from '../types';
+import { VBAny, VB_MISSING_ARGUMENT } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
   buildArgs,
@@ -14,6 +14,11 @@ import {
   callSubOrGetElementWithIndexesAndArgs,
 } from './common';
 import { throwVBError } from '../errorCodes';
+import {
+  IndexedArg,
+  NamedArg,
+  VBArguments,
+} from '../data-structure/VBArguments';
 
 async function callSub(
   node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,
@@ -26,10 +31,7 @@ async function callSub(
     throwVBError('SYNTAX_ERROR');
   }
   const subName = token.children[0].text;
-  let args: (VBValue | VBPointer)[] | undefined = await buildArgs(
-    node,
-    context,
-  );
+  let args: VBArguments | undefined = await buildArgs(node, context);
   return await context.callSubInternal(subName, args);
 }
 
@@ -41,7 +43,7 @@ async function callMemberSub(
 
   let subName = '';
 
-  let parent: VBPointer | VBValue | undefined;
+  let parent: VBAny | undefined;
 
   for (const c of children) {
     if (c.type === 'symbol' && c.symbol === 'implicitCallStmt_InStmt') {
@@ -59,15 +61,12 @@ async function callMemberSub(
 
   const indexes = await buildIndexes(node, context);
 
-  if (argsCall) {
-    indexes.unshift(argsCall);
-  }
-
   return callSubOrGetElementWithIndexesAndArgs(
     parent,
     subName,
     indexes,
     context,
+    argsCall,
   );
 }
 
@@ -99,13 +98,17 @@ registerEvaluators({
   },
 
   async evaluateArgsCall(node, context) {
-    const args = [];
+    const args = new VBArguments();
     const { children } = node;
-    let lastArg = VB_MISSING_ARGUMENT;
+    const missingArg: IndexedArg | NamedArg = {
+      type: 'indexed',
+      value: VB_MISSING_ARGUMENT,
+    };
+    let lastArg: IndexedArg | NamedArg = missingArg;
     for (const c of children) {
       if (c.type === 'token' && c.text === ',') {
-        args.push(lastArg);
-        lastArg = VB_MISSING_ARGUMENT;
+        args.addArg(lastArg);
+        lastArg = missingArg;
         continue;
       }
       context.stashMemberInternal();
@@ -113,17 +116,46 @@ registerEvaluators({
       context.popMemberInternal();
     }
     if (children.length) {
-      args.push(lastArg);
+      args.addArg(lastArg);
     }
     return args;
+  },
+
+  async evaluateArgCall(node, context) {
+    const valueStmt = node.children[0];
+    const values = valueStmt.children;
+    const v2 = values[1];
+    if (v2 && v2.type === 'token' && v2.token === 'ASSIGN') {
+      const value = await evaluate(values[2]!, context);
+      const nameNode = values[0];
+      if (
+        nameNode.type !== 'symbol' ||
+        nameNode.symbol !== 'ambiguousIdentifier'
+      ) {
+        throwVBError('SYNTAX_ERROR');
+      }
+      const name = nameNode.children[0].text;
+      return {
+        name,
+        type: 'named',
+        value,
+      } as NamedArg;
+    } else {
+      return {
+        type: 'indexed',
+        value: await evaluate(valueStmt, context),
+      } as IndexedArg;
+    }
   },
 
   async evaluateICS_S_MembersCall(node, context) {
     const { children } = node;
 
     if (children[0].symbol !== 'iCS_S_MemberCall') {
-      const parent: VBPointer | VBValue | undefined = (context.parentMember =
-        await evaluate(children[0], context));
+      const parent: VBAny | undefined = (context.parentMember = await evaluate(
+        children[0],
+        context,
+      ));
       if (
         !parent ||
         (parent.type === 'Pointer' &&
@@ -164,14 +196,12 @@ registerEvaluators({
   async evaluateICS_S_ProcedureOrArrayCall(node, context) {
     const args = await buildArgs(node, context);
     const indexes = await buildIndexes(node, context);
-    if (args) {
-      indexes.unshift(args);
-    }
     return callSubOrGetElementWithIndexesAndArgs(
       context.parentMember,
       collectAmbiguousIdentifier(node, true)!,
       indexes,
       context,
+      args,
     );
   },
 

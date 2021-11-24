@@ -16,6 +16,7 @@ import {
   VBBasicTypeClasses,
   VBSub,
   VBValue,
+  VBAny,
 } from '../types';
 import { getPropertyGetSubName, getPropertySetSubName } from '../utils';
 import { registerLoaders, load } from './loaders';
@@ -115,10 +116,7 @@ registerLoaders({
         } else if (symbol === 'asTypeClause') {
           argInfo.asType = collect_asTypeClause(c, context);
         } else if (symbol === 'argDefaultValue') {
-          const defaultValue: VBPointer | VBValue = await evaluate(
-            c.children[1],
-            context,
-          );
+          const defaultValue: VBAny = await evaluate(c.children[1], context);
           if (defaultValue.type === 'Pointer') {
             argInfo.defaultValue = await defaultValue.getValue();
           } else {

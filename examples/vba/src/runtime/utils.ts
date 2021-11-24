@@ -1,6 +1,6 @@
 import type { LiteralToken } from '../parser';
 import { throwVBError } from './errorCodes';
-import type { IndexType, VBPointer, VBValue } from './types';
+import type { IndexType, VBAny, VBPointer, VBValue } from './types';
 
 export function last<T>(stack: T[], n = 1) {
   return stack[stack.length - n];
@@ -23,7 +23,7 @@ export function captalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-export async function transformToIndexType(values: (VBPointer | VBValue)[]) {
+export async function transformToIndexType(values: VBAny[]) {
   const ret: IndexType[] = [];
   for (let v_ of values) {
     const v = v_.type === 'Pointer' ? await v_.getValue() : v_;

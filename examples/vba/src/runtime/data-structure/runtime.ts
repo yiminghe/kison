@@ -1,4 +1,4 @@
-import type { Context, VBArguments } from '../Context';
+import type { Context, VBBinderArguments } from '../Context';
 import type { AstVisitors, Ast_Visibility_Node } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBPointer } from './VBPointer';
@@ -43,7 +43,7 @@ export type SubBinderReturnType = VBValue | void;
 export interface SubBinder {
   type: 'SubBinder';
   value: (
-    args: VBArguments,
+    args: VBBinderArguments,
     context: Context,
   ) => Promise<SubBinderReturnType> | SubBinderReturnType;
   argumentsInfo?: ArgInfo[];

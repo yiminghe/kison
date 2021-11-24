@@ -158,5 +158,5 @@ export async function runs2(
     await context.load(c.code.trim(), c);
   }
 
-  await context.callSub(mainSub, [], options);
+  await context.callSub(mainSub, options);
 }

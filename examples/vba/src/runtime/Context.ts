@@ -32,12 +32,15 @@ import {
   VBInteger,
   VBString,
   VBVariable,
+  VBAny,
+  VBMissingArgument,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
 import bindings from './binding/bindings';
 import { throwVBError, VBError } from './errorCodes';
+import { VBArguments } from './data-structure/VBArguments';
 
 const defaultFileId: VBFile = {
   id: Math.random() + '',
@@ -48,13 +51,14 @@ const defaultFileId: VBFile = {
 export interface CallOptions {
   logError?: boolean;
   file?: VBFile;
+  args?: VBArguments;
 }
 
 interface MemberItem {
-  parentMember?: VBPointer | VBValue | undefined;
+  parentMember?: VBAny | undefined;
 }
 
-export class VBArguments {
+export class VBBinderArguments {
   constructor(public scope: VBScope) {}
   async getValue(name: string) {
     const obj = await this.scope.getVariable(name);
@@ -71,7 +75,7 @@ export class VBArguments {
 }
 
 export class Context {
-  parentMember?: VBPointer | VBValue | undefined;
+  parentMember?: VBAny | undefined;
 
   memberStack: MemberItem[] = [];
 
@@ -216,15 +220,18 @@ export class Context {
 
   async _setupScope(
     subName: string,
-    args: (VBValue | VBPointer)[],
+    args: VBArguments,
     argumentsInfo: ArgInfo[],
     file: VBFile = this.currentFile,
   ) {
     async function fillOptionalArgument(argInfo: ArgInfo) {
-      if (argInfo.optional && argInfo.defaultValue) {
+      if (argInfo.optional) {
         await scope.setVariableValue(
           argInfo.name,
-          new VBValuePointer(argInfo.defaultValue, argInfo.asType),
+          new VBValuePointer(
+            argInfo.defaultValue || new VBMissingArgument(),
+            argInfo.asType,
+          ),
         );
         return;
       }
@@ -233,7 +240,7 @@ export class Context {
 
     async function fillParamArrayArgument(
       argInfo: ArgInfo,
-      getArgs: () => (VBValue | VBPointer)[],
+      getArgs: () => VBAny[],
     ) {
       if (argInfo?.paramArray) {
         const args = getArgs();
@@ -251,19 +258,20 @@ export class Context {
         return true;
       }
     }
-
     const scope = new VBScope(file, subName, this);
     let i = 0;
-    for (; i < args.length; i++) {
-      const a = args[i];
+    for (; i < argumentsInfo.length; i++) {
       const argInfo = argumentsInfo[i];
-      if (await fillParamArrayArgument(argInfo, () => args.slice(i))) {
+      const a = args.getIndexedValue(i) || args.getNamedValue(argInfo.name);
+      if (
+        !args.namedValues &&
+        (await fillParamArrayArgument(argInfo, () =>
+          args.indexedValues.slice(i),
+        ))
+      ) {
         break;
       }
-      if (!argInfo) {
-        throwVBError('NO_MATCH_ARGUMENT_PARAMETER');
-      }
-      if (a.type === 'MissingArgument') {
+      if (!a || a.type === 'MissingArgument') {
         await fillOptionalArgument(argInfo);
         continue;
       }
@@ -276,20 +284,13 @@ export class Context {
         await scope.setVariableValue(argInfo.name, a);
       }
     }
-    while (i < argumentsInfo.length) {
-      const argInfo = argumentsInfo[i];
-      if (!(await fillParamArrayArgument(argInfo, () => []))) {
-        await fillOptionalArgument(argInfo);
-      }
-      ++i;
-    }
     this.scopeStack.push(scope);
     return scope;
   }
 
   async callVBSubInternal(
     subSymbolItem: VBSub,
-    args: (VBValue | VBPointer)[] = [],
+    args: VBArguments = new VBArguments(),
     classObj?: VBClass,
   ) {
     if (!subSymbolItem.block) {
@@ -344,7 +345,7 @@ export class Context {
 
   async callSubBinderInternal(
     subDef: SubBinder,
-    args: (VBValue | VBPointer)[] = [],
+    args: VBArguments = new VBArguments(),
   ): Promise<VBValue> {
     this.stashMemberInternal();
     const scope = await this._setupScope(
@@ -352,7 +353,7 @@ export class Context {
       args,
       subDef.argumentsInfo || [],
     );
-    const ret = await subDef.value(new VBArguments(scope), this);
+    const ret = await subDef.value(new VBBinderArguments(scope), this);
     this.popMemberInternal();
     this.scopeStack.pop();
     if (ret !== undefined) {
@@ -363,7 +364,7 @@ export class Context {
 
   async callSubInternal(
     subName: string,
-    args: (VBValue | VBPointer)[] = [],
+    args: VBArguments = new VBArguments(),
   ): Promise<VBValue> {
     const { bindersMap: subBindersMap, symbolTable } = this;
 
@@ -460,11 +461,7 @@ export class Context {
     this._registerBinder(binder);
   }
 
-  public async callSub(
-    subName: string,
-    args: (VBValue | VBPointer)[] = [],
-    options: CallOptions = {},
-  ) {
+  public async callSub(subName: string, options: CallOptions = {}) {
     const { currentFile } = this;
     if (options.file) {
       const { file } = options;
@@ -475,7 +472,7 @@ export class Context {
       this.currentFile = existingFile;
     }
     try {
-      return await this.callSubInternal(subName, args);
+      return await this.callSubInternal(subName, options.args);
     } catch (e: unknown) {
       if (e instanceof Error && this.currentAstNode && this.currentFile) {
         if (options.logError !== false) {

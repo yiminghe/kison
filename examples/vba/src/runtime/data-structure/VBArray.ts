@@ -1,11 +1,10 @@
 import {
   VBBasicTypeKey,
   Subscript,
-  VBValue,
   VBBasicTypeClasses,
   VBInteger,
 } from './VBValue';
-import { VBPointer, VBValuePointer } from './VBPointer';
+import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import { IndexType } from './runtime';
 import { throwVBError } from '../errorCodes';
 
@@ -88,7 +87,7 @@ export class VBArray {
     return element as VBPointer;
   }
 
-  async setElement(indexes: IndexType[], value: VBValue | VBPointer) {
+  async setElement(indexes: IndexType[], value: VBAny) {
     const obj = await this.getElement(indexes);
     return obj.setValue(value);
   }

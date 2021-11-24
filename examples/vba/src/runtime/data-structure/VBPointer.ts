@@ -17,6 +17,8 @@ export type VBPointer =
   | VBBindIndexPointer
   | VBPropertyPointer;
 
+export type VBAny = VBPointer | VBValue;
+
 // address
 export class VBValuePointer {
   type: 'Pointer' = 'Pointer';
@@ -25,7 +27,7 @@ export class VBValuePointer {
 
   constructor(
     // nested address or value
-    private _value: VBValue | VBPointer = VB_EMPTY,
+    private _value: VBAny = VB_EMPTY,
     public asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE(),
     public constant: boolean = false,
   ) {
@@ -57,7 +59,7 @@ export class VBValuePointer {
     return this;
   }
 
-  async setValue(value: VBValue | VBPointer) {
+  async setValue(value: VBAny) {
     if (this.constant) {
       throwVBError('SET_CONST');
     }

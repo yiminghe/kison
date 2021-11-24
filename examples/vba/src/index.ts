@@ -18,4 +18,4 @@ export type {
 } from './runtime/types';
 export { parser };
 export { Context } from './runtime/Context';
-export type { CallOptions, VBArguments } from './runtime/Context';
+export type { CallOptions, VBBinderArguments } from './runtime/Context';

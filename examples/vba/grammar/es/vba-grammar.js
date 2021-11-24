@@ -373,19 +373,7 @@ module.exports = {
       n.groupEndZeroOrMoreMark,
     ],
 
-    [
-      n.argCall,
-      n.LPARENOptional,
-      n.groupStartMark,
-      n.BYREF,
-      n.alternationMark,
-      n.BYVAL,
-      n.alternationMark,
-      n.PARAMARRAY,
-      n.groupEndOptionalMark,
-      n.RPARENOptional,
-      n.valueStmt,
-    ],
+    [n.argCall, n.valueStmt],
 
     [
       n.variableStmt,
@@ -477,6 +465,10 @@ module.exports = {
       n.implicitCallStmt_InStmt,
       n.alternationMark,
       n.NEW,
+      n.valueStmt,
+      n.alternationMark,
+      n.ambiguousIdentifier,
+      n.ASSIGN,
       n.valueStmt,
     ],
 
@@ -666,9 +658,9 @@ module.exports = {
       ...generateLexerRulesByKeywords(n.KEYWORDS),
 
       ...generateLexerRulesByMap({
+        ASSIGN: ':=',
         COLON: ':',
         AMPERSAND: '&',
-        ASSIGN: ':=',
         DIV: '/',
         EQ: '=',
         GEQ: '>=',
@@ -676,12 +668,12 @@ module.exports = {
         LEQ: '<=',
         LPAREN: '(',
         LT: '<',
-        MINUS: '-',
         MINUS_EQ: '-=',
+        MINUS: '-',
         MULT: '*',
         NEQ: '<>',
-        PLUS: '+',
         PLUS_EQ: '+=',
+        PLUS: '+',
         POW: '^',
         RPAREN: ')',
         L_SQUARE_BRACKET: '[',

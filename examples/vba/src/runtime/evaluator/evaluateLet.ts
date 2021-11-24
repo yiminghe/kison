@@ -3,7 +3,7 @@ import type {
   Ast_ImplicitCallStmt_InStmt_Node,
   Ast_ValueStmt_Node,
 } from '../../parser';
-import { VBPointer, VBValue } from '../types';
+import { VBPointer, VBAny } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import { collectAmbiguousIdentifiers } from '../collect/collectType';
 import { throwVBError } from '../errorCodes';
@@ -27,7 +27,7 @@ registerEvaluators({
       throwVBError('UNEXPECTED_ERROR', 'left side operator');
     }
     context.stashMemberInternal();
-    const rightValue: VBValue | VBPointer = await evaluate(right, context);
+    const rightValue: VBAny = await evaluate(right, context);
     context.popMemberInternal();
     if (op.token === 'EQ') {
       await leftVariable.setValue(rightValue);
@@ -52,10 +52,7 @@ registerEvaluators({
       }
     } else {
       context.stashMemberInternal();
-      let rightValue: VBValue | VBPointer = await evaluate(
-        c3.children[0],
-        context,
-      );
+      let rightValue: VBAny = await evaluate(c3.children[0], context);
       context.popMemberInternal();
       if (
         rightValue.type === 'Nothing' &&

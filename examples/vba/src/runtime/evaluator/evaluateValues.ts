@@ -3,8 +3,7 @@ import {
   VBString,
   VB_NOTHING,
   VB_NULL,
-  VBValue,
-  VBPointer,
+  VBAny,
   VB_FALSE,
   VB_TRUE,
 } from '../types';
@@ -12,7 +11,7 @@ import { evaluate, registerEvaluators } from './evaluators';
 
 registerEvaluators({
   async evaluateIndexes(node, context) {
-    let ret: (VBValue | VBPointer)[] = [];
+    let ret: VBAny[] = [];
     const { children } = node;
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'valueStmt') {

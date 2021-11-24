@@ -1,8 +1,7 @@
 import type { VBFile } from './runtime';
 import type { Context } from '../Context';
-import type { VBValue } from './VBValue';
 import type { VBClass } from './VBClass';
-import { VBPointer, VBValuePointer } from './VBPointer';
+import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import { VBNamespace } from './VBNamespace';
 import { last } from '../utils';
 import { throwVBError } from '../errorCodes';
@@ -87,7 +86,7 @@ export class VBScope {
     return value;
   }
 
-  async setVariableValue(name: string, value: VBValue | VBPointer) {
+  async setVariableValue(name: string, value: VBAny) {
     let v = await this.getVariable(name);
     const setValue = value.type === 'Pointer' ? await value.getValue() : value;
     if (v.type === 'Pointer') {

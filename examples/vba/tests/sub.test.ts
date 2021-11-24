@@ -112,7 +112,7 @@ End Sub
 
   it('paramarray works', async () => {
     const ret = await run(`
-    Public Sub Procedure_Five(ByVal iConstant As Integer, _
+     Sub Procedure_Five(ByVal iConstant As Integer, _
       ParamArray aArgumentsArray() As Variant)
 
 Dim vArg As Variant
@@ -121,7 +121,7 @@ Debug.Print vArg
 
 End Sub
 
-Public Sub main()
+ Sub main()
 dim a(1) as Integer
 a(0)=1
 a(1)=2
@@ -134,19 +134,32 @@ End Sub
 
   it('paramarray can be optional', async () => {
     const ret = await run(`
-Public Sub Procedure_Five(ByVal iConstant As Integer, _
+ Sub Procedure_Five(ByVal iConstant As Integer, _
   ParamArray aArgumentsArray() As Variant)
 
 Debug.Print iConstant, UBound(aArgumentsArray), LBound(aArgumentsArray)
 
 End Sub
 
-Public Sub main()
+ Sub main()
 
 Call Procedure_Five(100)
 
 End Sub
 `);
     expect(ret).toEqual([100, -1, 0]);
+  });
+
+  it('support named arguments', async () => {
+    const ret = await run(`
+    Sub test(x As Integer, Optional y As Integer = 10, Optional z As Integer = 20)
+    Debug.Print x, y, z
+    End Sub
+    
+    Sub main()
+    test 1, y:=2
+    End Sub    
+    `);
+    expect(ret).toEqual([1, 2, 20]);
   });
 });

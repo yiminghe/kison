@@ -1,18 +1,19 @@
 import type { AstNode, AstSymbolNode } from '../../parser';
 import type { Context } from '../Context';
-import { NamespaceValue, VBNamespace, VBPointer, VBValue } from '../types';
+import { NamespaceValue, VBNamespace, VBAny } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
 import { throwVBError } from '../errorCodes';
+import { VBArguments } from '../data-structure/VBArguments';
 
 export async function buildArgs({ children }: AstSymbolNode, context: Context) {
-  let args: (VBValue | VBPointer)[] | undefined;
+  let args: VBArguments | undefined;
   for (let i = 0; i < children.length; i++) {
     const f = children[i];
     if (f.type === 'token' && f.token === 'LPAREN') {
       let n = children[i + 1];
       if (n && n.type === 'token' && n.token === 'RPAREN') {
-        args = [];
+        args = new VBArguments();
       }
     } else if (f.type === 'symbol' && f.symbol === 'argsCall') {
       args = await evaluate(f, context);
@@ -26,7 +27,7 @@ export async function buildIndexes(
   { children }: { children: AstNode[] },
   context: Context,
 ) {
-  let args: (VBValue | VBPointer)[][] = [];
+  let args: VBAny[][] = [];
   for (const f of children) {
     if (f.type === 'symbol' && f.symbol === 'indexes') {
       args.push(await evaluate(f, context));
@@ -36,16 +37,17 @@ export async function buildIndexes(
 }
 
 export async function callSubOrGetElementWithIndexesAndArgs(
-  parent: VBValue | VBPointer | VBNamespace | undefined,
+  parent: VBAny | VBNamespace | undefined,
   subName: string,
-  indexes: (VBPointer | VBValue)[][],
+  indexes: VBAny[][],
   context: Context,
+  args?: VBArguments,
 ) {
   const scope = context.getCurrentScopeInternal();
 
   async function getElements(
-    obj: VBPointer | VBValue | VBNamespace | NamespaceValue,
-    indexes: (VBPointer | VBValue)[][],
+    obj: VBAny | VBNamespace | NamespaceValue,
+    indexes: VBAny[][],
   ) {
     let ret = obj;
     for (const i of indexes) {
@@ -65,7 +67,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
   }
 
   if (parent) {
-    let v: VBPointer | VBValue | VBNamespace | NamespaceValue | undefined;
+    let v: VBAny | VBNamespace | NamespaceValue | undefined;
     if (subName) {
       if (parent.type === 'Namespace') {
         v = parent.get(subName);
@@ -74,11 +76,15 @@ export async function callSubOrGetElementWithIndexesAndArgs(
         if (value.type === 'Class') {
           v = await value.get(subName);
           if (!v) {
-            if (!indexes.length) {
+            if (!indexes.length && !args) {
               throwVBError('UNEXPECTED_ERROR', 'class function call');
             }
-            v = await value.callSub(subName, indexes[0]);
-            indexes.shift();
+            if (args) {
+              v = await value.callSub(subName, args);
+            } else {
+              v = await value.callSub(subName, new VBArguments(indexes[0]));
+              indexes.shift();
+            }
           }
         }
       }
@@ -88,10 +94,17 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     } else {
       v = parent;
     }
-    if (indexes.length) {
+    if (indexes.length || args) {
       if (v.type === 'SubBinder') {
-        v = await context.callSubBinderInternal(v, indexes[0]);
-        indexes.shift();
+        if (args) {
+          v = await context.callSubBinderInternal(v, args);
+        } else {
+          v = await context.callSubBinderInternal(
+            v,
+            new VBArguments(indexes[0]),
+          );
+          indexes.shift();
+        }
       }
       return getElements(v, indexes);
     } else {
@@ -105,20 +118,25 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     if (variable.type === 'Namespace') {
       return variable;
     }
-
     return getElements(variable, indexes);
   } else {
-    const args = indexes[0] || [];
-    const value = await context.callSubInternal(subName, args);
-    return getElements(value, indexes.slice(1));
+    let value;
+    if (args) {
+      value = await context.callSubInternal(subName, args);
+    } else {
+      value = await context.callSubInternal(
+        subName,
+        new VBArguments(indexes[0]),
+      );
+      indexes.shift();
+    }
+    return getElements(value, indexes);
   }
 }
+export async function getVBValue(v: VBAny): Promise<VBAny>;
 export async function getVBValue(
-  v: VBPointer | VBValue,
-): Promise<VBPointer | VBValue>;
-export async function getVBValue(
-  v: VBPointer | VBValue | undefined,
-): Promise<VBPointer | VBValue | undefined> {
+  v: VBAny | undefined,
+): Promise<VBAny | undefined> {
   if (!v) {
     return v;
   }

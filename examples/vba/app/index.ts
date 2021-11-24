@@ -82,7 +82,7 @@ require(['vs/editor/editor.main'], () => {
   Object.assign(editorContainer.style, { display: 'flex', height: '430px' });
   editorContainer.innerHTML = `
   <div  style="flex:1;flex-direction:column;display:flex;">
-  <p>module: </p>
+  <p>module m1: </p>
   <div id='module-editor' style="flex:1">
   </div>
   </div>
@@ -203,7 +203,7 @@ require(['vs/editor/editor.main'], () => {
     },
   });
 
-  $('evaluate').addEventListener('click', async () => {
+  $('evaluate').addEventListener('click', async function evaluate() {
     try {
       const { classCode, moduleCode } = getAllCodes();
       let start = Date.now();
@@ -227,7 +227,7 @@ require(['vs/editor/editor.main'], () => {
       console.log('');
       console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {
-      console.error(e);
+      console.error(e.message);
     }
   });
 });

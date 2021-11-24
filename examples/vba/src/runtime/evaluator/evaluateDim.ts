@@ -7,6 +7,7 @@ import {
   collectAmbiguousIdentifier,
 } from '../collect/collectType';
 import type { Context } from '../Context';
+import { throwVBError } from '../errorCodes';
 import {
   AsTypeClauseInfo,
   VBArray,
@@ -14,7 +15,7 @@ import {
   VBVariableInfo,
   Subscript,
   VBPointer,
-  VBPrimitiveTypeClass,
+  VBBasicTypeClasses,
   getDEFAULT_AS_TYPE,
   VB_EMPTY,
   VBValuePointer,
@@ -25,7 +26,7 @@ async function getNumberFromSubscript(node: VBPointer | VBInteger) {
   if (node.type === 'Pointer') {
     const vbValue = await node.getValue();
     if (vbValue.type !== 'Integer') {
-      throw new Error('unexpected array dimision!');
+      throwVBError('UNEXPECTED_ERROR', 'array dimision');
     }
     return vbValue.value;
   }
@@ -78,15 +79,15 @@ registerEvaluators({
     let value: VBVariableInfo['value'] | undefined;
 
     if (type) {
-      const PrimitiveClass = (VBPrimitiveTypeClass as any)[type];
+      const VBBasicTypeClass = (VBBasicTypeClasses as any)[type];
       if (subscripts) {
         value = () => {
           const value = new VBArray(type, subscripts!);
           return new VBValuePointer(value, asType);
         };
-      } else if (PrimitiveClass) {
+      } else if (VBBasicTypeClass) {
         value = () => {
-          const value = new PrimitiveClass();
+          const value = new VBBasicTypeClass();
           return new VBValuePointer(value, asType);
         };
       }
@@ -105,8 +106,9 @@ registerEvaluators({
       }
     }
     if (!value) {
-      throw new Error(
-        'unexpect asType: ' + asType.type || asType.classType?.join(''),
+      throwVBError(
+        'UNEXPECTED_ERROR',
+        'asType: ' + asType.type || asType.classType?.join(''),
       );
     }
     return {
@@ -155,7 +157,7 @@ registerEvaluators({
       .get(currentScope.file.id)
       ?.symbolTable.get(currentScope.subName);
     if (!subSymbolItem || subSymbolItem.type === 'variable') {
-      throw new Error('expected subSymbolItem when evaluate_variableStmt!');
+      throwVBError('SYNTAX_ERROR');
     }
     isStatic = isStatic || subSymbolItem.isStatic;
     for (const v of variables) {
@@ -209,10 +211,10 @@ registerEvaluators({
               obj.asType = asType;
             }
           } else {
-            throw new Error('unexpected redim!');
+            throwVBError('UNEXPECTED_ERROR', 'redim');
           }
         } else {
-          throw new Error('unexpected redim!');
+          throwVBError('UNEXPECTED_ERROR', 'redim');
         }
       }
     }

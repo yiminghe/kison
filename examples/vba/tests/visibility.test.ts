@@ -51,7 +51,7 @@ describe('class', () => {
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"Can not find sub definition: test2 (line 2 at file m1)"`,
+      `"can not find sub: test2 (line 2 at file m1)"`,
     );
   });
 
@@ -83,7 +83,7 @@ describe('class', () => {
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"Can not access non-public member! (line 3 at file m1)"`,
+      `"can not access non-public member (line 3 at file m1)"`,
     );
   });
 
@@ -117,7 +117,7 @@ describe('class', () => {
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"Can not access non-public method! (line 3 at file m1)"`,
+      `"can not access non-public method (line 3 at file m1)"`,
     );
   });
 
@@ -171,7 +171,7 @@ describe('class', () => {
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"Can not access non-public property! (line 3 at file m1)"`,
+      `"can not access non-public property (line 3 at file m1)"`,
     );
   });
 
@@ -227,7 +227,7 @@ describe('class', () => {
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"Can not access non-public property! (line 3 at file m1)"`,
+      `"can not access non-public property (line 3 at file m1)"`,
     );
   });
 });

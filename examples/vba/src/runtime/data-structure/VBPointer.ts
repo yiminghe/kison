@@ -1,3 +1,4 @@
+import { throwVBError } from '../errorCodes';
 import {
   VBBindIndexPointer,
   VBBindPropertyPointer,
@@ -58,7 +59,7 @@ export class VBValuePointer {
 
   async setValue(value: VBValue | VBPointer) {
     if (this.constant) {
-      throw new Error('Can not set const variable!');
+      throwVBError('SET_CONST');
     }
     const obj = this._getObject();
     if (obj.subType === 'Value') {

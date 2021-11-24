@@ -86,7 +86,7 @@ export class VBMissingArgument {
   readonly value: undefined;
 }
 
-export type VBPrimitive =
+export type VBBasicType =
   | VBByte
   | VBCurrency
   | VBDate
@@ -103,7 +103,7 @@ export type VBPrimitive =
   | VBMissingArgument
   | VBEmpty;
 
-export const VBPrimitiveTypeClass = {
+export const VBBasicTypeClasses = {
   String: VBString,
   Single: VBSingle,
   Integer: VBInteger,
@@ -118,15 +118,13 @@ export const VBPrimitiveTypeClass = {
   Variant: VBEmpty,
 };
 
-Object.keys(VBPrimitiveTypeClass).forEach((k) => {
-  (VBPrimitiveTypeClass as any)[k.toLowerCase()] = (
-    VBPrimitiveTypeClass as any
-  )[k];
+Object.keys(VBBasicTypeClasses).forEach((k) => {
+  (VBBasicTypeClasses as any)[k.toLowerCase()] = (VBBasicTypeClasses as any)[k];
 });
 
-export type VBValidPrimitiveType = keyof typeof VBPrimitiveTypeClass;
+export type VBBasicTypeKey = keyof typeof VBBasicTypeClasses;
 
-export type VBValue = VBPrimitive | VBArray | VBClass;
+export type VBValue = VBBasicType | VBArray | VBClass;
 
 export const VB_NULL = new VBNull();
 export const VB_NOTHING = new VBNothing();
@@ -136,7 +134,7 @@ export const VB_TRUE = new VBBoolean(true);
 export const VB_FALSE = new VBBoolean(false);
 
 export interface AsTypeClauseInfo {
-  type?: VBValidPrimitiveType;
+  type?: VBBasicTypeKey;
   isArray: boolean;
   isNew?: boolean;
   classType?: string[];

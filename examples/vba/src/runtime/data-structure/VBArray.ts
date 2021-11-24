@@ -1,16 +1,15 @@
 import {
-  VBValidPrimitiveType,
+  VBBasicTypeKey,
   Subscript,
   VBValue,
-  VBPrimitiveTypeClass,
+  VBBasicTypeClasses,
   VBInteger,
 } from './VBValue';
 import { VBPointer, VBValuePointer } from './VBPointer';
 import { IndexType } from './runtime';
+import { throwVBError } from '../errorCodes';
 
 type ArrayElement = VBPointer | VBPointer[];
-
-const ARRAY_ACCESS_ERROR = `Subscript out of Range`;
 
 export class VBArray {
   type: 'Array' = 'Array';
@@ -18,7 +17,7 @@ export class VBArray {
   dynamic: boolean = false;
 
   constructor(
-    public elementType: VBValidPrimitiveType,
+    public elementType: VBBasicTypeKey,
     public subscripts: Subscript[] = [],
     public base: number = 0,
   ) {
@@ -30,7 +29,7 @@ export class VBArray {
   jsUBound(i: number = 0) {
     const { subscripts } = this;
     if (!subscripts.length) {
-      throw new Error('unexpected index access!');
+      throwVBError('UNEXPECTED_ERROR', 'index access');
     }
     return subscripts[i].upper;
   }
@@ -38,7 +37,7 @@ export class VBArray {
   jsLBound(i: number = 0) {
     const { subscripts } = this;
     if (!subscripts.length) {
-      throw new Error('unexpected index access!');
+      throwVBError('UNEXPECTED_ERROR', 'index access');
     }
     const subscript = subscripts[i];
     return subscript.lower === undefined ? this.base : subscript.lower;
@@ -55,29 +54,29 @@ export class VBArray {
   async getElement(indexes: IndexType[]) {
     let { value, elementType, subscripts } = this;
     if (indexes.length !== subscripts.length) {
-      throw new Error(ARRAY_ACCESS_ERROR);
+      throwVBError('INDEX_OUT_OF_RANGE');
     }
     let element = value[0];
     for (let i = 0; i < indexes.length; i++) {
       const index = indexes[i];
       if (typeof index !== 'number') {
-        throw new Error('expect number index for array!');
+        throwVBError('INDEX_NUMBER');
       }
       const subscript = subscripts[i];
       if (!subscript) {
-        throw new Error(ARRAY_ACCESS_ERROR);
+        throwVBError('INDEX_OUT_OF_RANGE');
       }
       const lbound = this.jsLBound(i);
       const ubound = this.jsUBound(i);
       if (index < lbound || index > ubound) {
-        throw new Error(ARRAY_ACCESS_ERROR);
+        throwVBError('INDEX_OUT_OF_RANGE');
       }
       if (value[index] === undefined) {
         if (i < subscripts.length - 1) {
           value[index] = [];
         } else {
-          const VBPrimitiveClass = VBPrimitiveTypeClass[elementType];
-          value[index] = new VBValuePointer(new VBPrimitiveClass(), {
+          const VBBasicTypeClass = VBBasicTypeClasses[elementType];
+          value[index] = new VBValuePointer(new VBBasicTypeClass(), {
             type: elementType,
             isArray: false,
           });

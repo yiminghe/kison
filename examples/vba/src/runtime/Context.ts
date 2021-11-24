@@ -37,6 +37,7 @@ import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
 import bindings from './binding/bindings';
+import { throwVBError, VBError } from './errorCodes';
 
 const defaultFileId: VBFile = {
   id: Math.random() + '',
@@ -102,7 +103,7 @@ export class Context {
   popMemberInternal() {
     const item = this.memberStack.pop();
     if (!item) {
-      throw new Error('Internal Error at popMember');
+      throwVBError('INTERNAL_ERROR', 'popMember');
     }
     this.parentMember = item.parentMember;
   }
@@ -126,7 +127,7 @@ export class Context {
       }
       namespace.set(name, binder);
     } else {
-      throw new Error('error when binding');
+      throwVBError('BINDING_ERROR');
     }
   }
 
@@ -157,7 +158,7 @@ export class Context {
     if (namespace) {
       return namespace.get(last(names));
     } else {
-      throw new Error('error when binding');
+      throwVBError('BINDING_ERROR');
     }
   }
 
@@ -208,7 +209,7 @@ export class Context {
       }
     }
     if (name !== 'object') {
-      throw new Error('Can not find file name: ' + name);
+      throwVBError('NOT_FOUND_FILE', name);
     }
     return name;
   }
@@ -227,7 +228,7 @@ export class Context {
         );
         return;
       }
-      throw new Error('No optional argument: ' + argInfo.name);
+      throwVBError('NO_OPTIONAL_ARGUMENT', argInfo.name);
     }
 
     async function fillParamArrayArgument(
@@ -260,7 +261,7 @@ export class Context {
         break;
       }
       if (!argInfo) {
-        throw new Error('argument size is not same with parameter size!');
+        throwVBError('NO_MATCH_ARGUMENT_PARAMETER');
       }
       if (a.type === 'MissingArgument') {
         await fillOptionalArgument(argInfo);
@@ -331,7 +332,7 @@ export class Context {
     if (subSymbolItem.type === 'function') {
       const obj = await currentScope.getVariable(subName);
       if (obj.type === 'Namespace') {
-        throw new Error('unexpected return namespace!');
+        throwVBError('UNEXPECTED_ERROR', 'return namespace');
       }
       ret = await obj.getValue();
     } else {
@@ -399,7 +400,7 @@ export class Context {
       const n = names[i];
       const namespace = defMap.get(n);
       if (!namespace) {
-        throw new Error('Can not find sub definition: ' + subName);
+        throwVBError('NOT_FOUND_SUB', subName);
       }
       if (namespace.type === 'Namespace') {
         defMap = namespace.value;
@@ -409,7 +410,7 @@ export class Context {
     }
 
     if (!subDef) {
-      throw new Error('Can not find sub definition: ' + subName);
+      throwVBError('NOT_FOUND_SUB', subName);
     }
 
     return this.callSubBinderInternal(subDef, args);
@@ -469,7 +470,7 @@ export class Context {
       const { file } = options;
       const existingFile = this.getFileById(file.id);
       if (!existingFile) {
-        throw new Error('Can not find file id:' + file.id);
+        throwVBError('NOT_FOUND_FILE_ID', file.id);
       }
       this.currentFile = existingFile;
     }
@@ -480,16 +481,20 @@ export class Context {
         if (options.logError !== false) {
           console.error(e);
         }
-        throw new Error(
-          e.message +
-            ` (line ${this.currentAstNode.firstLine} at file ${this.currentFile.name})`,
-        );
+        if (e instanceof VBError) {
+          e.setVBPosition(this.currentFile.name, this.currentAstNode.firstLine);
+        } else {
+          (e as any).vbFileName = this.currentFile.name;
+          (e as any).vbFirstLine = this.currentAstNode.firstLine;
+        }
+        throw e;
       }
 
       const exit: Ast_END_Node = e as Ast_END_Node;
 
       if (exit.type === 'token' && exit.token === 'END') {
       } else {
+        console.error(e);
         // unknown error
         console.error(
           `unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`,
@@ -563,7 +568,7 @@ export class Context {
       }
     }
     if (!value) {
-      throw new Error('Can not find class: ' + name);
+      throwVBError('NOT_FOUND_CLASS', name);
     }
     await value.init();
     return value;

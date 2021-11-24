@@ -13,6 +13,7 @@ import {
   buildIndexes,
   callSubOrGetElementWithIndexesAndArgs,
 } from './common';
+import { throwVBError } from '../errorCodes';
 
 async function callSub(
   node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,
@@ -22,7 +23,7 @@ async function callSub(
   const { children } = node;
   const token = children[tokenIndex];
   if (token.type !== 'symbol' || token.symbol !== 'ambiguousIdentifier') {
-    throw new Error('unexpected');
+    throwVBError('SYNTAX_ERROR');
   }
   const subName = token.children[0].text;
   let args: (VBValue | VBPointer)[] | undefined = await buildArgs(
@@ -51,7 +52,7 @@ async function callMemberSub(
   }
 
   if (!parent) {
-    throw new Error('unexpected member access!');
+    throwVBError('UNEXPECTED_ERROR', 'member access');
   }
 
   const argsCall = await buildArgs(node, context);
@@ -129,7 +130,7 @@ registerEvaluators({
           (await parent.getValue()).type === 'Empty') ||
         parent.type === 'Empty'
       ) {
-        throw new Error('invalid member access!');
+        throwVBError('UNEXPECTED_ERROR', 'member access');
       }
     }
 

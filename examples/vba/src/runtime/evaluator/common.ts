@@ -3,6 +3,7 @@ import type { Context } from '../Context';
 import { NamespaceValue, VBNamespace, VBPointer, VBValue } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
+import { throwVBError } from '../errorCodes';
 
 export async function buildArgs({ children }: AstSymbolNode, context: Context) {
   let args: (VBValue | VBPointer)[] | undefined;
@@ -57,7 +58,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
       ) {
         ret = await value.getElement(valueIndex);
       } else {
-        throw new Error('unexpected index access!');
+        throwVBError('UNEXPECTED_ERROR', 'index access');
       }
     }
     return ret;
@@ -74,7 +75,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
           v = await value.get(subName);
           if (!v) {
             if (!indexes.length) {
-              throw new Error('unexpected class function call!');
+              throwVBError('UNEXPECTED_ERROR', 'class function call');
             }
             v = await value.callSub(subName, indexes[0]);
             indexes.shift();
@@ -82,7 +83,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
         }
       }
       if (!v) {
-        throw new Error('unexpected member access!');
+        throwVBError('UNEXPECTED_ERROR', 'member access');
       }
     } else {
       v = parent;

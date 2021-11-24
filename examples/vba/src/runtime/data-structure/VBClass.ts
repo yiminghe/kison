@@ -9,6 +9,7 @@ import {
   isClassProperty,
 } from '../utils';
 import { SubBinder } from '../types';
+import { throwVBError } from '../errorCodes';
 
 interface VBClassMember {
   value: VBPointer;
@@ -30,7 +31,7 @@ export class VBNativeClass {
   get fileSymbolTable() {
     const fileSymbolTable = this.context.symbolTable.get(this.id);
     if (!fileSymbolTable) {
-      throw new Error('Can not find class: ' + this.id);
+      throwVBError('NOT_FOUND_CLASS');
     }
     return fileSymbolTable;
   }
@@ -71,12 +72,12 @@ export class VBNativeClass {
     if (sub && sub.type !== 'variable') {
       if (sub.isPrivate() && this.id !== this.context.currentFile.id) {
         const type = isClassProperty(name) ? 'property' : 'method';
-        throw new Error(`Can not access non-public ${type}!`);
+        throwVBError('NO_PRIVATE_TYPE', type);
       }
       return this.context.callVBSubInternal(sub, args, this);
     } else {
       if (check) {
-        throw new Error(`Can not find sub!`);
+        throwVBError('NOT_FOUND_SUB', name);
       }
     }
     return VB_EMPTY;
@@ -86,7 +87,7 @@ export class VBNativeClass {
     if (this.members.has(name)) {
       const member = this.members.get(name)!;
       if (this.context.currentFile.id !== this.id && member.isPrivate) {
-        throw new Error('Can not access non-public member!');
+        throwVBError('NO_PRIVATE_MEMBER');
       }
       return member.value.setValue(await getVBValue(value));
     } else {
@@ -100,7 +101,7 @@ export class VBNativeClass {
     if (this.members.has(name)) {
       const member = this.members.get(name)!;
       if (this.context.currentFile.id !== this.id && member.isPrivate) {
-        throw new Error('Can not access non-public member!');
+        throwVBError('NO_PRIVATE_MEMBER');
       }
       return member.value;
     } else {
@@ -179,7 +180,7 @@ export class VBBindIndexPointer {
   async getValue() {
     if (!this._value) {
       if (!this.instance.instance.getElement) {
-        throw new Error('no getElement on ClassBinder!');
+        throwVBError('NOT_FOUND_GET_ELEMENT_CLASS_BINDER');
       }
       this._value = await this.instance.instance.getElement(this.indexes);
     }
@@ -243,7 +244,7 @@ export class VBBindClass {
       v = value;
     }
     if (!this.instance.setElement) {
-      throw new Error('no setElement on ClassBinder!');
+      throwVBError('NOT_FOUND_SET_ELEMENT_CLASS_BINDER');
     }
     return this.instance.setElement(indexes, v);
   }

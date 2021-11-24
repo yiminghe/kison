@@ -7,12 +7,13 @@ import type {
 } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
+import { throwVBError } from '../errorCodes';
 import { evaluate } from '../evaluator/index';
 import {
   ArgInfo,
   VBMissingArgument,
   VBPointer,
-  VBPrimitiveTypeClass,
+  VBBasicTypeClasses,
   VBSub,
   VBValue,
 } from '../types';
@@ -45,7 +46,7 @@ async function loadCall(
       return;
     }
   }
-  throw new Error(`expect ${node.symbol} definition name!`);
+  throwVBError('NOT_FOUND_SUB', node.symbol);
 }
 
 registerLoaders({
@@ -79,7 +80,7 @@ registerLoaders({
     }
     for (let i = 0; i < ret.length; i++) {
       if (ret[i].paramArray && i !== ret.length - 1) {
-        throw new Error('paramarray must be last argument!');
+        throwVBError('PARAMARRAY_LAST_ARGUMENT');
       }
     }
     return ret;
@@ -127,27 +128,27 @@ registerLoaders({
       }
     }
     if (!lp && argInfo.paramArray) {
-      throw new Error('paramArray parameter must be of array type!');
+      throwVBError('PARAMARRAY_TYPE');
     }
     const type = argInfo.asType?.type || 'Variant';
     if (argInfo.paramArray) {
       if (argInfo.byRef === false) {
-        throw new Error('paramArray must be byRef!');
+        throwVBError('PARAMARRAY_BY_REF');
       }
       if (type !== 'Variant') {
-        throw new Error('paramArray must be Variant!');
+        throwVBError('PARAMARRAY_VARIANT');
       }
     }
 
     if (argInfo.optional && !argInfo.defaultValue) {
-      const PrimitiveClass = (VBPrimitiveTypeClass as any)[type];
-      if (!PrimitiveClass) {
-        throw new Error('optional parameter defaultValue must be basic type!');
+      const VBBasicTypeClass = (VBBasicTypeClasses as any)[type];
+      if (!VBBasicTypeClass) {
+        throwVBError('DEFAULT_VALUE_TYPE');
       }
       if (type === 'Variant') {
         argInfo.defaultValue = new VBMissingArgument();
       } else {
-        argInfo.defaultValue = new PrimitiveClass();
+        argInfo.defaultValue = new VBBasicTypeClass();
       }
     }
     return argInfo;

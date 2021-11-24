@@ -203,6 +203,8 @@ require(['vs/editor/editor.main'], () => {
     },
   });
 
+  let called = false;
+
   $('evaluate').addEventListener('click', async function evaluate() {
     try {
       const { classCode, moduleCode } = getAllCodes();
@@ -219,9 +221,16 @@ require(['vs/editor/editor.main'], () => {
           },
         ],
         (context) => {
+          if (called) {
+            return;
+          }
+          called = true;
           context.registerSubBinder(LogSub('msgbox'));
           context.registerSubBinder(LogSub('debug.print'));
           context.registerSubBinder(Debugger);
+        },
+        {
+          reuseContext: true,
         },
       );
       console.log('');

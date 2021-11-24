@@ -422,16 +422,24 @@ export class Context {
       this.symbolTable.delete(file.id);
       return;
     }
-    file = this.getFileById(file.id) || file;
-    file.name = file.name.toLowerCase();
+    const currentFile = this.getFileById(file.id) || file;
+    currentFile.name = file.name.toLowerCase();
+    this.currentFile = currentFile;
+    const currentFileSymbolTable = this.symbolTable.get(currentFile.id);
+    if (currentFileSymbolTable && currentFileSymbolTable.code === code) {
+      currentFileSymbolTable.file = currentFile;
+      return;
+    }
     const { ast, error } = parser.parse(code);
     if (error) {
       throw new Error(error.errorMessage);
     }
-    this.astMap.set(file.id, ast);
-    this.currentFile = file;
-    this.symbolTable.set(file.id, new FileSymbolTable(file));
-    return load(ast, this);
+    this.astMap.set(currentFile.id, ast);
+    this.symbolTable.set(
+      currentFile.id,
+      new FileSymbolTable(currentFile, code),
+    );
+    await load(ast, this);
   }
 
   public registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {

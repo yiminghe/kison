@@ -121,17 +121,7 @@ export async function runs(
   return ret;
 }
 
-export async function runs2(
-  mainSub: string,
-  moduleCodes: string[],
-  classCode: (VBFile & { code: string })[] = [],
-  callback: (context: Context) => void = () => {},
-  options: CallOptions = {},
-) {
-  let id = 0;
-
-  const context = new Context();
-
+function bindCommon(context: Context) {
   context.registerSubBinder(createRange);
 
   context.registerClassBinder(JSDateBinder);
@@ -142,6 +132,24 @@ export async function runs2(
     ...vbModal,
     name: 'VBA.FormShowConstants.' + vbModal.name,
   });
+  return context;
+}
+
+const globalContext = new Context();
+bindCommon(globalContext);
+
+export async function runs2(
+  mainSub: string,
+  moduleCodes: string[],
+  classCode: (VBFile & { code: string })[] = [],
+  callback: (context: Context) => void = () => {},
+  options: CallOptions & { reuseContext?: boolean } = {},
+) {
+  let id = 0;
+
+  const context = options.reuseContext
+    ? globalContext
+    : bindCommon(new Context());
 
   await callback(context);
 

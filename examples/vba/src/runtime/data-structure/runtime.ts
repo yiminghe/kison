@@ -96,7 +96,7 @@ export type Loaders = AstVisitors<'load', Context>;
 
 export class FileSymbolTable {
   symbolTable = new Map<SymbolName, SymbolItem>();
-  constructor(public file: VBFile) {}
+  constructor(public file: VBFile, public code: string) {}
 
   get type() {
     return this.file.type;

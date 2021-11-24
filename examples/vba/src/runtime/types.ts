@@ -6,3 +6,4 @@ export * from './data-structure/VBClass';
 export * from './data-structure/VBArray';
 export * from './data-structure/VBPointer';
 export * from './data-structure/VBNamespace';
+export * from './data-structure/VBArguments';

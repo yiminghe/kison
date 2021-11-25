@@ -38,7 +38,7 @@ import {
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
-import bindings from './binding/bindings';
+import bindings from './std/libs';
 import { throwVBError, VBError } from './errorCodes';
 import { VBArguments } from './data-structure/VBArguments';
 

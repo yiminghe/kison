@@ -441,7 +441,7 @@ const globalUtils = {
   },
 
   isOptionalSymbol(s: any) {
-    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?/);
+    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?$/);
   },
 
   normalizeSymbol(s: any): string {

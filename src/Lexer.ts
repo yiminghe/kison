@@ -436,18 +436,18 @@ class Lexer {
     return ret && this.mapReverseState(ret);
   }
 
-  showDebugInfo() {
+  showDebugInfo(nextToken?: Token) {
+    nextToken = nextToken || this.getCurrentToken();
     var { DEBUG_CONTEXT_LIMIT } = Lexer.STATIC;
-    var { matched, match, input } = this;
-
-    matched = matched.slice(0, matched.length - match.length);
+    var { input } = this;
+    const matched = input.slice(0, nextToken.start);
     var past =
         (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
         matched
           .slice(0 - DEBUG_CONTEXT_LIMIT)
           .split('\n')
           .join(' '),
-      next = match + input.slice(this.end);
+      next = input.slice(nextToken.start);
     //#JSCOVERAGE_ENDIF
     next =
       next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
@@ -557,6 +557,16 @@ class Lexer {
       tokens.pop();
     }
     tokens.push(token);
+  }
+
+  peekTokens(num: number = 1) {
+    const ret = [];
+    this.stash();
+    for (let i = 0; i < num; i++) {
+      ret.push(this.lex());
+    }
+    this.stashPop();
+    return ret;
   }
 
   lex(): Token {

@@ -1,5 +1,4 @@
 import Utils from '../utils';
-import { Table } from './LLGrammar';
 import type { Token, ParserOptions } from '../parser';
 import type { ParseError } from '../types';
 import type {
@@ -15,6 +14,7 @@ let {
   parser,
   astStack,
   globalSymbolNodeId,
+  parserPredictTable,
 } = data;
 
 type SymbolItem = string | number | Function;
@@ -72,7 +72,7 @@ export default function parse(input: string, options: ParserOptions) {
     getProductionLabel,
     productions,
   } = parser;
-  var table = parser.table as Table;
+  var table = parserPredictTable;
 
   lexer.options = lexerOptions;
   startSymbol = startSymbol || getProductionSymbol(productions[0]);
@@ -99,7 +99,7 @@ export default function parse(input: string, options: ParserOptions) {
       return [lexer.mapReverseSymbol(s)];
     }
     const ret = (table[s] && Object.keys(table[s])) || [];
-    return ret.map((r) => lexer.mapReverseSymbol(r));
+    return ret.map((r: string) => lexer.mapReverseSymbol(r));
   };
 
   function peekSymbolStack() {
@@ -140,9 +140,9 @@ export default function parse(input: string, options: ParserOptions) {
         pushRecoveryTokens(recoveryTokens, token);
       } else if ((next = getTableVal(topSymbol, token.t)) !== undefined) {
         popSymbolStack();
-        production = productions[next];
+        production = productions[next[0]];
 
-        if (productionSkipAstNodeSet?.has(next)) {
+        if (productionSkipAstNodeSet?.has(next[0])) {
           const newRhs = getLabeledRhsForAddNodeFlag(production);
           symbolStack.push.apply(symbolStack, newRhs.reverse());
         } else {
@@ -151,7 +151,7 @@ export default function parse(input: string, options: ParserOptions) {
           if (parseTree) {
             const newAst = new AstSymbolNode({
               id: ++globalSymbolNodeId,
-              internalRuleIndex: next,
+              internalRuleIndex: next[0],
               symbol: getOriginalSymbol(topSymbol),
               label,
               isWrap,

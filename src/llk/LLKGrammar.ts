@@ -5,8 +5,6 @@ import utils from '../utils';
 const { serializeObject } = utils;
 
 class LLKGrammar extends Grammar {
-  override buildMeta() {}
-
   override buildProductions() {
     const firstProduction = this.productionInstances[0];
     this.productionInstances.splice(0, 1);
@@ -21,6 +19,7 @@ class LLKGrammar extends Grammar {
   }
 
   override genCodeInternal(code: string[]) {
+    this.genTable(code);
     for (const key of Object.keys(parseCode)) {
       code.push(`var ${key} = ${serializeObject((parseCode as any)[key])};`);
     }

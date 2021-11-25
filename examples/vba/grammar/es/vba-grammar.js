@@ -649,7 +649,7 @@ module.exports = {
       n.ambiguousIdentifier,
     ],
 
-    // ...n.KEYWORDS.map((keyword) => [n.ambiguousIdentifier, keyword]),
+    ...n.KEYWORDS.map((keyword) => [n.ambiguousIdentifier, keyword]),
 
     [n.ambiguousIdentifier, n.IDENTIFIER],
   ]),

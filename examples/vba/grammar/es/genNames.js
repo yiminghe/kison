@@ -121,7 +121,6 @@ const keywords = [
   'WITH',
   'WITHEVENTS',
   'XOR',
-  '$EOF',
 ];
 
 const lexer = [
@@ -152,6 +151,7 @@ const lexer = [
   'L_SQUARE_BRACKET',
   'R_SQUARE_BRACKET',
   'keywords',
+  '$EOF',
 ];
 
 const symbols = [

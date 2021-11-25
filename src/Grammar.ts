@@ -5,6 +5,7 @@ import NonTerminal from './NonTerminal';
 import Lexer, { LexerRule } from './Lexer';
 import Production from './Production';
 import data from './data';
+import type { Table } from './data';
 import { Rh, Rhs } from './types';
 import ItemSet from './lalr/ItemSet';
 
@@ -114,6 +115,8 @@ function findIdenticalProductionRule(
 }
 
 class Grammar {
+  checkConflicts: boolean = false;
+
   prioritySymbolMap: Record<string, string> = {};
 
   nonTerminals: Record<string, NonTerminal> = {};
@@ -637,6 +640,8 @@ class Grammar {
     uuid: { id: number },
     newPs: ProductionRule[],
   ) {
+    const originalLength = newPs.length;
+
     const { rhs } = p;
 
     type Node = {
@@ -840,6 +845,14 @@ class Grammar {
       }
     } else {
       processOneRoot(rhsRoot);
+    }
+
+    if (p.predict) {
+      for (let l = originalLength; l < newPs.length; l++) {
+        if (!newPs[l].predict) {
+          newPs[l].predict = p.predict;
+        }
+      }
     }
   }
 
@@ -1475,11 +1488,98 @@ class Grammar {
     }
     fake.productions = newVs2;
   }
+  setTable(symbol: string, terminal: string, index: number, follow = false) {
+    index = follow ? -index : index;
+    const { table, productionInstances } = this;
+    table[symbol] = table[symbol] || {};
+    const predicts = (table[symbol][terminal] = table[symbol][terminal] || []);
+    if (predicts.indexOf(index) === -1) {
+      predicts.push(index);
+    }
+    if (this.checkConflicts && predicts.length > 1) {
+      const e = ['', `Conflict: ${symbol} , ${terminal} ->`];
+      for (const i of predicts) {
+        e.push(
+          (i > 0 ? '' : '-: ') + productionInstances[Math.abs(i)].toString(),
+        );
+      }
+      e.push('');
+      console.error(e.join('\n'));
+    }
+  }
+
+  buildTable() {
+    const { productionInstances } = this;
+    for (let index = 0; index < productionInstances.length; index++) {
+      const p = productionInstances[index];
+      let { symbol, rhs: oRhs } = p;
+      const rhs = filterRhs(oRhs);
+      const firsts = this.findFirst(rhs);
+      for (const terminal of Object.keys(firsts)) {
+        this.setTable(symbol, terminal, index);
+      }
+      if (this.isNullable(rhs)) {
+        const follows = this.findFollows(symbol);
+        for (const terminal of Object.keys(follows)) {
+          this.setTable(symbol, terminal, index, true);
+        }
+      }
+    }
+  }
+
+  visualizeTable() {
+    const ret = [];
+    const { table, productionInstances } = this;
+    for (const nonTerminal of Object.keys(table)) {
+      const col = table[nonTerminal];
+      if (col) {
+        for (const terminal of Object.keys(col)) {
+          const pss = col[terminal];
+          if (pss !== undefined) {
+            for (const ps of pss) {
+              const production = productionInstances[Math.abs(ps)];
+              ret.push(
+                (ps > 0 ? '' : '-: ') +
+                  `${nonTerminal} ${terminal} => ${production.symbol} -> ${
+                    filterRhs(production.rhs).join(', ') || 'EMPTY'
+                  }`,
+              );
+            }
+          }
+        }
+      }
+    }
+    return ret.join('\n');
+  }
 
   buildMeta() {
     this.buildNonTerminals();
     this.buildNullable();
     this.buildFirsts();
+    this.buildFollows();
+    this.buildTable();
+  }
+
+  genTable(code: string[]) {
+    const { table, lexer } = this;
+    const mappedTable: Table = {};
+    for (const nonTerminal of Object.keys(table)) {
+      const col = table[nonTerminal];
+      if (col) {
+        const mappedCol: Record<string, number[]> = {};
+        for (const terminal of Object.keys(col)) {
+          const ps = col[terminal];
+          if (ps !== undefined) {
+            col[terminal] = ps.map((p) => Math.abs(p));
+            mappedCol[lexer.mapSymbol(terminal)] = col[terminal];
+          }
+        }
+        mappedTable[lexer.mapSymbol(nonTerminal)] = mappedCol;
+      }
+    }
+    code.push(
+      'const parserPredictTable = ' + serializeObject(mappedTable) + ';',
+    );
   }
 
   build() {
@@ -1492,8 +1592,7 @@ class Grammar {
   buildProductions() {}
 
   buildNonTerminals() {
-    var { lexer, nonTerminals } = this;
-    var productionInstances = this.productionInstances;
+    var { lexer, nonTerminals, productionInstances } = this;
     for (const production of productionInstances) {
       var { symbol } = production;
       var nonTerminal = nonTerminals[symbol];
@@ -1504,6 +1603,7 @@ class Grammar {
       }
       nonTerminal.productions.push(production);
       eachRhs(production.rhs, (rh) => {
+        rh = normalizeSymbol(rh);
         if (!lexer.hasToken(rh) && !nonTerminals[rh]) {
           nonTerminals[rh] = new NonTerminal({
             symbol: rh,
@@ -1515,8 +1615,7 @@ class Grammar {
 
   buildNullable() {
     var i, rhs, n, t, production;
-    var { nonTerminals } = this;
-    var productionInstances = this.productionInstances;
+    var { nonTerminals, productionInstances } = this;
     var cont = true;
     // loop until no further changes have been made
     while (cont) {
@@ -1568,6 +1667,11 @@ class Grammar {
       return true;
       // terminal
     }
+
+    if (isOptionalSymbol(symbol) || isZeroOrMoreSymbol(symbol)) {
+      return true;
+    }
+    symbol = normalizeSymbol(symbol);
     if (!nonTerminals[symbol]) {
       return false;
       // non terminal
@@ -1584,11 +1688,14 @@ class Grammar {
     if (symbol instanceof Array) {
       symbol = filterRhs(symbol);
       for (i = 0; (t = symbol[i]); ++i) {
-        if (!nonTerminals[t]) {
-          firsts[t] = 1;
+        const normalizeT = normalizeSymbol(t);
+
+        if (!nonTerminals[normalizeT]) {
+          firsts[normalizeT] = 1;
         } else {
-          Object.assign(firsts, nonTerminals[t].firsts);
+          Object.assign(firsts, nonTerminals[normalizeT].firsts);
         }
+
         if (!this.isNullable(t)) {
           break;
         }
@@ -1596,6 +1703,7 @@ class Grammar {
       return firsts;
       // terminal
     }
+    symbol = normalizeSymbol(symbol);
     if (!nonTerminals[symbol]) {
       return { [symbol]: 1 };
       // non terminal
@@ -1604,11 +1712,69 @@ class Grammar {
     }
   }
 
-  buildFirsts() {
+  table: Table = {};
+
+  findFollows(symbol: string) {
     var { nonTerminals } = this;
+    if (!nonTerminals[symbol]) {
+      return { [symbol]: 1 };
+      // non terminal
+    } else {
+      return nonTerminals[symbol].follows;
+    }
+  }
+
+  buildFollows() {
+    const { productionInstances, nonTerminals } = this;
+    var cont = true;
+    var nonTerminal, symbol;
+    var mappedStartTag = productionInstances[0].symbol;
+    var { EOF_TOKEN } = Lexer.STATIC;
+    nonTerminals[mappedStartTag].addFollows({
+      [EOF_TOKEN]: 1,
+    });
+    // loop until no further changes have been made
+    while (cont) {
+      cont = false;
+      for (symbol of Object.keys(nonTerminals)) {
+        nonTerminal = nonTerminals[symbol];
+        for (const p of productionInstances) {
+          let { rhs, symbol: leftSymbol } = p;
+          rhs = filterRhs(rhs);
+          let index = -1;
+          for (let i = 0; i < rhs.length; i++) {
+            const rh = normalizeSymbol(rhs[i]);
+            if (rh === symbol) {
+              index = i;
+            }
+          }
+          if (index !== -1) {
+            const rh = rhs[index];
+            const isZeroOrMore = isZeroOrMoreSymbol(rh);
+            if (index !== rhs.length - 1 || isZeroOrMore) {
+              const nextSymbols = filterRhs(
+                rhs.slice(isZeroOrMore ? index : index + 1),
+              );
+              cont =
+                nonTerminal.addFollows(this.findFirst(nextSymbols)) || cont;
+              if (this.isNullable(nextSymbols)) {
+                cont =
+                  nonTerminal.addFollows(this.findFollows(leftSymbol)) || cont;
+              }
+            } else {
+              cont =
+                nonTerminal.addFollows(this.findFollows(leftSymbol)) || cont;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  buildFirsts() {
+    var { nonTerminals, productionInstances } = this;
     var cont = true;
     var nonTerminal, symbol, firsts;
-    const productionInstances = this.productionInstances;
     // loop until no further changes have been made
     while (cont) {
       cont = false;

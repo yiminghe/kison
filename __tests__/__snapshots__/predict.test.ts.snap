@@ -75,121 +75,17 @@ exports[`llk predict simple predict 1`] = `
                   'text': '1'
                 },
                 {
-                  'start': 6,
+                  'start': 0,
                   'end': 0,
-                  'firstLine': 1,
+                  'firstLine': 0,
                   'lastLine': 0,
-                  'firstColumn': 7,
+                  'firstColumn': 0,
                   'lastColumn': 0,
                   'symbol': 'sequence2',
                   'type': 'symbol',
-                  'children': [
-                    {
-                      'start': 6,
-                      'end': 7,
-                      'firstLine': 1,
-                      'lastLine': 1,
-                      'firstColumn': 7,
-                      'lastColumn': 8,
-                      'token': 'NUMBER',
-                      'type': 'token',
-                      'text': '3'
-                    },
-                    {
-                      'start': 8,
-                      'end': 0,
-                      'firstLine': 1,
-                      'lastLine': 0,
-                      'firstColumn': 9,
-                      'lastColumn': 0,
-                      'symbol': 'sequence2',
-                      'type': 'symbol',
-                      'children': [
-                        {
-                          'start': 8,
-                          'end': 9,
-                          'firstLine': 1,
-                          'lastLine': 1,
-                          'firstColumn': 9,
-                          'lastColumn': 10,
-                          'token': 'NUMBER',
-                          'type': 'token',
-                          'text': '1'
-                        },
-                        {
-                          'start': 10,
-                          'end': 0,
-                          'firstLine': 1,
-                          'lastLine': 0,
-                          'firstColumn': 11,
-                          'lastColumn': 0,
-                          'symbol': 'sequence2',
-                          'type': 'symbol',
-                          'children': [
-                            {
-                              'start': 10,
-                              'end': 11,
-                              'firstLine': 1,
-                              'lastLine': 1,
-                              'firstColumn': 11,
-                              'lastColumn': 12,
-                              'token': 'NUMBER',
-                              'type': 'token',
-                              'text': '1'
-                            },
-                            {
-                              'start': 12,
-                              'end': 0,
-                              'firstLine': 1,
-                              'lastLine': 0,
-                              'firstColumn': 13,
-                              'lastColumn': 0,
-                              'symbol': 'sequence2',
-                              'type': 'symbol',
-                              'children': [
-                                {
-                                  'start': 12,
-                                  'end': 13,
-                                  'firstLine': 1,
-                                  'lastLine': 1,
-                                  'firstColumn': 13,
-                                  'lastColumn': 14,
-                                  'token': 'NUMBER',
-                                  'type': 'token',
-                                  'text': '1'
-                                },
-                                {
-                                  'start': 0,
-                                  'end': 0,
-                                  'firstLine': 0,
-                                  'lastLine': 0,
-                                  'firstColumn': 0,
-                                  'lastColumn': 0,
-                                  'symbol': 'sequence2',
-                                  'type': 'symbol',
-                                  'children': [],
-                                  'ruleIndex': 4,
-                                  'internalRuleIndex': 4,
-                                  'id': 10
-                                }
-                              ],
-                              'ruleIndex': 3,
-                              'internalRuleIndex': 3,
-                              'id': 9
-                            }
-                          ],
-                          'ruleIndex': 3,
-                          'internalRuleIndex': 3,
-                          'id': 8
-                        }
-                      ],
-                      'ruleIndex': 3,
-                      'internalRuleIndex': 3,
-                      'id': 7
-                    }
-                  ],
-                  'ruleIndex': 3,
-                  'internalRuleIndex': 3,
+                  'children': [],
+                  'ruleIndex': 4,
+                  'internalRuleIndex': 4,
                   'id': 6
                 }
               ],
@@ -206,6 +102,124 @@ exports[`llk predict simple predict 1`] = `
       'ruleIndex': 2,
       'internalRuleIndex': 2,
       'id': 3
+    },
+    {
+      'start': 6,
+      'end': 0,
+      'firstLine': 1,
+      'lastLine': 0,
+      'firstColumn': 7,
+      'lastColumn': 0,
+      'symbol': 'sequence',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 6,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 8,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '3'
+        },
+        {
+          'start': 8,
+          'end': 0,
+          'firstLine': 1,
+          'lastLine': 0,
+          'firstColumn': 9,
+          'lastColumn': 0,
+          'symbol': 'sequence2',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 8,
+              'end': 9,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 9,
+              'lastColumn': 10,
+              'token': 'NUMBER',
+              'type': 'token',
+              'text': '1'
+            },
+            {
+              'start': 10,
+              'end': 0,
+              'firstLine': 1,
+              'lastLine': 0,
+              'firstColumn': 11,
+              'lastColumn': 0,
+              'symbol': 'sequence2',
+              'type': 'symbol',
+              'children': [
+                {
+                  'start': 10,
+                  'end': 11,
+                  'firstLine': 1,
+                  'lastLine': 1,
+                  'firstColumn': 11,
+                  'lastColumn': 12,
+                  'token': 'NUMBER',
+                  'type': 'token',
+                  'text': '1'
+                },
+                {
+                  'start': 12,
+                  'end': 0,
+                  'firstLine': 1,
+                  'lastLine': 0,
+                  'firstColumn': 13,
+                  'lastColumn': 0,
+                  'symbol': 'sequence2',
+                  'type': 'symbol',
+                  'children': [
+                    {
+                      'start': 12,
+                      'end': 13,
+                      'firstLine': 1,
+                      'lastLine': 1,
+                      'firstColumn': 13,
+                      'lastColumn': 14,
+                      'token': 'NUMBER',
+                      'type': 'token',
+                      'text': '1'
+                    },
+                    {
+                      'start': 0,
+                      'end': 0,
+                      'firstLine': 0,
+                      'lastLine': 0,
+                      'firstColumn': 0,
+                      'lastColumn': 0,
+                      'symbol': 'sequence2',
+                      'type': 'symbol',
+                      'children': [],
+                      'ruleIndex': 4,
+                      'internalRuleIndex': 4,
+                      'id': 11
+                    }
+                  ],
+                  'ruleIndex': 3,
+                  'internalRuleIndex': 3,
+                  'id': 10
+                }
+              ],
+              'ruleIndex': 3,
+              'internalRuleIndex': 3,
+              'id': 9
+            }
+          ],
+          'ruleIndex': 3,
+          'internalRuleIndex': 3,
+          'id': 8
+        }
+      ],
+      'ruleIndex': 2,
+      'internalRuleIndex': 2,
+      'id': 7
     }
   ],
   'ruleIndex': 1,
@@ -214,7 +228,33 @@ exports[`llk predict simple predict 1`] = `
 }"
 `;
 
-exports[`llk predict simple predict 2`] = `undefined`;
+exports[`llk predict simple predict 2`] = `
+Object {
+  "errorMessage": "syntax error at line 1:
+2 1 1 3 1 1 
+------------^
+'NUMBER' expected.
+current token: '$EOF'.",
+  "expected": Array [
+    "NUMBER",
+  ],
+  "lexer": Object {
+    "end": 12,
+    "firstColumn": 13,
+    "firstLine": 1,
+    "lastColumn": 13,
+    "lastLine": 1,
+    "start": 12,
+    "t": "$EOF",
+    "text": "",
+    "token": "$EOF",
+  },
+  "recovery": false,
+  "symbol": "sequence2",
+  "tip": "'NUMBER' expected.
+current token: '$EOF'.",
+}
+`;
 
 exports[`llk predict support group predict 1`] = `
 "{
@@ -372,31 +412,297 @@ exports[`llk predict support group predict 1`] = `
 `;
 
 exports[`llk predict support group predict 2`] = `
-Object {
-  "errorMessage": "syntax error at line 1:
-2 1 1 3 1 1 
-------------^
-'NUMBER' expected.
-current token: 'NUMBER'.",
-  "expected": Array [
-    "NUMBER",
+"{
+  'start': 0,
+  'end': 11,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 12,
+  'symbol': 'program',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 4,
+      'symbol': 'sequence',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        },
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'symbol': 'sequence1',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4,
+              'token': 'NUMBER',
+              'type': 'token',
+              'text': '1'
+            }
+          ],
+          'ruleIndex': 3,
+          'internalRuleIndex': 9,
+          'id': 4
+        }
+      ],
+      'ruleIndex': 2,
+      'internalRuleIndex': 8,
+      'id': 3
+    },
+    {
+      'start': 4,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 8,
+      'symbol': 'sequence',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '1'
+        },
+        {
+          'start': 6,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 8,
+          'symbol': 'sequence1',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 6,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 7,
+              'lastColumn': 8,
+              'token': 'NUMBER',
+              'type': 'token',
+              'text': '3'
+            }
+          ],
+          'ruleIndex': 3,
+          'internalRuleIndex': 9,
+          'id': 6
+        }
+      ],
+      'ruleIndex': 2,
+      'internalRuleIndex': 8,
+      'id': 5
+    },
+    {
+      'start': 8,
+      'end': 11,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 9,
+      'lastColumn': 12,
+      'symbol': 'sequence',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 8,
+          'end': 9,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 9,
+          'lastColumn': 10,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '1'
+        },
+        {
+          'start': 10,
+          'end': 11,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 11,
+          'lastColumn': 12,
+          'symbol': 'sequence1',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 10,
+              'end': 11,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 11,
+              'lastColumn': 12,
+              'token': 'NUMBER',
+              'type': 'token',
+              'text': '1'
+            }
+          ],
+          'ruleIndex': 3,
+          'internalRuleIndex': 9,
+          'id': 8
+        }
+      ],
+      'ruleIndex': 2,
+      'internalRuleIndex': 8,
+      'id': 7
+    }
   ],
-  "lexer": Object {
-    "end": 9,
-    "firstColumn": 9,
-    "firstLine": 1,
-    "lastColumn": 10,
-    "lastLine": 1,
-    "start": 8,
-    "t": "NUMBER",
-    "text": "1",
-    "token": "NUMBER",
-  },
-  "recovery": false,
-  "symbol": "sequence",
-  "tip": "'NUMBER' expected.
-current token: 'NUMBER'.",
-}
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 2
+}"
 `;
 
-exports[`llk predict support group predict 3`] = `undefined`;
+exports[`llk predict support group predict 3`] = `
+"{
+  'start': 0,
+  'end': 7,
+  'firstLine': 1,
+  'lastLine': 1,
+  'firstColumn': 1,
+  'lastColumn': 8,
+  'symbol': 'program',
+  'type': 'symbol',
+  'children': [
+    {
+      'start': 0,
+      'end': 3,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 1,
+      'lastColumn': 4,
+      'symbol': 'sequence',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 0,
+          'end': 1,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 1,
+          'lastColumn': 2,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '2'
+        },
+        {
+          'start': 2,
+          'end': 3,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 3,
+          'lastColumn': 4,
+          'symbol': 'sequence1',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 2,
+              'end': 3,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 3,
+              'lastColumn': 4,
+              'token': 'NUMBER',
+              'type': 'token',
+              'text': '1'
+            }
+          ],
+          'ruleIndex': 3,
+          'internalRuleIndex': 9,
+          'id': 4
+        }
+      ],
+      'ruleIndex': 2,
+      'internalRuleIndex': 8,
+      'id': 3
+    },
+    {
+      'start': 4,
+      'end': 7,
+      'firstLine': 1,
+      'lastLine': 1,
+      'firstColumn': 5,
+      'lastColumn': 8,
+      'symbol': 'sequence',
+      'type': 'symbol',
+      'children': [
+        {
+          'start': 4,
+          'end': 5,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 5,
+          'lastColumn': 6,
+          'token': 'NUMBER',
+          'type': 'token',
+          'text': '1'
+        },
+        {
+          'start': 6,
+          'end': 7,
+          'firstLine': 1,
+          'lastLine': 1,
+          'firstColumn': 7,
+          'lastColumn': 8,
+          'symbol': 'sequence1',
+          'type': 'symbol',
+          'children': [
+            {
+              'start': 6,
+              'end': 7,
+              'firstLine': 1,
+              'lastLine': 1,
+              'firstColumn': 7,
+              'lastColumn': 8,
+              'token': 'NUMBER',
+              'type': 'token',
+              'text': '5'
+            }
+          ],
+          'ruleIndex': 3,
+          'internalRuleIndex': 9,
+          'id': 6
+        }
+      ],
+      'ruleIndex': 2,
+      'internalRuleIndex': 8,
+      'id': 5
+    }
+  ],
+  'ruleIndex': 1,
+  'internalRuleIndex': 1,
+  'id': 2
+}"
+`;

@@ -486,10 +486,6 @@ export const XOR = 'XOR';
 export const XOROptional = 'XOR?';
 export const XORZeroOrMore = 'XOR*';
 export const XOROneOrMore = 'XOR+';
-export const $EOF = '$EOF';
-export const $EOFOptional = '$EOF?';
-export const $EOFZeroOrMore = '$EOF*';
-export const $EOFOneOrMore = '$EOF+';
 export const IDENTIFIER = 'IDENTIFIER';
 export const IDENTIFIEROptional = 'IDENTIFIER?';
 export const IDENTIFIERZeroOrMore = 'IDENTIFIER*';
@@ -598,6 +594,10 @@ export const keywords = 'keywords';
 export const keywordsOptional = 'keywords?';
 export const keywordsZeroOrMore = 'keywords*';
 export const keywordsOneOrMore = 'keywords+';
+export const $EOF = '$EOF';
+export const $EOFOptional = '$EOF?';
+export const $EOFZeroOrMore = '$EOF*';
+export const $EOFOneOrMore = '$EOF+';
 export const progam = 'progam';
 export const progamOptional = 'progam?';
 export const progamZeroOrMore = 'progam*';
@@ -964,7 +964,6 @@ export const KEYWORDS = [
   'WITH',
   'WITHEVENTS',
   'XOR',
-  '$EOF',
 ];
 
 export const makeProductions = (arr) => {

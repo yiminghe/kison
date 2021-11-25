@@ -144,10 +144,12 @@ describe('llk predict', () => {
     let ret = parser.parse('2 1 1 3 1 1 1');
     expect(ret.error).toBeFalsy();
     expect(prettyJson(ret.ast)).toMatchSnapshot();
-    ret = parser.parse('2 1 1 3 1 1 ');
-    expect(ret.error).toMatchSnapshot();
     // global match!
+    ret = parser.parse('2 1 1 3 1 1 ');
+    expect(ret.error).toBeFalsy();
+    expect(prettyJson(ret.ast)).toMatchSnapshot();
     ret = parser.parse('2 1 1 5');
-    expect(ret.error).toMatchSnapshot();
+    expect(ret.error).toBeFalsy();
+    expect(prettyJson(ret.ast)).toMatchSnapshot();
   });
 });

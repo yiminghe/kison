@@ -1,10 +1,6 @@
 import Grammar from '../Grammar';
-import Utils from '../utils';
 import Production from '../Production';
-import Lexer from '../Lexer';
 import parse from './parse';
-
-const { serializeObject, filterRhs } = Utils;
 
 function inProductions(productions: Production[], production: Production) {
   for (const p of productions) {
@@ -22,57 +18,8 @@ function addToProductions(productions: Production[], production: Production) {
   productions.push(production);
 }
 
-export type Table = Record<string, Record<string, number>>;
-
 class LLGrammar extends Grammar {
-  table: Table = {};
-
-  findFollows(symbol: string) {
-    var { nonTerminals } = this;
-    if (!nonTerminals[symbol]) {
-      return { [symbol]: 1 };
-      // non terminal
-    } else {
-      return nonTerminals[symbol].follows;
-    }
-  }
-
-  buildFollows() {
-    const { productionInstances, nonTerminals } = this;
-    var cont = true;
-    var nonTerminal, symbol;
-    var mappedStartTag = productionInstances[0].symbol;
-    var { EOF_TOKEN } = Lexer.STATIC;
-    nonTerminals[mappedStartTag].addFollows({
-      [EOF_TOKEN]: 1,
-    });
-    // loop until no further changes have been made
-    while (cont) {
-      cont = false;
-      for (symbol in nonTerminals) {
-        nonTerminal = nonTerminals[symbol];
-        for (const p of productionInstances) {
-          let { rhs, symbol: leftSymbol } = p;
-          rhs = filterRhs(rhs);
-          const index = rhs.indexOf(symbol);
-          if (index !== -1) {
-            if (index !== rhs.length - 1) {
-              const nextSymbols = filterRhs(rhs.slice(index + 1));
-              cont =
-                nonTerminal.addFollows(this.findFirst(nextSymbols)) || cont;
-              if (this.isNullable(nextSymbols)) {
-                cont =
-                  nonTerminal.addFollows(this.findFollows(leftSymbol)) || cont;
-              }
-            } else {
-              cont =
-                nonTerminal.addFollows(this.findFollows(leftSymbol)) || cont;
-            }
-          }
-        }
-      }
-    }
-  }
+  override checkConflicts = true;
 
   extractCommonPrefix() {
     const prefixSymbolSlashMap: Record<string, number> = {};
@@ -220,95 +167,8 @@ class LLGrammar extends Grammar {
     return changed ? this.removeDuplicate(newPs) : ps;
   }
 
-  override buildMeta() {
-    super.buildMeta();
-    this.buildFollows();
-    this.buildTable();
-  }
-
-  setTable(symbol: string, terminal: string, index: number, follow = false) {
-    index = follow ? -index : index;
-    const { table, productionInstances } = this;
-    table[symbol] = table[symbol] || {};
-    const original = table[symbol][terminal];
-    table[symbol][terminal] = index;
-    if (original !== undefined && original !== index) {
-      const e = ['', `Conflict: ${symbol} , ${terminal} ->`];
-      for (const i of [original, index]) {
-        e.push(
-          (i > 0 ? '' : '-: ') + productionInstances[Math.abs(i)].toString(),
-        );
-      }
-      e.push('');
-      console.error(e.join('\n'));
-    }
-  }
-
-  getTableVal(row: string, col: string) {
-    const { table } = this;
-    return table[row] && table[row][col];
-  }
-
-  buildTable() {
-    const { productionInstances } = this;
-    for (let index = 0; index < productionInstances.length; index++) {
-      const p = productionInstances[index];
-      let { symbol, rhs: oRhs } = p;
-      const rhs = filterRhs(oRhs);
-      const firsts = this.findFirst(rhs);
-      for (const terminal of Object.keys(firsts)) {
-        this.setTable(symbol, terminal, index);
-      }
-      if (this.isNullable(rhs)) {
-        const follows = this.findFollows(symbol);
-        for (const terminal of Object.keys(follows)) {
-          this.setTable(symbol, terminal, index, true);
-        }
-      }
-    }
-  }
-
-  visualizeTable() {
-    const ret = [];
-    const { table, productionInstances } = this;
-    for (const nonTerminal of Object.keys(table)) {
-      const col = table[nonTerminal];
-      if (col) {
-        for (const terminal of Object.keys(col)) {
-          const ps = col[terminal];
-          if (ps !== undefined) {
-            const production = productionInstances[Math.abs(ps)];
-            ret.push(
-              (ps > 0 ? '' : '-: ') +
-                `${nonTerminal} ${terminal} => ${production.symbol} -> ${
-                  filterRhs(production.rhs).join(', ') || 'EMPTY'
-                }`,
-            );
-          }
-        }
-      }
-    }
-    return ret.join('\n');
-  }
-
   override genCodeInternal(code: string[]) {
-    const { table, lexer } = this;
-    const mappedTable: Table = {};
-    for (const nonTerminal of Object.keys(table)) {
-      const col = table[nonTerminal];
-      if (col) {
-        const mappedCol: Record<string, number> = {};
-        for (const terminal of Object.keys(col)) {
-          const ps = col[terminal];
-          if (ps !== undefined) {
-            col[terminal] = Math.abs(ps);
-            mappedCol[lexer.mapSymbol(terminal)] = col[terminal];
-          }
-        }
-        mappedTable[lexer.mapSymbol(nonTerminal)] = mappedCol;
-      }
-    }
-    code.push('parser.table = ' + serializeObject(mappedTable) + ';');
+    this.genTable(code);
     code.push('parser.parse = ' + parse.toString() + ';');
     return code.join('\n');
   }

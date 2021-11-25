@@ -68,13 +68,13 @@ function visualizeAction(
   }
 }
 
-interface Table {
+interface LRTable {
   gotos: Record<string, Record<string, number>>;
   action: Record<string, Record<string, number[]>>;
 }
 
 class LALRGrammar extends Grammar {
-  table: Table = {
+  lrTable: LRTable = {
     gotos: {},
     action: {},
   };
@@ -314,15 +314,15 @@ class LALRGrammar extends Grammar {
   }
 
   buildTable() {
-    var { operatorPriorityMap, table, itemSets, nonTerminals } = this;
+    var { operatorPriorityMap, lrTable, itemSets, nonTerminals } = this;
     var productionInstances = this.productionInstances;
     var mappedStartTag = START_TAG;
     var mappedEndTag = Lexer.STATIC.EOF_TOKEN;
     var gotos: Record<string, Record<string, number>> = {};
     var action: any = {};
     var i: number, itemSet: ItemSet;
-    table.gotos = gotos;
-    table.action = action;
+    lrTable.gotos = gotos;
+    lrTable.action = action;
     for (i = 0; i < itemSets.length; i++) {
       itemSet = itemSets[i];
       for (const item of itemSet.items) {
@@ -435,8 +435,8 @@ class LALRGrammar extends Grammar {
   }
 
   visualizeTable() {
-    var { table, productionInstances } = this;
-    var { gotos, action } = table;
+    var { lrTable, productionInstances } = this;
+    var { gotos, action } = lrTable;
     var ret = [];
     this.itemSets.forEach((itemSet, i) => {
       ret.push(new Array(70).join('*') + ' itemSet : ' + i);
@@ -444,7 +444,7 @@ class LALRGrammar extends Grammar {
       ret.push('');
     });
     ret.push('');
-    ret.push(new Array(70).join('*') + ' table : ');
+    ret.push(new Array(70).join('*') + ' lrTable : ');
     for (const index of Object.keys(action)) {
       const av = action[index];
       for (const s of Object.keys(av)) {
@@ -474,9 +474,9 @@ class LALRGrammar extends Grammar {
   }
 
   serializeTable() {
-    const { table, lexer } = this;
-    const t: typeof table = { gotos: {}, action: {} };
-    const { gotos, action } = table;
+    const { lrTable, lexer } = this;
+    const t: typeof lrTable = { gotos: {}, action: {} };
+    const { gotos, action } = lrTable;
 
     function transform(obj: any) {
       const ret: any = {};
@@ -501,7 +501,7 @@ class LALRGrammar extends Grammar {
     code.push(peekStack.toString());
     code.push('var ActionTypeMap = ' + serializeObject(ActionTypeMap) + ';');
     code.push('var GrammarConst = ' + serializeObject(GrammarConst) + ';');
-    code.push('parser.table = ' + this.serializeTable() + ';');
+    code.push('parser.lrTable = ' + this.serializeTable() + ';');
     code.push('parser.parse = ' + parse.toString() + ';');
     return code.join('\n');
   }
@@ -522,8 +522,8 @@ function parse(input: string, options: any) {
     getProductionAction,
     productions,
   } = parser;
-  var table = parser.table as Table;
-  var { gotos, action: tableAction } = table;
+  var lrTable = parser.lrTable as LRTable;
+  var { gotos, action: tableAction } = lrTable;
   // for debug info
   var prefix = filename ? 'in file: ' + filename + ' ' : '';
   var valueStack = [];

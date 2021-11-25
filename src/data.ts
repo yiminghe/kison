@@ -23,7 +23,10 @@ const gened = {
   globalSymbolNodeId: 0,
 };
 
+export type Table = Record<string, Record<string, number[]>>;
+
 export default {
+  parserPredictTable: {} as Table,
   gened,
   Lexer: {} as typeof Lexer,
   lexer: {} as Lexer,
@@ -31,6 +34,7 @@ export default {
   parser: {} as {
     userData: any;
     table: any;
+    lrTable: any;
     prioritySymbolMap: Record<string, string>;
     getProductionRhs: (p: ProductionRule) => Rhs;
     getProductionSymbol: (p: ProductionRule) => string;

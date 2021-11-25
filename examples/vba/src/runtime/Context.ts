@@ -97,6 +97,11 @@ export class Context {
     }
   }
 
+  resetMemberInternal() {
+    this.memberStack = [];
+    this.parentMember = undefined;
+  }
+
   stashMemberInternal() {
     this.memberStack.push({
       parentMember: this.parentMember,
@@ -418,6 +423,7 @@ export class Context {
   }
 
   public async load(code: string, file: VBFile = defaultFileId) {
+    this.resetMemberInternal();
     if (!code) {
       this.symbolTable.delete(file.id);
       return;
@@ -469,6 +475,11 @@ export class Context {
     this._registerBinder(binder);
   }
 
+  public reset() {
+    this.resetMemberInternal();
+    this.scopeStack = [];
+  }
+
   public async callSub(subName: string, options: CallOptions = {}) {
     const { currentFile } = this;
     if (options.file) {
@@ -492,6 +503,7 @@ export class Context {
           (e as any).vbFileName = this.currentFile.name;
           (e as any).vbFirstLine = this.currentAstNode.firstLine;
         }
+        this.reset();
         throw e;
       }
 
@@ -504,6 +516,7 @@ export class Context {
         console.error(
           `unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`,
         );
+        this.reset();
         throw exit;
       }
     }

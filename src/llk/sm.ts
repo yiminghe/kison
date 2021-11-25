@@ -15,6 +15,7 @@ var {
   productionsBySymbol,
   smUnitBySymbol,
   VIRTUAL_OPTIONAL_RULE_INDEX,
+  parserPredictTable,
 } = data;
 const { isOptionalSymbol, isZeroOrMoreSymbol, isLazySymbol, normalizeSymbol } =
   utils;
@@ -93,6 +94,7 @@ function predictProductionIndexLLK(
   let unit;
   let lastUnit;
   let endState;
+  let symbolEndState;
 
   if (ruleIndex === -1) {
     lastUnit = unit = getUnitBySymbol(topSymbol);
@@ -115,11 +117,16 @@ function predictProductionIndexLLK(
 
   const { unitType } = unit;
 
-  function getSkipCheckStates(unit: Unit) {
+  lexer.stash();
+
+  if (fn) {
+    fn();
+  }
+
+  const getSkipCheckStates = (unit: Unit) => {
     const u: any = unit;
-    let states: AllState[] = u.checkStates;
+    let states: { unit: SymbolStateUnit; state: State } = u.checkStates;
     if (!states) {
-      u.checkStates = states = [];
       const skipStartState = new State(
         'startOfSkip$' + childSymbol,
         null,
@@ -128,19 +135,23 @@ function predictProductionIndexLLK(
       skipStartState.pushTransition(unit.end);
       const symbolUnit = new SymbolStateUnit(childSymbol, -2);
       symbolUnit.end.pushTransition(unit.end);
-      states.push(
-        skipStartState,
-        ...symbolUnit.start.getAlternativeStartStates(),
-      );
+      u.checkStates = states = {
+        state: skipStartState,
+        unit: symbolUnit,
+      };
     }
-    return states;
-  }
+    return [states.state, ...states.unit.start.getAlternativeStartStates()];
+  };
 
   let nextUnits: Record<string, Unit>;
 
   let startState: AllState;
 
-  function returnNext(ruleIndex: number) {
+  function returnNext(ruleIndex?: number) {
+    lexer.stashPop();
+    if (ruleIndex === undefined) {
+      return null;
+    }
     const nextUnit = nextUnits[ruleIndex];
     return {
       ruleIndex,
@@ -149,24 +160,21 @@ function predictProductionIndexLLK(
   }
 
   if (unit.lazy) {
-    lexer.stash();
-    if (fn) {
-      fn();
-    }
     let states: AllState[] = getSkipCheckStates(unit);
     endState = lastUnit.end;
+    symbolEndState = unit.end;
     const ruleIndexes = findBestAlternation(
       childSymbol,
       states,
       globalMatch ? null : endState,
+      symbolEndState,
     );
-    lexer.stashPop();
     if (
       ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX ||
       ruleIndexes.length === 0
     ) {
       // skip this symbol first
-      return null;
+      return returnNext();
     } else {
       startState = unit.start.transitions[0].to;
       if (startState.classType !== 'SymbolState') {
@@ -189,6 +197,7 @@ function predictProductionIndexLLK(
     nextUnits = startState.getUnits();
     startStates = getSkipCheckStates(unit);
     endState = lastUnit.end;
+    symbolEndState = unit.end;
   } else {
     const alternatives: any = productionsBySymbol[childSymbol];
     startState = unit.start;
@@ -204,19 +213,19 @@ function predictProductionIndexLLK(
       return returnNext(ruleIndex);
     }
     startStates = startState.getAlternativeStartStates();
+    if (startStates.length === 1) {
+      return returnNext(startStates[0].ruleIndex);
+    }
     endState = lastUnit.end;
+    symbolEndState = unit.end;
   }
 
-  lexer.stash();
-  if (fn) {
-    fn();
-  }
   const ruleIndexes = findBestAlternation(
     childSymbol,
     startStates,
     globalMatch ? null : endState,
+    symbolEndState,
   );
-  lexer.stashPop();
 
   if (ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX) {
     ruleIndexes.shift();
@@ -226,7 +235,7 @@ function predictProductionIndexLLK(
     return returnNext(ruleIndexes[0]);
   }
 
-  return null;
+  return returnNext();
 }
 
 function findExpectedTokenFromStateMachine(
@@ -277,6 +286,11 @@ class State {
   ) {
     this.transitions = [];
   }
+
+  getTransitionsToMatch() {
+    return this.transitions;
+  }
+
   pushTransition(endState: State | SymbolState, condition?: Function) {
     this.transitions.push(new Transition(endState, condition));
   }
@@ -284,22 +298,22 @@ class State {
 
 class SymbolState {
   classType: 'SymbolState' = 'SymbolState';
-  startStates: AllState[];
+  startStates: Record<number, AllState> = {};
   units: Record<string, RootSymbolUnit> = {};
   _afterTransitions: Transition[] = [];
-  _beforeTransitions: Transition[] = [];
   alltransitions?: Transition[];
+  indexedTransitions: Record<number, Transition> = {};
+
   constructor(
     public symbol: string,
     public type: string,
     public unit: Unit,
     public ruleIndex: number,
-  ) {
-    this.startStates = [];
-  }
+  ) {}
 
   get transitions() {
     let transitions = this.alltransitions;
+    const { indexedTransitions } = this;
     if (!transitions) {
       const { symbol, unit, startStates, units } = this;
       this.alltransitions = transitions = [];
@@ -312,17 +326,31 @@ class SymbolState {
         const rhs = parser.getProductionRhs(p);
         const rootSymbolUnit = buildRhsSM(symbol, rhs, i);
         units[i] = rootSymbolUnit;
-        startStates.push(rootSymbolUnit.start);
-        transitions.push(new Transition(rootSymbolUnit.start));
+        startStates[i] = rootSymbolUnit.start;
+        const t = new Transition(rootSymbolUnit.start);
+        transitions.push(t);
+        indexedTransitions[i] = t;
         rootSymbolUnit.end.pushTransition(unit.end);
       }
+
       this.alltransitions = transitions = [
-        ...this._beforeTransitions,
         ...transitions,
         ...this._afterTransitions,
       ];
     }
     return transitions;
+  }
+
+  getTransitionsToMatch() {
+    const { indexedTransitions, _afterTransitions } = this;
+    const transitions = this.getNextRuleIndexes().map(
+      (i) => indexedTransitions[i],
+    );
+    const ret = _afterTransitions.length
+      ? transitions.concat(_afterTransitions)
+      : transitions;
+    // console.log(`optimize ${this.symbol} getTransitionsToMatch: from ${this.transitions.length} to ${ret.length}`);
+    return ret;
   }
 
   getTransitions() {
@@ -334,23 +362,30 @@ class SymbolState {
     return this.units;
   }
 
-  getAlternativeStartStates() {
+  getNextRuleIndexes() {
     this.getTransitions();
-    let startStates: AllState[] = [];
+    const t = lexer.getCurrentToken().t;
+    const predictTable = parserPredictTable[this.symbol];
+    const nextRuleIndexes = predictTable[t] || [];
+    const ret = [];
     const { productions, getProductionPredict } = parser;
-    for (const s of this.startStates) {
-      const ruleIndex = s.ruleIndex;
+    for (const ruleIndex of nextRuleIndexes) {
       const production = productions[ruleIndex];
       const predict = getProductionPredict(production);
       if (!predict || predict.call(parser) !== false) {
-        startStates.push(s);
+        ret.push(ruleIndex);
       }
     }
-    return startStates;
+    return ret;
   }
 
-  pushBeforeTransition(endState: State | SymbolState, condition?: Function) {
-    this._beforeTransitions.push(new Transition(endState, condition));
+  getAlternativeStartStates() {
+    const nextRuleIndexes = this.getNextRuleIndexes();
+    let startStates: AllState[] = nextRuleIndexes.map(
+      (ruleIndex) => this.startStates[ruleIndex],
+    );
+    // console.log(`optimize ${this.symbol} getAlternativeStartStates: from ${Object.keys(this.startStates).length} to ${startStates.length}`);
+    return startStates;
   }
 
   pushTransition(endState: State | SymbolState, condition?: Function) {

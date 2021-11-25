@@ -100,8 +100,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 55,
-                  'internalRuleIndex': 159,
+                  'ruleIndex': 177,
+                  'internalRuleIndex': 281,
                   'id': 7
                 },
                 {
@@ -321,8 +321,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                           'text': 'x'
                                         }
                                       ],
-                                      'ruleIndex': 55,
-                                      'internalRuleIndex': 159,
+                                      'ruleIndex': 177,
+                                      'internalRuleIndex': 281,
                                       'id': 19
                                     }
                                   ],
@@ -613,8 +613,8 @@ exports[`vba parser parse correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 55,
-                  'internalRuleIndex': 159,
+                  'ruleIndex': 177,
+                  'internalRuleIndex': 281,
                   'id': 7
                 },
                 {
@@ -720,8 +720,8 @@ exports[`vba parser parse correctly 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 55,
-                                  'internalRuleIndex': 159,
+                                  'ruleIndex': 177,
+                                  'internalRuleIndex': 281,
                                   'id': 14
                                 },
                                 {

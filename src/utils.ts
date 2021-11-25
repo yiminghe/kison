@@ -98,25 +98,23 @@ const globalUtils = {
       errorNode: AstErrorNodeType | undefined;
     },
   ) {
+    const expected = getExpected();
+    const recommendedAction: { action?: string } = {};
+    const nextToken = lexer.peekTokens()[0];
+    // should delete
+    if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
+      recommendedAction.action = 'del';
+    } else if (expected.length) {
+      recommendedAction.action = 'add';
+    }
     ret.error = {
       recovery: false,
-      ...getParseError(getExpected),
-      expected: getExpected(),
+      ...getParseError(() => expected, recommendedAction.action === 'add'),
+      expected,
       symbol: peekStack(astStack).symbol,
       lexer: lexer.toJSON(),
     };
     if (onErrorRecovery) {
-      const recommendedAction: { action?: string } = {};
-      lexer.stash();
-      const nextToken = lexer.lex();
-      lexer.stashPop();
-      // should delete
-      if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
-        recommendedAction.action = 'del';
-      } else if (ret.error.expected.length) {
-        recommendedAction.action = 'add';
-      }
-
       const localErrorNode = new AstErrorNode({
         error: ret.error,
         ...ret.error.lexer,
@@ -304,20 +302,21 @@ const globalUtils = {
     }
   },
 
-  getParseError(getExpected: () => string[]) {
+  getParseError(getExpected: () => string[], peek: boolean = false) {
     const expected = getExpected();
     const tips = [];
     if (expected.length) {
       tips.push("'" + expected.join("', '") + "' expected.");
     }
-    tips.push("current token: '" + lexer.getCurrentToken().token + "'.");
+    const nextToken = peek ? lexer.peekTokens()[0] : lexer.getCurrentToken();
+    tips.push("current token: '" + nextToken.token + "'.");
     const tip = tips.join('\n');
     return {
       errorMessage: [
         'syntax error at line ' +
-          lexer.lineNumber +
+          nextToken.firstLine +
           ':\n' +
-          lexer.showDebugInfo(),
+          lexer.showDebugInfo(nextToken),
         ...tips,
       ].join('\n'),
       tip,

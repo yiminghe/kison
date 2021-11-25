@@ -12,9 +12,9 @@ function findBestAlternation(
   _forSymbol: string,
   states: AllState[],
   endState: AllState | null,
+  symbolEndState: AllState,
 ) {
-  //console.log('start findBestAlternation: ' + _forSymbol);
-  //const start = Date.now();
+  // const start = Date.now();
   let reachableStates: (StateItem | null)[] = [];
   for (const state of states) {
     reachableStates.push({
@@ -22,24 +22,32 @@ function findBestAlternation(
       ruleIndexes: [state.ruleIndex],
     });
   }
-  let ruleIndexes: Map<number, number> = new Map();
+  let consumedTokensLength: Map<number, number> = new Map();
   //const times = [];
   let count: number = 0;
+  const finishedTokens = new Set<number>();
   while (1) {
     //const start = Date.now();
     reachableStates = getNextReachableStateItems(
       reachableStates,
-      ruleIndexes,
+      consumedTokensLength,
       endState,
       count,
+      symbolEndState,
+      finishedTokens,
     );
     if (
       reachableStates.length === 1 &&
-      !ruleIndexes.has(VIRTUAL_OPTIONAL_RULE_INDEX)
+      !finishedTokens.has(VIRTUAL_OPTIONAL_RULE_INDEX)
     ) {
-      const values = new Set(ruleIndexes.values());
-      if (!values.size || (values.size === 1 && Array.from(values)[0] === 0)) {
-        ruleIndexes.set(reachableStates[0]!.ruleIndexes[0], count + 1);
+      if (
+        !finishedTokens.size ||
+        (finishedTokens.size === 1 &&
+          consumedTokensLength.get(Array.from(finishedTokens.keys())[0]) === 0)
+      ) {
+        const rule = reachableStates[0]!.ruleIndexes[0];
+        finishedTokens.add(rule);
+        consumedTokensLength.set(rule, count + 1);
         break;
       }
     }
@@ -52,14 +60,17 @@ function findBestAlternation(
     }
   }
 
-  let arr = Array.from(ruleIndexes.keys());
+  let arr = Array.from(finishedTokens.keys());
 
   if (arr.length > 1) {
-    if (ruleIndexes.has(VIRTUAL_OPTIONAL_RULE_INDEX)) {
-      ruleIndexes.set(VIRTUAL_OPTIONAL_RULE_INDEX, 0xffff);
+    const getOrder = (a: number) => {
+      return consumedTokensLength.get(a) || count;
+    };
+    if (consumedTokensLength.has(VIRTUAL_OPTIONAL_RULE_INDEX)) {
+      consumedTokensLength.set(VIRTUAL_OPTIONAL_RULE_INDEX, 0xffff);
     }
     arr = arr.sort((a, b) => {
-      const ret = ruleIndexes.get(b)! - ruleIndexes.get(a)!;
+      const ret = getOrder(b) - getOrder(a);
       if (ret === 0) {
         return a - b;
       }
@@ -67,16 +78,16 @@ function findBestAlternation(
     });
   }
 
-  // const time = Date.now() - start;
-  // console.log('');
   // const time=0
-  // console.log(_forSymbol + ' findBestAlternation: ' + time + ' ' + arr);
 
-  // for(const a of arr){
-  //   if(a===VIRTUAL_OPTIONAL_RULE_INDEX){
-  //     console.log('skip');
+  // const time = Date.now() - start;
+  // console.log(_forSymbol + ' findBestAlternation: ' + time);
+
+  // for (const a of arr) {
+  //   if (a === VIRTUAL_OPTIONAL_RULE_INDEX) {
+  //     console.log(_forSymbol, ': skip');
   //   } else {
-  //     console.log((parser.productions as any)[a][1])
+  //     console.log(_forSymbol, parser.productions[a][1])
   //   }
   // }
   // console.log('');
@@ -85,9 +96,11 @@ function findBestAlternation(
 
 function getNextReachableStateItems(
   reachableStates: (StateItem | null)[],
-  ruleIndexes: Map<number, number>,
+  consumedTokensLength: Map<number, number>,
   endState: AllState | null,
   count: number,
+  symbolEndState: AllState,
+  finishedTokens: Set<number>,
 ) {
   // function last<T>(arr: T[], n = 1) {
   //   return arr[arr.length - n];
@@ -119,31 +132,18 @@ function getNextReachableStateItems(
       }
       state = stateItem.state;
 
+      if (state === symbolEndState) {
+        const rootIndex = stateItem.ruleIndexes[0];
+        consumedTokensLength.set(rootIndex, count);
+      }
+
       if (
         state === endState ||
         (!state.transitions.length &&
           lexer.getCurrentToken().token === Lexer.STATIC.EOF_TOKEN)
       ) {
         const rootIndex = stateItem.ruleIndexes[0];
-        ruleIndexes.set(rootIndex, count);
-        // for (let j = 0; j < stack.length; j++) {
-        //   const s = stack[j];
-        //   if (s && s.ruleIndexes[0] === rootIndex) {
-        //     stack[j] = null;
-        //   }
-        // }
-        // for (let j = i; j < reachableStates.length; j++) {
-        //   const v = reachableStates[j];
-        //   if (v && v.ruleIndexes[0] === rootIndex) {
-        //     reachableStates[j] = null;
-        //   }
-        // }
-        // for (let j = 0; j < newReachableStates.length; j++) {
-        //   const v = newReachableStates[j];
-        //   if (v && v.ruleIndexes[0] === rootIndex) {
-        //     newReachableStates[j] = null;
-        //   }
-        // }
+        finishedTokens.add(rootIndex);
         continue;
       }
 
@@ -154,7 +154,7 @@ function getNextReachableStateItems(
 
       currentRuleIndexes = stateItem.ruleIndexes;
       let finded;
-      for (const t of state.transitions) {
+      for (const t of state.getTransitionsToMatch()) {
         const find = t.perform();
         finded = finded || !!find;
         if (find) {
@@ -182,7 +182,7 @@ function getNextReachableStateItems(
   newReachableStates = newReachableStates.filter((n) => !!n);
 
   let current = newReachableStates[0];
-  if (current && ruleIndexes.size === 0) {
+  if (current && finishedTokens.size === 0) {
     let i = 1;
     for (i = 1; i < newReachableStates.length; i++) {
       let next = newReachableStates[i];
@@ -194,7 +194,9 @@ function getNextReachableStateItems(
       }
     }
     if (current && i === newReachableStates.length) {
-      ruleIndexes.set(current.ruleIndexes[0], count);
+      const ruleIndex = current.ruleIndexes[0];
+      finishedTokens.add(ruleIndex);
+      consumedTokensLength.set(ruleIndex, count);
       return [];
     }
   }

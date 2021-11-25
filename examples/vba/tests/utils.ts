@@ -151,6 +151,10 @@ export async function runs2(
     ? globalContext
     : bindCommon(new Context());
 
+  if (options.reuseContext) {
+    context.reset();
+  }
+
   await callback(context);
 
   for (const m of moduleCodes) {

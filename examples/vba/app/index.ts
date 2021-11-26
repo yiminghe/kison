@@ -235,6 +235,7 @@ require(['vs/editor/editor.main'], () => {
       console.log('');
       console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {
+      console.error(e);
       console.error(e.message);
     }
   });

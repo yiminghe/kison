@@ -1,5 +1,6 @@
 import type { VBClass } from './VBClass';
 import type { VBArray } from './VBArray';
+import { Ast_ExitStmt_Node } from '../../parser';
 
 export class VBByte {
   type: 'Byte' = 'Byte';
@@ -145,3 +146,42 @@ export const getDEFAULT_AS_TYPE: () => AsTypeClauseInfo = () => ({
   type: 'Variant',
   isArray: false,
 });
+
+export type ExitToken = {
+  type: 'Exit';
+  subType: Ast_ExitStmt_Node['children'][0]['token'];
+};
+
+export const VB_EXIT_SUB: ExitToken = {
+  type: 'Exit',
+  subType: 'EXIT_SUB',
+};
+export const VB_EXIT_FUNCTION: ExitToken = {
+  type: 'Exit',
+  subType: 'EXIT_FUNCTION',
+};
+export const VB_EXIT_PROPERTY: ExitToken = {
+  type: 'Exit',
+  subType: 'EXIT_PROPERTY',
+};
+export const VB_EXIT_END: ExitToken = {
+  type: 'Exit',
+  subType: 'END',
+};
+
+export function getExitToken(node: Ast_ExitStmt_Node) {
+  const c = node.children[0];
+  if (c.token === 'END') {
+    return VB_EXIT_END;
+  }
+  if (c.token === 'EXIT_FUNCTION') {
+    return VB_EXIT_FUNCTION;
+  }
+  if (c.token === 'EXIT_SUB') {
+    return VB_EXIT_SUB;
+  }
+  if (c.token === 'EXIT_PROPERTY') {
+    return VB_EXIT_PROPERTY;
+  }
+  throw new Error('unexpected exit!');
+}

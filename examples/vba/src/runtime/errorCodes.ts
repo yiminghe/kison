@@ -1,4 +1,4 @@
-import { ParseError } from '../parser';
+import type { ParseError } from '../parser';
 
 export const errorCodes = {
   INTERNAL_ERROR: (type: string) => `internal error: ${type}`,
@@ -10,6 +10,7 @@ export const errorCodes = {
   NO_OPTIONAL_ARGUMENT: (name: string) => `no optional argument: ${name}`,
   NO_MATCH_ARGUMENT_PARAMETER: `argument length is not same with parameter size`,
   NOT_FOUND_SUB: (name: string) => `can not find sub: ${name}`,
+  NOT_FOUND_LINE_LABEL: (name: string) => `can not find line label: ${name}`,
   SYNTAX_ERROR: `syntax error`,
   INDEX_OUT_OF_RANGE: `subscript out of range`,
   INDEX_NUMBER: `index must be number type`,
@@ -27,14 +28,24 @@ export const errorCodes = {
   EXPECTED_ARRAY_TYPE: (name: string) => `expect array type at ${name}`,
 };
 
+let i = 0;
+
+const errorNumbers: any = {};
+
+for (const k of Object.keys(errorCodes)) {
+  errorNumbers[k] = ++i;
+}
+
 type ErrorCode = keyof typeof errorCodes;
 
 export class VBRuntimeError extends Error {
   public vbErrorType: string = 'runtime';
   public vbFileName: string = '';
   public vbFirstLine: number = -1;
+  public vbErrorNumber: number = -1;
   constructor(public vbErrorCode: ErrorCode, public vbArgs: any[] = []) {
     super('');
+    this.vbErrorNumber = errorNumbers[vbErrorCode];
     const error = errorCodes[vbErrorCode] as any;
     if (typeof error === 'string') {
       this.message = error;

@@ -6,6 +6,7 @@ import {
   VBAny,
   VB_FALSE,
   VB_TRUE,
+  getExitToken,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -47,7 +48,6 @@ registerEvaluators({
   },
 
   evaluateExitStmt(node) {
-    const exit = node.children[0];
-    throw exit;
+    throw getExitToken(node);
   },
 });

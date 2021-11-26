@@ -1,23 +1,28 @@
-import type { VBFile } from './runtime';
+import type { SubBinder, VBFile } from './runtime';
 import type { Context } from '../Context';
 import type { VBClass } from './VBClass';
 import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import { VBNamespace } from './VBNamespace';
 import { last } from '../utils';
 import { throwVBRuntimeError } from '../errorCodes';
+import { VBSub } from './VBSub';
 
 export class VBScope {
+  variableMap = new Map<string, VBPointer>();
+
   constructor(
     public file: VBFile,
-    public subName: string,
+    public sub: VBSub | SubBinder,
     public context: Context,
     public classObj?: VBClass,
   ) {
-    const returnName = last(subName.split('.'));
+    const returnName = last(this.subName.split('.'));
     this.variableMap.set(returnName, new VBValuePointer());
   }
 
-  variableMap = new Map<string, VBPointer>();
+  get subName() {
+    return this.sub.name;
+  }
 
   async hasVariable(name: string) {
     return !!(await this._getVariable(name));

@@ -211,6 +211,10 @@ module.exports = {
 
     [
       n.blockStmt,
+      n.lineLabel,
+      n.alternationMark,
+      n.goToStmt,
+      n.alternationMark,
       n.eraseStmt,
       n.alternationMark,
       n.exitStmt,
@@ -227,6 +231,10 @@ module.exports = {
       n.alternationMark,
       n.implicitCallStmt_InBlock,
     ],
+
+    [n.lineLabel, n.ambiguousIdentifier, n.COLON],
+
+    [n.goToStmt, n.GOTO, n.ambiguousIdentifier],
 
     [
       n.eraseStmt,

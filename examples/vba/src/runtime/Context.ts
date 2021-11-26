@@ -34,6 +34,7 @@ import {
   VBVariable,
   VBAny,
   VBMissingArgument,
+  ExitToken,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -228,7 +229,7 @@ export class Context {
   }
 
   async _setupScope(
-    subName: string,
+    sub: VBSub | SubBinder,
     args: VBArguments,
     argumentsInfo: ArgInfo[],
     file: VBFile = this.currentFile,
@@ -267,7 +268,7 @@ export class Context {
         return true;
       }
     }
-    const scope = new VBScope(file, subName, this);
+    const scope = new VBScope(file, sub, this);
     let i = 0;
     for (; i < argumentsInfo.length; i++) {
       const argInfo = argumentsInfo[i];
@@ -311,7 +312,7 @@ export class Context {
     const argumentsInfo = subSymbolItem.arugmentsInfo;
     const subName = subSymbolItem.name;
     const currentScope = await this._setupScope(
-      subName,
+      subSymbolItem,
       args,
       argumentsInfo,
       subSymbolItem.file,
@@ -323,13 +324,13 @@ export class Context {
     try {
       ret = await evaluate(subSymbolItem.block, this);
     } catch (e: unknown) {
-      const exitNode = e as AstTokenNode;
+      const exitNode = e as ExitToken;
       if (
         exitNode &&
-        exitNode.type === 'token' &&
-        (exitNode.token === 'EXIT_FUNCTION' ||
-          exitNode.token === 'EXIT_PROPERTY' ||
-          exitNode.token === 'EXIT_SUB')
+        exitNode.type === 'Exit' &&
+        (exitNode.subType === 'EXIT_FUNCTION' ||
+          exitNode.subType === 'EXIT_PROPERTY' ||
+          exitNode.subType === 'EXIT_SUB')
       ) {
         // just exit sub
       } else {
@@ -358,7 +359,7 @@ export class Context {
   ): Promise<VBValue> {
     this.stashMemberInternal();
     const scope = await this._setupScope(
-      subDef.name,
+      subDef,
       args,
       subDef.argumentsInfo || [],
     );
@@ -536,9 +537,9 @@ export class Context {
         throw e;
       }
 
-      const exit: Ast_END_Node = e as Ast_END_Node;
+      const exit = e as ExitToken;
 
-      if (exit.type === 'token' && exit.token === 'END') {
+      if (exit.type === 'Exit' && exit.subType === 'END') {
       } else {
         console.error(e);
         // unknown error

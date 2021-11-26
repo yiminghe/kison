@@ -6,7 +6,7 @@ import type {
 } from '../../parser';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
-import { VBAny, VB_MISSING_ARGUMENT } from '../types';
+import { VBAny, VB_EXIT_SUB, VB_MISSING_ARGUMENT } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
   buildArgs,
@@ -19,6 +19,7 @@ import {
   NamedArg,
   VBArguments,
 } from '../data-structure/VBArguments';
+import { getIdentifierName } from '../utils';
 
 async function callSub(
   node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,
@@ -80,6 +81,17 @@ registerEvaluators({
   evaluateFunctionStmt() {
     return;
   },
+
+  async evaluateGoToStmt(node, context) {
+    const label = getIdentifierName(node.children[1]);
+    const sub = context.getCurrentScopeInternal().sub;
+    if (sub.type !== 'SubBinder') {
+      await sub.gotoLineLabel(label);
+      throw VB_EXIT_SUB;
+    }
+  },
+
+  evaluateLineLabel() {},
 
   async evaluateICS_B_MemberProcedureCall(node, context) {
     return callMemberSub(node, context);

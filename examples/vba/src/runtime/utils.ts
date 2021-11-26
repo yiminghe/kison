@@ -1,6 +1,6 @@
-import type { LiteralToken } from '../parser';
+import type { Ast_AmbiguousIdentifier_Node, LiteralToken } from '../parser';
 import { throwVBRuntimeError } from './errorCodes';
-import type { IndexType, VBAny, VBPointer, VBValue } from './types';
+import type { IndexType, VBAny } from './types';
 
 export function last<T>(stack: T[], n = 1) {
   return stack[stack.length - n];
@@ -51,4 +51,8 @@ export function getPropertySetSubName(t: string) {
 
 export function isClassProperty(t: string) {
   return t.startsWith(prefix);
+}
+
+export function getIdentifierName(n: Ast_AmbiguousIdentifier_Node) {
+  return n.children[0].text;
 }

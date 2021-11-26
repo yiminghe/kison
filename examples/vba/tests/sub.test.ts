@@ -172,4 +172,18 @@ End Sub
     expect(ret).toEqual([1, 2, 20]);
     expect(context.getPublicModuleSubs()).toEqual(['test', 'main']);
   });
+
+  it('goto works', async () => {
+    let ret = await run(
+      `
+      sub main 
+      msgbox 1 
+      goto done
+      done: msgbox 2
+      msgbox 3
+      end sub 
+    `,
+    );
+    expect(ret).toEqual([1, 2, 3]);
+  });
 });

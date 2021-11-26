@@ -1,9 +1,13 @@
 import type { AstNode, LiteralToken, AstVisitor } from '../../parser';
 import type { Context } from '../Context';
-import { Evaluators, VB_EMPTY } from '../types';
+import type { Evaluators } from '../types';
+import { VB_EMPTY } from '../data-structure/VBValue';
 import { isSkipToken, warn, captalize } from '../utils';
 
 export async function evaluate(ast: AstNode, context: Context): Promise<any> {
+  if (!ast) {
+    return VB_EMPTY;
+  }
   let symbol = '';
   let token: LiteralToken = '' as LiteralToken;
   let label = '';
@@ -45,8 +49,15 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
     return;
   }
 
+  return evaluateNodes(children, context);
+}
+
+export async function evaluateNodes(
+  nodes: AstNode[],
+  context: Context,
+): Promise<any> {
   let ret;
-  for (const c of children) {
+  for (const c of nodes) {
     ret = evaluate(c, context);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;

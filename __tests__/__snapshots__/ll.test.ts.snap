@@ -768,16 +768,16 @@ exports[`ll error detection works 1`] = `
               '-'
             ],
             'symbol': 'exp',
-            'lexer': {
-              't': '$EOF',
+            'token': {
               'text': '',
+              't': '$EOF',
+              'token': '$EOF',
+              'start': 4,
+              'end': 4,
               'firstLine': 1,
               'firstColumn': 5,
               'lastLine': 1,
-              'lastColumn': 5,
-              'token': '$EOF',
-              'start': 4,
-              'end': 4
+              'lastColumn': 5
             }
           }
         }

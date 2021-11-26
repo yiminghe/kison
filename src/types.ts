@@ -15,7 +15,7 @@ export type TransformNode = (arg: {
 export interface ParseError {
   errorMessage: string;
   expected: string[];
-  lexer: Token;
+  token: Token;
   recovery?: Boolean;
   symbol: AstSymbolNode['symbol'];
   tip: string;

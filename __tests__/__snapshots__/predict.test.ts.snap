@@ -238,7 +238,11 @@ current token: '$EOF'.",
   "expected": Array [
     "NUMBER",
   ],
-  "lexer": Object {
+  "recovery": false,
+  "symbol": "sequence2",
+  "tip": "'NUMBER' expected.
+current token: '$EOF'.",
+  "token": Object {
     "end": 12,
     "firstColumn": 13,
     "firstLine": 1,
@@ -249,10 +253,6 @@ current token: '$EOF'.",
     "text": "",
     "token": "$EOF",
   },
-  "recovery": false,
-  "symbol": "sequence2",
-  "tip": "'NUMBER' expected.
-current token: '$EOF'.",
 }
 `;
 

@@ -142,10 +142,9 @@ require(['vs/editor/editor.main'], () => {
     const value = getCurrentCode();
     let start = Date.now();
     const ret = { value, ret: parser.parse(value, {}) };
+    console.log(ret.ret);
     if (ret.ret.error) {
       console.error(ret.ret.error.errorMessage);
-    } else {
-      console.log(ret.ret);
     }
     console.log('parse duration: ' + (Date.now() - start));
     console.log('');

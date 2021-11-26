@@ -72,11 +72,12 @@ const globalUtils = {
         getExpected = () => [EOF_TOKEN];
         lexer.lex();
       }
+      const token = lexer.getCurrentToken();
       ret.error = {
-        ...getParseError(getExpected),
+        ...getParseError(getExpected, token),
         expected: getExpected(),
         symbol: peekStack(astStack)?.symbol,
-        lexer: lexer.toJSON(),
+        token,
       };
       ret.errorNode = closeAstWhenError(parseTree, ret.error, astStack);
     }
@@ -107,17 +108,21 @@ const globalUtils = {
     } else if (expected.length) {
       recommendedAction.action = 'add';
     }
+    const token =
+      recommendedAction.action === 'add'
+        ? lexer.peekTokens()[0]
+        : lexer.getCurrentToken();
     ret.error = {
       recovery: false,
-      ...getParseError(() => expected, recommendedAction.action === 'add'),
+      ...getParseError(() => expected, token),
       expected,
       symbol: peekStack(astStack).symbol,
-      lexer: lexer.toJSON(),
+      token,
     };
     if (onErrorRecovery) {
       const localErrorNode = new AstErrorNode({
         error: ret.error,
-        ...ret.error.lexer,
+        ...ret.error.token,
       });
       if (parseTree) {
         peekStack(astStack).addChild(localErrorNode);
@@ -269,7 +274,7 @@ const globalUtils = {
   ) {
     const errorNode = new AstErrorNode({
       error,
-      ...error.lexer,
+      ...error.token,
     });
     if (parseTree) {
       const top = peekStack(astStack);
@@ -302,13 +307,15 @@ const globalUtils = {
     }
   },
 
-  getParseError(getExpected: () => string[], peek: boolean = false) {
+  getParseError(
+    getExpected: () => string[],
+    nextToken: Token = lexer.getCurrentToken(),
+  ) {
     const expected = getExpected();
     const tips = [];
     if (expected.length) {
       tips.push("'" + expected.join("', '") + "' expected.");
     }
-    const nextToken = peek ? lexer.peekTokens()[0] : lexer.getCurrentToken();
     tips.push("current token: '" + nextToken.token + "'.");
     const tip = tips.join('\n');
     return {

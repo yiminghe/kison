@@ -103,7 +103,7 @@ class Lexer {
 
   static STATIC = {
     INITIAL_STATE: 'I',
-    DEBUG_CONTEXT_LIMIT: 20,
+    DEBUG_CONTEXT_LIMIT: 79,
     EOF_TOKEN: '$EOF',
     UNKNOWN_TOKEN: '$UNKNOWN',
   };
@@ -437,22 +437,41 @@ class Lexer {
   }
 
   showDebugInfo(nextToken?: Token) {
+    function truncate(str: string, before = false) {
+      let c = before
+        ? str.slice(0 - DEBUG_CONTEXT_LIMIT)
+        : str.slice(0, DEBUG_CONTEXT_LIMIT);
+      c = c.replace(/\r\n/g, '\n');
+      let s = str.length > DEBUG_CONTEXT_LIMIT ? '...' : '';
+
+      const ret = before ? s + c : c + s;
+      let end = '';
+      if (str.endsWith('\n') && !ret.endsWith('\n')) {
+        end = '\n';
+      }
+      return ret + end;
+    }
+
     nextToken = nextToken || this.getCurrentToken();
     var { DEBUG_CONTEXT_LIMIT } = Lexer.STATIC;
     var { input } = this;
     const matched = input.slice(0, nextToken.start);
-    var past =
-        (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
-        matched
-          .slice(0 - DEBUG_CONTEXT_LIMIT)
-          .split('\n')
-          .join(' '),
-      next = input.slice(nextToken.start);
-    //#JSCOVERAGE_ENDIF
-    next =
-      next.slice(0, DEBUG_CONTEXT_LIMIT).split('\n').join(' ') +
-      (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
-    return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
+    var past = truncate(matched, true);
+    var next = input.slice(nextToken.start).replace(/\r\n/g, '\n'); //#JSCOVERAGE_ENDIF
+    const lastLine = past.lastIndexOf('\n');
+    const dashLength = past.length - lastLine;
+    let middleIndex = next.indexOf('\n');
+    let middle = '';
+    if (middleIndex > -1) {
+      middle = truncate(next.slice(0, middleIndex + 1));
+      next = next.slice(middleIndex);
+    } else {
+      middle = truncate(next) + '\n';
+      next = '';
+    }
+    middle += new Array(dashLength).join('-') + '^';
+    next = truncate(next);
+    return past + middle + next;
   }
 
   mapSymbol(t: string) {

@@ -346,16 +346,16 @@ describe('ll', () => {
             '-'
           ],
           'symbol': 'exp',
-          'lexer': {
-            't': '$EOF',
+          'token': {
             'text': '',
+            't': '$EOF',
+            'token': '$EOF',
+            'start': 4,
+            'end': 4,
             'firstLine': 1,
             'firstColumn': 5,
             'lastLine': 1,
-            'lastColumn': 5,
-            'token': '$EOF',
-            'start': 4,
-            'end': 4
+            'lastColumn': 5
           }
         }
       }"
@@ -428,21 +428,23 @@ describe('ll', () => {
             "NUMBER",
             "-",
           ],
-          "lexer": Object {
+          "recovery": true,
+          "symbol": "exp",
+          "tip": "'(', 'NUMBER', '-' expected.
+      current token: '/'.",
+          "token": Object {
+            "channel": undefined,
             "end": 3,
             "firstColumn": 3,
             "firstLine": 1,
             "lastColumn": 4,
             "lastLine": 1,
+            "recovery": "del",
             "start": 2,
             "t": "/",
             "text": "/",
             "token": "/",
           },
-          "recovery": true,
-          "symbol": "exp",
-          "tip": "'(', 'NUMBER', '-' expected.
-      current token: '/'.",
         },
         "firstColumn": 3,
         "firstLine": 1,
@@ -489,16 +491,16 @@ describe('ll', () => {
           '-'
         ],
         'symbol': 'exp',
-        'lexer': {
-          't': '$EOF',
+        'token': {
           'text': '',
+          't': '$EOF',
+          'token': '$EOF',
+          'start': 2,
+          'end': 2,
           'firstLine': 1,
           'firstColumn': 3,
           'lastLine': 1,
-          'lastColumn': 3,
-          'token': '$EOF',
-          'start': 2,
-          'end': 2
+          'lastColumn': 3
         }
       }"
     `);
@@ -516,7 +518,11 @@ describe('ll', () => {
             "NUMBER",
             "-",
           ],
-          "lexer": Object {
+          "recovery": true,
+          "symbol": "exp",
+          "tip": "'(', 'NUMBER', '-' expected.
+      current token: '$EOF'.",
+          "token": Object {
             "end": 2,
             "firstColumn": 3,
             "firstLine": 1,
@@ -527,10 +533,6 @@ describe('ll', () => {
             "text": "",
             "token": "$EOF",
           },
-          "recovery": true,
-          "symbol": "exp",
-          "tip": "'(', 'NUMBER', '-' expected.
-      current token: '$EOF'.",
         },
         "firstColumn": 3,
         "firstLine": 1,

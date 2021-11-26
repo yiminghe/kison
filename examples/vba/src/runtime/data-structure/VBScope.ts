@@ -4,11 +4,13 @@ import type { VBClass } from './VBClass';
 import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import { VBNamespace } from './VBNamespace';
 import { last } from '../utils';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError, VBRuntimeError } from './VBError';
 import { VBSub } from './VBSub';
 
 export class VBScope {
   variableMap = new Map<string, VBPointer>();
+
+  error: VBRuntimeError | undefined;
 
   constructor(
     public file: VBFile,
@@ -17,7 +19,7 @@ export class VBScope {
     public classObj?: VBClass,
   ) {
     const returnName = last(this.subName.split('.'));
-    this.variableMap.set(returnName, new VBValuePointer());
+    this.variableMap.set(returnName, new VBValuePointer(context));
   }
 
   get subName() {
@@ -81,7 +83,7 @@ export class VBScope {
     if (v) {
       return v;
     }
-    v = new VBValuePointer();
+    v = new VBValuePointer(this.context);
     this.variableMap.set(name, v);
     return v;
   }
@@ -97,7 +99,7 @@ export class VBScope {
     if (v.type === 'Pointer') {
       await v.setValue(setValue);
     } else {
-      throwVBRuntimeError('UNEXPECTED_ERROR', 'namespace');
+      throwVBRuntimeError(this.context, 'UNEXPECTED_ERROR', 'namespace');
     }
     return v;
   }

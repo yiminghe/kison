@@ -3,7 +3,7 @@ import type { Context } from '../Context';
 import { NamespaceValue, VBNamespace, VBAny } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from '../data-structure/VBError';
 import { VBArguments } from '../data-structure/VBArguments';
 
 export async function buildArgs({ children }: AstSymbolNode, context: Context) {
@@ -13,7 +13,7 @@ export async function buildArgs({ children }: AstSymbolNode, context: Context) {
     if (f.type === 'token' && f.token === 'LPAREN') {
       let n = children[i + 1];
       if (n && n.type === 'token' && n.token === 'RPAREN') {
-        args = new VBArguments();
+        args = new VBArguments(context);
       }
     } else if (f.type === 'symbol' && f.symbol === 'argsCall') {
       args = await evaluate(f, context);
@@ -51,7 +51,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
   ) {
     let ret = obj;
     for (const i of indexes) {
-      const valueIndex = await transformToIndexType(i);
+      const valueIndex = await transformToIndexType(context, i);
       const value = ret.type === 'Pointer' ? await ret.getValue() : ret;
       if (
         value &&
@@ -60,7 +60,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
       ) {
         ret = await value.getElement(valueIndex);
       } else {
-        throwVBRuntimeError('UNEXPECTED_ERROR', 'index access');
+        throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'index access');
       }
     }
     return ret;
@@ -77,19 +77,26 @@ export async function callSubOrGetElementWithIndexesAndArgs(
           v = await value.get(subName);
           if (!v) {
             if (!indexes.length && !args) {
-              throwVBRuntimeError('UNEXPECTED_ERROR', 'class function call');
+              throwVBRuntimeError(
+                context,
+                'UNEXPECTED_ERROR',
+                'class function call',
+              );
             }
             if (args) {
               v = await value.callSub(subName, args);
             } else {
-              v = await value.callSub(subName, new VBArguments(indexes[0]));
+              v = await value.callSub(
+                subName,
+                new VBArguments(context, indexes[0]),
+              );
               indexes.shift();
             }
           }
         }
       }
       if (!v) {
-        throwVBRuntimeError('UNEXPECTED_ERROR', 'member access');
+        throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'member access');
       }
     } else {
       v = parent;
@@ -101,12 +108,14 @@ export async function callSubOrGetElementWithIndexesAndArgs(
         } else {
           v = await context.callSubBinderInternal(
             v,
-            new VBArguments(indexes[0]),
+            new VBArguments(context, indexes[0]),
           );
           indexes.shift();
         }
       }
       return getElements(v, indexes);
+    } else if (v.type === 'SubBinder') {
+      return await context.callSubBinderInternal(v);
     } else {
       return v;
     }
@@ -126,7 +135,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     } else {
       value = await context.callSubInternal(
         subName,
-        new VBArguments(indexes[0]),
+        new VBArguments(context, indexes[0]),
       );
       indexes.shift();
     }

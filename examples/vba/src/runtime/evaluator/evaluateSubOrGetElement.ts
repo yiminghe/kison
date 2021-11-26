@@ -6,14 +6,20 @@ import type {
 } from '../../parser';
 import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
-import { VBAny, VB_EXIT_SUB, VB_MISSING_ARGUMENT } from '../types';
+import {
+  VBAny,
+  VB_EXIT_SUB,
+  VB_MISSING_ARGUMENT,
+  VBClass,
+  SubBinder,
+} from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
   buildArgs,
   buildIndexes,
   callSubOrGetElementWithIndexesAndArgs,
 } from './common';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from '../data-structure/VBError';
 import {
   IndexedArg,
   NamedArg,
@@ -29,7 +35,7 @@ async function callSub(
   const { children } = node;
   const token = children[tokenIndex];
   if (token.type !== 'symbol' || token.symbol !== 'ambiguousIdentifier') {
-    throwVBRuntimeError('SYNTAX_ERROR');
+    throwVBRuntimeError(context, 'SYNTAX_ERROR');
   }
   const subName = token.children[0].text;
   let args: VBArguments | undefined = await buildArgs(node, context);
@@ -55,7 +61,7 @@ async function callMemberSub(
   }
 
   if (!parent) {
-    throwVBRuntimeError('UNEXPECTED_ERROR', 'member access');
+    throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'member access');
   }
 
   const argsCall = await buildArgs(node, context);
@@ -93,8 +99,16 @@ registerEvaluators({
 
   evaluateLineLabel() {},
 
+  evaluateOnErrorStmt({ children }, context) {
+    const c = children[3];
+    if (c && c.type === 'token' && c.text === '1') {
+      context.getCurrentScopeInternal().error = undefined;
+    }
+  },
+
   async evaluateICS_B_MemberProcedureCall(node, context) {
-    return callMemberSub(node, context);
+    const v = await callMemberSub(node, context);
+    return v;
   },
 
   async evaluateECS_MemberProcedureCall(node, context) {
@@ -110,7 +124,7 @@ registerEvaluators({
   },
 
   async evaluateArgsCall(node, context) {
-    const args = new VBArguments();
+    const args = new VBArguments(context);
     const { children } = node;
     const missingArg: IndexedArg | NamedArg = {
       type: 'indexed',
@@ -144,7 +158,7 @@ registerEvaluators({
         nameNode.type !== 'symbol' ||
         nameNode.symbol !== 'ambiguousIdentifier'
       ) {
-        throwVBRuntimeError('SYNTAX_ERROR');
+        throwVBRuntimeError(context, 'SYNTAX_ERROR');
       }
       const name = nameNode.children[0].text;
       return {
@@ -174,7 +188,7 @@ registerEvaluators({
           (await parent.getValue()).type === 'Empty') ||
         parent.type === 'Empty'
       ) {
-        throwVBRuntimeError('UNEXPECTED_ERROR', 'member access');
+        throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'member access');
       }
     }
 

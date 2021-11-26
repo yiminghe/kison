@@ -1,6 +1,6 @@
 import { SubBinder } from '../types';
 
-export const isMissing: SubBinder = {
+const isMissing: SubBinder = {
   name: 'ismissing',
   type: 'SubBinder',
   argumentsInfo: [
@@ -13,3 +13,5 @@ export const isMissing: SubBinder = {
     return context.createBoolean(value?.type === 'MissingArgument');
   },
 };
+
+export default [isMissing];

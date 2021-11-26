@@ -1,5 +1,6 @@
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from './VBError';
 import { VBAny } from './VBPointer';
+import type { Context } from '../Context';
 
 export interface NamedArg {
   type: 'named';
@@ -14,10 +15,10 @@ export interface IndexedArg {
 
 export class VBArguments {
   namedValues: Record<string, VBAny> | undefined = undefined;
-  constructor(public indexedValues: VBAny[] = []) {}
+  constructor(private context: Context, public indexedValues: VBAny[] = []) {}
   addIndexedValue(value: VBAny) {
     if (this.namedValues) {
-      throwVBRuntimeError('SYNTAX_ERROR');
+      throwVBRuntimeError(this.context, 'SYNTAX_ERROR');
     }
     this.indexedValues.push(value);
   }

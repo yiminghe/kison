@@ -52,7 +52,8 @@ export interface SubBinder {
 
 export interface VariableBinder {
   type: 'VariableBinder';
-  value: VBValue;
+  value?: VBValue;
+  get?: (context: Context) => VBValue | Promise<VBValue>;
   name: string;
 }
 
@@ -69,7 +70,7 @@ export interface InstanceBinder {
 export interface ClassBinder {
   type: 'ClassBinder';
   name: string;
-  value: () => Promise<InstanceBinder> | InstanceBinder;
+  value: (context: Context) => Promise<InstanceBinder> | InstanceBinder;
 }
 
 export type UserClassBinder = Omit<ClassBinder, 'type'>;

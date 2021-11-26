@@ -7,7 +7,7 @@ import type {
 } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from '../data-structure/VBError';
 import { evaluate } from '../evaluator/index';
 import {
   ArgInfo,
@@ -47,7 +47,7 @@ async function loadCall(
       return;
     }
   }
-  throwVBRuntimeError('NOT_FOUND_SUB', node.symbol);
+  throwVBRuntimeError(context, 'NOT_FOUND_SUB', node.symbol);
 }
 
 registerLoaders({
@@ -81,7 +81,7 @@ registerLoaders({
     }
     for (let i = 0; i < ret.length; i++) {
       if (ret[i].paramArray && i !== ret.length - 1) {
-        throwVBRuntimeError('PARAMARRAY_LAST_ARGUMENT');
+        throwVBRuntimeError(context, 'PARAMARRAY_LAST_ARGUMENT');
       }
     }
     return ret;
@@ -92,7 +92,7 @@ registerLoaders({
       byRef: true,
       name: '',
       asType: {
-        type: 'Variant',
+        type: 'variant',
         isArray: false,
       },
     };
@@ -126,24 +126,24 @@ registerLoaders({
       }
     }
     if (!lp && argInfo.paramArray) {
-      throwVBRuntimeError('PARAMARRAY_TYPE');
+      throwVBRuntimeError(context, 'PARAMARRAY_TYPE');
     }
-    const type = argInfo.asType?.type || 'Variant';
+    const type = argInfo.asType?.type || 'variant';
     if (argInfo.paramArray) {
       if (argInfo.byRef === false) {
-        throwVBRuntimeError('PARAMARRAY_BY_REF');
+        throwVBRuntimeError(context, 'PARAMARRAY_BY_REF');
       }
-      if (type !== 'Variant') {
-        throwVBRuntimeError('PARAMARRAY_VARIANT');
+      if (type !== 'variant') {
+        throwVBRuntimeError(context, 'PARAMARRAY_VARIANT');
       }
     }
 
     if (argInfo.optional && !argInfo.defaultValue) {
       const VBBasicTypeClass = (VBBasicTypeClasses as any)[type];
       if (!VBBasicTypeClass) {
-        throwVBRuntimeError('DEFAULT_VALUE_TYPE');
+        throwVBRuntimeError(context, 'DEFAULT_VALUE_TYPE');
       }
-      if (type === 'Variant') {
+      if (type === 'variant') {
         argInfo.defaultValue = new VBMissingArgument();
       } else {
         argInfo.defaultValue = new VBBasicTypeClass();

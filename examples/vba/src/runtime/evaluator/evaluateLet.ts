@@ -6,7 +6,7 @@ import type {
 import { VBPointer, VBAny } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import { collectAmbiguousIdentifiers } from '../collect/collectType';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from '../data-structure/VBError';
 
 registerEvaluators({
   async evaluateLetStmt(node, context) {
@@ -24,7 +24,7 @@ registerEvaluators({
     const leftVariable: VBPointer = await evaluate(left, context);
     context.popMemberInternal();
     if (leftVariable.type !== 'Pointer') {
-      throwVBRuntimeError('UNEXPECTED_ERROR', 'left side operator');
+      throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'left side operator');
     }
     context.stashMemberInternal();
     const rightValue: VBAny = await evaluate(right, context);
@@ -40,7 +40,7 @@ registerEvaluators({
     const leftVariable: VBPointer = await evaluate(children[1], context);
     context.popMemberInternal();
     if (leftVariable.type !== 'Pointer') {
-      throwVBRuntimeError('UNEXPECTED_ERROR', 'left side operator');
+      throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'left side operator');
     }
     const c3 = children[3];
     if (c3.children[0].type === 'token' && c3.children[0].token === 'NEW') {

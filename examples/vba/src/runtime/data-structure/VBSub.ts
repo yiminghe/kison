@@ -13,7 +13,7 @@ import { VBPointer } from './VBPointer';
 import type { VBFile, ArgInfo, Visibility } from './runtime';
 import { evaluateNodes } from '../evaluator/evaluators';
 import { getIdentifierName } from '../utils';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from './VBError';
 
 export class VBSub {
   block: Ast_Block_Node | undefined;
@@ -27,6 +27,8 @@ export class VBSub {
   staticVariables: Map<string, VBPointer> = new Map();
   private lineLabelMap: Map<string, number> = new Map();
 
+  onErrorLineLabel: string | undefined;
+
   addStaticVariable(name: string, value: VBPointer) {
     this.staticVariables.set(name, value);
   }
@@ -39,10 +41,17 @@ export class VBSub {
     return this.staticVariables.has(name);
   }
 
+  async onError() {
+    if (!this.onErrorLineLabel) {
+      throw new Error('need on error label!');
+    }
+    await this.gotoLineLabel(this.onErrorLineLabel);
+  }
+
   async gotoLineLabel(name: string) {
     const i = this.lineLabelMap.get(name);
     if (i === undefined) {
-      throwVBRuntimeError('NOT_FOUND_LINE_LABEL', name);
+      throwVBRuntimeError(this.context, 'NOT_FOUND_LINE_LABEL', name);
     }
     const stmts = this.block?.children || [];
     return evaluateNodes(stmts.slice(i + 1), this.context);
@@ -82,8 +91,15 @@ export class VBSub {
     const stmts = block?.children || [];
     for (let i = 0; i < stmts.length; i++) {
       const stmt = stmts[i].children[0];
-      if (stmt && stmt.type === 'symbol' && stmt.symbol === 'lineLabel') {
-        lineLabelMap.set(getIdentifierName(stmt.children[0]), i);
+      if (stmt && stmt.type === 'symbol') {
+        if (stmt.symbol === 'lineLabel') {
+          lineLabelMap.set(getIdentifierName(stmt.children[0]), i);
+        } else if (stmt.symbol === 'onErrorStmt') {
+          const cs = stmt.children;
+          if (cs[2].type === 'symbol') {
+            this.onErrorLineLabel = getIdentifierName(cs[2]);
+          }
+        }
       }
     }
   }

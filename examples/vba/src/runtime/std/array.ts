@@ -1,7 +1,7 @@
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from '../data-structure/VBError';
 import { SubBinder } from '../types';
 
-export const ubound: SubBinder = {
+const ubound: SubBinder = {
   name: 'ubound',
   type: 'SubBinder',
   argumentsInfo: [
@@ -9,16 +9,16 @@ export const ubound: SubBinder = {
       name: 'arg',
     },
   ],
-  async value(args) {
+  async value(args, context) {
     const value = await args.getValue('arg');
     if (value?.type !== 'Array') {
-      throwVBRuntimeError('EXPECTED_ARRAY_TYPE', 'ubound');
+      throwVBRuntimeError(context, 'EXPECTED_ARRAY_TYPE', 'ubound');
     }
     return value.ubound();
   },
 };
 
-export const lbound: SubBinder = {
+const lbound: SubBinder = {
   name: 'lbound',
   type: 'SubBinder',
   argumentsInfo: [
@@ -26,11 +26,13 @@ export const lbound: SubBinder = {
       name: 'arg',
     },
   ],
-  async value(args) {
+  async value(args, context) {
     const value = await args.getValue('arg');
     if (value?.type !== 'Array') {
-      throwVBRuntimeError('EXPECTED_ARRAY_TYPE', 'lbound');
+      throwVBRuntimeError(context, 'EXPECTED_ARRAY_TYPE', 'lbound');
     }
     return value.lbound();
   },
 };
+
+export default [ubound, lbound];

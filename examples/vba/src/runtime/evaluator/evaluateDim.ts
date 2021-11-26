@@ -7,7 +7,7 @@ import {
   collectAmbiguousIdentifier,
 } from '../collect/collectType';
 import type { Context } from '../Context';
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from '../data-structure/VBError';
 import {
   AsTypeClauseInfo,
   VBArray,
@@ -22,11 +22,14 @@ import {
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
-async function getNumberFromSubscript(node: VBPointer | VBInteger) {
+async function getNumberFromSubscript(
+  node: VBPointer | VBInteger,
+  context: Context,
+) {
   if (node.type === 'Pointer') {
     const vbValue = await node.getValue();
     if (vbValue.type !== 'Integer') {
-      throwVBRuntimeError('UNEXPECTED_ERROR', 'array dimision');
+      throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'array dimision');
     }
     return vbValue.value;
   }
@@ -82,31 +85,33 @@ registerEvaluators({
       const VBBasicTypeClass = (VBBasicTypeClasses as any)[type];
       if (subscripts) {
         value = () => {
-          const value = new VBArray(type, subscripts!);
-          return new VBValuePointer(value, asType);
+          const value = new VBArray(context, type, subscripts!);
+          return new VBValuePointer(context, value, asType);
         };
       } else if (VBBasicTypeClass) {
         value = () => {
           const value = new VBBasicTypeClass();
-          return new VBValuePointer(value, asType);
+          return new VBValuePointer(context, value, asType);
         };
       }
     } else if (className) {
       if (isNew) {
         value = async () => {
           return new VBValuePointer(
+            context,
             await context.createObject(className),
             asType,
           );
         };
       } else {
         value = () => {
-          return new VBValuePointer(VB_EMPTY, asType);
+          return new VBValuePointer(context, VB_EMPTY, asType);
         };
       }
     }
     if (!value) {
       throwVBRuntimeError(
+        context,
         'UNEXPECTED_ERROR',
         'asType: ' + asType.type || asType.classType?.join(''),
       );
@@ -127,11 +132,20 @@ registerEvaluators({
     }
     let one = false;
     if (subs.length === 2) {
-      lower = await getNumberFromSubscript(await evaluate(subs[0], context));
-      upper = await getNumberFromSubscript(await evaluate(subs[1], context));
+      lower = await getNumberFromSubscript(
+        await evaluate(subs[0], context),
+        context,
+      );
+      upper = await getNumberFromSubscript(
+        await evaluate(subs[1], context),
+        context,
+      );
     } else if (subs.length === 1) {
       one = true;
-      upper = await getNumberFromSubscript(await evaluate(subs[0], context));
+      upper = await getNumberFromSubscript(
+        await evaluate(subs[0], context),
+        context,
+      );
     }
     return one
       ? { upper }
@@ -157,7 +171,7 @@ registerEvaluators({
       .get(currentScope.file.id)
       ?.symbolTable.get(currentScope.subName);
     if (!subSymbolItem || subSymbolItem.type === 'variable') {
-      throwVBRuntimeError('SYNTAX_ERROR');
+      throwVBRuntimeError(context, 'SYNTAX_ERROR');
     }
     isStatic = isStatic || subSymbolItem.isStatic;
     for (const v of variables) {
@@ -211,10 +225,10 @@ registerEvaluators({
               obj.asType = asType;
             }
           } else {
-            throwVBRuntimeError('UNEXPECTED_ERROR', 'redim');
+            throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'redim');
           }
         } else {
-          throwVBRuntimeError('UNEXPECTED_ERROR', 'redim');
+          throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'redim');
         }
       }
     }

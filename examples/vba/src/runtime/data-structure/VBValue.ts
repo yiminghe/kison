@@ -105,18 +105,18 @@ export type VBBasicType =
   | VBEmpty;
 
 export const VBBasicTypeClasses = {
-  String: VBString,
-  Single: VBSingle,
-  Integer: VBInteger,
-  Boolean: VBBoolean,
-  Byte: VBByte,
-  Currency: VBCurrency,
-  Date: VBDate,
-  Decimal: VBDecimal,
-  Double: VBDouble,
-  Long: VBLong,
-  LongLong: VBLongLong,
-  Variant: VBEmpty,
+  string: VBString,
+  single: VBSingle,
+  integer: VBInteger,
+  boolean: VBBoolean,
+  byte: VBByte,
+  currency: VBCurrency,
+  date: VBDate,
+  decimal: VBDecimal,
+  double: VBDouble,
+  long: VBLong,
+  longLong: VBLongLong,
+  variant: VBEmpty,
 };
 
 Object.keys(VBBasicTypeClasses).forEach((k) => {
@@ -143,7 +143,7 @@ export interface AsTypeClauseInfo {
 }
 
 export const getDEFAULT_AS_TYPE: () => AsTypeClauseInfo = () => ({
-  type: 'Variant',
+  type: 'variant',
   isArray: false,
 });
 
@@ -168,6 +168,10 @@ export const VB_EXIT_END: ExitToken = {
   type: 'Exit',
   subType: 'END',
 };
+
+export type PromiseOrNot<T> = T | Promise<T>;
+
+export type PromiseOrNotFn<T> = () => PromiseOrNot<T>;
 
 export function getExitToken(node: Ast_ExitStmt_Node) {
   const c = node.children[0];

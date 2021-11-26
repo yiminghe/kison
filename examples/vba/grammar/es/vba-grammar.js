@@ -21,7 +21,13 @@ function generateLexerRulesByKeywords(arr) {
   for (const token of arr) {
     const reg = token.replace(/^macro_/i, '#').replace(/_/g, ' ');
     const regexp = new RegExp(RegexEscape(reg) + '\\b', 'i');
-    rules.push([token, regexp]);
+    rules.push([
+      token,
+      regexp,
+      function action() {
+        this.text = (this.text || '').toLowerCase();
+      },
+    ]);
   }
   return rules;
 }
@@ -215,6 +221,8 @@ module.exports = {
       n.alternationMark,
       n.goToStmt,
       n.alternationMark,
+      n.onErrorStmt,
+      n.alternationMark,
       n.eraseStmt,
       n.alternationMark,
       n.exitStmt,
@@ -230,6 +238,18 @@ module.exports = {
       n.variableStmt,
       n.alternationMark,
       n.implicitCallStmt_InBlock,
+    ],
+
+    [
+      n.onErrorStmt,
+      n.ON_ERROR,
+      n.GOTO,
+      n.groupStartMark,
+      n.ambiguousIdentifier,
+      n.alternationMark,
+      n.MINUS,
+      n.INTEGERLITERAL,
+      n.groupEndMark,
     ],
 
     [n.lineLabel, n.ambiguousIdentifier, n.COLON],
@@ -700,7 +720,7 @@ module.exports = {
 
       [n.STRINGLITERAL, /"[^"\r\n]*"/],
 
-      [n.INTEGERLITERAL, /(\+|-)?[0-9]+/],
+      [n.INTEGERLITERAL, /[0-9]+/],
 
       [
         n.IDENTIFIER,

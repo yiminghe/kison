@@ -44,8 +44,10 @@ import {
   throwVBRuntimeError,
   VBParseError,
   VBRuntimeError,
-} from './errorCodes';
+} from './data-structure/VBError';
 import { VBArguments } from './data-structure/VBArguments';
+
+type ShiftArray<T> = T extends [any, ...infer u] ? u : never;
 
 const defaultFileId: VBFile = {
   id: Math.random() + '',
@@ -117,7 +119,7 @@ export class Context {
   popMemberInternal() {
     const item = this.memberStack.pop();
     if (!item) {
-      throwVBRuntimeError('INTERNAL_ERROR', 'popMember');
+      throwVBRuntimeError(this, 'INTERNAL_ERROR', 'popMember');
     }
     this.parentMember = item.parentMember;
   }
@@ -135,13 +137,19 @@ export class Context {
       const name = last(names);
       let binder;
       if (userBinder.type === 'VariableBinder') {
-        binder = new VBValuePointer(userBinder.value, undefined, true);
+        const get = userBinder.get;
+        binder = new VBValuePointer(
+          this,
+          get ? () => get(this) : userBinder.value,
+          undefined,
+          true,
+        );
       } else {
         binder = userBinder;
       }
       namespace.set(name, binder);
     } else {
-      throwVBRuntimeError('BINDING_ERROR');
+      throwVBRuntimeError(this, 'BINDING_ERROR');
     }
   }
 
@@ -172,7 +180,7 @@ export class Context {
     if (namespace) {
       return namespace.get(last(names));
     } else {
-      throwVBRuntimeError('BINDING_ERROR');
+      throwVBRuntimeError(this, 'BINDING_ERROR');
     }
   }
 
@@ -223,7 +231,7 @@ export class Context {
       }
     }
     if (name !== 'object') {
-      throwVBRuntimeError('NOT_FOUND_FILE', name);
+      throwVBRuntimeError(this, 'NOT_FOUND_FILE', name);
     }
     return name;
   }
@@ -234,27 +242,28 @@ export class Context {
     argumentsInfo: ArgInfo[],
     file: VBFile = this.currentFile,
   ) {
-    async function fillOptionalArgument(argInfo: ArgInfo) {
+    const fillOptionalArgument = async (argInfo: ArgInfo) => {
       if (argInfo.optional) {
         await scope.setVariableValue(
           argInfo.name,
           new VBValuePointer(
+            this,
             argInfo.defaultValue || new VBMissingArgument(),
             argInfo.asType,
           ),
         );
         return;
       }
-      throwVBRuntimeError('NO_OPTIONAL_ARGUMENT', argInfo.name);
-    }
+      throwVBRuntimeError(this, 'NO_OPTIONAL_ARGUMENT', argInfo.name);
+    };
 
-    async function fillParamArrayArgument(
+    const fillParamArrayArgument = async (
       argInfo: ArgInfo,
       getArgs: () => VBAny[],
-    ) {
+    ) => {
       if (argInfo?.paramArray) {
         const args = getArgs();
-        const params = Context.createArray('Variant', [
+        const params = this.createArray('variant', [
           { upper: args.length - 1 },
         ]);
         for (let j = 0; j < args.length; j++) {
@@ -263,11 +272,11 @@ export class Context {
           // is not effected by the Option Base statement.
           params.setElement([j], nest);
         }
-        await scope.setVariable(argInfo.name, new VBValuePointer(params));
+        await scope.setVariable(argInfo.name, new VBValuePointer(this, params));
         i = argumentsInfo.length;
         return true;
       }
-    }
+    };
     const scope = new VBScope(file, sub, this);
     let i = 0;
     for (; i < argumentsInfo.length; i++) {
@@ -288,7 +297,7 @@ export class Context {
       if (a.type === 'Pointer' && argInfo.byRef) {
         await scope.setVariable(
           argInfo.name,
-          new VBValuePointer(a, argInfo.asType),
+          new VBValuePointer(this, a, argInfo.asType),
         );
       } else {
         await scope.setVariableValue(argInfo.name, a);
@@ -300,7 +309,7 @@ export class Context {
 
   async callVBSubInternal(
     subSymbolItem: VBSub,
-    args: VBArguments = new VBArguments(),
+    args: VBArguments = new VBArguments(this),
     classObj?: VBClass,
   ) {
     if (!subSymbolItem.block) {
@@ -317,6 +326,11 @@ export class Context {
       argumentsInfo,
       subSymbolItem.file,
     );
+    const clean = () => {
+      this.currentFile = currentFile;
+      this.popMemberInternal();
+      this.scopeStack.pop();
+    };
     if (classObj) {
       currentScope.classObj = classObj;
     }
@@ -324,26 +338,43 @@ export class Context {
     try {
       ret = await evaluate(subSymbolItem.block, this);
     } catch (e: unknown) {
-      const exitNode = e as ExitToken;
-      if (
-        exitNode &&
-        exitNode.type === 'Exit' &&
-        (exitNode.subType === 'EXIT_FUNCTION' ||
-          exitNode.subType === 'EXIT_PROPERTY' ||
-          exitNode.subType === 'EXIT_SUB')
-      ) {
-        // just exit sub
-      } else {
-        throw e;
+      let error = e;
+      let run = true;
+      while (run) {
+        run = false;
+        const exitNode = error as ExitToken;
+        if (error instanceof VBRuntimeError) {
+          if (currentScope.error || !subSymbolItem.onErrorLineLabel) {
+            clean();
+            throw error;
+          } else {
+            currentScope.error = error;
+            try {
+              await subSymbolItem.onError();
+            } catch (e2) {
+              error = e2;
+              run = true;
+            }
+          }
+        } else if (
+          exitNode &&
+          exitNode.type === 'Exit' &&
+          (exitNode.subType === 'EXIT_FUNCTION' ||
+            exitNode.subType === 'EXIT_PROPERTY' ||
+            exitNode.subType === 'EXIT_SUB')
+        ) {
+          // just exit sub
+        } else {
+          throw e;
+        }
       }
     }
-    this.currentFile = currentFile;
-    this.popMemberInternal();
-    this.scopeStack.pop();
+
+    clean();
     if (subSymbolItem.type === 'function') {
       const obj = await currentScope.getVariable(subName);
       if (obj.type === 'Namespace') {
-        throwVBRuntimeError('UNEXPECTED_ERROR', 'return namespace');
+        throwVBRuntimeError(this, 'UNEXPECTED_ERROR', 'return namespace');
       }
       ret = await obj.getValue();
     } else {
@@ -355,7 +386,7 @@ export class Context {
 
   async callSubBinderInternal(
     subDef: SubBinder,
-    args: VBArguments = new VBArguments(),
+    args: VBArguments = new VBArguments(this),
   ): Promise<VBValue> {
     this.stashMemberInternal();
     const scope = await this._setupScope(
@@ -363,9 +394,13 @@ export class Context {
       args,
       subDef.argumentsInfo || [],
     );
-    const ret = await subDef.value(new VBBinderArguments(scope), this);
-    this.popMemberInternal();
-    this.scopeStack.pop();
+    let ret;
+    try {
+      ret = await subDef.value(new VBBinderArguments(scope), this);
+    } finally {
+      this.popMemberInternal();
+      this.scopeStack.pop();
+    }
     if (ret !== undefined) {
       return ret;
     }
@@ -374,7 +409,7 @@ export class Context {
 
   async callSubInternal(
     subName: string,
-    args: VBArguments = new VBArguments(),
+    args: VBArguments = new VBArguments(this),
   ): Promise<VBValue> {
     const { bindersMap: subBindersMap, symbolTable } = this;
 
@@ -411,7 +446,7 @@ export class Context {
       const n = names[i];
       const namespace = defMap.get(n);
       if (!namespace) {
-        throwVBRuntimeError('NOT_FOUND_SUB', subName);
+        throwVBRuntimeError(this, 'NOT_FOUND_SUB', subName);
       }
       if (namespace.type === 'Namespace') {
         defMap = namespace.value;
@@ -421,7 +456,7 @@ export class Context {
     }
 
     if (!subDef) {
-      throwVBRuntimeError('NOT_FOUND_SUB', subName);
+      throwVBRuntimeError(this, 'NOT_FOUND_SUB', subName);
     }
 
     return this.callSubBinderInternal(subDef, args);
@@ -450,7 +485,13 @@ export class Context {
       currentFile.id,
       new FileSymbolTable(currentFile, code),
     );
-    await load(ast, this);
+    try {
+      await load(ast, this);
+    } catch (e) {
+      this.symbolTable.delete(currentFile.id);
+      this.astMap.delete(currentFile.id);
+      throw e;
+    }
   }
 
   public registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {
@@ -516,7 +557,7 @@ export class Context {
       const { file } = options;
       const existingFile = this.getFileById(file.id);
       if (!existingFile) {
-        throwVBRuntimeError('NOT_FOUND_FILE_ID', file.id);
+        throwVBRuntimeError(this, 'NOT_FOUND_FILE_ID', file.id);
       }
       this.currentFile = existingFile;
     }
@@ -528,10 +569,7 @@ export class Context {
           console.error(e);
         }
         if (e instanceof VBRuntimeError) {
-          e.setVBPosition(this.currentFile.name, this.currentAstNode.firstLine);
-        } else {
-          (e as any).vbFileName = this.currentFile.name;
-          (e as any).vbFirstLine = this.currentAstNode.firstLine;
+          e.completeVBPositionInfo();
         }
         this.reset();
         throw e;
@@ -582,10 +620,6 @@ export class Context {
     return value ? VB_TRUE : VB_FALSE;
   }
 
-  public static createArray(...args: ConstructorParameters<typeof VBArray>) {
-    return new VBArray(...args);
-  }
-
   public createInteger(value: number) {
     return Context.createInteger(value);
   }
@@ -598,8 +632,19 @@ export class Context {
     return Context.createBoolean(value);
   }
 
-  public createArray(...args: ConstructorParameters<typeof VBArray>) {
-    return Context.createArray(...args);
+  public createArray(
+    ...args: ShiftArray<ConstructorParameters<typeof VBArray>>
+  ) {
+    return new VBArray(this, ...args);
+  }
+
+  public throwError(number: number, source?: string, description?: string) {
+    const error = new VBRuntimeError(number);
+    error.vbFile = this.currentFile;
+    error.vbFirstLine = this.currentAstNode?.firstLine || -1;
+    if (source) error.vbErrorSource = source;
+    if (description) error.message = description;
+    throw error;
   }
 
   public async createObject(name: string) {
@@ -616,7 +661,7 @@ export class Context {
       }
     }
     if (!value) {
-      throwVBRuntimeError('NOT_FOUND_CLASS', name);
+      throwVBRuntimeError(this, 'NOT_FOUND_CLASS', name);
     }
     await value.init();
     return value;

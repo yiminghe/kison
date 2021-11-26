@@ -1,3 +1,4 @@
-import { isMissing } from './isMissing';
-import { ubound, lbound } from './ulBound';
-export default [isMissing, ubound, lbound];
+import args from './args';
+import error from './error';
+import array from './array';
+export default [...args, ...error, ...array];

@@ -106,7 +106,7 @@ export async function runs(
             paramArray: true,
           },
         ],
-        async value(args) {
+        async value(args, context) {
           const msgs = (await args.getValue('msgs')) as unknown as VBArray;
           for (let i = 0; i <= msgs.jsUBound(); i++) {
             ret.push((await (await msgs.getElement([i])).getValue()).value);

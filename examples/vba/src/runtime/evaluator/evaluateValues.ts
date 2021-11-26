@@ -29,7 +29,7 @@ registerEvaluators({
   },
 
   evaluateSTRINGLITERAL(node) {
-    return new VBString(node.text);
+    return new VBString(node.text.slice(1, -1));
   },
 
   evaluateNOTHING() {

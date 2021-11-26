@@ -1,4 +1,4 @@
-import { throwVBRuntimeError } from '../errorCodes';
+import { throwVBRuntimeError } from './VBError';
 import {
   VBBindIndexPointer,
   VBBindPropertyPointer,
@@ -9,7 +9,9 @@ import {
   AsTypeClauseInfo,
   getDEFAULT_AS_TYPE,
   VB_EMPTY,
+  PromiseOrNotFn,
 } from './VBValue';
+import type { Context } from '../Context';
 
 export type VBPointer =
   | VBValuePointer
@@ -26,42 +28,48 @@ export class VBValuePointer {
   dynamicArray: boolean = false;
 
   constructor(
+    private context: Context,
     // nested address or value
-    private _value: VBAny = VB_EMPTY,
+    private _value: VBAny | PromiseOrNotFn<VBAny> = VB_EMPTY,
     public asType: AsTypeClauseInfo = getDEFAULT_AS_TYPE(),
     public constant: boolean = false,
   ) {
-    if (_value.type === 'Array') {
+    if (typeof _value !== 'function' && _value.type === 'Array') {
       this.dynamicArray = _value.dynamic;
-      if (asType.type === 'Variant') {
+      if (asType.type === 'variant') {
         this.dynamicArray = true;
       }
     }
   }
 
   clone() {
-    const newObj = new VBValuePointer(this._value, this.asType);
+    const newObj = new VBValuePointer(this.context, this._value, this.asType);
     newObj.dynamicArray = this.dynamicArray;
     return newObj;
   }
 
   async getValue(): Promise<VBValue> {
-    if (this._value.type === 'Pointer') {
-      return this._value.getValue();
+    let _value = this._value;
+    if (typeof _value === 'function') {
+      _value = await _value();
     }
-    return this._value;
+    if (_value.type === 'Pointer') {
+      return _value.getValue();
+    }
+    return _value;
   }
 
   _getObject(): VBPointer {
-    if (this._value.type === 'Pointer') {
-      return this._value._getObject();
+    let _value = this._value;
+    if (typeof _value !== 'function' && _value.type === 'Pointer') {
+      return _value._getObject();
     }
     return this;
   }
 
   async setValue(value: VBAny) {
     if (this.constant) {
-      throwVBRuntimeError('SET_CONST');
+      throwVBRuntimeError(this.context, 'SET_CONST');
     }
     const obj = this._getObject();
     if (obj.subType === 'Value') {

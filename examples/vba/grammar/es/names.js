@@ -322,10 +322,6 @@ export const NULL = 'NULL';
 export const NULLOptional = 'NULL?';
 export const NULLZeroOrMore = 'NULL*';
 export const NULLOneOrMore = 'NULL+';
-export const ON = 'ON';
-export const ONOptional = 'ON?';
-export const ONZeroOrMore = 'ON*';
-export const ONOneOrMore = 'ON+';
 export const ON_ERROR = 'ON_ERROR';
 export const ON_ERROROptional = 'ON_ERROR?';
 export const ON_ERRORZeroOrMore = 'ON_ERROR*';
@@ -334,6 +330,10 @@ export const ON_LOCAL_ERROR = 'ON_LOCAL_ERROR';
 export const ON_LOCAL_ERROROptional = 'ON_LOCAL_ERROR?';
 export const ON_LOCAL_ERRORZeroOrMore = 'ON_LOCAL_ERROR*';
 export const ON_LOCAL_ERROROneOrMore = 'ON_LOCAL_ERROR+';
+export const ON = 'ON';
+export const ONOptional = 'ON?';
+export const ONZeroOrMore = 'ON*';
+export const ONOneOrMore = 'ON+';
 export const OPTIONAL = 'OPTIONAL';
 export const OPTIONALOptional = 'OPTIONAL?';
 export const OPTIONALZeroOrMore = 'OPTIONAL*';
@@ -843,6 +843,10 @@ export const goToStmt = 'goToStmt';
 export const goToStmtOptional = 'goToStmt?';
 export const goToStmtZeroOrMore = 'goToStmt*';
 export const goToStmtOneOrMore = 'goToStmt+';
+export const onErrorStmt = 'onErrorStmt';
+export const onErrorStmtOptional = 'onErrorStmt?';
+export const onErrorStmtZeroOrMore = 'onErrorStmt*';
+export const onErrorStmtOneOrMore = 'onErrorStmt+';
 export const groupStartMark = "'('";
 export const groupEndMark = "')'";
 export const groupEndOptionalMark = "')'?";
@@ -931,9 +935,9 @@ export const KEYWORDS = [
   'NOT',
   'NOTHING',
   'NULL',
-  'ON',
   'ON_ERROR',
   'ON_LOCAL_ERROR',
+  'ON',
   'OPTIONAL',
   'OPTION_BASE',
   'OPTION_EXPLICIT',

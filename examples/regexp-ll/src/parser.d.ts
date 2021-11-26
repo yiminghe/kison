@@ -60,7 +60,7 @@ export interface Token extends Position {
 export interface ParseError {
   errorMessage: string;
   expected: LiteralToken[];
-  lexer: Token;
+  token: Token;
   recovery?: Boolean;
   symbol: AstSymbolNode['symbol'];
   tip: string;

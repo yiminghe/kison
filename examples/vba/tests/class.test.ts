@@ -75,6 +75,7 @@ end sub
     msgbox c.x
     c.x=11
     msgbox c.x
+    c.print
   end sub  
     `;
 
@@ -87,6 +88,10 @@ end sub
     
     sub setM(v)
       m=v
+    end sub
+
+    sub print
+    debug.print "class print"
     end sub
     
     Property Get x()
@@ -110,6 +115,6 @@ end sub
       ],
     );
 
-    expect(ret).toEqual([0, 10, 10, 11]);
+    expect(ret).toEqual([0, 10, 10, 11, 'class print']);
   });
 });

@@ -77,11 +77,7 @@ export async function callSubOrGetElementWithIndexesAndArgs(
           v = await value.get(subName);
           if (!v) {
             if (!indexes.length && !args) {
-              throwVBRuntimeError(
-                context,
-                'UNEXPECTED_ERROR',
-                'class function call',
-              );
+              args = new VBArguments(context);
             }
             if (args) {
               v = await value.callSub(subName, args);

@@ -1,5 +1,5 @@
 import type { LiteralToken } from '../parser';
-import { throwVBError } from './errorCodes';
+import { throwVBRuntimeError } from './errorCodes';
 import type { IndexType, VBAny, VBPointer, VBValue } from './types';
 
 export function last<T>(stack: T[], n = 1) {
@@ -30,7 +30,7 @@ export async function transformToIndexType(values: VBAny[]) {
     if (v.type === 'Integer' || v.type === 'String') {
       ret.push(v.value);
     } else {
-      throwVBError('UNEXPECTED_ERROR', 'index access');
+      throwVBRuntimeError('UNEXPECTED_ERROR', 'index access');
     }
   }
   return ret;

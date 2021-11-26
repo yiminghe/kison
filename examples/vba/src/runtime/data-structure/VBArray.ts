@@ -6,7 +6,7 @@ import {
 } from './VBValue';
 import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import { IndexType } from './runtime';
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 
 type ArrayElement = VBPointer | VBPointer[];
 
@@ -28,7 +28,7 @@ export class VBArray {
   jsUBound(i: number = 0) {
     const { subscripts } = this;
     if (!subscripts.length) {
-      throwVBError('UNEXPECTED_ERROR', 'index access');
+      throwVBRuntimeError('UNEXPECTED_ERROR', 'index access');
     }
     return subscripts[i].upper;
   }
@@ -36,7 +36,7 @@ export class VBArray {
   jsLBound(i: number = 0) {
     const { subscripts } = this;
     if (!subscripts.length) {
-      throwVBError('UNEXPECTED_ERROR', 'index access');
+      throwVBRuntimeError('UNEXPECTED_ERROR', 'index access');
     }
     const subscript = subscripts[i];
     return subscript.lower === undefined ? this.base : subscript.lower;
@@ -53,22 +53,22 @@ export class VBArray {
   async getElement(indexes: IndexType[]) {
     let { value, elementType, subscripts } = this;
     if (indexes.length !== subscripts.length) {
-      throwVBError('INDEX_OUT_OF_RANGE');
+      throwVBRuntimeError('INDEX_OUT_OF_RANGE');
     }
     let element = value[0];
     for (let i = 0; i < indexes.length; i++) {
       const index = indexes[i];
       if (typeof index !== 'number') {
-        throwVBError('INDEX_NUMBER');
+        throwVBRuntimeError('INDEX_NUMBER');
       }
       const subscript = subscripts[i];
       if (!subscript) {
-        throwVBError('INDEX_OUT_OF_RANGE');
+        throwVBRuntimeError('INDEX_OUT_OF_RANGE');
       }
       const lbound = this.jsLBound(i);
       const ubound = this.jsUBound(i);
       if (index < lbound || index > ubound) {
-        throwVBError('INDEX_OUT_OF_RANGE');
+        throwVBRuntimeError('INDEX_OUT_OF_RANGE');
       }
       if (value[index] === undefined) {
         if (i < subscripts.length - 1) {

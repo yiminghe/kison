@@ -39,7 +39,11 @@ import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
 import { last } from './utils';
 import bindings from './std/libs';
-import { throwVBError, VBError } from './errorCodes';
+import {
+  throwVBRuntimeError,
+  VBParseError,
+  VBRuntimeError,
+} from './errorCodes';
 import { VBArguments } from './data-structure/VBArguments';
 
 const defaultFileId: VBFile = {
@@ -112,7 +116,7 @@ export class Context {
   popMemberInternal() {
     const item = this.memberStack.pop();
     if (!item) {
-      throwVBError('INTERNAL_ERROR', 'popMember');
+      throwVBRuntimeError('INTERNAL_ERROR', 'popMember');
     }
     this.parentMember = item.parentMember;
   }
@@ -136,7 +140,7 @@ export class Context {
       }
       namespace.set(name, binder);
     } else {
-      throwVBError('BINDING_ERROR');
+      throwVBRuntimeError('BINDING_ERROR');
     }
   }
 
@@ -167,7 +171,7 @@ export class Context {
     if (namespace) {
       return namespace.get(last(names));
     } else {
-      throwVBError('BINDING_ERROR');
+      throwVBRuntimeError('BINDING_ERROR');
     }
   }
 
@@ -218,7 +222,7 @@ export class Context {
       }
     }
     if (name !== 'object') {
-      throwVBError('NOT_FOUND_FILE', name);
+      throwVBRuntimeError('NOT_FOUND_FILE', name);
     }
     return name;
   }
@@ -240,7 +244,7 @@ export class Context {
         );
         return;
       }
-      throwVBError('NO_OPTIONAL_ARGUMENT', argInfo.name);
+      throwVBRuntimeError('NO_OPTIONAL_ARGUMENT', argInfo.name);
     }
 
     async function fillParamArrayArgument(
@@ -338,7 +342,7 @@ export class Context {
     if (subSymbolItem.type === 'function') {
       const obj = await currentScope.getVariable(subName);
       if (obj.type === 'Namespace') {
-        throwVBError('UNEXPECTED_ERROR', 'return namespace');
+        throwVBRuntimeError('UNEXPECTED_ERROR', 'return namespace');
       }
       ret = await obj.getValue();
     } else {
@@ -406,7 +410,7 @@ export class Context {
       const n = names[i];
       const namespace = defMap.get(n);
       if (!namespace) {
-        throwVBError('NOT_FOUND_SUB', subName);
+        throwVBRuntimeError('NOT_FOUND_SUB', subName);
       }
       if (namespace.type === 'Namespace') {
         defMap = namespace.value;
@@ -416,7 +420,7 @@ export class Context {
     }
 
     if (!subDef) {
-      throwVBError('NOT_FOUND_SUB', subName);
+      throwVBRuntimeError('NOT_FOUND_SUB', subName);
     }
 
     return this.callSubBinderInternal(subDef, args);
@@ -438,7 +442,7 @@ export class Context {
     }
     const { ast, error } = parser.parse(code);
     if (error) {
-      throw new Error(error.errorMessage);
+      throw new VBParseError(error);
     }
     this.astMap.set(currentFile.id, ast);
     this.symbolTable.set(
@@ -480,13 +484,38 @@ export class Context {
     this.scopeStack = [];
   }
 
+  public getPublicModuleSubs(file?: VBFile) {
+    const ret: string[] = [];
+    const { symbolTable } = this;
+    let items: FileSymbolTable[] = [];
+    if (file) {
+      const table = symbolTable.get(file.id);
+      if (table) {
+        items.push(table);
+      }
+    } else {
+      items = Array.from(this.symbolTable.values());
+    }
+    for (const item of items) {
+      if (item.type === 'module') {
+        const table = item.symbolTable;
+        table.forEach((value) => {
+          if (!value.isPrivate()) {
+            ret.push(value.name);
+          }
+        });
+      }
+    }
+    return ret;
+  }
+
   public async callSub(subName: string, options: CallOptions = {}) {
     const { currentFile } = this;
     if (options.file) {
       const { file } = options;
       const existingFile = this.getFileById(file.id);
       if (!existingFile) {
-        throwVBError('NOT_FOUND_FILE_ID', file.id);
+        throwVBRuntimeError('NOT_FOUND_FILE_ID', file.id);
       }
       this.currentFile = existingFile;
     }
@@ -497,7 +526,7 @@ export class Context {
         if (options.logError !== false) {
           console.error(e);
         }
-        if (e instanceof VBError) {
+        if (e instanceof VBRuntimeError) {
           e.setVBPosition(this.currentFile.name, this.currentAstNode.firstLine);
         } else {
           (e as any).vbFileName = this.currentFile.name;
@@ -586,7 +615,7 @@ export class Context {
       }
     }
     if (!value) {
-      throwVBError('NOT_FOUND_CLASS', name);
+      throwVBRuntimeError('NOT_FOUND_CLASS', name);
     }
     await value.init();
     return value;

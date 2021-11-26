@@ -1,3 +1,4 @@
+import { Context } from '../src';
 import { run } from './utils';
 
 describe('sub', () => {
@@ -151,15 +152,24 @@ End Sub
   });
 
   it('support named arguments', async () => {
-    const ret = await run(`
+    let context: Context = null!;
+    const ret = await run(
+      `
     Sub test(x As Integer, Optional y As Integer = 10, Optional z As Integer = 20)
     Debug.Print x, y, z
     End Sub
+
+    private sub test2
+    Debug.Print 10
+    end sub
     
     Sub main()
     test 1, y:=2
     End Sub    
-    `);
+    `,
+      (c) => (context = c),
+    );
     expect(ret).toEqual([1, 2, 20]);
+    expect(context.getPublicModuleSubs()).toEqual(['test', 'main']);
   });
 });

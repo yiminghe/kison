@@ -9,7 +9,7 @@ import {
   isClassProperty,
 } from '../utils';
 import { SubBinder, VBAny } from '../types';
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 import { VBArguments } from './VBArguments';
 
 interface VBClassMember {
@@ -32,7 +32,7 @@ export class VBNativeClass {
   get fileSymbolTable() {
     const fileSymbolTable = this.context.symbolTable.get(this.id);
     if (!fileSymbolTable) {
-      throwVBError('NOT_FOUND_CLASS');
+      throwVBRuntimeError('NOT_FOUND_CLASS');
     }
     return fileSymbolTable;
   }
@@ -73,12 +73,12 @@ export class VBNativeClass {
     if (sub && sub.type !== 'variable') {
       if (sub.isPrivate() && this.id !== this.context.currentFile.id) {
         const type = isClassProperty(name) ? 'property' : 'method';
-        throwVBError('NO_PRIVATE_TYPE', type);
+        throwVBRuntimeError('NO_PRIVATE_TYPE', type);
       }
       return this.context.callVBSubInternal(sub, args, this);
     } else {
       if (check) {
-        throwVBError('NOT_FOUND_SUB', name);
+        throwVBRuntimeError('NOT_FOUND_SUB', name);
       }
     }
     return VB_EMPTY;
@@ -88,7 +88,7 @@ export class VBNativeClass {
     if (this.members.has(name)) {
       const member = this.members.get(name)!;
       if (this.context.currentFile.id !== this.id && member.isPrivate) {
-        throwVBError('NO_PRIVATE_MEMBER');
+        throwVBRuntimeError('NO_PRIVATE_MEMBER');
       }
       return member.value.setValue(await getVBValue(value));
     } else {
@@ -103,7 +103,7 @@ export class VBNativeClass {
     if (this.members.has(name)) {
       const member = this.members.get(name)!;
       if (this.context.currentFile.id !== this.id && member.isPrivate) {
-        throwVBError('NO_PRIVATE_MEMBER');
+        throwVBRuntimeError('NO_PRIVATE_MEMBER');
       }
       return member.value;
     } else {
@@ -182,7 +182,7 @@ export class VBBindIndexPointer {
   async getValue() {
     if (!this._value) {
       if (!this.instance.instance.getElement) {
-        throwVBError('NOT_FOUND_GET_ELEMENT_CLASS_BINDER');
+        throwVBRuntimeError('NOT_FOUND_GET_ELEMENT_CLASS_BINDER');
       }
       this._value = await this.instance.instance.getElement(this.indexes);
     }
@@ -246,7 +246,7 @@ export class VBBindClass {
       v = value;
     }
     if (!this.instance.setElement) {
-      throwVBError('NOT_FOUND_SET_ELEMENT_CLASS_BINDER');
+      throwVBRuntimeError('NOT_FOUND_SET_ELEMENT_CLASS_BINDER');
     }
     return this.instance.setElement(indexes, v);
   }

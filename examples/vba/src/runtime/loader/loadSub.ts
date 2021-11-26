@@ -7,7 +7,7 @@ import type {
 } from '../../parser';
 import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 import { evaluate } from '../evaluator/index';
 import {
   ArgInfo,
@@ -47,7 +47,7 @@ async function loadCall(
       return;
     }
   }
-  throwVBError('NOT_FOUND_SUB', node.symbol);
+  throwVBRuntimeError('NOT_FOUND_SUB', node.symbol);
 }
 
 registerLoaders({
@@ -81,7 +81,7 @@ registerLoaders({
     }
     for (let i = 0; i < ret.length; i++) {
       if (ret[i].paramArray && i !== ret.length - 1) {
-        throwVBError('PARAMARRAY_LAST_ARGUMENT');
+        throwVBRuntimeError('PARAMARRAY_LAST_ARGUMENT');
       }
     }
     return ret;
@@ -126,22 +126,22 @@ registerLoaders({
       }
     }
     if (!lp && argInfo.paramArray) {
-      throwVBError('PARAMARRAY_TYPE');
+      throwVBRuntimeError('PARAMARRAY_TYPE');
     }
     const type = argInfo.asType?.type || 'Variant';
     if (argInfo.paramArray) {
       if (argInfo.byRef === false) {
-        throwVBError('PARAMARRAY_BY_REF');
+        throwVBRuntimeError('PARAMARRAY_BY_REF');
       }
       if (type !== 'Variant') {
-        throwVBError('PARAMARRAY_VARIANT');
+        throwVBRuntimeError('PARAMARRAY_VARIANT');
       }
     }
 
     if (argInfo.optional && !argInfo.defaultValue) {
       const VBBasicTypeClass = (VBBasicTypeClasses as any)[type];
       if (!VBBasicTypeClass) {
-        throwVBError('DEFAULT_VALUE_TYPE');
+        throwVBRuntimeError('DEFAULT_VALUE_TYPE');
       }
       if (type === 'Variant') {
         argInfo.defaultValue = new VBMissingArgument();

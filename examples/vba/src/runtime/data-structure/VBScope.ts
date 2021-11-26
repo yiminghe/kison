@@ -4,7 +4,7 @@ import type { VBClass } from './VBClass';
 import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import { VBNamespace } from './VBNamespace';
 import { last } from '../utils';
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 
 export class VBScope {
   constructor(
@@ -92,7 +92,7 @@ export class VBScope {
     if (v.type === 'Pointer') {
       await v.setValue(setValue);
     } else {
-      throwVBError('UNEXPECTED_ERROR', 'namespace');
+      throwVBRuntimeError('UNEXPECTED_ERROR', 'namespace');
     }
     return v;
   }

@@ -1,3 +1,5 @@
+import { ParseError } from '../parser';
+
 export const errorCodes = {
   INTERNAL_ERROR: (type: string) => `internal error: ${type}`,
   BINDING_ERROR: 'error when binding',
@@ -27,7 +29,8 @@ export const errorCodes = {
 
 type ErrorCode = keyof typeof errorCodes;
 
-export class VBError extends Error {
+export class VBRuntimeError extends Error {
+  public vbErrorType: string = 'runtime';
   public vbFileName: string = '';
   public vbFirstLine: number = -1;
   constructor(public vbErrorCode: ErrorCode, public vbArgs: any[] = []) {
@@ -47,10 +50,20 @@ export class VBError extends Error {
   }
 }
 
-export function makeVBError(errorCode: ErrorCode, ...args: any[]) {
-  return new VBError(errorCode, args);
+export class VBParseError extends Error {
+  public vbErrorType: string = 'parse';
+  constructor(public parseError: ParseError) {
+    super(parseError.errorMessage);
+  }
 }
 
-export function throwVBError(errorCode: ErrorCode, ...args: any[]): never {
-  throw makeVBError(errorCode, args);
+export function makeVBRuntimeError(errorCode: ErrorCode, ...args: any[]) {
+  return new VBRuntimeError(errorCode, args);
+}
+
+export function throwVBRuntimeError(
+  errorCode: ErrorCode,
+  ...args: any[]
+): never {
+  throw makeVBRuntimeError(errorCode, args);
 }

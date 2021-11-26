@@ -1,4 +1,4 @@
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 import { VBAny } from './VBPointer';
 
 export interface NamedArg {
@@ -17,7 +17,7 @@ export class VBArguments {
   constructor(public indexedValues: VBAny[] = []) {}
   addIndexedValue(value: VBAny) {
     if (this.namedValues) {
-      throwVBError('SYNTAX_ERROR');
+      throwVBRuntimeError('SYNTAX_ERROR');
     }
     this.indexedValues.push(value);
   }

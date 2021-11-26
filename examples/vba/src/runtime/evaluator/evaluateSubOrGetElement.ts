@@ -13,7 +13,7 @@ import {
   buildIndexes,
   callSubOrGetElementWithIndexesAndArgs,
 } from './common';
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 import {
   IndexedArg,
   NamedArg,
@@ -28,7 +28,7 @@ async function callSub(
   const { children } = node;
   const token = children[tokenIndex];
   if (token.type !== 'symbol' || token.symbol !== 'ambiguousIdentifier') {
-    throwVBError('SYNTAX_ERROR');
+    throwVBRuntimeError('SYNTAX_ERROR');
   }
   const subName = token.children[0].text;
   let args: VBArguments | undefined = await buildArgs(node, context);
@@ -54,7 +54,7 @@ async function callMemberSub(
   }
 
   if (!parent) {
-    throwVBError('UNEXPECTED_ERROR', 'member access');
+    throwVBRuntimeError('UNEXPECTED_ERROR', 'member access');
   }
 
   const argsCall = await buildArgs(node, context);
@@ -132,7 +132,7 @@ registerEvaluators({
         nameNode.type !== 'symbol' ||
         nameNode.symbol !== 'ambiguousIdentifier'
       ) {
-        throwVBError('SYNTAX_ERROR');
+        throwVBRuntimeError('SYNTAX_ERROR');
       }
       const name = nameNode.children[0].text;
       return {
@@ -162,7 +162,7 @@ registerEvaluators({
           (await parent.getValue()).type === 'Empty') ||
         parent.type === 'Empty'
       ) {
-        throwVBError('UNEXPECTED_ERROR', 'member access');
+        throwVBRuntimeError('UNEXPECTED_ERROR', 'member access');
       }
     }
 

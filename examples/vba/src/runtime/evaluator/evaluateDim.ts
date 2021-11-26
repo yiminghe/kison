@@ -7,7 +7,7 @@ import {
   collectAmbiguousIdentifier,
 } from '../collect/collectType';
 import type { Context } from '../Context';
-import { throwVBError } from '../errorCodes';
+import { throwVBRuntimeError } from '../errorCodes';
 import {
   AsTypeClauseInfo,
   VBArray,
@@ -26,7 +26,7 @@ async function getNumberFromSubscript(node: VBPointer | VBInteger) {
   if (node.type === 'Pointer') {
     const vbValue = await node.getValue();
     if (vbValue.type !== 'Integer') {
-      throwVBError('UNEXPECTED_ERROR', 'array dimision');
+      throwVBRuntimeError('UNEXPECTED_ERROR', 'array dimision');
     }
     return vbValue.value;
   }
@@ -106,7 +106,7 @@ registerEvaluators({
       }
     }
     if (!value) {
-      throwVBError(
+      throwVBRuntimeError(
         'UNEXPECTED_ERROR',
         'asType: ' + asType.type || asType.classType?.join(''),
       );
@@ -157,7 +157,7 @@ registerEvaluators({
       .get(currentScope.file.id)
       ?.symbolTable.get(currentScope.subName);
     if (!subSymbolItem || subSymbolItem.type === 'variable') {
-      throwVBError('SYNTAX_ERROR');
+      throwVBRuntimeError('SYNTAX_ERROR');
     }
     isStatic = isStatic || subSymbolItem.isStatic;
     for (const v of variables) {
@@ -211,10 +211,10 @@ registerEvaluators({
               obj.asType = asType;
             }
           } else {
-            throwVBError('UNEXPECTED_ERROR', 'redim');
+            throwVBRuntimeError('UNEXPECTED_ERROR', 'redim');
           }
         } else {
-          throwVBError('UNEXPECTED_ERROR', 'redim');
+          throwVBRuntimeError('UNEXPECTED_ERROR', 'redim');
         }
       }
     }

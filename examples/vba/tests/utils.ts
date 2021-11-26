@@ -68,14 +68,16 @@ const createRange: SubBinder = {
     return context.createObject('excel.Range');
   },
 };
+type ContextCallback = (context: Context) => void;
 
-export async function run(moduleCode: string) {
-  return runs([moduleCode]);
+export async function run(moduleCode: string, callback?: ContextCallback) {
+  return runs([moduleCode], [], callback);
 }
 
 export async function runs(
   moduleCodes: string[],
   classCode: (VBFile & { code: string })[] = [],
+  callback?: ContextCallback,
 ) {
   const ret: any[] = [];
   const MsgBoxSub: SubBinder = {
@@ -112,6 +114,9 @@ export async function runs(
           return Context.createInteger(1);
         },
       });
+      if (callback) {
+        callback(context);
+      }
     },
     {
       logError: false,

@@ -12,11 +12,15 @@ describe('error handling', () => {
       Done:
           Exit Sub
       eh:
-          debug.print "catch error:" , Err.Description
+          debug.print "catch error:" , Err.Description, err.stack
       End Sub
     `,
     );
-    expect(ret).toEqual([1]);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+      ]
+    `);
 
     ret = await run(
       `
@@ -27,11 +31,20 @@ describe('error handling', () => {
       Done:
           Exit Sub
       eh:
-          debug.print "catch error:" , Err.Description , Err.Number
+          debug.print "catch error:" , Err.Description , Err.Number, err.stack
       End Sub
     `,
     );
-    expect(ret).toEqual([10, 'catch error:', 'internal error', 1]);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        10,
+        "catch error:",
+        "internal error",
+        1,
+        "internal error
+      at main (m1:4)",
+      ]
+    `);
   });
 
   it('on only catch error once', async () => {
@@ -46,7 +59,7 @@ describe('error handling', () => {
   Done:
             Exit Sub
   eh:
-      Debug.Print "catch error:", Err.Description, Err.Number
+      Debug.Print "catch error:", Err.Description, Err.Number, err.stack
       Error 1
   End Sub
   
@@ -56,7 +69,9 @@ describe('error handling', () => {
       error = e;
     }
 
-    expect(error.message).toEqual('internal error (line 9 at file m1)');
+    expect(error.message).toMatchInlineSnapshot(
+      `"internal error at main (m1:9)"`,
+    );
   });
 
   it('error bubble works', async () => {
@@ -71,11 +86,18 @@ Sub main()
     test
     debug.print 10
     eh:
-    debug.print err.number
+    debug.print err.number, err.stack
 End Sub
     `,
     );
-    expect(ret).toEqual([1]);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+        "internal error
+      at test (m1:2)
+      at main (m1:7)",
+      ]
+    `);
   });
 
   it('error stop bubble works', async () => {
@@ -94,11 +116,16 @@ Sub main()
     debug.print 10
     exit sub
     eh:
-    debug.print err.number
+    debug.print err.number, err.stack
 End Sub
     `,
     );
-    expect(ret).toEqual([11, 10]);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        11,
+        10,
+      ]
+    `);
   });
 
   it('error reset works', async () => {
@@ -110,18 +137,26 @@ End Sub
       
      error 1
   continue:
-      Debug.Print Err.Number
+      Debug.Print Err.Number, err.stack
   
   done:
       Exit Sub
   eh:
-      Debug.Print Err.Number
+      Debug.Print Err.Number, err.stack
       On Error Goto -1 ' reset the error
       Goto continue ' return to the code
   End Sub
     `,
     );
-    expect(ret).toEqual([1, 0]);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+        "internal error
+      at main (m1:5)",
+        0,
+        "",
+      ]
+    `);
   });
 
   it('error clear will clear error num', async () => {
@@ -133,18 +168,27 @@ End Sub
       
      error 1
   continue:
-      Debug.Print Err.Number
+      Debug.Print Err.Number, err.stack
   
   done:
       Exit Sub
   eh:
-      Debug.Print Err.Number
+      Debug.Print Err.Number, err.stack
       Err.clear
       Goto continue ' return to the code
   End Sub
     `,
     );
-    expect(ret).toEqual([1, 0]);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+        "internal error
+      at main (m1:5)",
+        0,
+        "internal error
+      at main (m1:5)",
+      ]
+    `);
   });
 
   it('error clear will not reset error', async () => {
@@ -163,7 +207,7 @@ End Sub
   done:
       Exit Sub
   eh:
-      Debug.Print Err.Number
+      Debug.Print Err.Number, err.stack
       Err.clear
       Goto continue ' return to the code
   End Sub
@@ -186,11 +230,19 @@ End Sub
       Err.raise 1,"2","3"
     
       eh:
-        Debug.Print Err.Number, Err.source, Err.description
+        Debug.Print Err.Number, Err.source, Err.description, err.stack
     End Sub
     `,
     );
-    expect(ret).toEqual([1, '2', '3']);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1,
+        "2",
+        "internal error",
+        "internal error
+      at main (m1:5)",
+      ]
+    `);
   });
 
   it('error raise only has number', async () => {
@@ -203,11 +255,19 @@ End Sub
       Err.raise 1000
     
       eh:
-        Debug.Print Err.Number, Err.source, Err.description
+        Debug.Print Err.Number, Err.source, Err.description, err.stack
     End Sub
     `,
     );
-    expect(ret).toEqual([1000, '', '']);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        1000,
+        "",
+        "",
+        "
+      at main (m1:5)",
+      ]
+    `);
   });
 
   it('error raise must has number', async () => {
@@ -220,10 +280,18 @@ End Sub
       Err.raise
     
       eh:
-        Debug.Print Err.Number, Err.source, Err.description
+        Debug.Print Err.Number, Err.source, Err.description, err.stack
     End Sub
     `,
     );
-    expect(ret).toEqual([6, '', 'no optional argument: number']);
+    expect(ret).toMatchInlineSnapshot(`
+      Array [
+        6,
+        "",
+        "no optional argument: number",
+        "no optional argument: number
+      at main (m1:5)",
+      ]
+    `);
   });
 });

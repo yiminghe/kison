@@ -6,11 +6,17 @@ import { VBNamespace } from './VBNamespace';
 import { last } from '../utils';
 import { throwVBRuntimeError, VBRuntimeError } from './VBError';
 import { VBSub } from './VBSub';
+import { AstNode } from '../../parser';
 
 export class VBScope {
   variableMap = new Map<string, VBPointer>();
 
-  error: VBRuntimeError | undefined;
+  private _error: VBRuntimeError | undefined;
+  private _errorAstNode: AstNode | undefined;
+
+  currentAstNode: AstNode | undefined;
+
+  calledScope: VBScope | undefined;
 
   constructor(
     public file: VBFile,
@@ -18,8 +24,29 @@ export class VBScope {
     public context: Context,
     public classObj?: VBClass,
   ) {
+    this.calledScope = last(context.scopeStack);
     const returnName = last(this.subName.split('.'));
     this.variableMap.set(returnName, new VBValuePointer(context));
+  }
+
+  set error(e: VBRuntimeError | undefined) {
+    this._errorAstNode = e ? this.currentAstNode : undefined;
+    this._error = e;
+  }
+
+  get error(): VBRuntimeError | undefined {
+    return this._error;
+  }
+
+  getErrorPositionInfo(useLastestPosition?: boolean) {
+    if (this.sub.type === 'SubBinder') {
+      return `at ${this.subName} (SubBinder)`;
+    } else {
+      const node = useLastestPosition
+        ? this.currentAstNode
+        : this._errorAstNode || this.currentAstNode;
+      return `at ${this.subName} (${this.file.name}:${node?.firstLine})`;
+    }
   }
 
   get subName() {

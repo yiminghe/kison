@@ -56,7 +56,7 @@ end sub
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"subscript out of range (line 5 at file m1)"`,
+      `"subscript out of range at main (m1:5)"`,
     );
   });
 
@@ -73,7 +73,7 @@ end sub
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"subscript out of range (line 3 at file m1)"`,
+      `"subscript out of range at main (m1:3)"`,
     );
 
     error = undefined;
@@ -90,7 +90,7 @@ end sub
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"unexpected redim (line 3 at file m1)"`,
+      `"unexpected redim at main (m1:3)"`,
     );
 
     ret = await run(`
@@ -139,7 +139,7 @@ end sub
     }
 
     expect(error.message).toMatchInlineSnapshot(
-      `"subscript out of range (line 7 at file m1)"`,
+      `"subscript out of range at main (m1:7)"`,
     );
   });
 

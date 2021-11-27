@@ -1,0 +1,17 @@
+<script>
+  function test(){
+     
+       throw e;
+     
+    }
+
+    function main(){
+      try{
+    test()
+  }catch(e){
+      console.log(e.stack);
+     }
+    }
+
+    main()
+</script>

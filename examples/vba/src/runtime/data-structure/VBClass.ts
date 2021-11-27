@@ -54,11 +54,8 @@ export class VBNativeClass {
         });
       }
     }
-    const { currentFile } = context;
-    context.currentFile = fileSymbolTable.file;
     let ret;
     ret = await this.callSub('Class_Initialize', undefined, false);
-    context.currentFile = currentFile;
     return ret;
   }
 

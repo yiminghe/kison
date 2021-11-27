@@ -11,7 +11,8 @@ const error: SubBinder = {
   async value(args, context) {
     const number = await args.getValue('number');
     const n = number?.type === 'Integer' ? number.value : 1000;
-    context.throwError(n);
+    const scope = context.getLastScopeInternal();
+    context.throwError(n, undefined, undefined, scope);
   },
 };
 
@@ -20,7 +21,7 @@ const errDescription: VariableBinder = {
   type: 'VariableBinder',
   async get(context) {
     const error = context.getCurrentScopeInternal().error;
-    const str = error?.message || '';
+    const str = error?.vbDescription || '';
     return context.createString(str);
   },
 };
@@ -31,6 +32,17 @@ const errSource: VariableBinder = {
   async get(context) {
     const error = context.getCurrentScopeInternal().error;
     const str = error?.vbErrorSource || '';
+    return context.createString(str);
+  },
+};
+
+// non-standard
+const errStack: VariableBinder = {
+  name: 'Err.Stack'.toLowerCase(),
+  type: 'VariableBinder',
+  async get(context) {
+    const error = context.getCurrentScopeInternal().error;
+    const str = error?.vbStack || '';
     return context.createString(str);
   },
 };
@@ -50,8 +62,7 @@ const errClear: SubBinder = {
   type: 'SubBinder',
   argumentsInfo: [],
   async value(_args, context) {
-    const { scopeStack } = context;
-    const error = scopeStack[scopeStack.length - 2].error;
+    const error = context.getLastScopeInternal().error;
     if (error) {
       error.vbErrorNumber = 0;
       error.vbErrorSource = '';
@@ -84,7 +95,13 @@ const errRaise: SubBinder = {
     const description: VBString | undefined = (await args.getValue(
       'description',
     )) as VBString;
-    context.throwError(number?.value || 0, source?.value, description?.value);
+    const scope = context.getLastScopeInternal();
+    context.throwError(
+      number?.value || 0,
+      source?.value,
+      description?.value,
+      scope,
+    );
   },
 };
 
@@ -95,4 +112,5 @@ export default [
   errClear,
   errRaise,
   errSource,
+  errStack,
 ];

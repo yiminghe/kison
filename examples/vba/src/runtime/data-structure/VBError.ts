@@ -1,6 +1,7 @@
 import type { ParseError } from '../../parser';
 import { Context } from '../Context';
 import { VBFile } from './runtime';
+import { VBScope } from './VBScope';
 
 export const errorCodes = {
   INTERNAL_ERROR: (type: string) => `internal error${type ? ': ' + type : ''}`,
@@ -69,11 +70,12 @@ type ErrorCode = keyof typeof errorCodes;
 
 export class VBRuntimeError extends Error {
   public vbErrorType: string = 'runtime';
-  public vbFile: VBFile | undefined;
-  public vbFirstLine: number = -1;
+  public vbScope: VBScope | undefined;
   public vbErrorNumber: number = -1;
   public vbErrorCode: ErrorCode = 'INTERNAL_ERROR';
   public vbErrorSource: string = '';
+  public vbDescription: string = '';
+  public vbOrigin: string = '';
   constructor(public code: ErrorCode | number, public vbArgs: any[] = []) {
     super('');
     if (typeof code === 'string') {
@@ -91,12 +93,26 @@ export class VBRuntimeError extends Error {
         this.message = error(...vbArgs);
       }
     }
+    this.vbDescription = this.message;
   }
 
-  completeVBPositionInfo() {
-    if (this.vbFile) {
-      this.message += ` (line ${this.vbFirstLine} at file ${this.vbFile.name})`;
+  get vbStack() {
+    const ret: string[] = [
+      this.vbDescription,
+      this.vbOrigin
+    ];
+    let scope = this.vbScope?.calledScope;
+    while (scope) {
+      ret.push(scope.getErrorPositionInfo());
+      scope = scope.calledScope;
     }
+    return ret.join('\n');
+  }
+
+  initWithVBScope(scope: VBScope) {
+    this.vbScope = scope;
+    this.vbOrigin = scope.getErrorPositionInfo(true);
+    this.message = this.vbDescription + ' ' + this.vbOrigin;
   }
 }
 
@@ -117,7 +133,6 @@ export function throwVBRuntimeError(
   ...args: any[]
 ): never {
   const error = makeVBRuntimeError(code, args);
-  error.vbFile = context.currentFile;
-  error.vbFirstLine = context.currentAstNode?.firstLine || -1;
+  error.initWithVBScope(context.getCurrentScopeInternal());
   throw error;
 }

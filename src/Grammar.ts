@@ -1080,13 +1080,13 @@ class Grammar {
   expandProductionsInternal() {}
 
   getPrecedenceTerminal(p: ProductionRule) {
-    if (p.precedence) {
+    if ('precedence' in p) {
       return p.precedence;
     }
-    const { rhs } = p;
+    const rhs = filterRhs(p.rhs);
     for (let i = rhs.length - 1; i >= 0; i--) {
       const rh = rhs[i];
-      if (typeof rh === 'string' && this.lexer.hasToken(rh)) {
+      if (this.lexer.hasToken(rh)) {
         return rh;
       }
     }
@@ -1213,6 +1213,9 @@ class Grammar {
 
     const getPriority = (p1: ProductionRule) => {
       const precedenceTerminal1 = this.getPrecedenceTerminal(p1)!;
+      if (!precedenceTerminal1) {
+        return 0;
+      }
       const priority1 = priorityMap[precedenceTerminal1];
       return priority1;
     };
@@ -1220,30 +1223,31 @@ class Grammar {
     const unrelevants = productions.filter((p) => !getPriority(p));
     const relevantProductions = productions.filter((p) => !!getPriority(p));
 
-    relevantProductions.sort((p1: ProductionRule, p2: ProductionRule) => {
-      return getPriority(p1) - getPriority(p2);
-    });
+    const relevantByGroup: Record<string, ProductionRule[]> = {};
+
+    for (const p of relevantProductions) {
+      const arr = (relevantByGroup[p.symbol] = relevantByGroup[p.symbol] || []);
+      arr.push(p);
+    }
+
+    const parts = [];
+
+    for (const symbol of Object.keys(relevantByGroup)) {
+      const ps = relevantByGroup[symbol];
+      if (ps.length === 1) {
+        unrelevants.push(ps[0]);
+      } else {
+        ps.sort((p1: ProductionRule, p2: ProductionRule) => {
+          return getPriority(p1) - getPriority(p2);
+        });
+        parts.push(ps);
+      }
+    }
 
     function getSymbol(s: string, priority: string | number) {
       return `${s}_p_${priority}`;
     }
 
-    const parts = [];
-    let part = [];
-
-    for (let i = 0; i < relevantProductions.length; i++) {
-      const p = relevantProductions[i];
-      const nextP = relevantProductions[i + 1];
-      part.push(p);
-      if (!nextP || p.symbol !== nextP.symbol) {
-        parts.push(part);
-        part = [];
-      }
-    }
-
-    if (part.length) {
-      parts.push(part);
-    }
     const newRelevants: ProductionRule[] = [];
 
     function getNextP(productions: ProductionRule[], index: number) {
@@ -1255,6 +1259,7 @@ class Grammar {
         }
       }
     }
+
     const { prioritySymbolMap } = this;
 
     const transformPart = (ps: ProductionRule[]) => {

@@ -16,7 +16,7 @@ export class VBScope {
 
   currentAstNode: AstNode | undefined;
 
-  calledScope: VBScope | undefined;
+  callerScope: VBScope | undefined;
 
   constructor(
     public file: VBFile,
@@ -24,7 +24,7 @@ export class VBScope {
     public context: Context,
     public classObj?: VBClass,
   ) {
-    this.calledScope = last(context.scopeStack);
+    this.callerScope = last(context.scopeStack);
     const returnName = last(this.subName.split('.'));
     this.variableMap.set(returnName, new VBValuePointer(context));
   }
@@ -45,7 +45,7 @@ export class VBScope {
       const node = useLastestPosition
         ? this.currentAstNode
         : this._errorAstNode || this.currentAstNode;
-      return `at ${this.subName} (${this.file.name}:${node?.firstLine})`;
+      return `at ${this.subName} (${this.file.name}:${node?.firstLine || 1})`;
     }
   }
 

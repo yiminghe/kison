@@ -1,3 +1,4 @@
+import { throwVBRuntimeError } from '../data-structure/VBError';
 import {
   VBInteger,
   VBString,
@@ -7,6 +8,7 @@ import {
   VB_FALSE,
   VB_TRUE,
   getExitToken,
+  VBValue,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 
@@ -47,5 +49,49 @@ registerEvaluators({
 
   evaluateExitStmt(node) {
     throw getExitToken(node);
+  },
+
+  async evaluateValueStmt({ children }, context) {
+    if (children.length === 1) {
+      return evaluate(children[0], context);
+    }
+    if (children.length === 3) {
+      if (
+        children[0].type === 'token' &&
+        children[0].token === 'LPAREN' &&
+        children[2].type === 'token' &&
+        children[2].token === 'RPAREN'
+      ) {
+        return evaluate(children[1], context);
+      }
+      const operator = children[1];
+
+      function createNumber(v: any) {
+        if (typeof v !== 'number') {
+          throwVBRuntimeError(context, 'TYPE_MISMATCH');
+        }
+        if ((v | 0) !== v) {
+          return context.createDouble(v);
+        }
+        return context.createInteger(v);
+      }
+
+      if (operator.type === 'token') {
+        const left: VBValue = await evaluate(children[0], context);
+        const right: VBValue = await evaluate(children[2], context);
+        switch (operator.token) {
+          case 'PLUS': {
+            // @ts-ignore
+            const v = left.value + right.value;
+            return createNumber(v);
+          }
+          case 'MULT': {
+            // @ts-ignore
+            const v = left.value * right.value;
+            return createNumber(v);
+          }
+        }
+      }
+    }
   },
 });

@@ -35,6 +35,7 @@ import {
   VBAny,
   VBMissingArgument,
   ExitToken,
+  VBDouble,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -49,7 +50,7 @@ import { VBArguments } from './data-structure/VBArguments';
 
 type ShiftArray<T> = T extends [any, ...infer u] ? u : never;
 
-const defaultFileId: VBFile = {
+const defaultFile: VBFile = {
   id: Math.random() + '',
   name: 'default',
   type: 'module',
@@ -210,10 +211,10 @@ export class Context {
 
   getSymbolItemFromFileInternal(
     name: string,
-    file: string,
+    fileId: string,
     noCheckPublic: boolean = false,
   ) {
-    const item = this.symbolTable.get(file);
+    const item = this.symbolTable.get(fileId);
     if (item && item.type === 'module') {
       const sub = item.symbolTable.get(name);
       if (sub) {
@@ -472,7 +473,7 @@ export class Context {
     return this.callSubBindingInternal(subDef, args);
   }
 
-  public async load(code: string, file: VBFile = defaultFileId) {
+  public async load(code: string, file: VBFile = defaultFile) {
     if (!code) {
       this.symbolTable.delete(file.id);
       return;
@@ -495,25 +496,13 @@ export class Context {
       currentFile.id,
       new FileSymbolTable(currentFile, code),
     );
-    this.scopeStack = [
-      new VBScope(
-        currentFile,
-        {
-          type: 'SubBinding',
-          name: '$TOP',
-          value() {},
-        },
-        this,
-      ),
-    ];
+    this.reset(file);
     try {
       await load(ast, this);
     } catch (e) {
       this.symbolTable.delete(currentFile.id);
       this.astMap.delete(currentFile.id);
       throw e;
-    } finally {
-      this.scopeStack = [];
     }
   }
 
@@ -544,9 +533,14 @@ export class Context {
     this._registerBinding(binding);
   }
 
-  public reset() {
-    this.scopeStack = [];
+  public reset(file?: VBFile) {
     this.withStack = [];
+    this.scopeStack = [];
+    if (file) {
+      const sub = new VBSub(null!, this);
+      sub.initWithFileAndName(file, 'TOP');
+      this.scopeStack = [new VBScope(file, sub, this)];
+    }
   }
 
   public getPublicModuleSubs(file?: VBFile) {
@@ -574,12 +568,25 @@ export class Context {
     return ret;
   }
 
+  private nested = 0;
+
   public async callSub(subName: string, options: CallOptions = {}) {
+    let { file } = options;
+    if (this.nested === 0) {
+      if (!file) {
+        const sub = this.getSymbolItemInternal(subName);
+        if (sub && sub.type != 'variable') {
+          file = file || sub.file;
+        }
+      }
+      this.reset(file || defaultFile);
+      this.nested++;
+    }
     let filePassed = this.currentFile;
-    if (options.file) {
-      const { file } = options;
+    if (file) {
       const existingFile = this.getFileById(file.id);
       if (!existingFile) {
+        this.nested--;
         throwVBRuntimeError(this, 'NOT_FOUND_FILE_ID', file.id);
       }
       filePassed = existingFile;
@@ -588,14 +595,16 @@ export class Context {
       return await this.callSubInternal(subName, options.args, filePassed);
     } catch (e: unknown) {
       if (e instanceof Error) {
-        if (options.logError !== false) {
-          console.error(e);
-          if (e instanceof VBRuntimeError) {
-            console.log('vb stack:  *****************');
-            console.log(e.vbStack);
+        if (this.nested === 1) {
+          if (options.logError !== false) {
+            console.error(e);
+            if (e instanceof VBRuntimeError) {
+              console.log('vb stack:  *****************');
+              console.log(e.vbStack);
+            }
           }
+          this.reset();
         }
-        this.reset();
         throw e;
       }
 
@@ -603,14 +612,18 @@ export class Context {
 
       if (exit.type === 'Exit' && exit.subType === 'END') {
       } else {
-        console.error(e);
-        // unknown error
-        console.error(
-          `unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`,
-        );
-        this.reset();
+        if (this.nested === 1) {
+          console.error(e);
+          // unknown error
+          console.error(
+            `unkown error: (line ${this.currentAstNode?.firstLine} at file ${this.currentFile.name})`,
+          );
+          this.reset();
+        }
         throw exit;
       }
+    } finally {
+      this.nested--;
     }
   }
 
@@ -635,6 +648,10 @@ export class Context {
     return new VBInteger(value);
   }
 
+  public static createDouble(value: number) {
+    return new VBDouble(value);
+  }
+
   public static createString(value: string) {
     return new VBString(value);
   }
@@ -645,6 +662,10 @@ export class Context {
 
   public createInteger(value: number) {
     return Context.createInteger(value);
+  }
+
+  public createDouble(value: number) {
+    return Context.createDouble(value);
   }
 
   public createString(value: string) {

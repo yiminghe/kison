@@ -99,10 +99,10 @@ export class VBRuntimeError extends Error {
 
   get vbStack() {
     const ret: string[] = [this.vbDescription, this.vbOrigin];
-    let scope = this.vbScope?.calledScope;
+    let scope = this.vbScope?.callerScope;
     while (scope) {
       ret.push(scope.getErrorPositionInfo());
-      scope = scope.calledScope;
+      scope = scope.callerScope;
     }
     return ret.join('\n');
   }

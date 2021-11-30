@@ -42,7 +42,8 @@ describe('error handling', () => {
         "internal error",
         1,
         "internal error
-      at main (m1:4)",
+      at main (m1:4)
+      at TOP (m1:1)",
       ]
     `);
   });
@@ -95,7 +96,8 @@ End Sub
         1,
         "internal error
       at test (m1:2)
-      at main (m1:7)",
+      at main (m1:7)
+      at TOP (m1:1)",
       ]
     `);
   });
@@ -152,7 +154,8 @@ End Sub
       Array [
         1,
         "internal error
-      at main (m1:5)",
+      at main (m1:5)
+      at TOP (m1:1)",
         0,
         "",
       ]
@@ -183,10 +186,12 @@ End Sub
       Array [
         1,
         "internal error
-      at main (m1:5)",
+      at main (m1:5)
+      at TOP (m1:1)",
         0,
         "internal error
-      at main (m1:5)",
+      at main (m1:5)
+      at TOP (m1:1)",
       ]
     `);
   });
@@ -240,7 +245,8 @@ End Sub
         "2",
         "internal error",
         "internal error
-      at main (m1:5)",
+      at main (m1:5)
+      at TOP (m1:1)",
       ]
     `);
   });
@@ -265,7 +271,8 @@ End Sub
         "",
         "",
         "
-      at main (m1:5)",
+      at main (m1:5)
+      at TOP (m1:1)",
       ]
     `);
   });
@@ -290,7 +297,8 @@ End Sub
         "",
         "no optional argument: number",
         "no optional argument: number
-      at main (m1:5)",
+      at main (m1:5)
+      at TOP (m1:1)",
       ]
     `);
   });

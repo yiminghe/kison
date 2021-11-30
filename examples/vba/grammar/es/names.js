@@ -482,6 +482,10 @@ export const XOR = 'XOR';
 export const XOROptional = 'XOR?';
 export const XORZeroOrMore = 'XOR*';
 export const XOROneOrMore = 'XOR+';
+export const IMP = 'IMP';
+export const IMPOptional = 'IMP?';
+export const IMPZeroOrMore = 'IMP*';
+export const IMPOneOrMore = 'IMP+';
 export const IDENTIFIER = 'IDENTIFIER';
 export const IDENTIFIEROptional = 'IDENTIFIER?';
 export const IDENTIFIERZeroOrMore = 'IDENTIFIER*';
@@ -554,6 +558,10 @@ export const PLUS_EQ = 'PLUS_EQ';
 export const PLUS_EQOptional = 'PLUS_EQ?';
 export const PLUS_EQZeroOrMore = 'PLUS_EQ*';
 export const PLUS_EQOneOrMore = 'PLUS_EQ+';
+export const IDIV = 'IDIV';
+export const IDIVOptional = 'IDIV?';
+export const IDIVZeroOrMore = 'IDIV*';
+export const IDIVOneOrMore = 'IDIV+';
 export const POW = 'POW';
 export const POWOptional = 'POW?';
 export const POWZeroOrMore = 'POW*';
@@ -983,6 +991,7 @@ export const KEYWORDS = [
   'WITH',
   'WITHEVENTS',
   'XOR',
+  'IMP',
 ];
 
 export const makeProductions = (arr) => {
@@ -1012,3 +1021,6 @@ export const makeLexerRules = (arr) => {
     return a;
   });
 };
+
+export const UMINUS = 'UMINUS';
+export const UPLUS = 'UPLUS';

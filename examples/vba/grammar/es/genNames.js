@@ -120,6 +120,7 @@ const keywords = [
   'WITH',
   'WITHEVENTS',
   'XOR',
+  'IMP',
 ];
 
 const lexer = [
@@ -141,6 +142,7 @@ const lexer = [
   'NEQ',
   'PLUS',
   'PLUS_EQ',
+  'IDIV',
   'POW',
   'RPAREN',
   'NEWLINE',
@@ -276,5 +278,8 @@ export const makeLexerRules = (arr) => {
   });
 };
 `);
+
+code.push(`export const UMINUS = "UMINUS";`);
+code.push(`export const UPLUS = "UPLUS";`);
 
 require('fs').writeFileSync(__dirname + '/names.js', code.join('\n'));

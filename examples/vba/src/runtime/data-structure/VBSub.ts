@@ -20,9 +20,9 @@ export class VBSub {
   name: string = '';
   private _argumentsInfo?: ArgInfo[];
   private _returnInfo?: AsTypeClauseInfo;
-  type: 'sub' | 'function';
+  type: 'sub' | 'function' = 'sub';
   private _visibility?: Visibility;
-  file: VBFile;
+  file: VBFile = null!;
   _static?: boolean;
   staticVariables: Map<string, VBPointer> = new Map();
   private lineLabelMap: Map<string, number> = new Map();
@@ -66,24 +66,31 @@ export class VBSub {
       | Ast_PropertySetStmt_Node,
     public context: Context,
   ) {
-    this.file = context.currentFile;
-    const subSymbol = this.sub.symbol;
-    this.type =
-      subSymbol === 'subStmt' ||
-      subSymbol === 'propertyLetStmt' ||
-      subSymbol === 'propertySetStmt'
-        ? 'sub'
-        : 'function';
-    let block;
-    for (const c of sub.children) {
-      if (c.type === 'symbol' && c.symbol === 'block') {
-        block = c;
-      } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
-        this.name = c.children[0].text;
+    if (sub) {
+      this.file = context.currentFile;
+      const subSymbol = this.sub.symbol;
+      this.type =
+        subSymbol === 'subStmt' ||
+        subSymbol === 'propertyLetStmt' ||
+        subSymbol === 'propertySetStmt'
+          ? 'sub'
+          : 'function';
+      let block;
+      for (const c of sub.children) {
+        if (c.type === 'symbol' && c.symbol === 'block') {
+          block = c;
+        } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+          this.name = c.children[0].text;
+        }
       }
+      this.block = block;
+      this.initLineLabelMap();
     }
-    this.block = block;
-    this.initLineLabelMap();
+  }
+
+  initWithFileAndName(file: VBFile, name: string) {
+    this.file = file;
+    this.name = name;
   }
 
   initLineLabelMap() {

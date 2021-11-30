@@ -10,6 +10,7 @@ import {
   getExitToken,
   VBValue,
 } from '../types';
+import { getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
 
 registerEvaluators({
@@ -77,8 +78,8 @@ registerEvaluators({
       }
 
       if (operator.type === 'token') {
-        const left: VBValue = await evaluate(children[0], context);
-        const right: VBValue = await evaluate(children[2], context);
+        const left: VBValue = await getVBValue(await evaluate(children[0], context));
+        const right: VBValue = await getVBValue(await evaluate(children[2], context));
         switch (operator.token) {
           case 'PLUS': {
             // @ts-ignore

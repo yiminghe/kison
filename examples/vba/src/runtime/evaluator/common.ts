@@ -1,6 +1,6 @@
 import type { AstNode, AstSymbolNode } from '../../parser';
 import type { Context } from '../Context';
-import { NamespaceValue, VBNamespace, VBAny } from '../types';
+import { NamespaceValue, VBNamespace, VBAny, VBValue } from '../types';
 import { evaluate } from './evaluators';
 import { transformToIndexType } from '../utils';
 import { throwVBRuntimeError } from '../data-structure/VBError';
@@ -138,10 +138,10 @@ export async function callSubOrGetElementWithIndexesAndArgs(
     return getElements(value, indexes);
   }
 }
-export async function getVBValue(v: VBAny): Promise<VBAny>;
+export async function getVBValue(v: VBAny): Promise<VBValue>;
 export async function getVBValue(
   v: VBAny | undefined,
-): Promise<VBAny | undefined> {
+): Promise<VBValue | undefined> {
   if (!v) {
     return v;
   }

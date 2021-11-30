@@ -328,8 +328,12 @@ module.exports = {
     [
       n.eCS_MemberProcedureCall,
       n.CALL,
+      n.groupStartMark,
       n.implicitCallStmt_InStmtOptional,
       '.',
+      n.alternationMark,
+      n.SPACE_DOT,
+      n.groupEndMark,
       n.ambiguousIdentifier,
       n.typeHintOptional,
       n.groupStartMark,
@@ -528,11 +532,16 @@ module.exports = {
     [
       n.iCS_S_MembersCall,
       n.groupStartMark,
+      n.groupStartMark,
       n.iCS_S_VariableOrProcedureCall,
       n.alternationMark,
       n.iCS_S_ProcedureOrArrayCall,
-      n.groupEndOptionalMark,
-      n.iCS_S_MemberCallOneOrMore,
+      n.groupEndMark,
+      n.iCS_S_MemberCall,
+      n.alternationMark,
+      n.iCS_S_SpaceMemberCall,
+      n.groupEndMark,
+      n.iCS_S_MemberCallZeroOrMore,
       n.dictionaryCallStmtOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -542,17 +551,23 @@ module.exports = {
     ],
     [
       n.iCS_S_MemberCall,
-      n.groupStartMark,
       '.',
-      n.alternationMark,
-      '!',
-      n.groupEndMark,
       n.groupStartMark,
       n.iCS_S_VariableOrProcedureCall,
       n.alternationMark,
       n.iCS_S_ProcedureOrArrayCall,
       n.groupEndMark,
     ],
+    [
+      n.iCS_S_SpaceMemberCall,
+      n.SPACE_DOT,
+      n.groupStartMark,
+      n.iCS_S_VariableOrProcedureCall,
+      n.alternationMark,
+      n.iCS_S_ProcedureOrArrayCall,
+      n.groupEndMark,
+    ],
+
     [
       n.iCS_S_ProcedureOrArrayCall,
       n.ambiguousIdentifier,
@@ -700,7 +715,10 @@ module.exports = {
   lexer: {
     rules: n.makeLexerRules([
       ...generateLexerRulesByKeywords(n.KEYWORDS),
-
+      {
+        token: n.SPACE_DOT,
+        regexp: /\s+\./,
+      },
       ...generateLexerRulesByMap({
         ASSIGN: ':=',
         COLON: ':',

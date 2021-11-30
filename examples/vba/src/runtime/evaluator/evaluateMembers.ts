@@ -30,22 +30,15 @@ import { getIdentifierName, last } from '../utils';
 registerEvaluators({
   async evaluateICS_S_MembersCall(node, context) {
     const { children } = node;
-    let parentMember: VBAny | undefined;
-
-    if (children[0].symbol !== 'iCS_S_MemberCall') {
-      parentMember = await evaluate(children[0], context);
-      if (
-        !parentMember ||
-        (parentMember.type === 'Pointer' &&
-          (await parentMember.getValue()).type === 'Empty') ||
-        parentMember.type === 'Empty'
-      ) {
-        throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'member access');
-      }
-    } else {
-      parentMember = last(context.withStack);
+    let parentMember: VBAny | undefined = await evaluate(children[0], context);
+    if (
+      !parentMember ||
+      (parentMember.type === 'Pointer' &&
+        (await parentMember.getValue()).type === 'Empty') ||
+      parentMember.type === 'Empty'
+    ) {
+      throwVBRuntimeError(context, 'INVALIDE_REF');
     }
-
     for (const c of children) {
       if (c.type === 'symbol' && c.symbol === 'iCS_S_MemberCall') {
         parentMember = await evaluate(c, context, {
@@ -53,9 +46,7 @@ registerEvaluators({
         });
       }
     }
-
     const indexes = await buildIndexes(node, context);
-
     let v;
     if (parentMember && indexes.length) {
       v = await callSubOrGetElementWithIndexesAndArgs(
@@ -67,7 +58,6 @@ registerEvaluators({
     } else {
       v = parentMember;
     }
-
     return v;
   },
 
@@ -76,5 +66,14 @@ registerEvaluators({
       throwVBRuntimeError(context, 'INVALIDE_REF');
     }
     return evaluate(children[1], context, params);
+  },
+
+  async evaluateICS_S_SpaceMemberCall({ children }, context, params = {}) {
+    if (params.parentMember) {
+      throwVBRuntimeError(context, 'INVALIDE_REF');
+    }
+    return evaluate(children[1], context, {
+      parentMember: last(context.withStack),
+    });
   },
 });

@@ -150,6 +150,7 @@ const lexer = [
   'L_SQUARE_BRACKET',
   'R_SQUARE_BRACKET',
   'keywords',
+  'SPACE_DOT',
   '$EOF',
 ];
 
@@ -206,6 +207,7 @@ const symbols = [
   'complexType',
   'iCS_S_MembersCall',
   'iCS_S_MemberCall',
+  'iCS_S_SpaceMemberCall',
   'eCS_MemberProcedureCall',
   'iCS_B_MemberProcedureCall',
   'propertyGetStmt',

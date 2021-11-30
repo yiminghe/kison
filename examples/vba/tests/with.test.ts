@@ -71,7 +71,7 @@ describe('with', () => {
         end sub
     
           sub test
-          call msgbox(.m1)
+            msgbox .m1
           end sub
         `;
     let error: any = {};

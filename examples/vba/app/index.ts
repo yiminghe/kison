@@ -1,4 +1,4 @@
-import { parser, SubBinder, VBArray } from '../src/index';
+import { parser, SubBinding, VBArray } from '../src/index';
 import type * as Manaco from 'monaco-editor';
 import { runs2 } from '../tests/utils';
 
@@ -177,14 +177,14 @@ require(['vs/editor/editor.main'], () => {
     }
   });
 
-  const Debugger: SubBinder = {
+  const Debugger: SubBinding = {
     name: 'debugger',
     async value(args, context) {
       debugger;
     },
   };
 
-  const LogSub: (name: string) => SubBinder = (name) => ({
+  const LogSub: (name: string) => SubBinding = (name) => ({
     name,
     argumentsInfo: [
       {
@@ -224,9 +224,9 @@ require(['vs/editor/editor.main'], () => {
             return;
           }
           called = true;
-          context.registerSubBinder(LogSub('msgbox'));
-          context.registerSubBinder(LogSub('debug.print'));
-          context.registerSubBinder(Debugger);
+          context.registerSubBinding(LogSub('msgbox'));
+          context.registerSubBinding(LogSub('debug.print'));
+          context.registerSubBinding(Debugger);
         },
         {
           reuseContext: true,

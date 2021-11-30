@@ -9,13 +9,13 @@ import {
   VBNativeClass,
   VBBindClass,
   VBValue,
-  SubBinder,
+  SubBinding,
   VBFile,
   VBSub,
   VBClass,
-  VariableBinder,
-  UserVariableBinder,
-  UserClassBinder,
+  VariableBinding,
+  UserVariableBinding,
+  UserClassBinding,
   VBValuePointer,
   VB_TRUE,
   VB_FALSE,
@@ -27,7 +27,7 @@ import {
   VB_EMPTY,
   VBPointer,
   FileSymbolTable,
-  ClassBinder,
+  ClassBinding,
   NamespaceMap,
   VBInteger,
   VBString,
@@ -65,7 +65,7 @@ interface MemberItem {
   parentMember?: VBAny | undefined;
 }
 
-export class VBBinderArguments {
+export class VBBindingArguments {
   constructor(public scope: VBScope) {}
   async getValue(name: string) {
     const obj = await this.scope.getVariable(name);
@@ -82,13 +82,13 @@ export class VBBinderArguments {
 }
 
 export class Context {
-  parentMember?: VBAny | undefined;
+  withStack: VBAny[] = [];
 
-  memberStack: MemberItem[] = [];
+  private stashedWithStack: VBAny[][] = [];
 
   astMap = new Map<string, AstRootNode>();
 
-  bindersMap: NamespaceMap = new Map();
+  bindingMap: NamespaceMap = new Map();
 
   symbolTable = new Map<string, FileSymbolTable>();
 
@@ -96,7 +96,19 @@ export class Context {
 
   constructor() {
     for (const b of bindings) {
-      this._registerBinder(b);
+      this._registerBinding(b);
+    }
+  }
+
+  stashWithStackInternal() {
+    this.stashedWithStack.push(this.withStack);
+    this.withStack = [];
+  }
+
+  popWithStackInternal() {
+    this.withStack = this.stashedWithStack.pop()!;
+    if (!this.withStack) {
+      throwVBRuntimeError(this, 'INTERNAL_ERROR', 'unmatched with statement!');
     }
   }
 
@@ -112,57 +124,37 @@ export class Context {
     last(this.scopeStack).currentAstNode = v;
   }
 
-  resetMemberInternal() {
-    this.memberStack = [];
-    this.parentMember = undefined;
-  }
-
-  stashMemberInternal() {
-    this.memberStack.push({
-      parentMember: this.parentMember,
-    });
-    this.parentMember = undefined;
-  }
-
-  popMemberInternal() {
-    const item = this.memberStack.pop();
-    if (!item) {
-      throwVBRuntimeError(this, 'INTERNAL_ERROR', 'popMember');
-    }
-    this.parentMember = item.parentMember;
-  }
-
   registerSymbolItemInternal(name: string, item: SymbolItem) {
     const { symbolTable, currentFile } = this;
     const currentTable = symbolTable.get(currentFile!.id)!;
     currentTable.symbolTable.set(name.toLowerCase(), item);
   }
 
-  _registerBinder(userBinder: VariableBinder | SubBinder | ClassBinder) {
-    const names = userBinder.name.split('.');
+  _registerBinding(userBinding: VariableBinding | SubBinding | ClassBinding) {
+    const names = userBinding.name.split('.');
     const namespace = this._findBind(names);
     if (namespace) {
       const name = last(names);
-      let binder;
-      if (userBinder.type === 'VariableBinder') {
-        const get = userBinder.get;
-        binder = new VBValuePointer(
+      let binding;
+      if (userBinding.type === 'VariableBinding') {
+        const get = userBinding.get;
+        binding = new VBValuePointer(
           this,
-          get ? () => get(this) : userBinder.value,
+          get ? () => get(this) : userBinding.value,
           undefined,
           true,
         );
       } else {
-        binder = userBinder;
+        binding = userBinding;
       }
-      namespace.set(name, binder);
+      namespace.set(name, binding);
     } else {
       throwVBRuntimeError(this, 'BINDING_ERROR');
     }
   }
 
   _findBind(names: string[]): NamespaceMap | null {
-    let namespace = this.bindersMap;
+    let namespace = this.bindingMap;
     const len = names.length;
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
@@ -183,7 +175,7 @@ export class Context {
     return null;
   }
 
-  _getBinder(names: string[]) {
+  _getBinding(names: string[]) {
     const namespace = this._findBind(names);
     if (namespace) {
       return namespace.get(last(names));
@@ -233,7 +225,7 @@ export class Context {
   }
 
   getFileIdFromFileNameInternal(name: string) {
-    if (this.bindersMap.get(name)?.type === 'Namespace') {
+    if (this.bindingMap.get(name)?.type === 'Namespace') {
       return name;
     }
     for (const fileSymbolTable of this.symbolTable.values()) {
@@ -249,7 +241,7 @@ export class Context {
   }
 
   async _setupScope(
-    sub: VBSub | SubBinder,
+    sub: VBSub | SubBinding,
     args: VBArguments,
     argumentsInfo: ArgInfo[],
     file: VBFile,
@@ -338,7 +330,6 @@ export class Context {
     if (!subSymbolItem.block) {
       return VB_EMPTY;
     }
-    this.stashMemberInternal();
     const argumentsInfo = subSymbolItem.arugmentsInfo;
     const subName = subSymbolItem.name;
     const currentScope = await this._setupScope(
@@ -347,8 +338,9 @@ export class Context {
       argumentsInfo,
       subSymbolItem.file,
     );
+    this.stashWithStackInternal();
     const clean = () => {
-      this.popMemberInternal();
+      this.popWithStackInternal();
     };
     if (classObj) {
       currentScope.classObj = classObj;
@@ -385,11 +377,11 @@ export class Context {
         ) {
           // just exit sub
         } else {
+          clean();
           throw e;
         }
       }
     }
-
     clean();
     this.scopeStack.pop();
     if (subSymbolItem.type === 'function') {
@@ -405,11 +397,10 @@ export class Context {
     return ret;
   }
 
-  async callSubBinderInternal(
-    subDef: SubBinder,
+  async callSubBindingInternal(
+    subDef: SubBinding,
     args: VBArguments = new VBArguments(this),
   ): Promise<VBValue> {
-    this.stashMemberInternal();
     const scope = await this._setupScope(
       subDef,
       args,
@@ -417,11 +408,7 @@ export class Context {
       this.currentFile,
     );
     let ret;
-    try {
-      ret = await subDef.value(new VBBinderArguments(scope), this);
-    } finally {
-      this.popMemberInternal();
-    }
+    ret = await subDef.value(new VBBindingArguments(scope), this);
     this.scopeStack.pop();
     if (ret !== undefined) {
       return ret;
@@ -434,7 +421,7 @@ export class Context {
     args: VBArguments = new VBArguments(this),
     file = this.currentFile,
   ): Promise<VBValue> {
-    const { bindersMap: subBindersMap, symbolTable } = this;
+    const { bindingMap: subBindingsMap, symbolTable } = this;
 
     let subSymbolItem: VBSub | VBVariable | undefined =
       this.getSymbolItemFromFileInternal(subName, file?.id, true);
@@ -461,7 +448,7 @@ export class Context {
 
     const names = subName.split('.');
 
-    let defMap = subBindersMap;
+    let defMap = subBindingsMap;
     let i;
     let subDef;
 
@@ -473,7 +460,7 @@ export class Context {
       }
       if (namespace.type === 'Namespace') {
         defMap = namespace.value;
-      } else if (namespace.type === 'SubBinder' && i === names.length - 1) {
+      } else if (namespace.type === 'SubBinding' && i === names.length - 1) {
         subDef = namespace;
       }
     }
@@ -482,11 +469,10 @@ export class Context {
       throwVBRuntimeError(this, 'NOT_FOUND_SUB', subName);
     }
 
-    return this.callSubBinderInternal(subDef, args);
+    return this.callSubBindingInternal(subDef, args);
   }
 
   public async load(code: string, file: VBFile = defaultFileId) {
-    this.resetMemberInternal();
     if (!code) {
       this.symbolTable.delete(file.id);
       return;
@@ -513,7 +499,7 @@ export class Context {
       new VBScope(
         currentFile,
         {
-          type: 'SubBinder',
+          type: 'SubBinding',
           name: '$TOP',
           value() {},
         },
@@ -531,36 +517,36 @@ export class Context {
     }
   }
 
-  public registerSubBinder(subBinder: Omit<SubBinder, 'type'>) {
-    const binder: SubBinder = {
-      ...subBinder,
-      type: 'SubBinder',
-      name: subBinder.name.toLowerCase(),
+  public registerSubBinding(subBinding: Omit<SubBinding, 'type'>) {
+    const binding: SubBinding = {
+      ...subBinding,
+      type: 'SubBinding',
+      name: subBinding.name.toLowerCase(),
     };
-    this._registerBinder(binder);
+    this._registerBinding(binding);
   }
 
-  public registerVariableBinder(variableBinder: UserVariableBinder) {
-    const binder: VariableBinder = {
-      ...variableBinder,
-      type: 'VariableBinder',
-      name: variableBinder.name.toLowerCase(),
+  public registerVariableBinding(variableBinding: UserVariableBinding) {
+    const binding: VariableBinding = {
+      ...variableBinding,
+      type: 'VariableBinding',
+      name: variableBinding.name.toLowerCase(),
     };
-    this._registerBinder(binder);
+    this._registerBinding(binding);
   }
 
-  public registerClassBinder(classBinder: UserClassBinder) {
-    const binder: ClassBinder = {
-      type: 'ClassBinder',
-      ...classBinder,
-      name: classBinder.name.toLowerCase(),
+  public registerClassBinding(classBinding: UserClassBinding) {
+    const binding: ClassBinding = {
+      type: 'ClassBinding',
+      ...classBinding,
+      name: classBinding.name.toLowerCase(),
     };
-    this._registerBinder(binder);
+    this._registerBinding(binding);
   }
 
   public reset() {
-    this.resetMemberInternal();
     this.scopeStack = [];
+    this.withStack = [];
   }
 
   public getPublicModuleSubs(file?: VBFile) {
@@ -690,10 +676,10 @@ export class Context {
 
   public async createObject(name: string) {
     const classType = name.toLowerCase().split('.');
-    const binder = this._getBinder(classType);
+    const binding = this._getBinding(classType);
     let value: VBClass | undefined;
-    if (binder && binder.type === 'ClassBinder') {
-      value = new VBBindClass(binder, this);
+    if (binding && binding.type === 'ClassBinding') {
+      value = new VBBindClass(binding, this);
     } else if (classType.length === 1) {
       const classId = this.getFileIdFromFileNameInternal(classType[0]);
       const symbolItem = this.symbolTable.get(classId);

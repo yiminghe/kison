@@ -1,7 +1,7 @@
-import type { Context, VBBinderArguments } from '../Context';
+import type { Context, VBBindingArguments } from '../Context';
 import type { AstVisitors, Ast_Visibility_Node } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
-import { VBPointer } from './VBPointer';
+import { VBAny, VBPointer } from './VBPointer';
 import type { VBSub } from './VBSub';
 
 export interface VBFile {
@@ -38,20 +38,20 @@ export class VBVariable {
 
 export type Visibility = Ast_Visibility_Node['children'][0]['token'];
 
-export type SubBinderReturnType = VBValue | void;
+export type SubBindingReturnType = VBValue | void;
 
-export interface SubBinder {
-  type: 'SubBinder';
+export interface SubBinding {
+  type: 'SubBinding';
   value: (
-    args: VBBinderArguments,
+    args: VBBindingArguments,
     context: Context,
-  ) => Promise<SubBinderReturnType> | SubBinderReturnType;
+  ) => Promise<SubBindingReturnType> | SubBindingReturnType;
   argumentsInfo?: ArgInfo[];
   name: string;
 }
 
-export interface VariableBinder {
-  type: 'VariableBinder';
+export interface VariableBinding {
+  type: 'VariableBinding';
   value?: VBValue;
   get?: (context: Context) => VBValue | Promise<VBValue>;
   name: string;
@@ -59,23 +59,23 @@ export interface VariableBinder {
 
 export type IndexType = string | number;
 
-export interface InstanceBinder {
+export interface InstanceBinding {
   getElement?(indexes: IndexType[]): Promise<VBValue>;
   setElement?(indexes: IndexType[], value: VBValue): Promise<void>;
   get(name: string): Promise<VBValue>;
   set(name: string, value: VBValue): Promise<void>;
-  subs?: Record<string, Exclude<UserSubBinder, 'name'>>;
+  subs?: Record<string, Exclude<UserSubBinding, 'name'>>;
 }
 
-export interface ClassBinder {
-  type: 'ClassBinder';
+export interface ClassBinding {
+  type: 'ClassBinding';
   name: string;
-  value: (context: Context) => Promise<InstanceBinder> | InstanceBinder;
+  value: (context: Context) => Promise<InstanceBinding> | InstanceBinding;
 }
 
-export type UserClassBinder = Omit<ClassBinder, 'type'>;
-export type UserVariableBinder = Omit<VariableBinder, 'type'>;
-export type UserSubBinder = Omit<SubBinder, 'type'>;
+export type UserClassBinding = Omit<ClassBinding, 'type'>;
+export type UserVariableBinding = Omit<VariableBinding, 'type'>;
+export type UserSubBinding = Omit<SubBinding, 'type'>;
 
 export interface ArgInfo {
   byRef?: boolean;
@@ -91,7 +91,9 @@ export interface VBVariableInfo {
   value: () => Promise<VBPointer> | VBPointer;
 }
 
-export type Evaluators = AstVisitors<'evaluate', Context>;
+export type EvaluateParams = { parentMember?: VBAny | undefined };
+
+export type Evaluators = AstVisitors<'evaluate', Context, EvaluateParams>;
 
 export type Loaders = AstVisitors<'load', Context>;
 

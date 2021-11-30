@@ -1,4 +1,4 @@
-import type { SubBinder, VBFile } from './runtime';
+import type { SubBinding, VBFile } from './runtime';
 import type { Context } from '../Context';
 import type { VBClass } from './VBClass';
 import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
@@ -20,7 +20,7 @@ export class VBScope {
 
   constructor(
     public file: VBFile,
-    public sub: VBSub | SubBinder,
+    public sub: VBSub | SubBinding,
     public context: Context,
     public classObj?: VBClass,
   ) {
@@ -39,8 +39,8 @@ export class VBScope {
   }
 
   getErrorPositionInfo(useLastestPosition?: boolean) {
-    if (this.sub.type === 'SubBinder') {
-      return `at ${this.subName} (SubBinder)`;
+    if (this.sub.type === 'SubBinding') {
+      return `at ${this.subName} (SubBinding)`;
     } else {
       const node = useLastestPosition
         ? this.currentAstNode
@@ -87,14 +87,14 @@ export class VBScope {
       return v;
     }
 
-    // binder
-    const binder = context.bindersMap.get(name);
-    if (binder) {
-      if (binder.type === 'Namespace') {
-        return binder;
+    // binding
+    const binding = context.bindingMap.get(name);
+    if (binding) {
+      if (binding.type === 'Namespace') {
+        return binding;
       }
-      if (binder.type === 'Pointer') {
-        return binder;
+      if (binding.type === 'Pointer') {
+        return binding;
       }
     }
 

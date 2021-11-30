@@ -98,11 +98,11 @@ export async function callSubOrGetElementWithIndexesAndArgs(
       v = parent;
     }
     if (indexes.length || args) {
-      if (v.type === 'SubBinder') {
+      if (v.type === 'SubBinding') {
         if (args) {
-          v = await context.callSubBinderInternal(v, args);
+          v = await context.callSubBindingInternal(v, args);
         } else {
-          v = await context.callSubBinderInternal(
+          v = await context.callSubBindingInternal(
             v,
             new VBArguments(context, indexes[0]),
           );
@@ -110,8 +110,8 @@ export async function callSubOrGetElementWithIndexesAndArgs(
         }
       }
       return getElements(v, indexes);
-    } else if (v.type === 'SubBinder') {
-      return await context.callSubBinderInternal(v);
+    } else if (v.type === 'SubBinding') {
+      return await context.callSubBindingInternal(v);
     } else {
       return v;
     }

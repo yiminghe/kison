@@ -1,8 +1,8 @@
-import { SubBinder } from '../types';
+import { SubBinding } from '../types';
 
-const isMissing: SubBinder = {
+const isMissing: SubBinding = {
   name: 'ismissing',
-  type: 'SubBinder',
+  type: 'SubBinding',
   argumentsInfo: [
     {
       name: 'arg',

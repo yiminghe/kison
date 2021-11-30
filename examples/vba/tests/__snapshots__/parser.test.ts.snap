@@ -101,7 +101,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 180,
-                  'internalRuleIndex': 291,
+                  'internalRuleIndex': 296,
                   'id': 7
                 },
                 {
@@ -322,17 +322,17 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                         }
                                       ],
                                       'ruleIndex': 180,
-                                      'internalRuleIndex': 291,
+                                      'internalRuleIndex': 296,
                                       'id': 19
                                     }
                                   ],
-                                  'ruleIndex': 47,
-                                  'internalRuleIndex': 127,
+                                  'ruleIndex': 48,
+                                  'internalRuleIndex': 133,
                                   'id': 18
                                 }
                               ],
-                              'ruleIndex': 43,
-                              'internalRuleIndex': 112,
+                              'ruleIndex': 44,
+                              'internalRuleIndex': 118,
                               'id': 17
                             },
                             {
@@ -378,23 +378,23 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 49,
-                                  'internalRuleIndex': 129,
+                                  'ruleIndex': 50,
+                                  'internalRuleIndex': 135,
                                   'id': 21
                                 }
                               ],
-                              'ruleIndex': 42,
-                              'internalRuleIndex': 107,
+                              'ruleIndex': 43,
+                              'internalRuleIndex': 113,
                               'id': 20
                             }
                           ],
                           'ruleIndex': 24,
-                          'internalRuleIndex': 72,
+                          'internalRuleIndex': 73,
                           'id': 16
                         }
                       ],
                       'ruleIndex': 16,
-                      'internalRuleIndex': 45,
+                      'internalRuleIndex': 46,
                       'id': 15
                     },
                     {
@@ -614,7 +614,7 @@ exports[`vba parser parse correctly 2`] = `
                     }
                   ],
                   'ruleIndex': 180,
-                  'internalRuleIndex': 291,
+                  'internalRuleIndex': 296,
                   'id': 7
                 },
                 {
@@ -721,7 +721,7 @@ exports[`vba parser parse correctly 2`] = `
                                     }
                                   ],
                                   'ruleIndex': 180,
-                                  'internalRuleIndex': 291,
+                                  'internalRuleIndex': 296,
                                   'id': 14
                                 },
                                 {
@@ -776,38 +776,38 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 49,
-                                              'internalRuleIndex': 129,
+                                              'ruleIndex': 50,
+                                              'internalRuleIndex': 135,
                                               'id': 18
                                             }
                                           ],
-                                          'ruleIndex': 42,
-                                          'internalRuleIndex': 107,
+                                          'ruleIndex': 43,
+                                          'internalRuleIndex': 113,
                                           'id': 17
                                         }
                                       ],
                                       'ruleIndex': 33,
-                                      'internalRuleIndex': 86,
+                                      'internalRuleIndex': 87,
                                       'id': 16
                                     }
                                   ],
                                   'ruleIndex': 32,
-                                  'internalRuleIndex': 85,
+                                  'internalRuleIndex': 86,
                                   'id': 15
                                 }
                               ],
                               'ruleIndex': 31,
-                              'internalRuleIndex': 83,
+                              'internalRuleIndex': 84,
                               'id': 13
                             }
                           ],
                           'ruleIndex': 29,
-                          'internalRuleIndex': 81,
+                          'internalRuleIndex': 82,
                           'id': 12
                         }
                       ],
                       'ruleIndex': 16,
-                      'internalRuleIndex': 47,
+                      'internalRuleIndex': 48,
                       'id': 11
                     },
                     {

@@ -1,14 +1,14 @@
 import type { Context } from '../Context';
 import { VBValue, VB_EMPTY } from './VBValue';
 import { VBPointer } from './VBPointer';
-import { ClassBinder, IndexType, InstanceBinder } from './runtime';
+import { ClassBinding, IndexType, InstanceBinding } from './runtime';
 import { getVBValue } from '../evaluator/common';
 import {
   getPropertyGetSubName,
   getPropertySetSubName,
   isClassProperty,
 } from '../utils';
-import { SubBinder, VBAny } from '../types';
+import { SubBinding, VBAny } from '../types';
 import { throwVBRuntimeError } from './VBError';
 import { VBArguments } from './VBArguments';
 
@@ -201,12 +201,12 @@ export class VBBindClass {
 
   value: string;
 
-  instance: InstanceBinder = null!;
+  instance: InstanceBinding = null!;
 
   private properties = new Map<string, VBBindPropertyPointer>();
 
-  constructor(public binder: ClassBinder, public context: Context) {
-    this.value = `[class ${binder.name}]`;
+  constructor(public binding: ClassBinding, public context: Context) {
+    this.value = `[class ${binding.name}]`;
   }
 
   async init() {
@@ -214,7 +214,7 @@ export class VBBindClass {
       return;
     }
     this._init = true;
-    this.instance = await this.binder.value(this.context);
+    this.instance = await this.binding.value(this.context);
   }
 
   async set(name: string, value: VBAny) {
@@ -256,12 +256,12 @@ export class VBBindClass {
     args: VBArguments = new VBArguments(this.context),
   ) {
     const subs = this.instance.subs || {};
-    const sub: SubBinder = {
+    const sub: SubBinding = {
       ...subs[name],
-      type: 'SubBinder',
+      type: 'SubBinding',
       name,
     };
-    return this.context.callSubBinderInternal(sub, args);
+    return this.context.callSubBindingInternal(sub, args);
   }
 }
 

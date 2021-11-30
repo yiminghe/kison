@@ -215,7 +215,7 @@ const symbols = [
   'lineLabel',
   'goToStmt',
   'onErrorStmt',
-  'implicitCallStmt_InBlock',
+  'withStmt',
   'implicitCallStmt_InBlock',
   'implicitCallStmt_InBlock',
   'implicitCallStmt_InBlock',

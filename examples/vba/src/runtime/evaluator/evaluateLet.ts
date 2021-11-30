@@ -20,15 +20,11 @@ registerEvaluators({
     const left: Ast_ImplicitCallStmt_InStmt_Node = c;
     const op = children[++index] as AstTokenNode;
     const right = children[++index] as Ast_ValueStmt_Node;
-    context.stashMemberInternal();
     const leftVariable: VBPointer = await evaluate(left, context);
-    context.popMemberInternal();
     if (leftVariable.type !== 'Pointer') {
       throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'left side operator');
     }
-    context.stashMemberInternal();
     const rightValue: VBAny = await evaluate(right, context);
-    context.popMemberInternal();
     if (op.token === 'EQ') {
       await leftVariable.setValue(rightValue);
     }
@@ -36,9 +32,7 @@ registerEvaluators({
 
   async evaluateSetStmt(node, context) {
     let { children } = node;
-    context.stashMemberInternal();
     const leftVariable: VBPointer = await evaluate(children[1], context);
-    context.popMemberInternal();
     if (leftVariable.type !== 'Pointer') {
       throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'left side operator');
     }
@@ -51,9 +45,7 @@ registerEvaluators({
         await leftVariable.setValue(rightValue);
       }
     } else {
-      context.stashMemberInternal();
       let rightValue: VBAny = await evaluate(c3.children[0], context);
-      context.popMemberInternal();
       if (
         rightValue.type === 'Nothing' &&
         leftVariable.subType === 'Value' &&

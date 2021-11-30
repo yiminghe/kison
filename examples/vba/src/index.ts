@@ -12,11 +12,11 @@ import parser from './parser';
 
 export type {
   VBArray,
-  UserSubBinder as SubBinder,
-  UserVariableBinder as VariableBinder,
-  UserClassBinder as ClassBinder,
+  UserSubBinding as SubBinding,
+  UserVariableBinding as VariableBinding,
+  UserClassBinding as ClassBinding,
 } from './runtime/types';
 export { parser };
 export { VBArguments } from './runtime/types';
 export { Context } from './runtime/Context';
-export type { CallOptions, VBBinderArguments } from './runtime/Context';
+export type { CallOptions, VBBindingArguments } from './runtime/Context';

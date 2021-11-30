@@ -1,10 +1,14 @@
 import type { AstNode, LiteralToken, AstVisitor } from '../../parser';
 import type { Context } from '../Context';
-import type { Evaluators } from '../types';
+import type { Evaluators, EvaluateParams } from '../types';
 import { VB_EMPTY } from '../data-structure/VBValue';
 import { isSkipToken, warn, captalize } from '../utils';
 
-export async function evaluate(ast: AstNode, context: Context): Promise<any> {
+export async function evaluate(
+  ast: AstNode,
+  context: Context,
+  params?: EvaluateParams,
+): Promise<any> {
   if (!ast) {
     return VB_EMPTY;
   }
@@ -29,11 +33,13 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
   const m2 = `evaluate${captalize(n2)}`;
 
   const evaluators2 = evaluators as any;
-  const fn: AstVisitor<'', Context> = evaluators2[m2] || evaluators2[m1];
+  const fn: AstVisitor<'', Context, EvaluateParams> =
+    evaluators2[m2] || evaluators2[m1];
 
   if (fn) {
     context.currentAstNode = ast;
-    let ret = fn(ast, context);
+    //console.log('call visitor:' + (evaluators2[m2] ? m2 : m1))
+    let ret = fn(ast, context, params);
     if (ret && ret.then) {
       ret = await ret;
     }
@@ -49,16 +55,17 @@ export async function evaluate(ast: AstNode, context: Context): Promise<any> {
     return;
   }
 
-  return evaluateNodes(children, context);
+  return evaluateNodes(children, context, params);
 }
 
 export async function evaluateNodes(
   nodes: AstNode[],
   context: Context,
+  params?: EvaluateParams,
 ): Promise<any> {
   let ret;
   for (const c of nodes) {
-    ret = evaluate(c, context);
+    ret = evaluate(c, context, params);
     if (ret && (ret as Promise<any>).then) {
       ret = await ret;
     }

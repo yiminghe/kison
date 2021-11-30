@@ -19,8 +19,8 @@ export const errorCodes = {
   INDEX_NUMBER: `index must be number type`,
   NO_PRIVATE_TYPE: (type: string) => `can not access non-public ${type}`,
   NO_PRIVATE_MEMBER: `can not access non-public member`,
-  NOT_FOUND_SET_ELEMENT_CLASS_BINDER: `no setElement on class binder`,
-  NOT_FOUND_GET_ELEMENT_CLASS_BINDER: `no getElement on class binder`,
+  NOT_FOUND_SET_ELEMENT_CLASS_BINDER: `no setElement on class binding`,
+  NOT_FOUND_GET_ELEMENT_CLASS_BINDER: `no getElement on class binding`,
   SET_CONST: `can not set const variable`,
   UNEXPECTED_ERROR: (type: string) => `unexpected ${type}`,
   PARAMARRAY_LAST_ARGUMENT: `paramarray must be the last argument`,
@@ -30,6 +30,7 @@ export const errorCodes = {
   DEFAULT_VALUE_TYPE: 'default value must be basic type',
   EXPECTED_ARRAY_TYPE: (name: string) => `expect array type at ${name}`,
   TYPE_MISMATCH: 'Type Mismatch',
+  INVALIDE_REF: 'invalid reference',
 };
 
 type ErrorCodesKey = keyof typeof errorCodes;
@@ -97,10 +98,7 @@ export class VBRuntimeError extends Error {
   }
 
   get vbStack() {
-    const ret: string[] = [
-      this.vbDescription,
-      this.vbOrigin
-    ];
+    const ret: string[] = [this.vbDescription, this.vbOrigin];
     let scope = this.vbScope?.calledScope;
     while (scope) {
       ret.push(scope.getErrorPositionInfo());

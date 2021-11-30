@@ -7,7 +7,7 @@ https://github.com/yiminghe/kison
 ## usage
 
 ```typescript
-import { Context, SubBinder } from 'vba';
+import { Context, SubBinding } from 'vba';
 
 const sampleCode = `
 sub main
@@ -16,7 +16,7 @@ MsgBox 2
 end sub
 `.trim();
 
-const MsgBoxSub: SubBinder = {
+const MsgBoxSub: SubBinding = {
   name: 'MsgBox',
   argumentsInfo: [
     {
@@ -30,7 +30,7 @@ const MsgBoxSub: SubBinder = {
 
 async function main(){
   const context = new Context();
-  context.registerSubBinder(MsgBoxSub);
+  context.registerSubBinding(MsgBoxSub);
   await context.load(sampleCode);
   await context.callSub('main');
 }

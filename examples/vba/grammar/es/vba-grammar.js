@@ -223,6 +223,8 @@ module.exports = {
       n.alternationMark,
       n.onErrorStmt,
       n.alternationMark,
+      n.withStmt,
+      n.alternationMark,
       n.eraseStmt,
       n.alternationMark,
       n.exitStmt,
@@ -414,6 +416,20 @@ module.exports = {
       n.groupEndMark,
       n.WITHEVENTSOptional,
       n.variableListStmt,
+    ],
+
+    [
+      n.withStmt,
+      n.WITH,
+      n.groupStartMark,
+      n.implicitCallStmt_InStmt,
+      n.alternationMark,
+      n.NEW,
+      n.type_,
+      n.groupEndMark,
+      n.endOfStatement,
+      n.blockOptional,
+      n.END_WITH,
     ],
 
     [

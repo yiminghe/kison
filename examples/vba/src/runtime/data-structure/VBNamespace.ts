@@ -1,7 +1,11 @@
 import type { VBPointer } from './VBPointer';
-import type { SubBinder, ClassBinder } from './runtime';
+import type { SubBinding, ClassBinding } from './runtime';
 
-export type NamespaceValue = VBPointer | SubBinder | ClassBinder | VBNamespace;
+export type NamespaceValue =
+  | VBPointer
+  | SubBinding
+  | ClassBinding
+  | VBNamespace;
 
 export type NamespaceMap = Map<string, NamespaceValue>;
 

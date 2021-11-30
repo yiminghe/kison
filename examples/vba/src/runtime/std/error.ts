@@ -1,8 +1,8 @@
-import { SubBinder, VariableBinder, VBInteger, VBString } from '../types';
+import { SubBinding, VariableBinding, VBInteger, VBString } from '../types';
 
-const error: SubBinder = {
+const error: SubBinding = {
   name: 'error',
-  type: 'SubBinder',
+  type: 'SubBinding',
   argumentsInfo: [
     {
       name: 'number',
@@ -16,9 +16,9 @@ const error: SubBinder = {
   },
 };
 
-const errDescription: VariableBinder = {
+const errDescription: VariableBinding = {
   name: 'Err.Description'.toLowerCase(),
-  type: 'VariableBinder',
+  type: 'VariableBinding',
   async get(context) {
     const error = context.getCurrentScopeInternal().error;
     const str = error?.vbDescription || '';
@@ -26,9 +26,9 @@ const errDescription: VariableBinder = {
   },
 };
 
-const errSource: VariableBinder = {
+const errSource: VariableBinding = {
   name: 'Err.Source'.toLowerCase(),
-  type: 'VariableBinder',
+  type: 'VariableBinding',
   async get(context) {
     const error = context.getCurrentScopeInternal().error;
     const str = error?.vbErrorSource || '';
@@ -37,9 +37,9 @@ const errSource: VariableBinder = {
 };
 
 // non-standard
-const errStack: VariableBinder = {
+const errStack: VariableBinding = {
   name: 'Err.Stack'.toLowerCase(),
-  type: 'VariableBinder',
+  type: 'VariableBinding',
   async get(context) {
     const error = context.getCurrentScopeInternal().error;
     const str = error?.vbStack || '';
@@ -47,9 +47,9 @@ const errStack: VariableBinder = {
   },
 };
 
-const errNumber: VariableBinder = {
+const errNumber: VariableBinding = {
   name: 'Err.Number'.toLowerCase(),
-  type: 'VariableBinder',
+  type: 'VariableBinding',
   async get(context) {
     const error = context.getCurrentScopeInternal().error;
     const str = error?.vbErrorNumber || 0;
@@ -57,9 +57,9 @@ const errNumber: VariableBinder = {
   },
 };
 
-const errClear: SubBinder = {
+const errClear: SubBinding = {
   name: 'Err.Clear'.toLowerCase(),
-  type: 'SubBinder',
+  type: 'SubBinding',
   argumentsInfo: [],
   async value(_args, context) {
     const error = context.getLastScopeInternal().error;
@@ -71,9 +71,9 @@ const errClear: SubBinder = {
   },
 };
 
-const errRaise: SubBinder = {
+const errRaise: SubBinding = {
   name: 'Err.Raise'.toLowerCase(),
-  type: 'SubBinder',
+  type: 'SubBinding',
   argumentsInfo: [
     {
       name: 'number',

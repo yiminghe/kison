@@ -170,10 +170,6 @@ export const ERASE = 'ERASE';
 export const ERASEOptional = 'ERASE?';
 export const ERASEZeroOrMore = 'ERASE*';
 export const ERASEOneOrMore = 'ERASE+';
-export const ERROR = 'ERROR';
-export const ERROROptional = 'ERROR?';
-export const ERRORZeroOrMore = 'ERROR*';
-export const ERROROneOrMore = 'ERROR+';
 export const EVENT = 'EVENT';
 export const EVENTOptional = 'EVENT?';
 export const EVENTZeroOrMore = 'EVENT*';
@@ -847,6 +843,10 @@ export const onErrorStmt = 'onErrorStmt';
 export const onErrorStmtOptional = 'onErrorStmt?';
 export const onErrorStmtZeroOrMore = 'onErrorStmt*';
 export const onErrorStmtOneOrMore = 'onErrorStmt+';
+export const withStmt = 'withStmt';
+export const withStmtOptional = 'withStmt?';
+export const withStmtZeroOrMore = 'withStmt*';
+export const withStmtOneOrMore = 'withStmt+';
 export const groupStartMark = "'('";
 export const groupEndMark = "')'";
 export const groupEndOptionalMark = "')'?";
@@ -897,7 +897,6 @@ export const KEYWORDS = [
   'ENUM',
   'EQV',
   'ERASE',
-  'ERROR',
   'EVENT',
   'EXIT_DO',
   'EXIT_FOR',

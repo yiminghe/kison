@@ -1,8 +1,8 @@
 import {
   Context,
-  SubBinder,
-  ClassBinder,
-  VariableBinder,
+  SubBinding,
+  ClassBinding,
+  VariableBinding,
   CallOptions,
   VBArray,
 } from '../src/index';
@@ -12,12 +12,12 @@ function upperFirst(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-const vbModal: VariableBinder = {
+const vbModal: VariableBinding = {
   name: 'vbModal',
   value: Context.createInteger(1),
 };
 
-const JSDateBinder: ClassBinder = {
+const JSDateBinding: ClassBinding = {
   name: 'js.Date',
   async value() {
     const d: any = new Date();
@@ -39,7 +39,7 @@ const JSDateBinder: ClassBinder = {
   },
 };
 
-const ExcelRange: ClassBinder = {
+const ExcelRange: ClassBinding = {
   name: 'excel.Range',
   async value() {
     const d = [Context.createInteger(1), Context.createInteger(2)];
@@ -62,7 +62,7 @@ const ExcelRange: ClassBinder = {
   },
 };
 
-const createRange: SubBinder = {
+const createRange: SubBinding = {
   name: 'createRange',
   async value(args, context) {
     return context.createObject('excel.Range');
@@ -80,7 +80,7 @@ export async function runs(
   callback?: ContextCallback,
 ) {
   const ret: any[] = [];
-  const MsgBoxSub: SubBinder = {
+  const MsgBoxSub: SubBinding = {
     name: 'MsgBox',
     argumentsInfo: [
       {
@@ -97,8 +97,8 @@ export async function runs(
     moduleCodes,
     classCode,
     (context) => {
-      context.registerSubBinder(MsgBoxSub);
-      context.registerSubBinder({
+      context.registerSubBinding(MsgBoxSub);
+      context.registerSubBinding({
         name: 'debug.print',
         argumentsInfo: [
           {
@@ -127,13 +127,13 @@ export async function runs(
 }
 
 function bindCommon(context: Context) {
-  context.registerSubBinder(createRange);
+  context.registerSubBinding(createRange);
 
-  context.registerClassBinder(JSDateBinder);
-  context.registerClassBinder(ExcelRange);
+  context.registerClassBinding(JSDateBinding);
+  context.registerClassBinding(ExcelRange);
 
-  context.registerVariableBinder(vbModal);
-  context.registerVariableBinder({
+  context.registerVariableBinding(vbModal);
+  context.registerVariableBinding({
     ...vbModal,
     name: 'VBA.FormShowConstants.' + vbModal.name,
   });

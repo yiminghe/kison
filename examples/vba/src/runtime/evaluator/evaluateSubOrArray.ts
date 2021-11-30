@@ -11,7 +11,7 @@ import {
   VB_EXIT_SUB,
   VB_MISSING_ARGUMENT,
   VBClass,
-  SubBinder,
+  SubBinding,
 } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
@@ -25,7 +25,7 @@ import {
   NamedArg,
   VBArguments,
 } from '../data-structure/VBArguments';
-import { getIdentifierName } from '../utils';
+import { getIdentifierName, last } from '../utils';
 
 async function callSub(
   node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,
@@ -61,7 +61,11 @@ async function callMemberSub(
   }
 
   if (!parent) {
-    throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'member access');
+    parent = last(context.withStack);
+  }
+
+  if (!parent) {
+    throwVBRuntimeError(context, 'INVALIDE_REF');
   }
 
   const argsCall = await buildArgs(node, context);
@@ -91,7 +95,7 @@ registerEvaluators({
   async evaluateGoToStmt(node, context) {
     const label = getIdentifierName(node.children[1]);
     const sub = context.getCurrentScopeInternal().sub;
-    if (sub.type !== 'SubBinder') {
+    if (sub.type !== 'SubBinding') {
       await sub.gotoLineLabel(label);
       throw VB_EXIT_SUB;
     }
@@ -137,9 +141,7 @@ registerEvaluators({
         lastArg = missingArg;
         continue;
       }
-      context.stashMemberInternal();
       lastArg = await evaluate(c, context);
-      context.popMemberInternal();
     }
     if (children.length) {
       args.addArg(lastArg);
@@ -174,56 +176,11 @@ registerEvaluators({
     }
   },
 
-  async evaluateICS_S_MembersCall(node, context) {
-    const { children } = node;
-
-    if (children[0].symbol !== 'iCS_S_MemberCall') {
-      const parent: VBAny | undefined = (context.parentMember = await evaluate(
-        children[0],
-        context,
-      ));
-      if (
-        !parent ||
-        (parent.type === 'Pointer' &&
-          (await parent.getValue()).type === 'Empty') ||
-        parent.type === 'Empty'
-      ) {
-        throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'member access');
-      }
-    }
-
-    for (const c of children) {
-      if (c.type === 'symbol' && c.symbol === 'iCS_S_MemberCall') {
-        context.parentMember = await evaluate(c, context);
-      }
-    }
-
-    let parent = context.parentMember;
-
-    context.parentMember = undefined;
-
-    const indexes = await buildIndexes(node, context);
-
-    let v;
-    if (parent && indexes.length) {
-      v = await callSubOrGetElementWithIndexesAndArgs(
-        parent,
-        '',
-        indexes,
-        context,
-      );
-    } else {
-      v = parent;
-    }
-
-    return v;
-  },
-
-  async evaluateICS_S_ProcedureOrArrayCall(node, context) {
+  async evaluateICS_S_ProcedureOrArrayCall(node, context, params = {}) {
     const args = await buildArgs(node, context);
     const indexes = await buildIndexes(node, context);
     return callSubOrGetElementWithIndexesAndArgs(
-      context.parentMember,
+      params.parentMember,
       collectAmbiguousIdentifier(node, true)!,
       indexes,
       context,
@@ -231,12 +188,16 @@ registerEvaluators({
     );
   },
 
-  async evaluateICS_S_VariableOrProcedureCall({ children }, context) {
+  async evaluateICS_S_VariableOrProcedureCall(
+    { children },
+    context,
+    params = {},
+  ) {
     const subName = children[0].children[0].text;
     const indexes = await buildIndexes({ children }, context);
-    if (indexes.length || context.parentMember) {
+    if (indexes.length || params.parentMember) {
       return callSubOrGetElementWithIndexesAndArgs(
-        context.parentMember,
+        params.parentMember,
         subName,
         indexes,
         context,

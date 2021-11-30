@@ -1,9 +1,9 @@
 import { throwVBRuntimeError } from '../data-structure/VBError';
-import { SubBinder } from '../types';
+import { SubBinding } from '../types';
 
-const ubound: SubBinder = {
+const ubound: SubBinding = {
   name: 'ubound',
-  type: 'SubBinder',
+  type: 'SubBinding',
   argumentsInfo: [
     {
       name: 'arg',
@@ -18,9 +18,9 @@ const ubound: SubBinder = {
   },
 };
 
-const lbound: SubBinder = {
+const lbound: SubBinding = {
   name: 'lbound',
-  type: 'SubBinder',
+  type: 'SubBinding',
   argumentsInfo: [
     {
       name: 'arg',

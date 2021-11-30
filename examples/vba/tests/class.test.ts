@@ -75,6 +75,7 @@ end sub
     msgbox c.x
     c.x=11
     msgbox c.x
+    debug.print c.x,c.x
     c.print
   end sub  
     `;
@@ -115,6 +116,6 @@ end sub
       ],
     );
 
-    expect(ret).toEqual([0, 10, 10, 11, 'class print']);
+    expect(ret).toEqual([0, 10, 10, 11, 11, 11, 'class print']);
   });
 });

@@ -275,7 +275,7 @@ export class Context {
           const nest = args[j];
           // The parameter array is always zero based and
           // is not effected by the Option Base statement.
-          params.setElement([j], nest);
+          await params.setElement([j], nest);
         }
         await scope.setVariable(argInfo.name, new VBValuePointer(this, params));
         i = argumentsInfo.length;

@@ -15,7 +15,7 @@ describe('expression', () => {
     expect(ret).toEqual([11]);
   });
 
-  xit('logic works', async () => {
+  it('logic works', async () => {
     ret = await run(`
     sub main
     Dim x, y As Boolean
@@ -25,6 +25,6 @@ describe('expression', () => {
     end sub    
     `);
 
-    expect(ret).toEqual([0, 1]);
+    expect(ret).toEqual([false, true]);
   });
 });

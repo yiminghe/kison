@@ -56,7 +56,7 @@ const ExcelRange: ClassBinding = {
       },
       async setElement(indexes, value) {
         const index: number = parseInt(indexes[0] + '', 10);
-        if (value.type === 'Integer') d[index] = value;
+        if (value.type === 'integer') d[index] = value;
       },
     };
   },

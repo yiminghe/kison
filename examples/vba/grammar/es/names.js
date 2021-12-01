@@ -238,6 +238,10 @@ export const IN = 'IN';
 export const INOptional = 'IN?';
 export const INZeroOrMore = 'IN*';
 export const INOneOrMore = 'IN+';
+export const ISNOT = 'ISNOT';
+export const ISNOTOptional = 'ISNOT?';
+export const ISNOTZeroOrMore = 'ISNOT*';
+export const ISNOTOneOrMore = 'ISNOT+';
 export const IS = 'IS';
 export const ISOptional = 'IS?';
 export const ISZeroOrMore = 'IS*';
@@ -490,6 +494,10 @@ export const IDENTIFIER = 'IDENTIFIER';
 export const IDENTIFIEROptional = 'IDENTIFIER?';
 export const IDENTIFIERZeroOrMore = 'IDENTIFIER*';
 export const IDENTIFIEROneOrMore = 'IDENTIFIER+';
+export const DOUBLELITERAL = 'DOUBLELITERAL';
+export const DOUBLELITERALOptional = 'DOUBLELITERAL?';
+export const DOUBLELITERALZeroOrMore = 'DOUBLELITERAL*';
+export const DOUBLELITERALOneOrMore = 'DOUBLELITERAL+';
 export const INTEGERLITERAL = 'INTEGERLITERAL';
 export const INTEGERLITERALOptional = 'INTEGERLITERAL?';
 export const INTEGERLITERALZeroOrMore = 'INTEGERLITERAL*';
@@ -930,6 +938,7 @@ export const KEYWORDS = [
   'IF',
   'IMPLEMENTS',
   'IN',
+  'ISNOT',
   'IS',
   'INTEGER',
   'LONG',
@@ -1022,5 +1031,4 @@ export const makeLexerRules = (arr) => {
   });
 };
 
-export const UMINUS = 'UMINUS';
-export const UPLUS = 'UPLUS';
+export const PREFIX = 'PREFIX';

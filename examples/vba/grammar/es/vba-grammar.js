@@ -47,6 +47,25 @@ ${WS}
   'i',
 );
 
+const operators = [
+  ['left', n.NOT],
+  ['left', n.IS, n.ISNOT, n.GEQ, n.LEQ, n.GT, n.LT, n.NEQ, n.EQ],
+  ['left', n.XOR, n.OR, n.AND],
+  ['left', n.PLUS, n.MINUS, n.AMPERSAND],
+  ['left', n.MULT, n.DIV, n.IDIV, n.MOD],
+  ['left', n.POW],
+  ['right', n.PREFIX],
+];
+
+const binaryOps = [];
+for (const g of operators.slice(0, -1)) {
+  let ops = g.slice(1);
+  if (ops[0] === n.NOT) {
+    ops = ops.slice(1);
+  }
+  binaryOps.push(...ops);
+}
+
 module.exports = {
   productions: n.makeProductions([
     [
@@ -512,113 +531,33 @@ module.exports = {
       n.alternationMark,
       n.implicitCallStmt_InStmt,
       n.alternationMark,
-      n.LPAREN,
-      n.valueStmt,
-      n.RPAREN,
-      n.alternationMark,
-      n.NEW,
-      n.valueStmt,
-      n.alternationMark,
       n.ambiguousIdentifier,
       n.ASSIGN,
       n.valueStmt,
       n.alternationMark,
-      n.valueStmt,
-      n.IS,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.LIKE,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.GEQ,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.LEQ,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.GT,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.LT,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.NEQ,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.EQ,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.POW,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.DIV,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.IDIV,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.MULT,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.MOD,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.PLUS,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.MINUS,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.AMPERSAND,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.IMP,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.EQV,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.XOR,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.OR,
-      n.valueStmt,
-      n.alternationMark,
-      n.valueStmt,
-      n.AND,
-      n.valueStmt,
-      n.alternationMark,
-      n.NOT,
+      n.NEW,
       n.valueStmt,
     ],
     {
       symbol: n.valueStmt,
-      rhs: [n.MINUS, n.valueStmt],
-      precedence: n.UMINUS,
+      rhs: [n.LPAREN, n.valueStmt, n.RPAREN],
+      label: 'AtomExpression',
     },
+    ...binaryOps.map((o) => ({
+      symbol: n.valueStmt,
+      rhs: [n.valueStmt, o, n.valueStmt],
+      label: 'BinaryExpression',
+    })),
+    ...[n.MINUS, n.PLUS].map((o) => ({
+      symbol: n.valueStmt,
+      rhs: [o, n.valueStmt],
+      label: 'PrefixExpression',
+      precedence: n.PREFIX,
+    })),
     {
       symbol: n.valueStmt,
-      rhs: [n.PLUS, n.valueStmt],
-      precedence: n.UPLUS,
+      rhs: [n.NOT, n.valueStmt],
+      label: 'PrefixExpression',
     },
     [
       n.implicitCallStmt_InStmt,
@@ -699,6 +638,8 @@ module.exports = {
 
     [
       n.literal,
+      n.DOUBLELITERAL,
+      n.alternationMark,
       n.INTEGERLITERAL,
       n.alternationMark,
       n.STRINGLITERAL,
@@ -817,22 +758,19 @@ module.exports = {
     [n.ambiguousIdentifier, n.IDENTIFIER],
   ]),
 
-  operators: [
-    ['left', n.IS, n.LIKE, n.GEQ, n.LEQ, n.GT, n.LT, n.NEQ, n.EQ],
-    ['left', n.IMP, n.EQV, n.XOR, n.OR, n.AND],
-    ['left', n.PLUS, n.MINUS, n.AMPERSAND],
-    ['left', n.MULT, n.DIV, n.IDIV, n.MOD],
-    ['left', n.POW],
-    ['right', n.UMINUS, n.UPLUS, n.NOT],
-  ],
+  operators,
 
   lexer: {
     rules: n.makeLexerRules([
       ...generateLexerRulesByKeywords(n.KEYWORDS),
+
+      [n.DOUBLELITERAL, /[0-9]*\.[0-9]+(E[0-9]+)?/],
+
       {
         token: n.SPACE_DOT,
         regexp: /\s+\./,
       },
+
       ...generateLexerRulesByMap({
         ASSIGN: ':=',
         COLON: ':',

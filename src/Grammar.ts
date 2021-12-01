@@ -1519,9 +1519,6 @@ class Grammar {
       const p = productionInstances[index];
       let { symbol, rhs: oRhs } = p;
       const rhs = filterRhs(oRhs);
-      if (symbol === '_1(Group)') {
-        debugger;
-      }
       const firsts = this.findFirst(rhs);
 
       for (const terminal of Object.keys(firsts)) {
@@ -1567,7 +1564,6 @@ class Grammar {
     this.buildNullable();
     this.buildFirsts();
     this.buildFollows();
-    debugger;
     this.buildTable();
   }
 

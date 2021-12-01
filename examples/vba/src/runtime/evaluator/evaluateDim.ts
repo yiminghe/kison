@@ -28,7 +28,7 @@ async function getNumberFromSubscript(
 ) {
   if (node.type === 'Pointer') {
     const vbValue = await node.getValue();
-    if (vbValue.type !== 'Integer') {
+    if (vbValue.type !== 'integer') {
       throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'array dimision');
     }
     return vbValue.value;

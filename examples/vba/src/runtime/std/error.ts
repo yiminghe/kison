@@ -10,7 +10,7 @@ const error: SubBinding = {
   ],
   async value(args, context) {
     const number = await args.getValue('number');
-    const n = number?.type === 'Integer' ? number.value : 1000;
+    const n = number?.type === 'integer' ? number.value : 1000;
     const scope = context.getLastScopeInternal();
     context.throwError(n, undefined, undefined, scope);
   },

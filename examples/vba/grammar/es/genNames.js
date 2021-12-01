@@ -59,6 +59,7 @@ const keywords = [
   'IF',
   'IMPLEMENTS',
   'IN',
+  'ISNOT',
   'IS',
   'INTEGER',
   'LONG',
@@ -125,6 +126,7 @@ const keywords = [
 
 const lexer = [
   'IDENTIFIER',
+  'DOUBLELITERAL',
   'INTEGERLITERAL',
   'STRINGLITERAL',
   'AMPERSAND',
@@ -279,7 +281,6 @@ export const makeLexerRules = (arr) => {
 };
 `);
 
-code.push(`export const UMINUS = "UMINUS";`);
-code.push(`export const UPLUS = "UPLUS";`);
+code.push(`export const PREFIX = "PREFIX";`);
 
 require('fs').writeFileSync(__dirname + '/names.js', code.join('\n'));

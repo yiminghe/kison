@@ -28,7 +28,7 @@ export async function transformToIndexType(context: Context, values: VBAny[]) {
   const ret: IndexType[] = [];
   for (let v_ of values) {
     const v = v_.type === 'Pointer' ? await v_.getValue() : v_;
-    if (v.type === 'Integer' || v.type === 'String') {
+    if (v.type === 'integer' || v.type === 'string') {
       ret.push(v.value);
     } else {
       throwVBRuntimeError(context, 'UNEXPECTED_ERROR', 'index access');

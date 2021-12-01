@@ -9,9 +9,21 @@ import {
   VB_TRUE,
   getExitToken,
   VBValue,
+  VBDouble,
 } from '../types';
 import { getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
+import type { Context } from '../Context';
+
+function createNumber(v: any, context: Context) {
+  if (typeof v !== 'number') {
+    throwVBRuntimeError(context, 'TYPE_MISMATCH');
+  }
+  if ((v | 0) !== v) {
+    return context.createDouble(v);
+  }
+  return context.createInteger(v);
+}
 
 registerEvaluators({
   async evaluateIndexes(node, context) {
@@ -27,6 +39,10 @@ registerEvaluators({
 
   evaluateINTEGERLITERAL(node) {
     return new VBInteger(parseInt(node.text));
+  },
+
+  evaluateDOUBLELITERAL(node) {
+    return new VBDouble(parseFloat(node.text));
   },
 
   evaluateSTRINGLITERAL(node) {
@@ -52,46 +68,126 @@ registerEvaluators({
     throw getExitToken(node);
   },
 
-  async evaluateValueStmt({ children }, context) {
-    if (children.length === 1) {
-      return evaluate(children[0], context);
+  async evaluateAtomExpression({ children }, context) {
+    return evaluate(children[1], context);
+  },
+
+  async evaluatePrefixExpression({ children }, context) {
+    const operator = children[0];
+    const v: VBValue = await getVBValue(await evaluate(children[1], context));
+    switch (operator.token) {
+      case 'NOT': {
+        return context.createBoolean(!v.value);
+      }
+      case 'MINUS': {
+        const n = -(v.value as any);
+        return createNumber(n, context);
+      }
+      case 'PLUS': {
+        const n = +(v.value as any);
+        return createNumber(n, context);
+      }
     }
-    if (children.length === 3) {
-      if (
-        children[0].type === 'token' &&
-        children[0].token === 'LPAREN' &&
-        children[2].type === 'token' &&
-        children[2].token === 'RPAREN'
-      ) {
-        return evaluate(children[1], context);
-      }
-      const operator = children[1];
+  },
 
-      function createNumber(v: any) {
-        if (typeof v !== 'number') {
-          throwVBRuntimeError(context, 'TYPE_MISMATCH');
-        }
-        if ((v | 0) !== v) {
-          return context.createDouble(v);
-        }
-        return context.createInteger(v);
+  async evaluateBinaryExpression({ children }, context) {
+    const operator = children[1];
+    const left: VBValue = await getVBValue(
+      await evaluate(children[0], context),
+    );
+    const right: VBValue = await getVBValue(
+      await evaluate(children[2], context),
+    );
+    switch (operator.token) {
+      case 'PLUS': {
+        // @ts-ignore
+        const v = left.value + right.value;
+        return createNumber(v, context);
       }
-
-      if (operator.type === 'token') {
-        const left: VBValue = await getVBValue(await evaluate(children[0], context));
-        const right: VBValue = await getVBValue(await evaluate(children[2], context));
-        switch (operator.token) {
-          case 'PLUS': {
-            // @ts-ignore
-            const v = left.value + right.value;
-            return createNumber(v);
-          }
-          case 'MULT': {
-            // @ts-ignore
-            const v = left.value * right.value;
-            return createNumber(v);
-          }
-        }
+      case 'MULT': {
+        // @ts-ignore
+        const v = left.value * right.value;
+        return createNumber(v, context);
+      }
+      case 'MINUS': {
+        // @ts-ignore
+        const v = left.value - right.value;
+        return createNumber(v, context);
+      }
+      case 'DIV': {
+        // @ts-ignore
+        const v = left.value / right.value;
+        return createNumber(v, context);
+      }
+      case 'IDIV': {
+        // @ts-ignore
+        const v = (left.value / right.value) | 0;
+        return createNumber(v, context);
+      }
+      case 'MOD': {
+        // @ts-ignore
+        const v = left.value % right.value;
+        return createNumber(v, context);
+      }
+      case 'POW': {
+        // @ts-ignore
+        const v = Math.pow(left.value, right.value);
+        return createNumber(v, context);
+      }
+      case 'AMPERSAND': {
+        // @ts-ignore
+        const v = String(left.value) + String(right.value);
+        return context.createString(v);
+      }
+      case 'OR': {
+        const returnBoolean =
+          left.type === 'boolean' && right.type === 'boolean';
+        const v = (left.value || (0 as any)) | (right.value || (0 as any));
+        return returnBoolean
+          ? context.createBoolean(v > 0)
+          : context.createInteger(v);
+      }
+      case 'AND': {
+        const returnBoolean =
+          left.type === 'boolean' && right.type === 'boolean';
+        const v = (left.value || (0 as any)) & (right.value || (0 as any));
+        return returnBoolean
+          ? context.createBoolean(v > 0)
+          : context.createInteger(v);
+      }
+      case 'XOR': {
+        const returnBoolean =
+          left.type === 'boolean' && right.type === 'boolean';
+        const v = (left.value || (0 as any)) ^ (right.value || (0 as any));
+        return returnBoolean
+          ? context.createBoolean(v > 0)
+          : context.createInteger(v);
+      }
+      case 'GEQ': {
+        // @ts-ignore
+        return context.createBoolean(left.value >= right.value);
+      }
+      case 'GT': {
+        // @ts-ignore
+        return context.createBoolean(left.value > right.value);
+      }
+      case 'LT': {
+        // @ts-ignore
+        return context.createBoolean(left.value < right.value);
+      }
+      case 'LEQ': {
+        // @ts-ignore
+        return context.createBoolean(left.value <= right.value);
+      }
+      case 'EQ':
+      case 'IS': {
+        // @ts-ignore
+        return context.createBoolean(left.value === right.value);
+      }
+      case 'NEQ':
+      case 'ISNOT': {
+        // @ts-ignore
+        return context.createBoolean(left.value !== right.value);
       }
     }
   },

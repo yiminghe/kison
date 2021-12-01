@@ -3,22 +3,22 @@ import type { VBArray } from './VBArray';
 import { Ast_ExitStmt_Node } from '../../parser';
 
 export class VBByte {
-  type: 'Byte' = 'Byte';
+  type: 'byte' = 'byte';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBDouble {
-  type: 'Double' = 'Double';
+  type: 'double' = 'double';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBSingle {
-  type: 'Single' = 'Single';
+  type: 'single' = 'single';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBInteger {
-  type: 'Integer' = 'Integer';
+  type: 'integer' = 'integer';
   readonly value: number = 0;
   constructor(value: number = 0) {
     this.value = value | 0;
@@ -26,39 +26,39 @@ export class VBInteger {
 }
 
 export class VBLongLong {
-  type: 'LongLong' = 'LongLong';
+  type: 'longlong' = 'longlong';
   constructor(public readonly value: number = 0) {}
 }
 
 export const VBLongPtr = VBLongLong;
 
 export class VBLong {
-  type: 'Long' = 'Long';
+  type: 'long' = 'long';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBCurrency {
-  type: 'Currency' = 'Currency';
+  type: 'currency' = 'currency';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBDate {
-  type: 'Date' = 'Date';
+  type: 'date' = 'date';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBDecimal {
-  type: 'Decimal' = 'Decimal';
+  type: 'decimal' = 'decimal';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBString {
-  type: 'String' = 'String';
+  type: 'string' = 'string';
   constructor(public readonly value: string = '') {}
 }
 
 export class VBNull {
-  type: 'Null' = 'Null';
+  type: 'null' = 'null';
   readonly value = null;
 }
 
@@ -68,7 +68,7 @@ export class VBEmpty {
 }
 
 export class VBBoolean {
-  type: 'Boolean' = 'Boolean';
+  type: 'boolean' = 'boolean';
   constructor(public readonly value: boolean = false) {}
 }
 

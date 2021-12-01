@@ -14,4 +14,17 @@ describe('expression', () => {
 
     expect(ret).toEqual([11]);
   });
+
+  xit('logic works', async () => {
+    ret = await run(`
+    sub main
+    Dim x, y As Boolean
+    x = Not 23 > 14
+    y = Not 23 > 67
+    debug.print x,y
+    end sub    
+    `);
+
+    expect(ret).toEqual([0, 1]);
+  });
 });

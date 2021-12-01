@@ -31,6 +31,7 @@ export const errorCodes = {
   EXPECTED_ARRAY_TYPE: (name: string) => `expect array type at ${name}`,
   TYPE_MISMATCH: 'Type Mismatch',
   INVALIDE_REF: 'invalid reference',
+  DIVIDE_BY_ZERO: 'divide by zero',
 };
 
 type ErrorCodesKey = keyof typeof errorCodes;

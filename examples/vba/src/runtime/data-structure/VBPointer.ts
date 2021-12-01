@@ -73,10 +73,18 @@ export class VBValuePointer {
     }
     const obj = this._getObject();
     if (obj.subType === 'Value') {
+      let v: VBValue;
       if (value.type === 'Pointer') {
-        obj._value = await value.getValue();
+        v = await value.getValue();
       } else {
-        obj._value = value;
+        v = value;
+      }
+      const type = obj.asType.type;
+      if (type === 'variant' || type === v.type.toLowerCase()) {
+        obj._value = v;
+      } else {
+        obj._value = v;
+        // throwVBRuntimeError(this.context, 'TYPE_MISMATCH');
       }
     } else {
       await obj.setValue(value);

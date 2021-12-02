@@ -35,4 +35,18 @@ const lbound: SubBinding = {
   },
 };
 
-export default [ubound, lbound];
+const array: SubBinding = {
+  name: 'array',
+  type: 'SubBinding',
+  argumentsInfo: [
+    {
+      name: 'values',
+      paramArray: true,
+    },
+  ],
+  async value(args) {
+    return await args.getValue('values');
+  },
+};
+
+export default [ubound, lbound, array];

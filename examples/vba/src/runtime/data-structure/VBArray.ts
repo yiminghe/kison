@@ -3,15 +3,30 @@ import {
   Subscript,
   VBBasicTypeClasses,
   VBInteger,
+  VBValue,
+  VB_EMPTY,
 } from './VBValue';
 import { VBPointer, VBValuePointer, VBAny } from './VBPointer';
 import type { IndexType } from './runtime';
 import { throwVBRuntimeError } from './VBError';
 import type { Context } from '../Context';
+import { getVBValue } from '../evaluator/common';
 
 type ArrayElement = VBPointer | VBPointer[];
 
-export class VBArray {
+export interface VBIterator {
+  next: () => Promise<{ value: VBValue; done: boolean }>;
+}
+
+export interface VBIteraterable {
+  vbIterator?(): VBIterator;
+}
+
+export function isVBIteraterable(a: any): a is Required<VBIteraterable> {
+  return a && 'vbIterator' in a;
+}
+
+export class VBArray implements VBIteraterable {
   type: 'Array' = 'Array';
   value: ArrayElement[] = [];
   dynamic: boolean = false;
@@ -25,6 +40,25 @@ export class VBArray {
     if (!subscripts.length) {
       this.dynamic = true;
     }
+  }
+
+  vbIterator() {
+    let i = this.jsLBound();
+    let len = this.jsUBound();
+    return {
+      next: async () => {
+        if (i > len) {
+          return {
+            value: VB_EMPTY,
+            done: true,
+          };
+        }
+        return {
+          value: await getVBValue(await this.getElement([i++])),
+          done: false,
+        };
+      },
+    };
   }
 
   jsUBound(i: number = 0) {

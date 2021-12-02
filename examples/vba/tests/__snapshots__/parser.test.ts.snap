@@ -100,8 +100,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 220,
-                  'internalRuleIndex': 333,
+                  'ruleIndex': 222,
+                  'internalRuleIndex': 338,
                   'id': 7
                 },
                 {
@@ -321,18 +321,18 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                           'text': 'x'
                                         }
                                       ],
-                                      'ruleIndex': 220,
-                                      'internalRuleIndex': 333,
+                                      'ruleIndex': 222,
+                                      'internalRuleIndex': 338,
                                       'id': 19
                                     }
                                   ],
-                                  'ruleIndex': 85,
-                                  'internalRuleIndex': 164,
+                                  'ruleIndex': 87,
+                                  'internalRuleIndex': 169,
                                   'id': 18
                                 }
                               ],
-                              'ruleIndex': 80,
-                              'internalRuleIndex': 146,
+                              'ruleIndex': 82,
+                              'internalRuleIndex': 151,
                               'id': 17
                             },
                             {
@@ -378,24 +378,24 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 87,
-                                  'internalRuleIndex': 167,
+                                  'ruleIndex': 89,
+                                  'internalRuleIndex': 172,
                                   'id': 28
                                 }
                               ],
-                              'ruleIndex': 79,
-                              'internalRuleIndex': 334,
+                              'ruleIndex': 81,
+                              'internalRuleIndex': 339,
                               'id': 20,
                               'isWrap': true
                             }
                           ],
-                          'ruleIndex': 37,
-                          'internalRuleIndex': 96,
+                          'ruleIndex': 39,
+                          'internalRuleIndex': 101,
                           'id': 16
                         }
                       ],
                       'ruleIndex': 16,
-                      'internalRuleIndex': 48,
+                      'internalRuleIndex': 50,
                       'id': 15
                     },
                     {
@@ -614,8 +614,8 @@ exports[`vba parser parse correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 220,
-                  'internalRuleIndex': 333,
+                  'ruleIndex': 222,
+                  'internalRuleIndex': 338,
                   'id': 7
                 },
                 {
@@ -721,8 +721,8 @@ exports[`vba parser parse correctly 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 219,
-                                  'internalRuleIndex': 332,
+                                  'ruleIndex': 221,
+                                  'internalRuleIndex': 337,
                                   'id': 14
                                 },
                                 {
@@ -777,39 +777,39 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 87,
-                                              'internalRuleIndex': 167,
+                                              'ruleIndex': 89,
+                                              'internalRuleIndex': 172,
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 79,
-                                          'internalRuleIndex': 334,
+                                          'ruleIndex': 81,
+                                          'internalRuleIndex': 339,
                                           'id': 17,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 46,
-                                      'internalRuleIndex': 114,
+                                      'ruleIndex': 48,
+                                      'internalRuleIndex': 119,
                                       'id': 16
                                     }
                                   ],
-                                  'ruleIndex': 45,
-                                  'internalRuleIndex': 113,
+                                  'ruleIndex': 47,
+                                  'internalRuleIndex': 118,
                                   'id': 15
                                 }
                               ],
-                              'ruleIndex': 44,
-                              'internalRuleIndex': 111,
+                              'ruleIndex': 46,
+                              'internalRuleIndex': 116,
                               'id': 13
                             }
                           ],
-                          'ruleIndex': 42,
-                          'internalRuleIndex': 109,
+                          'ruleIndex': 44,
+                          'internalRuleIndex': 114,
                           'id': 12
                         }
                       ],
                       'ruleIndex': 16,
-                      'internalRuleIndex': 50,
+                      'internalRuleIndex': 52,
                       'id': 11
                     },
                     {

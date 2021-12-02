@@ -14,6 +14,7 @@ import {
 import { getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
 import type { Context } from '../Context';
+import { getIdentifierName } from '../utils';
 
 function createNumber(v: any, context: Context) {
   if (typeof v !== 'number') {
@@ -35,6 +36,12 @@ registerEvaluators({
       }
     }
     return ret;
+  },
+
+  evaluateAmbiguousIdentifier(node, context) {
+    return context
+      .getCurrentScopeInternal()
+      .getVariable(getIdentifierName(node));
   },
 
   evaluateINTEGERLITERAL(node) {

@@ -29,7 +29,6 @@
       [
         "pika-plugin-build-web-babel",
         {
-          "mjs": true,
           "sourcemap":false
         }
       ],

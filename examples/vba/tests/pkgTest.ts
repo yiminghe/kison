@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { Context, SubBinder } from '../pkg/';
+import { Context, SubBinding } from '../pkg/';
 
 const sampleCode = `
 sub main
@@ -9,7 +9,7 @@ MsgBox 2
 end sub
 `.trim();
 
-const MsgBoxSub: SubBinder = {
+const MsgBoxSub: SubBinding = {
   name: 'MsgBox',
   argumentsInfo: [
     {
@@ -23,7 +23,7 @@ const MsgBoxSub: SubBinder = {
 
 async function main() {
   const context = new Context();
-  context.registerSubBinder(MsgBoxSub);
+  context.registerSubBinding(MsgBoxSub);
   await context.load(sampleCode);
   await context.callSub('main');
 }

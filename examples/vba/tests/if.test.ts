@@ -11,6 +11,15 @@ describe('if', () => {
     expect(ret).toEqual([2]);
   });
 
+  it('nested if statement works', async () => {
+    ret = await run(`
+    sub main
+    if 2>1 then if 2>3 then msgbox 1 else msgbox 2
+  end sub
+         `);
+    expect(ret).toEqual([2]);
+  });
+
   it('if block works', async () => {
     ret = await run(`
     sub main

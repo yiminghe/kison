@@ -7,6 +7,7 @@ import { VBPointer, VBAny } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
 import { collectAmbiguousIdentifiers } from '../collect/collectType';
 import { throwVBRuntimeError } from '../data-structure/VBError';
+import { getVBValue, minusValue, plusValue } from './common';
 
 registerEvaluators({
   async evaluateLetStmt(node, context) {
@@ -27,6 +28,14 @@ registerEvaluators({
     const rightValue: VBAny = await evaluate(right, context);
     if (op.token === 'EQ') {
       await leftVariable.setValue(rightValue);
+    } else if (op.token === 'PLUS_EQ') {
+      await leftVariable.setValue(
+        await plusValue(context, leftVariable, rightValue),
+      );
+    } else if (op.token === 'MINUS_EQ') {
+      await leftVariable.setValue(
+        await minusValue(context, leftVariable, rightValue),
+      );
     }
   },
 

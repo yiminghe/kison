@@ -376,6 +376,7 @@
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#block" title="block">block</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#doLoopStmt" title="doLoopStmt">doLoopStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#forEachStmt" title="forEachStmt">forEachStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#forNextStmt" title="forNextStmt">forNextStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#functionStmt" title="functionStmt">functionStmt</xhtml:a></xhtml:li>
@@ -388,6 +389,7 @@
             <xhtml:li><xhtml:a href="#sC_Case" title="sC_Case">sC_Case</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#selectCaseStmt" title="selectCaseStmt">selectCaseStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#subStmt" title="subStmt">subStmt</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#whileWendStmt" title="whileWendStmt">whileWendStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#withStmt" title="withStmt">withStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="moduleDeclarations">moduleDeclarations:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="441" height="97">
@@ -1116,6 +1118,7 @@
       </xhtml:p>
       <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
          <xhtml:ul>
+            <xhtml:li><xhtml:a href="#doLoopStmt" title="doLoopStmt">doLoopStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#forEachStmt" title="forEachStmt">forEachStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#forNextStmt" title="forNextStmt">forNextStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#functionStmt" title="functionStmt">functionStmt</xhtml:a></xhtml:li>
@@ -1127,9 +1130,10 @@
             <xhtml:li><xhtml:a href="#propertySetStmt" title="propertySetStmt">propertySetStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#sC_Case" title="sC_Case">sC_Case</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#subStmt" title="subStmt">subStmt</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#whileWendStmt" title="whileWendStmt">whileWendStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#withStmt" title="withStmt">withStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
-      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="blockStmt">blockStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="269" height="697">
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="blockStmt">blockStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="269" height="785">
          <defs>
             <style type="text/css">
     @namespace "http://www.w3.org/2000/svg";
@@ -1178,37 +1182,43 @@
             <text class="nonterminal" x="59" y="197">forNextStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#forEachStmt" xlink:title="forEachStmt">
             <rect x="51" y="223" width="96" height="32"></rect>
             <rect x="49" y="221" width="96" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="241">forEachStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#onErrorStmt" xlink:title="onErrorStmt">
+            <text class="nonterminal" x="59" y="241">forEachStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#doLoopStmt" xlink:title="doLoopStmt">
             <rect x="51" y="267" width="96" height="32"></rect>
             <rect x="49" y="265" width="96" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="285">onErrorStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#withStmt" xlink:title="withStmt">
-            <rect x="51" y="311" width="76" height="32"></rect>
-            <rect x="49" y="309" width="76" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="329">withStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#eraseStmt" xlink:title="eraseStmt">
-            <rect x="51" y="355" width="86" height="32"></rect>
-            <rect x="49" y="353" width="86" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="373">eraseStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#exitStmt" xlink:title="exitStmt">
-            <rect x="51" y="399" width="72" height="32"></rect>
-            <rect x="49" y="397" width="72" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="417">exitStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#explicitCallStmt" xlink:title="explicitCallStmt">
-            <rect x="51" y="443" width="118" height="32"></rect>
-            <rect x="49" y="441" width="118" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="461">explicitCallStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#setStmt" xlink:title="setStmt">
-            <rect x="51" y="487" width="70" height="32"></rect>
-            <rect x="49" y="485" width="70" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="505">setStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#redimStmt" xlink:title="redimStmt">
-            <rect x="51" y="531" width="86" height="32"></rect>
-            <rect x="49" y="529" width="86" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="549">redimStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#letStmt" xlink:title="letStmt">
-            <rect x="51" y="575" width="66" height="32"></rect>
-            <rect x="49" y="573" width="66" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="593">letStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#variableStmt" xlink:title="variableStmt">
-            <rect x="51" y="619" width="100" height="32"></rect>
-            <rect x="49" y="617" width="100" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="637">variableStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#implicitCallStmt_InBlock" xlink:title="implicitCallStmt_InBlock">
-            <rect x="51" y="663" width="170" height="32"></rect>
-            <rect x="49" y="661" width="170" height="32" class="nonterminal"></rect>
-            <text class="nonterminal" x="59" y="681">implicitCallStmt_InBlock</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m76 0 h10 m0 0 h94 m-210 0 h20 m190 0 h20 m-230 0 q10 0 10 10 m210 0 q0 -10 10 -10 m-220 10 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m80 0 h10 m0 0 h90 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m114 0 h10 m0 0 h56 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m118 0 h10 m0 0 h52 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m76 0 h10 m0 0 h94 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m86 0 h10 m0 0 h84 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m72 0 h10 m0 0 h98 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m118 0 h10 m0 0 h52 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m70 0 h10 m0 0 h100 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m86 0 h10 m0 0 h84 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m66 0 h10 m0 0 h104 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m100 0 h10 m0 0 h70 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m170 0 h10 m23 -660 h-3"></svg:path>
+            <text class="nonterminal" x="59" y="285">doLoopStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#whileWendStmt" xlink:title="whileWendStmt">
+            <rect x="51" y="311" width="118" height="32"></rect>
+            <rect x="49" y="309" width="118" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="329">whileWendStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#onErrorStmt" xlink:title="onErrorStmt">
+            <rect x="51" y="355" width="96" height="32"></rect>
+            <rect x="49" y="353" width="96" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="373">onErrorStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#withStmt" xlink:title="withStmt">
+            <rect x="51" y="399" width="76" height="32"></rect>
+            <rect x="49" y="397" width="76" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="417">withStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#eraseStmt" xlink:title="eraseStmt">
+            <rect x="51" y="443" width="86" height="32"></rect>
+            <rect x="49" y="441" width="86" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="461">eraseStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#exitStmt" xlink:title="exitStmt">
+            <rect x="51" y="487" width="72" height="32"></rect>
+            <rect x="49" y="485" width="72" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="505">exitStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#explicitCallStmt" xlink:title="explicitCallStmt">
+            <rect x="51" y="531" width="118" height="32"></rect>
+            <rect x="49" y="529" width="118" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="549">explicitCallStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#setStmt" xlink:title="setStmt">
+            <rect x="51" y="575" width="70" height="32"></rect>
+            <rect x="49" y="573" width="70" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="593">setStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#redimStmt" xlink:title="redimStmt">
+            <rect x="51" y="619" width="86" height="32"></rect>
+            <rect x="49" y="617" width="86" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="637">redimStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#letStmt" xlink:title="letStmt">
+            <rect x="51" y="663" width="66" height="32"></rect>
+            <rect x="49" y="661" width="66" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="681">letStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#variableStmt" xlink:title="variableStmt">
+            <rect x="51" y="707" width="100" height="32"></rect>
+            <rect x="49" y="705" width="100" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="725">variableStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#implicitCallStmt_InBlock" xlink:title="implicitCallStmt_InBlock">
+            <rect x="51" y="751" width="170" height="32"></rect>
+            <rect x="49" y="749" width="170" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="59" y="769">implicitCallStmt_InBlock</text></a><svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m20 0 h10 m76 0 h10 m0 0 h94 m-210 0 h20 m190 0 h20 m-230 0 q10 0 10 10 m210 0 q0 -10 10 -10 m-220 10 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m80 0 h10 m0 0 h90 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m114 0 h10 m0 0 h56 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m118 0 h10 m0 0 h52 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m118 0 h10 m0 0 h52 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m96 0 h10 m0 0 h74 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m76 0 h10 m0 0 h94 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m86 0 h10 m0 0 h84 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m72 0 h10 m0 0 h98 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m118 0 h10 m0 0 h52 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m70 0 h10 m0 0 h100 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m86 0 h10 m0 0 h84 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m66 0 h10 m0 0 h104 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m100 0 h10 m0 0 h70 m-200 -10 v20 m210 0 v-20 m-210 20 v24 m210 0 v-24 m-210 24 q0 10 10 10 m190 0 q10 0 10 -10 m-200 10 h10 m170 0 h10 m23 -748 h-3"></svg:path>
          <polygon points="259 17 267 13 267 21"></polygon>
          <polygon points="259 17 251 13 251 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
          <xhtml:div class="ebnf"><xhtml:code>
@@ -1219,6 +1229,8 @@
                <div>           | <a href="#selectCaseStmt" title="selectCaseStmt">selectCaseStmt</a></div>
                <div>           | <a href="#forNextStmt" title="forNextStmt">forNextStmt</a></div>
                <div>           | <a href="#forEachStmt" title="forEachStmt">forEachStmt</a></div>
+               <div>           | <a href="#doLoopStmt" title="doLoopStmt">doLoopStmt</a></div>
+               <div>           | <a href="#whileWendStmt" title="whileWendStmt">whileWendStmt</a></div>
                <div>           | <a href="#onErrorStmt" title="onErrorStmt">onErrorStmt</a></div>
                <div>           | <a href="#withStmt" title="withStmt">withStmt</a></div>
                <div>           | <a href="#eraseStmt" title="eraseStmt">eraseStmt</a></div>
@@ -1234,6 +1246,142 @@
          <xhtml:ul>
             <xhtml:li><xhtml:a href="#block" title="block">block</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#ifThenElseStmt" title="ifThenElseStmt">ifThenElseStmt</xhtml:a></xhtml:li>
+         </xhtml:ul>
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="whileWendStmt">whileWendStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="527" height="37">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 17 1 13 1 21"></polygon>
+         <polygon points="17 17 9 13 9 21"></polygon>
+         <rect x="31" y="3" width="66" height="32" rx="10"></rect>
+         <rect x="29" y="1" width="66" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="39" y="21">WHILE</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#valueStmt" xlink:title="valueStmt">
+            <rect x="117" y="3" width="84" height="32"></rect>
+            <rect x="115" y="1" width="84" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="125" y="21">valueStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#endOfStatement" xlink:title="endOfStatement">
+            <rect x="221" y="3" width="124" height="32"></rect>
+            <rect x="219" y="1" width="124" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="229" y="21">endOfStatement</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#block" xlink:title="block">
+            <rect x="365" y="3" width="52" height="32"></rect>
+            <rect x="363" y="1" width="52" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="373" y="21">block</text></a><rect x="437" y="3" width="62" height="32" rx="10"></rect>
+         <rect x="435" y="1" width="62" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="445" y="21">WEND</text>
+         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m66 0 h10 m0 0 h10 m84 0 h10 m0 0 h10 m124 0 h10 m0 0 h10 m52 0 h10 m0 0 h10 m62 0 h10 m3 0 h-3"></svg:path>
+         <polygon points="517 17 525 13 525 21"></polygon>
+         <polygon points="517 17 509 13 509 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <xhtml:div class="ebnf"><xhtml:code>
+               <div><a href="#whileWendStmt" title="whileWendStmt">whileWendStmt</a></div>
+               <div>         ::= 'WHILE' <a href="#valueStmt" title="valueStmt">valueStmt</a> <a href="#endOfStatement" title="endOfStatement">endOfStatement</a> <a href="#block" title="block">block</a> 'WEND'</div></xhtml:code></xhtml:div>
+      </xhtml:p>
+      <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <xhtml:ul>
+            <xhtml:li><xhtml:a href="#blockStmt" title="blockStmt">blockStmt</xhtml:a></xhtml:li>
+         </xhtml:ul>
+      </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="doLoopStmt">doLoopStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="703" height="201">
+         <defs>
+            <style type="text/css">
+    @namespace "http://www.w3.org/2000/svg";
+    .line                 {fill: none; stroke: #332900; stroke-width: 1;}
+    .bold-line            {stroke: #141000; shape-rendering: crispEdges; stroke-width: 2;}
+    .thin-line            {stroke: #1F1800; shape-rendering: crispEdges}
+    .filled               {fill: #332900; stroke: none;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    text.regexp           {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1F1800;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #332900; stroke: #332900;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+    rect.text             {fill: none; stroke: none;}
+    polygon.regexp        {fill: #FFF4C7; stroke: #332900; stroke-width: 1;}
+  </style>
+         </defs>
+         <polygon points="9 17 1 13 1 21"></polygon>
+         <polygon points="17 17 9 13 9 21"></polygon>
+         <rect x="31" y="3" width="40" height="32" rx="10"></rect>
+         <rect x="29" y="1" width="40" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="39" y="21">DO</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#endOfStatement" xlink:title="endOfStatement">
+            <rect x="111" y="3" width="124" height="32"></rect>
+            <rect x="109" y="1" width="124" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="119" y="21">endOfStatement</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#block" xlink:title="block">
+            <rect x="255" y="3" width="52" height="32"></rect>
+            <rect x="253" y="1" width="52" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="263" y="21">block</text></a><rect x="327" y="3" width="58" height="32" rx="10"></rect>
+         <rect x="325" y="1" width="58" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="335" y="21">LOOP</text>
+         <rect x="445" y="35" width="66" height="32" rx="10"></rect>
+         <rect x="443" y="33" width="66" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="453" y="53">WHILE</text>
+         <rect x="445" y="79" width="62" height="32" rx="10"></rect>
+         <rect x="443" y="77" width="62" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="453" y="97">UNTIL</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#valueStmt" xlink:title="valueStmt">
+            <rect x="551" y="35" width="84" height="32"></rect>
+            <rect x="549" y="33" width="84" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="559" y="53">valueStmt</text></a><rect x="131" y="123" width="66" height="32" rx="10"></rect>
+         <rect x="129" y="121" width="66" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="139" y="141">WHILE</text>
+         <rect x="131" y="167" width="62" height="32" rx="10"></rect>
+         <rect x="129" y="165" width="62" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="139" y="185">UNTIL</text><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#valueStmt" xlink:title="valueStmt">
+            <rect x="237" y="123" width="84" height="32"></rect>
+            <rect x="235" y="121" width="84" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="245" y="141">valueStmt</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#endOfStatement" xlink:title="endOfStatement">
+            <rect x="341" y="123" width="124" height="32"></rect>
+            <rect x="339" y="121" width="124" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="349" y="141">endOfStatement</text></a><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#block" xlink:title="block">
+            <rect x="485" y="123" width="52" height="32"></rect>
+            <rect x="483" y="121" width="52" height="32" class="nonterminal"></rect>
+            <text class="nonterminal" x="493" y="141">block</text></a><rect x="557" y="123" width="58" height="32" rx="10"></rect>
+         <rect x="555" y="121" width="58" height="32" class="terminal" rx="10"></rect>
+         <text class="terminal" x="565" y="141">LOOP</text>
+         <svg:path xmlns:svg="http://www.w3.org/2000/svg" class="line" d="m17 17 h2 m0 0 h10 m40 0 h10 m20 0 h10 m124 0 h10 m0 0 h10 m52 0 h10 m0 0 h10 m58 0 h10 m20 0 h10 m0 0 h220 m-250 0 h20 m230 0 h20 m-270 0 q10 0 10 10 m250 0 q0 -10 10 -10 m-260 10 v12 m250 0 v-12 m-250 12 q0 10 10 10 m230 0 q10 0 10 -10 m-220 10 h10 m66 0 h10 m-106 0 h20 m86 0 h20 m-126 0 q10 0 10 10 m106 0 q0 -10 10 -10 m-116 10 v24 m106 0 v-24 m-106 24 q0 10 10 10 m86 0 q10 0 10 -10 m-96 10 h10 m62 0 h10 m0 0 h4 m20 -44 h10 m84 0 h10 m-564 -32 h20 m564 0 h20 m-604 0 q10 0 10 10 m584 0 q0 -10 10 -10 m-594 10 v100 m584 0 v-100 m-584 100 q0 10 10 10 m564 0 q10 0 10 -10 m-554 10 h10 m66 0 h10 m-106 0 h20 m86 0 h20 m-126 0 q10 0 10 10 m106 0 q0 -10 10 -10 m-116 10 v24 m106 0 v-24 m-106 24 q0 10 10 10 m86 0 q10 0 10 -10 m-96 10 h10 m62 0 h10 m0 0 h4 m20 -44 h10 m84 0 h10 m0 0 h10 m124 0 h10 m0 0 h10 m52 0 h10 m0 0 h10 m58 0 h10 m0 0 h40 m23 -120 h-3"></svg:path>
+         <polygon points="693 17 701 13 701 21"></polygon>
+         <polygon points="693 17 685 13 685 21"></polygon></svg><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">
+         <xhtml:div class="ebnf"><xhtml:code>
+               <div><a href="#doLoopStmt" title="doLoopStmt">doLoopStmt</a></div>
+               <div>         ::= 'DO' ( <a href="#endOfStatement" title="endOfStatement">endOfStatement</a> <a href="#block" title="block">block</a> 'LOOP' ( ( 'WHILE' | 'UNTIL' ) <a href="#valueStmt" title="valueStmt">valueStmt</a> )? | ( 'WHILE' | 'UNTIL' ) <a href="#valueStmt" title="valueStmt">valueStmt</a> <a href="#endOfStatement" title="endOfStatement">endOfStatement</a> <a href="#block" title="block">block</a> 'LOOP' )</div></xhtml:code></xhtml:div>
+      </xhtml:p>
+      <xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml">referenced by:
+         <xhtml:ul>
+            <xhtml:li><xhtml:a href="#blockStmt" title="blockStmt">blockStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="forNextStmt">forNextStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="893" height="167">
          <defs>
@@ -3424,6 +3572,7 @@
             <xhtml:li><xhtml:a href="#argCall" title="argCall">argCall</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#argDefaultValue" title="argDefaultValue">argDefaultValue</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#baseType" title="baseType">baseType</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#doLoopStmt" title="doLoopStmt">doLoopStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#eraseStmt" title="eraseStmt">eraseStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#forEachStmt" title="forEachStmt">forEachStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#forNextStmt" title="forNextStmt">forNextStmt</xhtml:a></xhtml:li>
@@ -3437,6 +3586,7 @@
             <xhtml:li><xhtml:a href="#setStmt" title="setStmt">setStmt</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#subscript_" title="subscript_">subscript_</xhtml:a></xhtml:li>
             <xhtml:li><xhtml:a href="#valueStmt" title="valueStmt">valueStmt</xhtml:a></xhtml:li>
+            <xhtml:li><xhtml:a href="#whileWendStmt" title="whileWendStmt">whileWendStmt</xhtml:a></xhtml:li>
          </xhtml:ul>
       </xhtml:p><xhtml:br xmlns:xhtml="http://www.w3.org/1999/xhtml" /><xhtml:p xmlns:xhtml="http://www.w3.org/1999/xhtml" style="font-size: 14px; font-weight:bold"><xhtml:a name="implicitCallStmt_InStmt">implicitCallStmt_InStmt:</xhtml:a></xhtml:p><svg xmlns="http://www.w3.org/2000/svg" width="317" height="125">
          <defs>

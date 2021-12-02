@@ -4,6 +4,14 @@ import { isVBIteraterable, VBInteger, VBPointer, ExitToken } from '../types';
 
 const one = new VBInteger(1);
 
+function checkBreak(e: unknown) {
+  const exitNode = e as ExitToken;
+  if (exitNode && exitNode.type === 'Exit' && exitNode.subType === 'EXIT_FOR') {
+  } else {
+    throw e;
+  }
+}
+
 registerEvaluators({
   async evaluateForNextStmt({ children }, context) {
     const id: VBPointer = await evaluate(children[1], context);
@@ -27,16 +35,8 @@ registerEvaluators({
         try {
           await evaluate(block, context);
         } catch (e) {
-          const exitNode = e as ExitToken;
-          if (
-            exitNode &&
-            exitNode.type === 'Exit' &&
-            exitNode.subType === 'EXIT_FOR'
-          ) {
-            break;
-          } else {
-            throw e;
-          }
+          checkBreak(e);
+          break;
         }
       }
       from.value += step.value;
@@ -68,16 +68,8 @@ registerEvaluators({
           try {
             await evaluate(block, context);
           } catch (e) {
-            const exitNode = e as ExitToken;
-            if (
-              exitNode &&
-              exitNode.type === 'Exit' &&
-              exitNode.subType === 'EXIT_FOR'
-            ) {
-              break;
-            } else {
-              throw e;
-            }
+            checkBreak(e);
+            break;
           }
         }
       } while (ret && !ret.done);

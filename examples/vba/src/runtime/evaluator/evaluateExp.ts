@@ -11,20 +11,10 @@ import {
   VBValue,
   VBDouble,
 } from '../types';
-import { getVBValue } from './common';
+import { createNumber, getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
 import type { Context } from '../Context';
 import { getIdentifierName } from '../utils';
-
-function createNumber(v: any, context: Context) {
-  if (typeof v !== 'number') {
-    throwVBRuntimeError(context, 'TYPE_MISMATCH');
-  }
-  if ((v | 0) !== v) {
-    return context.createDouble(v);
-  }
-  return context.createInteger(v);
-}
 
 registerEvaluators({
   async evaluateIndexes(node, context) {
@@ -99,9 +89,8 @@ registerEvaluators({
 
   async evaluateBinaryExpression({ children }, context) {
     const operator = children[1];
-    const left: VBValue = await getVBValue(
-      await evaluate(children[0], context),
-    );
+    const leftV = await evaluate(children[0], context);
+    const left: VBValue = await getVBValue(leftV);
     const right: VBValue = await getVBValue(
       await evaluate(children[2], context),
     );

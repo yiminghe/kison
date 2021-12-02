@@ -168,6 +168,10 @@ export const VB_EXIT_PROPERTY: ExitToken = {
   type: 'Exit',
   subType: 'EXIT_PROPERTY',
 };
+export const VB_EXIT_DO: ExitToken = {
+  type: 'Exit',
+  subType: 'EXIT_DO',
+};
 export const VB_EXIT_END: ExitToken = {
   type: 'Exit',
   subType: 'END',
@@ -193,6 +197,9 @@ export function getExitToken(node: Ast_ExitStmt_Node) {
   }
   if (c.token === 'EXIT_FOR') {
     return VB_EXIT_FOR;
+  }
+  if (c.token === 'EXIT_DO') {
+    return VB_EXIT_DO;
   }
   throw new Error('unexpected exit!');
 }

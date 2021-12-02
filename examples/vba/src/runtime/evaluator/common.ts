@@ -150,3 +150,29 @@ export async function getVBValue(
   }
   return v;
 }
+
+export function createNumber(v: any, context: Context) {
+  if (typeof v !== 'number') {
+    throwVBRuntimeError(context, 'TYPE_MISMATCH');
+  }
+  if ((v | 0) !== v) {
+    return context.createDouble(v);
+  }
+  return context.createInteger(v);
+}
+
+export async function plusValue(context: Context, left: VBAny, right: VBAny) {
+  const leftV = await getVBValue(left);
+  const rightV = await getVBValue(right);
+  // @ts-ignore
+  const v = leftV.value + rightV.value;
+  return createNumber(v, context);
+}
+
+export async function minusValue(context: Context, left: VBAny, right: VBAny) {
+  const leftV = await getVBValue(left);
+  const rightV = await getVBValue(right);
+  // @ts-ignore
+  const v = leftV.value - rightV.value;
+  return createNumber(v, context);
+}

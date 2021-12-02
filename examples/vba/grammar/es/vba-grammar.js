@@ -248,6 +248,10 @@ module.exports = {
       n.alternationMark,
       n.forEachStmt,
       n.alternationMark,
+      n.doLoopStmt,
+      n.alternationMark,
+      n.whileWendStmt,
+      n.alternationMark,
       n.onErrorStmt,
       n.alternationMark,
       n.withStmt,
@@ -267,6 +271,38 @@ module.exports = {
       n.variableStmt,
       n.alternationMark,
       n.implicitCallStmt_InBlock,
+    ],
+
+    [n.whileWendStmt, n.WHILE, n.valueStmt, n.endOfStatement, n.block, n.WEND],
+
+    [n.doLoopStmt, n.DO, n.endOfStatement, n.block, n.LOOP],
+
+    [
+      n.doLoopStmt,
+      n.DO,
+      n.groupStartMark,
+      n.WHILE,
+      n.alternationMark,
+      n.UNTIL,
+      n.groupEndMark,
+      n.valueStmt,
+      n.endOfStatement,
+      n.block,
+      n.LOOP,
+    ],
+
+    [
+      n.doLoopStmt,
+      n.DO,
+      n.endOfStatement,
+      n.block,
+      n.LOOP,
+      n.groupStartMark,
+      n.WHILE,
+      n.alternationMark,
+      n.UNTIL,
+      n.groupEndMark,
+      n.valueStmt,
     ],
 
     [
@@ -916,21 +952,26 @@ module.exports = {
 
       ...generateLexerRulesByMap({
         ASSIGN: ':=',
+        NEQ: '<>',
+        LEQ: '<=',
+        GEQ: '>=',
+        MINUS_EQ: '-=',
+        PLUS_EQ: '+=',
         COLON: ':',
         AMPERSAND: '&',
         DIV: '/',
         IDIV: '\\',
         EQ: '=',
-        GEQ: '>=',
+
         GT: '>',
-        LEQ: '<=',
+
         LPAREN: '(',
+
         LT: '<',
-        MINUS_EQ: '-=',
+
         MINUS: '-',
         MULT: '*',
-        NEQ: '<>',
-        PLUS_EQ: '+=',
+
         PLUS: '+',
         POW: '^',
         RPAREN: ')',

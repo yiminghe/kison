@@ -227,6 +227,16 @@ const symbols = [
   'ifElseIfBlockStmt',
   'ifElseBlockStmt',
   'certainIdentifier',
+  'selectCaseStmt',
+  'sC_Case',
+  'sC_Cond',
+  'comparisonOperator',
+  'sC_Selection',
+  'sC_Selection',
+  'sC_Selection',
+  'sC_Selection',
+  'sC_Selection',
+  'sC_Selection',
   '',
 ];
 

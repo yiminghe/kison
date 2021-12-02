@@ -91,7 +91,10 @@ export interface VBVariableInfo {
   value: () => Promise<VBPointer> | VBPointer;
 }
 
-export type EvaluateParams = { parentMember?: VBAny | undefined };
+export type EvaluateParams = {
+  selectValue?: VBValue | undefined;
+  parentMember?: VBAny | undefined;
+};
 
 export type Evaluators = AstVisitors<'evaluate', Context, EvaluateParams>;
 

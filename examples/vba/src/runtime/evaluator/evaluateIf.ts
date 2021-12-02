@@ -1,7 +1,7 @@
 import type { Context } from '../Context';
 import type { AstNode, AstSymbolNode } from '../../parser';
 import { getVBValue } from './common';
-import { evaluate, registerEvaluators } from './evaluators';
+import { evaluate, registerEvaluators, evaluators } from './evaluators';
 
 function findConditonAndBlock(children: AstNode[]) {
   let block: AstSymbolNode | undefined = undefined;
@@ -59,5 +59,71 @@ registerEvaluators({
         }
       }
     }
+  },
+
+  async evaluateSelectCaseStmt({ children }, context) {
+    const selectValue = await getVBValue(await evaluate(children[2], context));
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'sC_Case') {
+        const caseValue = await getVBValue(
+          await evaluate(c, context, {
+            selectValue,
+          }),
+        );
+        if (caseValue && caseValue.value) {
+          return;
+        }
+      }
+    }
+  },
+
+  async evaluateSC_Case({ children }, context, params) {
+    const condValue = await getVBValue(
+      await evaluate(children[1], context, params),
+    );
+    if (condValue && condValue.value && children[3]) {
+      await evaluate(children[3], context);
+    }
+    return condValue;
+  },
+
+  evaluateCaseCondElse(_, context) {
+    return context.createBoolean(true);
+  },
+
+  async evaluateCaseCondSelection({ children }, context, params) {
+    for (const c of children) {
+      if (c.type === 'symbol' && c.symbol === 'sC_Selection') {
+        const cond = await getVBValue(await evaluate(c, context, params));
+        if (cond && cond.value) {
+          return cond;
+        }
+      }
+    }
+  },
+
+  async evaluateCaseCondIs({ children }, context, params) {
+    const c = [params?.selectValue, children[1].children[0], children[2]];
+    return evaluators.evaluateBinaryExpression!(
+      { children: c } as any,
+      context,
+    );
+  },
+
+  async evaluateCaseCondTo({ children }, context, params) {
+    const v: any = params?.selectValue?.value;
+    const c1: any = (await getVBValue(await evaluate(children[0], context)))
+      .value;
+    const c2: any = (await getVBValue(await evaluate(children[2], context)))
+      .value;
+    return context.createBoolean(v >= c1 && v <= c2);
+  },
+
+  async evaluateCaseCondValue({ children }, context, params) {
+    const v = params?.selectValue;
+    const c1 = await getVBValue(await evaluate(children[0], context));
+    return context.createBoolean(
+      !!v && v.type === c1.type && v.value === c1.value,
+    );
   },
 });

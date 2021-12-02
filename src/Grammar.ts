@@ -1084,6 +1084,9 @@ class Grammar {
       return p.precedence;
     }
     const rhs = filterRhs(p.rhs);
+    if (rhs.indexOf(p.symbol) === -1) {
+      return null;
+    }
     for (let i = rhs.length - 1; i >= 0; i--) {
       const rh = rhs[i];
       if (this.lexer.hasToken(rh)) {

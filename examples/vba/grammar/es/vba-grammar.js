@@ -752,7 +752,6 @@ module.exports = {
     ...n.KEYWORDS.map((keyword) => ({
       symbol: n.ambiguousIdentifier,
       rhs: [keyword],
-      precedence: null,
     })),
 
     [n.ambiguousIdentifier, n.IDENTIFIER],

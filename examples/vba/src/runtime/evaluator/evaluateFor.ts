@@ -1,6 +1,6 @@
 import { getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
-import { isVBIteraterable, VBInteger, VBPointer } from '../types';
+import { isVBIteraterable, VBInteger, VBPointer, ExitToken } from '../types';
 
 const one = new VBInteger(1);
 
@@ -24,7 +24,20 @@ registerEvaluators({
 
     while (from.value <= to.value) {
       if (block) {
-        await evaluate(block, context);
+        try {
+          await evaluate(block, context);
+        } catch (e) {
+          const exitNode = e as ExitToken;
+          if (
+            exitNode &&
+            exitNode.type === 'Exit' &&
+            exitNode.subType === 'EXIT_FOR'
+          ) {
+            break;
+          } else {
+            throw e;
+          }
+        }
       }
       from.value += step.value;
       await id.setValue(from);
@@ -52,7 +65,20 @@ registerEvaluators({
         ret = await iterator.next();
         await id.setValue(ret.value);
         if (!ret.done && block) {
-          await evaluate(block, context);
+          try {
+            await evaluate(block, context);
+          } catch (e) {
+            const exitNode = e as ExitToken;
+            if (
+              exitNode &&
+              exitNode.type === 'Exit' &&
+              exitNode.subType === 'EXIT_FOR'
+            ) {
+              break;
+            } else {
+              throw e;
+            }
+          }
         }
       } while (ret && !ret.done);
     }

@@ -14,6 +14,19 @@ end sub
     expect(ret).toEqual([0, 1, 2]);
   });
 
+  it('exit for works', async () => {
+    ret = await run(`
+    sub main
+dim i
+for i=0 to 2
+debug.print i
+if i=1 then exit for
+next
+end sub
+    `);
+    expect(ret).toEqual([0, 1]);
+  });
+
   it('for step works', async () => {
     ret = await run(`
     sub main
@@ -38,5 +51,20 @@ end sub
     End Sub
     `);
     expect(ret).toEqual([0, 1, 2]);
+  });
+
+  it('for each exit works', async () => {
+    ret = await run(`
+    Sub main()
+    Dim a As Variant
+    Dim i
+    a = Array(0, 1, 2)
+    For Each i In a
+      Debug.Print i
+      if i=1 then exit for
+    Next
+    End Sub
+    `);
+    expect(ret).toEqual([0, 1]);
   });
 });

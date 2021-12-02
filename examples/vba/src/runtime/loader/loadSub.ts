@@ -5,7 +5,10 @@ import type {
   Ast_PropertySetStmt_Node,
   Ast_PropertyGetStmt_Node,
 } from '../../parser';
-import { collect_asTypeClause } from '../collect/collectType';
+import {
+  collect_asTypeClause,
+  isIdentifierSymbol,
+} from '../collect/collectType';
 import { Context } from '../Context';
 import { throwVBRuntimeError } from '../data-structure/VBError';
 import { evaluate } from '../evaluator/index';
@@ -31,7 +34,7 @@ async function loadCall(
   context: Context,
 ) {
   for (const c of node.children) {
-    if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+    if (isIdentifierSymbol(c)) {
       const vbSub = new VBSub(node, context);
       await vbSub.init();
       let name = c.children[0].text;
@@ -111,7 +114,7 @@ registerLoaders({
         }
       } else if (c.type === 'symbol') {
         const { symbol } = c;
-        if (symbol === 'ambiguousIdentifier') {
+        if (isIdentifierSymbol(c)) {
           argInfo.name = c.children[0].text;
         } else if (symbol === 'asTypeClause') {
           argInfo.asType = collect_asTypeClause(c, context);

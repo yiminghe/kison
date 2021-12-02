@@ -222,9 +222,11 @@ const symbols = [
   'goToStmt',
   'onErrorStmt',
   'withStmt',
-  'implicitCallStmt_InBlock',
-  'implicitCallStmt_InBlock',
-  'implicitCallStmt_InBlock',
+  'ifThenElseStmt',
+  'ifBlockStmt',
+  'ifElseIfBlockStmt',
+  'ifElseBlockStmt',
+  'certainIdentifier',
   '',
 ];
 

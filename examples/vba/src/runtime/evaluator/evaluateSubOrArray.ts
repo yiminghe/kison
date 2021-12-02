@@ -4,7 +4,10 @@ import type {
   Ast_ECS_MemberProcedureCall_Node,
   Ast_ICS_B_MemberProcedureCall_Node,
 } from '../../parser';
-import { collectAmbiguousIdentifier } from '../collect/collectType';
+import {
+  collectAmbiguousIdentifier,
+  isIdentifierSymbol,
+} from '../collect/collectType';
 import type { Context } from '../Context';
 import {
   VBAny,
@@ -34,7 +37,7 @@ async function callSub(
 ) {
   const { children } = node;
   const token = children[tokenIndex];
-  if (token.type !== 'symbol' || token.symbol !== 'ambiguousIdentifier') {
+  if (!isIdentifierSymbol(token)) {
     throwVBRuntimeError(context, 'SYNTAX_ERROR');
   }
   const subName = token.children[0].text;
@@ -55,7 +58,7 @@ async function callMemberSub(
   for (const c of children) {
     if (c.type === 'symbol' && c.symbol === 'implicitCallStmt_InStmt') {
       parent = await evaluate(c, context);
-    } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+    } else if (isIdentifierSymbol(c)) {
       subName = c.children[0].text;
     }
   }
@@ -156,10 +159,7 @@ registerEvaluators({
     if (v2 && v2.type === 'token' && v2.token === 'ASSIGN') {
       const value = await evaluate(values[2]!, context);
       const nameNode = values[0];
-      if (
-        nameNode.type !== 'symbol' ||
-        nameNode.symbol !== 'ambiguousIdentifier'
-      ) {
+      if (!isIdentifierSymbol(nameNode)) {
         throwVBRuntimeError(context, 'SYNTAX_ERROR');
       }
       const name = nameNode.children[0].text;

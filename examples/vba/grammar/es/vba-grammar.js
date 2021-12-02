@@ -240,6 +240,8 @@ module.exports = {
       n.alternationMark,
       n.goToStmt,
       n.alternationMark,
+      n.ifThenElseStmt,
+      n.alternationMark,
       n.onErrorStmt,
       n.alternationMark,
       n.withStmt,
@@ -260,6 +262,49 @@ module.exports = {
       n.alternationMark,
       n.implicitCallStmt_InBlock,
     ],
+
+    {
+      symbol: n.ifThenElseStmt,
+      rhs: [
+        n.IF,
+        n.valueStmt,
+        n.THEN,
+        n.blockStmt,
+        n.groupStartMark,
+        n.ELSE,
+        n.blockStmt,
+        n.groupEndOptionalMark,
+      ],
+      label: 'InlineIfThenElse',
+    },
+    {
+      symbol: n.ifThenElseStmt,
+      rhs: [
+        n.ifBlockStmt,
+        n.ifElseIfBlockStmtZeroOrMore,
+        n.ifElseBlockStmtOptional,
+        n.END_IF,
+      ],
+      label: 'BlockIfThenElse',
+    },
+    [
+      n.ifBlockStmt,
+      n.IF,
+      n.valueStmt,
+      n.THEN,
+      n.endOfStatement,
+      n.blockOptional,
+    ],
+    [
+      n.ifElseIfBlockStmt,
+      n.ELSEIF,
+      n.valueStmt,
+      n.THEN,
+      n.endOfStatement,
+      n.blockOptional,
+    ],
+
+    [n.ifElseBlockStmt, n.ELSE, n.endOfStatement, n.blockOptional],
 
     [
       n.onErrorStmt,
@@ -407,7 +452,7 @@ module.exports = {
     ],
     [
       n.iCS_B_ProcedureCall,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.argsCallOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -753,7 +798,7 @@ module.exports = {
       symbol: n.ambiguousIdentifier,
       rhs: [keyword],
     })),
-
+    [n.certainIdentifier, n.IDENTIFIER],
     [n.ambiguousIdentifier, n.IDENTIFIER],
   ]),
 

@@ -14,6 +14,7 @@ import type { VBFile, ArgInfo, Visibility } from './runtime';
 import { evaluateNodes } from '../evaluator/evaluators';
 import { getIdentifierName } from '../utils';
 import { throwVBRuntimeError } from './VBError';
+import { isIdentifierSymbol } from '../collect/collectType';
 
 export class VBSub {
   block: Ast_Block_Node | undefined;
@@ -79,7 +80,7 @@ export class VBSub {
       for (const c of sub.children) {
         if (c.type === 'symbol' && c.symbol === 'block') {
           block = c;
-        } else if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+        } else if (isIdentifierSymbol(c)) {
           this.name = c.children[0].text;
         }
       }

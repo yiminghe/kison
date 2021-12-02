@@ -3,21 +3,34 @@ import type {
   Ast_Type__Node,
   AstNode,
   Ast_Indexes_Node,
+  AstSymbolNode,
+  Ast_AmbiguousIdentifier_Node,
+  Ast_CertainIdentifier_Node,
 } from '../../parser';
 import { Context } from '../Context';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
+
+export function isIdentifierSymbol(
+  node: AstNode,
+): node is Ast_AmbiguousIdentifier_Node | Ast_CertainIdentifier_Node {
+  return (
+    node.type === 'symbol' &&
+    (node.symbol === 'ambiguousIdentifier' ||
+      node.symbol === 'certainIdentifier')
+  );
+}
 
 export function collectAmbiguousIdentifier(
   node: AstNode,
   breadth: boolean = false,
 ): string | undefined {
   if (node.type === 'symbol') {
-    if (node.symbol === 'ambiguousIdentifier') {
+    if (isIdentifierSymbol(node)) {
       return node.children[0].text;
     }
     if (breadth) {
       for (const c of node.children) {
-        if (c.type === 'symbol' && c.symbol === 'ambiguousIdentifier') {
+        if (isIdentifierSymbol(c)) {
           return c.children[0].text;
         }
       }
@@ -36,7 +49,7 @@ export function collectAmbiguousIdentifiers(
   ret: string[] = [],
 ): string[] {
   if (node.type === 'symbol') {
-    if (node.symbol === 'ambiguousIdentifier') {
+    if (isIdentifierSymbol(node)) {
       ret.push(node.children[0].text);
     } else {
       for (const c of node.children) {
@@ -99,7 +112,7 @@ export function collect_type_(node: Ast_Type__Node, context: Context) {
     } else if (c.type === 'symbol' && c.symbol === 'complexType') {
       const classType = [];
       for (const id of c.children) {
-        if (id.type === 'symbol' && id.symbol === 'ambiguousIdentifier') {
+        if (isIdentifierSymbol(id)) {
           classType.push(id.children[0].text);
         }
       }

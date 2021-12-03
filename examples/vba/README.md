@@ -5,8 +5,8 @@ vba engine, written in typescript/javascript
 https://yiminghe.me/kison/examples/vba
 
 ## feature
-- basic type: integer, array, string, double
-- expression: not > < <> = >= <= + * / \ ^ += -= xor and or
+- basic type: integer, array, string, double, date
+- expression: not > < <> = >= <= + & * / \ ^ += -= xor and or
 - visibility: public/private variable and sub/function
 - control logic: with, if then else, do while, for next, for each, goto
 - function: sub/function, static variable

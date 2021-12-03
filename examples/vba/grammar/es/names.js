@@ -46,6 +46,10 @@ export const CONST = 'CONST';
 export const CONSTOptional = 'CONST?';
 export const CONSTZeroOrMore = 'CONST*';
 export const CONSTOneOrMore = 'CONST+';
+export const DATE = 'DATE';
+export const DATEOptional = 'DATE?';
+export const DATEZeroOrMore = 'DATE*';
+export const DATEOneOrMore = 'DATE+';
 export const DECLARE = 'DECLARE';
 export const DECLAREOptional = 'DECLARE?';
 export const DECLAREZeroOrMore = 'DECLARE*';
@@ -494,6 +498,10 @@ export const IDENTIFIER = 'IDENTIFIER';
 export const IDENTIFIEROptional = 'IDENTIFIER?';
 export const IDENTIFIERZeroOrMore = 'IDENTIFIER*';
 export const IDENTIFIEROneOrMore = 'IDENTIFIER+';
+export const DATELITERAL = 'DATELITERAL';
+export const DATELITERALOptional = 'DATELITERAL?';
+export const DATELITERALZeroOrMore = 'DATELITERAL*';
+export const DATELITERALOneOrMore = 'DATELITERAL+';
 export const DOUBLELITERAL = 'DOUBLELITERAL';
 export const DOUBLELITERALOptional = 'DOUBLELITERAL?';
 export const DOUBLELITERALZeroOrMore = 'DOUBLELITERAL*';
@@ -946,6 +954,7 @@ export const KEYWORDS = [
   'CALL',
   'CASE',
   'CONST',
+  'DATE',
   'DECLARE',
   'DEFBOOL',
   'DEFBYTE',

@@ -1,7 +1,20 @@
-import type { Ast_AmbiguousIdentifier_Node, LiteralToken } from '../parser';
+import type { Ast_AmbiguousIdentifier_Node, LiteralToken,
+  AstNode,
+  Ast_CertainIdentifier_Node,
+} from '../parser';
 import { throwVBRuntimeError } from './data-structure/VBError';
 import type { IndexType, VBAny } from './types';
 import type { Context } from './Context';
+
+export function isIdentifierSymbol(
+  node: AstNode,
+): node is Ast_AmbiguousIdentifier_Node | Ast_CertainIdentifier_Node {
+  return (
+    node.type === 'symbol' &&
+    (node.symbol === 'ambiguousIdentifier' ||
+      node.symbol === 'certainIdentifier')
+  );
+}
 
 export function last<T>(stack: T[], n = 1) {
   return stack[stack.length - n];

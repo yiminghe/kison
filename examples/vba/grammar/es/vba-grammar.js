@@ -66,6 +66,62 @@ for (const g of operators.slice(0, -1)) {
   binaryOps.push(...ops);
 }
 
+const DIGIT = '\\d';
+const WS2 = '\\s';
+const AMPM = '(?:' + WS2 + '?(AM|PM|A|P))';
+const TIMESEPARATOR = '(?:' + WS2 + '?' + '(:|.)' + WS2 + '?)';
+const TIMEVALUE =
+  '(?:' +
+  DIGIT +
+  '+' +
+  AMPM +
+  '|' +
+  DIGIT +
+  '+' +
+  TIMESEPARATOR +
+  DIGIT +
+  '+' +
+  '(?:' +
+  TIMESEPARATOR +
+  DIGIT +
+  '+)?' +
+  AMPM +
+  '?)';
+const ENGLISHMONTHNAME =
+  '(?:J A N U A R Y | F E B R U A R Y | M A R C H | A P R I L | M A Y | J U N E  | A U G U S T | S E P T E M B E R | O C T O B E R | N O V E M B E R | D E C E M B E R)'.replace(
+    /\s/g,
+    '',
+  );
+const ENGLISHMONTHABBREVIATION =
+  '(?:J A N | F E B | M A R | A P R | J U N | J U L | A U G | S E P |  O C T | N O V | D E C)'.replace(
+    /\s/g,
+    '',
+  );
+const MONTHNAME = `(?:${ENGLISHMONTHABBREVIATION}|${ENGLISHMONTHNAME})`;
+const DATESEPARATOR = '(?:' + WS2 + '?' + '[\\/,-]?' + WS2 + '?)';
+const DATEVALUEPART = '(?:' + DIGIT + '+|' + MONTHNAME + ')';
+const DATEVALUE =
+  '(?:' +
+  DATEVALUEPART +
+  DATESEPARATOR +
+  DATEVALUEPART +
+  '(?:' +
+  DATESEPARATOR +
+  DATEVALUEPART +
+  ')?)';
+const DATEORTIME =
+  '(?:' +
+  DATEVALUE +
+  WS2 +
+  '?' +
+  TIMEVALUE +
+  '|' +
+  DATEVALUE +
+  '|' +
+  TIMEVALUE +
+  ')';
+const DATELITERAL = new RegExp('#' + DATEORTIME + '#', 'i');
+
 module.exports = {
   productions: n.makeProductions([
     [
@@ -831,6 +887,8 @@ module.exports = {
       n.TRUE,
       n.alternationMark,
       n.FALSE,
+      n.alternationMark,
+      n.DATELITERAL,
     ],
 
     [
@@ -914,10 +972,8 @@ module.exports = {
       n.VARIANT,
       n.alternationMark,
       n.STRING,
-      n.groupStartMark,
-      n.MULT,
-      n.valueStmt,
-      n.groupEndOptionalMark,
+      n.alternationMark,
+      n.DATE,
     ],
 
     [
@@ -943,6 +999,7 @@ module.exports = {
     rules: n.makeLexerRules([
       ...generateLexerRulesByKeywords(n.KEYWORDS),
 
+      [n.DATELITERAL, DATELITERAL],
       [n.DOUBLELITERAL, /[0-9]*\.[0-9]+(E[0-9]+)?/],
 
       {

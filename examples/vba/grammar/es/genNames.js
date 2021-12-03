@@ -11,6 +11,7 @@ const keywords = [
   'CALL',
   'CASE',
   'CONST',
+  'DATE',
   'DECLARE',
   'DEFBOOL',
   'DEFBYTE',
@@ -126,6 +127,7 @@ const keywords = [
 
 const lexer = [
   'IDENTIFIER',
+  'DATELITERAL',
   'DOUBLELITERAL',
   'INTEGERLITERAL',
   'STRINGLITERAL',

@@ -12,9 +12,8 @@ import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from './VBValue';
 import { VBPointer } from './VBPointer';
 import type { VBFile, ArgInfo, Visibility } from './runtime';
 import { evaluateNodes } from '../evaluator/evaluators';
-import { getIdentifierName } from '../utils';
+import { getIdentifierName, isIdentifierSymbol } from '../utils';
 import { throwVBRuntimeError } from './VBError';
-import { isIdentifierSymbol } from '../collect/collectType';
 
 export class VBSub {
   block: Ast_Block_Node | undefined;
@@ -72,8 +71,8 @@ export class VBSub {
       const subSymbol = this.sub.symbol;
       this.type =
         subSymbol === 'subStmt' ||
-        subSymbol === 'propertyLetStmt' ||
-        subSymbol === 'propertySetStmt'
+          subSymbol === 'propertyLetStmt' ||
+          subSymbol === 'propertySetStmt'
           ? 'sub'
           : 'function';
       let block;

@@ -10,6 +10,7 @@ import {
   getDEFAULT_AS_TYPE,
   VB_EMPTY,
   PromiseOrNotFn,
+  VBDate,
 } from './VBValue';
 import type { Context } from '../Context';
 
@@ -83,6 +84,9 @@ export class VBValuePointer {
       if (type === 'variant' || type === v.type.toLowerCase()) {
         obj._value = v;
       } else {
+        if (type === 'date' && v.type === 'string') {
+          v = new VBDate(+new Date(v.value));
+        }
         obj._value = v;
         // throwVBRuntimeError(this.context, 'TYPE_MISMATCH');
       }

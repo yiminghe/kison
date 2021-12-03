@@ -6,7 +6,6 @@ import type {
 } from '../../parser';
 import {
   collectAmbiguousIdentifier,
-  isIdentifierSymbol,
 } from '../collect/collectType';
 import type { Context } from '../Context';
 import {
@@ -28,7 +27,7 @@ import {
   NamedArg,
   VBArguments,
 } from '../data-structure/VBArguments';
-import { getIdentifierName, last } from '../utils';
+import { getIdentifierName, last,isIdentifierSymbol } from '../utils';
 
 async function callSub(
   node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,

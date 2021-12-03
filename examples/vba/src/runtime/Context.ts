@@ -36,6 +36,7 @@ import {
   VBMissingArgument,
   ExitToken,
   VBDouble,
+  VBDate,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -648,6 +649,10 @@ export class Context {
     return new VBInteger(value);
   }
 
+  public static createDate(value: number) {
+    return new VBDate(value);
+  }
+
   public static createDouble(value: number) {
     return new VBDouble(value);
   }
@@ -662,6 +667,10 @@ export class Context {
 
   public createInteger(value: number) {
     return Context.createInteger(value);
+  }
+
+  public createDate(value: number) {
+    return Context.createDate(value);
   }
 
   public createDouble(value: number) {

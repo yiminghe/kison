@@ -7,7 +7,7 @@ import type {
 } from '../../parser';
 import {
   collect_asTypeClause,
-  isIdentifierSymbol,
+  
 } from '../collect/collectType';
 import { Context } from '../Context';
 import { throwVBRuntimeError } from '../data-structure/VBError';
@@ -21,7 +21,7 @@ import {
   VBValue,
   VBAny,
 } from '../types';
-import { getPropertyGetSubName, getPropertySetSubName } from '../utils';
+import { getPropertyGetSubName, getPropertySetSubName,isIdentifierSymbol, } from '../utils';
 import { registerLoaders, load } from './loaders';
 
 async function loadCall(

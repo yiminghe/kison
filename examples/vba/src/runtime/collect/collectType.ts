@@ -3,22 +3,10 @@ import type {
   Ast_Type__Node,
   AstNode,
   Ast_Indexes_Node,
-  AstSymbolNode,
-  Ast_AmbiguousIdentifier_Node,
-  Ast_CertainIdentifier_Node,
 } from '../../parser';
 import { Context } from '../Context';
 import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
-
-export function isIdentifierSymbol(
-  node: AstNode,
-): node is Ast_AmbiguousIdentifier_Node | Ast_CertainIdentifier_Node {
-  return (
-    node.type === 'symbol' &&
-    (node.symbol === 'ambiguousIdentifier' ||
-      node.symbol === 'certainIdentifier')
-  );
-}
+import { isIdentifierSymbol } from '../utils';
 
 export function collectAmbiguousIdentifier(
   node: AstNode,

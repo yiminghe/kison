@@ -10,6 +10,7 @@ import {
   getExitToken,
   VBValue,
   VBDouble,
+  VBDate,
 } from '../types';
 import { createNumber, getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
@@ -36,6 +37,10 @@ registerEvaluators({
 
   evaluateINTEGERLITERAL(node) {
     return new VBInteger(parseInt(node.text));
+  },
+
+  evaluateDATELITERAL(node) {
+    return new VBDate(+new Date(node.text.slice(1, -1)));
   },
 
   evaluateDOUBLELITERAL(node) {

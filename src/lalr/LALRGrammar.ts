@@ -313,7 +313,7 @@ class LALRGrammar extends Grammar {
     }
   }
 
-  buildTable() {
+  override buildTable() {
     var { operatorPriorityMap, lrTable, itemSets, nonTerminals } = this;
     var productionInstances = this.productionInstances;
     var mappedStartTag = START_TAG;
@@ -434,7 +434,7 @@ class LALRGrammar extends Grammar {
     }
   }
 
-  visualizeTable() {
+  override visualizeTable() {
     var { lrTable, productionInstances } = this;
     var { gotos, action } = lrTable;
     var ret = [];

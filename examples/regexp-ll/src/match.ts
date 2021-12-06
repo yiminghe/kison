@@ -112,7 +112,7 @@ export class Matcher {
 }
 
 export class AsyncMatcher {
-  startState?: State;
+  startState?: State | undefined;
   stopped?: boolean;
   input: AsyncInput | null;
   matchFn: typeof asyncDfsMatch;

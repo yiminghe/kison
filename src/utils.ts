@@ -231,6 +231,7 @@ const globalUtils = {
     astStack = [
       new AstSymbolNode({
         id: 0,
+        symbol: '',
         children: [],
       }),
     ];

@@ -5,10 +5,7 @@ import type {
   Ast_PropertySetStmt_Node,
   Ast_PropertyGetStmt_Node,
 } from '../../parser';
-import {
-  collect_asTypeClause,
-  
-} from '../collect/collectType';
+import { collect_asTypeClause } from '../collect/collectType';
 import { Context } from '../Context';
 import { throwVBRuntimeError } from '../data-structure/VBError';
 import { evaluate } from '../evaluator/index';
@@ -21,7 +18,11 @@ import {
   VBValue,
   VBAny,
 } from '../types';
-import { getPropertyGetSubName, getPropertySetSubName,isIdentifierSymbol, } from '../utils';
+import {
+  getPropertyGetSubName,
+  getPropertySetSubName,
+  isIdentifierSymbol,
+} from '../utils';
 import { registerLoaders, load } from './loaders';
 
 async function loadCall(

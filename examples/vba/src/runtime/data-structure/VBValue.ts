@@ -135,7 +135,7 @@ export const VB_TRUE = new VBBoolean(true);
 export const VB_FALSE = new VBBoolean(false);
 
 export interface AsTypeClauseInfo {
-  type?: VBBasicTypeKey;
+  type?: VBBasicTypeKey | undefined;
   isArray: boolean;
   isNew?: boolean;
   classType?: string[];

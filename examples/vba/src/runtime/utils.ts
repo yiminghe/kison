@@ -1,4 +1,6 @@
-import type { Ast_AmbiguousIdentifier_Node, LiteralToken,
+import type {
+  Ast_AmbiguousIdentifier_Node,
+  LiteralToken,
   AstNode,
   Ast_CertainIdentifier_Node,
 } from '../parser';

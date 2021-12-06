@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/recommended",
   "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
     "isolatedModules": true,
     "resolveJsonModule":true,

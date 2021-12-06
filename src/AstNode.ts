@@ -17,17 +17,17 @@ interface ErrorTokenParams extends TokenParams {
 
 interface SymbolParams extends Params {
   id: number;
-  children?: AstNode[];
-  symbol?: string;
-  label?: string;
-  isWrap?: boolean;
-  internalRuleIndex?: number;
+  children?: AstNode[] | undefined;
+  symbol: string;
+  label?: string | undefined;
+  isWrap?: boolean | undefined;
+  internalRuleIndex?: number | undefined;
 }
 
 export type AstNode = AstSymbolNode | AstTokenNode;
 
 export class BaseAstNode {
-  parent?: AstSymbolNode;
+  parent: AstSymbolNode | undefined;
   start: number = 0;
   end: number = 0;
   firstLine: number = 0;
@@ -73,12 +73,12 @@ const { productionRuleIndexMap } = data;
 
 export class AstSymbolNode extends BaseAstNode {
   symbol: string = '';
-  label?: string;
+  label: string | undefined;
   type: 'symbol' = 'symbol';
   children: AstNode[] = [];
   ruleIndex: number = -1;
   internalRuleIndex: number = -1;
-  isWrap?: boolean;
+  isWrap: boolean | undefined;
 
   constructor(params: SymbolParams) {
     super();

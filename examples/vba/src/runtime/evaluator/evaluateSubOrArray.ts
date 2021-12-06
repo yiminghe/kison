@@ -4,9 +4,7 @@ import type {
   Ast_ECS_MemberProcedureCall_Node,
   Ast_ICS_B_MemberProcedureCall_Node,
 } from '../../parser';
-import {
-  collectAmbiguousIdentifier,
-} from '../collect/collectType';
+import { collectAmbiguousIdentifier } from '../collect/collectType';
 import type { Context } from '../Context';
 import {
   VBAny,
@@ -27,7 +25,7 @@ import {
   NamedArg,
   VBArguments,
 } from '../data-structure/VBArguments';
-import { getIdentifierName, last,isIdentifierSymbol } from '../utils';
+import { getIdentifierName, last, isIdentifierSymbol } from '../utils';
 
 async function callSub(
   node: Ast_ICS_B_ProcedureCall_Node | Ast_ECS_ProcedureCall_Node,

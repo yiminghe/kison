@@ -7,12 +7,12 @@ const { filterRhs, eachRhs } = utils;
 interface Params {
   symbol: string;
   rhs: Rhs;
-  label?: string;
-  ruleIndex?: number;
-  skipAstNode?: boolean;
-  action?: Function;
-  predict?: Function;
-  isWrap?: boolean;
+  label?: string | undefined;
+  ruleIndex?: number | undefined;
+  skipAstNode?: boolean | undefined;
+  action?: Function | undefined;
+  predict?: Function | undefined;
+  isWrap?: boolean | undefined;
 }
 
 class Production {

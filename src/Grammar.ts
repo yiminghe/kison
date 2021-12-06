@@ -59,17 +59,17 @@ function emurate(
 
 export interface ProductionRule {
   symbol: string;
-  predict?: Function;
-  precedence?: string;
-  action?: Function;
-  label?: string;
+  predict?: Function | undefined;
+  precedence?: string | undefined;
+  action?: Function | undefined;
+  label?: string | undefined;
   rhs: Rhs;
 
   //begin internal: not public api
-  flat?: boolean;
-  ruleIndex?: number;
-  skipAstNode?: boolean;
-  isWrap?: boolean;
+  flat?: boolean | undefined;
+  ruleIndex?: number | undefined;
+  skipAstNode?: boolean | undefined;
+  isWrap?: boolean | undefined;
   // end internal
 }
 

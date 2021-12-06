@@ -91,7 +91,7 @@ class Lexer {
 
   options: Options = {};
 
-  defaultEnv?: string;
+  defaultEnv: string | undefined;
 
   rules: LexerRule[] = [];
 

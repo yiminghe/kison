@@ -255,5 +255,5 @@ registerEvaluators({
 type RedimRet = {
   obj: VBPointer;
   subscripts: Subscript[];
-  asType?: AsTypeClauseInfo;
+  asType?: AsTypeClauseInfo | undefined;
 };

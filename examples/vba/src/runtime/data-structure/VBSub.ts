@@ -71,8 +71,8 @@ export class VBSub {
       const subSymbol = this.sub.symbol;
       this.type =
         subSymbol === 'subStmt' ||
-          subSymbol === 'propertyLetStmt' ||
-          subSymbol === 'propertySetStmt'
+        subSymbol === 'propertyLetStmt' ||
+        subSymbol === 'propertySetStmt'
           ? 'sub'
           : 'function';
       let block;

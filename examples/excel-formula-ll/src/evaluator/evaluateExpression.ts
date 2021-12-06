@@ -107,7 +107,9 @@ function transformToArray(node: AstSymbolNode, context: Context) {
 
 type BinaryDef = {
   fn: (a: Primary_Type, b: Primary_Type) => Atom_Value_Type;
-  check?: (...args: (All_Type | null)[]) => Error_Type | undefined;
+  check?:
+    | undefined
+    | ((...args: (All_Type | null)[]) => Error_Type | undefined);
 };
 
 function evaluateBinaryExp(

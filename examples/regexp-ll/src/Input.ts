@@ -11,7 +11,7 @@ export interface GroupValue {
 
 export interface GroupIndex {
   index: number;
-  name?: string;
+  name?: string | undefined;
 }
 
 export default class Input {

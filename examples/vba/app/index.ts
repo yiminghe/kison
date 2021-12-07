@@ -14,9 +14,7 @@ require.config({
 
 const $ = (v: string): any => document.getElementById(v)!;
 
-const moduleSampleCode =
-  localStorage.getItem('moduleCode') ||
-  `
+const moduleDefaultCode = `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
   debug.print msg
   call debug.print(msg2)
@@ -50,9 +48,7 @@ sub main
 end sub
 `.trim();
 
-const classSampleCode =
-  localStorage.getItem('classCode') ||
-  `
+const classDefaultCode = `
 public m as Integer
 
 sub Class_Initialize
@@ -77,6 +73,19 @@ Property Let x(value)
   m = value
 End Property
 `.trim();
+const version = '2';
+
+if (
+  !localStorage.getItem('codeVersion') ||
+  localStorage.getItem('codeVersion') !== version
+) {
+  localStorage.setItem('classCode', classDefaultCode);
+  localStorage.setItem('moduleCode', moduleDefaultCode);
+  localStorage.setItem('codeVersion', version);
+}
+
+const moduleSampleCode = localStorage.getItem('moduleCode')!;
+const classSampleCode = localStorage.getItem('classCode')!;
 
 require(['vs/editor/editor.main'], () => {
   $('sub').value = 'main';

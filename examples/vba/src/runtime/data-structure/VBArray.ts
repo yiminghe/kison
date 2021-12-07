@@ -14,19 +14,24 @@ import { getVBValue } from '../evaluator/common';
 
 type ArrayElement = VBPointer | VBPointer[];
 
-export interface VBIterator {
-  next: () => Promise<{ value: VBValue; done: boolean }>;
+interface VBIteratorReturn {
+  value: VBAny;
+  done: boolean;
 }
 
-export interface VBIteraterable {
+export interface VBIterator {
+  next: () => Promise<VBIteratorReturn> | VBIteratorReturn;
+}
+
+export interface VBIterable {
   vbIterator?(): VBIterator;
 }
 
-export function isVBIteraterable(a: any): a is Required<VBIteraterable> {
-  return a && 'vbIterator' in a;
+export function isVBIterable(a: any): a is Required<VBIterable> {
+  return a && 'vbIterable' in a && !!a.vbIterable();
 }
 
-export class VBArray implements VBIteraterable {
+export class VBArray implements VBIterable {
   type: 'Array' = 'Array';
   value: ArrayElement[] = [];
   dynamic: boolean = false;
@@ -42,6 +47,10 @@ export class VBArray implements VBIteraterable {
     }
   }
 
+  vbIterable() {
+    return true;
+  }
+
   vbIterator() {
     let i = this.jsLBound();
     let len = this.jsUBound();
@@ -54,7 +63,7 @@ export class VBArray implements VBIteraterable {
           };
         }
         return {
-          value: await getVBValue(await this.getElement([i++])),
+          value: await this.getElement([i++]),
           done: false,
         };
       },
@@ -116,7 +125,6 @@ export class VBArray implements VBIteraterable {
             new VBBasicTypeClass(),
             {
               type: elementType,
-              isArray: false,
             },
           );
         }

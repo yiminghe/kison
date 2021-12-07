@@ -1,6 +1,6 @@
 import { getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
-import { isVBIteraterable, VBInteger, VBPointer, ExitToken } from '../types';
+import { isVBIterable, VBInteger, VBPointer, ExitToken } from '../types';
 
 const one = new VBInteger(1);
 
@@ -58,7 +58,7 @@ registerEvaluators({
       }
     }
 
-    if (isVBIteraterable(value)) {
+    if (isVBIterable(value)) {
       const iterator = value.vbIterator();
       let ret;
       do {

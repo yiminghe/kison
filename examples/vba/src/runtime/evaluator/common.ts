@@ -145,8 +145,8 @@ export async function getVBValue(
   if (!v) {
     return v;
   }
-  if (v.type === 'Pointer') {
-    return v.getValue();
+  while (v && v.type === 'Pointer') {
+    v = await v.getValue();
   }
   return v;
 }

@@ -37,6 +37,7 @@ import {
   ExitToken,
   VBDouble,
   VBDate,
+  VB_NOTHING,
 } from './types';
 import { evaluate } from './evaluator/index';
 import { load } from './loader/index';
@@ -48,6 +49,7 @@ import {
   VBRuntimeError,
 } from './data-structure/VBError';
 import { VBArguments } from './data-structure/VBArguments';
+import { getVBValue } from './evaluator/common';
 
 type ShiftArray<T> = T extends [any, ...infer u] ? u : never;
 
@@ -74,6 +76,13 @@ export class VBBindingArguments {
     if (obj.type === 'Pointer') {
       return obj.getValue();
     }
+  }
+  async getPointer(name: string) {
+    const obj = await this.scope.getVariable(name);
+    if (obj.type === 'Pointer') {
+      return obj;
+    }
+    throwVBRuntimeError(this.scope.context, 'UNEXPECTED_ERROR');
   }
   async setValue(name: string, value: VBValue) {
     const obj = await this.scope.getVariable(name);
@@ -227,7 +236,8 @@ export class Context {
   }
 
   getFileIdFromFileNameInternal(name: string) {
-    if (this.bindingMap.get(name)?.type === 'Namespace') {
+    const bindingType = this.bindingMap.get(name)?.type;
+    if (bindingType === 'Namespace' || bindingType === 'ClassBinding') {
       return name;
     }
     for (const fileSymbolTable of this.symbolTable.values()) {
@@ -299,6 +309,12 @@ export class Context {
       if (!a || a.type === 'MissingArgument') {
         await fillOptionalArgument(argInfo);
         continue;
+      }
+      if (argInfo.asType?.type && argInfo.asType.type !== 'variant') {
+        const v = await getVBValue(a);
+        if (v.type !== argInfo.asType.type) {
+          throwVBRuntimeError(this, 'TYPE_MISMATCH');
+        }
       }
       if (a.type === 'Pointer' && argInfo.byRef) {
         await scope.setVariable(
@@ -649,6 +665,14 @@ export class Context {
     return new VBInteger(value);
   }
 
+  public static createEmpty() {
+    return VB_EMPTY;
+  }
+
+  public static createNothing() {
+    return VB_NOTHING;
+  }
+
   public static createDate(value: number) {
     return new VBDate(value);
   }
@@ -663,6 +687,14 @@ export class Context {
 
   public static createBoolean(value: boolean) {
     return value ? VB_TRUE : VB_FALSE;
+  }
+
+  public createEmpty() {
+    return Context.createEmpty();
+  }
+
+  public createNothing() {
+    return Context.createNothing();
   }
 
   public createInteger(value: number) {

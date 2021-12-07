@@ -18,10 +18,10 @@ describe('with', () => {
     sub main
     dim c as new MyClass
     c.init
-    msgbox c.m1
-    msgbox c.m2
-    msgbox c.m3.m1
-    msgbox c.m3.m2
+    debug.print c.m1
+    debug.print c.m2
+    debug.print c.m3.m1
+    debug.print c.m3.m2
     with c
       .m1 = 1
       .m2 = 2
@@ -30,10 +30,10 @@ describe('with', () => {
         .m2 = 4
       end with  
     end with
-    msgbox c.m1
-    msgbox c.m2
-    msgbox c.m3.m1
-    msgbox c.m3.m2
+    debug.print c.m1
+    debug.print c.m2
+    debug.print c.m3.m1
+    debug.print c.m3.m2
     end sub    
         `;
 
@@ -71,7 +71,7 @@ describe('with', () => {
         end sub
     
           sub test
-            msgbox .m1
+            debug.print .m1
           end sub
         `;
     let error: any = {};

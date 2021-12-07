@@ -18,8 +18,8 @@ const moduleSampleCode =
   localStorage.getItem('moduleCode') ||
   `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
-  MsgBox msg
-  call MsgBox(msg2)
+  debug.print msg
+  call debug.print(msg2)
   msg = 11
   msg2 = 12
 end sub
@@ -30,21 +30,23 @@ sub main
   m1 = 10
   test2 m1, m2
   test2 1, 2
-  MsgBox m1
-  MsgBox m2
+  debug.print m1
+  debug.print m2
 
   dim c as New MyClass
   debug.print c.m
-  msgbox c.getM()
+  debug.print c.getM()
   c.setM(12)
-  msgbox c.m
+  debug.print c.m
   c.x = 13
-  msgbox c.x
+  debug.print c.x
   
   dim d as New js.Date
   debug.print d.date
   d.date = 10
   debug.print d.date
+
+  msgbox "done"
 end sub
 `.trim();
 
@@ -54,8 +56,8 @@ const classSampleCode =
 public m as Integer
 
 sub Class_Initialize
-msgbox VBA.FormShowConstants.vbModal
-msgbox vbModal
+debug.print VBA.FormShowConstants.vbModal
+debug.print vbModal
 m = 2
 end sub
 
@@ -198,7 +200,11 @@ require(['vs/editor/editor.main'], () => {
       for (let i = 0; i <= msgs.jsUBound(); i++) {
         ret.push((await (await msgs.getElement([i])).getValue()).value);
       }
-      console.log(`call ${name}:`, ret);
+      if (name === 'debug.print') {
+        console.log(ret.length > 1 ? ret : ret[0]);
+      } else if (name === 'msgbox') {
+        alert(ret.join(','));
+      }
     },
   });
 
@@ -224,8 +230,8 @@ require(['vs/editor/editor.main'], () => {
             return;
           }
           called = true;
-          context.registerSubBinding(LogSub('msgbox'));
           context.registerSubBinding(LogSub('debug.print'));
+          context.registerSubBinding(LogSub('msgbox'));
           context.registerSubBinding(Debugger);
         },
         {
@@ -237,6 +243,7 @@ require(['vs/editor/editor.main'], () => {
     } catch (e: any) {
       console.error(e);
       console.error(e.message);
+      alert(e.message);
     }
   });
 });

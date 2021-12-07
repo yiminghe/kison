@@ -14,6 +14,7 @@ import type { VBFile, ArgInfo, Visibility } from './runtime';
 import { evaluateNodes } from '../evaluator/evaluators';
 import { getIdentifierName, isIdentifierSymbol } from '../utils';
 import { throwVBRuntimeError } from './VBError';
+import { collect_asTypeClause } from '../collect/collectType';
 
 export class VBSub {
   block: Ast_Block_Node | undefined;
@@ -146,10 +147,9 @@ export class VBSub {
       if (c.type === 'symbol' && c.symbol === 'argList') {
         this._argumentsInfo = await load(c, this.context);
       } else if (c.type === 'symbol' && c.symbol === 'asTypeClause') {
-        this._returnInfo = await load(c, this.context);
+        this._returnInfo = collect_asTypeClause(c, this.context);
       }
     }
-    this._returnInfo = this._returnInfo || getDEFAULT_AS_TYPE();
     this._argumentsInfo = this._argumentsInfo || [];
   }
 

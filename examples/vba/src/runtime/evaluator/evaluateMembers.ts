@@ -69,7 +69,7 @@ registerEvaluators({
   },
 
   async evaluateICS_S_SpaceMemberCall({ children }, context, params = {}) {
-    if (params.parentMember) {
+    if (!last(context.withStack)) {
       throwVBRuntimeError(context, 'INVALIDE_REF');
     }
     return evaluate(children[1], context, {

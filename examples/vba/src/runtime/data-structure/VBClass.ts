@@ -11,6 +11,7 @@ import {
 import { SubBinding, VBAny } from '../types';
 import { throwVBRuntimeError } from './VBError';
 import { VBArguments } from './VBArguments';
+import { VBIterable } from './VBArray';
 
 interface VBClassMember {
   value: VBPointer;
@@ -125,7 +126,7 @@ export class VBPropertyPointer {
     public _value: () => Promise<VBValue>,
   ) {}
 
-  _getObject() {
+  getPointer() {
     return this;
   }
 
@@ -147,12 +148,12 @@ export class VBBindPropertyPointer {
 
   public constructor(public instance: VBBindClass, public name: string) {}
 
-  _getObject() {
+  getPointer() {
     return this;
   }
 
   async getValue() {
-    return (await this.instance.get(this.name))._value;
+    return (await this.instance.get(this.name))!._value;
   }
 
   async setValue(value: VBAny) {
@@ -172,7 +173,7 @@ export class VBBindIndexPointer {
     public indexes: IndexType[],
   ) {}
 
-  _getObject() {
+  getPointer() {
     return this;
   }
 
@@ -226,13 +227,17 @@ export class VBBindClass {
     }
     return this.instance.set(name, v);
   }
-  async get(name: string): Promise<VBBindPropertyPointer> {
+  async get(name: string): Promise<VBBindPropertyPointer | undefined> {
     let obj = this.properties.get(name);
+    const instanceValue = await this.instance.get(name);
+    if (!instanceValue) {
+      return;
+    }
     if (!obj) {
       obj = new VBBindPropertyPointer(this, name);
       this.properties.set(name, obj);
     }
-    obj._value = await this.instance.get(name);
+    obj._value = instanceValue;
     return obj;
   }
   async getElement(indexes: IndexType[]) {
@@ -249,6 +254,14 @@ export class VBBindClass {
       throwVBRuntimeError(this.context, 'NOT_FOUND_SET_ELEMENT_CLASS_BINDER');
     }
     return this.instance.setElement(indexes, v);
+  }
+
+  vbIterable() {
+    return 'vbIterator' in this.instance;
+  }
+
+  vbIterator() {
+    return this.instance.vbIterator!();
   }
 
   async callSub(

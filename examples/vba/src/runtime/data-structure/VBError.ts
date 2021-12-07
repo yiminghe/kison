@@ -32,6 +32,8 @@ export const errorCodes = {
   TYPE_MISMATCH: 'Type Mismatch',
   INVALIDE_REF: 'invalid reference',
   DIVIDE_BY_ZERO: 'divide by zero',
+  READ_ONLY: 'read only',
+  KEY_ALREADY_EXISTS: 'key already exists',
 };
 
 type ErrorCodesKey = keyof typeof errorCodes;
@@ -40,6 +42,7 @@ let i = 0;
 
 const orderToMatch: Record<string, ErrorCodesKey> = {
   13: 'TYPE_MISMATCH',
+  457: 'KEY_ALREADY_EXISTS',
 };
 
 const errorNumbers: Record<ErrorCodesKey, number> = {} as Record<

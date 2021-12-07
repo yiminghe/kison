@@ -192,16 +192,11 @@ registerEvaluators({
   ) {
     const subName = children[0].children[0].text;
     const indexes = await buildIndexes({ children }, context);
-    if (indexes.length || params.parentMember) {
-      return callSubOrGetElementWithIndexesAndArgs(
-        params.parentMember,
-        subName,
-        indexes,
-        context,
-      );
-    } else {
-      // variable
-      return await context.getCurrentScopeInternal().getVariable(subName);
-    }
+    return callSubOrGetElementWithIndexesAndArgs(
+      params.parentMember,
+      subName,
+      indexes,
+      context,
+    );
   },
 });

@@ -55,12 +55,13 @@ registerEvaluators({
       }
     } else {
       let rightValue: VBAny = await evaluate(c3.children[0], context);
-      if (
-        rightValue.type === 'Nothing' &&
-        leftVariable.subType === 'Value' &&
-        leftVariable.asType.isNew
-      ) {
-        rightValue = await context.createObject(leftVariable.asType.className!);
+      if (rightValue.type === 'Nothing') {
+        const leftPointer = leftVariable.getPointer();
+        if (leftPointer.subType === 'Value' && leftPointer.asType.isNew) {
+          rightValue = await context.createObject(
+            leftPointer.asType.className!,
+          );
+        }
       }
       await leftVariable.setValue(rightValue);
     }

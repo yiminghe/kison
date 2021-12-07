@@ -97,7 +97,6 @@ registerLoaders({
       name: '',
       asType: {
         type: 'variant',
-        isArray: false,
       },
     };
     let lp = false;

@@ -1,8 +1,8 @@
 ## vba
 
 ### 特性支持
-‒ 基本类型：integer, array, string, double
-‒ 操作符：not > < <> = >= <= + * / \ ^ += -= xor and or
+‒ 基本类型：integer, array, string, double, date
+‒ 操作符：not > < <> = >= <= + & * / \ ^ += -= xor and or
 ‒ 可访问性： public/private for variable/sub/function
 ‒ 控制逻辑：with, if then else, do while, for next, for each, goto
 ‒ 函数：sub/function, 静态变量，参数按值传递，参数按地址传递

@@ -1,6 +1,6 @@
 import { getVBValue } from './common';
 import { evaluate, registerEvaluators } from './evaluators';
-import { isVBIteraterable, VBInteger, VBPointer, ExitToken } from '../types';
+import { isVBIterable, VBInteger, VBPointer, ExitToken } from '../types';
 import { AstNode, Ast_Block_Node } from '../../parser';
 import type { Context } from '../Context';
 

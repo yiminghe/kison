@@ -7,6 +7,7 @@ import { last } from '../utils';
 import { throwVBRuntimeError, VBRuntimeError } from './VBError';
 import { VBSub } from './VBSub';
 import { AstNode } from '../../parser';
+import { VBBasicTypeClasses } from './VBValue';
 
 export class VBScope {
   variableMap = new Map<string, VBPointer>();
@@ -25,8 +26,19 @@ export class VBScope {
     public classObj?: VBClass,
   ) {
     this.callerScope = last(context.scopeStack);
-    const returnName = last(this.subName.split('.'));
-    this.variableMap.set(returnName, new VBValuePointer(context));
+    const { returnInfo } = sub;
+    if (returnInfo || sub.type === 'function') {
+      const returnName = last(this.subName.split('.'));
+      if (returnInfo?.type) {
+        const VBBasicTypeClass = (VBBasicTypeClasses as any)[returnInfo.type];
+        if (VBBasicTypeClass) {
+          const value = new VBBasicTypeClass();
+          this.variableMap.set(returnName, new VBValuePointer(context, value));
+          return;
+        }
+      }
+      this.variableMap.set(returnName, new VBValuePointer(context));
+    }
   }
 
   set error(e: VBRuntimeError | undefined) {

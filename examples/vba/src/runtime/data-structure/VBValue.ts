@@ -136,7 +136,7 @@ export const VB_FALSE = new VBBoolean(false);
 
 export interface AsTypeClauseInfo {
   type?: VBBasicTypeKey | undefined;
-  isArray: boolean;
+  isArray?: boolean | undefined;
   isNew?: boolean;
   classType?: string[];
   className?: string;
@@ -144,7 +144,6 @@ export interface AsTypeClauseInfo {
 
 export const getDEFAULT_AS_TYPE: () => AsTypeClauseInfo = () => ({
   type: 'variant',
-  isArray: false,
 });
 
 export type ExitToken = {

@@ -60,10 +60,10 @@ export class VBValuePointer {
     return _value;
   }
 
-  _getObject(): VBPointer {
+  getPointer(): VBPointer {
     let _value = this._value;
     if (typeof _value !== 'function' && _value.type === 'Pointer') {
-      return _value._getObject();
+      return _value.getPointer();
     }
     return this;
   }
@@ -72,7 +72,7 @@ export class VBValuePointer {
     if (this.constant) {
       throwVBRuntimeError(this.context, 'SET_CONST');
     }
-    const obj = this._getObject();
+    const obj = this.getPointer();
     if (obj.subType === 'Value') {
       let v: VBValue;
       if (value.type === 'Pointer') {

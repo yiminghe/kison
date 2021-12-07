@@ -3,7 +3,7 @@ import type { AstVisitors, Ast_Visibility_Node } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBAny, VBPointer } from './VBPointer';
 import type { VBSub } from './VBSub';
-import { VBIteraterable, VBIterator } from './VBArray';
+import { VBIterable, VBIterator } from './VBArray';
 
 export interface VBFile {
   id: string;
@@ -48,6 +48,7 @@ export interface SubBinding {
     context: Context,
   ) => Promise<SubBindingReturnType> | SubBindingReturnType;
   argumentsInfo?: ArgInfo[];
+  returnInfo?: AsTypeClauseInfo;
   name: string;
 }
 
@@ -60,12 +61,12 @@ export interface VariableBinding {
 
 export type IndexType = string | number;
 
-export interface InstanceBinding extends VBIteraterable {
-  getElement?(indexes: IndexType[]): Promise<VBValue>;
-  setElement?(indexes: IndexType[], value: VBValue): Promise<void>;
-  get(name: string): Promise<VBValue>;
-  set(name: string, value: VBValue): Promise<void>;
-  subs?: Record<string, Exclude<UserSubBinding, 'name'>>;
+export interface InstanceBinding extends VBIterable {
+  getElement?(indexes: IndexType[]): Promise<VBValue> | VBValue;
+  setElement?(indexes: IndexType[], value: VBValue): Promise<void> | void;
+  get(name: string): Promise<VBValue> | VBValue | undefined;
+  set(name: string, value: VBValue): Promise<void> | void;
+  subs?: Record<string, Omit<UserSubBinding, 'name'>>;
 }
 
 export interface ClassBinding {

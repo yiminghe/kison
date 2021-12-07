@@ -44,6 +44,7 @@ import { load } from './loader/index';
 import { last } from './utils';
 import bindings from './std/libs';
 import {
+  ErrorCode,
   throwVBRuntimeError,
   VBParseError,
   VBRuntimeError,
@@ -724,7 +725,7 @@ export class Context {
   }
 
   public throwError(
-    number: number,
+    number: number | ErrorCode,
     source?: string,
     description?: string,
     scope?: VBScope,

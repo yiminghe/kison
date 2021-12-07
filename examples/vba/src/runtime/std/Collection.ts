@@ -1,5 +1,4 @@
-import { throwVBRuntimeError } from '../data-structure/VBError';
-import { ClassBinding, VBPointer, SubBinding } from '../types';
+import { ClassBinding, VBPointer } from '../types';
 
 interface Item {
   value: VBPointer;
@@ -55,7 +54,7 @@ const Collection: ClassBinding = {
             };
             if (keyValue !== undefined) {
               if (mappedValues.has(keyValue)) {
-                throwVBRuntimeError(context, 'KEY_ALREADY_EXISTS');
+                context.throwError('KEY_ALREADY_EXISTS');
               }
               mappedValues.set(keyValue, item);
             }
@@ -119,7 +118,7 @@ const Collection: ClassBinding = {
                 }
               }
             } else {
-              throwVBRuntimeError(context, 'TYPE_MISMATCH');
+              context.throwError('TYPE_MISMATCH');
             }
           },
         },
@@ -130,7 +129,7 @@ const Collection: ClassBinding = {
         }
       },
       set() {
-        throwVBRuntimeError(context, 'READ_ONLY');
+        context.throwError('READ_ONLY');
       },
       vbIterator() {
         let i = 1;
@@ -161,26 +160,10 @@ const Collection: ClassBinding = {
         return item ? item.value : context.createEmpty();
       },
       setElement() {
-        throwVBRuntimeError(context, 'READ_ONLY');
+        context.throwError('READ_ONLY');
       },
     };
   },
 };
 
-const isObject: SubBinding = {
-  name: 'isObject'.toLowerCase(),
-  type: 'SubBinding',
-  argumentsInfo: [
-    {
-      name: 'item',
-    },
-  ],
-  async value(args, context) {
-    const item = await args.getValue('item');
-    if (!item || !item.value) {
-      throwVBRuntimeError(context, 'TYPE_MISMATCH');
-    }
-  },
-};
-
-export default [Collection, isObject];
+export default [Collection];

@@ -71,7 +71,7 @@ for (const tk of Object.keys(errorCodes)) {
   }
 }
 
-type ErrorCode = keyof typeof errorCodes;
+export type ErrorCode = keyof typeof errorCodes;
 
 export class VBRuntimeError extends Error {
   public vbErrorType: string = 'runtime';

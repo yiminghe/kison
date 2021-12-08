@@ -30,7 +30,7 @@ A LALR(1)/LL(1)/LL(K) parser generator for `javascript`/`typescript`
 [![NPM downloads](https://img.shields.io/npm/dm/@yiminghe/excel-formula.svg)](https://npmjs.org/package/%40yiminghe%2Fexcel-formula)
 
 
-- [regexp](https://yiminghe.me/kison/examples/regexp-ll/): [match-stream-data-using-regular-expression](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
+- [regexp](https://yiminghe.me/kison/examples/regexp-ll/): javascript regexp engine in typescript/javascript, support async stream match: [match-stream-data-using-regular-expression](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
 
 [![npm version](https://badge.fury.io/js/%40yiminghe%2Fregexp.svg)](https://badge.fury.io/js/%40yiminghe%2Fregexp)
 [![NPM downloads](https://img.shields.io/npm/dm/@yiminghe/regexp.svg)](https://npmjs.org/package/%40yiminghe%2Fregexp)

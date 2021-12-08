@@ -46,6 +46,7 @@ let {
   productionSkipAstNodeSet,
   globalSymbolNodeId,
   astStack,
+  VIRTUAL_OPTIONAL_RULE_INDEX,
 } = data;
 
 type SymbolItem = string | number | RuleFlag | Function;
@@ -215,9 +216,13 @@ function parse(input: string, options: ParserOptions = {}) {
         token = lexer.lex();
         pushRecoveryTokens(recoveryTokens, token);
         continue;
+      } else if (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol)) {
+        next = {
+          ruleIndex: VIRTUAL_OPTIONAL_RULE_INDEX,
+        };
       }
 
-      if (next) {
+      if (next && next.unit) {
         if (!isZeroOrMoreSymbol(topSymbol)) {
           popSymbolStack();
         }
@@ -256,7 +261,10 @@ function parse(input: string, options: ParserOptions = {}) {
           ].reverse();
           symbolStack.push(...newRhs);
         }
-      } else if (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol)) {
+      } else if (
+        next &&
+        (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol))
+      ) {
         popSymbolStack();
       } else {
         let breakToEnd;

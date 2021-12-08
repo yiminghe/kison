@@ -146,7 +146,7 @@ module.exports = {
       n.endOfLine,
       n.alternationMark,
       n.COLON,
-      n.groupEndZeroOrMoreMark,
+      n.groupEndOneOrMoreMark,
     ],
 
     [
@@ -293,6 +293,7 @@ module.exports = {
     [
       n.blockStmt,
       n.lineLabel,
+      n.blockStmtOptional,
       n.alternationMark,
       n.goToStmt,
       n.alternationMark,
@@ -1004,7 +1005,7 @@ module.exports = {
 
       {
         token: n.SPACE_DOT,
-        regexp: /\s+\./,
+        regexp: / +\./,
       },
 
       ...generateLexerRulesByMap({

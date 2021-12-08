@@ -1,6 +1,6 @@
 progam ::= moduleDeclarations? endOfLine* moduleBody? endOfLine* '$EOF'
 endOfLine ::= 'NEWLINE' | 'COMMENT' | 'REMCOMMENT'
-endOfStatement ::= ( endOfLine | 'COLON' )*
+endOfStatement ::= ( endOfLine | 'COLON' )+
 moduleDeclarations ::= moduleDeclarationsElement ( endOfLine+ moduleDeclarationsElement )* endOfLine*
 moduleDeclarationsElement ::= 'COMMENT' | variableStmt | moduleOption
 moduleOption ::= 'OPTION_BASE' 'INTEGERLITERAL' | 'OPTION_COMPARE' 'IDENTIFIER' | 'OPTION_EXPLICIT' | 'OPTION_PRIVATE_MODULE'
@@ -13,7 +13,7 @@ propertySetStmt ::= visibility? 'STATIC'? 'PROPERTY_SET' ambiguousIdentifier arg
 propertyLetStmt ::= visibility? 'STATIC'? 'PROPERTY_LET' ambiguousIdentifier argList? endOfStatement block? 'END_PROPERTY'
 functionStmt ::= visibility? 'STATIC'? 'FUNCTION' ambiguousIdentifier typeHint? argList? asTypeClause? endOfStatement block? 'END_FUNCTION'
 block ::= blockStmt ( endOfStatement blockStmt )* endOfStatement
-blockStmt ::= lineLabel | goToStmt | ifThenElseStmt | selectCaseStmt | forNextStmt | forEachStmt | doLoopStmt | whileWendStmt | onErrorStmt | withStmt | eraseStmt | exitStmt | explicitCallStmt | setStmt | redimStmt | letStmt | variableStmt | implicitCallStmt_InBlock
+blockStmt ::= lineLabel blockStmt? | goToStmt | ifThenElseStmt | selectCaseStmt | forNextStmt | forEachStmt | doLoopStmt | whileWendStmt | onErrorStmt | withStmt | eraseStmt | exitStmt | explicitCallStmt | setStmt | redimStmt | letStmt | variableStmt | implicitCallStmt_InBlock
 whileWendStmt ::= 'WHILE' valueStmt endOfStatement block 'WEND'
 doLoopStmt ::= 'DO' endOfStatement block 'LOOP'
 doLoopStmt ::= 'DO' ( 'WHILE' | 'UNTIL' ) valueStmt endOfStatement block 'LOOP'

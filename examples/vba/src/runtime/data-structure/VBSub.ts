@@ -55,7 +55,7 @@ export class VBSub {
       throwVBRuntimeError(this.context, 'NOT_FOUND_LINE_LABEL', name);
     }
     const stmts = this.block?.children || [];
-    return evaluateNodes(stmts.slice(i + 1), this.context);
+    return evaluateNodes(stmts.slice(i), this.context);
   }
 
   constructor(

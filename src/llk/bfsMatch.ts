@@ -9,6 +9,7 @@ interface StateItem {
 }
 
 function findBestAlternation(
+  strict: boolean,
   _forSymbol: string,
   states: AllState[],
   endState: AllState | null,
@@ -61,6 +62,11 @@ function findBestAlternation(
   }
 
   let arr = Array.from(finishedTokens.keys());
+
+  if (!strict && !arr.length) {
+    // deep go to error branch
+    arr = Array.from(consumedTokensLength.keys());
+  }
 
   if (arr.length > 1) {
     const getOrder = (a: number) => {

@@ -89,7 +89,10 @@ const globalUtils = {
     getExpected: () => string[],
     onErrorRecovery: any,
     topSymbol: any,
-    shouldDelete: (nextToken: Token) => boolean,
+    shouldDelete: (tokens: {
+      nextToken: Token;
+      currentToken: Token;
+    }) => boolean,
     transformNode: TransformNode | undefined | false,
     recoveryTokens: Token[],
     ret: {
@@ -101,17 +104,18 @@ const globalUtils = {
   ) {
     const expected = getExpected();
     const recommendedAction: { action?: string } = {};
+    const currentToken = lexer.getCurrentToken();
     const nextToken = lexer.peekTokens()[0];
     // should delete
-    if (topSymbol === nextToken.t || shouldDelete(nextToken)) {
+    if (
+      topSymbol === nextToken.t ||
+      shouldDelete({ currentToken, nextToken })
+    ) {
       recommendedAction.action = 'del';
     } else if (expected.length) {
       recommendedAction.action = 'add';
     }
-    const token =
-      recommendedAction.action === 'add'
-        ? lexer.peekTokens()[0]
-        : lexer.getCurrentToken();
+    const token = recommendedAction.action === 'add' ? nextToken : currentToken;
     ret.error = {
       recovery: false,
       ...getParseError(() => expected, token),

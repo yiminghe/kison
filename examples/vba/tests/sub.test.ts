@@ -5,9 +5,9 @@ describe('sub', () => {
   it('exit sub works', async () => {
     const code = `
 sub main
-msgbox vbModal
+debug.print vbModal
 test2
-msgbox 4
+debug.print 4
 end sub
 
 sub test2
@@ -29,15 +29,15 @@ end sub
   it('end works', async () => {
     const code = `
 sub main
-msgbox 0
+debug.print 0
 test2
-msgbox 3
+debug.print 3
 end sub
 
 sub test2
-msgbox VBA.FormShowConstants.vbModal
+debug.print VBA.FormShowConstants.vbModal
 end
-msgbox 2
+debug.print 2
 end sub
     `;
     const ret: any[] = await run(code);
@@ -56,10 +56,10 @@ Sub Multi(marks As Integer _
             , Optional count As Integer = 1 _
             , Optional amount As Integer = 2 _
             , Optional version As Integer = 3)
-    msgbox marks
-    msgbox count
-    msgbox amount
-    msgbox version
+    debug.print marks
+    debug.print count
+    debug.print amount
+    debug.print version
     
 End Sub
 
@@ -104,7 +104,7 @@ End Sub
 
 Sub CalcValues(Optional x)
     ' Check for the parameter
-    msgbox IsMissing(x)
+    debug.print IsMissing(x)
 End Sub    
     `);
 
@@ -177,10 +177,10 @@ End Sub
     let ret = await run(
       `
       sub main 
-      msgbox 1 
+      debug.print 1 
       goto done
-      done: msgbox 2
-      msgbox 3
+      done: debug.print 2
+      debug.print 3
       end sub 
     `,
     );

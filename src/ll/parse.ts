@@ -172,7 +172,7 @@ export default function parse(input: string, options: ParserOptions) {
           getExpected,
           onErrorRecovery,
           topSymbol,
-          (nextToken) =>
+          ({ nextToken }) =>
             typeof topSymbol === 'string' &&
             getTableVal(topSymbol, nextToken.t) !== undefined,
           transformNode as any,

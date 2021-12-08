@@ -14,6 +14,18 @@ require.config({
 
 const $ = (v: string): any => document.getElementById(v)!;
 
+function trimLine(s: string) {
+  let start = 0;
+  let end = s.length - 1;
+  while (s[start] === ' ') {
+    start++;
+  }
+  while (s[end] === ' ') {
+    end--;
+  }
+  return s.slice(start, end + 1);
+}
+
 const moduleDefaultCode = `
 sub test2 (ByVal msg As Integer, msg2 As Integer)
   debug.print msg
@@ -46,7 +58,7 @@ sub main
 
   msgbox "done"
 end sub
-`.trim();
+`.trimStart();
 
 const classDefaultCode = `
 public m as Integer
@@ -72,7 +84,8 @@ End Property
 Property Let x(value)
   m = value
 End Property
-`.trim();
+`.trimStart();
+
 const version = '2';
 
 if (
@@ -135,7 +148,7 @@ require(['vs/editor/editor.main'], () => {
     editor: Manaco.editor.IStandaloneCodeEditor = moduleEditor,
     type: 'moduleCode' | 'classCode' = 'moduleCode',
   ) {
-    const code = editor.getModel()!.getValue().trim();
+    const code = editor.getModel()!.getValue().trimStart();
     localStorage.setItem(type, code);
     return code;
   }

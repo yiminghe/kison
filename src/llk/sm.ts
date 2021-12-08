@@ -152,6 +152,11 @@ function predictProductionIndexLLK(
     if (ruleIndex === undefined) {
       return null;
     }
+    if (ruleIndex === VIRTUAL_OPTIONAL_RULE_INDEX) {
+      return {
+        ruleIndex,
+      };
+    }
     const nextUnit = nextUnits[ruleIndex];
     return {
       ruleIndex,
@@ -164,17 +169,17 @@ function predictProductionIndexLLK(
     endState = lastUnit.end;
     symbolEndState = unit.end;
     const ruleIndexes = findBestAlternation(
+      false,
       childSymbol,
       states,
       globalMatch ? null : endState,
       symbolEndState,
     );
-    if (
-      ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX ||
-      ruleIndexes.length === 0
-    ) {
-      // skip this symbol first
+    if (!ruleIndexes.length) {
       return returnNext();
+    } else if (ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX) {
+      // skip this symbol first
+      return returnNext(VIRTUAL_OPTIONAL_RULE_INDEX);
     } else {
       startState = unit.start.transitions[0].to;
       if (startState.classType !== 'SymbolState') {
@@ -221,6 +226,7 @@ function predictProductionIndexLLK(
   }
 
   const ruleIndexes = findBestAlternation(
+    false,
     childSymbol,
     startStates,
     globalMatch ? null : endState,
@@ -229,6 +235,9 @@ function predictProductionIndexLLK(
 
   if (ruleIndexes[0] === VIRTUAL_OPTIONAL_RULE_INDEX) {
     ruleIndexes.shift();
+    if (!ruleIndexes.length) {
+      return returnNext(VIRTUAL_OPTIONAL_RULE_INDEX);
+    }
   }
 
   if (ruleIndexes.length) {

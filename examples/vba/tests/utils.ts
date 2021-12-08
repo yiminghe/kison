@@ -168,11 +168,11 @@ export async function runs2(
   }
   let i = 0;
   for (const m of moduleCodes) {
-    await context.load(m.trim(), files[i++]);
+    await context.load(m.trimStart(), files[i++]);
   }
 
   for (const c of classCode) {
-    await context.load(c.code.trim(), c);
+    await context.load(c.code.trimStart(), c);
   }
 
   await context.callSub(mainSub, {

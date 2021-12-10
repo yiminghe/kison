@@ -65,19 +65,27 @@ export class VBNativeClass {
     args: VBArguments = new VBArguments(this.context),
     check: boolean = true,
   ) {
+    const { context } = this;
     name = name.toLowerCase();
-    const fileSymbolTable = this.context.symbolTable.get(this.id)!;
-    const sub = fileSymbolTable.symbolTable.get(name);
-    if (sub && sub.type !== 'variable') {
-      if (sub.isPrivate() && this.id !== this.context.currentFile.id) {
-        const type = isClassProperty(name) ? 'property' : 'method';
-        throwVBRuntimeError(this.context, 'NO_PRIVATE_TYPE', type);
+    const fileSymbolTable = context.symbolTable.get(this.id)?.symbolTable!;
+    if (fileSymbolTable) {
+      let isProperty = false;
+      let sub = fileSymbolTable.get(name);
+      if (!sub) {
+        isProperty = true;
+        sub = fileSymbolTable.get(getPropertyGetSubName(name));
       }
-      return this.context.callVBSubInternal(sub, args, this);
-    } else {
-      if (check) {
-        throwVBRuntimeError(this.context, 'NOT_FOUND_SUB', name);
+      if (sub && sub.type !== 'variable') {
+        if (sub.isPrivate() && this.id !== context.currentFile.id) {
+          const type =
+            isProperty || isClassProperty(name) ? 'property' : 'method';
+          throwVBRuntimeError(context, 'NO_PRIVATE_TYPE', type);
+        }
+        return context.callVBSubInternal(sub, args, this);
       }
+    }
+    if (check) {
+      throwVBRuntimeError(this.context, 'NOT_FOUND_SUB', name);
     }
     return VB_EMPTY;
   }

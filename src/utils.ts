@@ -107,15 +107,12 @@ const globalUtils = {
     const currentToken = lexer.getCurrentToken();
     const nextToken = lexer.peekTokens()[0];
     // should delete
-    if (
-      topSymbol === nextToken.t ||
-      shouldDelete({ currentToken, nextToken })
-    ) {
+    if (expected.indexOf(nextToken.token) !== -1) {
       recommendedAction.action = 'del';
     } else if (expected.length) {
       recommendedAction.action = 'add';
     }
-    const token = recommendedAction.action === 'add' ? nextToken : currentToken;
+    const token = currentToken;
     ret.error = {
       recovery: false,
       ...getParseError(() => expected, token),

@@ -61,4 +61,5 @@ export function registerLoaders(others: Loaders) {
 
 export const loaders: Loaders = {
   load,
+  loadAttributeStmt() {},
 };

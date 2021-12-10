@@ -642,6 +642,10 @@ export const moduleAttributes = 'moduleAttributes';
 export const moduleAttributesOptional = 'moduleAttributes?';
 export const moduleAttributesZeroOrMore = 'moduleAttributes*';
 export const moduleAttributesOneOrMore = 'moduleAttributes+';
+export const attributeStmt = 'attributeStmt';
+export const attributeStmtOptional = 'attributeStmt?';
+export const attributeStmtZeroOrMore = 'attributeStmt*';
+export const attributeStmtOneOrMore = 'attributeStmt+';
 export const moduleDeclarations = 'moduleDeclarations';
 export const moduleDeclarationsOptional = 'moduleDeclarations?';
 export const moduleDeclarationsZeroOrMore = 'moduleDeclarations*';
@@ -773,6 +777,13 @@ export const iCS_S_VariableOrProcedureCallZeroOrMore =
   'iCS_S_VariableOrProcedureCall*';
 export const iCS_S_VariableOrProcedureCallOneOrMore =
   'iCS_S_VariableOrProcedureCall+';
+export const mCS_S_VariableOrProcedureCall = 'mCS_S_VariableOrProcedureCall';
+export const mCS_S_VariableOrProcedureCallOptional =
+  'mCS_S_VariableOrProcedureCall?';
+export const mCS_S_VariableOrProcedureCallZeroOrMore =
+  'mCS_S_VariableOrProcedureCall*';
+export const mCS_S_VariableOrProcedureCallOneOrMore =
+  'mCS_S_VariableOrProcedureCall+';
 export const explicitCallStmt = 'explicitCallStmt';
 export const explicitCallStmtOptional = 'explicitCallStmt?';
 export const explicitCallStmtZeroOrMore = 'explicitCallStmt*';
@@ -795,6 +806,12 @@ export const iCS_S_ProcedureOrArrayCallZeroOrMore =
   'iCS_S_ProcedureOrArrayCall*';
 export const iCS_S_ProcedureOrArrayCallOneOrMore =
   'iCS_S_ProcedureOrArrayCall+';
+export const mCS_S_ProcedureOrArrayCall = 'mCS_S_ProcedureOrArrayCall';
+export const mCS_S_ProcedureOrArrayCallOptional = 'mCS_S_ProcedureOrArrayCall?';
+export const mCS_S_ProcedureOrArrayCallZeroOrMore =
+  'mCS_S_ProcedureOrArrayCall*';
+export const mCS_S_ProcedureOrArrayCallOneOrMore =
+  'mCS_S_ProcedureOrArrayCall+';
 export const exitStmt = 'exitStmt';
 export const exitStmtOptional = 'exitStmt?';
 export const exitStmtZeroOrMore = 'exitStmt*';
@@ -871,6 +888,10 @@ export const goToStmt = 'goToStmt';
 export const goToStmtOptional = 'goToStmt?';
 export const goToStmtZeroOrMore = 'goToStmt*';
 export const goToStmtOneOrMore = 'goToStmt+';
+export const resumeStmt = 'resumeStmt';
+export const resumeStmtOptional = 'resumeStmt?';
+export const resumeStmtZeroOrMore = 'resumeStmt*';
+export const resumeStmtOneOrMore = 'resumeStmt+';
 export const onErrorStmt = 'onErrorStmt';
 export const onErrorStmtOptional = 'onErrorStmt?';
 export const onErrorStmtZeroOrMore = 'onErrorStmt*';

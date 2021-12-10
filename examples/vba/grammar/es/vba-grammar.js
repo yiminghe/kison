@@ -126,6 +126,9 @@ module.exports = {
   productions: n.makeProductions([
     [
       n.progam,
+      n.endOfLineZeroOrMore,
+      n.moduleAttributesOptional,
+      n.endOfLineZeroOrMore,
       n.moduleDeclarationsOptional,
       n.endOfLineZeroOrMore,
       n.moduleBodyOptional,
@@ -147,6 +150,24 @@ module.exports = {
       n.alternationMark,
       n.COLON,
       n.groupEndOneOrMoreMark,
+    ],
+    [
+      n.moduleAttributes,
+      n.groupStartMark,
+      n.attributeStmt,
+      n.endOfLineOneOrMore,
+      n.groupEndOneOrMoreMark,
+    ],
+    [
+      n.attributeStmt,
+      n.ATTRIBUTE,
+      n.implicitCallStmt_InStmt,
+      n.EQ,
+      n.literal,
+      n.groupStartMark,
+      ',',
+      n.literal,
+      n.groupEndZeroOrMoreMark,
     ],
 
     [
@@ -234,8 +255,7 @@ module.exports = {
       n.PROPERTY_GET,
       n.ambiguousIdentifier,
       n.typeHintOptional,
-      n.LPAREN,
-      n.RPAREN,
+      n.argListOptional,
       n.asTypeClauseOptional,
       n.endOfStatement,
       n.blockOptional,
@@ -295,7 +315,11 @@ module.exports = {
       n.lineLabel,
       n.blockStmtOptional,
       n.alternationMark,
+      n.attributeStmt,
+      n.alternationMark,
       n.goToStmt,
+      n.alternationMark,
+      n.resumeStmt,
       n.alternationMark,
       n.ifThenElseStmt,
       n.alternationMark,
@@ -329,6 +353,8 @@ module.exports = {
       n.alternationMark,
       n.implicitCallStmt_InBlock,
     ],
+
+    [n.resumeStmt, n.RESUME, n.ambiguousIdentifier],
 
     [n.whileWendStmt, n.WHILE, n.valueStmt, n.endOfStatement, n.block, n.WEND],
 
@@ -501,6 +527,7 @@ module.exports = {
     [
       n.onErrorStmt,
       n.ON_ERROR,
+      n.groupStartMark,
       n.GOTO,
       n.groupStartMark,
       n.ambiguousIdentifier,
@@ -508,9 +535,13 @@ module.exports = {
       n.MINUS,
       n.INTEGERLITERAL,
       n.groupEndMark,
+      n.alternationMark,
+      n.RESUME,
+      n.NEXT,
+      n.groupEndMark,
     ],
 
-    [n.lineLabel, n.ambiguousIdentifier, n.COLON],
+    [n.lineLabel, n.certainIdentifier, n.COLON],
 
     [n.goToStmt, n.GOTO, n.ambiguousIdentifier],
 
@@ -630,12 +661,15 @@ module.exports = {
 
     [
       n.iCS_B_MemberProcedureCall,
-      n.implicitCallStmt_InStmt,
+      n.groupStartMark,
+      n.SPACE_DOT,
+      n.alternationMark,
+      n.implicitCallStmt_InStmtOptional,
       '.',
+      n.groupEndMark,
       n.ambiguousIdentifier,
       n.typeHintOptional,
       n.argsCallOptional,
-      n.dictionaryCallStmtOptional,
       n.groupStartMark,
       n.LPAREN,
       n.indexes,
@@ -812,13 +846,12 @@ module.exports = {
       n.iCS_S_VariableOrProcedureCall,
       n.alternationMark,
       n.iCS_S_ProcedureOrArrayCall,
-      n.groupEndMark,
+      n.groupEndOptionalMark,
       n.iCS_S_MemberCall,
       n.alternationMark,
       n.iCS_S_SpaceMemberCall,
       n.groupEndMark,
       n.iCS_S_MemberCallZeroOrMore,
-      n.dictionaryCallStmtOptional,
       n.groupStartMark,
       n.LPAREN,
       n.indexes,
@@ -829,29 +862,41 @@ module.exports = {
       n.iCS_S_MemberCall,
       '.',
       n.groupStartMark,
-      n.iCS_S_VariableOrProcedureCall,
+      n.mCS_S_VariableOrProcedureCall,
       n.alternationMark,
-      n.iCS_S_ProcedureOrArrayCall,
+      n.mCS_S_ProcedureOrArrayCall,
       n.groupEndMark,
     ],
     [
       n.iCS_S_SpaceMemberCall,
       n.SPACE_DOT,
       n.groupStartMark,
-      n.iCS_S_VariableOrProcedureCall,
+      n.mCS_S_VariableOrProcedureCall,
       n.alternationMark,
-      n.iCS_S_ProcedureOrArrayCall,
+      n.mCS_S_ProcedureOrArrayCall,
       n.groupEndMark,
     ],
 
     [
       n.iCS_S_ProcedureOrArrayCall,
+      n.certainIdentifier,
+      n.typeHintOptional,
+      n.LPAREN,
+      n.argsCallOptional,
+      n.RPAREN,
+      n.groupStartMark,
+      n.LPAREN,
+      n.indexes,
+      n.RPAREN,
+      n.groupEndZeroOrMoreMark,
+    ],
+    [
+      n.mCS_S_ProcedureOrArrayCall,
       n.ambiguousIdentifier,
       n.typeHintOptional,
       n.LPAREN,
       n.argsCallOptional,
       n.RPAREN,
-      n.dictionaryCallStmtOptional,
       n.groupStartMark,
       n.LPAREN,
       n.indexes,
@@ -861,17 +906,24 @@ module.exports = {
 
     [
       n.iCS_S_VariableOrProcedureCall,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
-      n.dictionaryCallStmtOptional,
       n.groupStartMark,
       n.LPAREN,
       n.indexes,
       n.RPAREN,
       n.groupEndZeroOrMoreMark,
     ],
-
-    [n.dictionaryCallStmt, '!', n.ambiguousIdentifier, n.typeHintOptional],
+    [
+      n.mCS_S_VariableOrProcedureCall,
+      n.ambiguousIdentifier,
+      n.typeHintOptional,
+      n.groupStartMark,
+      n.LPAREN,
+      n.indexes,
+      n.RPAREN,
+      n.groupEndZeroOrMoreMark,
+    ],
 
     [
       n.literal,
@@ -928,7 +980,7 @@ module.exports = {
 
     [n.argDefaultValue, n.EQ, n.valueStmt],
 
-    [n.asTypeClause, n.AS, n.NEWOptional, n.type_, n.fieldLengthOptional],
+    [n.asTypeClause, n.AS, n.NEWOptional, n.type_],
 
     [
       n.type_,
@@ -947,11 +999,7 @@ module.exports = {
       n.complexType,
       n.ambiguousIdentifier,
       n.groupStartMark,
-      n.groupStartMark,
       '.',
-      n.alternationMark,
-      '!',
-      n.groupEndMark,
       n.ambiguousIdentifier,
       n.groupEndZeroOrMoreMark,
     ],
@@ -975,15 +1023,6 @@ module.exports = {
       n.STRING,
       n.alternationMark,
       n.DATE,
-    ],
-
-    [
-      n.fieldLength,
-      n.MULT,
-      n.INTEGERLITERAL,
-      n.alternationMark,
-      n.MULT,
-      n.ambiguousIdentifier,
     ],
 
     ...n.KEYWORDS.map((keyword) => ({

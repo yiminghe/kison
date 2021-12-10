@@ -1,31 +1,8 @@
-import type {
-  Ast_ICS_B_ProcedureCall_Node,
-  Ast_ECS_ProcedureCall_Node,
-  Ast_ECS_MemberProcedureCall_Node,
-  Ast_ICS_B_MemberProcedureCall_Node,
-} from '../../parser';
-import { collectAmbiguousIdentifier } from '../collect/collectType';
-import type { Context } from '../Context';
-import {
-  VBAny,
-  VB_EXIT_SUB,
-  VB_MISSING_ARGUMENT,
-  VBClass,
-  SubBinding,
-} from '../types';
+import { VBAny } from '../types';
 import { evaluate, registerEvaluators } from './evaluators';
-import {
-  buildArgs,
-  buildIndexes,
-  callSubOrGetElementWithIndexesAndArgs,
-} from './common';
+import { buildIndexes, callSubOrGetElementWithIndexesAndArgs } from './common';
 import { throwVBRuntimeError } from '../data-structure/VBError';
-import {
-  IndexedArg,
-  NamedArg,
-  VBArguments,
-} from '../data-structure/VBArguments';
-import { getIdentifierName, last } from '../utils';
+import { last } from '../utils';
 
 registerEvaluators({
   async evaluateICS_S_MembersCall(node, context) {
@@ -39,7 +16,7 @@ registerEvaluators({
     ) {
       throwVBRuntimeError(context, 'INVALIDE_REF');
     }
-    for (const c of children) {
+    for (const c of children.slice(1)) {
       if (c.type === 'symbol' && c.symbol === 'iCS_S_MemberCall') {
         parentMember = await evaluate(c, context, {
           parentMember,
@@ -63,12 +40,22 @@ registerEvaluators({
 
   async evaluateICS_S_MemberCall({ children }, context, params = {}) {
     if (!params.parentMember) {
-      throwVBRuntimeError(context, 'INVALIDE_REF');
+      // with xx
+      // no space
+      // msgbox(.xx)
+      //
+      if (!last(context.withStack)) {
+        throwVBRuntimeError(context, 'INVALIDE_REF');
+      }
+      params = {
+        ...params,
+        parentMember: last(context.withStack),
+      };
     }
     return evaluate(children[1], context, params);
   },
 
-  async evaluateICS_S_SpaceMemberCall({ children }, context, params = {}) {
+  async evaluateICS_S_SpaceMemberCall({ children }, context) {
     if (!last(context.withStack)) {
       throwVBRuntimeError(context, 'INVALIDE_REF');
     }

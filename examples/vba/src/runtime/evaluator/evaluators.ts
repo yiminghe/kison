@@ -79,4 +79,5 @@ export function registerEvaluators(others: Evaluators) {
 
 export const evaluators: Evaluators = {
   evaluate,
+  evaluateAttributeStmt() {},
 };

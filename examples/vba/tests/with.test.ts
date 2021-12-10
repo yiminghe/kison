@@ -1,5 +1,4 @@
-import { Context } from '../src';
-import { runs, run } from './utils';
+import { runs } from './utils';
 
 describe('with', () => {
   let ret: any[];
@@ -94,5 +93,44 @@ describe('with', () => {
     expect(error.message).toMatchInlineSnapshot(
       `"invalid reference at test (m1:9)"`,
     );
+  });
+
+  it('works for memberCall', async () => {
+    const classCode = `
+    public m1 as Integer
+    public m2 as Integer
+    sub class_initialize
+      m1 = 1
+      m2 = 2 
+    end sub
+    sub print2
+      debug.print m2
+    end sub
+        `;
+
+    const moduleCode = `
+    sub main
+    dim c as new MyClass
+    
+    with c
+      call debug.print(.m1)
+      .print2
+    end with
+    end sub    
+        `;
+
+    ret = await runs(
+      [moduleCode],
+      [
+        {
+          code: classCode,
+          name: 'MyClass',
+          id: '1',
+          type: 'class',
+        },
+      ],
+    );
+
+    expect(ret).toEqual([1, 2]);
   });
 });

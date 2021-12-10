@@ -34,6 +34,7 @@ export const errorCodes = {
   DIVIDE_BY_ZERO: 'divide by zero',
   READ_ONLY: 'read only',
   KEY_ALREADY_EXISTS: 'key already exists',
+  UNSUPPORTED: (m: string) => `'${m}' unsupported`,
 };
 
 type ErrorCodesKey = keyof typeof errorCodes;

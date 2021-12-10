@@ -69,6 +69,8 @@ export function isClassProperty(t: string) {
   return t.startsWith(prefix);
 }
 
-export function getIdentifierName(n: Ast_AmbiguousIdentifier_Node) {
+export function getIdentifierName(
+  n: Ast_AmbiguousIdentifier_Node | Ast_CertainIdentifier_Node,
+) {
   return n.children[0].text;
 }

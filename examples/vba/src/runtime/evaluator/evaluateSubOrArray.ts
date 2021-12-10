@@ -13,7 +13,7 @@ import {
   VBClass,
   SubBinding,
 } from '../types';
-import { evaluate, registerEvaluators } from './evaluators';
+import { evaluate, evaluators, registerEvaluators } from './evaluators';
 import {
   buildArgs,
   buildIndexes,
@@ -92,8 +92,20 @@ registerEvaluators({
     return;
   },
 
-  async evaluateGoToStmt(node, context) {
-    const label = getIdentifierName(node.children[1]);
+  async evaluateGoToStmt({ children }, context) {
+    const label = getIdentifierName(children[1]);
+    const sub = context.getCurrentScopeInternal().sub;
+    if (sub.type !== 'SubBinding') {
+      await sub.gotoLineLabel(label);
+      throw VB_EXIT_SUB;
+    }
+  },
+
+  async evaluateResumeStmt({ children }, context) {
+    const label = getIdentifierName(children[1]);
+    if (label === 'next') {
+      throwVBRuntimeError(context, 'UNSUPPORTED', 'resume next');
+    }
     const sub = context.getCurrentScopeInternal().sub;
     if (sub.type !== 'SubBinding') {
       await sub.gotoLineLabel(label);
@@ -185,6 +197,11 @@ registerEvaluators({
     );
   },
 
+  async evaluateMCS_S_ProcedureOrArrayCall(...args) {
+    const fn = evaluators.evaluateICS_S_ProcedureOrArrayCall;
+    return (fn as any)(...args);
+  },
+
   async evaluateICS_S_VariableOrProcedureCall(
     { children },
     context,
@@ -198,5 +215,10 @@ registerEvaluators({
       indexes,
       context,
     );
+  },
+
+  async evaluateMCS_S_VariableOrProcedureCall(...args) {
+    const fn = evaluators.evaluateICS_S_VariableOrProcedureCall;
+    return (fn as any)(...args);
   },
 });

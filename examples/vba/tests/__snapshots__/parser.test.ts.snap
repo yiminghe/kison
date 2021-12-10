@@ -100,8 +100,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 227,
-                  'internalRuleIndex': 352,
+                  'ruleIndex': 230,
+                  'internalRuleIndex': 362,
                   'id': 7
                 },
                 {
@@ -306,7 +306,7 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'lastLine': 8,
                                       'firstColumn': 1,
                                       'lastColumn': 2,
-                                      'symbol': 'ambiguousIdentifier',
+                                      'symbol': 'certainIdentifier',
                                       'type': 'symbol',
                                       'children': [
                                         {
@@ -321,18 +321,18 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                           'text': 'x'
                                         }
                                       ],
-                                      'ruleIndex': 227,
-                                      'internalRuleIndex': 352,
+                                      'ruleIndex': 229,
+                                      'internalRuleIndex': 361,
                                       'id': 19
                                     }
                                   ],
-                                  'ruleIndex': 91,
-                                  'internalRuleIndex': 181,
+                                  'ruleIndex': 95,
+                                  'internalRuleIndex': 197,
                                   'id': 18
                                 }
                               ],
-                              'ruleIndex': 86,
-                              'internalRuleIndex': 163,
+                              'ruleIndex': 89,
+                              'internalRuleIndex': 176,
                               'id': 17
                             },
                             {
@@ -378,24 +378,24 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                       'text': '1'
                                     }
                                   ],
-                                  'ruleIndex': 93,
-                                  'internalRuleIndex': 184,
+                                  'ruleIndex': 97,
+                                  'internalRuleIndex': 200,
                                   'id': 28
                                 }
                               ],
-                              'ruleIndex': 85,
-                              'internalRuleIndex': 353,
+                              'ruleIndex': 88,
+                              'internalRuleIndex': 363,
                               'id': 20,
                               'isWrap': true
                             }
                           ],
-                          'ruleIndex': 43,
-                          'internalRuleIndex': 113,
+                          'ruleIndex': 46,
+                          'internalRuleIndex': 124,
                           'id': 16
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 52,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 58,
                       'id': 15
                     },
                     {
@@ -440,8 +440,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                       'id': 34
                     }
                   ],
-                  'ruleIndex': 15,
-                  'internalRuleIndex': 36,
+                  'ruleIndex': 17,
+                  'internalRuleIndex': 40,
                   'id': 14
                 },
                 {
@@ -456,13 +456,13 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                   'text': 'end sub'
                 }
               ],
-              'ruleIndex': 10,
-              'internalRuleIndex': 30,
+              'ruleIndex': 12,
+              'internalRuleIndex': 34,
               'id': 6
             }
           ],
-          'ruleIndex': 8,
-          'internalRuleIndex': 25,
+          'ruleIndex': 10,
+          'internalRuleIndex': 29,
           'id': 5
         },
         {
@@ -492,8 +492,8 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
           'id': 36
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 20,
+      'ruleIndex': 9,
+      'internalRuleIndex': 24,
       'id': 4
     },
     {
@@ -614,8 +614,8 @@ exports[`vba parser parse correctly 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 227,
-                  'internalRuleIndex': 352,
+                  'ruleIndex': 230,
+                  'internalRuleIndex': 362,
                   'id': 7
                 },
                 {
@@ -721,8 +721,8 @@ exports[`vba parser parse correctly 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 226,
-                                  'internalRuleIndex': 351,
+                                  'ruleIndex': 229,
+                                  'internalRuleIndex': 361,
                                   'id': 14
                                 },
                                 {
@@ -777,39 +777,39 @@ exports[`vba parser parse correctly 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 93,
-                                              'internalRuleIndex': 184,
+                                              'ruleIndex': 97,
+                                              'internalRuleIndex': 200,
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 85,
-                                          'internalRuleIndex': 353,
+                                          'ruleIndex': 88,
+                                          'internalRuleIndex': 363,
                                           'id': 17,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 52,
-                                      'internalRuleIndex': 131,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 144,
                                       'id': 16
                                     }
                                   ],
-                                  'ruleIndex': 51,
-                                  'internalRuleIndex': 130,
+                                  'ruleIndex': 54,
+                                  'internalRuleIndex': 143,
                                   'id': 15
                                 }
                               ],
-                              'ruleIndex': 50,
-                              'internalRuleIndex': 128,
+                              'ruleIndex': 53,
+                              'internalRuleIndex': 141,
                               'id': 13
                             }
                           ],
-                          'ruleIndex': 48,
-                          'internalRuleIndex': 126,
+                          'ruleIndex': 51,
+                          'internalRuleIndex': 137,
                           'id': 12
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 54,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 60,
                       'id': 11
                     },
                     {
@@ -854,8 +854,8 @@ exports[`vba parser parse correctly 2`] = `
                       'id': 31
                     }
                   ],
-                  'ruleIndex': 15,
-                  'internalRuleIndex': 36,
+                  'ruleIndex': 17,
+                  'internalRuleIndex': 40,
                   'id': 10
                 },
                 {
@@ -870,13 +870,13 @@ exports[`vba parser parse correctly 2`] = `
                   'text': 'end sub'
                 }
               ],
-              'ruleIndex': 10,
-              'internalRuleIndex': 30,
+              'ruleIndex': 12,
+              'internalRuleIndex': 34,
               'id': 6
             }
           ],
-          'ruleIndex': 8,
-          'internalRuleIndex': 25,
+          'ruleIndex': 10,
+          'internalRuleIndex': 29,
           'id': 5
         },
         {
@@ -906,8 +906,8 @@ exports[`vba parser parse correctly 2`] = `
           'id': 33
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 20,
+      'ruleIndex': 9,
+      'internalRuleIndex': 24,
       'id': 4
     },
     {
@@ -1028,8 +1028,8 @@ exports[`vba parser report error when extra ; 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 227,
-                  'internalRuleIndex': 352,
+                  'ruleIndex': 230,
+                  'internalRuleIndex': 362,
                   'id': 7
                 },
                 {
@@ -1135,8 +1135,8 @@ exports[`vba parser report error when extra ; 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 226,
-                                  'internalRuleIndex': 351,
+                                  'ruleIndex': 229,
+                                  'internalRuleIndex': 361,
                                   'id': 14
                                 },
                                 {
@@ -1191,39 +1191,39 @@ exports[`vba parser report error when extra ; 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 93,
-                                              'internalRuleIndex': 184,
+                                              'ruleIndex': 97,
+                                              'internalRuleIndex': 200,
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 85,
-                                          'internalRuleIndex': 353,
+                                          'ruleIndex': 88,
+                                          'internalRuleIndex': 363,
                                           'id': 17,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 52,
-                                      'internalRuleIndex': 131,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 144,
                                       'id': 16
                                     }
                                   ],
-                                  'ruleIndex': 51,
-                                  'internalRuleIndex': 130,
+                                  'ruleIndex': 54,
+                                  'internalRuleIndex': 143,
                                   'id': 15
                                 }
                               ],
-                              'ruleIndex': 50,
-                              'internalRuleIndex': 128,
+                              'ruleIndex': 53,
+                              'internalRuleIndex': 141,
                               'id': 13
                             }
                           ],
-                          'ruleIndex': 48,
-                          'internalRuleIndex': 126,
+                          'ruleIndex': 51,
+                          'internalRuleIndex': 137,
                           'id': 12
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 54,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 60,
                       'id': 11
                     },
                     {
@@ -1319,8 +1319,8 @@ exports[`vba parser report error when extra ; 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 226,
-                                  'internalRuleIndex': 351,
+                                  'ruleIndex': 229,
+                                  'internalRuleIndex': 361,
                                   'id': 36
                                 },
                                 {
@@ -1385,13 +1385,13 @@ exports[`vba parser report error when extra ; 2`] = `
                                                       'text': '2'
                                                     }
                                                   ],
-                                                  'ruleIndex': 93,
-                                                  'internalRuleIndex': 184,
+                                                  'ruleIndex': 97,
+                                                  'internalRuleIndex': 200,
                                                   'id': 47
                                                 }
                                               ],
-                                              'ruleIndex': 82,
-                                              'internalRuleIndex': 378,
+                                              'ruleIndex': 85,
+                                              'internalRuleIndex': 388,
                                               'id': 44,
                                               'isWrap': true
                                             },
@@ -1451,54 +1451,54 @@ exports[`vba parser report error when extra ; 2`] = `
                                               }
                                             }
                                           ],
-                                          'ruleIndex': 85,
-                                          'internalRuleIndex': 353,
+                                          'ruleIndex': 88,
+                                          'internalRuleIndex': 363,
                                           'id': 39,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 52,
-                                      'internalRuleIndex': 131,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 144,
                                       'id': 38
                                     }
                                   ],
-                                  'ruleIndex': 51,
-                                  'internalRuleIndex': 130,
+                                  'ruleIndex': 54,
+                                  'internalRuleIndex': 143,
                                   'id': 37
                                 }
                               ],
-                              'ruleIndex': 50,
-                              'internalRuleIndex': 128,
+                              'ruleIndex': 53,
+                              'internalRuleIndex': 141,
                               'id': 35
                             }
                           ],
-                          'ruleIndex': 48,
-                          'internalRuleIndex': 126,
+                          'ruleIndex': 51,
+                          'internalRuleIndex': 137,
                           'id': 34
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 54,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 60,
                       'id': 33
                     }
                   ],
-                  'ruleIndex': 15,
-                  'internalRuleIndex': 36,
+                  'ruleIndex': 17,
+                  'internalRuleIndex': 40,
                   'id': 10
                 }
               ],
-              'ruleIndex': 10,
-              'internalRuleIndex': 30,
+              'ruleIndex': 12,
+              'internalRuleIndex': 34,
               'id': 6
             }
           ],
-          'ruleIndex': 8,
-          'internalRuleIndex': 25,
+          'ruleIndex': 10,
+          'internalRuleIndex': 29,
           'id': 5
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 20,
+      'ruleIndex': 9,
+      'internalRuleIndex': 24,
       'id': 4
     }
   ],
@@ -1567,11 +1567,11 @@ exports[`vba parser report error when missing end sub 2`] = `
           'children': [
             {
               'start': 5,
-              'end': 0,
+              'end': 61,
               'firstLine': 2,
-              'lastLine': 0,
+              'lastLine': 7,
               'firstColumn': 5,
-              'lastColumn': 0,
+              'lastColumn': 8,
               'symbol': 'subStmt',
               'type': 'symbol',
               'children': [
@@ -1608,8 +1608,8 @@ exports[`vba parser report error when missing end sub 2`] = `
                       'text': 'main'
                     }
                   ],
-                  'ruleIndex': 227,
-                  'internalRuleIndex': 352,
+                  'ruleIndex': 230,
+                  'internalRuleIndex': 362,
                   'id': 7
                 },
                 {
@@ -1655,11 +1655,11 @@ exports[`vba parser report error when missing end sub 2`] = `
                 },
                 {
                   'start': 18,
-                  'end': 61,
+                  'end': 54,
                   'firstLine': 3,
                   'lastLine': 7,
                   'firstColumn': 5,
-                  'lastColumn': 8,
+                  'lastColumn': 1,
                   'symbol': 'block',
                   'type': 'symbol',
                   'children': [
@@ -1715,8 +1715,8 @@ exports[`vba parser report error when missing end sub 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 226,
-                                  'internalRuleIndex': 351,
+                                  'ruleIndex': 229,
+                                  'internalRuleIndex': 361,
                                   'id': 14
                                 },
                                 {
@@ -1771,39 +1771,39 @@ exports[`vba parser report error when missing end sub 2`] = `
                                                   'text': '1'
                                                 }
                                               ],
-                                              'ruleIndex': 93,
-                                              'internalRuleIndex': 184,
+                                              'ruleIndex': 97,
+                                              'internalRuleIndex': 200,
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 85,
-                                          'internalRuleIndex': 353,
+                                          'ruleIndex': 88,
+                                          'internalRuleIndex': 363,
                                           'id': 17,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 52,
-                                      'internalRuleIndex': 131,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 144,
                                       'id': 16
                                     }
                                   ],
-                                  'ruleIndex': 51,
-                                  'internalRuleIndex': 130,
+                                  'ruleIndex': 54,
+                                  'internalRuleIndex': 143,
                                   'id': 15
                                 }
                               ],
-                              'ruleIndex': 50,
-                              'internalRuleIndex': 128,
+                              'ruleIndex': 53,
+                              'internalRuleIndex': 141,
                               'id': 13
                             }
                           ],
-                          'ruleIndex': 48,
-                          'internalRuleIndex': 126,
+                          'ruleIndex': 51,
+                          'internalRuleIndex': 137,
                           'id': 12
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 54,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 60,
                       'id': 11
                     },
                     {
@@ -1899,8 +1899,8 @@ exports[`vba parser report error when missing end sub 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 226,
-                                  'internalRuleIndex': 351,
+                                  'ruleIndex': 229,
+                                  'internalRuleIndex': 361,
                                   'id': 36
                                 },
                                 {
@@ -1955,39 +1955,39 @@ exports[`vba parser report error when missing end sub 2`] = `
                                                   'text': '2'
                                                 }
                                               ],
-                                              'ruleIndex': 93,
-                                              'internalRuleIndex': 184,
+                                              'ruleIndex': 97,
+                                              'internalRuleIndex': 200,
                                               'id': 47
                                             }
                                           ],
-                                          'ruleIndex': 85,
-                                          'internalRuleIndex': 353,
+                                          'ruleIndex': 88,
+                                          'internalRuleIndex': 363,
                                           'id': 39,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 52,
-                                      'internalRuleIndex': 131,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 144,
                                       'id': 38
                                     }
                                   ],
-                                  'ruleIndex': 51,
-                                  'internalRuleIndex': 130,
+                                  'ruleIndex': 54,
+                                  'internalRuleIndex': 143,
                                   'id': 37
                                 }
                               ],
-                              'ruleIndex': 50,
-                              'internalRuleIndex': 128,
+                              'ruleIndex': 53,
+                              'internalRuleIndex': 141,
                               'id': 35
                             }
                           ],
-                          'ruleIndex': 48,
-                          'internalRuleIndex': 126,
+                          'ruleIndex': 51,
+                          'internalRuleIndex': 137,
                           'id': 34
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 54,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 60,
                       'id': 33
                     },
                     {
@@ -2083,8 +2083,8 @@ exports[`vba parser report error when missing end sub 2`] = `
                                       'text': 'msgbox'
                                     }
                                   ],
-                                  'ruleIndex': 226,
-                                  'internalRuleIndex': 351,
+                                  'ruleIndex': 229,
+                                  'internalRuleIndex': 361,
                                   'id': 58
                                 },
                                 {
@@ -2139,39 +2139,39 @@ exports[`vba parser report error when missing end sub 2`] = `
                                                   'text': '3'
                                                 }
                                               ],
-                                              'ruleIndex': 93,
-                                              'internalRuleIndex': 184,
+                                              'ruleIndex': 97,
+                                              'internalRuleIndex': 200,
                                               'id': 69
                                             }
                                           ],
-                                          'ruleIndex': 85,
-                                          'internalRuleIndex': 353,
+                                          'ruleIndex': 88,
+                                          'internalRuleIndex': 363,
                                           'id': 61,
                                           'isWrap': true
                                         }
                                       ],
-                                      'ruleIndex': 52,
-                                      'internalRuleIndex': 131,
+                                      'ruleIndex': 55,
+                                      'internalRuleIndex': 144,
                                       'id': 60
                                     }
                                   ],
-                                  'ruleIndex': 51,
-                                  'internalRuleIndex': 130,
+                                  'ruleIndex': 54,
+                                  'internalRuleIndex': 143,
                                   'id': 59
                                 }
                               ],
-                              'ruleIndex': 50,
-                              'internalRuleIndex': 128,
+                              'ruleIndex': 53,
+                              'internalRuleIndex': 141,
                               'id': 57
                             }
                           ],
-                          'ruleIndex': 48,
-                          'internalRuleIndex': 126,
+                          'ruleIndex': 51,
+                          'internalRuleIndex': 137,
                           'id': 56
                         }
                       ],
-                      'ruleIndex': 16,
-                      'internalRuleIndex': 54,
+                      'ruleIndex': 18,
+                      'internalRuleIndex': 60,
                       'id': 55
                     },
                     {
@@ -2214,181 +2214,56 @@ exports[`vba parser report error when missing end sub 2`] = `
                       'ruleIndex': 3,
                       'internalRuleIndex': 9,
                       'id': 75
-                    },
-                    {
+                    }
+                  ],
+                  'ruleIndex': 17,
+                  'internalRuleIndex': 40,
+                  'id': 10
+                },
+                {
+                  'start': 58,
+                  'end': 61,
+                  'firstLine': 7,
+                  'lastLine': 7,
+                  'firstColumn': 5,
+                  'lastColumn': 8,
+                  'token': 'SUB',
+                  'type': 'token',
+                  'text': 'sub',
+                  'error': {
+                    'recovery': false,
+                    'errorMessage': 'syntax error at line 7:\\\\n\\\\n    sub main\\\\n    msgbox 1\\\\n    msgbox 2\\\\n    msgbox 3\\\\n\\\\n    sub test\\\\n----^\\\\n    msgbox 4\\\\n    end sub\\\\n    \\\\n'END_SUB' expected.\\\\ncurrent token: 'SUB'.',
+                    'tip': ''END_SUB' expected.\\\\ncurrent token: 'SUB'.',
+                    'expected': [
+                      'END_SUB'
+                    ],
+                    'symbol': 'subStmt',
+                    'token': {
+                      'text': 'sub',
+                      'token': 'SUB',
+                      't': 'SUB',
                       'start': 58,
                       'end': 61,
                       'firstLine': 7,
                       'lastLine': 7,
                       'firstColumn': 5,
-                      'lastColumn': 8,
-                      'token': 'SUB',
-                      'type': 'token',
-                      'text': 'sub',
-                      'error': {
-                        'recovery': false,
-                        'errorMessage': 'syntax error at line 7:\\\\n\\\\n    sub main\\\\n    msgbox 1\\\\n    msgbox 2\\\\n    msgbox 3\\\\n\\\\n    sub test\\\\n----^\\\\n    msgbox 4\\\\n    end sub\\\\n    \\\\n'IDENTIFIER', 'IMP', 'XOR', 'WITHEVENTS', 'WITH', 'WHILE', 'WEND', 'VARIANT', 'UNTIL', 'TYPEOF', 'TRUE', 'TO', 'THEN', 'SUB', 'STRING', 'STOP', 'STEP', 'STATIC', 'SINGLE', 'SET', 'SELECT', 'RETURN', 'RESUME', 'RESET', 'REDIM', 'RAISEEVENT', 'PUBLIC', 'PTRSAFE', 'PROPERTY_SET', 'PROPERTY_LET', 'PROPERTY_GET', 'PRIVATE', 'PRESERVE', 'PARAMARRAY', 'OR', 'OPTION_PRIVATE_MODULE', 'OPTION_COMPARE', 'OPTION_EXPLICIT', 'OPTION_BASE', 'OPTIONAL', 'ON', 'ON_LOCAL_ERROR', 'ON_ERROR', 'NULL', 'NOTHING', 'NOT', 'NEW', 'NEXT', 'MOD', 'MACRO_END_IF', 'MACRO_ELSE', 'MACRO_ELSEIF', 'MACRO_IF', 'MACRO_CONST', 'LSET', 'LIKE', 'LIB', 'LET', 'LEN', 'LOOP', 'LONG', 'INTEGER', 'IS', 'ISNOT', 'IN', 'IMPLEMENTS', 'IF', 'GOTO', 'GOSUB', 'GLOBAL', 'GET', 'FUNCTION', 'FOR', 'FRIEND', 'FALSE', 'EXIT_SUB', 'EXIT_PROPERTY', 'EXIT_FUNCTION', 'EXIT_FOR', 'EXIT_DO', 'EVENT', 'ERASE', 'EQV', 'ENUM', 'END', 'END_WITH', 'END_TYPE', 'END_SUB', 'END_SELECT', 'END_PROPERTY', 'END_IF', 'END_FUNCTION', 'END_ENUM', 'ELSEIF', 'ELSE', 'EACH', 'DOUBLE', 'DO', 'DIM', 'DEFVAR', 'DEFSTR', 'DEFSNG', 'DEFOBJ', 'DEFLNG', 'DEFINT', 'DEFCUR', 'DEFDEC', 'DEFDBL', 'DEFDATE', 'DEFBYTE', 'DEFBOOL', 'DECLARE', 'DATE', 'CONST', 'CASE', 'CALL', 'BYTE', 'BYREF', 'BYVAL', 'BOOLEAN', 'BEGIN', 'AS', 'ATTRIBUTE', 'AND', 'ALIAS', 'SPACE_DOT' expected.\\\\ncurrent token: 'SUB'.',
-                        'tip': ''IDENTIFIER', 'IMP', 'XOR', 'WITHEVENTS', 'WITH', 'WHILE', 'WEND', 'VARIANT', 'UNTIL', 'TYPEOF', 'TRUE', 'TO', 'THEN', 'SUB', 'STRING', 'STOP', 'STEP', 'STATIC', 'SINGLE', 'SET', 'SELECT', 'RETURN', 'RESUME', 'RESET', 'REDIM', 'RAISEEVENT', 'PUBLIC', 'PTRSAFE', 'PROPERTY_SET', 'PROPERTY_LET', 'PROPERTY_GET', 'PRIVATE', 'PRESERVE', 'PARAMARRAY', 'OR', 'OPTION_PRIVATE_MODULE', 'OPTION_COMPARE', 'OPTION_EXPLICIT', 'OPTION_BASE', 'OPTIONAL', 'ON', 'ON_LOCAL_ERROR', 'ON_ERROR', 'NULL', 'NOTHING', 'NOT', 'NEW', 'NEXT', 'MOD', 'MACRO_END_IF', 'MACRO_ELSE', 'MACRO_ELSEIF', 'MACRO_IF', 'MACRO_CONST', 'LSET', 'LIKE', 'LIB', 'LET', 'LEN', 'LOOP', 'LONG', 'INTEGER', 'IS', 'ISNOT', 'IN', 'IMPLEMENTS', 'IF', 'GOTO', 'GOSUB', 'GLOBAL', 'GET', 'FUNCTION', 'FOR', 'FRIEND', 'FALSE', 'EXIT_SUB', 'EXIT_PROPERTY', 'EXIT_FUNCTION', 'EXIT_FOR', 'EXIT_DO', 'EVENT', 'ERASE', 'EQV', 'ENUM', 'END', 'END_WITH', 'END_TYPE', 'END_SUB', 'END_SELECT', 'END_PROPERTY', 'END_IF', 'END_FUNCTION', 'END_ENUM', 'ELSEIF', 'ELSE', 'EACH', 'DOUBLE', 'DO', 'DIM', 'DEFVAR', 'DEFSTR', 'DEFSNG', 'DEFOBJ', 'DEFLNG', 'DEFINT', 'DEFCUR', 'DEFDEC', 'DEFDBL', 'DEFDATE', 'DEFBYTE', 'DEFBOOL', 'DECLARE', 'DATE', 'CONST', 'CASE', 'CALL', 'BYTE', 'BYREF', 'BYVAL', 'BOOLEAN', 'BEGIN', 'AS', 'ATTRIBUTE', 'AND', 'ALIAS', 'SPACE_DOT' expected.\\\\ncurrent token: 'SUB'.',
-                        'expected': [
-                          'IDENTIFIER',
-                          'IMP',
-                          'XOR',
-                          'WITHEVENTS',
-                          'WITH',
-                          'WHILE',
-                          'WEND',
-                          'VARIANT',
-                          'UNTIL',
-                          'TYPEOF',
-                          'TRUE',
-                          'TO',
-                          'THEN',
-                          'SUB',
-                          'STRING',
-                          'STOP',
-                          'STEP',
-                          'STATIC',
-                          'SINGLE',
-                          'SET',
-                          'SELECT',
-                          'RETURN',
-                          'RESUME',
-                          'RESET',
-                          'REDIM',
-                          'RAISEEVENT',
-                          'PUBLIC',
-                          'PTRSAFE',
-                          'PROPERTY_SET',
-                          'PROPERTY_LET',
-                          'PROPERTY_GET',
-                          'PRIVATE',
-                          'PRESERVE',
-                          'PARAMARRAY',
-                          'OR',
-                          'OPTION_PRIVATE_MODULE',
-                          'OPTION_COMPARE',
-                          'OPTION_EXPLICIT',
-                          'OPTION_BASE',
-                          'OPTIONAL',
-                          'ON',
-                          'ON_LOCAL_ERROR',
-                          'ON_ERROR',
-                          'NULL',
-                          'NOTHING',
-                          'NOT',
-                          'NEW',
-                          'NEXT',
-                          'MOD',
-                          'MACRO_END_IF',
-                          'MACRO_ELSE',
-                          'MACRO_ELSEIF',
-                          'MACRO_IF',
-                          'MACRO_CONST',
-                          'LSET',
-                          'LIKE',
-                          'LIB',
-                          'LET',
-                          'LEN',
-                          'LOOP',
-                          'LONG',
-                          'INTEGER',
-                          'IS',
-                          'ISNOT',
-                          'IN',
-                          'IMPLEMENTS',
-                          'IF',
-                          'GOTO',
-                          'GOSUB',
-                          'GLOBAL',
-                          'GET',
-                          'FUNCTION',
-                          'FOR',
-                          'FRIEND',
-                          'FALSE',
-                          'EXIT_SUB',
-                          'EXIT_PROPERTY',
-                          'EXIT_FUNCTION',
-                          'EXIT_FOR',
-                          'EXIT_DO',
-                          'EVENT',
-                          'ERASE',
-                          'EQV',
-                          'ENUM',
-                          'END',
-                          'END_WITH',
-                          'END_TYPE',
-                          'END_SUB',
-                          'END_SELECT',
-                          'END_PROPERTY',
-                          'END_IF',
-                          'END_FUNCTION',
-                          'END_ENUM',
-                          'ELSEIF',
-                          'ELSE',
-                          'EACH',
-                          'DOUBLE',
-                          'DO',
-                          'DIM',
-                          'DEFVAR',
-                          'DEFSTR',
-                          'DEFSNG',
-                          'DEFOBJ',
-                          'DEFLNG',
-                          'DEFINT',
-                          'DEFCUR',
-                          'DEFDEC',
-                          'DEFDBL',
-                          'DEFDATE',
-                          'DEFBYTE',
-                          'DEFBOOL',
-                          'DECLARE',
-                          'DATE',
-                          'CONST',
-                          'CASE',
-                          'CALL',
-                          'BYTE',
-                          'BYREF',
-                          'BYVAL',
-                          'BOOLEAN',
-                          'BEGIN',
-                          'AS',
-                          'ATTRIBUTE',
-                          'AND',
-                          'ALIAS',
-                          'SPACE_DOT'
-                        ],
-                        'symbol': 'block',
-                        'token': {
-                          'text': 'sub',
-                          'token': 'SUB',
-                          't': 'SUB',
-                          'start': 58,
-                          'end': 61,
-                          'firstLine': 7,
-                          'lastLine': 7,
-                          'firstColumn': 5,
-                          'lastColumn': 8
-                        }
-                      }
+                      'lastColumn': 8
                     }
-                  ],
-                  'ruleIndex': 15,
-                  'internalRuleIndex': 36,
-                  'id': 10
+                  }
                 }
               ],
-              'ruleIndex': 10,
-              'internalRuleIndex': 30,
+              'ruleIndex': 12,
+              'internalRuleIndex': 34,
               'id': 6
             }
           ],
-          'ruleIndex': 8,
-          'internalRuleIndex': 25,
+          'ruleIndex': 10,
+          'internalRuleIndex': 29,
           'id': 5
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 20,
+      'ruleIndex': 9,
+      'internalRuleIndex': 24,
       'id': 4
     }
   ],

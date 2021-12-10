@@ -104,8 +104,11 @@ export class VBSub {
           lineLabelMap.set(getIdentifierName(stmt.children[0]), i);
         } else if (stmt.symbol === 'onErrorStmt') {
           const cs = stmt.children;
-          if (cs[2].type === 'symbol') {
-            this.onErrorLineLabel = getIdentifierName(cs[2]);
+          const label = cs[2];
+          if (label.type === 'symbol') {
+            this.onErrorLineLabel = getIdentifierName(label);
+          } else if (label.type === 'token' && label.token === 'NEXT') {
+            throwVBRuntimeError(this.context, 'UNSUPPORTED', 'resume next');
           }
         }
       }

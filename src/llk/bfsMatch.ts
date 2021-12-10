@@ -27,6 +27,7 @@ function findBestAlternation(
   //const times = [];
   let count: number = 0;
   const finishedTokens = new Set<number>();
+  let possibleRuleIndexes: Set<number> | undefined;
   while (1) {
     //const start = Date.now();
     reachableStates = getNextReachableStateItems(
@@ -55,6 +56,11 @@ function findBestAlternation(
     //times.push(Date.now() - start);
     if (reachableStates.length) {
       ++count;
+      possibleRuleIndexes = new Set(
+        reachableStates
+          .map((r) => r?.ruleIndexes[0])
+          .filter((n) => typeof n === 'number') as number[],
+      );
       lexer.lex();
     } else {
       break;
@@ -97,6 +103,11 @@ function findBestAlternation(
   //   }
   // }
   // console.log('');
+
+  if (!arr.length && possibleRuleIndexes) {
+    arr = Array.from(possibleRuleIndexes.values());
+    arr = arr.sort((a, b) => a - b);
+  }
   return arr;
 }
 

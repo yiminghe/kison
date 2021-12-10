@@ -881,9 +881,11 @@ module.exports = {
       n.groupEndMark,
     ],
 
-    [
-      n.iCS_S_ProcedureOrArrayCall,
-      n.certainIdentifier,
+    ...[n.mCS_S_ProcedureOrArrayCall, n.iCS_S_ProcedureOrArrayCall].map((s) => [
+      s,
+      s === n.mCS_S_ProcedureOrArrayCall
+        ? n.ambiguousIdentifier
+        : n.certainIdentifier,
       n.typeHintOptional,
       n.LPAREN,
       n.argsCallOptional,
@@ -893,41 +895,22 @@ module.exports = {
       n.indexes,
       n.RPAREN,
       n.groupEndZeroOrMoreMark,
-    ],
-    [
-      n.mCS_S_ProcedureOrArrayCall,
-      n.ambiguousIdentifier,
-      n.typeHintOptional,
-      n.LPAREN,
-      n.argsCallOptional,
-      n.RPAREN,
-      n.groupStartMark,
-      n.LPAREN,
-      n.indexes,
-      n.RPAREN,
-      n.groupEndZeroOrMoreMark,
-    ],
+    ]),
 
-    [
-      n.iCS_S_VariableOrProcedureCall,
-      n.certainIdentifier,
-      n.typeHintOptional,
-      n.groupStartMark,
-      n.LPAREN,
-      n.indexes,
-      n.RPAREN,
-      n.groupEndZeroOrMoreMark,
-    ],
-    [
-      n.mCS_S_VariableOrProcedureCall,
-      n.ambiguousIdentifier,
-      n.typeHintOptional,
-      n.groupStartMark,
-      n.LPAREN,
-      n.indexes,
-      n.RPAREN,
-      n.groupEndZeroOrMoreMark,
-    ],
+    ...[n.iCS_S_VariableOrProcedureCall, n.mCS_S_VariableOrProcedureCall].map(
+      (s) => [
+        s,
+        s === n.mCS_S_VariableOrProcedureCall
+          ? n.ambiguousIdentifier
+          : n.certainIdentifier,
+        n.typeHintOptional,
+        n.groupStartMark,
+        n.LPAREN,
+        n.indexes,
+        n.RPAREN,
+        n.groupEndZeroOrMoreMark,
+      ],
+    ),
 
     [
       n.literal,

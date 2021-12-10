@@ -5,7 +5,10 @@ import type {
   Ast_Indexes_Node,
 } from '../../parser';
 import { Context } from '../Context';
-import { AsTypeClauseInfo, getDEFAULT_AS_TYPE } from '../types';
+import {
+  AsTypeClauseInfo,
+  getDEFAULT_AS_TYPE,
+} from '../data-structure/VBValue';
 import { isIdentifierSymbol } from '../utils';
 
 export function collectAmbiguousIdentifier(

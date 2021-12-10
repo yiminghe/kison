@@ -107,7 +107,10 @@ const globalUtils = {
     const currentToken = lexer.getCurrentToken();
     const nextToken = lexer.peekTokens()[0];
     // should delete
-    if (expected.indexOf(nextToken.token) !== -1) {
+    if (
+      currentToken.token === '$UNKNOWN' ||
+      expected.indexOf(nextToken.token) !== -1
+    ) {
       recommendedAction.action = 'del';
     } else if (expected.length) {
       recommendedAction.action = 'add';

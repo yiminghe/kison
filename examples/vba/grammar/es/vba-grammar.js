@@ -16,6 +16,10 @@ function generateLexerRulesByMap(map) {
   return rules;
 }
 
+function isSingleKeyword(s) {
+  return s.indexOf('_') === -1;
+}
+
 function generateLexerRulesByKeywords(arr) {
   const rules = [];
   for (const token of arr) {
@@ -241,7 +245,7 @@ module.exports = {
       n.visibilityOptional,
       n.STATICOptional,
       n.SUB,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.argListOptional,
       n.endOfStatement,
       n.blockOptional,
@@ -253,7 +257,7 @@ module.exports = {
       n.visibilityOptional,
       n.STATICOptional,
       n.PROPERTY_GET,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
       n.argListOptional,
       n.asTypeClauseOptional,
@@ -267,7 +271,7 @@ module.exports = {
       n.visibilityOptional,
       n.STATICOptional,
       n.PROPERTY_SET,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.argListOptional,
       n.endOfStatement,
       n.blockOptional,
@@ -279,7 +283,7 @@ module.exports = {
       n.visibilityOptional,
       n.STATICOptional,
       n.PROPERTY_LET,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.argListOptional,
       n.endOfStatement,
       n.blockOptional,
@@ -291,7 +295,7 @@ module.exports = {
       n.visibilityOptional,
       n.STATICOptional,
       n.FUNCTION,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
       n.argListOptional,
       n.asTypeClauseOptional,
@@ -391,7 +395,7 @@ module.exports = {
     [
       n.forNextStmt,
       n.FOR,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
       n.asTypeClauseOptional,
       n.EQ,
@@ -412,7 +416,7 @@ module.exports = {
       n.forEachStmt,
       n.FOR,
       n.EACH,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
       n.IN,
       n.valueStmt,
@@ -530,7 +534,7 @@ module.exports = {
       n.groupStartMark,
       n.GOTO,
       n.groupStartMark,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.alternationMark,
       n.MINUS,
       n.INTEGERLITERAL,
@@ -638,7 +642,7 @@ module.exports = {
     [
       n.eCS_ProcedureCall,
       n.CALL,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -737,7 +741,7 @@ module.exports = {
 
     [
       n.variableSubStmt,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.groupStartMark,
       n.LPAREN,
       n.subscriptsOptional,
@@ -802,7 +806,7 @@ module.exports = {
       n.alternationMark,
       n.implicitCallStmt_InStmt,
       n.alternationMark,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.ASSIGN,
       n.valueStmt,
       n.alternationMark,
@@ -968,7 +972,7 @@ module.exports = {
       n.BYREF,
       n.groupEndOptionalMark,
       n.PARAMARRAYOptional,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.typeHintOptional,
       n.groupStartMark,
       n.LPAREN,
@@ -997,7 +1001,7 @@ module.exports = {
 
     [
       n.complexType,
-      n.ambiguousIdentifier,
+      n.certainIdentifier,
       n.groupStartMark,
       '.',
       n.ambiguousIdentifier,
@@ -1025,10 +1029,15 @@ module.exports = {
       n.DATE,
     ],
 
-    ...n.KEYWORDS.map((keyword) => ({
-      symbol: n.ambiguousIdentifier,
-      rhs: [keyword],
-    })),
+    ...n.KEYWORDS.map((keyword) =>
+      isSingleKeyword(keyword)
+        ? {
+            symbol: n.ambiguousIdentifier,
+            rhs: [keyword],
+          }
+        : null,
+    ).filter((n) => !!n),
+
     [n.certainIdentifier, n.IDENTIFIER],
     [n.ambiguousIdentifier, n.IDENTIFIER],
   ]),

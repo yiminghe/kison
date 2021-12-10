@@ -35,6 +35,12 @@ registerEvaluators({
       .getVariable(getIdentifierName(node));
   },
 
+  evaluateCertainIdentifier(node, context) {
+    return context
+      .getCurrentScopeInternal()
+      .getVariable(getIdentifierName(node));
+  },
+
   evaluateINTEGERLITERAL(node) {
     return new VBInteger(parseInt(node.text));
   },

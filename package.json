@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.5.37",
+  "version": "0.5.38",
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [

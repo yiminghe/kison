@@ -222,7 +222,7 @@ require(['vs/editor/editor.main'], () => {
       },
     ],
     async value(args) {
-      const ret = [];
+      const ret: any = [];
       const msgs = (await args.getValue('msg')) as unknown as VBArray;
       for (let i = 0; i <= msgs.jsUBound(); i++) {
         ret.push((await (await msgs.getElement([i])).getValue()).value);
@@ -230,7 +230,8 @@ require(['vs/editor/editor.main'], () => {
       if (name === 'debug.print') {
         console.log(ret.length > 1 ? ret : ret[0]);
       } else if (name === 'msgbox') {
-        alert(ret.join(','));
+        // do not block main thread
+        setTimeout(() => alert(ret.join(',')), 0);
       }
     },
   });

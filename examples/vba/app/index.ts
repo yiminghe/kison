@@ -34,7 +34,7 @@ sub test2 (ByVal msg As Integer, msg2 As Integer)
   msg2 = 12
 end sub
 
-sub main
+function main
   dim m1 as Integer
   dim m2 as Integer
   m1 = 10
@@ -52,12 +52,17 @@ sub main
   debug.print c.x
   
   dim d as New js.Date
-  debug.print d.date
-  d.date = 10
-  debug.print d.date
+  debug.print "date", d.date
+  debug.print "getDate", d.getDate()
+  d.date += 1
+  debug.print "date", d.date
+  d.setDate(d.getDate() + 1)
+  debug.print "getDate", d.getDate()
 
   msgbox "done"
-end sub
+
+  main = c.x * 10
+end function
 `.trimStart();
 
 const classDefaultCode = `
@@ -86,7 +91,7 @@ Property Let x(value)
 End Property
 `.trimStart();
 
-const version = '2';
+const version = '3';
 
 if (
   !localStorage.getItem('codeVersion') ||
@@ -236,8 +241,9 @@ require(['vs/editor/editor.main'], () => {
     try {
       const { classCode, moduleCode } = getAllCodes();
       let start = Date.now();
-      await runs2(
-        $('sub').value,
+      const subName = $('sub').value;
+      const ret = await runs2(
+        subName,
         [moduleCode],
         [
           {
@@ -261,6 +267,7 @@ require(['vs/editor/editor.main'], () => {
         },
       );
       console.log('');
+      console.log(`${subName} return:`, ret?.value);
       console.log('run duration: ' + (Date.now() - start));
     } catch (e: any) {
       console.error(e);

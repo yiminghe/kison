@@ -12,6 +12,8 @@ import parser from './parser';
 
 export type {
   VBArray,
+  VBFile,
+  InstanceBinding,
   UserSubBinding as SubBinding,
   UserVariableBinding as VariableBinding,
   UserClassBinding as ClassBinding,

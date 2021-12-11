@@ -1,6 +1,6 @@
 {
   "name": "vba",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "vba typescript/javascript runtime",
   "author": "yiminghe <yiminghe@gmail.com>",
   "repository": {

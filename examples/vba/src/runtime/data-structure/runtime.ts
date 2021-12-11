@@ -3,7 +3,7 @@ import type { AstVisitors, Ast_Visibility_Node } from '../../parser';
 import { VBValue, AsTypeClauseInfo } from './VBValue';
 import { VBAny, VBPointer } from './VBPointer';
 import type { VBSub } from './VBSub';
-import { VBIterable, VBIterator } from './VBArray';
+import { VBIterable } from './VBArray';
 
 export interface VBFile {
   id: string;
@@ -46,7 +46,7 @@ export interface SubBinding {
   value: (
     args: VBBindingArguments,
     context: Context,
-  ) => Promise<SubBindingReturnType> | SubBindingReturnType;
+  ) => OptionalPromise<SubBindingReturnType>;
   argumentsInfo?: ArgInfo[];
   returnInfo?: AsTypeClauseInfo;
   name: string;
@@ -55,24 +55,28 @@ export interface SubBinding {
 export interface VariableBinding {
   type: 'VariableBinding';
   value?: VBValue;
-  get?: (context: Context) => VBValue | Promise<VBValue>;
+  get?: (context: Context) => OptionalPromise<VBValue>;
   name: string;
 }
 
 export type IndexType = string | number;
 
+export type Optional<T> = T | undefined;
+
+export type OptionalPromise<T> = T | Promise<T>;
+
 export interface InstanceBinding extends VBIterable {
-  getElement?(indexes: IndexType[]): Promise<VBValue> | VBValue;
-  setElement?(indexes: IndexType[], value: VBValue): Promise<void> | void;
-  get(name: string): Promise<VBValue> | VBValue | undefined;
-  set(name: string, value: VBValue): Promise<void> | void;
+  getElement?(indexes: IndexType[]): OptionalPromise<VBValue>;
+  setElement?(indexes: IndexType[], value: VBValue): OptionalPromise<void>;
+  get(name: string): OptionalPromise<Optional<VBValue>>;
+  set(name: string, value: VBValue): OptionalPromise<void>;
   subs?: Record<string, Omit<UserSubBinding, 'name'>>;
 }
 
 export interface ClassBinding {
   type: 'ClassBinding';
   name: string;
-  value: (context: Context) => Promise<InstanceBinding> | InstanceBinding;
+  value: (context: Context) => OptionalPromise<InstanceBinding>;
 }
 
 export type UserClassBinding = Omit<ClassBinding, 'type'>;
@@ -90,7 +94,7 @@ export interface ArgInfo {
 
 export interface VBVariableInfo {
   name: string;
-  value: () => Promise<VBPointer> | VBPointer;
+  value: () => OptionalPromise<VBPointer>;
 }
 
 export type EvaluateParams = {

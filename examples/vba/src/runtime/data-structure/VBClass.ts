@@ -224,6 +224,14 @@ export class VBBindClass {
     }
     this._init = true;
     this.instance = await this.binding.value(this.context);
+    const { subs } = this.instance;
+    if (subs) {
+      let newSubs: typeof subs = {};
+      for (const key of Object.keys(subs)) {
+        newSubs[key.toLowerCase()] = subs[key];
+      }
+      this.instance.subs = newSubs;
+    }
   }
 
   async set(name: string, value: VBAny) {

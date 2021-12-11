@@ -5,8 +5,9 @@ import {
   VariableBinding,
   CallOptions,
   VBArray,
+  InstanceBinding,
+  VBFile,
 } from '../src/index';
-import type { VBFile } from '../src/runtime/types';
 
 function upperFirst(name: string) {
   return name.charAt(0).toUpperCase() + name.slice(1);
@@ -21,21 +22,47 @@ const JSDateBinding: ClassBinding = {
   name: 'js.Date',
   async value() {
     const d: any = new Date();
-    return {
+
+    const instance: InstanceBinding = {
       async get(name) {
-        const v = d[`get${upperFirst(name)}`]();
-        if (typeof v === 'string') {
-          return Context.createString(v);
-        } else if (typeof v === 'number') {
-          return Context.createInteger(v);
+        const getter = `get${upperFirst(name)}`;
+        if (d[getter]) {
+          const v = d[getter]();
+          if (typeof v === 'string') {
+            return Context.createString(v);
+          } else if (typeof v === 'number') {
+            return Context.createInteger(v);
+          }
+          throw new Error('only allow string/number return type');
         }
-        throw new Error('only allow string/number return type');
       },
       async set(name, value) {
         let v = value.value;
         d[`set${upperFirst(name)}`](v);
       },
+      subs: {
+        getDate: {
+          value() {
+            return instance.get('date');
+          },
+        },
+        setDate: {
+          argumentsInfo: [
+            {
+              name: 'value',
+              asType: {
+                type: 'integer',
+              },
+            },
+          ],
+          async value(args) {
+            const value = (await args.getValue('value'))!;
+            instance.set('date', value);
+          },
+        },
+      },
     };
+    return instance;
   },
 };
 
@@ -175,8 +202,9 @@ export async function runs2(
     await context.load(c.code.trimStart(), c);
   }
 
-  await context.callSub(mainSub, {
+  const ret = await context.callSub(mainSub, {
     ...options,
     file: files[0],
   });
+  return ret;
 }

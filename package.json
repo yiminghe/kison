@@ -61,9 +61,7 @@
     "test": "jest",
     "test-debug": "rm -rf lib && jest -i"
   },
-  "bin": {
-    "kison": "./bin/kison.js"
-  },
+  "bin": "./bin/kison.js",
   "lint-staged": {
     "*.{tsx,js,jsx,ts}": [
       "prettier --write",
@@ -72,5 +70,6 @@
   },
   "pre-commit": [
     "lint-staged"
-  ]
+  ],
+  "packageManager": "yarn@3.0.0-rc.1"
 }

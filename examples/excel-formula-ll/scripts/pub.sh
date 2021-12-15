@@ -1,3 +1,3 @@
-npm run build
+yarn run build
 cd pkg
 npm publish --access public

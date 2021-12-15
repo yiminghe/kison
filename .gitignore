@@ -1,9 +1,5 @@
 nohup.out
 coverage/
-*.iml
-.idea/
-.ipr
-.iws
 *~
 ~*
 *.diff
@@ -19,8 +15,11 @@ Thumbs.db
 out/
 node_modules/
 tmp/
-reports/
-yarn.lock
 pkg/
 /lib/
-.yarn/
+/.yarn/*
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/sdks
+#!/.yarn/cache

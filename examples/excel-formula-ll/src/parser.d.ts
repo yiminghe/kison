@@ -174,15 +174,16 @@ export type All_Names = Exclude<
   ''
 >;
 
-export type AstVisitor<T extends string, C, R = any> = (
+export type AstVisitor<T extends string, C, OtherParams = any, R = any> = (
   node: AstNodeTypeMap[T extends All_Names ? T : 'ast'],
   context: C,
+  otherParams?: OtherParams,
 ) => R;
 
-export type AstVisitors<T extends string, C, R = any> = {
+export type AstVisitors<T extends string, C, OtherParams = any, R = any> = {
   [e in All_Names | '' as e extends ''
   ? T
-  : `${T}${Capitalize<e>}`]?: AstVisitor<e, C, R>;
+  : `${T}${Capitalize<e>}`]?: AstVisitor<e, C, OtherParams, R>;
 };
 
 declare function parse(input: string, options?: ParserOptions): ParseResult;

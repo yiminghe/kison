@@ -1,0 +1,15 @@
+{
+  "name": "@yiminghe/cal",
+  "private": true,
+  "version": "0.0.0",
+  "devDependencies": {
+    "@babel/cli": "7.x",
+    "@babel/preset-env": "7.x",
+    "@babel/preset-typescript": "7.x",
+    "@yiminghe/rr": "1.x",
+    "kison": "0.5.x"
+  },
+  "scripts": {
+    "gen": "sh gen.sh"
+  }
+}

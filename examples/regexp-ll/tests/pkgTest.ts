@@ -1,3 +1,4 @@
+// @ts-ignore
 const regexp = require('../pkg');
 
 {

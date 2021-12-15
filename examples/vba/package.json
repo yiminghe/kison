@@ -16,20 +16,21 @@
             "--rootDir",
             "src"
           ],
-          "tsconfig":"tsconfig.build.json"
+          "yarn": true,
+          "tsconfig": "tsconfig.build.json"
         }
       ],
       [
         "pika-plugin-build-web-babel",
         {
           "format": "cjs",
-          "sourcemap":false
+          "sourcemap": false
         }
       ],
       [
         "pika-plugin-build-web-babel",
         {
-          "sourcemap":false
+          "sourcemap": false
         }
       ],
       [
@@ -37,11 +38,25 @@
       ]
     ]
   },
+  "devDependencies": {
+    "@babel/cli": "7.x",
+    "@babel/preset-env": "7.x",
+    "@babel/preset-typescript": "7.x",
+    "@pika/pack": "^0.5.0",
+    "@types/jest": "27.x",
+    "@yiminghe/rr": "1.x",
+    "kison": "0.5.x",
+    "monaco-editor": "^0.28.0",
+    "pika-plugin-build-web-babel": "^0.11.2",
+    "pika-plugin-clean-dist-src": "^0.1.1",
+    "pika-plugin-ts-types": "^0.1.5",
+    "typescript": "4.x"
+  },
   "scripts": {
     "test": "rm -rf pkg && jest",
     "test-debug": "jest -i",
-    "check":"tsc --noEmit",
-    "build": "npm run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
+    "check": "tsc --noEmit",
+    "build": "yarn run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh && rm -rf pkg"
   }

@@ -51,6 +51,7 @@
     "modulex-util": "1.x"
   },
   "scripts": {
+    "prepack": "yarn run compile",
     "prepare": "husky install",
     "compile": "babel -x '.js,.ts' src --out-dir pkg && cp src/*.d.ts pkg/",
     "check": "tsc --noEmit",

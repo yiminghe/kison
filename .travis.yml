@@ -12,4 +12,4 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
 
 script:
-  - npm test
+  - yarn test

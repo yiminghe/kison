@@ -23,4 +23,3 @@ pkg/
 !/.yarn/releases
 !/.yarn/sdks
 #!/.yarn/cache
-yarn.lock

@@ -59,3618 +59,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["vba", ["workspace:examples/vba"]]
     ],
     "fallbackPool": [
-      [
-        "@babel/cli",
-        "virtual:74966d02493b79ad28c9043cec780c6ed24ce0f60f1ec6067b992147440ba7d626e66b3363e71b5f2ec070b1a6ea7f45e40cbe2939a0811439bc5760ed8b6bc6#npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fcli%2Fdownload%2F%40babel%2Fcli-7.16.0.tgz"
-      ],
-      [
-        "@babel/code-frame",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fcode-frame%2Fdownload%2F%40babel%2Fcode-frame-7.16.0.tgz"
-      ],
-      [
-        "@babel/compat-data",
-        "npm:7.16.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fcompat-data%2Fdownload%2F%40babel%2Fcompat-data-7.16.4.tgz"
-      ],
-      [
-        "@babel/core",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fcore%2Fdownload%2F%40babel%2Fcore-7.16.5.tgz"
-      ],
-      [
-        "@babel/generator",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fgenerator%2Fdownload%2F%40babel%2Fgenerator-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-annotate-as-pure",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-annotate-as-pure%2Fdownload%2F%40babel%2Fhelper-annotate-as-pure-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-builder-binary-assignment-operator-visitor",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-builder-binary-assignment-operator-visitor%2Fdownload%2F%40babel%2Fhelper-builder-binary-assignment-operator-visitor-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-compilation-targets",
-        "virtual:fa6d1392587ce827f3d080b5c766b7b6bb7a7f9d54a5f37d29b7c850dd1fb8c0799af28cc356cdeeb569104c1f9c183e0dccf8d537bff13549a95efb24995756#npm:7.16.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-compilation-targets%2Fdownload%2F%40babel%2Fhelper-compilation-targets-7.16.3.tgz"
-      ],
-      [
-        "@babel/helper-create-class-features-plugin",
-        "virtual:3ce0d8e4cb9c05ea44299160af2841d979b51e4407d1a6fe4fde20f5ac4cc22442775a5f3c095b666c5179794aad743e0b5dd152cc0a680b257eebb2a9f20144#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-create-class-features-plugin%2Fdownload%2F%40babel%2Fhelper-create-class-features-plugin-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-create-regexp-features-plugin",
-        "virtual:b620f25f0fcf0886f40bce9d5874b46caf8a21547de2499d71a5f6f935548c71d3f5cafcc7ca6ffa172e96eac827588155bf47215f79f30038f63f5e0b98a9e9#npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-create-regexp-features-plugin%2Fdownload%2F%40babel%2Fhelper-create-regexp-features-plugin-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-define-polyfill-provider",
-        "virtual:db156a4e901fbd46dbad26d754518600cfd90f95173446b038c358deecf8c33710150c2d5789f61cdf5fbe25b18c48c059ecfa7363516beb0946cd9071de264e#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-define-polyfill-provider%2Fdownload%2F%40babel%2Fhelper-define-polyfill-provider-0.3.0.tgz"
-      ],
-      [
-        "@babel/helper-environment-visitor",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-environment-visitor%2Fdownload%2F%40babel%2Fhelper-environment-visitor-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-explode-assignable-expression",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-explode-assignable-expression%2Fdownload%2F%40babel%2Fhelper-explode-assignable-expression-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-function-name",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-function-name%2Fdownload%2F%40babel%2Fhelper-function-name-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-get-function-arity",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-get-function-arity%2Fdownload%2F%40babel%2Fhelper-get-function-arity-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-hoist-variables",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-hoist-variables%2Fdownload%2F%40babel%2Fhelper-hoist-variables-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-member-expression-to-functions",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-member-expression-to-functions%2Fdownload%2F%40babel%2Fhelper-member-expression-to-functions-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-module-imports",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-module-imports%2Fdownload%2F%40babel%2Fhelper-module-imports-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-module-transforms",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-module-transforms%2Fdownload%2F%40babel%2Fhelper-module-transforms-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-optimise-call-expression",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-optimise-call-expression%2Fdownload%2F%40babel%2Fhelper-optimise-call-expression-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-plugin-utils",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-plugin-utils%2Fdownload%2F%40babel%2Fhelper-plugin-utils-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-remap-async-to-generator",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-remap-async-to-generator%2Fdownload%2F%40babel%2Fhelper-remap-async-to-generator-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-replace-supers",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-replace-supers%2Fdownload%2F%40babel%2Fhelper-replace-supers-7.16.5.tgz"
-      ],
-      [
-        "@babel/helper-simple-access",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-simple-access%2Fdownload%2F%40babel%2Fhelper-simple-access-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-skip-transparent-expression-wrappers",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-skip-transparent-expression-wrappers%2Fdownload%2F%40babel%2Fhelper-skip-transparent-expression-wrappers-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-split-export-declaration",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-split-export-declaration%2Fdownload%2F%40babel%2Fhelper-split-export-declaration-7.16.0.tgz"
-      ],
-      [
-        "@babel/helper-validator-identifier",
-        "npm:7.15.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-validator-identifier%2Fdownload%2F%40babel%2Fhelper-validator-identifier-7.15.7.tgz"
-      ],
-      [
-        "@babel/helper-validator-option",
-        "npm:7.14.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-validator-option%2Fdownload%2F%40babel%2Fhelper-validator-option-7.14.5.tgz"
-      ],
-      [
-        "@babel/helper-wrap-function",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-wrap-function%2Fdownload%2F%40babel%2Fhelper-wrap-function-7.16.5.tgz"
-      ],
-      [
-        "@babel/helpers",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelpers%2Fdownload%2F%40babel%2Fhelpers-7.16.5.tgz"
-      ],
-      [
-        "@babel/highlight",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhighlight%2Fdownload%2F%40babel%2Fhighlight-7.16.0.tgz"
-      ],
-      [
-        "@babel/node",
-        "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fnode%2Fdownload%2F%40babel%2Fnode-7.16.5.tgz"
-      ],
-      [
-        "@babel/parser",
-        "npm:7.16.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fparser%2Fdownload%2F%40babel%2Fparser-7.16.6.tgz"
-      ],
-      [
-        "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-bugfix-safari-id-destructuring-collision-in-function-expression%2Fdownload%2F%40babel%2Fplugin-bugfix-safari-id-destructuring-collision-in-function-expression-7.16.2.tgz"
-      ],
-      [
-        "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-bugfix-v8-spread-parameters-in-optional-chaining%2Fdownload%2F%40babel%2Fplugin-bugfix-v8-spread-parameters-in-optional-chaining-7.16.0.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-async-generator-functions",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-async-generator-functions%2Fdownload%2F%40babel%2Fplugin-proposal-async-generator-functions-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-class-properties%2Fdownload%2F%40babel%2Fplugin-proposal-class-properties-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-class-static-block",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-class-static-block%2Fdownload%2F%40babel%2Fplugin-proposal-class-static-block-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-dynamic-import",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-dynamic-import%2Fdownload%2F%40babel%2Fplugin-proposal-dynamic-import-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-export-namespace-from",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-export-namespace-from%2Fdownload%2F%40babel%2Fplugin-proposal-export-namespace-from-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-json-strings",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-json-strings%2Fdownload%2F%40babel%2Fplugin-proposal-json-strings-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-logical-assignment-operators",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-logical-assignment-operators%2Fdownload%2F%40babel%2Fplugin-proposal-logical-assignment-operators-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-nullish-coalescing-operator",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-nullish-coalescing-operator%2Fdownload%2F%40babel%2Fplugin-proposal-nullish-coalescing-operator-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-numeric-separator",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-numeric-separator%2Fdownload%2F%40babel%2Fplugin-proposal-numeric-separator-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-object-rest-spread",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-object-rest-spread%2Fdownload%2F%40babel%2Fplugin-proposal-object-rest-spread-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-optional-catch-binding",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-optional-catch-binding%2Fdownload%2F%40babel%2Fplugin-proposal-optional-catch-binding-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-optional-chaining",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-optional-chaining%2Fdownload%2F%40babel%2Fplugin-proposal-optional-chaining-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-private-methods",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-private-methods%2Fdownload%2F%40babel%2Fplugin-proposal-private-methods-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-private-property-in-object",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-private-property-in-object%2Fdownload%2F%40babel%2Fplugin-proposal-private-property-in-object-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-proposal-unicode-property-regex",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-proposal-unicode-property-regex%2Fdownload%2F%40babel%2Fplugin-proposal-unicode-property-regex-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-async-generators",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-async-generators%2Fdownload%2F%40babel%2Fplugin-syntax-async-generators-7.8.4.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-bigint",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-bigint%2Fdownload%2F%40babel%2Fplugin-syntax-bigint-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-class-properties",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.12.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-class-properties%2Fdownload%2F%40babel%2Fplugin-syntax-class-properties-7.12.13.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-class-static-block",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.14.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-class-static-block%2Fdownload%2F%40babel%2Fplugin-syntax-class-static-block-7.14.5.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-dynamic-import",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-dynamic-import%2Fdownload%2F%40babel%2Fplugin-syntax-dynamic-import-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-export-namespace-from",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-export-namespace-from%2Fdownload%2F%40babel%2Fplugin-syntax-export-namespace-from-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-import-meta",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.10.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-import-meta%2Fdownload%2F%40babel%2Fplugin-syntax-import-meta-7.10.4.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-json-strings",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-json-strings%2Fdownload%2F%40babel%2Fplugin-syntax-json-strings-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-logical-assignment-operators",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.10.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-logical-assignment-operators%2Fdownload%2F%40babel%2Fplugin-syntax-logical-assignment-operators-7.10.4.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-nullish-coalescing-operator",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-nullish-coalescing-operator%2Fdownload%2F%40babel%2Fplugin-syntax-nullish-coalescing-operator-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-numeric-separator",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.10.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-numeric-separator%2Fdownload%2F%40babel%2Fplugin-syntax-numeric-separator-7.10.4.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-object-rest-spread",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-object-rest-spread%2Fdownload%2F%40babel%2Fplugin-syntax-object-rest-spread-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-optional-catch-binding",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-optional-catch-binding%2Fdownload%2F%40babel%2Fplugin-syntax-optional-catch-binding-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-optional-chaining",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-optional-chaining%2Fdownload%2F%40babel%2Fplugin-syntax-optional-chaining-7.8.3.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-private-property-in-object",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.14.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-private-property-in-object%2Fdownload%2F%40babel%2Fplugin-syntax-private-property-in-object-7.14.5.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-top-level-await",
-        "virtual:1386771afa1aead7ca458a2f5f6e5358538887578fdd94b20d7a85f64b57347d040db276dd9065205935232ca7f1c3d8a9a997af16101580c60a945ba6010260#npm:7.14.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-top-level-await%2Fdownload%2F%40babel%2Fplugin-syntax-top-level-await-7.14.5.tgz"
-      ],
-      [
-        "@babel/plugin-syntax-typescript",
-        "virtual:82d16600a3c9f144a8bca820b8f8ede7c6765b1ccbc982a7169bb915b589e027235a28a4351d7e9593a56b9b0450d5acab8c1a099d366d3193b9ae7422c6b2e6#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-syntax-typescript%2Fdownload%2F%40babel%2Fplugin-syntax-typescript-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-arrow-functions",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-arrow-functions%2Fdownload%2F%40babel%2Fplugin-transform-arrow-functions-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-async-to-generator",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-async-to-generator%2Fdownload%2F%40babel%2Fplugin-transform-async-to-generator-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-block-scoped-functions",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-block-scoped-functions%2Fdownload%2F%40babel%2Fplugin-transform-block-scoped-functions-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-block-scoping",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-block-scoping%2Fdownload%2F%40babel%2Fplugin-transform-block-scoping-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-classes",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-classes%2Fdownload%2F%40babel%2Fplugin-transform-classes-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-computed-properties",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-computed-properties%2Fdownload%2F%40babel%2Fplugin-transform-computed-properties-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-destructuring",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-destructuring%2Fdownload%2F%40babel%2Fplugin-transform-destructuring-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-dotall-regex",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-dotall-regex%2Fdownload%2F%40babel%2Fplugin-transform-dotall-regex-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-duplicate-keys",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-duplicate-keys%2Fdownload%2F%40babel%2Fplugin-transform-duplicate-keys-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-exponentiation-operator",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-exponentiation-operator%2Fdownload%2F%40babel%2Fplugin-transform-exponentiation-operator-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-for-of",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-for-of%2Fdownload%2F%40babel%2Fplugin-transform-for-of-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-function-name",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-function-name%2Fdownload%2F%40babel%2Fplugin-transform-function-name-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-literals",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-literals%2Fdownload%2F%40babel%2Fplugin-transform-literals-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-member-expression-literals",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-member-expression-literals%2Fdownload%2F%40babel%2Fplugin-transform-member-expression-literals-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-modules-amd",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-modules-amd%2Fdownload%2F%40babel%2Fplugin-transform-modules-amd-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-modules-commonjs",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-modules-commonjs%2Fdownload%2F%40babel%2Fplugin-transform-modules-commonjs-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-modules-systemjs",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-modules-systemjs%2Fdownload%2F%40babel%2Fplugin-transform-modules-systemjs-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-modules-umd",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-modules-umd%2Fdownload%2F%40babel%2Fplugin-transform-modules-umd-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-named-capturing-groups-regex",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-named-capturing-groups-regex%2Fdownload%2F%40babel%2Fplugin-transform-named-capturing-groups-regex-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-new-target",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-new-target%2Fdownload%2F%40babel%2Fplugin-transform-new-target-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-object-super",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-object-super%2Fdownload%2F%40babel%2Fplugin-transform-object-super-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-parameters",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-parameters%2Fdownload%2F%40babel%2Fplugin-transform-parameters-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-property-literals",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-property-literals%2Fdownload%2F%40babel%2Fplugin-transform-property-literals-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-regenerator",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-regenerator%2Fdownload%2F%40babel%2Fplugin-transform-regenerator-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-reserved-words",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-reserved-words%2Fdownload%2F%40babel%2Fplugin-transform-reserved-words-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-shorthand-properties",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-shorthand-properties%2Fdownload%2F%40babel%2Fplugin-transform-shorthand-properties-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-spread",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-spread%2Fdownload%2F%40babel%2Fplugin-transform-spread-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-sticky-regex",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-sticky-regex%2Fdownload%2F%40babel%2Fplugin-transform-sticky-regex-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-template-literals",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-template-literals%2Fdownload%2F%40babel%2Fplugin-transform-template-literals-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-typeof-symbol",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-typeof-symbol%2Fdownload%2F%40babel%2Fplugin-transform-typeof-symbol-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-typescript",
-        "virtual:8e3dfffb041c9328a448c12a12a793518fe64a82a12a5b57fa8960d0e1daaab10afa9f7603b16b296035ec6f1d01f028a2ea0e56a193f6a41608377e384a832b#npm:7.16.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-typescript%2Fdownload%2F%40babel%2Fplugin-transform-typescript-7.16.1.tgz"
-      ],
-      [
-        "@babel/plugin-transform-unicode-escapes",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-unicode-escapes%2Fdownload%2F%40babel%2Fplugin-transform-unicode-escapes-7.16.5.tgz"
-      ],
-      [
-        "@babel/plugin-transform-unicode-regex",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fplugin-transform-unicode-regex%2Fdownload%2F%40babel%2Fplugin-transform-unicode-regex-7.16.5.tgz"
-      ],
-      [
-        "@babel/preset-env",
-        "virtual:74966d02493b79ad28c9043cec780c6ed24ce0f60f1ec6067b992147440ba7d626e66b3363e71b5f2ec070b1a6ea7f45e40cbe2939a0811439bc5760ed8b6bc6#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fpreset-env%2Fdownload%2F%40babel%2Fpreset-env-7.16.5.tgz"
-      ],
-      [
-        "@babel/preset-modules",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fpreset-modules%2Fdownload%2F%40babel%2Fpreset-modules-0.1.5.tgz"
-      ],
-      [
-        "@babel/preset-typescript",
-        "virtual:74966d02493b79ad28c9043cec780c6ed24ce0f60f1ec6067b992147440ba7d626e66b3363e71b5f2ec070b1a6ea7f45e40cbe2939a0811439bc5760ed8b6bc6#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fpreset-typescript%2Fdownload%2F%40babel%2Fpreset-typescript-7.16.5.tgz"
-      ],
-      [
-        "@babel/register",
-        "virtual:76327ffcafe778cef9037a0be95bd2be16fa3c4b278635c721d356db69ffe8db1c3e8a9999a4f4855463c04d00b9397ceae37de987413ba5cdcb82e44a172609#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fregister%2Fdownload%2F%40babel%2Fregister-7.16.5.tgz"
-      ],
-      [
-        "@babel/runtime",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.16.5.tgz"
-      ],
-      [
-        "@babel/template",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Ftemplate%2Fdownload%2F%40babel%2Ftemplate-7.16.0.tgz"
-      ],
-      [
-        "@babel/traverse",
-        "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Ftraverse%2Fdownload%2F%40babel%2Ftraverse-7.16.5.tgz"
-      ],
-      [
-        "@babel/types",
-        "npm:7.16.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Ftypes%2Fdownload%2F%40babel%2Ftypes-7.16.0.tgz"
-      ],
-      [
-        "@bcoe/v8-coverage",
-        "npm:0.2.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40bcoe%2Fv8-coverage%2Fdownload%2F%40bcoe%2Fv8-coverage-0.2.3.tgz"
-      ],
-      [
-        "@gar/promisify",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40gar%2Fpromisify%2Fdownload%2F%40gar%2Fpromisify-1.1.2.tgz"
-      ],
-      [
-        "@istanbuljs/load-nyc-config",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40istanbuljs%2Fload-nyc-config%2Fdownload%2F%40istanbuljs%2Fload-nyc-config-1.1.0.tgz"
-      ],
-      [
-        "@istanbuljs/schema",
-        "npm:0.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40istanbuljs%2Fschema%2Fdownload%2F%40istanbuljs%2Fschema-0.1.3.tgz"
-      ],
-      [
-        "@jest/console",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fconsole%2Fdownload%2F%40jest%2Fconsole-27.4.2.tgz"
-      ],
-      [
-        "@jest/core",
-        "virtual:1374f5586fb0733c01fcead84835dbfe8c373f9ea4ec21c0b0a2d79153c830229f2b736f58c786d35c527a9df1bfbd142e574f8537aad8c5bf486282889f7608#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fcore%2Fdownload%2F%40jest%2Fcore-27.4.5.tgz"
-      ],
-      [
-        "@jest/environment",
-        "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fenvironment%2Fdownload%2F%40jest%2Fenvironment-27.4.4.tgz"
-      ],
-      [
-        "@jest/fake-timers",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ffake-timers%2Fdownload%2F%40jest%2Ffake-timers-27.4.2.tgz"
-      ],
-      [
-        "@jest/globals",
-        "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fglobals%2Fdownload%2F%40jest%2Fglobals-27.4.4.tgz"
-      ],
-      [
-        "@jest/reporters",
-        "virtual:31a8eea0c93eac9466299e73f5d1ca872a84a9ca696c1b8bce6f80eee385873885558cc4dad43aa4c560abc9e3377233089ff4be39c0f8f4ea4edb1d161f8b25#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Freporters%2Fdownload%2F%40jest%2Freporters-27.4.5.tgz"
-      ],
-      [
-        "@jest/source-map",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fsource-map%2Fdownload%2F%40jest%2Fsource-map-27.4.0.tgz"
-      ],
-      [
-        "@jest/test-result",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"
-      ],
-      [
-        "@jest/test-sequencer",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-sequencer%2Fdownload%2F%40jest%2Ftest-sequencer-27.4.5.tgz"
-      ],
-      [
-        "@jest/transform",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftransform%2Fdownload%2F%40jest%2Ftransform-27.4.5.tgz"
-      ],
-      [
-        "@jest/types",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"
-      ],
-      [
-        "@nicolo-ribaudo/chokidar-2",
-        "npm:2.1.8-no-fsevents.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40nicolo-ribaudo%2Fchokidar-2%2Fdownload%2F%40nicolo-ribaudo%2Fchokidar-2-2.1.8-no-fsevents.3.tgz"
-      ],
-      [
-        "@nodelib/fs.scandir",
-        "npm:2.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40nodelib%2Ffs.scandir%2Fdownload%2F%40nodelib%2Ffs.scandir-2.1.5.tgz"
-      ],
-      [
-        "@nodelib/fs.stat",
-        "npm:2.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40nodelib%2Ffs.stat%2Fdownload%2F%40nodelib%2Ffs.stat-2.0.5.tgz"
-      ],
-      [
-        "@nodelib/fs.walk",
-        "npm:1.2.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40nodelib%2Ffs.walk%2Fdownload%2F%40nodelib%2Ffs.walk-1.2.8.tgz"
-      ],
-      [
-        "@npmcli/fs",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40npmcli%2Ffs%2Fdownload%2F%40npmcli%2Ffs-1.0.0.tgz"
-      ],
-      [
-        "@npmcli/move-file",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40npmcli%2Fmove-file%2Fdownload%2F%40npmcli%2Fmove-file-1.1.2.tgz"
-      ],
-      [
-        "@pika/cli",
-        "npm:0.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40pika%2Fcli%2Fdownload%2F%40pika%2Fcli-0.2.0.tgz"
-      ],
-      [
-        "@pika/pack",
-        "npm:0.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40pika%2Fpack%2Fdownload%2F%40pika%2Fpack-0.5.0.tgz"
-      ],
-      [
-        "@pika/types",
-        "npm:0.6.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40pika%2Ftypes%2Fdownload%2F%40pika%2Ftypes-0.6.1.tgz"
-      ],
-      [
-        "@rollup/plugin-commonjs",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:20.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40rollup%2Fplugin-commonjs%2Fdownload%2F%40rollup%2Fplugin-commonjs-20.0.0.tgz"
-      ],
-      [
-        "@rollup/plugin-json",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:4.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40rollup%2Fplugin-json%2Fdownload%2F%40rollup%2Fplugin-json-4.1.0.tgz"
-      ],
-      [
-        "@rollup/plugin-node-resolve",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:13.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40rollup%2Fplugin-node-resolve%2Fdownload%2F%40rollup%2Fplugin-node-resolve-13.1.1.tgz"
-      ],
-      [
-        "@rollup/plugin-replace",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40rollup%2Fplugin-replace%2Fdownload%2F%40rollup%2Fplugin-replace-3.0.0.tgz"
-      ],
-      [
-        "@rollup/pluginutils",
-        "virtual:36124ad03eca09edee5a92f4a315fcbf1e7d992bc1114e46072a6025ff85e8ac7db42424a7515c162ef7add4d5e06866caeb23b258fce85ec5b6fb80b4014092#npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40rollup%2Fpluginutils%2Fdownload%2F%40rollup%2Fpluginutils-3.1.0.tgz"
-      ],
-      [
-        "@samverschueren/stream-to-observable",
-        "virtual:5c7a3b3c90c8cfe2b2cb6a301856d4b8fb0b727799e0147df2d1e94be7902ddd8705e0b30e8916fefb22563b64c45d9dedbe1d9c414c677c67089d14e80213d2#npm:0.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40samverschueren%2Fstream-to-observable%2Fdownload%2F%40samverschueren%2Fstream-to-observable-0.3.1.tgz"
-      ],
-      [
-        "@sindresorhus/is",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-2.1.1.tgz"
-      ],
-      [
-        "@sinonjs/commons",
-        "npm:1.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40sinonjs%2Fcommons%2Fdownload%2F%40sinonjs%2Fcommons-1.8.3.tgz"
-      ],
-      [
-        "@sinonjs/fake-timers",
-        "npm:8.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40sinonjs%2Ffake-timers%2Fdownload%2F%40sinonjs%2Ffake-timers-8.1.0.tgz"
-      ],
-      [
-        "@szmarczak/http-timer",
-        "npm:4.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40szmarczak%2Fhttp-timer%2Fdownload%2F%40szmarczak%2Fhttp-timer-4.0.6.tgz"
-      ],
-      [
-        "@tootallnate/once",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40tootallnate%2Fonce%2Fdownload%2F%40tootallnate%2Fonce-1.1.2.tgz"
-      ],
-      [
-        "@trysound/sax",
-        "npm:0.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40trysound%2Fsax%2Fdownload%2F%40trysound%2Fsax-0.2.0.tgz"
-      ],
-      [
-        "@tsconfig/recommended",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40tsconfig%2Frecommended%2Fdownload%2F%40tsconfig%2Frecommended-1.0.1.tgz"
-      ],
-      [
-        "@types/babel__core",
-        "npm:7.1.17::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fbabel__core%2Fdownload%2F%40types%2Fbabel__core-7.1.17.tgz"
-      ],
-      [
-        "@types/babel__generator",
-        "npm:7.6.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fbabel__generator%2Fdownload%2F%40types%2Fbabel__generator-7.6.3.tgz"
-      ],
-      [
-        "@types/babel__template",
-        "npm:7.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fbabel__template%2Fdownload%2F%40types%2Fbabel__template-7.4.1.tgz"
-      ],
-      [
-        "@types/babel__traverse",
-        "npm:7.14.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fbabel__traverse%2Fdownload%2F%40types%2Fbabel__traverse-7.14.2.tgz"
-      ],
-      [
-        "@types/cacheable-request",
-        "npm:6.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fcacheable-request%2Fdownload%2F%40types%2Fcacheable-request-6.0.2.tgz"
-      ],
-      [
-        "@types/estree",
-        "npm:0.0.39::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Festree%2Fdownload%2F%40types%2Festree-0.0.39.tgz"
-      ],
-      [
-        "@types/glob",
-        "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fglob%2Fdownload%2F%40types%2Fglob-7.2.0.tgz"
-      ],
-      [
-        "@types/graceful-fs",
-        "npm:4.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fgraceful-fs%2Fdownload%2F%40types%2Fgraceful-fs-4.1.5.tgz"
-      ],
-      [
-        "@types/http-cache-semantics",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fhttp-cache-semantics%2Fdownload%2F%40types%2Fhttp-cache-semantics-4.0.1.tgz"
-      ],
-      [
-        "@types/istanbul-lib-coverage",
-        "npm:2.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fistanbul-lib-coverage%2Fdownload%2F%40types%2Fistanbul-lib-coverage-2.0.3.tgz"
-      ],
-      [
-        "@types/istanbul-lib-report",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fistanbul-lib-report%2Fdownload%2F%40types%2Fistanbul-lib-report-3.0.0.tgz"
-      ],
-      [
-        "@types/istanbul-reports",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fistanbul-reports%2Fdownload%2F%40types%2Fistanbul-reports-3.0.1.tgz"
-      ],
-      [
-        "@types/jest",
-        "npm:27.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fjest%2Fdownload%2F%40types%2Fjest-27.0.3.tgz"
-      ],
-      [
-        "@types/json5",
-        "npm:0.0.29::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fjson5%2Fdownload%2F%40types%2Fjson5-0.0.29.tgz"
-      ],
-      [
-        "@types/keyv",
-        "npm:3.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fkeyv%2Fdownload%2F%40types%2Fkeyv-3.1.3.tgz"
-      ],
-      [
-        "@types/minimatch",
-        "npm:3.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fminimatch%2Fdownload%2F%40types%2Fminimatch-3.0.5.tgz"
-      ],
-      [
-        "@types/minimist",
-        "npm:1.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fminimist%2Fdownload%2F%40types%2Fminimist-1.2.2.tgz"
-      ],
-      [
-        "@types/node",
-        "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"
-      ],
-      [
-        "@types/normalize-package-data",
-        "npm:2.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnormalize-package-data%2Fdownload%2F%40types%2Fnormalize-package-data-2.4.1.tgz"
-      ],
-      [
-        "@types/parse-json",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fparse-json%2Fdownload%2F%40types%2Fparse-json-4.0.0.tgz"
-      ],
-      [
-        "@types/prettier",
-        "npm:2.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fprettier%2Fdownload%2F%40types%2Fprettier-2.4.2.tgz"
-      ],
-      [
-        "@types/resolve",
-        "npm:1.17.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fresolve%2Fdownload%2F%40types%2Fresolve-1.17.1.tgz"
-      ],
-      [
-        "@types/responselike",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fresponselike%2Fdownload%2F%40types%2Fresponselike-1.0.0.tgz"
-      ],
-      [
-        "@types/stack-utils",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fstack-utils%2Fdownload%2F%40types%2Fstack-utils-2.0.1.tgz"
-      ],
-      [
-        "@types/yargs",
-        "npm:16.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fyargs%2Fdownload%2F%40types%2Fyargs-16.0.4.tgz"
-      ],
-      [
-        "@types/yargs-parser",
-        "npm:20.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fyargs-parser%2Fdownload%2F%40types%2Fyargs-parser-20.2.1.tgz"
-      ],
-      [
-        "@yiminghe/cal",
-        "workspace:examples/cal"
-      ],
-      [
-        "@yiminghe/cal-ll",
-        "workspace:examples/cal-ll"
-      ],
-      [
-        "@yiminghe/excel-formula",
-        "workspace:examples/excel-formula-ll"
-      ],
-      [
-        "@yiminghe/regexp",
-        "workspace:examples/regexp-ll"
-      ],
-      [
-        "@yiminghe/rr",
-        "npm:1.63.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40yiminghe%2Frr%2Fdownload%2F%40yiminghe%2Frr-1.63.2.tgz"
-      ],
-      [
-        "@yiminghe/xtemplate",
-        "workspace:examples/xtemplate"
-      ],
-      [
-        "abab",
-        "npm:2.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fabab%2Fdownload%2Fabab-2.0.5.tgz"
-      ],
-      [
-        "abbrev",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fabbrev%2Fdownload%2Fabbrev-1.1.1.tgz"
-      ],
-      [
-        "acorn",
-        "npm:8.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Facorn%2Fdownload%2Facorn-8.6.0.tgz"
-      ],
-      [
-        "acorn-globals",
-        "npm:6.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Facorn-globals%2Fdownload%2Facorn-globals-6.0.0.tgz"
-      ],
-      [
-        "acorn-walk",
-        "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Facorn-walk%2Fdownload%2Facorn-walk-7.2.0.tgz"
-      ],
-      [
-        "agent-base",
-        "npm:6.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fagent-base%2Fdownload%2Fagent-base-6.0.2.tgz"
-      ],
-      [
-        "agentkeepalive",
-        "npm:4.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fagentkeepalive%2Fdownload%2Fagentkeepalive-4.1.4.tgz"
-      ],
-      [
-        "aggregate-error",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Faggregate-error%2Fdownload%2Faggregate-error-3.1.0.tgz"
-      ],
-      [
-        "alphanum-sort",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Falphanum-sort%2Fdownload%2Falphanum-sort-1.0.2.tgz"
-      ],
-      [
-        "ansi-align",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fansi-align%2Fdownload%2Fansi-align-3.0.1.tgz"
-      ],
-      [
-        "ansi-escapes",
-        "npm:4.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fansi-escapes%2Fdownload%2Fansi-escapes-4.3.2.tgz"
-      ],
-      [
-        "ansi-regex",
-        "npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fansi-regex%2Fdownload%2Fansi-regex-5.0.1.tgz"
-      ],
-      [
-        "ansi-styles",
-        "npm:4.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fansi-styles%2Fdownload%2Fansi-styles-4.3.0.tgz"
-      ],
-      [
-        "any-observable",
-        "virtual:7fe0c9cca01ed84ab492184ba2ba353991a3bc6352334b2d27c77c0b83dc19c02991e09ce5996e97bc3f2db849dfd77e108a01c1fc9ce4efe57821d7fecc45ab#npm:0.5.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fany-observable%2Fdownload%2Fany-observable-0.5.1.tgz"
-      ],
-      [
-        "anymatch",
-        "npm:3.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fanymatch%2Fdownload%2Fanymatch-3.1.2.tgz"
-      ],
-      [
-        "aproba",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Faproba%2Fdownload%2Faproba-2.0.0.tgz"
-      ],
-      [
-        "are-we-there-yet",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fare-we-there-yet%2Fdownload%2Fare-we-there-yet-2.0.0.tgz"
-      ],
-      [
-        "argparse",
-        "npm:1.0.10::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fargparse%2Fdownload%2Fargparse-1.0.10.tgz"
-      ],
-      [
-        "arr-diff",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farr-diff%2Fdownload%2Farr-diff-4.0.0.tgz"
-      ],
-      [
-        "arr-flatten",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farr-flatten%2Fdownload%2Farr-flatten-1.1.0.tgz"
-      ],
-      [
-        "arr-union",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farr-union%2Fdownload%2Farr-union-3.1.0.tgz"
-      ],
-      [
-        "array-find-index",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farray-find-index%2Fdownload%2Farray-find-index-1.0.2.tgz"
-      ],
-      [
-        "array-union",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farray-union%2Fdownload%2Farray-union-2.1.0.tgz"
-      ],
-      [
-        "array-uniq",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farray-uniq%2Fdownload%2Farray-uniq-1.0.3.tgz"
-      ],
-      [
-        "array-unique",
-        "npm:0.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farray-unique%2Fdownload%2Farray-unique-0.3.2.tgz"
-      ],
-      [
-        "arrify",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Farrify%2Fdownload%2Farrify-1.0.1.tgz"
-      ],
-      [
-        "assign-symbols",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fassign-symbols%2Fdownload%2Fassign-symbols-1.0.0.tgz"
-      ],
-      [
-        "async-exit-hook",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fasync-exit-hook%2Fdownload%2Fasync-exit-hook-2.0.1.tgz"
-      ],
-      [
-        "asynckit",
-        "npm:0.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fasynckit%2Fdownload%2Fasynckit-0.4.0.tgz"
-      ],
-      [
-        "atob",
-        "npm:2.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fatob%2Fdownload%2Fatob-2.1.2.tgz"
-      ],
-      [
-        "babel-jest",
-        "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-jest%2Fdownload%2Fbabel-jest-27.4.5.tgz"
-      ],
-      [
-        "babel-plugin-dynamic-import-node",
-        "npm:2.3.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-dynamic-import-node%2Fdownload%2Fbabel-plugin-dynamic-import-node-2.3.3.tgz"
-      ],
-      [
-        "babel-plugin-istanbul",
-        "npm:6.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-istanbul%2Fdownload%2Fbabel-plugin-istanbul-6.1.1.tgz"
-      ],
-      [
-        "babel-plugin-jest-hoist",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-jest-hoist%2Fdownload%2Fbabel-plugin-jest-hoist-27.4.0.tgz"
-      ],
-      [
-        "babel-plugin-polyfill-corejs2",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-corejs2%2Fdownload%2Fbabel-plugin-polyfill-corejs2-0.3.0.tgz"
-      ],
-      [
-        "babel-plugin-polyfill-corejs3",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-corejs3%2Fdownload%2Fbabel-plugin-polyfill-corejs3-0.4.0.tgz"
-      ],
-      [
-        "babel-plugin-polyfill-regenerator",
-        "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-regenerator%2Fdownload%2Fbabel-plugin-polyfill-regenerator-0.3.0.tgz"
-      ],
-      [
-        "babel-preset-current-node-syntax",
-        "virtual:adb43dc8b4efe740a74bf1bfea99533231863530fff53c57c15bdb6b0a132f768c765d0809150f65c6102b909656861d14975ef9a54b53d1508540e8ea3e6c28#npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-preset-current-node-syntax%2Fdownload%2Fbabel-preset-current-node-syntax-1.0.1.tgz"
-      ],
-      [
-        "babel-preset-jest",
-        "virtual:0512346058cd22445be9c05861142568d9ecad723a04ebd7cf8c24c140a608185c0058edce3329b209ea83ffdc9e07460b5c154de8be1d045be6f966c81c1df3#npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-preset-jest%2Fdownload%2Fbabel-preset-jest-27.4.0.tgz"
-      ],
-      [
-        "balanced-match",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbalanced-match%2Fdownload%2Fbalanced-match-1.0.2.tgz"
-      ],
-      [
-        "base",
-        "npm:0.11.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbase%2Fdownload%2Fbase-0.11.2.tgz"
-      ],
-      [
-        "benchmark",
-        "npm:2.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbenchmark%2Fdownload%2Fbenchmark-2.1.4.tgz"
-      ],
-      [
-        "big.js",
-        "npm:5.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbig.js%2Fdownload%2Fbig.js-5.2.2.tgz"
-      ],
-      [
-        "binary-extensions",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbinary-extensions%2Fdownload%2Fbinary-extensions-2.2.0.tgz"
-      ],
-      [
-        "boolbase",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fboolbase%2Fdownload%2Fboolbase-1.0.0.tgz"
-      ],
-      [
-        "boxen",
-        "npm:5.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fboxen%2Fdownload%2Fboxen-5.1.2.tgz"
-      ],
-      [
-        "brace-expansion",
-        "npm:1.1.11::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrace-expansion%2Fdownload%2Fbrace-expansion-1.1.11.tgz"
-      ],
-      [
-        "braces",
-        "npm:3.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbraces%2Fdownload%2Fbraces-3.0.2.tgz"
-      ],
-      [
-        "browser-process-hrtime",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowser-process-hrtime%2Fdownload%2Fbrowser-process-hrtime-1.0.0.tgz"
-      ],
-      [
-        "browserslist",
-        "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"
-      ],
-      [
-        "bser",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbser%2Fdownload%2Fbser-2.1.1.tgz"
-      ],
-      [
-        "buffer-from",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbuffer-from%2Fdownload%2Fbuffer-from-1.1.2.tgz"
-      ],
-      [
-        "builtin-modules",
-        "npm:3.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbuiltin-modules%2Fdownload%2Fbuiltin-modules-3.2.0.tgz"
-      ],
-      [
-        "builtins",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbuiltins%2Fdownload%2Fbuiltins-1.0.3.tgz"
-      ],
-      [
-        "cacache",
-        "npm:15.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcacache%2Fdownload%2Fcacache-15.3.0.tgz"
-      ],
-      [
-        "cache-base",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcache-base%2Fdownload%2Fcache-base-1.0.1.tgz"
-      ],
-      [
-        "cacheable-lookup",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcacheable-lookup%2Fdownload%2Fcacheable-lookup-2.0.1.tgz"
-      ],
-      [
-        "cacheable-request",
-        "npm:7.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcacheable-request%2Fdownload%2Fcacheable-request-7.0.2.tgz"
-      ],
-      [
-        "call-bind",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcall-bind%2Fdownload%2Fcall-bind-1.0.2.tgz"
-      ],
-      [
-        "caller-callsite",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaller-callsite%2Fdownload%2Fcaller-callsite-2.0.0.tgz"
-      ],
-      [
-        "caller-path",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaller-path%2Fdownload%2Fcaller-path-2.0.0.tgz"
-      ],
-      [
-        "callsites",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcallsites%2Fdownload%2Fcallsites-3.1.0.tgz"
-      ],
-      [
-        "camelcase",
-        "npm:5.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcamelcase%2Fdownload%2Fcamelcase-5.3.1.tgz"
-      ],
-      [
-        "camelcase-keys",
-        "npm:6.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcamelcase-keys%2Fdownload%2Fcamelcase-keys-6.2.2.tgz"
-      ],
-      [
-        "caniuse-api",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaniuse-api%2Fdownload%2Fcaniuse-api-3.0.0.tgz"
-      ],
-      [
-        "caniuse-lite",
-        "npm:1.0.30001286::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001286.tgz"
-      ],
-      [
-        "chalk",
-        "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"
-      ],
-      [
-        "char-regex",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchar-regex%2Fdownload%2Fchar-regex-1.0.2.tgz"
-      ],
-      [
-        "chardet",
-        "npm:0.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchardet%2Fdownload%2Fchardet-0.7.0.tgz"
-      ],
-      [
-        "chokidar",
-        "npm:3.5.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchokidar%2Fdownload%2Fchokidar-3.5.2.tgz"
-      ],
-      [
-        "chownr",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchownr%2Fdownload%2Fchownr-2.0.0.tgz"
-      ],
-      [
-        "ci-info",
-        "npm:3.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fci-info%2Fdownload%2Fci-info-3.3.0.tgz"
-      ],
-      [
-        "cjs-module-lexer",
-        "npm:1.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcjs-module-lexer%2Fdownload%2Fcjs-module-lexer-1.2.2.tgz"
-      ],
-      [
-        "class-utils",
-        "npm:0.3.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fclass-utils%2Fdownload%2Fclass-utils-0.3.6.tgz"
-      ],
-      [
-        "clean-stack",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fclean-stack%2Fdownload%2Fclean-stack-2.2.0.tgz"
-      ],
-      [
-        "cli-boxes",
-        "npm:2.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcli-boxes%2Fdownload%2Fcli-boxes-2.2.1.tgz"
-      ],
-      [
-        "cli-cursor",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcli-cursor%2Fdownload%2Fcli-cursor-2.1.0.tgz"
-      ],
-      [
-        "cli-truncate",
-        "npm:0.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcli-truncate%2Fdownload%2Fcli-truncate-0.2.1.tgz"
-      ],
-      [
-        "cli-width",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcli-width%2Fdownload%2Fcli-width-3.0.0.tgz"
-      ],
-      [
-        "cliui",
-        "npm:7.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcliui%2Fdownload%2Fcliui-7.0.4.tgz"
-      ],
-      [
-        "clone-deep",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fclone-deep%2Fdownload%2Fclone-deep-4.0.1.tgz"
-      ],
-      [
-        "clone-response",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fclone-response%2Fdownload%2Fclone-response-1.0.2.tgz"
-      ],
-      [
-        "co",
-        "npm:4.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fco%2Fdownload%2Fco-4.6.0.tgz"
-      ],
-      [
-        "code-point-at",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcode-point-at%2Fdownload%2Fcode-point-at-1.1.0.tgz"
-      ],
-      [
-        "collect-v8-coverage",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcollect-v8-coverage%2Fdownload%2Fcollect-v8-coverage-1.0.1.tgz"
-      ],
-      [
-        "collection-visit",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcollection-visit%2Fdownload%2Fcollection-visit-1.0.0.tgz"
-      ],
-      [
-        "color-convert",
-        "npm:1.9.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcolor-convert%2Fdownload%2Fcolor-convert-1.9.3.tgz"
-      ],
-      [
-        "color-name",
-        "npm:1.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcolor-name%2Fdownload%2Fcolor-name-1.1.3.tgz"
-      ],
-      [
-        "color-support",
-        "npm:1.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcolor-support%2Fdownload%2Fcolor-support-1.1.3.tgz"
-      ],
-      [
-        "colord",
-        "npm:2.9.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcolord%2Fdownload%2Fcolord-2.9.1.tgz"
-      ],
-      [
-        "combined-stream",
-        "npm:1.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcombined-stream%2Fdownload%2Fcombined-stream-1.0.8.tgz"
-      ],
-      [
-        "commander",
-        "npm:2.20.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcommander%2Fdownload%2Fcommander-2.20.3.tgz"
-      ],
-      [
-        "commondir",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcommondir%2Fdownload%2Fcommondir-1.0.1.tgz"
-      ],
-      [
-        "component-emitter",
-        "npm:1.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcomponent-emitter%2Fdownload%2Fcomponent-emitter-1.3.0.tgz"
-      ],
-      [
-        "concat-map",
-        "npm:0.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fconcat-map%2Fdownload%2Fconcat-map-0.0.1.tgz"
-      ],
-      [
-        "concat-with-sourcemaps",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fconcat-with-sourcemaps%2Fdownload%2Fconcat-with-sourcemaps-1.1.0.tgz"
-      ],
-      [
-        "configstore",
-        "npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fconfigstore%2Fdownload%2Fconfigstore-5.0.1.tgz"
-      ],
-      [
-        "console-control-strings",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fconsole-control-strings%2Fdownload%2Fconsole-control-strings-1.1.0.tgz"
-      ],
-      [
-        "convert-source-map",
-        "npm:1.8.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fconvert-source-map%2Fdownload%2Fconvert-source-map-1.8.0.tgz"
-      ],
-      [
-        "copy-descriptor",
-        "npm:0.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcopy-descriptor%2Fdownload%2Fcopy-descriptor-0.1.1.tgz"
-      ],
-      [
-        "core-js",
-        "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.19.3.tgz"
-      ],
-      [
-        "core-js-compat",
-        "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz"
-      ],
-      [
-        "cosmiconfig",
-        "npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcosmiconfig%2Fdownload%2Fcosmiconfig-5.2.1.tgz"
-      ],
-      [
-        "cross-spawn",
-        "npm:7.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcross-spawn%2Fdownload%2Fcross-spawn-7.0.3.tgz"
-      ],
-      [
-        "crypto-random-string",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcrypto-random-string%2Fdownload%2Fcrypto-random-string-2.0.0.tgz"
-      ],
-      [
-        "css-declaration-sorter",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz"
-      ],
-      [
-        "css-select",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-select%2Fdownload%2Fcss-select-4.2.0.tgz"
-      ],
-      [
-        "css-tree",
-        "npm:1.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-tree%2Fdownload%2Fcss-tree-1.1.3.tgz"
-      ],
-      [
-        "css-what",
-        "npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-what%2Fdownload%2Fcss-what-5.1.0.tgz"
-      ],
-      [
-        "cssesc",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssesc%2Fdownload%2Fcssesc-3.0.0.tgz"
-      ],
-      [
-        "cssnano",
-        "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.12.tgz"
-      ],
-      [
-        "cssnano-preset-default",
-        "virtual:970ba034f090ca1f103421ef8de0895aa989edf2c0bd3ee172a4ce3d00d309bcb760b6e173bd5efa6d53861138180d43f89f0770a7d39f0e9bbfb031e674e496#npm:5.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.8.tgz"
-      ],
-      [
-        "cssnano-utils",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"
-      ],
-      [
-        "csso",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcsso%2Fdownload%2Fcsso-4.2.0.tgz"
-      ],
-      [
-        "cssom",
-        "npm:0.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssom%2Fdownload%2Fcssom-0.4.4.tgz"
-      ],
-      [
-        "cssstyle",
-        "npm:2.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssstyle%2Fdownload%2Fcssstyle-2.3.0.tgz"
-      ],
-      [
-        "currently-unhandled",
-        "npm:0.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcurrently-unhandled%2Fdownload%2Fcurrently-unhandled-0.4.1.tgz"
-      ],
-      [
-        "data-urls",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdata-urls%2Fdownload%2Fdata-urls-2.0.0.tgz"
-      ],
-      [
-        "date-fns",
-        "npm:1.30.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdate-fns%2Fdownload%2Fdate-fns-1.30.1.tgz"
-      ],
-      [
-        "debug",
-        "virtual:c39dbf8b77e494cbd312d080801186d7a604cbc7f5bb4fba1dabf7e71a5b33c78076d219732cd15b4f17d5d52a119d9e022d55d294c3ba66658974a2b70804e6#npm:4.3.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdebug%2Fdownload%2Fdebug-4.3.3.tgz"
-      ],
-      [
-        "decamelize",
-        "npm:1.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdecamelize%2Fdownload%2Fdecamelize-1.2.0.tgz"
-      ],
-      [
-        "decamelize-keys",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdecamelize-keys%2Fdownload%2Fdecamelize-keys-1.1.0.tgz"
-      ],
-      [
-        "decimal.js",
-        "npm:10.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdecimal.js%2Fdownload%2Fdecimal.js-10.3.1.tgz"
-      ],
-      [
-        "decode-uri-component",
-        "npm:0.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdecode-uri-component%2Fdownload%2Fdecode-uri-component-0.2.0.tgz"
-      ],
-      [
-        "decompress-response",
-        "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdecompress-response%2Fdownload%2Fdecompress-response-5.0.0.tgz"
-      ],
-      [
-        "dedent",
-        "npm:0.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdedent%2Fdownload%2Fdedent-0.7.0.tgz"
-      ],
-      [
-        "deep-extend",
-        "npm:0.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdeep-extend%2Fdownload%2Fdeep-extend-0.6.0.tgz"
-      ],
-      [
-        "deep-is",
-        "npm:0.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdeep-is%2Fdownload%2Fdeep-is-0.1.4.tgz"
-      ],
-      [
-        "deepmerge",
-        "npm:4.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdeepmerge%2Fdownload%2Fdeepmerge-4.2.2.tgz"
-      ],
-      [
-        "defer-to-connect",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdefer-to-connect%2Fdownload%2Fdefer-to-connect-2.0.1.tgz"
-      ],
-      [
-        "define-properties",
-        "npm:1.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdefine-properties%2Fdownload%2Fdefine-properties-1.1.3.tgz"
-      ],
-      [
-        "define-property",
-        "npm:0.2.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdefine-property%2Fdownload%2Fdefine-property-0.2.5.tgz"
-      ],
-      [
-        "del",
-        "npm:6.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdel%2Fdownload%2Fdel-6.0.0.tgz"
-      ],
-      [
-        "delayed-stream",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdelayed-stream%2Fdownload%2Fdelayed-stream-1.0.0.tgz"
-      ],
-      [
-        "delegates",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdelegates%2Fdownload%2Fdelegates-1.0.0.tgz"
-      ],
-      [
-        "depd",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdepd%2Fdownload%2Fdepd-1.1.2.tgz"
-      ],
-      [
-        "detect-indent",
-        "npm:6.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdetect-indent%2Fdownload%2Fdetect-indent-6.1.0.tgz"
-      ],
-      [
-        "detect-newline",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdetect-newline%2Fdownload%2Fdetect-newline-3.1.0.tgz"
-      ],
-      [
-        "diff-sequences",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdiff-sequences%2Fdownload%2Fdiff-sequences-27.4.0.tgz"
-      ],
-      [
-        "dir-glob",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdir-glob%2Fdownload%2Fdir-glob-3.0.1.tgz"
-      ],
-      [
-        "dom-serializer",
-        "npm:1.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdom-serializer%2Fdownload%2Fdom-serializer-1.3.2.tgz"
-      ],
-      [
-        "domelementtype",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdomelementtype%2Fdownload%2Fdomelementtype-2.2.0.tgz"
-      ],
-      [
-        "domexception",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdomexception%2Fdownload%2Fdomexception-2.0.1.tgz"
-      ],
-      [
-        "domhandler",
-        "npm:4.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdomhandler%2Fdownload%2Fdomhandler-4.3.0.tgz"
-      ],
-      [
-        "domutils",
-        "npm:2.8.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdomutils%2Fdownload%2Fdomutils-2.8.0.tgz"
-      ],
-      [
-        "dot-prop",
-        "npm:6.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdot-prop%2Fdownload%2Fdot-prop-6.0.1.tgz"
-      ],
-      [
-        "duplexer3",
-        "npm:0.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fduplexer3%2Fdownload%2Fduplexer3-0.1.4.tgz"
-      ],
-      [
-        "electron-to-chromium",
-        "npm:1.4.18::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.18.tgz"
-      ],
-      [
-        "elegant-spinner",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felegant-spinner%2Fdownload%2Felegant-spinner-1.0.1.tgz"
-      ],
-      [
-        "emittery",
-        "npm:0.8.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Femittery%2Fdownload%2Femittery-0.8.1.tgz"
-      ],
-      [
-        "emoji-regex",
-        "npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Femoji-regex%2Fdownload%2Femoji-regex-8.0.0.tgz"
-      ],
-      [
-        "emojis-list",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Femojis-list%2Fdownload%2Femojis-list-3.0.0.tgz"
-      ],
-      [
-        "encoding",
-        "npm:0.1.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fencoding%2Fdownload%2Fencoding-0.1.13.tgz"
-      ],
-      [
-        "end-of-stream",
-        "npm:1.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fend-of-stream%2Fdownload%2Fend-of-stream-1.4.4.tgz"
-      ],
-      [
-        "entities",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fentities%2Fdownload%2Fentities-2.2.0.tgz"
-      ],
-      [
-        "env-paths",
-        "npm:2.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fenv-paths%2Fdownload%2Fenv-paths-2.2.1.tgz"
-      ],
-      [
-        "err-code",
-        "npm:2.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ferr-code%2Fdownload%2Ferr-code-2.0.3.tgz"
-      ],
-      [
-        "error-ex",
-        "npm:1.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ferror-ex%2Fdownload%2Ferror-ex-1.3.2.tgz"
-      ],
-      [
-        "es-abstract",
-        "npm:1.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fes-abstract%2Fdownload%2Fes-abstract-1.19.1.tgz"
-      ],
-      [
-        "es-to-primitive",
-        "npm:1.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fes-to-primitive%2Fdownload%2Fes-to-primitive-1.2.1.tgz"
-      ],
-      [
-        "escalade",
-        "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fescalade%2Fdownload%2Fescalade-3.1.1.tgz"
-      ],
-      [
-        "escape-goat",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fescape-goat%2Fdownload%2Fescape-goat-3.0.0.tgz"
-      ],
-      [
-        "escape-string-regexp",
-        "npm:1.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fescape-string-regexp%2Fdownload%2Fescape-string-regexp-1.0.5.tgz"
-      ],
-      [
-        "escodegen",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fescodegen%2Fdownload%2Fescodegen-2.0.0.tgz"
-      ],
-      [
-        "esprima",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fesprima%2Fdownload%2Fesprima-4.0.1.tgz"
-      ],
-      [
-        "estraverse",
-        "npm:5.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Festraverse%2Fdownload%2Festraverse-5.3.0.tgz"
-      ],
-      [
-        "estree-walker",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Festree-walker%2Fdownload%2Festree-walker-1.0.1.tgz"
-      ],
-      [
-        "esutils",
-        "npm:2.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fesutils%2Fdownload%2Fesutils-2.0.3.tgz"
-      ],
-      [
-        "eventemitter3",
-        "npm:4.0.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Feventemitter3%2Fdownload%2Feventemitter3-4.0.7.tgz"
-      ],
-      [
-        "execa",
-        "npm:5.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexeca%2Fdownload%2Fexeca-5.1.1.tgz"
-      ],
-      [
-        "exit",
-        "npm:0.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexit%2Fdownload%2Fexit-0.1.2.tgz"
-      ],
-      [
-        "expand-brackets",
-        "npm:2.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexpand-brackets%2Fdownload%2Fexpand-brackets-2.1.4.tgz"
-      ],
-      [
-        "expect",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexpect%2Fdownload%2Fexpect-27.4.2.tgz"
-      ],
-      [
-        "extend-shallow",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fextend-shallow%2Fdownload%2Fextend-shallow-2.0.1.tgz"
-      ],
-      [
-        "external-editor",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexternal-editor%2Fdownload%2Fexternal-editor-3.1.0.tgz"
-      ],
-      [
-        "extglob",
-        "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fextglob%2Fdownload%2Fextglob-2.0.4.tgz"
-      ],
-      [
-        "fast-glob",
-        "npm:3.2.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffast-glob%2Fdownload%2Ffast-glob-3.2.7.tgz"
-      ],
-      [
-        "fast-json-stable-stringify",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffast-json-stable-stringify%2Fdownload%2Ffast-json-stable-stringify-2.1.0.tgz"
-      ],
-      [
-        "fast-levenshtein",
-        "npm:2.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffast-levenshtein%2Fdownload%2Ffast-levenshtein-2.0.6.tgz"
-      ],
-      [
-        "fastq",
-        "npm:1.13.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffastq%2Fdownload%2Ffastq-1.13.0.tgz"
-      ],
-      [
-        "fb-watchman",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffb-watchman%2Fdownload%2Ffb-watchman-2.0.1.tgz"
-      ],
-      [
-        "figures",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffigures%2Fdownload%2Ffigures-2.0.0.tgz"
-      ],
-      [
-        "file-uri-to-path",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffile-uri-to-path%2Fdownload%2Ffile-uri-to-path-1.0.0.tgz"
-      ],
-      [
-        "fill-range",
-        "npm:7.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffill-range%2Fdownload%2Ffill-range-7.0.1.tgz"
-      ],
-      [
-        "find-cache-dir",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffind-cache-dir%2Fdownload%2Ffind-cache-dir-2.1.0.tgz"
-      ],
-      [
-        "find-parent-dir",
-        "npm:0.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffind-parent-dir%2Fdownload%2Ffind-parent-dir-0.3.1.tgz"
-      ],
-      [
-        "find-up",
-        "npm:4.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffind-up%2Fdownload%2Ffind-up-4.1.0.tgz"
-      ],
-      [
-        "for-in",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffor-in%2Fdownload%2Ffor-in-1.0.2.tgz"
-      ],
-      [
-        "form-data",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fform-data%2Fdownload%2Fform-data-3.0.1.tgz"
-      ],
-      [
-        "fragment-cache",
-        "npm:0.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffragment-cache%2Fdownload%2Ffragment-cache-0.2.1.tgz"
-      ],
-      [
-        "fs-extra",
-        "npm:10.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffs-extra%2Fdownload%2Ffs-extra-10.0.0.tgz"
-      ],
-      [
-        "fs-minipass",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffs-minipass%2Fdownload%2Ffs-minipass-2.1.0.tgz"
-      ],
-      [
-        "fs-readdir-recursive",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffs-readdir-recursive%2Fdownload%2Ffs-readdir-recursive-1.1.0.tgz"
-      ],
-      [
-        "fs.realpath",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffs.realpath%2Fdownload%2Ffs.realpath-1.0.0.tgz"
-      ],
-      [
-        "fsevents",
-        "patch:fsevents@npm%3A2.3.2%3A%3A__archiveUrl=https%253A%252F%252Fregistry.npm.alibaba-inc.com%252Ffsevents%252Fdownload%252Ffsevents-2.3.2.tgz#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
-      ],
-      [
-        "function-bind",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffunction-bind%2Fdownload%2Ffunction-bind-1.1.1.tgz"
-      ],
-      [
-        "gauge",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgauge%2Fdownload%2Fgauge-4.0.0.tgz"
-      ],
-      [
-        "generic-names",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgeneric-names%2Fdownload%2Fgeneric-names-2.0.1.tgz"
-      ],
-      [
-        "gensync",
-        "npm:1.0.0-beta.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgensync%2Fdownload%2Fgensync-1.0.0-beta.2.tgz"
-      ],
-      [
-        "get-caller-file",
-        "npm:2.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-caller-file%2Fdownload%2Fget-caller-file-2.0.5.tgz"
-      ],
-      [
-        "get-intrinsic",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-intrinsic%2Fdownload%2Fget-intrinsic-1.1.1.tgz"
-      ],
-      [
-        "get-own-enumerable-property-symbols",
-        "npm:3.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-own-enumerable-property-symbols%2Fdownload%2Fget-own-enumerable-property-symbols-3.0.2.tgz"
-      ],
-      [
-        "get-package-type",
-        "npm:0.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-package-type%2Fdownload%2Fget-package-type-0.1.0.tgz"
-      ],
-      [
-        "get-stream",
-        "npm:5.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-stream%2Fdownload%2Fget-stream-5.2.0.tgz"
-      ],
-      [
-        "get-symbol-description",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-symbol-description%2Fdownload%2Fget-symbol-description-1.0.0.tgz"
-      ],
-      [
-        "get-value",
-        "npm:2.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fget-value%2Fdownload%2Fget-value-2.0.6.tgz"
-      ],
-      [
-        "github-url-from-git",
-        "npm:1.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgithub-url-from-git%2Fdownload%2Fgithub-url-from-git-1.5.0.tgz"
-      ],
-      [
-        "glob",
-        "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fglob%2Fdownload%2Fglob-7.2.0.tgz"
-      ],
-      [
-        "glob-parent",
-        "npm:5.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fglob-parent%2Fdownload%2Fglob-parent-5.1.2.tgz"
-      ],
-      [
-        "global-dirs",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fglobal-dirs%2Fdownload%2Fglobal-dirs-2.1.0.tgz"
-      ],
-      [
-        "globals",
-        "npm:11.12.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fglobals%2Fdownload%2Fglobals-11.12.0.tgz"
-      ],
-      [
-        "globby",
-        "npm:11.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fglobby%2Fdownload%2Fglobby-11.0.4.tgz"
-      ],
-      [
-        "got",
-        "npm:9.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgot%2Fdownload%2Fgot-9.6.0.tgz"
-      ],
-      [
-        "graceful-fs",
-        "npm:4.2.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgraceful-fs%2Fdownload%2Fgraceful-fs-4.2.8.tgz"
-      ],
-      [
-        "hard-rejection",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhard-rejection%2Fdownload%2Fhard-rejection-2.1.0.tgz"
-      ],
-      [
-        "has",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas%2Fdownload%2Fhas-1.0.3.tgz"
-      ],
-      [
-        "has-ansi",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-ansi%2Fdownload%2Fhas-ansi-2.0.0.tgz"
-      ],
-      [
-        "has-bigints",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-bigints%2Fdownload%2Fhas-bigints-1.0.1.tgz"
-      ],
-      [
-        "has-flag",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-flag%2Fdownload%2Fhas-flag-4.0.0.tgz"
-      ],
-      [
-        "has-symbols",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-symbols%2Fdownload%2Fhas-symbols-1.0.2.tgz"
-      ],
-      [
-        "has-tostringtag",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-tostringtag%2Fdownload%2Fhas-tostringtag-1.0.0.tgz"
-      ],
-      [
-        "has-unicode",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-unicode%2Fdownload%2Fhas-unicode-2.0.1.tgz"
-      ],
-      [
-        "has-value",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-value%2Fdownload%2Fhas-value-1.0.0.tgz"
-      ],
-      [
-        "has-values",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-values%2Fdownload%2Fhas-values-1.0.0.tgz"
-      ],
-      [
-        "has-yarn",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhas-yarn%2Fdownload%2Fhas-yarn-2.1.0.tgz"
-      ],
-      [
-        "homedir-polyfill",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhomedir-polyfill%2Fdownload%2Fhomedir-polyfill-1.0.3.tgz"
-      ],
-      [
-        "hosted-git-info",
-        "npm:3.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhosted-git-info%2Fdownload%2Fhosted-git-info-3.0.8.tgz"
-      ],
-      [
-        "html-encoding-sniffer",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhtml-encoding-sniffer%2Fdownload%2Fhtml-encoding-sniffer-2.0.1.tgz"
-      ],
-      [
-        "html-escaper",
-        "npm:2.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhtml-escaper%2Fdownload%2Fhtml-escaper-2.0.2.tgz"
-      ],
-      [
-        "http-cache-semantics",
-        "npm:4.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhttp-cache-semantics%2Fdownload%2Fhttp-cache-semantics-4.1.0.tgz"
-      ],
-      [
-        "http-proxy-agent",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhttp-proxy-agent%2Fdownload%2Fhttp-proxy-agent-4.0.1.tgz"
-      ],
-      [
-        "https-proxy-agent",
-        "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhttps-proxy-agent%2Fdownload%2Fhttps-proxy-agent-5.0.0.tgz"
-      ],
-      [
-        "human-signals",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhuman-signals%2Fdownload%2Fhuman-signals-2.1.0.tgz"
-      ],
-      [
-        "humanize-ms",
-        "npm:1.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhumanize-ms%2Fdownload%2Fhumanize-ms-1.2.1.tgz"
-      ],
-      [
-        "husky",
-        "npm:7.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fhusky%2Fdownload%2Fhusky-7.0.4.tgz"
-      ],
-      [
-        "iconv-lite",
-        "npm:0.4.24::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ficonv-lite%2Fdownload%2Ficonv-lite-0.4.24.tgz"
-      ],
-      [
-        "icss-replace-symbols",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ficss-replace-symbols%2Fdownload%2Ficss-replace-symbols-1.1.0.tgz"
-      ],
-      [
-        "icss-utils",
-        "virtual:b98cb9eced822e0409a8fd92466eb63159a978cd54f9b5ade24c7b2ca58c381218fc7eff7530f291153e0126aae75b623fd7793e11c9691fc4b3701a3c9cebd5#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ficss-utils%2Fdownload%2Ficss-utils-5.1.0.tgz"
-      ],
-      [
-        "ignore",
-        "npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fignore%2Fdownload%2Fignore-5.1.9.tgz"
-      ],
-      [
-        "ignore-walk",
-        "npm:3.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fignore-walk%2Fdownload%2Fignore-walk-3.0.4.tgz"
-      ],
-      [
-        "import-cwd",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimport-cwd%2Fdownload%2Fimport-cwd-3.0.0.tgz"
-      ],
-      [
-        "import-fresh",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimport-fresh%2Fdownload%2Fimport-fresh-2.0.0.tgz"
-      ],
-      [
-        "import-from",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimport-from%2Fdownload%2Fimport-from-3.0.0.tgz"
-      ],
-      [
-        "import-lazy",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimport-lazy%2Fdownload%2Fimport-lazy-2.1.0.tgz"
-      ],
-      [
-        "import-local",
-        "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimport-local%2Fdownload%2Fimport-local-3.0.3.tgz"
-      ],
-      [
-        "imurmurhash",
-        "npm:0.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimurmurhash%2Fdownload%2Fimurmurhash-0.1.4.tgz"
-      ],
-      [
-        "indent-string",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Findent-string%2Fdownload%2Findent-string-4.0.0.tgz"
-      ],
-      [
-        "infer-owner",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finfer-owner%2Fdownload%2Finfer-owner-1.0.4.tgz"
-      ],
-      [
-        "inflight",
-        "npm:1.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finflight%2Fdownload%2Finflight-1.0.6.tgz"
-      ],
-      [
-        "inherits",
-        "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finherits%2Fdownload%2Finherits-2.0.4.tgz"
-      ],
-      [
-        "ini",
-        "npm:1.3.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fini%2Fdownload%2Fini-1.3.8.tgz"
-      ],
-      [
-        "inquirer",
-        "npm:7.3.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finquirer%2Fdownload%2Finquirer-7.3.3.tgz"
-      ],
-      [
-        "inquirer-autosubmit-prompt",
-        "npm:0.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finquirer-autosubmit-prompt%2Fdownload%2Finquirer-autosubmit-prompt-0.2.0.tgz"
-      ],
-      [
-        "internal-slot",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finternal-slot%2Fdownload%2Finternal-slot-1.0.3.tgz"
-      ],
-      [
-        "invariant",
-        "npm:2.2.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Finvariant%2Fdownload%2Finvariant-2.2.4.tgz"
-      ],
-      [
-        "ip",
-        "npm:1.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fip%2Fdownload%2Fip-1.1.5.tgz"
-      ],
-      [
-        "ip-regex",
-        "npm:4.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fip-regex%2Fdownload%2Fip-regex-4.3.0.tgz"
-      ],
-      [
-        "is-absolute-url",
-        "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-absolute-url%2Fdownload%2Fis-absolute-url-3.0.3.tgz"
-      ],
-      [
-        "is-accessor-descriptor",
-        "npm:0.1.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-accessor-descriptor%2Fdownload%2Fis-accessor-descriptor-0.1.6.tgz"
-      ],
-      [
-        "is-arrayish",
-        "npm:0.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-arrayish%2Fdownload%2Fis-arrayish-0.2.1.tgz"
-      ],
-      [
-        "is-bigint",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-bigint%2Fdownload%2Fis-bigint-1.0.4.tgz"
-      ],
-      [
-        "is-binary-path",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-binary-path%2Fdownload%2Fis-binary-path-2.1.0.tgz"
-      ],
-      [
-        "is-boolean-object",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-boolean-object%2Fdownload%2Fis-boolean-object-1.1.2.tgz"
-      ],
-      [
-        "is-buffer",
-        "npm:1.1.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-buffer%2Fdownload%2Fis-buffer-1.1.6.tgz"
-      ],
-      [
-        "is-builtin-module",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-builtin-module%2Fdownload%2Fis-builtin-module-3.1.0.tgz"
-      ],
-      [
-        "is-callable",
-        "npm:1.2.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-callable%2Fdownload%2Fis-callable-1.2.4.tgz"
-      ],
-      [
-        "is-ci",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-ci%2Fdownload%2Fis-ci-2.0.0.tgz"
-      ],
-      [
-        "is-core-module",
-        "npm:2.8.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-core-module%2Fdownload%2Fis-core-module-2.8.0.tgz"
-      ],
-      [
-        "is-data-descriptor",
-        "npm:0.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-data-descriptor%2Fdownload%2Fis-data-descriptor-0.1.4.tgz"
-      ],
-      [
-        "is-date-object",
-        "npm:1.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-date-object%2Fdownload%2Fis-date-object-1.0.5.tgz"
-      ],
-      [
-        "is-descriptor",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-descriptor%2Fdownload%2Fis-descriptor-1.0.2.tgz"
-      ],
-      [
-        "is-directory",
-        "npm:0.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-directory%2Fdownload%2Fis-directory-0.3.1.tgz"
-      ],
-      [
-        "is-docker",
-        "npm:2.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-docker%2Fdownload%2Fis-docker-2.2.1.tgz"
-      ],
-      [
-        "is-extendable",
-        "npm:0.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-extendable%2Fdownload%2Fis-extendable-0.1.1.tgz"
-      ],
-      [
-        "is-extglob",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-extglob%2Fdownload%2Fis-extglob-2.1.1.tgz"
-      ],
-      [
-        "is-fullwidth-code-point",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-fullwidth-code-point%2Fdownload%2Fis-fullwidth-code-point-2.0.0.tgz"
-      ],
-      [
-        "is-generator-fn",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-generator-fn%2Fdownload%2Fis-generator-fn-2.1.0.tgz"
-      ],
-      [
-        "is-glob",
-        "npm:4.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-glob%2Fdownload%2Fis-glob-4.0.3.tgz"
-      ],
-      [
-        "is-installed-globally",
-        "npm:0.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-installed-globally%2Fdownload%2Fis-installed-globally-0.3.2.tgz"
-      ],
-      [
-        "is-interactive",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-interactive%2Fdownload%2Fis-interactive-1.0.0.tgz"
-      ],
-      [
-        "is-lambda",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-lambda%2Fdownload%2Fis-lambda-1.0.1.tgz"
-      ],
-      [
-        "is-module",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-module%2Fdownload%2Fis-module-1.0.0.tgz"
-      ],
-      [
-        "is-negative-zero",
-        "npm:2.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-negative-zero%2Fdownload%2Fis-negative-zero-2.0.2.tgz"
-      ],
-      [
-        "is-npm",
-        "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-npm%2Fdownload%2Fis-npm-5.0.0.tgz"
-      ],
-      [
-        "is-number",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-number%2Fdownload%2Fis-number-3.0.0.tgz"
-      ],
-      [
-        "is-number-object",
-        "npm:1.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-number-object%2Fdownload%2Fis-number-object-1.0.6.tgz"
-      ],
-      [
-        "is-obj",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-obj%2Fdownload%2Fis-obj-1.0.1.tgz"
-      ],
-      [
-        "is-observable",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-observable%2Fdownload%2Fis-observable-1.1.0.tgz"
-      ],
-      [
-        "is-path-cwd",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-path-cwd%2Fdownload%2Fis-path-cwd-2.2.0.tgz"
-      ],
-      [
-        "is-path-in-cwd",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-path-in-cwd%2Fdownload%2Fis-path-in-cwd-2.1.0.tgz"
-      ],
-      [
-        "is-path-inside",
-        "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-path-inside%2Fdownload%2Fis-path-inside-3.0.3.tgz"
-      ],
-      [
-        "is-plain-obj",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-plain-obj%2Fdownload%2Fis-plain-obj-1.1.0.tgz"
-      ],
-      [
-        "is-plain-object",
-        "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-plain-object%2Fdownload%2Fis-plain-object-2.0.4.tgz"
-      ],
-      [
-        "is-potential-custom-element-name",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-potential-custom-element-name%2Fdownload%2Fis-potential-custom-element-name-1.0.1.tgz"
-      ],
-      [
-        "is-promise",
-        "npm:2.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-promise%2Fdownload%2Fis-promise-2.2.2.tgz"
-      ],
-      [
-        "is-reference",
-        "npm:1.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-reference%2Fdownload%2Fis-reference-1.2.1.tgz"
-      ],
-      [
-        "is-regex",
-        "npm:1.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-regex%2Fdownload%2Fis-regex-1.1.4.tgz"
-      ],
-      [
-        "is-regexp",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-regexp%2Fdownload%2Fis-regexp-1.0.0.tgz"
-      ],
-      [
-        "is-resolvable",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-resolvable%2Fdownload%2Fis-resolvable-1.1.0.tgz"
-      ],
-      [
-        "is-scoped",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-scoped%2Fdownload%2Fis-scoped-2.1.0.tgz"
-      ],
-      [
-        "is-shared-array-buffer",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-shared-array-buffer%2Fdownload%2Fis-shared-array-buffer-1.0.1.tgz"
-      ],
-      [
-        "is-stream",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-stream%2Fdownload%2Fis-stream-2.0.1.tgz"
-      ],
-      [
-        "is-string",
-        "npm:1.0.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-string%2Fdownload%2Fis-string-1.0.7.tgz"
-      ],
-      [
-        "is-symbol",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-symbol%2Fdownload%2Fis-symbol-1.0.4.tgz"
-      ],
-      [
-        "is-typedarray",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-typedarray%2Fdownload%2Fis-typedarray-1.0.0.tgz"
-      ],
-      [
-        "is-unicode-supported",
-        "npm:0.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-unicode-supported%2Fdownload%2Fis-unicode-supported-0.1.0.tgz"
-      ],
-      [
-        "is-url-superb",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-url-superb%2Fdownload%2Fis-url-superb-4.0.0.tgz"
-      ],
-      [
-        "is-weakref",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-weakref%2Fdownload%2Fis-weakref-1.0.2.tgz"
-      ],
-      [
-        "is-windows",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-windows%2Fdownload%2Fis-windows-1.0.2.tgz"
-      ],
-      [
-        "is-wsl",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-wsl%2Fdownload%2Fis-wsl-2.2.0.tgz"
-      ],
-      [
-        "is-yarn-global",
-        "npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-yarn-global%2Fdownload%2Fis-yarn-global-0.3.0.tgz"
-      ],
-      [
-        "isarray",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fisarray%2Fdownload%2Fisarray-1.0.0.tgz"
-      ],
-      [
-        "isexe",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fisexe%2Fdownload%2Fisexe-2.0.0.tgz"
-      ],
-      [
-        "isobject",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fisobject%2Fdownload%2Fisobject-3.0.1.tgz"
-      ],
-      [
-        "issue-regex",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fissue-regex%2Fdownload%2Fissue-regex-3.1.0.tgz"
-      ],
-      [
-        "istanbul-lib-coverage",
-        "npm:3.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fistanbul-lib-coverage%2Fdownload%2Fistanbul-lib-coverage-3.2.0.tgz"
-      ],
-      [
-        "istanbul-lib-instrument",
-        "npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fistanbul-lib-instrument%2Fdownload%2Fistanbul-lib-instrument-5.1.0.tgz"
-      ],
-      [
-        "istanbul-lib-report",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fistanbul-lib-report%2Fdownload%2Fistanbul-lib-report-3.0.0.tgz"
-      ],
-      [
-        "istanbul-lib-source-maps",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fistanbul-lib-source-maps%2Fdownload%2Fistanbul-lib-source-maps-4.0.1.tgz"
-      ],
-      [
-        "istanbul-reports",
-        "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fistanbul-reports%2Fdownload%2Fistanbul-reports-3.1.1.tgz"
-      ],
-      [
-        "jest",
-        "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest%2Fdownload%2Fjest-27.4.5.tgz"
-      ],
-      [
-        "jest-changed-files",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-changed-files%2Fdownload%2Fjest-changed-files-27.4.2.tgz"
-      ],
-      [
-        "jest-circus",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-circus%2Fdownload%2Fjest-circus-27.4.5.tgz"
-      ],
-      [
-        "jest-cli",
-        "virtual:1374f5586fb0733c01fcead84835dbfe8c373f9ea4ec21c0b0a2d79153c830229f2b736f58c786d35c527a9df1bfbd142e574f8537aad8c5bf486282889f7608#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-cli%2Fdownload%2Fjest-cli-27.4.5.tgz"
-      ],
-      [
-        "jest-config",
-        "virtual:31a8eea0c93eac9466299e73f5d1ca872a84a9ca696c1b8bce6f80eee385873885558cc4dad43aa4c560abc9e3377233089ff4be39c0f8f4ea4edb1d161f8b25#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-config%2Fdownload%2Fjest-config-27.4.5.tgz"
-      ],
-      [
-        "jest-diff",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-diff%2Fdownload%2Fjest-diff-27.4.2.tgz"
-      ],
-      [
-        "jest-docblock",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-docblock%2Fdownload%2Fjest-docblock-27.4.0.tgz"
-      ],
-      [
-        "jest-each",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-each%2Fdownload%2Fjest-each-27.4.2.tgz"
-      ],
-      [
-        "jest-environment-jsdom",
-        "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-environment-jsdom%2Fdownload%2Fjest-environment-jsdom-27.4.4.tgz"
-      ],
-      [
-        "jest-environment-node",
-        "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-environment-node%2Fdownload%2Fjest-environment-node-27.4.4.tgz"
-      ],
-      [
-        "jest-get-type",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-get-type%2Fdownload%2Fjest-get-type-27.4.0.tgz"
-      ],
-      [
-        "jest-haste-map",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-haste-map%2Fdownload%2Fjest-haste-map-27.4.5.tgz"
-      ],
-      [
-        "jest-jasmine2",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-jasmine2%2Fdownload%2Fjest-jasmine2-27.4.5.tgz"
-      ],
-      [
-        "jest-leak-detector",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-leak-detector%2Fdownload%2Fjest-leak-detector-27.4.2.tgz"
-      ],
-      [
-        "jest-matcher-utils",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-matcher-utils%2Fdownload%2Fjest-matcher-utils-27.4.2.tgz"
-      ],
-      [
-        "jest-message-util",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-message-util%2Fdownload%2Fjest-message-util-27.4.2.tgz"
-      ],
-      [
-        "jest-mock",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-mock%2Fdownload%2Fjest-mock-27.4.2.tgz"
-      ],
-      [
-        "jest-pnp-resolver",
-        "virtual:b68770277df733e7a308b4e13947393a44cc8f5f3c7b1b63ab2f55d7e3bd1b27593dfe070b167daadce2ca2e27af95939846ca87dc452aa6d6725c8b5dd6e597#npm:1.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-pnp-resolver%2Fdownload%2Fjest-pnp-resolver-1.2.2.tgz"
-      ],
-      [
-        "jest-regex-util",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-regex-util%2Fdownload%2Fjest-regex-util-27.4.0.tgz"
-      ],
-      [
-        "jest-resolve",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-resolve%2Fdownload%2Fjest-resolve-27.4.5.tgz"
-      ],
-      [
-        "jest-resolve-dependencies",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-resolve-dependencies%2Fdownload%2Fjest-resolve-dependencies-27.4.5.tgz"
-      ],
-      [
-        "jest-runner",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-runner%2Fdownload%2Fjest-runner-27.4.5.tgz"
-      ],
-      [
-        "jest-runtime",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-runtime%2Fdownload%2Fjest-runtime-27.4.5.tgz"
-      ],
-      [
-        "jest-serializer",
-        "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-serializer%2Fdownload%2Fjest-serializer-27.4.0.tgz"
-      ],
-      [
-        "jest-snapshot",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-snapshot%2Fdownload%2Fjest-snapshot-27.4.5.tgz"
-      ],
-      [
-        "jest-util",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"
-      ],
-      [
-        "jest-validate",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-validate%2Fdownload%2Fjest-validate-27.4.2.tgz"
-      ],
-      [
-        "jest-watcher",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-watcher%2Fdownload%2Fjest-watcher-27.4.2.tgz"
-      ],
-      [
-        "jest-worker",
-        "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-worker%2Fdownload%2Fjest-worker-27.4.5.tgz"
-      ],
-      [
-        "js-tokens",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjs-tokens%2Fdownload%2Fjs-tokens-4.0.0.tgz"
-      ],
-      [
-        "js-yaml",
-        "npm:3.14.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjs-yaml%2Fdownload%2Fjs-yaml-3.14.1.tgz"
-      ],
-      [
-        "jsdom",
-        "virtual:7d160b7e535296b55e0bb37a1c882a3654bf56d7dc27f68cf11e33b826475af6bc11fe5fc0759dffde25af4648d6f14f3b5278e384fa98d7d91885c06dd0f57a#npm:16.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjsdom%2Fdownload%2Fjsdom-16.7.0.tgz"
-      ],
-      [
-        "jsesc",
-        "npm:2.5.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjsesc%2Fdownload%2Fjsesc-2.5.2.tgz"
-      ],
-      [
-        "json-buffer",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjson-buffer%2Fdownload%2Fjson-buffer-3.0.1.tgz"
-      ],
-      [
-        "json-parse-better-errors",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjson-parse-better-errors%2Fdownload%2Fjson-parse-better-errors-1.0.2.tgz"
-      ],
-      [
-        "json-parse-even-better-errors",
-        "npm:2.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjson-parse-even-better-errors%2Fdownload%2Fjson-parse-even-better-errors-2.3.1.tgz"
-      ],
-      [
-        "json5",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjson5%2Fdownload%2Fjson5-1.0.1.tgz"
-      ],
-      [
-        "jsonfile",
-        "npm:6.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjsonfile%2Fdownload%2Fjsonfile-6.1.0.tgz"
-      ],
-      [
-        "keyv",
-        "npm:4.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fkeyv%2Fdownload%2Fkeyv-4.0.4.tgz"
-      ],
-      [
-        "kind-of",
-        "npm:6.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fkind-of%2Fdownload%2Fkind-of-6.0.3.tgz"
-      ],
-      [
-        "kleur",
-        "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fkleur%2Fdownload%2Fkleur-3.0.3.tgz"
-      ],
-      [
-        "latest-version",
-        "npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flatest-version%2Fdownload%2Flatest-version-5.1.0.tgz"
-      ],
-      [
-        "leven",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fleven%2Fdownload%2Fleven-3.1.0.tgz"
-      ],
-      [
-        "levn",
-        "npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flevn%2Fdownload%2Flevn-0.3.0.tgz"
-      ],
-      [
-        "lilconfig",
-        "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flilconfig%2Fdownload%2Flilconfig-2.0.4.tgz"
-      ],
-      [
-        "lines-and-columns",
-        "npm:1.2.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flines-and-columns%2Fdownload%2Flines-and-columns-1.2.4.tgz"
-      ],
-      [
-        "lint-staged",
-        "npm:7.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flint-staged%2Fdownload%2Flint-staged-7.3.0.tgz"
-      ],
-      [
-        "listr",
-        "npm:0.14.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flistr%2Fdownload%2Flistr-0.14.3.tgz"
-      ],
-      [
-        "listr-input",
-        "npm:0.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flistr-input%2Fdownload%2Flistr-input-0.2.1.tgz"
-      ],
-      [
-        "listr-silent-renderer",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flistr-silent-renderer%2Fdownload%2Flistr-silent-renderer-1.1.1.tgz"
-      ],
-      [
-        "listr-update-renderer",
-        "virtual:5c7a3b3c90c8cfe2b2cb6a301856d4b8fb0b727799e0147df2d1e94be7902ddd8705e0b30e8916fefb22563b64c45d9dedbe1d9c414c677c67089d14e80213d2#npm:0.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flistr-update-renderer%2Fdownload%2Flistr-update-renderer-0.5.0.tgz"
-      ],
-      [
-        "listr-verbose-renderer",
-        "npm:0.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flistr-verbose-renderer%2Fdownload%2Flistr-verbose-renderer-0.5.0.tgz"
-      ],
-      [
-        "load-json-file",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fload-json-file%2Fdownload%2Fload-json-file-4.0.0.tgz"
-      ],
-      [
-        "loader-utils",
-        "npm:1.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Floader-utils%2Fdownload%2Floader-utils-1.4.0.tgz"
-      ],
-      [
-        "locate-path",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flocate-path%2Fdownload%2Flocate-path-3.0.0.tgz"
-      ],
-      [
-        "lodash",
-        "npm:4.17.21::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash%2Fdownload%2Flodash-4.17.21.tgz"
-      ],
-      [
-        "lodash.camelcase",
-        "npm:4.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash.camelcase%2Fdownload%2Flodash.camelcase-4.3.0.tgz"
-      ],
-      [
-        "lodash.debounce",
-        "npm:4.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash.debounce%2Fdownload%2Flodash.debounce-4.0.8.tgz"
-      ],
-      [
-        "lodash.isequal",
-        "npm:4.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash.isequal%2Fdownload%2Flodash.isequal-4.5.0.tgz"
-      ],
-      [
-        "lodash.memoize",
-        "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash.memoize%2Fdownload%2Flodash.memoize-4.1.2.tgz"
-      ],
-      [
-        "lodash.uniq",
-        "npm:4.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash.uniq%2Fdownload%2Flodash.uniq-4.5.0.tgz"
-      ],
-      [
-        "lodash.zip",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flodash.zip%2Fdownload%2Flodash.zip-4.2.0.tgz"
-      ],
-      [
-        "log-symbols",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flog-symbols%2Fdownload%2Flog-symbols-1.0.2.tgz"
-      ],
-      [
-        "log-update",
-        "npm:2.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flog-update%2Fdownload%2Flog-update-2.3.0.tgz"
-      ],
-      [
-        "loose-envify",
-        "npm:1.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Floose-envify%2Fdownload%2Floose-envify-1.4.0.tgz"
-      ],
-      [
-        "loud-rejection",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Floud-rejection%2Fdownload%2Floud-rejection-2.2.0.tgz"
-      ],
-      [
-        "lowercase-keys",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flowercase-keys%2Fdownload%2Flowercase-keys-2.0.0.tgz"
-      ],
-      [
-        "lru-cache",
-        "npm:6.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flru-cache%2Fdownload%2Flru-cache-6.0.0.tgz"
-      ],
-      [
-        "magic-string",
-        "npm:0.25.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmagic-string%2Fdownload%2Fmagic-string-0.25.7.tgz"
-      ],
-      [
-        "make-dir",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmake-dir%2Fdownload%2Fmake-dir-2.1.0.tgz"
-      ],
-      [
-        "make-fetch-happen",
-        "npm:9.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmake-fetch-happen%2Fdownload%2Fmake-fetch-happen-9.1.0.tgz"
-      ],
-      [
-        "makeerror",
-        "npm:1.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmakeerror%2Fdownload%2Fmakeerror-1.0.12.tgz"
-      ],
-      [
-        "map-age-cleaner",
-        "npm:0.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmap-age-cleaner%2Fdownload%2Fmap-age-cleaner-0.1.3.tgz"
-      ],
-      [
-        "map-cache",
-        "npm:0.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmap-cache%2Fdownload%2Fmap-cache-0.2.2.tgz"
-      ],
-      [
-        "map-obj",
-        "npm:4.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmap-obj%2Fdownload%2Fmap-obj-4.3.0.tgz"
-      ],
-      [
-        "map-visit",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmap-visit%2Fdownload%2Fmap-visit-1.0.0.tgz"
-      ],
-      [
-        "mdn-data",
-        "npm:2.0.14::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmdn-data%2Fdownload%2Fmdn-data-2.0.14.tgz"
-      ],
-      [
-        "mem",
-        "npm:4.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmem%2Fdownload%2Fmem-4.3.0.tgz"
-      ],
-      [
-        "meow",
-        "npm:8.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmeow%2Fdownload%2Fmeow-8.1.2.tgz"
-      ],
-      [
-        "merge-stream",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmerge-stream%2Fdownload%2Fmerge-stream-2.0.0.tgz"
-      ],
-      [
-        "merge2",
-        "npm:1.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmerge2%2Fdownload%2Fmerge2-1.4.1.tgz"
-      ],
-      [
-        "micromatch",
-        "npm:4.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmicromatch%2Fdownload%2Fmicromatch-4.0.4.tgz"
-      ],
-      [
-        "mime-db",
-        "npm:1.51.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmime-db%2Fdownload%2Fmime-db-1.51.0.tgz"
-      ],
-      [
-        "mime-types",
-        "npm:2.1.34::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmime-types%2Fdownload%2Fmime-types-2.1.34.tgz"
-      ],
-      [
-        "mimic-fn",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmimic-fn%2Fdownload%2Fmimic-fn-2.1.0.tgz"
-      ],
-      [
-        "mimic-response",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmimic-response%2Fdownload%2Fmimic-response-1.0.1.tgz"
-      ],
-      [
-        "min-indent",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmin-indent%2Fdownload%2Fmin-indent-1.0.1.tgz"
-      ],
-      [
-        "minimatch",
-        "npm:3.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminimatch%2Fdownload%2Fminimatch-3.0.4.tgz"
-      ],
-      [
-        "minimist",
-        "npm:1.2.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminimist%2Fdownload%2Fminimist-1.2.5.tgz"
-      ],
-      [
-        "minimist-options",
-        "npm:4.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminimist-options%2Fdownload%2Fminimist-options-4.1.0.tgz"
-      ],
-      [
-        "minipass",
-        "npm:3.1.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminipass%2Fdownload%2Fminipass-3.1.6.tgz"
-      ],
-      [
-        "minipass-collect",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminipass-collect%2Fdownload%2Fminipass-collect-1.0.2.tgz"
-      ],
-      [
-        "minipass-fetch",
-        "npm:1.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminipass-fetch%2Fdownload%2Fminipass-fetch-1.4.1.tgz"
-      ],
-      [
-        "minipass-flush",
-        "npm:1.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminipass-flush%2Fdownload%2Fminipass-flush-1.0.5.tgz"
-      ],
-      [
-        "minipass-pipeline",
-        "npm:1.2.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminipass-pipeline%2Fdownload%2Fminipass-pipeline-1.2.4.tgz"
-      ],
-      [
-        "minipass-sized",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminipass-sized%2Fdownload%2Fminipass-sized-1.0.3.tgz"
-      ],
-      [
-        "minizlib",
-        "npm:2.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fminizlib%2Fdownload%2Fminizlib-2.1.2.tgz"
-      ],
-      [
-        "mixin-deep",
-        "npm:1.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmixin-deep%2Fdownload%2Fmixin-deep-1.3.2.tgz"
-      ],
-      [
-        "mkdirp",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmkdirp%2Fdownload%2Fmkdirp-1.0.4.tgz"
-      ],
-      [
-        "modulex-util",
-        "npm:1.1.10::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmodulex-util%2Fdownload%2Fmodulex-util-1.1.10.tgz"
-      ],
-      [
-        "monaco-editor",
-        "npm:0.28.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmonaco-editor%2Fdownload%2Fmonaco-editor-0.28.1.tgz"
-      ],
-      [
-        "ms",
-        "npm:2.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fms%2Fdownload%2Fms-2.1.3.tgz"
-      ],
-      [
-        "mute-stream",
-        "npm:0.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmute-stream%2Fdownload%2Fmute-stream-0.0.8.tgz"
-      ],
-      [
-        "nanomatch",
-        "npm:1.2.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnanomatch%2Fdownload%2Fnanomatch-1.2.13.tgz"
-      ],
-      [
-        "natural-compare",
-        "npm:1.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnatural-compare%2Fdownload%2Fnatural-compare-1.4.0.tgz"
-      ],
-      [
-        "negotiator",
-        "npm:0.6.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnegotiator%2Fdownload%2Fnegotiator-0.6.2.tgz"
-      ],
-      [
-        "new-github-release-url",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnew-github-release-url%2Fdownload%2Fnew-github-release-url-1.0.0.tgz"
-      ],
-      [
-        "node-environment-flags",
-        "npm:1.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnode-environment-flags%2Fdownload%2Fnode-environment-flags-1.0.6.tgz"
-      ],
-      [
-        "node-gyp",
-        "npm:8.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnode-gyp%2Fdownload%2Fnode-gyp-8.4.1.tgz"
-      ],
-      [
-        "node-int64",
-        "npm:0.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnode-int64%2Fdownload%2Fnode-int64-0.4.0.tgz"
-      ],
-      [
-        "node-releases",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnode-releases%2Fdownload%2Fnode-releases-2.0.1.tgz"
-      ],
-      [
-        "nopt",
-        "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnopt%2Fdownload%2Fnopt-5.0.0.tgz"
-      ],
-      [
-        "normalize-package-data",
-        "npm:2.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnormalize-package-data%2Fdownload%2Fnormalize-package-data-2.5.0.tgz"
-      ],
-      [
-        "normalize-path",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnormalize-path%2Fdownload%2Fnormalize-path-3.0.0.tgz"
-      ],
-      [
-        "normalize-url",
-        "npm:6.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnormalize-url%2Fdownload%2Fnormalize-url-6.1.0.tgz"
-      ],
-      [
-        "np",
-        "npm:7.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnp%2Fdownload%2Fnp-7.6.0.tgz"
-      ],
-      [
-        "npm-name",
-        "npm:6.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnpm-name%2Fdownload%2Fnpm-name-6.0.1.tgz"
-      ],
-      [
-        "npm-path",
-        "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnpm-path%2Fdownload%2Fnpm-path-2.0.4.tgz"
-      ],
-      [
-        "npm-run-path",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnpm-run-path%2Fdownload%2Fnpm-run-path-4.0.1.tgz"
-      ],
-      [
-        "npm-which",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnpm-which%2Fdownload%2Fnpm-which-3.0.1.tgz"
-      ],
-      [
-        "npmlog",
-        "npm:6.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnpmlog%2Fdownload%2Fnpmlog-6.0.0.tgz"
-      ],
-      [
-        "nth-check",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnth-check%2Fdownload%2Fnth-check-2.0.1.tgz"
-      ],
-      [
-        "number-is-nan",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnumber-is-nan%2Fdownload%2Fnumber-is-nan-1.0.1.tgz"
-      ],
-      [
-        "nwsapi",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnwsapi%2Fdownload%2Fnwsapi-2.2.0.tgz"
-      ],
-      [
-        "object-assign",
-        "npm:4.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject-assign%2Fdownload%2Fobject-assign-4.1.1.tgz"
-      ],
-      [
-        "object-copy",
-        "npm:0.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject-copy%2Fdownload%2Fobject-copy-0.1.0.tgz"
-      ],
-      [
-        "object-inspect",
-        "npm:1.11.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject-inspect%2Fdownload%2Fobject-inspect-1.11.1.tgz"
-      ],
-      [
-        "object-keys",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject-keys%2Fdownload%2Fobject-keys-1.1.1.tgz"
-      ],
-      [
-        "object-visit",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject-visit%2Fdownload%2Fobject-visit-1.0.1.tgz"
-      ],
-      [
-        "object.assign",
-        "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject.assign%2Fdownload%2Fobject.assign-4.1.2.tgz"
-      ],
-      [
-        "object.getownpropertydescriptors",
-        "npm:2.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject.getownpropertydescriptors%2Fdownload%2Fobject.getownpropertydescriptors-2.1.3.tgz"
-      ],
-      [
-        "object.pick",
-        "npm:1.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fobject.pick%2Fdownload%2Fobject.pick-1.3.0.tgz"
-      ],
-      [
-        "once",
-        "npm:1.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fonce%2Fdownload%2Fonce-1.4.0.tgz"
-      ],
-      [
-        "onetime",
-        "npm:5.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fonetime%2Fdownload%2Fonetime-5.1.2.tgz"
-      ],
-      [
-        "open",
-        "npm:7.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fopen%2Fdownload%2Fopen-7.4.2.tgz"
-      ],
-      [
-        "optionator",
-        "npm:0.8.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Foptionator%2Fdownload%2Foptionator-0.8.3.tgz"
-      ],
-      [
-        "org-regex",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Forg-regex%2Fdownload%2Forg-regex-1.0.0.tgz"
-      ],
-      [
-        "os-tmpdir",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fos-tmpdir%2Fdownload%2Fos-tmpdir-1.0.2.tgz"
-      ],
-      [
-        "ow",
-        "npm:0.21.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fow%2Fdownload%2Fow-0.21.0.tgz"
-      ],
-      [
-        "p-cancelable",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-cancelable%2Fdownload%2Fp-cancelable-2.1.1.tgz"
-      ],
-      [
-        "p-defer",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-defer%2Fdownload%2Fp-defer-1.0.0.tgz"
-      ],
-      [
-        "p-event",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-event%2Fdownload%2Fp-event-4.2.0.tgz"
-      ],
-      [
-        "p-finally",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-finally%2Fdownload%2Fp-finally-1.0.0.tgz"
-      ],
-      [
-        "p-is-promise",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-is-promise%2Fdownload%2Fp-is-promise-2.1.0.tgz"
-      ],
-      [
-        "p-limit",
-        "npm:2.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-limit%2Fdownload%2Fp-limit-2.3.0.tgz"
-      ],
-      [
-        "p-locate",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-locate%2Fdownload%2Fp-locate-3.0.0.tgz"
-      ],
-      [
-        "p-map",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-map%2Fdownload%2Fp-map-4.0.0.tgz"
-      ],
-      [
-        "p-memoize",
-        "npm:4.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-memoize%2Fdownload%2Fp-memoize-4.0.3.tgz"
-      ],
-      [
-        "p-queue",
-        "npm:6.6.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-queue%2Fdownload%2Fp-queue-6.6.2.tgz"
-      ],
-      [
-        "p-reflect",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-reflect%2Fdownload%2Fp-reflect-2.1.0.tgz"
-      ],
-      [
-        "p-settle",
-        "npm:4.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-settle%2Fdownload%2Fp-settle-4.1.1.tgz"
-      ],
-      [
-        "p-timeout",
-        "npm:3.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-timeout%2Fdownload%2Fp-timeout-3.2.0.tgz"
-      ],
-      [
-        "p-try",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-try%2Fdownload%2Fp-try-2.2.0.tgz"
-      ],
-      [
-        "package-json",
-        "npm:6.5.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpackage-json%2Fdownload%2Fpackage-json-6.5.0.tgz"
-      ],
-      [
-        "parent-module",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fparent-module%2Fdownload%2Fparent-module-1.0.1.tgz"
-      ],
-      [
-        "parse-json",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fparse-json%2Fdownload%2Fparse-json-4.0.0.tgz"
-      ],
-      [
-        "parse-passwd",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fparse-passwd%2Fdownload%2Fparse-passwd-1.0.0.tgz"
-      ],
-      [
-        "parse5",
-        "npm:6.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fparse5%2Fdownload%2Fparse5-6.0.1.tgz"
-      ],
-      [
-        "pascalcase",
-        "npm:0.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpascalcase%2Fdownload%2Fpascalcase-0.1.1.tgz"
-      ],
-      [
-        "path-exists",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpath-exists%2Fdownload%2Fpath-exists-3.0.0.tgz"
-      ],
-      [
-        "path-is-absolute",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpath-is-absolute%2Fdownload%2Fpath-is-absolute-1.0.1.tgz"
-      ],
-      [
-        "path-is-inside",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpath-is-inside%2Fdownload%2Fpath-is-inside-1.0.2.tgz"
-      ],
-      [
-        "path-key",
-        "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpath-key%2Fdownload%2Fpath-key-3.1.1.tgz"
-      ],
-      [
-        "path-parse",
-        "npm:1.0.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpath-parse%2Fdownload%2Fpath-parse-1.0.7.tgz"
-      ],
-      [
-        "path-type",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpath-type%2Fdownload%2Fpath-type-4.0.0.tgz"
-      ],
-      [
-        "picocolors",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpicocolors%2Fdownload%2Fpicocolors-1.0.0.tgz"
-      ],
-      [
-        "picomatch",
-        "npm:2.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpicomatch%2Fdownload%2Fpicomatch-2.3.0.tgz"
-      ],
-      [
-        "pify",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpify%2Fdownload%2Fpify-3.0.0.tgz"
-      ],
-      [
-        "pika-plugin-build-web-babel",
-        "npm:0.11.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpika-plugin-build-web-babel%2Fdownload%2Fpika-plugin-build-web-babel-0.11.2.tgz"
-      ],
-      [
-        "pika-plugin-clean-dist-src",
-        "npm:0.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpika-plugin-clean-dist-src%2Fdownload%2Fpika-plugin-clean-dist-src-0.1.2.tgz"
-      ],
-      [
-        "pika-plugin-ts-types",
-        "npm:0.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpika-plugin-ts-types%2Fdownload%2Fpika-plugin-ts-types-0.1.5.tgz"
-      ],
-      [
-        "pinkie",
-        "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpinkie%2Fdownload%2Fpinkie-2.0.4.tgz"
-      ],
-      [
-        "pinkie-promise",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpinkie-promise%2Fdownload%2Fpinkie-promise-2.0.1.tgz"
-      ],
-      [
-        "pirates",
-        "npm:4.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpirates%2Fdownload%2Fpirates-4.0.4.tgz"
-      ],
-      [
-        "pkg-dir",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpkg-dir%2Fdownload%2Fpkg-dir-4.2.0.tgz"
-      ],
-      [
-        "platform",
-        "npm:1.3.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fplatform%2Fdownload%2Fplatform-1.3.6.tgz"
-      ],
-      [
-        "please-upgrade-node",
-        "npm:3.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fplease-upgrade-node%2Fdownload%2Fplease-upgrade-node-3.2.0.tgz"
-      ],
-      [
-        "posix-character-classes",
-        "npm:0.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fposix-character-classes%2Fdownload%2Fposix-character-classes-0.1.1.tgz"
-      ],
-      [
-        "postcss-calc",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz"
-      ],
-      [
-        "postcss-colormin",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.1.tgz"
-      ],
-      [
-        "postcss-convert-values",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz"
-      ],
-      [
-        "postcss-discard-comments",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz"
-      ],
-      [
-        "postcss-discard-duplicates",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz"
-      ],
-      [
-        "postcss-discard-empty",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz"
-      ],
-      [
-        "postcss-discard-overridden",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz"
-      ],
-      [
-        "postcss-load-config",
-        "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-load-config%2Fdownload%2Fpostcss-load-config-3.1.0.tgz"
-      ],
-      [
-        "postcss-merge-longhand",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz"
-      ],
-      [
-        "postcss-merge-rules",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz"
-      ],
-      [
-        "postcss-minify-font-values",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz"
-      ],
-      [
-        "postcss-minify-gradients",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz"
-      ],
-      [
-        "postcss-minify-params",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz"
-      ],
-      [
-        "postcss-minify-selectors",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz"
-      ],
-      [
-        "postcss-modules",
-        "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:4.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-modules%2Fdownload%2Fpostcss-modules-4.2.2.tgz"
-      ],
-      [
-        "postcss-modules-extract-imports",
-        "virtual:36936b7b9ba7f6f9e2b4fa6c6c6c9f00a915859a99558fe3a3938e16fc0a5501bd1aad6fa268c6fb4cd272effa5653a95547bff32e292c8a4016ee1e9d899b38#npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-modules-extract-imports%2Fdownload%2Fpostcss-modules-extract-imports-3.0.0.tgz"
-      ],
-      [
-        "postcss-modules-local-by-default",
-        "virtual:36936b7b9ba7f6f9e2b4fa6c6c6c9f00a915859a99558fe3a3938e16fc0a5501bd1aad6fa268c6fb4cd272effa5653a95547bff32e292c8a4016ee1e9d899b38#npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-modules-local-by-default%2Fdownload%2Fpostcss-modules-local-by-default-4.0.0.tgz"
-      ],
-      [
-        "postcss-modules-scope",
-        "virtual:36936b7b9ba7f6f9e2b4fa6c6c6c9f00a915859a99558fe3a3938e16fc0a5501bd1aad6fa268c6fb4cd272effa5653a95547bff32e292c8a4016ee1e9d899b38#npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-modules-scope%2Fdownload%2Fpostcss-modules-scope-3.0.0.tgz"
-      ],
-      [
-        "postcss-modules-values",
-        "virtual:36936b7b9ba7f6f9e2b4fa6c6c6c9f00a915859a99558fe3a3938e16fc0a5501bd1aad6fa268c6fb4cd272effa5653a95547bff32e292c8a4016ee1e9d899b38#npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-modules-values%2Fdownload%2Fpostcss-modules-values-4.0.0.tgz"
-      ],
-      [
-        "postcss-normalize-charset",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-display-values",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-positions",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-repeat-style",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-string",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-timing-functions",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-unicode",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz"
-      ],
-      [
-        "postcss-normalize-url",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.3.tgz"
-      ],
-      [
-        "postcss-normalize-whitespace",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz"
-      ],
-      [
-        "postcss-ordered-values",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz"
-      ],
-      [
-        "postcss-reduce-initial",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz"
-      ],
-      [
-        "postcss-reduce-transforms",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz"
-      ],
-      [
-        "postcss-selector-parser",
-        "npm:6.0.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-selector-parser%2Fdownload%2Fpostcss-selector-parser-6.0.7.tgz"
-      ],
-      [
-        "postcss-svgo",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz"
-      ],
-      [
-        "postcss-unique-selectors",
-        "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz"
-      ],
-      [
-        "postcss-value-parser",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"
-      ],
-      [
-        "prelude-ls",
-        "npm:1.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fprelude-ls%2Fdownload%2Fprelude-ls-1.1.2.tgz"
-      ],
-      [
-        "prepend-http",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fprepend-http%2Fdownload%2Fprepend-http-2.0.0.tgz"
-      ],
-      [
-        "prettier",
-        "npm:2.5.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fprettier%2Fdownload%2Fprettier-2.5.1.tgz"
-      ],
-      [
-        "pretty-format",
-        "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpretty-format%2Fdownload%2Fpretty-format-27.4.2.tgz"
-      ],
-      [
-        "promise-inflight",
-        "virtual:f329779cf52cc0394382cf022f52ae61d0a9058ec818451a200c1f2072072eee3be05c606ad096334e1072dcc3e4ebde87b317b87ef1a94830bf345e3ffabb01#npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpromise-inflight%2Fdownload%2Fpromise-inflight-1.0.1.tgz"
-      ],
-      [
-        "promise-retry",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpromise-retry%2Fdownload%2Fpromise-retry-2.0.1.tgz"
-      ],
-      [
-        "promise.series",
-        "npm:0.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpromise.series%2Fdownload%2Fpromise.series-0.2.0.tgz"
-      ],
-      [
-        "prompts",
-        "npm:2.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fprompts%2Fdownload%2Fprompts-2.4.2.tgz"
-      ],
-      [
-        "pseudomap",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpseudomap%2Fdownload%2Fpseudomap-1.0.2.tgz"
-      ],
-      [
-        "psl",
-        "npm:1.8.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpsl%2Fdownload%2Fpsl-1.8.0.tgz"
-      ],
-      [
-        "pump",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpump%2Fdownload%2Fpump-3.0.0.tgz"
-      ],
-      [
-        "punycode",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpunycode%2Fdownload%2Fpunycode-2.1.1.tgz"
-      ],
-      [
-        "pupa",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpupa%2Fdownload%2Fpupa-2.1.1.tgz"
-      ],
-      [
-        "queue-microtask",
-        "npm:1.2.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fqueue-microtask%2Fdownload%2Fqueue-microtask-1.2.3.tgz"
-      ],
-      [
-        "quick-lru",
-        "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fquick-lru%2Fdownload%2Fquick-lru-4.0.1.tgz"
-      ],
-      [
-        "randombytes",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frandombytes%2Fdownload%2Frandombytes-2.1.0.tgz"
-      ],
-      [
-        "rc",
-        "npm:1.2.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frc%2Fdownload%2Frc-1.2.8.tgz"
-      ],
-      [
-        "react-is",
-        "npm:17.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Freact-is%2Fdownload%2Freact-is-17.0.2.tgz"
-      ],
-      [
-        "read-pkg",
-        "npm:5.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fread-pkg%2Fdownload%2Fread-pkg-5.2.0.tgz"
-      ],
-      [
-        "read-pkg-up",
-        "npm:7.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fread-pkg-up%2Fdownload%2Fread-pkg-up-7.0.1.tgz"
-      ],
-      [
-        "readable-stream",
-        "npm:3.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Freadable-stream%2Fdownload%2Freadable-stream-3.6.0.tgz"
-      ],
-      [
-        "readdirp",
-        "npm:3.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Freaddirp%2Fdownload%2Freaddirp-3.6.0.tgz"
-      ],
-      [
-        "redent",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fredent%2Fdownload%2Fredent-3.0.0.tgz"
-      ],
-      [
-        "regenerate",
-        "npm:1.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregenerate%2Fdownload%2Fregenerate-1.4.2.tgz"
-      ],
-      [
-        "regenerate-unicode-properties",
-        "npm:9.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregenerate-unicode-properties%2Fdownload%2Fregenerate-unicode-properties-9.0.0.tgz"
-      ],
-      [
-        "regenerator-runtime",
-        "npm:0.13.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.9.tgz"
-      ],
-      [
-        "regenerator-transform",
-        "npm:0.14.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregenerator-transform%2Fdownload%2Fregenerator-transform-0.14.5.tgz"
-      ],
-      [
-        "regex-not",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregex-not%2Fdownload%2Fregex-not-1.0.2.tgz"
-      ],
-      [
-        "regexpu-core",
-        "npm:4.8.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregexpu-core%2Fdownload%2Fregexpu-core-4.8.0.tgz"
-      ],
-      [
-        "registry-auth-token",
-        "npm:4.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregistry-auth-token%2Fdownload%2Fregistry-auth-token-4.2.1.tgz"
-      ],
-      [
-        "registry-url",
-        "npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregistry-url%2Fdownload%2Fregistry-url-5.1.0.tgz"
-      ],
-      [
-        "regjsgen",
-        "npm:0.5.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregjsgen%2Fdownload%2Fregjsgen-0.5.2.tgz"
-      ],
-      [
-        "regjsparser",
-        "npm:0.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregjsparser%2Fdownload%2Fregjsparser-0.7.0.tgz"
-      ],
-      [
-        "repeat-element",
-        "npm:1.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frepeat-element%2Fdownload%2Frepeat-element-1.1.4.tgz"
-      ],
-      [
-        "repeat-string",
-        "npm:1.6.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frepeat-string%2Fdownload%2Frepeat-string-1.6.1.tgz"
-      ],
-      [
-        "require-directory",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frequire-directory%2Fdownload%2Frequire-directory-2.1.1.tgz"
-      ],
-      [
-        "resolve",
-        "patch:resolve@npm%3A1.20.0%3A%3A__archiveUrl=https%253A%252F%252Fregistry.npm.alibaba-inc.com%252Fresolve%252Fdownload%252Fresolve-1.20.0.tgz#~builtin<compat/resolve>::version=1.20.0&hash=07638b"
-      ],
-      [
-        "resolve-cwd",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fresolve-cwd%2Fdownload%2Fresolve-cwd-3.0.0.tgz"
-      ],
-      [
-        "resolve-from",
-        "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fresolve-from%2Fdownload%2Fresolve-from-5.0.0.tgz"
-      ],
-      [
-        "resolve-url",
-        "npm:0.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fresolve-url%2Fdownload%2Fresolve-url-0.2.1.tgz"
-      ],
-      [
-        "resolve.exports",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fresolve.exports%2Fdownload%2Fresolve.exports-1.1.0.tgz"
-      ],
-      [
-        "responselike",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fresponselike%2Fdownload%2Fresponselike-2.0.0.tgz"
-      ],
-      [
-        "restore-cursor",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frestore-cursor%2Fdownload%2Frestore-cursor-2.0.0.tgz"
-      ],
-      [
-        "ret",
-        "npm:0.1.15::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fret%2Fdownload%2Fret-0.1.15.tgz"
-      ],
-      [
-        "retry",
-        "npm:0.12.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fretry%2Fdownload%2Fretry-0.12.0.tgz"
-      ],
-      [
-        "reusify",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Freusify%2Fdownload%2Freusify-1.0.4.tgz"
-      ],
-      [
-        "rimraf",
-        "npm:3.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frimraf%2Fdownload%2Frimraf-3.0.2.tgz"
-      ],
-      [
-        "rollup",
-        "npm:2.61.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frollup%2Fdownload%2Frollup-2.61.1.tgz"
-      ],
-      [
-        "rollup-plugin-babel",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:4.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frollup-plugin-babel%2Fdownload%2Frollup-plugin-babel-4.4.0.tgz"
-      ],
-      [
-        "rollup-plugin-postcss",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:4.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frollup-plugin-postcss%2Fdownload%2Frollup-plugin-postcss-4.0.2.tgz"
-      ],
-      [
-        "rollup-plugin-terser",
-        "virtual:71905460c2fd6aabac4bce6d837e8d0da16dc08939813be87438cc47bcfae482771006fcc58f5b3e99e62075395972cd7a775ecefdd506b78b77b52ab14a9173#npm:7.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frollup-plugin-terser%2Fdownload%2Frollup-plugin-terser-7.0.2.tgz"
-      ],
-      [
-        "rollup-pluginutils",
-        "npm:2.8.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frollup-pluginutils%2Fdownload%2Frollup-pluginutils-2.8.2.tgz"
-      ],
-      [
-        "run-async",
-        "npm:2.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frun-async%2Fdownload%2Frun-async-2.4.1.tgz"
-      ],
-      [
-        "run-parallel",
-        "npm:1.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frun-parallel%2Fdownload%2Frun-parallel-1.2.0.tgz"
-      ],
-      [
-        "rxjs",
-        "npm:6.6.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Frxjs%2Fdownload%2Frxjs-6.6.7.tgz"
-      ],
-      [
-        "safe-buffer",
-        "npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsafe-buffer%2Fdownload%2Fsafe-buffer-5.2.1.tgz"
-      ],
-      [
-        "safe-identifier",
-        "npm:0.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsafe-identifier%2Fdownload%2Fsafe-identifier-0.4.2.tgz"
-      ],
-      [
-        "safe-regex",
-        "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsafe-regex%2Fdownload%2Fsafe-regex-1.1.0.tgz"
-      ],
-      [
-        "safer-buffer",
-        "npm:2.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsafer-buffer%2Fdownload%2Fsafer-buffer-2.1.2.tgz"
-      ],
-      [
-        "saxes",
-        "npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsaxes%2Fdownload%2Fsaxes-5.0.1.tgz"
-      ],
-      [
-        "scoped-regex",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fscoped-regex%2Fdownload%2Fscoped-regex-2.1.0.tgz"
-      ],
-      [
-        "semver",
-        "npm:6.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsemver%2Fdownload%2Fsemver-6.3.0.tgz"
-      ],
-      [
-        "semver-compare",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsemver-compare%2Fdownload%2Fsemver-compare-1.0.0.tgz"
-      ],
-      [
-        "semver-diff",
-        "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsemver-diff%2Fdownload%2Fsemver-diff-3.1.1.tgz"
-      ],
-      [
-        "serialize-javascript",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fserialize-javascript%2Fdownload%2Fserialize-javascript-4.0.0.tgz"
-      ],
-      [
-        "set-blocking",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fset-blocking%2Fdownload%2Fset-blocking-2.0.0.tgz"
-      ],
-      [
-        "set-value",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fset-value%2Fdownload%2Fset-value-2.0.1.tgz"
-      ],
-      [
-        "shallow-clone",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fshallow-clone%2Fdownload%2Fshallow-clone-3.0.1.tgz"
-      ],
-      [
-        "shebang-command",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fshebang-command%2Fdownload%2Fshebang-command-2.0.0.tgz"
-      ],
-      [
-        "shebang-regex",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fshebang-regex%2Fdownload%2Fshebang-regex-3.0.0.tgz"
-      ],
-      [
-        "side-channel",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fside-channel%2Fdownload%2Fside-channel-1.0.4.tgz"
-      ],
-      [
-        "signal-exit",
-        "npm:3.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.6.tgz"
-      ],
-      [
-        "sisteransi",
-        "npm:1.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsisteransi%2Fdownload%2Fsisteransi-1.0.5.tgz"
-      ],
-      [
-        "slash",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fslash%2Fdownload%2Fslash-3.0.0.tgz"
-      ],
-      [
-        "slice-ansi",
-        "npm:0.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fslice-ansi%2Fdownload%2Fslice-ansi-0.0.4.tgz"
-      ],
-      [
-        "smart-buffer",
-        "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsmart-buffer%2Fdownload%2Fsmart-buffer-4.2.0.tgz"
-      ],
-      [
-        "snapdragon",
-        "npm:0.8.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsnapdragon%2Fdownload%2Fsnapdragon-0.8.2.tgz"
-      ],
-      [
-        "snapdragon-node",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsnapdragon-node%2Fdownload%2Fsnapdragon-node-2.1.1.tgz"
-      ],
-      [
-        "snapdragon-util",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsnapdragon-util%2Fdownload%2Fsnapdragon-util-3.0.1.tgz"
-      ],
-      [
-        "socks",
-        "npm:2.6.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsocks%2Fdownload%2Fsocks-2.6.1.tgz"
-      ],
-      [
-        "socks-proxy-agent",
-        "npm:6.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsocks-proxy-agent%2Fdownload%2Fsocks-proxy-agent-6.1.1.tgz"
-      ],
-      [
-        "source-map",
-        "npm:0.6.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsource-map%2Fdownload%2Fsource-map-0.6.1.tgz"
-      ],
-      [
-        "source-map-resolve",
-        "npm:0.5.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsource-map-resolve%2Fdownload%2Fsource-map-resolve-0.5.3.tgz"
-      ],
-      [
-        "source-map-support",
-        "npm:0.5.21::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsource-map-support%2Fdownload%2Fsource-map-support-0.5.21.tgz"
-      ],
-      [
-        "source-map-url",
-        "npm:0.4.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsource-map-url%2Fdownload%2Fsource-map-url-0.4.1.tgz"
-      ],
-      [
-        "sourcemap-codec",
-        "npm:1.4.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsourcemap-codec%2Fdownload%2Fsourcemap-codec-1.4.8.tgz"
-      ],
-      [
-        "spdx-correct",
-        "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fspdx-correct%2Fdownload%2Fspdx-correct-3.1.1.tgz"
-      ],
-      [
-        "spdx-exceptions",
-        "npm:2.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fspdx-exceptions%2Fdownload%2Fspdx-exceptions-2.3.0.tgz"
-      ],
-      [
-        "spdx-expression-parse",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fspdx-expression-parse%2Fdownload%2Fspdx-expression-parse-3.0.1.tgz"
-      ],
-      [
-        "spdx-license-ids",
-        "npm:3.0.11::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fspdx-license-ids%2Fdownload%2Fspdx-license-ids-3.0.11.tgz"
-      ],
-      [
-        "split",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsplit%2Fdownload%2Fsplit-1.0.1.tgz"
-      ],
-      [
-        "split-string",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsplit-string%2Fdownload%2Fsplit-string-3.1.0.tgz"
-      ],
-      [
-        "sprintf-js",
-        "npm:1.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsprintf-js%2Fdownload%2Fsprintf-js-1.0.3.tgz"
-      ],
-      [
-        "ssri",
-        "npm:8.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fssri%2Fdownload%2Fssri-8.0.1.tgz"
-      ],
-      [
-        "stable",
-        "npm:0.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstable%2Fdownload%2Fstable-0.1.8.tgz"
-      ],
-      [
-        "stack-utils",
-        "npm:2.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstack-utils%2Fdownload%2Fstack-utils-2.0.5.tgz"
-      ],
-      [
-        "staged-git-files",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstaged-git-files%2Fdownload%2Fstaged-git-files-1.1.1.tgz"
-      ],
-      [
-        "static-extend",
-        "npm:0.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstatic-extend%2Fdownload%2Fstatic-extend-0.1.2.tgz"
-      ],
-      [
-        "string-argv",
-        "npm:0.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring-argv%2Fdownload%2Fstring-argv-0.0.2.tgz"
-      ],
-      [
-        "string-hash",
-        "npm:1.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring-hash%2Fdownload%2Fstring-hash-1.1.3.tgz"
-      ],
-      [
-        "string-length",
-        "npm:4.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring-length%2Fdownload%2Fstring-length-4.0.2.tgz"
-      ],
-      [
-        "string-width",
-        "npm:4.2.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring-width%2Fdownload%2Fstring-width-4.2.3.tgz"
-      ],
-      [
-        "string.prototype.trimend",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring.prototype.trimend%2Fdownload%2Fstring.prototype.trimend-1.0.4.tgz"
-      ],
-      [
-        "string.prototype.trimstart",
-        "npm:1.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring.prototype.trimstart%2Fdownload%2Fstring.prototype.trimstart-1.0.4.tgz"
-      ],
-      [
-        "string_decoder",
-        "npm:1.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstring_decoder%2Fdownload%2Fstring_decoder-1.3.0.tgz"
-      ],
-      [
-        "stringify-object",
-        "npm:3.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstringify-object%2Fdownload%2Fstringify-object-3.3.0.tgz"
-      ],
-      [
-        "strip-ansi",
-        "npm:6.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstrip-ansi%2Fdownload%2Fstrip-ansi-6.0.1.tgz"
-      ],
-      [
-        "strip-bom",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstrip-bom%2Fdownload%2Fstrip-bom-4.0.0.tgz"
-      ],
-      [
-        "strip-eof",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstrip-eof%2Fdownload%2Fstrip-eof-1.0.0.tgz"
-      ],
-      [
-        "strip-final-newline",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstrip-final-newline%2Fdownload%2Fstrip-final-newline-2.0.0.tgz"
-      ],
-      [
-        "strip-indent",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstrip-indent%2Fdownload%2Fstrip-indent-3.0.0.tgz"
-      ],
-      [
-        "strip-json-comments",
-        "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstrip-json-comments%2Fdownload%2Fstrip-json-comments-2.0.1.tgz"
-      ],
-      [
-        "style-inject",
-        "npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstyle-inject%2Fdownload%2Fstyle-inject-0.3.0.tgz"
-      ],
-      [
-        "stylehacks",
-        "virtual:3e4f5478fbf8f45a955e5b512c5a808cf0b4383d76d4a9ba8c6a0794d72127c51359ffc36f95120b3477f8c55a832c7a6bdfb821230c8685b9d7113cf18f6a74#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz"
-      ],
-      [
-        "supports-color",
-        "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsupports-color%2Fdownload%2Fsupports-color-7.2.0.tgz"
-      ],
-      [
-        "supports-hyperlinks",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsupports-hyperlinks%2Fdownload%2Fsupports-hyperlinks-2.2.0.tgz"
-      ],
-      [
-        "svgo",
-        "npm:2.8.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsvgo%2Fdownload%2Fsvgo-2.8.0.tgz"
-      ],
-      [
-        "symbol-observable",
-        "npm:1.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsymbol-observable%2Fdownload%2Fsymbol-observable-1.2.0.tgz"
-      ],
-      [
-        "symbol-tree",
-        "npm:3.2.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsymbol-tree%2Fdownload%2Fsymbol-tree-3.2.4.tgz"
-      ],
-      [
-        "tar",
-        "npm:6.1.11::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftar%2Fdownload%2Ftar-6.1.11.tgz"
-      ],
-      [
-        "term-size",
-        "npm:1.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fterm-size%2Fdownload%2Fterm-size-1.2.0.tgz"
-      ],
-      [
-        "terminal-link",
-        "npm:2.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fterminal-link%2Fdownload%2Fterminal-link-2.1.1.tgz"
-      ],
-      [
-        "terser",
-        "virtual:30c12e1e196e29d9067415177fe9336b0a1193d7747a0074365b5dca86a57d541dcbba0e303b408a9ceb33ec7e8b306900c172a18f9d1249b0c2d785dd84264f#npm:5.10.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fterser%2Fdownload%2Fterser-5.10.0.tgz"
-      ],
-      [
-        "test-exclude",
-        "npm:6.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftest-exclude%2Fdownload%2Ftest-exclude-6.0.0.tgz"
-      ],
-      [
-        "throat",
-        "npm:6.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fthroat%2Fdownload%2Fthroat-6.0.1.tgz"
-      ],
-      [
-        "through",
-        "npm:2.3.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fthrough%2Fdownload%2Fthrough-2.3.8.tgz"
-      ],
-      [
-        "timsort",
-        "npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftimsort%2Fdownload%2Ftimsort-0.3.0.tgz"
-      ],
-      [
-        "tlds",
-        "npm:1.227.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftlds%2Fdownload%2Ftlds-1.227.0.tgz"
-      ],
-      [
-        "tmp",
-        "npm:0.0.33::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftmp%2Fdownload%2Ftmp-0.0.33.tgz"
-      ],
-      [
-        "tmpl",
-        "npm:1.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftmpl%2Fdownload%2Ftmpl-1.0.5.tgz"
-      ],
-      [
-        "to-fast-properties",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fto-fast-properties%2Fdownload%2Fto-fast-properties-2.0.0.tgz"
-      ],
-      [
-        "to-object-path",
-        "npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fto-object-path%2Fdownload%2Fto-object-path-0.3.0.tgz"
-      ],
-      [
-        "to-readable-stream",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fto-readable-stream%2Fdownload%2Fto-readable-stream-2.1.0.tgz"
-      ],
-      [
-        "to-regex",
-        "npm:3.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fto-regex%2Fdownload%2Fto-regex-3.0.2.tgz"
-      ],
-      [
-        "to-regex-range",
-        "npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fto-regex-range%2Fdownload%2Fto-regex-range-5.0.1.tgz"
-      ],
-      [
-        "tough-cookie",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftough-cookie%2Fdownload%2Ftough-cookie-4.0.0.tgz"
-      ],
-      [
-        "tr46",
-        "npm:2.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftr46%2Fdownload%2Ftr46-2.1.0.tgz"
-      ],
-      [
-        "trim-newlines",
-        "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftrim-newlines%2Fdownload%2Ftrim-newlines-3.0.1.tgz"
-      ],
-      [
-        "tsconfig-paths",
-        "npm:3.12.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftsconfig-paths%2Fdownload%2Ftsconfig-paths-3.12.0.tgz"
-      ],
-      [
-        "tslib",
-        "npm:1.14.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz"
-      ],
-      [
-        "type-check",
-        "npm:0.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftype-check%2Fdownload%2Ftype-check-0.3.2.tgz"
-      ],
-      [
-        "type-detect",
-        "npm:4.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftype-detect%2Fdownload%2Ftype-detect-4.0.8.tgz"
-      ],
-      [
-        "type-fest",
-        "npm:0.8.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftype-fest%2Fdownload%2Ftype-fest-0.8.1.tgz"
-      ],
-      [
-        "typedarray-to-buffer",
-        "npm:3.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftypedarray-to-buffer%2Fdownload%2Ftypedarray-to-buffer-3.1.5.tgz"
-      ],
-      [
-        "typescript",
-        "patch:typescript@npm%3A4.5.4%3A%3A__archiveUrl=https%253A%252F%252Fregistry.npm.alibaba-inc.com%252Ftypescript%252Fdownload%252Ftypescript-4.5.4.tgz#~builtin<compat/typescript>::version=4.5.4&hash=493e53"
-      ],
-      [
-        "unbox-primitive",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funbox-primitive%2Fdownload%2Funbox-primitive-1.0.1.tgz"
-      ],
-      [
-        "unicode-canonical-property-names-ecmascript",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funicode-canonical-property-names-ecmascript%2Fdownload%2Funicode-canonical-property-names-ecmascript-2.0.0.tgz"
-      ],
-      [
-        "unicode-match-property-ecmascript",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funicode-match-property-ecmascript%2Fdownload%2Funicode-match-property-ecmascript-2.0.0.tgz"
-      ],
-      [
-        "unicode-match-property-value-ecmascript",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funicode-match-property-value-ecmascript%2Fdownload%2Funicode-match-property-value-ecmascript-2.0.0.tgz"
-      ],
-      [
-        "unicode-property-aliases-ecmascript",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funicode-property-aliases-ecmascript%2Fdownload%2Funicode-property-aliases-ecmascript-2.0.0.tgz"
-      ],
-      [
-        "union-value",
-        "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funion-value%2Fdownload%2Funion-value-1.0.1.tgz"
-      ],
-      [
-        "unique-filename",
-        "npm:1.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funique-filename%2Fdownload%2Funique-filename-1.1.1.tgz"
-      ],
-      [
-        "unique-slug",
-        "npm:2.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funique-slug%2Fdownload%2Funique-slug-2.0.2.tgz"
-      ],
-      [
-        "unique-string",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funique-string%2Fdownload%2Funique-string-2.0.0.tgz"
-      ],
-      [
-        "universalify",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funiversalify%2Fdownload%2Funiversalify-2.0.0.tgz"
-      ],
-      [
-        "unset-value",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Funset-value%2Fdownload%2Funset-value-1.0.0.tgz"
-      ],
-      [
-        "update-notifier",
-        "npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fupdate-notifier%2Fdownload%2Fupdate-notifier-5.1.0.tgz"
-      ],
-      [
-        "urix",
-        "npm:0.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Furix%2Fdownload%2Furix-0.1.0.tgz"
-      ],
-      [
-        "url-parse-lax",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Furl-parse-lax%2Fdownload%2Furl-parse-lax-3.0.0.tgz"
-      ],
-      [
-        "url-regex",
-        "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Furl-regex%2Fdownload%2Furl-regex-5.0.0.tgz"
-      ],
-      [
-        "use",
-        "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fuse%2Fdownload%2Fuse-3.1.1.tgz"
-      ],
-      [
-        "util-deprecate",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Futil-deprecate%2Fdownload%2Futil-deprecate-1.0.2.tgz"
-      ],
-      [
-        "v8-to-istanbul",
-        "npm:8.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fv8-to-istanbul%2Fdownload%2Fv8-to-istanbul-8.1.0.tgz"
-      ],
-      [
-        "v8flags",
-        "npm:3.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fv8flags%2Fdownload%2Fv8flags-3.2.0.tgz"
-      ],
-      [
-        "vali-date",
-        "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fvali-date%2Fdownload%2Fvali-date-1.0.0.tgz"
-      ],
-      [
-        "validate-npm-package-license",
-        "npm:3.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fvalidate-npm-package-license%2Fdownload%2Fvalidate-npm-package-license-3.0.4.tgz"
-      ],
-      [
-        "validate-npm-package-name",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fvalidate-npm-package-name%2Fdownload%2Fvalidate-npm-package-name-3.0.0.tgz"
-      ],
-      [
-        "vba",
-        "workspace:examples/vba"
-      ],
-      [
-        "w3c-hr-time",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fw3c-hr-time%2Fdownload%2Fw3c-hr-time-1.0.2.tgz"
-      ],
-      [
-        "w3c-xmlserializer",
-        "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fw3c-xmlserializer%2Fdownload%2Fw3c-xmlserializer-2.0.0.tgz"
-      ],
-      [
-        "walker",
-        "npm:1.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwalker%2Fdownload%2Fwalker-1.0.8.tgz"
-      ],
-      [
-        "webidl-conversions",
-        "npm:6.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwebidl-conversions%2Fdownload%2Fwebidl-conversions-6.1.0.tgz"
-      ],
-      [
-        "whatwg-encoding",
-        "npm:1.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwhatwg-encoding%2Fdownload%2Fwhatwg-encoding-1.0.5.tgz"
-      ],
-      [
-        "whatwg-mimetype",
-        "npm:2.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwhatwg-mimetype%2Fdownload%2Fwhatwg-mimetype-2.3.0.tgz"
-      ],
-      [
-        "whatwg-url",
-        "npm:8.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwhatwg-url%2Fdownload%2Fwhatwg-url-8.7.0.tgz"
-      ],
-      [
-        "which",
-        "npm:1.3.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwhich%2Fdownload%2Fwhich-1.3.1.tgz"
-      ],
-      [
-        "which-boxed-primitive",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwhich-boxed-primitive%2Fdownload%2Fwhich-boxed-primitive-1.0.2.tgz"
-      ],
-      [
-        "wide-align",
-        "npm:1.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwide-align%2Fdownload%2Fwide-align-1.1.5.tgz"
-      ],
-      [
-        "widest-line",
-        "npm:3.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwidest-line%2Fdownload%2Fwidest-line-3.1.0.tgz"
-      ],
-      [
-        "word-wrap",
-        "npm:1.2.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fword-wrap%2Fdownload%2Fword-wrap-1.2.3.tgz"
-      ],
-      [
-        "wrap-ansi",
-        "npm:7.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwrap-ansi%2Fdownload%2Fwrap-ansi-7.0.0.tgz"
-      ],
-      [
-        "wrappy",
-        "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwrappy%2Fdownload%2Fwrappy-1.0.2.tgz"
-      ],
-      [
-        "write-file-atomic",
-        "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fwrite-file-atomic%2Fdownload%2Fwrite-file-atomic-3.0.3.tgz"
-      ],
-      [
-        "ws",
-        "virtual:e900cfc06557d76ba6372b8b8ebf25d1459411308a7227e8d2f7c9592b80795b8327c7d6b2690d58c88be3ec4ae66bb3803fca2b0865975ec9372e2a5be9b5b4#npm:7.5.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fws%2Fdownload%2Fws-7.5.6.tgz"
-      ],
-      [
-        "xdg-basedir",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fxdg-basedir%2Fdownload%2Fxdg-basedir-4.0.0.tgz"
-      ],
-      [
-        "xml-name-validator",
-        "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fxml-name-validator%2Fdownload%2Fxml-name-validator-3.0.0.tgz"
-      ],
-      [
-        "xmlchars",
-        "npm:2.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fxmlchars%2Fdownload%2Fxmlchars-2.2.0.tgz"
-      ],
-      [
-        "y18n",
-        "npm:5.0.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fy18n%2Fdownload%2Fy18n-5.0.8.tgz"
-      ],
-      [
-        "yallist",
-        "npm:4.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fyallist%2Fdownload%2Fyallist-4.0.0.tgz"
-      ],
-      [
-        "yaml",
-        "npm:1.10.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fyaml%2Fdownload%2Fyaml-1.10.2.tgz"
-      ],
-      [
-        "yargs",
-        "npm:16.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fyargs%2Fdownload%2Fyargs-16.2.0.tgz"
-      ],
-      [
-        "yargs-parser",
-        "npm:20.2.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fyargs-parser%2Fdownload%2Fyargs-parser-20.2.9.tgz"
-      ],
-      [
-        "yocto-queue",
-        "npm:0.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fyocto-queue%2Fdownload%2Fyocto-queue-0.1.0.tgz"
-      ]
     ],
     "packageRegistryData": [
       [null, [
@@ -3684,7 +72,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fpreset-typescript%2Fdownload%2F%40babel%2Fpreset-typescript-7.16.5.tgz"],
             ["@tsconfig/recommended", "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40tsconfig%2Frecommended%2Fdownload%2F%40tsconfig%2Frecommended-1.0.1.tgz"],
             ["@types/jest", "npm:27.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fjest%2Fdownload%2F%40types%2Fjest-27.0.3.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:16.11.14::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.14.tgz"],
             ["@yiminghe/rr", "npm:1.63.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40yiminghe%2Frr%2Fdownload%2F%40yiminghe%2Frr-1.63.2.tgz"],
             ["babel-jest", "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-jest%2Fdownload%2Fbabel-jest-27.4.5.tgz"],
             ["benchmark", "npm:2.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbenchmark%2Fdownload%2Fbenchmark-2.1.4.tgz"],
@@ -4249,7 +637,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/register", "virtual:76327ffcafe778cef9037a0be95bd2be16fa3c4b278635c721d356db69ffe8db1c3e8a9999a4f4855463c04d00b9397ceae37de987413ba5cdcb82e44a172609#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fregister%2Fdownload%2F%40babel%2Fregister-7.16.5.tgz"],
             ["@types/babel__core", null],
             ["commander", "npm:4.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcommander%2Fdownload%2Fcommander-4.1.1.tgz"],
-            ["core-js", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.19.3.tgz"],
+            ["core-js", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.20.0.tgz"],
             ["node-environment-flags", "npm:1.0.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnode-environment-flags%2Fdownload%2Fnode-environment-flags-1.0.6.tgz"],
             ["regenerator-runtime", "npm:0.13.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.9.tgz"],
             ["v8flags", "npm:3.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fv8flags%2Fdownload%2Fv8flags-3.2.0.tgz"]
@@ -7080,7 +3468,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-plugin-polyfill-corejs2", "virtual:a4abc71254b288c79881f6249317b209d7ffa53f25559d58109977f60dc92c4d7137c65bc76aeb99fad37ff4a42a97f1ef609a5bd82daa8df5ff76db8522f15c#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-corejs2%2Fdownload%2Fbabel-plugin-polyfill-corejs2-0.3.0.tgz"],
             ["babel-plugin-polyfill-corejs3", "virtual:a4abc71254b288c79881f6249317b209d7ffa53f25559d58109977f60dc92c4d7137c65bc76aeb99fad37ff4a42a97f1ef609a5bd82daa8df5ff76db8522f15c#npm:0.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-corejs3%2Fdownload%2Fbabel-plugin-polyfill-corejs3-0.4.0.tgz"],
             ["babel-plugin-polyfill-regenerator", "virtual:a4abc71254b288c79881f6249317b209d7ffa53f25559d58109977f60dc92c4d7137c65bc76aeb99fad37ff4a42a97f1ef609a5bd82daa8df5ff76db8522f15c#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-regenerator%2Fdownload%2Fbabel-plugin-polyfill-regenerator-0.3.0.tgz"],
-            ["core-js-compat", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz"],
+            ["core-js-compat", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.20.0.tgz"],
             ["semver", "npm:6.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsemver%2Fdownload%2Fsemver-6.3.0.tgz"]
           ],
           "packagePeers": [
@@ -7167,7 +3555,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["babel-plugin-polyfill-corejs2", "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-corejs2%2Fdownload%2Fbabel-plugin-polyfill-corejs2-0.3.0.tgz"],
             ["babel-plugin-polyfill-corejs3", "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-corejs3%2Fdownload%2Fbabel-plugin-polyfill-corejs3-0.4.0.tgz"],
             ["babel-plugin-polyfill-regenerator", "virtual:312de7d692d9491c0f09c95b8fc87a9dcd484a4b1d0487c1511b73ab029cc0c793b6e938558213582fb8e5c593d1c4ab014eee7c1a8e5d734cca14d7c1f74401#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-plugin-polyfill-regenerator%2Fdownload%2Fbabel-plugin-polyfill-regenerator-0.3.0.tgz"],
-            ["core-js-compat", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz"],
+            ["core-js-compat", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.20.0.tgz"],
             ["semver", "npm:6.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsemver%2Fdownload%2Fsemver-6.3.0.tgz"]
           ],
           "packagePeers": [
@@ -7389,7 +3777,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@jest/console", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fconsole%2Fdownload%2F%40jest%2Fconsole-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["jest-message-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-message-util%2Fdownload%2Fjest-message-util-27.4.2.tgz"],
             ["jest-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"],
@@ -7415,7 +3803,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/test-result", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"],
             ["@jest/transform", "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftransform%2Fdownload%2F%40jest%2Ftransform-27.4.5.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["@types/node-notifier", null],
             ["ansi-escapes", "npm:4.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fansi-escapes%2Fdownload%2Fansi-escapes-4.3.2.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
@@ -7455,7 +3843,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/environment", "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fenvironment%2Fdownload%2F%40jest%2Fenvironment-27.4.4.tgz"],
             ["@jest/fake-timers", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ffake-timers%2Fdownload%2F%40jest%2Ffake-timers-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["jest-mock", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-mock%2Fdownload%2Fjest-mock-27.4.2.tgz"]
           ],
           "linkType": "HARD",
@@ -7468,7 +3856,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/fake-timers", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ffake-timers%2Fdownload%2F%40jest%2Ffake-timers-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
             ["@sinonjs/fake-timers", "npm:8.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40sinonjs%2Ffake-timers%2Fdownload%2F%40sinonjs%2Ffake-timers-8.1.0.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["jest-message-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-message-util%2Fdownload%2Fjest-message-util-27.4.2.tgz"],
             ["jest-mock", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-mock%2Fdownload%2Fjest-mock-27.4.2.tgz"],
             ["jest-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"]
@@ -7505,7 +3893,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/test-result", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"],
             ["@jest/transform", "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftransform%2Fdownload%2F%40jest%2Ftransform-27.4.5.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["@types/node-notifier", null],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["collect-v8-coverage", "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcollect-v8-coverage%2Fdownload%2Fcollect-v8-coverage-1.0.1.tgz"],
@@ -7604,7 +3992,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
             ["@types/istanbul-lib-coverage", "npm:2.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fistanbul-lib-coverage%2Fdownload%2F%40types%2Fistanbul-lib-coverage-2.0.3.tgz"],
             ["@types/istanbul-reports", "npm:3.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fistanbul-reports%2Fdownload%2F%40types%2Fistanbul-reports-3.0.1.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["@types/yargs", "npm:16.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fyargs%2Fdownload%2F%40types%2Fyargs-16.0.4.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"]
           ],
@@ -8026,7 +4414,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/cacheable-request", "npm:6.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fcacheable-request%2Fdownload%2F%40types%2Fcacheable-request-6.0.2.tgz"],
             ["@types/http-cache-semantics", "npm:4.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fhttp-cache-semantics%2Fdownload%2F%40types%2Fhttp-cache-semantics-4.0.1.tgz"],
             ["@types/keyv", "npm:3.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fkeyv%2Fdownload%2F%40types%2Fkeyv-3.1.3.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["@types/responselike", "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fresponselike%2Fdownload%2F%40types%2Fresponselike-1.0.0.tgz"]
           ],
           "linkType": "HARD",
@@ -8054,7 +4442,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@types/glob", "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fglob%2Fdownload%2F%40types%2Fglob-7.2.0.tgz"],
             ["@types/minimatch", "npm:3.0.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fminimatch%2Fdownload%2F%40types%2Fminimatch-3.0.5.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -8064,7 +4452,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-graceful-fs-npm-4.1.5-ef5f15c6a4-d076bb61f4.zip/node_modules/@types/graceful-fs/",
           "packageDependencies": [
             ["@types/graceful-fs", "npm:4.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fgraceful-fs%2Fdownload%2F%40types%2Fgraceful-fs-4.1.5.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -8132,7 +4520,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-keyv-npm-3.1.3-f6db23b1fd-b5f8aa592c.zip/node_modules/@types/keyv/",
           "packageDependencies": [
             ["@types/keyv", "npm:3.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fkeyv%2Fdownload%2F%40types%2Fkeyv-3.1.3.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -8156,10 +4544,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/node", [
-        ["npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz", {
-          "packageLocation": "./.yarn/cache/@types-node-npm-16.11.13-4dc67876a8-7c9d62c024.zip/node_modules/@types/node/",
+        ["npm:16.11.14::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.14.tgz", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.11.14-60ee13216b-0bd4333fb4.zip/node_modules/@types/node/",
           "packageDependencies": [
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:16.11.14::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.14.tgz"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-17.0.0-878a96709e-30970a70c2.zip/node_modules/@types/node/",
+          "packageDependencies": [
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -8196,7 +4591,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-resolve-npm-1.17.1-fb9267524f-dc6a6df507.zip/node_modules/@types/resolve/",
           "packageDependencies": [
             ["@types/resolve", "npm:1.17.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fresolve%2Fdownload%2F%40types%2Fresolve-1.17.1.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -8206,7 +4601,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-responselike-npm-1.0.0-bbb09e3f98-e99fc7cc62.zip/node_modules/@types/responselike/",
           "packageDependencies": [
             ["@types/responselike", "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fresponselike%2Fdownload%2F%40types%2Fresponselike-1.0.0.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -8844,7 +5239,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fcore%2Fdownload%2F%40babel%2Fcore-7.16.5.tgz"],
             ["@babel/helper-define-polyfill-provider", "virtual:db156a4e901fbd46dbad26d754518600cfd90f95173446b038c358deecf8c33710150c2d5789f61cdf5fbe25b18c48c059ecfa7363516beb0946cd9071de264e#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-define-polyfill-provider%2Fdownload%2F%40babel%2Fhelper-define-polyfill-provider-0.3.0.tgz"],
             ["@types/babel__core", null],
-            ["core-js-compat", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz"]
+            ["core-js-compat", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.20.0.tgz"]
           ],
           "packagePeers": [
             "@babel/core",
@@ -8859,7 +5254,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", null],
             ["@babel/helper-define-polyfill-provider", "virtual:64d238c5a6f86421d7bf9031d0ea4a618ee86183b3993c57dda9f152178ca0125d1393f1b27cb8fa486a4fd91a7cf31f2a8b34a88c61e276d2a8ef90d8fa826f#npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fhelper-define-polyfill-provider%2Fdownload%2F%40babel%2Fhelper-define-polyfill-provider-0.3.0.tgz"],
             ["@types/babel__core", null],
-            ["core-js-compat", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz"]
+            ["core-js-compat", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.20.0.tgz"]
           ],
           "packagePeers": [
             "@babel/core",
@@ -9136,7 +5531,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["caniuse-lite", "npm:1.0.30001286::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001286.tgz"],
-            ["electron-to-chromium", "npm:1.4.18::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.18.tgz"],
+            ["electron-to-chromium", "npm:1.4.19::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.19.tgz"],
             ["escalade", "npm:3.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fescalade%2Fdownload%2Fescalade-3.1.1.tgz"],
             ["node-releases", "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnode-releases%2Fdownload%2Fnode-releases-2.0.1.tgz"],
             ["picocolors", "npm:1.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpicocolors%2Fdownload%2Fpicocolors-1.0.0.tgz"]
@@ -9819,19 +6214,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["core-js", [
-        ["npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.19.3.tgz", {
-          "packageLocation": "./.yarn/unplugged/core-js-npm-3.19.3-cf0a39d56f/node_modules/core-js/",
+        ["npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.20.0.tgz", {
+          "packageLocation": "./.yarn/unplugged/core-js-npm-3.20.0-6f00b057a2/node_modules/core-js/",
           "packageDependencies": [
-            ["core-js", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.19.3.tgz"]
+            ["core-js", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js%2Fdownload%2Fcore-js-3.20.0.tgz"]
           ],
           "linkType": "HARD",
         }]
       ]],
       ["core-js-compat", [
-        ["npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz", {
-          "packageLocation": "./.yarn/cache/core-js-compat-npm-3.19.3-92cf720268-4f00f734d8.zip/node_modules/core-js-compat/",
+        ["npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.20.0.tgz", {
+          "packageLocation": "./.yarn/cache/core-js-compat-npm-3.20.0-d959cafcae-d2887ab75f.zip/node_modules/core-js-compat/",
           "packageDependencies": [
-            ["core-js-compat", "npm:3.19.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.19.3.tgz"],
+            ["core-js-compat", "npm:3.20.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcore-js-compat%2Fdownload%2Fcore-js-compat-3.20.0.tgz"],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["semver", "npm:7.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsemver%2Fdownload%2Fsemver-7.0.0.tgz"]
           ],
@@ -9909,10 +6304,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz", {
-          "packageLocation": "./.yarn/__virtual__/css-declaration-sorter-virtual-db9b809920/0/cache/css-declaration-sorter-npm-6.1.3-9bfe04fea4-6fdacdce48.zip/node_modules/css-declaration-sorter/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz", {
+          "packageLocation": "./.yarn/__virtual__/css-declaration-sorter-virtual-e971e3223f/0/cache/css-declaration-sorter-npm-6.1.3-9bfe04fea4-6fdacdce48.zip/node_modules/css-declaration-sorter/",
           "packageDependencies": [
-            ["css-declaration-sorter", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz"],
+            ["css-declaration-sorter", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["timsort", "npm:0.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ftimsort%2Fdownload%2Ftimsort-0.3.0.tgz"]
@@ -9968,19 +6363,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["cssnano", [
-        ["npm:5.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.12.tgz", {
-          "packageLocation": "./.yarn/cache/cssnano-npm-5.0.12-42825eac36-c756f4c2b5.zip/node_modules/cssnano/",
+        ["npm:5.0.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.13.tgz", {
+          "packageLocation": "./.yarn/cache/cssnano-npm-5.0.13-170505da66-096324bf1e.zip/node_modules/cssnano/",
           "packageDependencies": [
-            ["cssnano", "npm:5.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.12.tgz"]
+            ["cssnano", "npm:5.0.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.13.tgz"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.12.tgz", {
-          "packageLocation": "./.yarn/__virtual__/cssnano-virtual-970ba034f0/0/cache/cssnano-npm-5.0.12-42825eac36-c756f4c2b5.zip/node_modules/cssnano/",
+        ["virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.13.tgz", {
+          "packageLocation": "./.yarn/__virtual__/cssnano-virtual-869e2ec84b/0/cache/cssnano-npm-5.0.13-170505da66-096324bf1e.zip/node_modules/cssnano/",
           "packageDependencies": [
-            ["cssnano", "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.12.tgz"],
+            ["cssnano", "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.13.tgz"],
             ["@types/postcss", null],
-            ["cssnano-preset-default", "virtual:970ba034f090ca1f103421ef8de0895aa989edf2c0bd3ee172a4ce3d00d309bcb760b6e173bd5efa6d53861138180d43f89f0770a7d39f0e9bbfb031e674e496#npm:5.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.8.tgz"],
+            ["cssnano-preset-default", "virtual:869e2ec84ba084a4913ee26a415fbec6a79b565732a93f6487deecf1b793c711bb1d9ae1e2447943dbe392ddcc0725626839b8f9977d484d8847955f25e6a29f#npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.9.tgz"],
             ["is-resolvable", "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-resolvable%2Fdownload%2Fis-resolvable-1.1.0.tgz"],
             ["lilconfig", "npm:2.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Flilconfig%2Fdownload%2Flilconfig-2.0.4.tgz"],
             ["postcss", null],
@@ -9994,48 +6389,48 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["cssnano-preset-default", [
-        ["npm:5.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.8.tgz", {
-          "packageLocation": "./.yarn/cache/cssnano-preset-default-npm-5.1.8-3b5f5d156c-89d6878cef.zip/node_modules/cssnano-preset-default/",
+        ["npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.9.tgz", {
+          "packageLocation": "./.yarn/cache/cssnano-preset-default-npm-5.1.9-65f3eab47b-1530d1cec6.zip/node_modules/cssnano-preset-default/",
           "packageDependencies": [
-            ["cssnano-preset-default", "npm:5.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.8.tgz"]
+            ["cssnano-preset-default", "npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.9.tgz"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:970ba034f090ca1f103421ef8de0895aa989edf2c0bd3ee172a4ce3d00d309bcb760b6e173bd5efa6d53861138180d43f89f0770a7d39f0e9bbfb031e674e496#npm:5.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.8.tgz", {
-          "packageLocation": "./.yarn/__virtual__/cssnano-preset-default-virtual-58cbe1f6de/0/cache/cssnano-preset-default-npm-5.1.8-3b5f5d156c-89d6878cef.zip/node_modules/cssnano-preset-default/",
+        ["virtual:869e2ec84ba084a4913ee26a415fbec6a79b565732a93f6487deecf1b793c711bb1d9ae1e2447943dbe392ddcc0725626839b8f9977d484d8847955f25e6a29f#npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.9.tgz", {
+          "packageLocation": "./.yarn/__virtual__/cssnano-preset-default-virtual-8432a21232/0/cache/cssnano-preset-default-npm-5.1.9-65f3eab47b-1530d1cec6.zip/node_modules/cssnano-preset-default/",
           "packageDependencies": [
-            ["cssnano-preset-default", "virtual:970ba034f090ca1f103421ef8de0895aa989edf2c0bd3ee172a4ce3d00d309bcb760b6e173bd5efa6d53861138180d43f89f0770a7d39f0e9bbfb031e674e496#npm:5.1.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.8.tgz"],
+            ["cssnano-preset-default", "virtual:869e2ec84ba084a4913ee26a415fbec6a79b565732a93f6487deecf1b793c711bb1d9ae1e2447943dbe392ddcc0725626839b8f9977d484d8847955f25e6a29f#npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-preset-default%2Fdownload%2Fcssnano-preset-default-5.1.9.tgz"],
             ["@types/postcss", null],
-            ["css-declaration-sorter", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz"],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["css-declaration-sorter", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:6.1.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcss-declaration-sorter%2Fdownload%2Fcss-declaration-sorter-6.1.3.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
-            ["postcss-calc", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz"],
-            ["postcss-colormin", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.1.tgz"],
-            ["postcss-convert-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz"],
-            ["postcss-discard-comments", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz"],
-            ["postcss-discard-duplicates", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz"],
-            ["postcss-discard-empty", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz"],
-            ["postcss-discard-overridden", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz"],
-            ["postcss-merge-longhand", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz"],
-            ["postcss-merge-rules", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz"],
-            ["postcss-minify-font-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz"],
-            ["postcss-minify-gradients", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz"],
-            ["postcss-minify-params", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz"],
-            ["postcss-minify-selectors", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz"],
-            ["postcss-normalize-charset", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz"],
-            ["postcss-normalize-display-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz"],
-            ["postcss-normalize-positions", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz"],
-            ["postcss-normalize-repeat-style", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz"],
-            ["postcss-normalize-string", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz"],
-            ["postcss-normalize-timing-functions", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz"],
-            ["postcss-normalize-unicode", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz"],
-            ["postcss-normalize-url", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.3.tgz"],
-            ["postcss-normalize-whitespace", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz"],
-            ["postcss-ordered-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz"],
-            ["postcss-reduce-initial", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz"],
-            ["postcss-reduce-transforms", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz"],
-            ["postcss-svgo", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz"],
-            ["postcss-unique-selectors", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz"]
+            ["postcss-calc", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz"],
+            ["postcss-colormin", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.2.tgz"],
+            ["postcss-convert-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz"],
+            ["postcss-discard-comments", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz"],
+            ["postcss-discard-duplicates", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz"],
+            ["postcss-discard-empty", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz"],
+            ["postcss-discard-overridden", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz"],
+            ["postcss-merge-longhand", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz"],
+            ["postcss-merge-rules", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz"],
+            ["postcss-minify-font-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz"],
+            ["postcss-minify-gradients", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz"],
+            ["postcss-minify-params", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz"],
+            ["postcss-minify-selectors", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz"],
+            ["postcss-normalize-charset", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz"],
+            ["postcss-normalize-display-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz"],
+            ["postcss-normalize-positions", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz"],
+            ["postcss-normalize-repeat-style", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz"],
+            ["postcss-normalize-string", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz"],
+            ["postcss-normalize-timing-functions", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz"],
+            ["postcss-normalize-unicode", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz"],
+            ["postcss-normalize-url", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.4.tgz"],
+            ["postcss-normalize-whitespace", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz"],
+            ["postcss-ordered-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz"],
+            ["postcss-reduce-initial", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz"],
+            ["postcss-reduce-transforms", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz"],
+            ["postcss-svgo", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz"],
+            ["postcss-unique-selectors", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz"]
           ],
           "packagePeers": [
             "@types/postcss",
@@ -10052,10 +6447,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/cssnano-utils-virtual-fb197f1f0d/0/cache/cssnano-utils-npm-2.0.1-497f3f098f-e27f7648fd.zip/node_modules/cssnano-utils/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/cssnano-utils-virtual-40eac71aac/0/cache/cssnano-utils-npm-2.0.1-497f3f098f-e27f7648fd.zip/node_modules/cssnano-utils/",
           "packageDependencies": [
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null]
           ],
@@ -10541,10 +6936,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["electron-to-chromium", [
-        ["npm:1.4.18::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.18.tgz", {
-          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.18-762c9589e5-59d8da47d9.zip/node_modules/electron-to-chromium/",
+        ["npm:1.4.19::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.19.tgz", {
+          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.19-1979605c1b-a99d237839.zip/node_modules/electron-to-chromium/",
           "packageDependencies": [
-            ["electron-to-chromium", "npm:1.4.18::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.18.tgz"]
+            ["electron-to-chromium", "npm:1.4.19::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.19.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -12064,15 +8459,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["is-absolute-url", [
-        ["npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-absolute-url%2Fdownload%2Fis-absolute-url-3.0.3.tgz", {
-          "packageLocation": "./.yarn/cache/is-absolute-url-npm-3.0.3-68d8e0c4be-5159b51d06.zip/node_modules/is-absolute-url/",
-          "packageDependencies": [
-            ["is-absolute-url", "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-absolute-url%2Fdownload%2Fis-absolute-url-3.0.3.tgz"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["is-accessor-descriptor", [
         ["npm:0.1.6::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-accessor-descriptor%2Fdownload%2Fis-accessor-descriptor-0.1.6.tgz", {
           "packageLocation": "./.yarn/cache/is-accessor-descriptor-npm-0.1.6-7eeb43d4ea-3d629a086a.zip/node_modules/is-accessor-descriptor/",
@@ -12863,7 +9249,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/environment", "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fenvironment%2Fdownload%2F%40jest%2Fenvironment-27.4.4.tgz"],
             ["@jest/test-result", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["co", "npm:4.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fco%2Fdownload%2Fco-4.6.0.tgz"],
             ["dedent", "npm:0.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fdedent%2Fdownload%2Fdedent-0.7.0.tgz"],
@@ -13006,7 +9392,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/environment", "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fenvironment%2Fdownload%2F%40jest%2Fenvironment-27.4.4.tgz"],
             ["@jest/fake-timers", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ffake-timers%2Fdownload%2F%40jest%2Ffake-timers-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["jest-mock", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-mock%2Fdownload%2Fjest-mock-27.4.2.tgz"],
             ["jest-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"],
             ["jsdom", "virtual:7d160b7e535296b55e0bb37a1c882a3654bf56d7dc27f68cf11e33b826475af6bc11fe5fc0759dffde25af4648d6f14f3b5278e384fa98d7d91885c06dd0f57a#npm:16.7.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjsdom%2Fdownload%2Fjsdom-16.7.0.tgz"]
@@ -13022,7 +9408,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/environment", "npm:27.4.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fenvironment%2Fdownload%2F%40jest%2Fenvironment-27.4.4.tgz"],
             ["@jest/fake-timers", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ffake-timers%2Fdownload%2F%40jest%2Ffake-timers-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["jest-mock", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-mock%2Fdownload%2Fjest-mock-27.4.2.tgz"],
             ["jest-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"]
           ],
@@ -13052,7 +9438,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-haste-map", "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-haste-map%2Fdownload%2Fjest-haste-map-27.4.5.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
             ["@types/graceful-fs", "npm:4.1.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fgraceful-fs%2Fdownload%2F%40types%2Fgraceful-fs-4.1.5.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["anymatch", "npm:3.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fanymatch%2Fdownload%2Fanymatch-3.1.2.tgz"],
             ["fb-watchman", "npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Ffb-watchman%2Fdownload%2Ffb-watchman-2.0.1.tgz"],
             ["fsevents", "patch:fsevents@npm%3A2.3.2%3A%3A__archiveUrl=https%253A%252F%252Fregistry.npm.alibaba-inc.com%252Ffsevents%252Fdownload%252Ffsevents-2.3.2.tgz#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"],
@@ -13077,7 +9463,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/source-map", "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Fsource-map%2Fdownload%2F%40jest%2Fsource-map-27.4.0.tgz"],
             ["@jest/test-result", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["co", "npm:4.6.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fco%2Fdownload%2Fco-4.6.0.tgz"],
             ["expect", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexpect%2Fdownload%2Fexpect-27.4.2.tgz"],
@@ -13142,7 +9528,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["jest-mock", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-mock%2Fdownload%2Fjest-mock-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"]
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"]
           ],
           "linkType": "HARD",
         }]
@@ -13219,7 +9605,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jest/test-result", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"],
             ["@jest/transform", "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftransform%2Fdownload%2F%40jest%2Ftransform-27.4.5.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["emittery", "npm:0.8.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Femittery%2Fdownload%2Femittery-0.8.1.tgz"],
             ["exit", "npm:0.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fexit%2Fdownload%2Fexit-0.1.2.tgz"],
@@ -13280,7 +9666,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/jest-serializer-npm-27.4.0-a20c6ecd40-1ed5f38e88.zip/node_modules/jest-serializer/",
           "packageDependencies": [
             ["jest-serializer", "npm:27.4.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-serializer%2Fdownload%2Fjest-serializer-27.4.0.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["graceful-fs", "npm:4.2.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgraceful-fs%2Fdownload%2Fgraceful-fs-4.2.8.tgz"]
           ],
           "linkType": "HARD",
@@ -13325,7 +9711,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["jest-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["ci-info", "npm:3.3.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fci-info%2Fdownload%2Fci-info-3.3.0.tgz"],
             ["graceful-fs", "npm:4.2.8::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fgraceful-fs%2Fdownload%2Fgraceful-fs-4.2.8.tgz"],
@@ -13367,7 +9753,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-watcher", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-watcher%2Fdownload%2Fjest-watcher-27.4.2.tgz"],
             ["@jest/test-result", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftest-result%2Fdownload%2F%40jest%2Ftest-result-27.4.2.tgz"],
             ["@jest/types", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-27.4.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["ansi-escapes", "npm:4.3.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fansi-escapes%2Fdownload%2Fansi-escapes-4.3.2.tgz"],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["jest-util", "npm:27.4.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-util%2Fdownload%2Fjest-util-27.4.2.tgz"],
@@ -13381,7 +9767,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/jest-worker-npm-26.6.2-88261d9fea-f9afa3b88e.zip/node_modules/jest-worker/",
           "packageDependencies": [
             ["jest-worker", "npm:26.6.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-worker%2Fdownload%2Fjest-worker-26.6.2.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["merge-stream", "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmerge-stream%2Fdownload%2Fmerge-stream-2.0.0.tgz"],
             ["supports-color", "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsupports-color%2Fdownload%2Fsupports-color-7.2.0.tgz"]
           ],
@@ -13391,7 +9777,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/jest-worker-npm-27.4.5-b054df1343-eb0b6be412.zip/node_modules/jest-worker/",
           "packageDependencies": [
             ["jest-worker", "npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fjest-worker%2Fdownload%2Fjest-worker-27.4.5.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:17.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.0.tgz"],
             ["merge-stream", "npm:2.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fmerge-stream%2Fdownload%2Fmerge-stream-2.0.0.tgz"],
             ["supports-color", "npm:8.1.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fsupports-color%2Fdownload%2Fsupports-color-8.1.1.tgz"]
           ],
@@ -13608,7 +9994,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:7.16.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40babel%2Fpreset-typescript%2Fdownload%2F%40babel%2Fpreset-typescript-7.16.5.tgz"],
             ["@tsconfig/recommended", "npm:1.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40tsconfig%2Frecommended%2Fdownload%2F%40tsconfig%2Frecommended-1.0.1.tgz"],
             ["@types/jest", "npm:27.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fjest%2Fdownload%2F%40types%2Fjest-27.0.3.tgz"],
-            ["@types/node", "npm:16.11.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.13.tgz"],
+            ["@types/node", "npm:16.11.14::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.14.tgz"],
             ["@yiminghe/rr", "npm:1.63.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2F%40yiminghe%2Frr%2Fdownload%2F%40yiminghe%2Frr-1.63.2.tgz"],
             ["babel-jest", "virtual:fc61340f8b585386bf8409adb408bd159db1b9c3d802422af99941a0dabdc15a2b555ce810129ddd93b2177f824f10eccf191a68096751569b7bf90fda29f4cd#npm:27.4.5::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbabel-jest%2Fdownload%2Fbabel-jest-27.4.5.tgz"],
             ["benchmark", "npm:2.1.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbenchmark%2Fdownload%2Fbenchmark-2.1.4.tgz"],
@@ -15642,10 +12028,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-calc-virtual-07a816dcc3/0/cache/postcss-calc-npm-8.0.0-877356b0e2-d945c49f31.zip/node_modules/postcss-calc/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-calc-virtual-cc15eb8f14/0/cache/postcss-calc-npm-8.0.0-877356b0e2-d945c49f31.zip/node_modules/postcss-calc/",
           "packageDependencies": [
-            ["postcss-calc", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz"],
+            ["postcss-calc", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:8.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-calc%2Fdownload%2Fpostcss-calc-8.0.0.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-selector-parser", "npm:6.0.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-selector-parser%2Fdownload%2Fpostcss-selector-parser-6.0.7.tgz"],
@@ -15659,17 +12045,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["postcss-colormin", [
-        ["npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.1.tgz", {
-          "packageLocation": "./.yarn/cache/postcss-colormin-npm-5.2.1-04affd60e7-c5337ae947.zip/node_modules/postcss-colormin/",
+        ["npm:5.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.2.tgz", {
+          "packageLocation": "./.yarn/cache/postcss-colormin-npm-5.2.2-cc58e47091-55f7e4306c.zip/node_modules/postcss-colormin/",
           "packageDependencies": [
-            ["postcss-colormin", "npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.1.tgz"]
+            ["postcss-colormin", "npm:5.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.2.tgz"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-colormin-virtual-1550c6d63c/0/cache/postcss-colormin-npm-5.2.1-04affd60e7-c5337ae947.zip/node_modules/postcss-colormin/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.2.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-colormin-virtual-03761883e2/0/cache/postcss-colormin-npm-5.2.2-cc58e47091-55f7e4306c.zip/node_modules/postcss-colormin/",
           "packageDependencies": [
-            ["postcss-colormin", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.2.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.1.tgz"],
+            ["postcss-colormin", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.2.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-colormin%2Fdownload%2Fpostcss-colormin-5.2.2.tgz"],
             ["@types/postcss", null],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["caniuse-api", "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaniuse-api%2Fdownload%2Fcaniuse-api-3.0.0.tgz"],
@@ -15692,10 +12078,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-convert-values-virtual-d0da1e7b7d/0/cache/postcss-convert-values-npm-5.0.2-bc6988aa0a-02a31f72b3.zip/node_modules/postcss-convert-values/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-convert-values-virtual-367ead3bab/0/cache/postcss-convert-values-npm-5.0.2-bc6988aa0a-02a31f72b3.zip/node_modules/postcss-convert-values/",
           "packageDependencies": [
-            ["postcss-convert-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz"],
+            ["postcss-convert-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-convert-values%2Fdownload%2Fpostcss-convert-values-5.0.2.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
@@ -15715,10 +12101,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-discard-comments-virtual-0972f8bd58/0/cache/postcss-discard-comments-npm-5.0.1-e1295d30b3-c561952bbf.zip/node_modules/postcss-discard-comments/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-discard-comments-virtual-d1e63c616e/0/cache/postcss-discard-comments-npm-5.0.1-e1295d30b3-c561952bbf.zip/node_modules/postcss-discard-comments/",
           "packageDependencies": [
-            ["postcss-discard-comments", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz"],
+            ["postcss-discard-comments", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-comments%2Fdownload%2Fpostcss-discard-comments-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null]
           ],
@@ -15737,10 +12123,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-discard-duplicates-virtual-43feeab864/0/cache/postcss-discard-duplicates-npm-5.0.1-9180c8684c-becb68fd5c.zip/node_modules/postcss-discard-duplicates/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-discard-duplicates-virtual-674a1d6e79/0/cache/postcss-discard-duplicates-npm-5.0.1-9180c8684c-becb68fd5c.zip/node_modules/postcss-discard-duplicates/",
           "packageDependencies": [
-            ["postcss-discard-duplicates", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz"],
+            ["postcss-discard-duplicates", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-duplicates%2Fdownload%2Fpostcss-discard-duplicates-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null]
           ],
@@ -15759,10 +12145,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-discard-empty-virtual-d41daeea2c/0/cache/postcss-discard-empty-npm-5.0.1-dd640470fb-2465ddabb1.zip/node_modules/postcss-discard-empty/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-discard-empty-virtual-4b7a775ca8/0/cache/postcss-discard-empty-npm-5.0.1-dd640470fb-2465ddabb1.zip/node_modules/postcss-discard-empty/",
           "packageDependencies": [
-            ["postcss-discard-empty", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz"],
+            ["postcss-discard-empty", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-empty%2Fdownload%2Fpostcss-discard-empty-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null]
           ],
@@ -15781,10 +12167,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-discard-overridden-virtual-ba9ba0ee17/0/cache/postcss-discard-overridden-npm-5.0.1-8c34c5b7e8-7da9a4bda9.zip/node_modules/postcss-discard-overridden/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-discard-overridden-virtual-1a4b2bc56e/0/cache/postcss-discard-overridden-npm-5.0.1-8c34c5b7e8-7da9a4bda9.zip/node_modules/postcss-discard-overridden/",
           "packageDependencies": [
-            ["postcss-discard-overridden", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz"],
+            ["postcss-discard-overridden", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-discard-overridden%2Fdownload%2Fpostcss-discard-overridden-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null]
           ],
@@ -15828,14 +12214,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-merge-longhand-virtual-3e4f5478fb/0/cache/postcss-merge-longhand-npm-5.0.4-304d259202-6c5ff2ae0e.zip/node_modules/postcss-merge-longhand/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-merge-longhand-virtual-2376f09023/0/cache/postcss-merge-longhand-npm-5.0.4-304d259202-6c5ff2ae0e.zip/node_modules/postcss-merge-longhand/",
           "packageDependencies": [
-            ["postcss-merge-longhand", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz"],
+            ["postcss-merge-longhand", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-longhand%2Fdownload%2Fpostcss-merge-longhand-5.0.4.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"],
-            ["stylehacks", "virtual:3e4f5478fbf8f45a955e5b512c5a808cf0b4383d76d4a9ba8c6a0794d72127c51359ffc36f95120b3477f8c55a832c7a6bdfb821230c8685b9d7113cf18f6a74#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz"]
+            ["stylehacks", "virtual:2376f09023a50f792e5ef0422e47b2ae9b9aa59ca24c23cf0b9bf9adaf87c732166fdb186562c2ec55aa690befedde643d8ec91bc8b88ea494cf283d2120b4ce#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz"]
           ],
           "packagePeers": [
             "@types/postcss",
@@ -15852,14 +12238,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-merge-rules-virtual-fe7416f696/0/cache/postcss-merge-rules-npm-5.0.3-11f4dc953a-2e701693c6.zip/node_modules/postcss-merge-rules/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-merge-rules-virtual-dd91b8ae56/0/cache/postcss-merge-rules-npm-5.0.3-11f4dc953a-2e701693c6.zip/node_modules/postcss-merge-rules/",
           "packageDependencies": [
-            ["postcss-merge-rules", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz"],
+            ["postcss-merge-rules", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-merge-rules%2Fdownload%2Fpostcss-merge-rules-5.0.3.tgz"],
             ["@types/postcss", null],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["caniuse-api", "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaniuse-api%2Fdownload%2Fcaniuse-api-3.0.0.tgz"],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-selector-parser", "npm:6.0.7::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-selector-parser%2Fdownload%2Fpostcss-selector-parser-6.0.7.tgz"]
           ],
@@ -15878,10 +12264,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-minify-font-values-virtual-0ad36c82b6/0/cache/postcss-minify-font-values-npm-5.0.1-826f0dff14-56aeb2cad5.zip/node_modules/postcss-minify-font-values/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-minify-font-values-virtual-4937a69e9d/0/cache/postcss-minify-font-values-npm-5.0.1-826f0dff14-56aeb2cad5.zip/node_modules/postcss-minify-font-values/",
           "packageDependencies": [
-            ["postcss-minify-font-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz"],
+            ["postcss-minify-font-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-font-values%2Fdownload%2Fpostcss-minify-font-values-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
@@ -15901,13 +12287,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-minify-gradients-virtual-07b9b17a8d/0/cache/postcss-minify-gradients-npm-5.0.3-b00413bae0-9ba5f28bae.zip/node_modules/postcss-minify-gradients/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-minify-gradients-virtual-817ad9f09f/0/cache/postcss-minify-gradients-npm-5.0.3-b00413bae0-9ba5f28bae.zip/node_modules/postcss-minify-gradients/",
           "packageDependencies": [
-            ["postcss-minify-gradients", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz"],
+            ["postcss-minify-gradients", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-gradients%2Fdownload%2Fpostcss-minify-gradients-5.0.3.tgz"],
             ["@types/postcss", null],
             ["colord", "npm:2.9.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcolord%2Fdownload%2Fcolord-2.9.1.tgz"],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -15926,14 +12312,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-minify-params-virtual-ccb351c5e3/0/cache/postcss-minify-params-npm-5.0.2-7120b70d66-234e833e0d.zip/node_modules/postcss-minify-params/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-minify-params-virtual-1dc372dd0d/0/cache/postcss-minify-params-npm-5.0.2-7120b70d66-234e833e0d.zip/node_modules/postcss-minify-params/",
           "packageDependencies": [
-            ["postcss-minify-params", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz"],
+            ["postcss-minify-params", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-params%2Fdownload%2Fpostcss-minify-params-5.0.2.tgz"],
             ["@types/postcss", null],
             ["alphanum-sort", "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Falphanum-sort%2Fdownload%2Falphanum-sort-1.0.2.tgz"],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -15952,10 +12338,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-minify-selectors-virtual-3dff723d7e/0/cache/postcss-minify-selectors-npm-5.1.0-df694a943c-bf938e70a7.zip/node_modules/postcss-minify-selectors/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-minify-selectors-virtual-50da69feee/0/cache/postcss-minify-selectors-npm-5.1.0-df694a943c-bf938e70a7.zip/node_modules/postcss-minify-selectors/",
           "packageDependencies": [
-            ["postcss-minify-selectors", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz"],
+            ["postcss-minify-selectors", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-minify-selectors%2Fdownload%2Fpostcss-minify-selectors-5.1.0.tgz"],
             ["@types/postcss", null],
             ["alphanum-sort", "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Falphanum-sort%2Fdownload%2Falphanum-sort-1.0.2.tgz"],
             ["postcss", null],
@@ -16099,10 +12485,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-charset-virtual-12de1ef52d/0/cache/postcss-normalize-charset-npm-5.0.1-951af55c70-b74720bf04.zip/node_modules/postcss-normalize-charset/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-charset-virtual-ca83b6773f/0/cache/postcss-normalize-charset-npm-5.0.1-951af55c70-b74720bf04.zip/node_modules/postcss-normalize-charset/",
           "packageDependencies": [
-            ["postcss-normalize-charset", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz"],
+            ["postcss-normalize-charset", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-charset%2Fdownload%2Fpostcss-normalize-charset-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null]
           ],
@@ -16121,12 +12507,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-display-values-virtual-b0bd1cc52b/0/cache/postcss-normalize-display-values-npm-5.0.1-48c06fdf5e-ee84d379ab.zip/node_modules/postcss-normalize-display-values/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-display-values-virtual-cbb15b4101/0/cache/postcss-normalize-display-values-npm-5.0.1-48c06fdf5e-ee84d379ab.zip/node_modules/postcss-normalize-display-values/",
           "packageDependencies": [
-            ["postcss-normalize-display-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz"],
+            ["postcss-normalize-display-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-display-values%2Fdownload%2Fpostcss-normalize-display-values-5.0.1.tgz"],
             ["@types/postcss", null],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -16145,10 +12531,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-positions-virtual-bec306c5b4/0/cache/postcss-normalize-positions-npm-5.0.1-f79cca5e53-71a97ff851.zip/node_modules/postcss-normalize-positions/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-positions-virtual-d529960a46/0/cache/postcss-normalize-positions-npm-5.0.1-f79cca5e53-71a97ff851.zip/node_modules/postcss-normalize-positions/",
           "packageDependencies": [
-            ["postcss-normalize-positions", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz"],
+            ["postcss-normalize-positions", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-positions%2Fdownload%2Fpostcss-normalize-positions-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
@@ -16168,12 +12554,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-repeat-style-virtual-43496046de/0/cache/postcss-normalize-repeat-style-npm-5.0.1-e8d8293324-24f21dd8ee.zip/node_modules/postcss-normalize-repeat-style/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-repeat-style-virtual-b0b1373ab8/0/cache/postcss-normalize-repeat-style-npm-5.0.1-e8d8293324-24f21dd8ee.zip/node_modules/postcss-normalize-repeat-style/",
           "packageDependencies": [
-            ["postcss-normalize-repeat-style", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz"],
+            ["postcss-normalize-repeat-style", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-repeat-style%2Fdownload%2Fpostcss-normalize-repeat-style-5.0.1.tgz"],
             ["@types/postcss", null],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -16192,10 +12578,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-string-virtual-a19ed5581e/0/cache/postcss-normalize-string-npm-5.0.1-c5393e4620-4b42d41a05.zip/node_modules/postcss-normalize-string/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-string-virtual-70b96351cf/0/cache/postcss-normalize-string-npm-5.0.1-c5393e4620-4b42d41a05.zip/node_modules/postcss-normalize-string/",
           "packageDependencies": [
-            ["postcss-normalize-string", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz"],
+            ["postcss-normalize-string", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-string%2Fdownload%2Fpostcss-normalize-string-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
@@ -16215,12 +12601,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-timing-functions-virtual-749da9acc3/0/cache/postcss-normalize-timing-functions-npm-5.0.1-c55e6dcab2-fa58de8f9f.zip/node_modules/postcss-normalize-timing-functions/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-timing-functions-virtual-6f4c2d2718/0/cache/postcss-normalize-timing-functions-npm-5.0.1-c55e6dcab2-fa58de8f9f.zip/node_modules/postcss-normalize-timing-functions/",
           "packageDependencies": [
-            ["postcss-normalize-timing-functions", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz"],
+            ["postcss-normalize-timing-functions", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-timing-functions%2Fdownload%2Fpostcss-normalize-timing-functions-5.0.1.tgz"],
             ["@types/postcss", null],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -16239,10 +12625,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-unicode-virtual-214df63112/0/cache/postcss-normalize-unicode-npm-5.0.1-454c8cc70e-d5a0e0c107.zip/node_modules/postcss-normalize-unicode/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-unicode-virtual-5519c523d8/0/cache/postcss-normalize-unicode-npm-5.0.1-454c8cc70e-d5a0e0c107.zip/node_modules/postcss-normalize-unicode/",
           "packageDependencies": [
-            ["postcss-normalize-unicode", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz"],
+            ["postcss-normalize-unicode", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-unicode%2Fdownload%2Fpostcss-normalize-unicode-5.0.1.tgz"],
             ["@types/postcss", null],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["postcss", null],
@@ -16256,19 +12642,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["postcss-normalize-url", [
-        ["npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.3.tgz", {
-          "packageLocation": "./.yarn/cache/postcss-normalize-url-npm-5.0.3-392d114ebb-34dfc8d1d7.zip/node_modules/postcss-normalize-url/",
+        ["npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.4.tgz", {
+          "packageLocation": "./.yarn/cache/postcss-normalize-url-npm-5.0.4-08448da292-3c5a1d1723.zip/node_modules/postcss-normalize-url/",
           "packageDependencies": [
-            ["postcss-normalize-url", "npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.3.tgz"]
+            ["postcss-normalize-url", "npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.4.tgz"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.3.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-url-virtual-7a39dc00ce/0/cache/postcss-normalize-url-npm-5.0.3-392d114ebb-34dfc8d1d7.zip/node_modules/postcss-normalize-url/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.4.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-url-virtual-5299fad871/0/cache/postcss-normalize-url-npm-5.0.4-08448da292-3c5a1d1723.zip/node_modules/postcss-normalize-url/",
           "packageDependencies": [
-            ["postcss-normalize-url", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.3.tgz"],
+            ["postcss-normalize-url", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.4::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-url%2Fdownload%2Fpostcss-normalize-url-5.0.4.tgz"],
             ["@types/postcss", null],
-            ["is-absolute-url", "npm:3.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fis-absolute-url%2Fdownload%2Fis-absolute-url-3.0.3.tgz"],
             ["normalize-url", "npm:6.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fnormalize-url%2Fdownload%2Fnormalize-url-6.1.0.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
@@ -16288,10 +12673,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-normalize-whitespace-virtual-5c1b1889f5/0/cache/postcss-normalize-whitespace-npm-5.0.1-6a9ba4644d-cefb27d244.zip/node_modules/postcss-normalize-whitespace/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-normalize-whitespace-virtual-4acf6b8507/0/cache/postcss-normalize-whitespace-npm-5.0.1-6a9ba4644d-cefb27d244.zip/node_modules/postcss-normalize-whitespace/",
           "packageDependencies": [
-            ["postcss-normalize-whitespace", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz"],
+            ["postcss-normalize-whitespace", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-normalize-whitespace%2Fdownload%2Fpostcss-normalize-whitespace-5.0.1.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
@@ -16311,12 +12696,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-ordered-values-virtual-dac7775cd7/0/cache/postcss-ordered-values-npm-5.0.2-03f4462335-80b1cab96e.zip/node_modules/postcss-ordered-values/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-ordered-values-virtual-89ac6c5036/0/cache/postcss-ordered-values-npm-5.0.2-03f4462335-80b1cab96e.zip/node_modules/postcss-ordered-values/",
           "packageDependencies": [
-            ["postcss-ordered-values", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz"],
+            ["postcss-ordered-values", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-ordered-values%2Fdownload%2Fpostcss-ordered-values-5.0.2.tgz"],
             ["@types/postcss", null],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -16335,10 +12720,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-reduce-initial-virtual-16b139fb8f/0/cache/postcss-reduce-initial-npm-5.0.2-61149cead6-324bdb8974.zip/node_modules/postcss-reduce-initial/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-reduce-initial-virtual-22187dadbb/0/cache/postcss-reduce-initial-npm-5.0.2-61149cead6-324bdb8974.zip/node_modules/postcss-reduce-initial/",
           "packageDependencies": [
-            ["postcss-reduce-initial", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz"],
+            ["postcss-reduce-initial", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-initial%2Fdownload%2Fpostcss-reduce-initial-5.0.2.tgz"],
             ["@types/postcss", null],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["caniuse-api", "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcaniuse-api%2Fdownload%2Fcaniuse-api-3.0.0.tgz"],
@@ -16359,12 +12744,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-reduce-transforms-virtual-9f9f3add1d/0/cache/postcss-reduce-transforms-npm-5.0.1-2d9b6ca019-89e033ba1f.zip/node_modules/postcss-reduce-transforms/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-reduce-transforms-virtual-7be3b37051/0/cache/postcss-reduce-transforms-npm-5.0.1-2d9b6ca019-89e033ba1f.zip/node_modules/postcss-reduce-transforms/",
           "packageDependencies": [
-            ["postcss-reduce-transforms", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz"],
+            ["postcss-reduce-transforms", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-reduce-transforms%2Fdownload%2Fpostcss-reduce-transforms-5.0.1.tgz"],
             ["@types/postcss", null],
-            ["cssnano-utils", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
+            ["cssnano-utils", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:2.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano-utils%2Fdownload%2Fcssnano-utils-2.0.1.tgz"],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"]
           ],
@@ -16394,10 +12779,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-svgo-virtual-446756095d/0/cache/postcss-svgo-npm-5.0.3-8e392cdfe3-7da0bfd6ec.zip/node_modules/postcss-svgo/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-svgo-virtual-22ba917e99/0/cache/postcss-svgo-npm-5.0.3-8e392cdfe3-7da0bfd6ec.zip/node_modules/postcss-svgo/",
           "packageDependencies": [
-            ["postcss-svgo", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz"],
+            ["postcss-svgo", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.3::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-svgo%2Fdownload%2Fpostcss-svgo-5.0.3.tgz"],
             ["@types/postcss", null],
             ["postcss", null],
             ["postcss-value-parser", "npm:4.2.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-value-parser%2Fdownload%2Fpostcss-value-parser-4.2.0.tgz"],
@@ -16418,10 +12803,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz", {
-          "packageLocation": "./.yarn/__virtual__/postcss-unique-selectors-virtual-4e3e11f547/0/cache/postcss-unique-selectors-npm-5.0.2-3b954a71dd-ad0f7a8a4f.zip/node_modules/postcss-unique-selectors/",
+        ["virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz", {
+          "packageLocation": "./.yarn/__virtual__/postcss-unique-selectors-virtual-df93f93d9f/0/cache/postcss-unique-selectors-npm-5.0.2-3b954a71dd-ad0f7a8a4f.zip/node_modules/postcss-unique-selectors/",
           "packageDependencies": [
-            ["postcss-unique-selectors", "virtual:58cbe1f6de5ae7fc0019bee43ebe6b2bd0776a9a5211aa117cf1c84bab835b54794313b6c42281f005df90a8ab47173eff51a45ea5f0e31b2a140bdcb8d19c55#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz"],
+            ["postcss-unique-selectors", "virtual:8432a21232bf96a8de414efbce6fd326b0aa098197e8c9b9a4e72e09fefd7f0ba55c6b0208a340be97ccba667da478c76705325ce85f06dda0acb27524942677#npm:5.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpostcss-unique-selectors%2Fdownload%2Fpostcss-unique-selectors-5.0.2.tgz"],
             ["@types/postcss", null],
             ["alphanum-sort", "npm:1.0.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Falphanum-sort%2Fdownload%2Falphanum-sort-1.0.2.tgz"],
             ["postcss", null],
@@ -17064,7 +13449,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/postcss", null],
             ["chalk", "npm:4.1.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fchalk%2Fdownload%2Fchalk-4.1.2.tgz"],
             ["concat-with-sourcemaps", "npm:1.1.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fconcat-with-sourcemaps%2Fdownload%2Fconcat-with-sourcemaps-1.1.0.tgz"],
-            ["cssnano", "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.12::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.12.tgz"],
+            ["cssnano", "virtual:49a72d5dfcfa531a90630601f348fb42433b59dc5d28b2663d6a03fbd0fe8b1bcf8a8f1a67b35c7585dad04697aaad6d425bf6eddd61e156d7952bacdcc320a3#npm:5.0.13::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fcssnano%2Fdownload%2Fcssnano-5.0.13.tgz"],
             ["import-cwd", "npm:3.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fimport-cwd%2Fdownload%2Fimport-cwd-3.0.0.tgz"],
             ["p-queue", "npm:6.6.2::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fp-queue%2Fdownload%2Fp-queue-6.6.2.tgz"],
             ["pify", "npm:5.0.0::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fpify%2Fdownload%2Fpify-5.0.0.tgz"],
@@ -17881,10 +14266,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:3e4f5478fbf8f45a955e5b512c5a808cf0b4383d76d4a9ba8c6a0794d72127c51359ffc36f95120b3477f8c55a832c7a6bdfb821230c8685b9d7113cf18f6a74#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz", {
-          "packageLocation": "./.yarn/__virtual__/stylehacks-virtual-a8326ec52c/0/cache/stylehacks-npm-5.0.1-57b866339e-777dbed398.zip/node_modules/stylehacks/",
+        ["virtual:2376f09023a50f792e5ef0422e47b2ae9b9aa59ca24c23cf0b9bf9adaf87c732166fdb186562c2ec55aa690befedde643d8ec91bc8b88ea494cf283d2120b4ce#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz", {
+          "packageLocation": "./.yarn/__virtual__/stylehacks-virtual-a9d8328660/0/cache/stylehacks-npm-5.0.1-57b866339e-777dbed398.zip/node_modules/stylehacks/",
           "packageDependencies": [
-            ["stylehacks", "virtual:3e4f5478fbf8f45a955e5b512c5a808cf0b4383d76d4a9ba8c6a0794d72127c51359ffc36f95120b3477f8c55a832c7a6bdfb821230c8685b9d7113cf18f6a74#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz"],
+            ["stylehacks", "virtual:2376f09023a50f792e5ef0422e47b2ae9b9aa59ca24c23cf0b9bf9adaf87c732166fdb186562c2ec55aa690befedde643d8ec91bc8b88ea494cf283d2120b4ce#npm:5.0.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fstylehacks%2Fdownload%2Fstylehacks-5.0.1.tgz"],
             ["@types/postcss", null],
             ["browserslist", "npm:4.19.1::__archiveUrl=https%3A%2F%2Fregistry.npm.alibaba-inc.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.19.1.tgz"],
             ["postcss", null],

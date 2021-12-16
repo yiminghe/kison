@@ -85,6 +85,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["modulex-util", "npm:1.1.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fmodulex-util%2Fdownload%2Fmodulex-util-1.1.10.tgz"],
             ["np", "npm:7.6.0::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fnp%2Fdownload%2Fnp-7.6.0.tgz"],
             ["prettier", "npm:2.5.1::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fprettier%2Fdownload%2Fprettier-2.5.1.tgz"],
+            ["semver", "npm:7.3.5::__archiveUrl=https%3A%2F%2Fregistry.nlark.com%2Fsemver%2Fdownload%2Fsemver-7.3.5.tgz"],
             ["supports-color", "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fsupports-color%2Fdownload%2Fsupports-color-7.2.0.tgz"],
             ["typescript", "patch:typescript@npm%3A4.5.4%3A%3A__archiveUrl=https%253A%252F%252Fregistry.npmmirror.com%252Ftypescript%252Fdownload%252Ftypescript-4.5.4.tgz#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],
@@ -10007,6 +10008,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["modulex-util", "npm:1.1.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fmodulex-util%2Fdownload%2Fmodulex-util-1.1.10.tgz"],
             ["np", "npm:7.6.0::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fnp%2Fdownload%2Fnp-7.6.0.tgz"],
             ["prettier", "npm:2.5.1::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fprettier%2Fdownload%2Fprettier-2.5.1.tgz"],
+            ["semver", "npm:7.3.5::__archiveUrl=https%3A%2F%2Fregistry.nlark.com%2Fsemver%2Fdownload%2Fsemver-7.3.5.tgz"],
             ["supports-color", "npm:7.2.0::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fsupports-color%2Fdownload%2Fsupports-color-7.2.0.tgz"],
             ["typescript", "patch:typescript@npm%3A4.5.4%3A%3A__archiveUrl=https%253A%252F%252Fregistry.npmmirror.com%252Ftypescript%252Fdownload%252Ftypescript-4.5.4.tgz#~builtin<compat/typescript>::version=4.5.4&hash=493e53"]
           ],

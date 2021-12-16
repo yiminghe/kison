@@ -33,6 +33,7 @@
     "lint-staged": "^7.2.0",
     "np": "^7.x",
     "prettier": "2.x",
+    "semver": "7.x",
     "supports-color": "7.x",
     "typescript": "4.x"
   },

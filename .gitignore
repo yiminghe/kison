@@ -33,6 +33,5 @@ yarn-debug.log*
 yarn-error.log*
 
 tmp/
-/lib/
 pkg/
 node_modules/

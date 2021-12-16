@@ -4,10 +4,10 @@
   "description": "LALR parser generator for javascript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
-    "lib",
+    "pkg",
     "bin"
   ],
-  "main": "./lib/index.js",
+  "main": "./pkg/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"
@@ -44,7 +44,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "lib/*"
+      "src/*"
     ],
     "testMatch": [
       "**/*.test.[j|t]s?(x)"
@@ -57,15 +57,15 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "compile": "babel -x '.js,.ts' src --out-dir lib && cp src/*.d.ts lib/",
+    "compile": "babel -x '.js,.ts' src --out-dir pkg && cp src/*.d.ts pkg/",
     "check": "tsc --noEmit",
     "start": "http-server --mimetypes examples/mime.types",
     "reinstall": "rm -rf node_modules yarn.lock && ayarn",
-    "pub": "yarn run check && rm -rf lib && yarn run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
+    "pub": "yarn run check && rm -rf pkg && yarn run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
     "test": "jest",
-    "test-debug": "rm -rf lib && jest -i",
+    "test-debug": "rm -rf pkg && jest -i",
     "g:ts": "cd $PWD && babel-node -x '.js,.ts,.tsx',.mjs"
   },
   "bin": "./bin/kison.js",

@@ -37,11 +37,6 @@
     "supports-color": "7.x",
     "typescript": "4.x"
   },
-  "dependenciesMeta": {
-    "@yiminghe/rr": {
-      "unplugged": true
-    }
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/*"
@@ -60,7 +55,7 @@
     "compile": "babel -x '.js,.ts' src --out-dir pkg && cp src/*.d.ts pkg/",
     "check": "tsc --noEmit",
     "start": "http-server --mimetypes examples/mime.types",
-    "reinstall": "rm -rf node_modules yarn.lock && ayarn",
+    "reinstall": "rm -rf node_modules .yarn/cache yarn.lock && ayarn",
     "pub": "yarn run check && rm -rf pkg && yarn run compile && np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",

@@ -6,6 +6,7 @@
 !/.yarn/patches
 !/.yarn/plugins
 !/.yarn/releases
+!/.yarn/versions
 !/.yarn/sdks
 
 # Swap the comments on the following lines if you don't wish to use zero-installs

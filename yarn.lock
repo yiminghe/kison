@@ -2152,11 +2152,11 @@ __metadata:
   linkType: soft
 
 "@yiminghe/rr@npm:1.x":
-  version: 1.63.2
-  resolution: "@yiminghe/rr@npm:1.63.2::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40yiminghe%2Frr%2Fdownload%2F%40yiminghe%2Frr-1.63.2.tgz"
+  version: 1.63.3
+  resolution: "@yiminghe/rr@npm:1.63.3::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40yiminghe%2Frr%2Fdownload%2F%40yiminghe%2Frr-1.63.3.tgz"
   bin:
     rr: rr.js
-  checksum: f35383e38073f19cc4a585b5d75973c558e793150394dfab91e1c4e8f088d4d70e93cf590bcf1d3bdc50391284b093d16a4d22c754789b6c09d321e664575510
+  checksum: df8acee6d9e240c3101df5d9d5e2a19b3ebe25ccc458d41894783a4752055a61dd21232141ff1feaa6466b6370d7e568df84113363a862ac2f073c22c7f8b853
   languageName: node
   linkType: hard
 
@@ -2970,9 +2970,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001286":
-  version: 1.0.30001286
-  resolution: "caniuse-lite@npm:1.0.30001286::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001286.tgz"
-  checksum: 04de4742552d4aeb713677b40693d9ac1fbd259573e0ff739565278bcecb6f398f3227546a4e930f4d5cf95b61458f4a53c9c1f90f5b0c4f6063b32e4c54b89e
+  version: 1.0.30001287
+  resolution: "caniuse-lite@npm:1.0.30001287::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001287.tgz"
+  checksum: b53c26a3a267a2920394e4aa5d1f60a76f891943914068066700e5497dda512f096d8a77dfefda17306a9df06e16ce9c6b5179f8856cc0efbcd8873d13b2fbea
   languageName: node
   linkType: hard
 
@@ -3941,9 +3941,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.17":
-  version: 1.4.19
-  resolution: "electron-to-chromium@npm:1.4.19::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.19.tgz"
-  checksum: a99d237839ecd65e93966f80039dd85d6a00a5a1dfa99b97546889773186b0e44ad8e81410e82faaaea13fb54375cc73ec343510317bc90941c2ffff051b3ab7
+  version: 1.4.20
+  resolution: "electron-to-chromium@npm:1.4.20::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.4.20.tgz"
+  checksum: 1ff0a5a1ab3e637208315a372fd489059762d56ebfcd07969bb014b2dc0b50c9f564aca71cbf5aafa62bf7ee458b5623470048fc0c93c10fef0cadde8151c51c
   languageName: node
   linkType: hard
 
@@ -6736,9 +6736,6 @@ __metadata:
     semver: 7.x
     supports-color: 7.x
     typescript: 4.x
-  dependenciesMeta:
-    "@yiminghe/rr":
-      unplugged: true
   bin:
     kison: ./bin/kison.js
   languageName: unknown

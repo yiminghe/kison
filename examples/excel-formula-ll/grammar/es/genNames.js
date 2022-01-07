@@ -69,6 +69,6 @@ code.push(`export const groupEndZeroOrMoreMark = "')'*";`);
 code.push(`export const groupEndOneOrMoreMark = "')'+";`);
 code.push(`export const alternationMark = "'|'";`);
 
-require('fs').writeFileSync(__dirname + '/names.js', code.join('\n'));
+require('fs').writeFileSync(__dirname + '/names.mjs', code.join('\n'));
 
 // require('fs').writeFileSync(require('path').join(__dirname , '../../src/names.ts'), code.join('\n'));

@@ -2124,6 +2124,7 @@ __metadata:
     "@pika/pack": ^0.5.0
     "@types/jest": 27.x
     "@yiminghe/rr": 1.x
+    jest: 27.x
     kison: 0.5.x
     monaco-editor: ^0.28.0
     pika-plugin-build-web-babel: ^0.11.2
@@ -2143,6 +2144,7 @@ __metadata:
     "@pika/pack": ^0.5.0
     "@types/jest": 27.x
     "@yiminghe/rr": 1.x
+    jest: 27.x
     kison: 0.5.x
     pika-plugin-build-web-babel: ^0.11.2
     pika-plugin-clean-dist-src: ^0.1.1
@@ -4066,6 +4068,197 @@ __metadata:
     is-date-object: ^1.0.1
     is-symbol: ^1.0.2
   checksum: 4ead6671a2c1402619bdd77f3503991232ca15e17e46222b0a41a5d81aebc8740a77822f5b3c965008e631153e9ef0580540007744521e72de8e33599fca2eed
+  languageName: node
+  linkType: hard
+
+"esbuild-android-arm64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-android-arm64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-android-arm64%2Fdownload%2Fesbuild-android-arm64-0.14.10.tgz"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-darwin-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-darwin-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-darwin-64%2Fdownload%2Fesbuild-darwin-64-0.14.10.tgz"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-darwin-arm64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-darwin-arm64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-darwin-arm64%2Fdownload%2Fesbuild-darwin-arm64-0.14.10.tgz"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-freebsd-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-freebsd-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-freebsd-64%2Fdownload%2Fesbuild-freebsd-64-0.14.10.tgz"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-freebsd-arm64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-freebsd-arm64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-freebsd-arm64%2Fdownload%2Fesbuild-freebsd-arm64-0.14.10.tgz"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-32@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-32@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-32%2Fdownload%2Fesbuild-linux-32-0.14.10.tgz"
+  conditions: os=linux & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-64%2Fdownload%2Fesbuild-linux-64-0.14.10.tgz"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-arm64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-arm64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-arm64%2Fdownload%2Fesbuild-linux-arm64-0.14.10.tgz"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-arm@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-arm@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-arm%2Fdownload%2Fesbuild-linux-arm-0.14.10.tgz"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-mips64le@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-mips64le@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-mips64le%2Fdownload%2Fesbuild-linux-mips64le-0.14.10.tgz"
+  conditions: os=linux & cpu=mips64el
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-ppc64le@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-ppc64le@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-ppc64le%2Fdownload%2Fesbuild-linux-ppc64le-0.14.10.tgz"
+  conditions: os=linux & cpu=ppc64
+  languageName: node
+  linkType: hard
+
+"esbuild-linux-s390x@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-linux-s390x@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-linux-s390x%2Fdownload%2Fesbuild-linux-s390x-0.14.10.tgz"
+  conditions: os=linux & cpu=s390x
+  languageName: node
+  linkType: hard
+
+"esbuild-netbsd-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-netbsd-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-netbsd-64%2Fdownload%2Fesbuild-netbsd-64-0.14.10.tgz"
+  conditions: os=netbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-openbsd-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-openbsd-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-openbsd-64%2Fdownload%2Fesbuild-openbsd-64-0.14.10.tgz"
+  conditions: os=openbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-sunos-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-sunos-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-sunos-64%2Fdownload%2Fesbuild-sunos-64-0.14.10.tgz"
+  conditions: os=sunos & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-windows-32@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-windows-32@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-windows-32%2Fdownload%2Fesbuild-windows-32-0.14.10.tgz"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"esbuild-windows-64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-windows-64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-windows-64%2Fdownload%2Fesbuild-windows-64-0.14.10.tgz"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"esbuild-windows-arm64@npm:0.14.10":
+  version: 0.14.10
+  resolution: "esbuild-windows-arm64@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild-windows-arm64%2Fdownload%2Fesbuild-windows-arm64-0.14.10.tgz"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"esbuild@npm:^0.14.10":
+  version: 0.14.10
+  resolution: "esbuild@npm:0.14.10::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fesbuild%2Fdownload%2Fesbuild-0.14.10.tgz"
+  dependencies:
+    esbuild-android-arm64: 0.14.10
+    esbuild-darwin-64: 0.14.10
+    esbuild-darwin-arm64: 0.14.10
+    esbuild-freebsd-64: 0.14.10
+    esbuild-freebsd-arm64: 0.14.10
+    esbuild-linux-32: 0.14.10
+    esbuild-linux-64: 0.14.10
+    esbuild-linux-arm: 0.14.10
+    esbuild-linux-arm64: 0.14.10
+    esbuild-linux-mips64le: 0.14.10
+    esbuild-linux-ppc64le: 0.14.10
+    esbuild-linux-s390x: 0.14.10
+    esbuild-netbsd-64: 0.14.10
+    esbuild-openbsd-64: 0.14.10
+    esbuild-sunos-64: 0.14.10
+    esbuild-windows-32: 0.14.10
+    esbuild-windows-64: 0.14.10
+    esbuild-windows-arm64: 0.14.10
+  dependenciesMeta:
+    esbuild-android-arm64:
+      optional: true
+    esbuild-darwin-64:
+      optional: true
+    esbuild-darwin-arm64:
+      optional: true
+    esbuild-freebsd-64:
+      optional: true
+    esbuild-freebsd-arm64:
+      optional: true
+    esbuild-linux-32:
+      optional: true
+    esbuild-linux-64:
+      optional: true
+    esbuild-linux-arm:
+      optional: true
+    esbuild-linux-arm64:
+      optional: true
+    esbuild-linux-mips64le:
+      optional: true
+    esbuild-linux-ppc64le:
+      optional: true
+    esbuild-linux-s390x:
+      optional: true
+    esbuild-netbsd-64:
+      optional: true
+    esbuild-openbsd-64:
+      optional: true
+    esbuild-sunos-64:
+      optional: true
+    esbuild-windows-32:
+      optional: true
+    esbuild-windows-64:
+      optional: true
+    esbuild-windows-arm64:
+      optional: true
+  bin:
+    esbuild: bin/esbuild
+  checksum: 0e42a74afa79f8f096d338415b6661410fb656ce0d8ea6f48ccbd943d383e01d946dc9124e366db7dc9deb02b924c6788a68d690a1aa28365e891102450e8ae5
   languageName: node
   linkType: hard
 
@@ -6726,6 +6919,7 @@ __metadata:
     benchmark: ^2.1.4
     commander: 2.x
     debug: 4.x
+    esbuild: ^0.14.10
     fs-extra: 10.x
     husky: 7.x
     jest: 27.x
@@ -10934,6 +11128,7 @@ __metadata:
     "@pika/pack": ^0.5.0
     "@types/jest": 27.x
     "@yiminghe/rr": 1.x
+    jest: 27.x
     kison: 0.5.x
     monaco-editor: ^0.28.0
     pika-plugin-build-web-babel: ^0.11.2

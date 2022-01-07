@@ -1,6 +1,6 @@
 // @ts-check
 
-import * as n from './names';
+import * as n from './names.mjs';
 // https://docs.oasis-open.org/office/OpenDocument/v1.3/OpenDocument-v1.3-part4-formula.html
 
 const operators = [
@@ -73,7 +73,7 @@ const my = {
   },
 };
 
-module.exports = () => ({
+export default () => ({
   my,
   operators,
   productions: [

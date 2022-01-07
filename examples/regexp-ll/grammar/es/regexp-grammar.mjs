@@ -1,4 +1,4 @@
-import * as n from './names';
+import * as n from './names.mjs';
 
 const my = {
   charRange: [
@@ -177,7 +177,7 @@ function createStringMatch(str) {
   return `my.createMatchString.bind(undefined, ${JSON.stringify(str)})`;
 }
 
-module.exports = () => ({
+export default () => ({
   my,
   productions: [
     {

@@ -1,7 +1,7 @@
 // @ts-check
 
 // http://msdn.microsoft.com/en-us/library/aa338033%28v=vs.60%29.aspx
-import * as n from './names';
+import * as n from './names.mjs';
 
 function RegexEscape(input) {
   return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
@@ -126,7 +126,7 @@ const DATEORTIME =
   ')';
 const DATELITERAL = new RegExp('#' + DATEORTIME + '#', 'i');
 
-module.exports = {
+export default {
   productions: n.makeProductions([
     [
       n.progam,

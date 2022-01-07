@@ -8,6 +8,7 @@ import type { WriteFileOptions } from 'fs';
 import path from 'path';
 import program from 'commander';
 import pkg from '../package.json';
+import { build } from 'esbuild';
 
 var encoding: WriteFileOptions = 'utf-8';
 
@@ -32,7 +33,6 @@ program
   .option('-m, --mode [mode]', 'lalr or ll')
   .option('-b, --babel [babel]', 'use babel')
   .option('-v, --verbose [verbose]', 'verbose')
-  .option('-w, --watch [watch]', 'Watch grammar file change')
   .option('--es [es]', 'generate es module')
   // defaults bool true
   .option('--no-compressSymbol', 'Set compress symbol')
@@ -146,8 +146,68 @@ function myJsBeautify(str: string) {
   return str;
 }
 
-function genParser() {
-  var grammarObj = require(grammar);
+async function bundleConfigFile(fileName: string): Promise<string> {
+  const result = await build({
+    absWorkingDir: process.cwd(),
+    entryPoints: [fileName],
+    outfile: 'out.js',
+    write: false,
+    platform: 'node',
+    bundle: true,
+    format: 'cjs',
+    sourcemap: 'inline',
+    metafile: true,
+    plugins: [
+      {
+        name: 'externalize-deps',
+        setup(build) {
+          build.onResolve({ filter: /.*/ }, (args) => {
+            const id = args.path;
+            if (id[0] !== '.' && !path.isAbsolute(id)) {
+              return {
+                external: true,
+              };
+            }
+          });
+        },
+      },
+      {
+        name: 'replace-import-meta',
+        setup(build) {
+          build.onLoad({ filter: /\.[jt]s$/ }, async (args) => {
+            const contents = await fs.promises.readFile(args.path, 'utf8');
+            return {
+              loader: args.path.endsWith('.ts') ? 'ts' : 'js',
+              contents: contents
+                .replace(
+                  /\bimport\.meta\.url\b/g,
+                  JSON.stringify(`file://${args.path}`),
+                )
+                .replace(
+                  /\b__dirname\b/g,
+                  JSON.stringify(path.dirname(args.path)),
+                )
+                .replace(/\b__filename\b/g, JSON.stringify(args.path)),
+            };
+          });
+        },
+      },
+    ],
+  });
+  const { text } = result.outputFiles[0];
+  return text;
+}
+
+async function genParser() {
+  var grammarObj;
+  if (grammar.endsWith('.js')) {
+    grammarObj = require(grammar);
+  } else {
+    const code = await bundleConfigFile(grammar);
+    const o:any = {};
+    new Function('module', code)(o);
+    grammarObj = o.exports.default;
+  }
 
   if (typeof grammarObj === 'function') {
     grammarObj = grammarObj();
@@ -230,11 +290,4 @@ function genParser() {
   }
 }
 
-var bufferCompile = Utils.buffer(genParser);
-
-if (program.watch) {
-  fs.watch(grammar, bufferCompile);
-  genParser();
-} else {
-  genParser();
-}
+genParser();

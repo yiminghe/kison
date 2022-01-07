@@ -301,4 +301,4 @@ export const makeLexerRules = (arr) => {
 
 code.push(`export const PREFIX = "PREFIX";`);
 
-require('fs').writeFileSync(__dirname + '/names.js', code.join('\n'));
+require('fs').writeFileSync(__dirname + '/names.mjs', code.join('\n'));

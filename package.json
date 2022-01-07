@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.5.42",
+  "version": "0.5.43",
   "description": "A LALR(1)/LL(1)/LL(K) parser generator for javascript/typescript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
@@ -13,6 +13,7 @@
     "LLK",
     "parser generator"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"

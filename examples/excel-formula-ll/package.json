@@ -9,6 +9,7 @@
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"
   },
+  "license": "MIT",
   "@pika/pack": {
     "pipeline": [
       [

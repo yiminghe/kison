@@ -1,6 +1,6 @@
 {
   "name": "kison",
-  "version": "0.5.41",
+  "version": "0.5.42",
   "description": "A LALR(1)/LL(1)/LL(K) parser generator for javascript/typescript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [

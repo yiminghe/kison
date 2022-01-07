@@ -43,7 +43,7 @@ A LALR(1)/LL(1)/LL(K) parser generator for `javascript`/`typescript`
 ## run command
 
 ```
-npx kison -g xx-grammar.js
+npx kison@latest -g xx-grammar.js
 ```
 
 ## grammar and lexer definition
@@ -242,7 +242,7 @@ module.exports = () => ({
 ### LALR
 
 ```
-npx kison -g cal-grammar.js
+npx kison@latest -g cal-grammar.js
 ```
 
 ### LL
@@ -250,7 +250,7 @@ npx kison -g cal-grammar.js
 ll parser generator
 
 ```
-npx kison -m ll -g cal-grammar.js
+npx kison@latest -m ll -g cal-grammar.js
 ```
 
 ## changelog

@@ -1,13 +1,18 @@
 {
   "name": "kison",
   "version": "0.5.40",
-  "description": "LALR parser generator for javascript",
+  "description": "A LALR(1)/LL(1)/LL(K) parser generator for javascript/typescript",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "pkg",
     "bin"
   ],
-  "main": "./pkg/index.js",
+  "keywords": [
+    "LALR",
+    "LL",
+    "LLK",
+    "parser generator"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:yiminghe/kison.git"

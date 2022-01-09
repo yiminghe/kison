@@ -204,9 +204,11 @@ async function genParser() {
     grammarObj = require(grammar);
   } else {
     const code = await bundleConfigFile(grammar);
-    const o:any = {};
-    new Function('module', code)(o);
-    grammarObj = o.exports.default;
+    const newFile = grammar.replace(/\.\w+$/, '.js');
+    fs.writeFileSync(newFile, code);
+    grammarObj = require(newFile);
+    grammarObj = grammarObj.default || grammarObj;
+    fs.unlinkSync(newFile);
   }
 
   if (typeof grammarObj === 'function') {

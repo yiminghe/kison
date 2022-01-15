@@ -5,6 +5,7 @@
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "pkg",
+    "types",
     "bin"
   ],
   "types": "types",

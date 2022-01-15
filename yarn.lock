@@ -2021,10 +2021,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.11.13":
-  version: 16.11.14
-  resolution: "@types/node@npm:16.11.14::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.14.tgz"
-  checksum: 0bd4333fb4e56532db7f5174732268b18089913ddbb0e97957228e64f9fe3babf9923c77ce6f07d3d354445cfbb8d31b95c1f8be3c0f7426308bd8b93d3aaa02
+"@types/node@npm:^17.0.8":
+  version: 17.0.8
+  resolution: "@types/node@npm:17.0.8::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.8.tgz"
+  checksum: f4cadeb9e602027520abc88c77142697e33cf6ac98bb02f8b595a398603cbd33df1f94d01c055c9f13cde0c8eaafc5e396ca72645458d42b4318b845bc7f1d0f
   languageName: node
   linkType: hard
 
@@ -6913,7 +6913,7 @@ __metadata:
     "@babel/preset-typescript": 7.x
     "@tsconfig/recommended": ^1.0.1
     "@types/jest": 27.x
-    "@types/node": ^16.11.13
+    "@types/node": ^17.0.8
     "@yiminghe/rr": 1.x
     babel-jest: 27.x
     benchmark: ^2.1.4

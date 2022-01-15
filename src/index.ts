@@ -9,6 +9,7 @@ import path from 'path';
 import program from 'commander';
 import pkg from '../package.json';
 import { build } from 'esbuild';
+import { options as KisonOptions } from './options';
 
 var encoding: WriteFileOptions = 'utf-8';
 
@@ -212,7 +213,7 @@ async function genParser() {
   }
 
   if (typeof grammarObj === 'function') {
-    grammarObj = grammarObj();
+    grammarObj = grammarObj(KisonOptions);
   }
 
   const Cons = ConsMap[mode];

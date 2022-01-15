@@ -249,29 +249,30 @@ const symbols = [
 const names = Array.from(new Set(keywords.concat(lexer).concat(symbols)));
 
 const code = [];
-
 for (const k of names) {
   if (!k) {
     continue;
   }
   code.push(`export const ${k} = '${k}';`);
-  code.push(`export const ${k}Optional = '${k}?';`);
-  code.push(`export const ${k}ZeroOrMore = '${k}*';`);
-  code.push(`export const ${k}OneOrMore = '${k}+';`);
 }
 
-code.push(`export const groupStartMark = "'('";`);
-code.push(`export const groupEndMark = "')'";`);
-code.push(`export const groupEndOptionalMark = "')'?";`);
-code.push(`export const groupEndZeroOrMoreMark = "')'*";`);
-code.push(`export const groupEndOneOrMoreMark = "')'+";`);
-code.push(`export const alternationMark = "'|'";`);
+code.push('export const makeExtendSymbols = (options:Kison.Options)=>({');
+
+for (const k of names) {
+  if (!k) {
+    continue;
+  }
+  code.push(`${k}Optional: options.makeOptionalSymbol(${k}),`);
+  code.push(`${k}ZeroOrMore: options.makeZeroOrMoreSymbol(${k}),`);
+  code.push(`${k}OneOrMore: options.makeOneOrMoreSymbol(${k}),`);
+}
+code.push('});');
 
 code.push(`export const KEYWORDS=${JSON.stringify(keywords)};`);
 
 code.push(`
-export const makeProductions = (arr)=>{
-  return arr.map(a=>{
+export const makeProductions = (arr:any)=>{
+  return arr.map((a:any)=>{
     if(Array.isArray(a)) {
        return {
          symbol: a[0],
@@ -282,10 +283,10 @@ export const makeProductions = (arr)=>{
   });
 };
 
-export const makeLexerRules = (arr) => {
-  return arr.map((a) => {
+export const makeLexerRules = (arr:any) => {
+  return arr.map((a:any) => {
     if (Array.isArray(a)) {
-      const ret = {
+      const ret:any = {
         token: a[0],
         regexp: a[1],
       };
@@ -301,4 +302,4 @@ export const makeLexerRules = (arr) => {
 
 code.push(`export const PREFIX = "PREFIX";`);
 
-require('fs').writeFileSync(__dirname + '/names.mjs', code.join('\n'));
+require('fs').writeFileSync(__dirname + '/names.ts', code.join('\n'));

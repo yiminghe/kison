@@ -2,12 +2,9 @@ import LLKGrammar from '../src/llk/LLKGrammar';
 import { prettyJson, run, HIDDEN_LEXER_RULE } from './utils';
 import Lexer from '../src/Lexer';
 import type Parser from '../src/parser';
+import { options } from '../src/options';
 
-const startGroupMarker = `'('`;
-const startPredictGroupMarker = `'(?'`;
-const endGroupMarker = `')'`;
-const alterMark = `'|'`;
-const alterPredictMark = `'|?'`;
+const { makePredictAlternates, makeGroupWithOptions, makeAlternates } = options;
 
 describe('llk predict', () => {
   it('simple predict', () => {
@@ -97,22 +94,34 @@ describe('llk predict', () => {
           rhs: [
             'NUMBER',
 
-            startPredictGroupMarker,
-
-            function (this: typeof Parser) {
-              const token = this.lexer.getLastToken((t) => !t.channel);
-              return token.text === '3';
-            },
-            'sequence3',
-            alterPredictMark,
-            function (this: typeof Parser) {
-              const token = this.lexer.getLastToken((t) => !t.channel);
-              return token.text === '2';
-            },
-            'sequence2',
-            alterMark,
-            'sequence1',
-            endGroupMarker,
+            ...makeGroupWithOptions(
+              [
+                ...makePredictAlternates(
+                  [
+                    function (this: typeof Parser) {
+                      const token = this.lexer.getLastToken((t) => !t.channel);
+                      return token.text === '3';
+                    },
+                    'sequence3',
+                  ],
+                  makeAlternates(
+                    [
+                      function (this: typeof Parser) {
+                        const token = this.lexer.getLastToken(
+                          (t) => !t.channel,
+                        );
+                        return token.text === '2';
+                      },
+                      'sequence2',
+                    ],
+                    'sequence1',
+                  ),
+                ),
+              ],
+              {
+                predict: true,
+              },
+            ),
           ],
         },
         {

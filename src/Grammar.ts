@@ -8,6 +8,13 @@ import data from './data';
 import type { Table } from './data';
 import { Rh, Rhs } from './types';
 import ItemSet from './lalr/ItemSet';
+import {
+  groupStartMark,
+  groupStartPredictMarker,
+  groupEndMark,
+  alternationMark,
+  alternationPredictMark,
+} from './options';
 
 const {
   productionAddAstNodeFlag,
@@ -15,18 +22,13 @@ const {
   START_TAG,
   astStack,
 } = data;
+
 const {
   isOneOrMoreSymbol,
   isOptionalSymbol,
   isZeroOrMoreSymbol,
   normalizeSymbol,
 } = Utils;
-
-const startGroupMarker = `'('`;
-const startPredictGroupMarker = `'(?'`;
-const endGroupMarker = `')'`;
-const alterMark = `'|'`;
-const alterPredictMark = `'|?'`;
 
 function setSize(set3: any) {
   return Object.keys(set3).length;
@@ -675,8 +677,8 @@ class Grammar {
 
     function addChildren(node: Node, child: Node) {
       if (
-        node.rh === startGroupMarker ||
-        node.rh === startPredictGroupMarker ||
+        node.rh === groupStartMark ||
+        node.rh === groupStartPredictMarker ||
         !node.rh
       ) {
         child.childIndex = node.children.length;
@@ -691,15 +693,15 @@ class Grammar {
     let predict = false;
 
     for (const rh of rhs) {
-      if (rh === alterMark || rh === alterPredictMark) {
+      if (rh === alternationMark || rh === alternationPredictMark) {
         current = stack[stack.length - 1];
-        if (rh === alterPredictMark) {
+        if (rh === alternationPredictMark) {
           predict = true;
         }
         continue;
       }
 
-      if (typeof rh === 'string' && rh.startsWith(endGroupMarker)) {
+      if (typeof rh === 'string' && rh.startsWith(groupEndMark)) {
         let newChild = wrapRh(rh, false);
         const parent = stack.pop()!;
         for (const c of parent.children) {
@@ -724,9 +726,9 @@ class Grammar {
       const topItem = stack[stack.length - 1];
       topItem.children[current.childIndex].tail = current;
 
-      if (rh === startGroupMarker || rh === startPredictGroupMarker) {
+      if (rh === groupStartMark || rh === groupStartPredictMarker) {
         stack.push(current);
-        if (rh === startPredictGroupMarker) {
+        if (rh === groupStartPredictMarker) {
           predict = true;
         }
       }
@@ -745,7 +747,7 @@ class Grammar {
       function pushNode() {
         if (
           node.rh &&
-          (typeof node.rh !== 'string' || !node.rh.startsWith(endGroupMarker))
+          (typeof node.rh !== 'string' || !node.rh.startsWith(groupEndMark))
         ) {
           if (node.predict) {
             ret.predict = node.rh;
@@ -760,12 +762,12 @@ class Grammar {
       } else {
         const child = node.children[0];
         if (node.children.length === 1) {
-          if (rh === startGroupMarker || rh === startPredictGroupMarker) {
+          if (rh === groupStartMark || rh === groupStartPredictMarker) {
             const crh = child.groupEnd?.rh;
             if (
               typeof crh !== 'string' ||
-              crh === endGroupMarker ||
-              !crh.startsWith(endGroupMarker)
+              crh === groupEndMark ||
+              !crh.startsWith(groupEndMark)
             ) {
               return collect(child, child.groupEnd, ret);
             }
@@ -779,7 +781,7 @@ class Grammar {
           subEnd = child.groupEnd;
         }
         const quantifier = subEnd
-          ? (subEnd.rh as string).slice(endGroupMarker.length)
+          ? (subEnd.rh as string).slice(groupEndMark.length)
           : '';
 
         let groupSymbol = `${p.symbol}_group_${uuid.id++}`;
@@ -884,8 +886,8 @@ class Grammar {
 
     function addChildren(node: Node, child: Node) {
       if (
-        node.rh === startGroupMarker ||
-        node.rh === startPredictGroupMarker ||
+        node.rh === groupStartMark ||
+        node.rh === groupStartPredictMarker ||
         !node.rh
       ) {
         child.childIndex = node.children.length;
@@ -899,11 +901,11 @@ class Grammar {
     let current = stack[0];
 
     for (const rh of rhs) {
-      if (rh === alterMark) {
+      if (rh === alternationMark) {
         current = stack[stack.length - 1];
         continue;
       }
-      if (typeof rh === 'string' && rh.startsWith(endGroupMarker)) {
+      if (typeof rh === 'string' && rh.startsWith(groupEndMark)) {
         let newChild = wrapRh(rh);
         const parent = stack.pop()!;
         for (const c of parent.children) {
@@ -920,7 +922,7 @@ class Grammar {
       const topItem = stack[stack.length - 1];
       topItem.children[current.childIndex].tail = current;
 
-      if (rh === startGroupMarker || rh === startPredictGroupMarker) {
+      if (rh === groupStartMark || rh === groupStartPredictMarker) {
         stack.push(current);
       }
     }
@@ -977,7 +979,7 @@ class Grammar {
         const newRhs = [];
         for (let i = 0; i < rhs.length; i++) {
           const rh = rhs[i];
-          if (rh === startGroupMarker || rh === startPredictGroupMarker) {
+          if (rh === groupStartMark || rh === groupStartPredictMarker) {
             changed = true;
             const start = i;
             i++;
@@ -988,16 +990,16 @@ class Grammar {
               subRh &&
               (nest ||
                 typeof subRh !== 'string' ||
-                !subRh.startsWith(endGroupMarker))
+                !subRh.startsWith(groupEndMark))
             ) {
               if (
-                subRh === startGroupMarker ||
-                subRh === startPredictGroupMarker
+                subRh === groupStartMark ||
+                subRh === groupStartPredictMarker
               ) {
                 nest++;
               } else if (
                 typeof subRh === 'string' &&
-                subRh.startsWith(endGroupMarker)
+                subRh.startsWith(groupEndMark)
               ) {
                 nest--;
               }
@@ -1008,15 +1010,15 @@ class Grammar {
             if (typeof subRh !== 'string') {
               throw new Error('unexpected rh: ' + subRh);
             }
-            const quantifier = subRh.slice(endGroupMarker.length);
+            const quantifier = subRh.slice(groupEndMark.length);
             const validRhs = subRhs.filter((rh) => {
               if (typeof rh !== 'string') {
                 return false;
               }
               if (
-                rh === startGroupMarker ||
-                rh === startPredictGroupMarker ||
-                rh === endGroupMarker
+                rh === groupStartMark ||
+                rh === groupStartPredictMarker ||
+                rh === groupEndMark
               ) {
                 return false;
               }
@@ -1030,7 +1032,7 @@ class Grammar {
 
             if (!quantifier) {
               const allNormalSymbols = validRhs.every((s) => {
-                return !(typeof s === 'string' && s.startsWith(endGroupMarker));
+                return !(typeof s === 'string' && s.startsWith(groupEndMark));
               });
               if (allNormalSymbols) {
                 newRhs.push(...validRhs);

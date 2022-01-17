@@ -1,24 +1,11 @@
 import Grammar from '../src/Grammar';
 import Utils from '../src/utils';
 import { prettyJson, run } from './utils';
+import { options } from '../src/options';
+
+const { makeZeroOrMoreGroup, makeAlternates, makeGroup } = options;
 
 describe('common', () => {
-  const groupStartMark = `'('`;
-  const groupEndMark = `')'`;
-  const alternationMark = `'|'`;
-  const groupEndZeroOrMoreMark = groupEndMark + '*';
-  const groupEndOneOrMoreMark = groupEndMark + '+';
-  const groupEndOptionalMark = groupEndMark + '?';
-
-  const n = {
-    groupStartMark,
-    groupEndMark,
-    groupEndOneOrMoreMark,
-    groupEndOptionalMark,
-    groupEndZeroOrMoreMark,
-    alternationMark,
-  };
-
   it('escape correctly', function () {
     expect(Utils.escapeString("'\\")).toEqual("\\'\\\\");
     expect(run("'" + Utils.escapeString("'\\") + "'")).toEqual("'\\");
@@ -29,26 +16,24 @@ describe('common', () => {
       productions: [
         {
           symbol: 'start',
-          rhs: [
-            '1',
-            '2',
-            alternationMark,
-            '3',
-            '4',
-            groupStartMark,
-            '5',
-            '6',
-            groupStartMark,
-            '7',
-            '8',
-            alternationMark,
-            '9',
-            groupEndMark,
-            '10',
-            alternationMark,
-            '11',
-            `${groupEndMark}*`,
-          ],
+          rhs: makeAlternates(
+            ['1', '2'],
+            [
+              '3',
+              '4',
+              ...makeZeroOrMoreGroup(
+                ...makeAlternates(
+                  [
+                    '5',
+                    '6',
+                    ...makeGroup(...makeAlternates(['7', '8'], '9')),
+                    '10',
+                  ],
+                  '11',
+                ),
+              ),
+            ],
+          ),
         },
       ],
       lexer: {
@@ -153,25 +138,10 @@ describe('common', () => {
       productions: [
         {
           symbol: 'start',
-          rhs: [
-            n.groupStartMark,
+          rhs: makeZeroOrMoreGroup(
             '1?',
-            n.groupStartMark,
-            ',',
-            n.alternationMark,
-            ';',
-            n.groupEndMark,
-            n.groupEndZeroOrMoreMark,
-            // '1',
-            // n.groupStartMark,
-            // n.groupStartMark,
-            // ',',
-            // n.alternationMark,
-            // ';',
-            // n.groupEndMark,
-            // '1?',
-            // n.groupEndZeroOrMoreMark,
-          ],
+            ...makeGroup(...makeAlternates(',', ';')),
+          ),
         },
       ],
       lexer: {

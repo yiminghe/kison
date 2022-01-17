@@ -43,34 +43,30 @@ const tokens = [
   'OPTIONAL',
 ];
 
-const names = Array.from(new Set(tokens.concat(symbols)));
+const names = Array.from(tokens.concat(symbols)).map((k) =>
+  k.replace(/-(\w)/g, (n, d) => {
+    return d.toUpperCase();
+  }),
+);
 
 const code = [];
-
-for (let k of names) {
+for (const k of names) {
   if (!k) {
     continue;
   }
-  k = k.replace(/-(\w)/g, (n, d) => {
-    return d.toUpperCase();
-  });
-  const value = k;
-  code.push(`export const ${k} = '${value}';`);
-  code.push(`export const ${k}Optional = '${value}?';`);
-  code.push(`export const ${k}ZeroOrMore = '${value}*';`);
-  code.push(`export const ${k}OneOrMore = '${value}+';`);
+  code.push(`export const ${k} = '${k}';`);
 }
 
-code.push(`export const groupStartMark = "'('";`);
-code.push(`export const groupEndMark = "')'";`);
-code.push(`export const groupEndOptionalMark = "')'?";`);
-code.push(`export const groupEndZeroOrMoreMark = "')'*";`);
-code.push(`export const groupEndOneOrMoreMark = "')'+";`);
-code.push(`export const alternationMark = "'|'";`);
+code.push('export const makeExtendSymbols = (options:Kison.Options)=>({');
 
-require('fs').writeFileSync(__dirname + '/names.mjs', code.join('\n'));
+for (const k of names) {
+  if (!k) {
+    continue;
+  }
+  code.push(`${k}Optional: options.makeOptionalSymbol(${k}),`);
+  code.push(`${k}ZeroOrMore: options.makeZeroOrMoreSymbol(${k}),`);
+  code.push(`${k}OneOrMore: options.makeOneOrMoreSymbol(${k}),`);
+}
+code.push('});');
 
-require('fs').writeFileSync(
-  require('path').join(__dirname, '../../src/names.mjs'),
-  code.join('\n'),
-);
+require('fs').writeFileSync(__dirname + '/names.ts', code.join('\n'));

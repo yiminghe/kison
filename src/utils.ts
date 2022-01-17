@@ -10,7 +10,7 @@ import data from './data';
 import type { Token } from './parser';
 import type { ParseError, Rhs, TransformNode } from './types';
 import type { ProductionRule } from './Grammar';
-
+import { symbolUtils } from './options';
 const { AstTokenNode, AstErrorNode, BaseAstNode, AstSymbolNode } = AstNodes;
 
 var {
@@ -434,36 +434,7 @@ const globalUtils = {
   isProductionEndFlag(t: any) {
     return t === productionEndFlag;
   },
-
-  isZeroOrMoreSymbol(s: any) {
-    return (
-      typeof s === 'string' && s !== '*?' && s.length > 1 && !!s.match(/\*\??$/)
-    );
-  },
-
-  isOneOrMoreSymbol(s: any) {
-    return (
-      typeof s === 'string' && s !== '+?' && s.length > 1 && !!s.match(/\+\??$/)
-    );
-  },
-
-  isLazySymbol(s: any) {
-    const match = typeof s === 'string' && s.match(/(\*|\+|\?)\?$/);
-    return match && s.length !== 2;
-  },
-
-  isOptionalSymbol(s: any) {
-    return typeof s === 'string' && s.length > 1 && !!s.match(/\??\?$/);
-  },
-
-  normalizeSymbol(s: any): string {
-    const ret =
-      isOptionalSymbol(s) || isZeroOrMoreSymbol(s) || isOneOrMoreSymbol(s)
-        ? s.replace(/(\*|\+|\?)?\??$/, '')
-        : s;
-    // ??
-    return ret || (s && s.slice(0, -1));
-  },
+  ...symbolUtils,
 };
 
 const utils = {
@@ -605,11 +576,8 @@ const utils = {
 };
 
 const {
-  isOptionalSymbol,
   cleanAst,
   defaultTransformAstNode,
-  isZeroOrMoreSymbol,
-  isOneOrMoreSymbol,
   peekStack,
   isExtraAstNode,
   isProductionEndFlag,

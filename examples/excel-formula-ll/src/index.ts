@@ -4,7 +4,7 @@ import * as cachedParser from './cachedParser';
 
 import initMonaco from './monaco-editor/formula.contribution';
 
-import { evaluate, evaluators } from './evaluator/index';
+import { evaluate, evaluators } from './interpreter/index';
 
 import { register } from './functions/register';
 
@@ -21,4 +21,4 @@ export {
 };
 
 export * from './parser';
-export * from './evaluator/types';
+export * from './interpreter/types';

@@ -1,4 +1,4 @@
-import { assertIsDefined } from './evaluator/utils';
+import { assertIsDefined } from './interpreter/utils';
 
 const A = 'A'.charCodeAt(0);
 

@@ -1,4 +1,4 @@
-import type { All_Type, Context } from '../evaluator/types';
+import type { All_Type, Context } from '../interpreter/types';
 
 export const functions = new Map();
 

@@ -6,7 +6,7 @@ import type {
   Range,
   Array_Type,
   Atom_Value_Type,
-} from '../evaluator/types';
+} from '../interpreter/types';
 
 export function toNumber(a: Atom_Type) {
   const { type, value } = a;

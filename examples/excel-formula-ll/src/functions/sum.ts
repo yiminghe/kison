@@ -1,4 +1,4 @@
-import { Atom_Value_Type, Error_Type } from '../evaluator/types';
+import { Atom_Value_Type, Error_Type } from '../interpreter/types';
 import { register } from './register';
 import { makeError } from './utils';
 

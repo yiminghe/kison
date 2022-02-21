@@ -1,5 +1,5 @@
 import { parser as formula } from '../src';
-import { prettyJson } from '../../../__tests__/utils';
+import { prettyJson } from 'kison/__tests__/utils';
 
 function parse(input: string) {
   return formula.parse(input);

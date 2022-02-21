@@ -14,6 +14,8 @@ import type {
   Ref_Type,
 } from './types';
 
+import { parseCoord } from '../utils';
+
 export function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {
     throw new Error(`Expected 'val' to be defined, but received ${val}`);
@@ -59,31 +61,31 @@ export function expandReference(
   let ranges = ref1.value.concat(ref2.value);
 
   for (const r of ranges) {
-    const { row, col, rowCount, colCount } = r;
+    const { start, end } = r;
+    let row = start.row;
+    let col = start.col;
     startRow = Math.min(startRow, row);
     startCol = Math.min(startCol, col);
-    if (colCount === 0) {
-      endCol = Infinity;
-    } else {
-      endCol = Math.max(endCol, col + colCount);
-    }
-
-    if (rowCount === 0) {
-      endRow = Infinity;
-    } else {
-      endRow = Math.max(endRow, row + rowCount);
+    if (end) {
+      endCol = Math.max(endCol, end.col);
+      endRow = Math.max(endRow, end.row);
     }
   }
 
-  const rowCount = isFinite(endRow) ? endRow - startRow : 0;
-  const colCount = isFinite(endCol) ? endCol - startCol : 0;
-
   return makeReference([
     {
-      row: startRow,
-      col: startCol,
-      rowCount,
-      colCount,
+      start: {
+        row: startRow,
+        col: startCol,
+        isColAbsolute: true,
+        isRowAbsolute: true,
+      },
+      end: {
+        row: endRow,
+        col: endCol,
+        isColAbsolute: true,
+        isRowAbsolute: true,
+      },
     },
   ]);
 }
@@ -118,14 +120,12 @@ export function intersectReference(
   let ranges = ref1.value.concat(ref2.value);
 
   for (const r of ranges) {
-    const { row, col, rowCount, colCount } = r;
-    startRow = Math.max(startRow, row);
-    startCol = Math.max(startCol, col);
-    if (colCount !== 0) {
-      endCol = Math.min(endCol, col + colCount);
-    }
-    if (rowCount !== 0) {
-      endRow = Math.min(endRow, row + rowCount);
+    const { start, end } = r;
+    startRow = Math.max(startRow, start.row);
+    startCol = Math.max(startCol, start.col);
+    if (end) {
+      endCol = Math.min(endCol, end.col);
+      endRow = Math.min(endRow, end.row);
     }
   }
 
@@ -133,15 +133,20 @@ export function intersectReference(
     return makeError('no intersect reference!', NULL_ERROR);
   }
 
-  const rowCount = isFinite(endRow) ? endRow - startRow : 0;
-  const colCount = isFinite(endCol) ? endCol - startCol : 0;
-
   return makeReference([
     {
-      row: startRow,
-      col: startCol,
-      rowCount,
-      colCount,
+      start: {
+        row: startRow,
+        col: startCol,
+        isColAbsolute: true,
+        isRowAbsolute: true,
+      },
+      end: {
+        row: endRow,
+        col: endCol,
+        isColAbsolute: true,
+        isRowAbsolute: true,
+      },
     },
   ]);
 }
@@ -163,8 +168,18 @@ export function checkNumber(...args: (All_Type | null)[]) {
 }
 
 export function isSingleCellReference(ref: Ref_Type) {
+  if (ref.value.length !== 1) {
+    return false;
+  }
   const range = ref.value[0];
-  return ref.value.length === 1 && range.rowCount === 1 && range.colCount === 1;
+  if (range.start.col === Infinity || range.start.row === Infinity) {
+    return false;
+  }
+  return (
+    !range.end ||
+    (range.end.row - range.start.row === 1 &&
+      range.end.col - range.start.col === 1)
+  );
 }
 
 export function isSingleValueArray(array: Atom_Type[][]) {
@@ -187,4 +202,76 @@ export function mapArray(
     ret[rowIndex] = newRow;
   }
   return ret;
+}
+
+export function resolveNamedExpression(text: string) {
+  if (text.match(/^[A-Za-z]+$/)) {
+    const start = parseCoord(text);
+    return makeReference([
+      {
+        start,
+      },
+    ]);
+  } else {
+    return makeError('TODO namedexpression' + text);
+  }
+}
+
+const rowRangeAddress = new RegExp(`^(?:(\\$?\\d+)\\:(\\$?\\d+))$`);
+const cellAddressLiteral = `(\\$?[A-Za-z]+\\$?[0-9]+)`;
+const cellAddress = `(?:
+  ${cellAddressLiteral}
+  (?:
+    \\s*
+    \\:
+    \\s*
+    ${cellAddressLiteral}
+    )?
+  #?
+)`.replace(/\s/g, '');
+
+export function resolveCell(text: string) {
+  let rowMatch = text.match(rowRangeAddress);
+  if (rowMatch) {
+    let [_, start, end] = rowMatch;
+    const startAbsolute = start.startsWith('$');
+    if (startAbsolute) {
+      start = start.slice(1);
+    }
+    const endAbsolute = end.startsWith('$');
+    if (endAbsolute) {
+      end = end.slice(1);
+    }
+    let startRow = parseInt(start, 10);
+    let endRow = parseInt(end, 10);
+    return makeReference([
+      {
+        start: {
+          row: startRow,
+          col: Infinity,
+          isRowAbsolute: startAbsolute,
+          isColAbsolute: false,
+        },
+        end: {
+          row: endRow,
+          col: Infinity,
+          isRowAbsolute: endAbsolute,
+          isColAbsolute: false,
+        },
+      },
+    ]);
+  }
+  const cellMatch = text.match(cellAddress);
+  assertIsDefined(cellMatch);
+  const start = parseCoord(cellMatch[1]);
+  let end;
+  if (cellMatch[2]) {
+    end = parseCoord(cellMatch[2]);
+  }
+  return makeReference([
+    {
+      start,
+      end,
+    },
+  ]);
 }

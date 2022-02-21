@@ -34,10 +34,10 @@ function fillCell(row: Atom_Value_Type[], index: number, value: Primary_Type) {
 export function getCellValuesByRange(cells: Primary_Type[][], ranges: Range[]) {
   const values: Atom_Value_Type[][] = [];
   for (const r of ranges) {
-    const { row, col, rowCount, colCount } = r;
-    if (!colCount) {
-      const endRow = Math.min(cells.length, row + rowCount);
-      for (let currentRow = row; currentRow < endRow; currentRow++) {
+    const { start, end } = r;
+    if (end && !Number.isFinite(end.col)) {
+      const endRow = Math.min(cells.length - 1, end.row);
+      for (let currentRow = start.row; currentRow <= endRow; currentRow++) {
         const rowData = cells[currentRow];
         if (rowData) {
           const rowValue: Atom_Value_Type[] = [];
@@ -49,15 +49,15 @@ export function getCellValuesByRange(cells: Primary_Type[][], ranges: Range[]) {
           });
         }
       }
-    } else if (!rowCount) {
+    } else if (end && !Number.isFinite(end.row)) {
       cells.forEach((rowData, currentRow) => {
         if (!rowData) {
           return;
         }
         const rowValue: Atom_Value_Type[] = [];
         values[currentRow] = rowValue;
-        const endCol = Math.min(rowData.length, col + colCount);
-        for (let currentCol = col; currentCol < endCol; currentCol++) {
+        const endCol = Math.min(rowData.length - 1, end.col);
+        for (let currentCol = start.col; currentCol <= endCol; currentCol++) {
           if (rowData && rowData[currentCol] !== undefined) {
             const value = rowData[currentCol];
             fillCell(rowValue, currentCol, value);
@@ -65,8 +65,8 @@ export function getCellValuesByRange(cells: Primary_Type[][], ranges: Range[]) {
         }
       });
     } else {
-      const endRow = Math.min(cells.length, row + rowCount);
-      for (let currentRow = row; currentRow < endRow; currentRow++) {
+      const endRow = Math.min(cells.length - 1, end?.row ?? start.row);
+      for (let currentRow = start.row; currentRow <= endRow; currentRow++) {
         const rowData = cells[currentRow];
 
         if (!rowData) {
@@ -74,8 +74,8 @@ export function getCellValuesByRange(cells: Primary_Type[][], ranges: Range[]) {
         }
         const rowValue: Atom_Value_Type[] = [];
         values[currentRow] = rowValue;
-        const endCol = Math.min(rowData.length, col + colCount);
-        for (let currentCol = col; currentCol < endCol; currentCol++) {
+        const endCol = Math.min(rowData.length - 1, end?.col ?? start.col);
+        for (let currentCol = start.col; currentCol <= endCol; currentCol++) {
           const value = rowData[currentCol];
           if (value !== undefined) {
             fillCell(rowValue, currentCol, value);

@@ -5,6 +5,7 @@ import type {
   Ref_Type,
   Range,
   Array_Type,
+  String_Type,
   Atom_Value_Type,
 } from '../interpreter/types';
 
@@ -24,6 +25,13 @@ export function makeError(message: string, value?: ERROR_ENUM): Error_Type {
     type: 'error',
     value: value || '#ERROR!',
     message,
+  };
+}
+
+export function makeString(value: string): String_Type {
+  return {
+    type: 'string',
+    value: value,
   };
 }
 

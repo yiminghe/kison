@@ -16,20 +16,31 @@ export function toColumnString(n: number) {
 }
 
 export function parseCoord(str: string) {
-  var results = str.match(/([A-Z]*)([0-9]*)/i);
-  assertIsDefined(results);
-  var col = -1;
-  if (results[1]) {
-    col = results[1]
+  var [_, colStr, rowStr] = (str.match(/(\$?[A-Z]*)(\$?[0-9]*)/i) ||
+    []) as string[];
+  let isColAbsolute = false;
+  let isRowAbsolute = false;
+  assertIsDefined(_);
+  var col = Infinity;
+  if (colStr) {
+    if (colStr.startsWith('$')) {
+      isColAbsolute = true;
+      colStr = colStr.slice(1);
+    }
+    col = colStr
       .split('')
-      .map((item) => item.toUpperCase().charCodeAt(0) - A + 1)
-      .reduce((x, y) => HEADER_RADIX * x + y, 0);
+      .map((item: string) => item.toUpperCase().charCodeAt(0) - A + 1)
+      .reduce((x: number, y: number) => HEADER_RADIX * x + y, 0);
   }
-  var row = -1;
-  if (results[2]) {
-    row = parseInt(results[2], 10);
+  var row = Infinity;
+  if (rowStr) {
+    if (rowStr.startsWith('$')) {
+      isRowAbsolute = true;
+      rowStr = rowStr.slice(1);
+    }
+    row = parseInt(rowStr, 10);
   }
-  return { col, row };
+  return { col, row, isRowAbsolute, isColAbsolute };
 }
 
 export function captalize(s: string) {

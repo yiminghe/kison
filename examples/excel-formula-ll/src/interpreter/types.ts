@@ -7,11 +7,15 @@ import type {
   NUM_ERROR,
   NAME_ERROR,
 } from '../common/constants';
-import type { AstVisitors } from '../parser';
+import type { AstVisitors, AstRootNode } from '../parser';
 
 export interface String_Type {
   type: 'string';
   value: string;
+}
+
+export interface Empty_Type {
+  type: 'empty';
 }
 
 export interface Number_Type {
@@ -49,11 +53,21 @@ export interface Error_Type {
   message: string;
 }
 
-export interface Range {
-  row: number;
-  rowCount: number;
+export interface RawCellAddress {
   col: number;
-  colCount: number;
+  row: number;
+}
+
+export interface CellAddress {
+  col: number;
+  row: number;
+  isRowAbsolute: boolean;
+  isColAbsolute: boolean;
+}
+
+export interface Range {
+  start: CellAddress;
+  end?: CellAddress | undefined;
 }
 
 export interface Ref_Type {
@@ -72,8 +86,16 @@ export type All_Type = Atom_Type | Array_Type;
 
 export type Atom_Value_Type = Exclude<Atom_Type, Ref_Type>;
 
+export type Raw_Value = Atom_Value_Type['value'];
+
 export interface Context {
   getCellValues: (ref: Ref_Type) => Atom_Value_Type[][];
 }
 
 export type Evaluators = AstVisitors<'evaluate', Context, All_Type>;
+
+export interface CollectContext {
+  addDep: (ref: Ref_Type) => void;
+}
+
+export type Collectors = AstVisitors<'collect', CollectContext, void>;

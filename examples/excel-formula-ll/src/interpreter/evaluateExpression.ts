@@ -72,10 +72,10 @@ function getRowColPos(value: Array_Type['value'], child: All_Type) {
   let endCol = value[0].length;
 
   if (child.type === 'reference') {
-    startRow = child.value[0].row;
-    endRow = startRow + child.value[0].rowCount + 1;
-    startCol = child.value[0].col;
-    endCol = startCol + child.value[0].colCount + 1;
+    startRow = child.value[0].start.row;
+    endRow = child.value[0].end?.row ?? startRow + 1;
+    startCol = child.value[0].start.col;
+    endCol = child.value[0].end?.col ?? startCol + 1;
   }
 
   return {
@@ -499,9 +499,7 @@ registerEvaluators({
       const range = a.value[0];
       return makeReference([
         {
-          ...range,
-          rowCount: 1,
-          colCount: 1,
+          start: range.start,
         },
       ]);
     }

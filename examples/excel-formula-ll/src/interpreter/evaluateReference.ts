@@ -1,25 +1,11 @@
-import { makeError, makeReference } from '../functions/utils';
-import { parseCoord } from '../utils';
 import { evaluate, registerEvaluators } from './evaluators';
 import {
-  assertIsDefined,
   expandReference,
   intersectReference,
+  resolveCell,
+  resolveNamedExpression,
   unionReference,
 } from './utils';
-
-const rowRangeAddress = new RegExp(`^(?:(\\d+)\\:(\\d+))$`);
-const cellAddressLiteral = `(\\$?[A-Za-z]+\\$?[0-9]+)`;
-const cellAddress = `(?:
-  ${cellAddressLiteral}
-  (?:
-    \\s*
-    \\:
-    \\s*
-    ${cellAddressLiteral}
-    )?
-  #?
-)`.replace(/\s/g, '');
 
 registerEvaluators({
   evaluateRangeReference(node, context) {
@@ -78,57 +64,12 @@ registerEvaluators({
   },
 
   evaluateCELL(node) {
-    const { text } = node;
-    let rowMatch = text.match(rowRangeAddress);
-    if (rowMatch) {
-      let startRow = parseInt(rowMatch[1], 10);
-      let endRow = parseInt(rowMatch[2], 10);
-      const rowCount = endRow - startRow + 1;
-      return makeReference([
-        {
-          row: startRow,
-          rowCount,
-          col: 1,
-          colCount: 0,
-        },
-      ]);
-    }
-    const cellMatch = text.match(cellAddress);
-    assertIsDefined(cellMatch);
-    const { row, col } = parseCoord(cellMatch[1]);
-    let rowCount = 1;
-    let colCount = 1;
-    if (cellMatch[2]) {
-      const { row: endRow, col: endCol } = parseCoord(cellMatch[2]);
-      rowCount = endRow - row + 1;
-      colCount = endCol - col + 1;
-    }
-    return makeReference([
-      {
-        row,
-        col,
-        rowCount,
-        colCount,
-      },
-    ]);
+    return resolveCell(node.text);
   },
 
   evaluateNAME(node) {
     // TODO name resolution
     // only colum
-    const { text } = node;
-    if (text.match(/^[A-Za-z]+$/)) {
-      const { col } = parseCoord(text);
-      return makeReference([
-        {
-          col,
-          colCount: 1,
-          row: 1,
-          rowCount: 0,
-        },
-      ]);
-    } else {
-      return makeError('can not find name: ' + text);
-    }
+    return resolveNamedExpression(node.text);
   },
 });

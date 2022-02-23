@@ -10,7 +10,7 @@ export type NamespaceValue =
 export type NamespaceMap = Map<string, NamespaceValue>;
 
 export class VBNamespace {
-  type: 'Namespace' = 'Namespace';
+  readonly type = 'Namespace';
   value: NamespaceMap = new Map();
   constructor(public name: string) {}
 

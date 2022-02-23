@@ -11,7 +11,7 @@ import {
 import parser from '../parser';
 
 class FormulaNode {
-  type: 'formula' = 'formula';
+  readonly type = 'formula';
   deps: Ref_Type[] = [];
   constructor(public value: string, public address: RawCellAddress) {
     const { ast } = parser.parse(value);
@@ -24,17 +24,17 @@ class FormulaNode {
 }
 
 class ValueNode {
-  type: 'value' = 'value';
+  readonly type = 'value';
   constructor(public value: Atom_Value_Type, public address: RawCellAddress) {}
 }
 
 class RangeNode {
-  type: 'range' = 'range';
+  readonly type = 'range';
   constructor(public value: Range) {}
 }
 
 class EmptyNode {
-  type: 'empty' = 'empty';
+  readonly type = 'empty';
   constructor(public address: RawCellAddress) {}
 }
 

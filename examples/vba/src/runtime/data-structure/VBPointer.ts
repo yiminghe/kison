@@ -24,9 +24,9 @@ export type VBAny = VBPointer | VBValue;
 
 // address
 export class VBValuePointer {
-  type: 'Pointer' = 'Pointer';
-  subType: 'Value' = 'Value';
-  dynamicArray: boolean = false;
+  readonly type = 'Pointer';
+  readonly subType = 'Value';
+  dynamicArray = false;
 
   constructor(
     private context: Context,

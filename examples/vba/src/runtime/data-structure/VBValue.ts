@@ -3,22 +3,22 @@ import type { VBArray } from './VBArray';
 import { Ast_ExitStmt_Node } from '../../parser';
 
 export class VBByte {
-  type: 'byte' = 'byte';
+  readonly type = 'byte';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBDouble {
-  type: 'double' = 'double';
+  readonly type = 'double';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBSingle {
-  type: 'single' = 'single';
+  readonly type = 'single';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBInteger {
-  type: 'integer' = 'integer';
+  readonly type = 'integer';
   readonly value: number = 0;
   constructor(value: number = 0) {
     this.value = value | 0;
@@ -26,49 +26,49 @@ export class VBInteger {
 }
 
 export class VBLongLong {
-  type: 'longlong' = 'longlong';
+  readonly type = 'longlong';
   constructor(public readonly value: number = 0) {}
 }
 
 export const VBLongPtr = VBLongLong;
 
 export class VBLong {
-  type: 'long' = 'long';
+  readonly type = 'long';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBCurrency {
-  type: 'currency' = 'currency';
+  readonly type = 'currency';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBDate {
-  type: 'date' = 'date';
+  readonly type = 'date';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBDecimal {
-  type: 'decimal' = 'decimal';
+  readonly type = 'decimal';
   constructor(public readonly value: number = 0) {}
 }
 
 export class VBString {
-  type: 'string' = 'string';
+  readonly type = 'string';
   constructor(public readonly value: string = '') {}
 }
 
 export class VBNull {
-  type: 'null' = 'null';
+  readonly type = 'null';
   readonly value = null;
 }
 
 export class VBEmpty {
-  type: 'Empty' = 'Empty';
+  readonly type = 'Empty';
   readonly value = undefined;
 }
 
 export class VBBoolean {
-  type: 'boolean' = 'boolean';
+  readonly type = 'boolean';
   constructor(public readonly value: boolean = false) {}
 }
 
@@ -78,12 +78,12 @@ export interface Subscript {
 }
 
 export class VBNothing {
-  type: 'Nothing' = 'Nothing';
+  readonly type = 'Nothing';
   readonly value: undefined;
 }
 
 export class VBMissingArgument {
-  type: 'MissingArgument' = 'MissingArgument';
+  readonly type = 'MissingArgument';
   readonly value: undefined;
 }
 

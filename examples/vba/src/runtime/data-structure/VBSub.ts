@@ -18,7 +18,7 @@ import { collect_asTypeClause } from '../collect/collectType';
 
 export class VBSub {
   block: Ast_Block_Node | undefined;
-  name: string = '';
+  name = '';
   private _argumentsInfo?: ArgInfo[];
   private _returnInfo?: AsTypeClauseInfo;
   type: 'sub' | 'function' = 'sub';

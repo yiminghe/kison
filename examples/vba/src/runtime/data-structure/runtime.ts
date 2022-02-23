@@ -16,7 +16,7 @@ export type SymbolName = string;
 export type SymbolItem = VBSub | VBVariable;
 
 export class VBVariable {
-  type: 'variable' = 'variable';
+  readonly type = 'variable';
   file: VBFile;
   constructor(
     public value: VBPointer,

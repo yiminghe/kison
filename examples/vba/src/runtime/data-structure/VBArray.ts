@@ -32,7 +32,7 @@ export function isVBIterable(a: any): a is Required<VBIterable> {
 }
 
 export class VBArray implements VBIterable {
-  type: 'Array' = 'Array';
+  readonly type = 'Array';
   value: ArrayElement[] = [];
   dynamic: boolean = false;
 

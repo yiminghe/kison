@@ -20,8 +20,8 @@ interface VBClassMember {
 
 // user class
 export class VBNativeClass {
-  type: 'Class' = 'Class';
-  subType: 'Native' = 'Native';
+  readonly type = 'Class';
+  readonly subType = 'Native';
   _init: boolean = false;
   members = new Map<string, VBClassMember>();
   value: string;
@@ -124,9 +124,9 @@ export class VBNativeClass {
 }
 
 export class VBPropertyPointer {
-  type: 'Pointer' = 'Pointer';
+  readonly type = 'Pointer';
 
-  subType: 'Property' = 'Property';
+  readonly subType = 'Property';
 
   public constructor(
     public classObj: VBNativeClass,
@@ -148,9 +148,9 @@ export class VBPropertyPointer {
 }
 
 export class VBBindPropertyPointer {
-  type: 'Pointer' = 'Pointer';
+  readonly type = 'Pointer';
 
-  subType: 'BindProperty' = 'BindProperty';
+  readonly subType = 'BindProperty';
 
   _value: VBValue = VB_EMPTY;
 
@@ -170,9 +170,9 @@ export class VBBindPropertyPointer {
 }
 
 export class VBBindIndexPointer {
-  type: 'Pointer' = 'Pointer';
+  readonly type = 'Pointer';
 
-  subType: 'BindIndex' = 'BindIndex';
+  readonly subType = 'BindIndex';
 
   _value: VBValue | undefined;
 
@@ -204,8 +204,8 @@ export class VBBindIndexPointer {
 }
 
 export class VBBindClass {
-  type: 'Class' = 'Class';
-  subType: 'bind' = 'bind';
+  readonly type = 'Class';
+  readonly subType = 'bind';
   _init: boolean = false;
 
   value: string;

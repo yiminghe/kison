@@ -75,13 +75,13 @@ for (const tk of Object.keys(errorCodes)) {
 export type ErrorCode = keyof typeof errorCodes;
 
 export class VBRuntimeError extends Error {
-  public vbErrorType: string = 'runtime';
+  public vbErrorType = 'runtime';
   public vbScope: VBScope | undefined;
-  public vbErrorNumber: number = -1;
+  public vbErrorNumber = -1;
   public vbErrorCode: ErrorCode = 'INTERNAL_ERROR';
-  public vbErrorSource: string = '';
-  public vbDescription: string = '';
-  public vbOrigin: string = '';
+  public vbErrorSource = '';
+  public vbDescription = '';
+  public vbOrigin = '';
   constructor(public code: ErrorCode | number, public vbArgs: any[] = []) {
     super('');
     if (typeof code === 'string') {

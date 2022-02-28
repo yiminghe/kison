@@ -5,3 +5,4 @@ export const NA_ERROR = '#N/A';
 export const REF_ERROR = '#REF!';
 export const NUM_ERROR = '#NUM!';
 export const NAME_ERROR = '#NAME?';
+export const CYCLE_ERROR = '#CYCLE!';

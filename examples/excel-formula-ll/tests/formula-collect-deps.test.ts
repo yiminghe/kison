@@ -26,6 +26,12 @@ describe('excel-formula-evaluator', () => {
                 'row': 1,
                 'isRowAbsolute': false,
                 'isColAbsolute': false
+              },
+              'end': {
+                'col': 1,
+                'row': 1,
+                'isRowAbsolute': false,
+                'isColAbsolute': false
               }
             }
           ]
@@ -54,6 +60,12 @@ describe('excel-formula-evaluator', () => {
           'value': [
             {
               'start': {
+                'col': 2,
+                'row': 4,
+                'isRowAbsolute': false,
+                'isColAbsolute': true
+              },
+              'end': {
                 'col': 2,
                 'row': 4,
                 'isRowAbsolute': false,

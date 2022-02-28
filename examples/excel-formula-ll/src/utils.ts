@@ -15,6 +15,10 @@ export function toColumnString(n: number) {
   return str.reverse().join('');
 }
 
+export function toCoordString({ row, col }: { row: number; col: number }) {
+  return `${toColumnString(col)}${row}`;
+}
+
 export function parseCoord(str: string) {
   var [_, colStr, rowStr] = (str.match(/(\$?[A-Z]*)(\$?[0-9]*)/i) ||
     []) as string[];

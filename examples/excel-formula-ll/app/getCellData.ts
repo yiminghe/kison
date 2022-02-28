@@ -1,4 +1,4 @@
-import { Primary_Type, utils, Range, Atom_Value_Type } from '../src/index';
+import { Primary_Type, utils, CellRange, Atom_Value_Type } from '../src/index';
 import { matchNumber } from './utils';
 
 const { parseCoord } = utils;
@@ -31,7 +31,10 @@ function fillCell(row: Atom_Value_Type[], index: number, value: Primary_Type) {
     };
   }
 }
-export function getCellValuesByRange(cells: Primary_Type[][], ranges: Range[]) {
+export function getCellValuesByRange(
+  cells: Primary_Type[][],
+  ranges: CellRange[],
+) {
   const values: Atom_Value_Type[][] = [];
   for (const r of ranges) {
     const { start, end } = r;

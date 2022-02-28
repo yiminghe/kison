@@ -6,6 +6,7 @@ import type {
   REF_ERROR,
   NUM_ERROR,
   NAME_ERROR,
+  CYCLE_ERROR,
 } from '../common/constants';
 import type { AstVisitors, AstRootNode } from '../parser';
 
@@ -45,6 +46,7 @@ export type ERROR_ENUM =
   | typeof REF_ERROR
   | typeof NUM_ERROR
   | typeof NAME_ERROR
+  | typeof CYCLE_ERROR
   | '#ERROR!';
 
 export interface Error_Type {
@@ -65,14 +67,14 @@ export interface CellAddress {
   isColAbsolute: boolean;
 }
 
-export interface Range {
+export interface CellRange {
   start: CellAddress;
-  end?: CellAddress | undefined;
+  end: CellAddress;
 }
 
 export interface Ref_Type {
   type: 'reference';
-  value: Range[];
+  value: CellRange[];
 }
 
 export type Atom_Type =

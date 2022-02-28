@@ -3,7 +3,7 @@ import type {
   ERROR_ENUM,
   Atom_Type,
   Ref_Type,
-  Range,
+  CellRange,
   Array_Type,
   String_Type,
   Atom_Value_Type,
@@ -35,7 +35,7 @@ export function makeString(value: string): String_Type {
   };
 }
 
-export function makeReference(ranges: Range[]): Ref_Type {
+export function makeReference(ranges: CellRange[]): Ref_Type {
   return {
     type: 'reference',
     value: ranges,

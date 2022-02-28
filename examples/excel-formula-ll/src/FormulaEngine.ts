@@ -10,7 +10,7 @@ export class FormulaEngine {
       const colData = data[row];
       if (colData) {
         for (let col = 0; col < colData.length; ++col) {
-          dependencyGraph.setCell(row, col, colData[col]);
+          dependencyGraph.setCell({ row, col }, colData[col]);
         }
       }
     }

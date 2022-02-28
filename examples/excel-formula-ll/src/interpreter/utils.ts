@@ -12,6 +12,8 @@ import type {
   Array_Element_Type,
   Error_Type,
   Ref_Type,
+  RawCellAddress,
+  CellRange,
 } from './types';
 
 import { parseCoord } from '../utils';
@@ -102,6 +104,15 @@ export function unionReference(
   return makeReference(ref1.value.concat(ref2.value));
 }
 
+export function addressInRange(range: CellRange, address: RawCellAddress) {
+  return (
+    range.start.row <= address.row &&
+    range.end.row >= address.row &&
+    range.start.col <= address.col &&
+    range.end.col >= address.col
+  );
+}
+
 export function intersectReference(
   ref1: Error_Type | Ref_Type,
   ref2: Error_Type | Ref_Type,
@@ -182,6 +193,13 @@ export function isSingleCellReference(ref: Ref_Type) {
   );
 }
 
+export function isSingleCellRange(range: CellRange) {
+  if (range.start.col === Infinity || range.start.row === Infinity) {
+    return false;
+  }
+  return range.start === range.end;
+}
+
 export function isSingleValueArray(array: Atom_Type[][]) {
   return array.length == 1 && array[0].length === 1;
 }
@@ -210,6 +228,7 @@ export function resolveNamedExpression(text: string) {
     return makeReference([
       {
         start,
+        end: start,
       },
     ]);
   } else {
@@ -264,7 +283,7 @@ export function resolveCell(text: string) {
   const cellMatch = text.match(cellAddress);
   assertIsDefined(cellMatch);
   const start = parseCoord(cellMatch[1]);
-  let end;
+  let end = start;
   if (cellMatch[2]) {
     end = parseCoord(cellMatch[2]);
   }

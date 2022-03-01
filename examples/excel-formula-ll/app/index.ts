@@ -32,7 +32,7 @@ require(['vs/editor/editor.main'], () => {
   A2: =3+a1
   B1: =4+a2
   B2: =5+b1
-  c1: =10
+  c1: 10
   
   `
     .trim()

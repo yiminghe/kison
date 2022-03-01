@@ -5,38 +5,39 @@ https://github.com/yiminghe/kison
 ## usage
 
 ```js
-import { parser, evaluate } from '@yiminghe/excel-formula';
+import { parser, FormulaEngine } from '@yiminghe/excel-formula';
 
 console.log(parser.parse('sum(a1,a2)'));
 
 console.log('*'.repeat(20));
 
-// or 
-console.log(parser.parse('sum(a1;a2)', {
-  lexerOptions: { env: 'de' }
-}));
+// or
+console.log(
+  parser.parse('sum(a1;a2)', {
+    lexerOptions: { env: 'de' },
+  }),
+);
 
 console.log('*'.repeat(20));
 
-const { ast } = parser.parse(`sum(1, 2, A1:B2, {5;4}+{1,2})`);
+const engine = new FormulaEngine();
 
-const ret = evaluate(ast, {
-  getCellValues(reference) {
-    // fake data
-    return [[
-      {
-        type: 'number',
-        value: 1
-      }
-    ], [
-      {
-        type: 'number',
-        value: 2
-      }
-    ]];
+engine.initWithValues([
+  [{
+    type: 'number',
+    value: 1
+  },
+  {
+    type: 'formula',
+    formula: '=a1'
   }
-});
-console.log(ret);
+  ]
+]);
+
+console.log(engine.getCellValue({
+  row: 1,
+  col: 2
+}));
 ```
 
 ## feature

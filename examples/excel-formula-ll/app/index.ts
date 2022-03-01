@@ -1,7 +1,12 @@
-import { initMonaco, cachedParser, evaluate } from '../src/index';
+import {
+  initMonaco,
+  cachedParser,
+  FormulaEngine,
+  evaluate,
+} from '../src/index';
 import type { LiteralToken } from '../src/index';
 import functionNames from './functionNames';
-import { getCellData, getCellValuesByRange } from './getCellData';
+import { getCellData } from './getCellData';
 import type * as Manaco from 'monaco-editor';
 
 const { getAst } = cachedParser;
@@ -20,16 +25,23 @@ require.config({
 
 const $ = (v: string) => document.getElementById(v)!;
 
-// @ts-ignore
-$('cells').value = $('cells')
-  // @ts-ignore
-  .value.trim()
-  .replace(/\n\s+/g, '\n');
-$('cells').style.height = '200px';
-$('cells').style.width = '500px';
-$('cells').style.display = 'block';
-
 require(['vs/editor/editor.main'], () => {
+  // @ts-ignore
+  $('cells').value = `
+  A1: =2+c1
+  A2: =3+a1
+  B1: =4+a2
+  B2: =5+b1
+  c1: =10
+  
+  `
+    .trim()
+    .replace(/\n\s+/g, '\n');
+
+  $('cells').style.height = '200px';
+  $('cells').style.width = '500px';
+  $('cells').style.display = 'block';
+
   initMonaco({
     monaco,
     getNames({ kind, table }) {
@@ -101,8 +113,24 @@ require(['vs/editor/editor.main'], () => {
   });
 
   $('evaluateData').addEventListener('click', () => {
-    editor.getModel()!.setValue(`sum(1,2,A1:B2,{5;4}+{1,2})`);
+    editor.getModel()!.setValue(`sum(a1:c2) + sum({5;6}+{7;8})`);
   });
+
+  let engine: FormulaEngine = undefined!;
+
+  function initSheet() {
+    // @ts-ignore
+    const cells = getCellData($('cells').value);
+    console.log('cells data: ', cells);
+    engine = new FormulaEngine();
+    engine.initWithValues(cells);
+  }
+
+  $('initSheet').addEventListener('click', () => {
+    initSheet();
+  });
+
+  initSheet();
 
   $('evaluate').addEventListener('click', () => {
     const {
@@ -112,13 +140,8 @@ require(['vs/editor/editor.main'], () => {
     if (error) {
       console.error('syntax error:', error);
     } else {
-      // @ts-ignore
-      const cells = getCellData($('cells').value);
-      console.log('cells data: ', cells);
       const calValue = evaluate(ast, {
-        getCellValues(reference) {
-          return getCellValuesByRange(cells, reference.value);
-        },
+        dependencyGraph: engine.dependencyGraph,
       });
       console.log(value, ' = ', calValue);
     }

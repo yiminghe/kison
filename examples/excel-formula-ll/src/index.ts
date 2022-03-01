@@ -4,16 +4,16 @@ import * as cachedParser from './cachedParser';
 
 import initMonaco from './monaco-editor/formula.contribution';
 
-import { evaluate, evaluators } from './interpreter/index';
+export { run as evaluate } from './interpreter/index';
 
 import { register } from './functions/register';
 
 import * as utils from './utils';
 
+export * from './FormulaEngine';
+
 export {
   utils,
-  evaluators,
-  evaluate,
   parser,
   cachedParser,
   initMonaco,

@@ -17,7 +17,6 @@ import type {
 
 import { evaluate, registerEvaluators } from './evaluators';
 import type {
-  Array_Element_Type,
   All_Type,
   Array_Type,
   Atom_Value_Type,
@@ -25,7 +24,7 @@ import type {
   Context,
   Error_Type,
   Number_Type,
-  Primary_Type,
+  Raw_Value,
   Ref_Type,
 } from './types';
 import {
@@ -96,8 +95,9 @@ function transformToArray(node: AstSymbolNode, context: Context) {
     if (left.value.length !== 1) {
       return makeError('more than one range!', VALUE_ERROR);
     }
-    const value = context.getCellValues(left);
-    left = { type: 'array', value };
+    left = makeArray(
+      context.dependencyGraph.getCellArrayFromRange(left.value[0]),
+    );
   }
   if (left.type === 'array' && isSingleValueArray(left.value)) {
     left = left.value[0][0];
@@ -106,7 +106,7 @@ function transformToArray(node: AstSymbolNode, context: Context) {
 }
 
 type BinaryDef = {
-  fn: (a: Primary_Type, b: Primary_Type) => Atom_Value_Type;
+  fn: (a: Raw_Value, b: Raw_Value) => Atom_Value_Type;
   check?:
     | undefined
     | ((...args: (All_Type | null)[]) => Error_Type | undefined);
@@ -122,6 +122,7 @@ function evaluateBinaryExp(
   if ('check' in def) {
     check = def.check;
   }
+  const { dependencyGraph } = context;
   const { children } = node;
   let leftRet = evaluate(children[0], context);
   let rightRet = evaluate(children[2], context);
@@ -134,8 +135,7 @@ function evaluateBinaryExp(
     if (leftRet.value.length !== 1) {
       return makeError('more than one range!', VALUE_ERROR);
     }
-    const value = context.getCellValues(leftRet);
-    left = makeArray(value);
+    left = makeArray(dependencyGraph.getCellArrayFromRange(leftRet.value[0]));
   } else {
     left = leftRet;
   }
@@ -143,8 +143,7 @@ function evaluateBinaryExp(
     if (rightRet.value.length !== 1) {
       return makeError('more than one range!', VALUE_ERROR);
     }
-    const value = context.getCellValues(rightRet);
-    right = makeArray(value);
+    right = makeArray(dependencyGraph.getCellArrayFromRange(rightRet.value[0]));
   } else {
     right = rightRet;
   }
@@ -291,7 +290,7 @@ function evaluateBinaryExp(
 
 const opFn: Record<string, BinaryDef> = {
   '+': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -302,7 +301,7 @@ const opFn: Record<string, BinaryDef> = {
     check: checkNumber,
   },
   '-': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -313,7 +312,7 @@ const opFn: Record<string, BinaryDef> = {
     check: checkNumber,
   },
   '*': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -324,7 +323,7 @@ const opFn: Record<string, BinaryDef> = {
     check: checkNumber,
   },
   '^': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -335,7 +334,7 @@ const opFn: Record<string, BinaryDef> = {
     check: checkNumber,
   },
   '/': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       assertType(a, 'number');
       assertType(b, 'number');
       if (b === 0) {
@@ -349,7 +348,7 @@ const opFn: Record<string, BinaryDef> = {
     check: checkNumber,
   },
   '=': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'boolean',
         value: a === b,
@@ -357,39 +356,39 @@ const opFn: Record<string, BinaryDef> = {
     },
   },
   '>=': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'boolean',
-        value: a >= b,
+        value: a! >= b!,
       };
     },
   },
   '<=': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'boolean',
-        value: a <= b,
+        value: a! <= b!,
       };
     },
   },
   '>': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'boolean',
-        value: a > b,
+        value: a! > b!,
       };
     },
   },
   '<': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'boolean',
-        value: a < b,
+        value: a! < b!,
       };
     },
   },
   '<>': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'boolean',
         value: a !== b,
@@ -397,10 +396,10 @@ const opFn: Record<string, BinaryDef> = {
     },
   },
   '&': {
-    fn(a: Primary_Type, b: Primary_Type) {
+    fn(a: Raw_Value, b: Raw_Value) {
       return {
         type: 'string',
-        value: a + '' + b,
+        value: (a || '') + '' + (b || ''),
       };
     },
   },
@@ -440,11 +439,11 @@ const unaryOp: Record<
 function evaluatePrefixExp(
   node: Ast_PrefixExp_Node,
   context: Context,
-  { fn }: { fn: (arg: Array_Element_Type) => Number_Type | Error_Type },
+  { fn }: { fn: (arg: Atom_Value_Type) => Number_Type | Error_Type },
 ): All_Type {
   const a = transformToArray(node.children[1], context);
 
-  function one(b: Array_Element_Type) {
+  function one(b: Atom_Value_Type) {
     let e = checkError(b);
     if (e) {
       return e;
@@ -500,6 +499,7 @@ registerEvaluators({
       return makeReference([
         {
           start: range.start,
+          end: range.start,
         },
       ]);
     }

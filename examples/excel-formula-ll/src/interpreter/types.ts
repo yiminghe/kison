@@ -7,16 +7,14 @@ import type {
   NUM_ERROR,
   NAME_ERROR,
   CYCLE_ERROR,
+  EMPTY_VALUE,
 } from '../common/constants';
+import type { DependencyGraph } from '../dependency-graph/DependencyGraph';
 import type { AstVisitors, AstRootNode } from '../parser';
 
 export interface String_Type {
   type: 'string';
   value: string;
-}
-
-export interface Empty_Type {
-  type: 'empty';
 }
 
 export interface Number_Type {
@@ -29,14 +27,12 @@ export interface Bool_Type {
   value: boolean;
 }
 
-export type Array_Element_Type = Exclude<Atom_Type, Ref_Type>;
+export type Empty_Type = typeof EMPTY_VALUE;
 
 export interface Array_Type {
   type: 'array';
-  value: Array_Element_Type[][];
+  value: Atom_Value_Type[][];
 }
-
-export type Primary_Type = number | boolean | string;
 
 export type ERROR_ENUM =
   | typeof VALUE_ERROR
@@ -81,17 +77,21 @@ export type Atom_Type =
   | String_Type
   | Number_Type
   | Ref_Type
+  | Empty_Type
   | Error_Type
   | Bool_Type;
 
 export type All_Type = Atom_Type | Array_Type;
+
+export type All_Value_Type = Atom_Type | Array_Type;
 
 export type Atom_Value_Type = Exclude<Atom_Type, Ref_Type>;
 
 export type Raw_Value = Atom_Value_Type['value'];
 
 export interface Context {
-  getCellValues: (ref: Ref_Type) => Atom_Value_Type[][];
+  dependencyGraph: DependencyGraph;
+  address?: RawCellAddress;
 }
 
 export type Evaluators = AstVisitors<'evaluate', Context, All_Type>;

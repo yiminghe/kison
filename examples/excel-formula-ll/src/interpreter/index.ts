@@ -3,4 +3,4 @@ import './evaluateFunction';
 import './evaluateReference';
 import './evaluateExpression';
 
-export { evaluators, evaluate } from './evaluators';
+export { evaluators, evaluate, run } from './evaluators';

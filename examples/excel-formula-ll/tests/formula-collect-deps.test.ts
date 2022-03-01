@@ -1,4 +1,4 @@
-import { parser as formula, evaluate, Ref_Type } from '../src';
+import { parser as formula, Ref_Type } from '../src';
 import { prettyJson } from 'kison/__tests__/utils';
 import { collect } from '../src/dependency-graph/collectDeps';
 

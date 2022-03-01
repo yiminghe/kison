@@ -4,6 +4,7 @@ import { prettyJson } from 'kison/__tests__/utils';
 function parse(input: string) {
   return formula.parse(input).ast;
 }
+const c: any = {};
 
 describe('excel-formula-evaluator', () => {
   describe('expression', () => {
@@ -19,7 +20,8 @@ describe('excel-formula-evaluator', () => {
      */
 
     it('binary works', () => {
-      expect(prettyJson(evaluate(parse(`{1,2}={1,3}`)))).toMatchInlineSnapshot(`
+      expect(prettyJson(evaluate(parse(`{1,2}={1,3}`), c)))
+        .toMatchInlineSnapshot(`
         "{
           'type': 'array',
           'value': [
@@ -36,7 +38,7 @@ describe('excel-formula-evaluator', () => {
           ]
         }"
       `);
-      expect(prettyJson(evaluate(parse(`{1,2,5}={1,3}`))))
+      expect(prettyJson(evaluate(parse(`{1,2,5}={1,3}`), c)))
         .toMatchInlineSnapshot(`
         "{
           'type': 'array',
@@ -59,7 +61,7 @@ describe('excel-formula-evaluator', () => {
           ]
         }"
       `);
-      expect(prettyJson(evaluate(parse(`{1,2}&{"4","5"}`))))
+      expect(prettyJson(evaluate(parse(`{1,2}&{"4","5"}`), c)))
         .toMatchInlineSnapshot(`
         "{
           'type': 'array',
@@ -78,7 +80,8 @@ describe('excel-formula-evaluator', () => {
         }"
       `);
 
-      expect(prettyJson(evaluate(parse(`{1,2}^{2,3}`)))).toMatchInlineSnapshot(`
+      expect(prettyJson(evaluate(parse(`{1,2}^{2,3}`), c)))
+        .toMatchInlineSnapshot(`
         "{
           'type': 'array',
           'value': [
@@ -98,7 +101,7 @@ describe('excel-formula-evaluator', () => {
     });
 
     it('unary works', () => {
-      expect(prettyJson(evaluate(parse(`{1,2}%`)))).toMatchInlineSnapshot(`
+      expect(prettyJson(evaluate(parse(`{1,2}%`), c))).toMatchInlineSnapshot(`
         "{
           'type': 'array',
           'value': [
@@ -116,7 +119,8 @@ describe('excel-formula-evaluator', () => {
         }"
       `);
 
-      expect(prettyJson(evaluate(parse(`+{"1","2"}`)))).toMatchInlineSnapshot(`
+      expect(prettyJson(evaluate(parse(`+{"1","2"}`), c)))
+        .toMatchInlineSnapshot(`
         "{
           'type': 'array',
           'value': [
@@ -134,7 +138,8 @@ describe('excel-formula-evaluator', () => {
         }"
       `);
 
-      expect(prettyJson(evaluate(parse(`-{"1","2"}`)))).toMatchInlineSnapshot(`
+      expect(prettyJson(evaluate(parse(`-{"1","2"}`), c)))
+        .toMatchInlineSnapshot(`
         "{
           'type': 'array',
           'value': [
@@ -152,7 +157,8 @@ describe('excel-formula-evaluator', () => {
         }"
       `);
 
-      expect(prettyJson(evaluate(parse(`@{"1","2"}`)))).toMatchInlineSnapshot(`
+      expect(prettyJson(evaluate(parse(`@{"1","2"}`), c)))
+        .toMatchInlineSnapshot(`
         "{
           'type': 'string',
           'value': '1'
@@ -162,7 +168,7 @@ describe('excel-formula-evaluator', () => {
   });
 
   it('function ok', () => {
-    expect(prettyJson(evaluate(parse(`sum(1,{1,2}+{5;4})`))))
+    expect(prettyJson(evaluate(parse(`sum(1,{1,2}+{5;4})`), c)))
       .toMatchInlineSnapshot(`
       "{
         'type': 'number',

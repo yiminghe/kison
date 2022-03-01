@@ -50,3 +50,7 @@ export function parseCoord(str: string) {
 export function captalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+export function isFormula(text: string) {
+  return text.startsWith('=');
+}

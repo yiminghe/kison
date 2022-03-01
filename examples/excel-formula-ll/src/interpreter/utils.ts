@@ -9,11 +9,11 @@ import type {
   All_Type,
   Array_Type,
   Atom_Type,
-  Array_Element_Type,
   Error_Type,
   Ref_Type,
   RawCellAddress,
   CellRange,
+  Atom_Value_Type,
 } from './types';
 
 import { parseCoord } from '../utils';
@@ -206,7 +206,7 @@ export function isSingleValueArray(array: Atom_Type[][]) {
 
 export function mapArray(
   arr: Array_Type['value'],
-  fn: (arg: Array_Element_Type) => Array_Element_Type,
+  fn: (arg: Atom_Value_Type) => Atom_Value_Type,
 ) {
   const ret = [];
   for (let rowIndex = 0; rowIndex < arr.length; rowIndex++) {

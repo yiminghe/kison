@@ -1,13 +1,11 @@
+import { makeArray, makeError } from '../functions/utils';
 import type { AstNode, AstVisitor } from '../parser';
 import { captalize } from '../utils';
-import type { All_Type, Context, Evaluators } from './types';
+import type { All_Type, Context, Evaluators, All_Value_Type } from './types';
+import { isSingleCellRange } from './utils';
+import { EMPTY_VALUE, REF_ERROR } from '../common/constants';
 
-export function evaluate(
-  ast: AstNode,
-  context: Context = {
-    getCellValues: () => [],
-  },
-): All_Type {
+export function evaluate(ast: AstNode, context: Context): All_Type {
   let symbol = '',
     token = '',
     label = '';
@@ -51,6 +49,32 @@ export function evaluate(
 export const evaluators: Evaluators = {
   evaluate,
 };
+
+export function run(ast: AstNode, context: Context): All_Value_Type {
+  const ret = evaluate(ast, context);
+  const { dependencyGraph, address } = context;
+  if (ret.type === 'reference') {
+    const range = ret.value;
+    if (range.length !== 1) {
+      return makeError('', REF_ERROR);
+    }
+    const r = range[0];
+    if (isSingleCellRange(r)) {
+      return dependencyGraph.getCellValue(r.start);
+    }
+
+    const value = dependencyGraph.getCellArrayFromRange(r);
+    if (!address) {
+      return makeArray(value);
+    }
+    // TODO implicit intersection
+    return value[0]?.[0] ?? EMPTY_VALUE;
+  }
+  if (ret.type === 'array' && address) {
+    return ret.value[0]?.[0] ?? EMPTY_VALUE;
+  }
+  return ret;
+}
 
 export function registerEvaluators(others: Evaluators) {
   Object.assign(evaluators, others);

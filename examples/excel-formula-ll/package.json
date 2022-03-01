@@ -1,6 +1,6 @@
 {
   "name": "@yiminghe/excel-formula",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [
     "index.js"
@@ -48,6 +48,7 @@
     "@babel/preset-typescript": "7.x",
     "@pika/pack": "^0.5.0",
     "@types/jest": "27.x",
+    "@types/node": "^17.0.21",
     "@yiminghe/rr": "1.x",
     "jest": "27.x",
     "kison": "0.5.x",

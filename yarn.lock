@@ -2021,10 +2021,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^17.0.8":
-  version: 17.0.8
-  resolution: "@types/node@npm:17.0.8::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-17.0.8.tgz"
-  checksum: f4cadeb9e602027520abc88c77142697e33cf6ac98bb02f8b595a398603cbd33df1f94d01c055c9f13cde0c8eaafc5e396ca72645458d42b4318b845bc7f1d0f
+"@types/node@npm:^17.0.21":
+  version: 17.0.21
+  resolution: "@types/node@npm:17.0.21::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fnode%2F-%2Fnode-17.0.21.tgz"
+  checksum: 89dcd2fe82f21d3634266f8384e9c865cf8af49685639fbdbd799bdd1040480fb1e8eeda2d3b9fce41edbe704d2a4be9f427118c4ae872e8d9bb7cbeb3c41a94
   languageName: node
   linkType: hard
 
@@ -2123,6 +2123,7 @@ __metadata:
     "@babel/preset-typescript": 7.x
     "@pika/pack": ^0.5.0
     "@types/jest": 27.x
+    "@types/node": ^17.0.21
     "@yiminghe/rr": 1.x
     jest: 27.x
     kison: 0.5.x
@@ -6913,7 +6914,7 @@ __metadata:
     "@babel/preset-typescript": 7.x
     "@tsconfig/recommended": ^1.0.1
     "@types/jest": 27.x
-    "@types/node": ^17.0.8
+    "@types/node": ^17.0.21
     "@yiminghe/rr": 1.x
     babel-jest: 27.x
     benchmark: ^2.1.4

@@ -31,7 +31,7 @@
     "@babel/preset-typescript": "7.x",
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "27.x",
-    "@types/node": "^17.0.8",
+    "@types/node": "^17.0.21",
     "@yiminghe/rr": "1.x",
     "babel-jest": "27.x",
     "benchmark": "^2.1.4",

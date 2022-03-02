@@ -6,7 +6,7 @@ import type { Ast_Exp_Node } from '../parser';
 
 import { evaluate, registerEvaluators } from './evaluators';
 
-import type { All_Type } from './types';
+import type { All_Type } from '../common/types';
 
 registerEvaluators({
   evaluateFunctionExp(node, context) {

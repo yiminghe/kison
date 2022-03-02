@@ -1,7 +1,8 @@
 import { makeArray, makeError } from '../functions/utils';
 import type { AstNode, AstVisitor } from '../parser';
 import { captalize } from '../utils';
-import type { All_Type, Context, Evaluators, All_Value_Type } from './types';
+import type { All_Type, All_Value_Type } from '../common/types';
+import type { Context, Evaluators } from './types';
 import { isSingleCellRange } from './utils';
 import { EMPTY_VALUE, REF_ERROR } from '../common/constants';
 

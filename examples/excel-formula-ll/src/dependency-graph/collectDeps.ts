@@ -1,6 +1,6 @@
 import type { AstNode, AstVisitor } from '../parser';
 import { captalize } from '../utils';
-import type { CollectContext, Collectors } from '../interpreter/types';
+import type { CollectContext, Collectors } from './types';
 import { resolveCell, resolveNamedExpression } from '../interpreter/utils';
 
 export function collect(ast: AstNode, context: CollectContext) {

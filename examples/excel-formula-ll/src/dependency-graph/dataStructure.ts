@@ -1,20 +1,16 @@
-import { makeString } from '../functions/utils';
 import { collect } from './collectDeps';
 import {
   Atom_Value_Type,
-  Raw_Value,
   Ref_Type,
-  CellAddress,
   RawCellAddress,
   CellRange,
-} from '../interpreter/types';
+} from '../common/types';
 import parser from '../parser';
-import { addressInRange, isSingleCellRange } from '../interpreter/utils';
 import { Ast_Formula_Node } from '../parser';
 import { run } from '../interpreter/index';
 import { toCoordString } from '../utils';
-import { EMPTY_VALUE } from '../common/constants';
 import type { DependencyGraph } from './DependencyGraph';
+import { isValueEqual } from './utils';
 
 export class FormulaNode {
   readonly type = 'formula';
@@ -45,6 +41,15 @@ export class FormulaNode {
     this.cachedValue = undefined;
   }
 
+  recompute() {
+    const currentValue = this.cachedValue;
+    const value = run(this.ast, {
+      dependencyGraph: this.dependencyGraph,
+      address: this.address,
+    }) as Atom_Value_Type;
+    return !currentValue || !isValueEqual(currentValue, value);
+  }
+
   get value(): Atom_Value_Type {
     if (!this.cachedValue) {
       // TODO: fix type & array formula
@@ -68,10 +73,4 @@ export class RangeNode {
   constructor(public range: CellRange) {}
 }
 
-export class EmptyNode {
-  readonly type = 'empty';
-  readonly value = EMPTY_VALUE;
-  constructor() {}
-}
-
-export type DependencyNode = ValueNode | RangeNode | FormulaNode | EmptyNode;
+export type DependencyNode = ValueNode | RangeNode | FormulaNode;

@@ -10,8 +10,6 @@ import {
 import type {
   AstSymbolNode,
   Ast_BinaryExp_Node,
-  Ast_ClipExp_Node,
-  Ast_PercentageExp_Node,
   Ast_PrefixExp_Node,
 } from '../parser';
 
@@ -21,12 +19,12 @@ import type {
   Array_Type,
   Atom_Value_Type,
   Atom_Type,
-  Context,
   Error_Type,
   Number_Type,
   Raw_Value,
   Ref_Type,
-} from './types';
+} from '../common/types';
+import { Context } from './types';
 import {
   assertType,
   checkError,
@@ -458,11 +456,11 @@ function evaluatePrefixExp(
 }
 
 registerEvaluators({
-  evaluateBinaryExp(node: Ast_BinaryExp_Node, context: Context) {
+  evaluateBinaryExp(node, context) {
     const op = node.children[1].token;
     return evaluateBinaryExp(node, context, opFn[op]);
   },
-  evaluatePercentageExp(node: Ast_PercentageExp_Node, context: Context) {
+  evaluatePercentageExp(node, context) {
     const a = transformToArray(node.children[0], context);
 
     function one(b: Atom_Type): Number_Type | Error_Type {
@@ -485,11 +483,11 @@ registerEvaluators({
     }
     return one(a);
   },
-  evaluatePrefixExp(node: Ast_PrefixExp_Node, context: Context) {
+  evaluatePrefixExp(node, context) {
     const op = node.children[0].token;
     return evaluatePrefixExp(node, context, unaryOp[op]);
   },
-  evaluateClipExp(node: Ast_ClipExp_Node, context: Context) {
+  evaluateClipExp(node, context) {
     // TODO: implicit intersection
     const a = evaluate(node.children[1], context);
     if (a.type === 'array') {

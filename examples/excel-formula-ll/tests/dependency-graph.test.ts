@@ -13,7 +13,7 @@ function toNodeString(n: DependencyNode) {
   }
 }
 
-describe('dependency graph', () => {
+describe('excel-formula-dependency graph', () => {
   it('sort works', () => {
     const g = new DependencyGraph();
 

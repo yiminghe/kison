@@ -6,7 +6,7 @@ import type {
   Error_Type,
   Number_Type,
   String_Type,
-} from './types';
+} from '../common/types';
 
 registerEvaluators({
   evaluateNUMBER(node): Number_Type {

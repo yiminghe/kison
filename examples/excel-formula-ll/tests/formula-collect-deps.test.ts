@@ -6,7 +6,7 @@ function parse(input: string) {
   return formula.parse(input).ast;
 }
 
-describe('excel-formula-evaluator', () => {
+describe('excel-formula-collector', () => {
   it('collect correctly', () => {
     const ast = parse('a1+d$2:$c$3+$b4');
     const deps: Ref_Type[] = [];

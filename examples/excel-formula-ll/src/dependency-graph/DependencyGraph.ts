@@ -1,15 +1,10 @@
-import {
-  Atom_Value_Type,
-  RawCellAddress,
-  CellRange,
-} from '../interpreter/types';
+import { Atom_Value_Type, RawCellAddress, CellRange } from '../common/types';
 import { addressInRange, isSingleCellRange } from '../interpreter/utils';
 import { CYCLE_ERROR, EMPTY_VALUE } from '../common/constants';
 import {
   FormulaNode,
   ValueNode,
   RangeNode,
-  EmptyNode,
   DependencyNode,
 } from './dataStructure';
 import { getCellAddressKey, getCellRangeKey } from './utils';
@@ -47,6 +42,7 @@ export class DependencyGraph {
 
   flush() {
     if (!this.batching) {
+      const shouldCheckSet = new Set(this.changedNodes);
       const { scc, sorted } = this.sort(this.changedNodes);
       this.changedNodes.clear();
       for (const c of scc) {
@@ -56,11 +52,26 @@ export class DependencyGraph {
         c.cachedValue = makeError('', CYCLE_ERROR);
       }
       for (const s of sorted) {
-        if (s.type === 'range') {
+        if (!shouldCheckSet.has(s)) {
+          continue;
+        }
+        let check = false;
+        if (s.type === 'value') {
+          check = true;
+        } else if (s.type === 'range') {
           s.cachedValue.clear();
+          check = true;
         } else if (s.type === 'formula') {
           // recompute
-          s.value;
+          check = s.recompute();
+        }
+        if (check) {
+          const dependents = this.dependents.get(s);
+          if (dependents) {
+            for (const d of dependents) {
+              shouldCheckSet.add(d);
+            }
+          }
         }
       }
     }
@@ -94,7 +105,7 @@ export class DependencyGraph {
   }
 
   getCellValue(address: RawCellAddress) {
-    const node = this.getNode(address) as FormulaNode | ValueNode | EmptyNode;
+    const node = this.getNode(address) as FormulaNode | ValueNode;
     if (!node) {
       return EMPTY_VALUE;
     }
@@ -224,14 +235,23 @@ export class DependencyGraph {
     }
   }
 
+  checkAndcleanNode(node: DependencyNode) {
+    if (node.type === 'value' && node.value.type === 'empty') {
+    }
+    if (node.type === 'range') {
+    }
+  }
+
   removePrecedents(oldNode: DependencyNode) {
     const precedents = this.precedents.get(oldNode);
     if (precedents) {
       this.precedents.delete(oldNode);
       for (const d of precedents) {
-        const dependents = this.dependents.get(d);
-        if (dependents?.has(oldNode)) {
-          dependents.delete(oldNode);
+        const dependents = this.dependents.get(d)!;
+        dependents.delete(oldNode);
+        if (!dependents.size && d.type == 'range') {
+          this.removePrecedents(d);
+          this.rangeNodes.delete(getCellRangeKey(d.range));
         }
       }
     }
@@ -256,10 +276,6 @@ export class DependencyGraph {
     this.width = Math.max(this.width, col);
     this.height = Math.max(this.height, row);
     let node: DependencyNode | undefined = undefined;
-    const oldNode = this.getNode(address);
-    if (oldNode) {
-      this.removePrecedents(oldNode);
-    }
     if (isFormula(formula)) {
       formula = formula.slice(1);
     }
@@ -292,19 +308,17 @@ export class DependencyGraph {
     this.height = Math.max(this.height, row);
     const valueNode = this.getNode(address);
 
-    if (valueNode && valueNode.type === 'value') {
-      if (value.type === 'empty') {
-        const dependents = this.dependents.get(valueNode);
-        const precedents = this.precedents.get(valueNode);
-        if (
-          (!dependents || dependents.size === 0) &&
-          (!precedents || precedents.size === 0)
-        ) {
-          this.removeNode(address);
-        }
+    if (valueNode && value.type === 'empty') {
+      const dependents = this.dependents.get(valueNode);
+      if (!dependents || !dependents.size) {
+        this.removeNode(address);
+        return;
       }
+    }
+
+    if (valueNode && valueNode.type === 'value') {
       valueNode.value = value;
-      this.changedNodes.add(valueNode);
+      this.swapOrSetNode(address, valueNode);
     } else {
       if (!valueNode && value.type === 'empty') {
         return;
@@ -344,7 +358,7 @@ export class DependencyGraph {
     if (existNode) {
       return existNode;
     }
-    const node = new EmptyNode();
+    const node = new ValueNode(EMPTY_VALUE);
     nodes[address.row] = nodes[address.row] || [];
     nodes[address.row][address.col] = node;
     return node;
@@ -352,39 +366,18 @@ export class DependencyGraph {
 
   swapOrSetNode(address: RawCellAddress, node: DependencyNode) {
     const oldNode = this.getNode(address);
-    const { nodes } = this;
-    nodes[address.row] = nodes[address.row] || [];
-    nodes[address.row][address.col] = node;
-    if (node.type === 'formula') {
-      this.formulaNodes.set(getCellAddressKey(address), node);
-    }
-    if (oldNode) {
-      {
-        const dependents = this.dependents.get(oldNode);
-        if (dependents) {
-          this.dependents.delete(oldNode);
-          this.dependents.set(node, dependents);
-          for (const d of dependents) {
-            const precedents = this.precedents.get(d);
-            if (precedents?.has(oldNode)) {
-              precedents.delete(oldNode);
-              precedents.add(node);
-            }
-          }
-        }
-      }
 
-      {
-        const precedents = this.precedents.get(oldNode);
-        if (precedents) {
-          this.precedents.delete(oldNode);
-          this.precedents.set(node, precedents);
-          for (const d of precedents) {
-            const dependents = this.dependents.get(d);
-            if (dependents?.has(oldNode)) {
-              dependents.delete(oldNode);
-              dependents.add(node);
-            }
+    if (oldNode) {
+      this.removePrecedents(oldNode);
+      const dependents = this.dependents.get(oldNode);
+      if (dependents) {
+        this.dependents.delete(oldNode);
+        this.dependents.set(node, dependents);
+        for (const d of dependents) {
+          const precedents = this.precedents.get(d)!;
+          if (precedents.has(oldNode)) {
+            precedents.delete(oldNode);
+            precedents.add(node);
           }
         }
       }
@@ -395,6 +388,15 @@ export class DependencyGraph {
         }
       }
     }
+
+    const { nodes } = this;
+    nodes[address.row] = nodes[address.row] || [];
+    nodes[address.row][address.col] = node;
+
+    if (node.type === 'formula') {
+      this.formulaNodes.set(getCellAddressKey(address), node);
+    }
+
     this.changedNodes.add(node);
     return node;
   }

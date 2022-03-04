@@ -7,7 +7,7 @@ import type {
   Array_Type,
   String_Type,
   Atom_Value_Type,
-} from '../interpreter/types';
+} from '../common/types';
 
 export function toNumber(a: Atom_Type) {
   const { type, value } = a;

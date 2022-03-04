@@ -135,8 +135,8 @@ export class DependencyGraph {
   *getCellFromRange(range: CellRange) {
     const start = range.start;
     const end = range.end!;
-    const maxCol = Math.min(end.col, this.width);
-    const maxRow = Math.min(end.row, this.height);
+    const maxCol = !isFinite(end.col) ? this.width : end.col;
+    const maxRow = !isFinite(end.row) ? this.height : end.row;
     for (let r = start.row; r <= maxRow; r++) {
       for (let c = start.col; c <= maxCol; c++) {
         yield { row: r, col: c };

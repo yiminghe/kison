@@ -1,5 +1,5 @@
 import { utils, FormulaEngine, CellValue } from '../src/index';
-import { makeString, makeNumber, makeFormula } from './utils';
+import { makeNumber, makeFormula } from './utils';
 
 const { parseCoord, toCoordString } = utils;
 
@@ -16,16 +16,21 @@ describe('excel-formula-engine', () => {
     g.initWithValues([
       [
         makeNumber(1), // a1
-        makeFormula('a1'), // b1
-        makeFormula('b1+1'), // c1
-        makeFormula('c1+1'), // d1
-        makeFormula('c1+2'), // e1
+        makeFormula('a1+1'), // b1
+        makeFormula('b1+2'), // c1
+        makeFormula('c1+3'), // d1
+        makeFormula('c1+4'), // e1
         makeFormula('d1+h1'), // f1
         makeFormula('f1'), // g1
         makeFormula('g1'), // h1
         makeFormula('f1'), // i1
       ],
-      [makeFormula('sum(a1:c1)')], //a2
+      [
+        makeFormula('sum(a1:c1)'), //a2
+        makeNumber(9), // b2
+        makeNumber(11), // b2
+        makeNumber(13), // b2
+      ],
     ]);
   });
 
@@ -52,124 +57,7 @@ describe('excel-formula-engine', () => {
 
     const ret = getCellValues();
 
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "adr": "A1",
-            "value": Object {
-              "type": "number",
-              "value": 1,
-            },
-          },
-          Object {
-            "adr": "B1",
-            "value": Object {
-              "formula": "a1",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 1,
-              },
-            },
-          },
-          Object {
-            "adr": "C1",
-            "value": Object {
-              "formula": "b1+1",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 2,
-              },
-            },
-          },
-          Object {
-            "adr": "D1",
-            "value": Object {
-              "formula": "c1+1",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 3,
-              },
-            },
-          },
-          Object {
-            "adr": "E1",
-            "value": Object {
-              "formula": "c1+2",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 4,
-              },
-            },
-          },
-          Object {
-            "adr": "F1",
-            "value": Object {
-              "formula": "d1+h1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-          Object {
-            "adr": "G1",
-            "value": Object {
-              "formula": "f1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-          Object {
-            "adr": "H1",
-            "value": Object {
-              "formula": "g1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-          Object {
-            "adr": "I1",
-            "value": Object {
-              "formula": "f1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-        ],
-        Array [
-          Object {
-            "adr": "A2",
-            "value": Object {
-              "formula": "sum(a1:c1)",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 4,
-              },
-            },
-          },
-        ],
-      ]
-    `);
+    expect(ret).toMatchSnapshot();
   });
 
   it('recompute works', () => {
@@ -177,119 +65,23 @@ describe('excel-formula-engine', () => {
 
     const ret = getCellValues();
 
-    expect(ret).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "adr": "A1",
-            "value": Object {
-              "type": "number",
-              "value": 1,
-            },
-          },
-          Object {
-            "adr": "B1",
-            "value": Object {
-              "formula": "a1",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 1,
-              },
-            },
-          },
-          Object {
-            "adr": "C1",
-            "value": Object {
-              "type": "number",
-              "value": 10,
-            },
-          },
-          Object {
-            "adr": "D1",
-            "value": Object {
-              "formula": "c1+1",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 11,
-              },
-            },
-          },
-          Object {
-            "adr": "E1",
-            "value": Object {
-              "formula": "c1+2",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 12,
-              },
-            },
-          },
-          Object {
-            "adr": "F1",
-            "value": Object {
-              "formula": "d1+h1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-          Object {
-            "adr": "G1",
-            "value": Object {
-              "formula": "f1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-          Object {
-            "adr": "H1",
-            "value": Object {
-              "formula": "g1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-          Object {
-            "adr": "I1",
-            "value": Object {
-              "formula": "f1",
-              "type": "formula",
-              "value": Object {
-                "message": "",
-                "type": "error",
-                "value": "#CYCLE!",
-              },
-            },
-          },
-        ],
-        Array [
-          Object {
-            "adr": "A2",
-            "value": Object {
-              "formula": "sum(a1:c1)",
-              "type": "formula",
-              "value": Object {
-                "type": "number",
-                "value": 12,
-              },
-            },
-          },
-        ],
-      ]
-    `);
+    expect(ret).toMatchSnapshot();
+  });
+
+  it('array works', () => {
+    function e(formula: string) {
+      return {
+        formula,
+        value: g.evaluateFormula(formula),
+      };
+    }
+
+    expect(e('A1:A2+B1:B2')).toMatchSnapshot();
+
+    expect(e('A1:A2+B1:C1')).toMatchSnapshot();
+
+    expect(e('A1:B2+C1:D2')).toMatchSnapshot();
+
+    expect(e('9+C1:D2')).toMatchSnapshot();
   });
 });

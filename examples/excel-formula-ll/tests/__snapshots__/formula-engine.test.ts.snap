@@ -1,0 +1,351 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`excel-formula-engine array works 1`] = `
+Object {
+  "formula": "A1:A2+B1:B2",
+  "value": Object {
+    "type": "array",
+    "value": Array [
+      Array [
+        Object {
+          "type": "number",
+          "value": 3,
+        },
+      ],
+      Array [
+        Object {
+          "type": "number",
+          "value": 16,
+        },
+      ],
+    ],
+  },
+}
+`;
+
+exports[`excel-formula-engine array works 2`] = `
+Object {
+  "formula": "A1:A2+B1:C1",
+  "value": Object {
+    "type": "array",
+    "value": Array [
+      Array [
+        Object {
+          "type": "number",
+          "value": 3,
+        },
+        Object {
+          "type": "number",
+          "value": 5,
+        },
+      ],
+      Array [
+        Object {
+          "type": "number",
+          "value": 9,
+        },
+        Object {
+          "type": "number",
+          "value": 11,
+        },
+      ],
+    ],
+  },
+}
+`;
+
+exports[`excel-formula-engine array works 3`] = `
+Object {
+  "formula": "A1:B2+C1:D2",
+  "value": Object {
+    "type": "array",
+    "value": Array [
+      Array [
+        Object {
+          "type": "number",
+          "value": 5,
+        },
+        Object {
+          "type": "number",
+          "value": 9,
+        },
+      ],
+      Array [
+        Object {
+          "type": "number",
+          "value": 18,
+        },
+        Object {
+          "type": "number",
+          "value": 22,
+        },
+      ],
+    ],
+  },
+}
+`;
+
+exports[`excel-formula-engine array works 4`] = `
+Object {
+  "formula": "9+C1:D2",
+  "value": Object {
+    "type": "array",
+    "value": Array [
+      Array [
+        Object {
+          "type": "number",
+          "value": 13,
+        },
+        Object {
+          "type": "number",
+          "value": 16,
+        },
+      ],
+      Array [
+        Object {
+          "type": "number",
+          "value": 20,
+        },
+        Object {
+          "type": "number",
+          "value": 22,
+        },
+      ],
+    ],
+  },
+}
+`;
+
+exports[`excel-formula-engine compute works 1`] = `
+Array [
+  Array [
+    Object {
+      "adr": "A1",
+      "value": Object {
+        "type": "number",
+        "value": 1,
+      },
+    },
+    Object {
+      "adr": "B1",
+      "value": Object {
+        "formula": "a1+1",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 2,
+        },
+      },
+    },
+    Object {
+      "adr": "C1",
+      "value": Object {
+        "formula": "b1+2",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 4,
+        },
+      },
+    },
+    Object {
+      "adr": "D1",
+      "value": Object {
+        "formula": "c1+3",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 7,
+        },
+      },
+    },
+    Object {
+      "adr": "E1",
+      "value": Object {
+        "formula": "c1+4",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 8,
+        },
+      },
+    },
+    Object {
+      "adr": "F1",
+      "value": Object {
+        "formula": "d1+h1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "G1",
+      "value": Object {
+        "formula": "f1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "H1",
+      "value": Object {
+        "formula": "g1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "I1",
+      "value": Object {
+        "formula": "f1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "adr": "A2",
+      "value": Object {
+        "formula": "sum(a1:c1)",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 7,
+        },
+      },
+    },
+  ],
+]
+`;
+
+exports[`excel-formula-engine recompute works 1`] = `
+Array [
+  Array [
+    Object {
+      "adr": "A1",
+      "value": Object {
+        "type": "number",
+        "value": 1,
+      },
+    },
+    Object {
+      "adr": "B1",
+      "value": Object {
+        "formula": "a1+1",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 2,
+        },
+      },
+    },
+    Object {
+      "adr": "C1",
+      "value": Object {
+        "type": "number",
+        "value": 10,
+      },
+    },
+    Object {
+      "adr": "D1",
+      "value": Object {
+        "formula": "c1+3",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 13,
+        },
+      },
+    },
+    Object {
+      "adr": "E1",
+      "value": Object {
+        "formula": "c1+4",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 14,
+        },
+      },
+    },
+    Object {
+      "adr": "F1",
+      "value": Object {
+        "formula": "d1+h1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "G1",
+      "value": Object {
+        "formula": "f1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "H1",
+      "value": Object {
+        "formula": "g1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "I1",
+      "value": Object {
+        "formula": "f1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+  ],
+  Array [
+    Object {
+      "adr": "A2",
+      "value": Object {
+        "formula": "sum(a1:c1)",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 13,
+        },
+      },
+    },
+  ],
+]
+`;

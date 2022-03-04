@@ -21,4 +21,4 @@ export {
 };
 
 export * from './parser';
-export * from './interpreter/types';
+export * from './common/types';

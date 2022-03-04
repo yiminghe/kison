@@ -1,6 +1,9 @@
+import { Ast_Formula_Node } from '.';
 import { EMPTY_VALUE } from './common/constants';
 import { Atom_Value_Type, RawCellAddress, Empty_Type } from './common/types';
 import { DependencyGraph } from './dependency-graph/DependencyGraph';
+import { evaluate } from './interpreter';
+import { parse } from './parserApi';
 
 type FormulaType = {
   type: 'formula';
@@ -18,7 +21,7 @@ export type CellValue =
   | undefined;
 
 export class FormulaEngine {
-  private dependencyGraph: DependencyGraph = new DependencyGraph();
+  dependencyGraph: DependencyGraph = new DependencyGraph();
 
   initWithValues(values: CellValue[][], options: Options = {}) {
     const { dependencyGraph } = this;
@@ -82,5 +85,15 @@ export class FormulaEngine {
       };
     }
     return cellValue;
+  }
+
+  evaluateFormula(formula: string) {
+    const ret = parse(formula);
+    if (ret.error) {
+      throw ret.error;
+    }
+    return evaluate(ret.ast, {
+      dependencyGraph: this.dependencyGraph,
+    });
   }
 }

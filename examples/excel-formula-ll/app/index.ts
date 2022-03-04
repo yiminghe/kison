@@ -25,9 +25,19 @@ require.config({
 
 const $ = (v: string) => document.getElementById(v)!;
 
+const formulaKey = 'excel-formula';
+const cellsKey = 'excel-cells';
+
 require(['vs/editor/editor.main'], () => {
+  function getEditorValue() {
+    const v = editor.getModel()!.getValue().trim();
+    localStorage.setItem(formulaKey, v);
+    return v;
+  }
   // @ts-ignore
-  $('cells').value = `
+  $('cells').value =
+    localStorage.getItem(cellsKey) ||
+    `
   A1: =2+c1
   A2: =3+a1
   B1: =4+a2
@@ -35,8 +45,8 @@ require(['vs/editor/editor.main'], () => {
   c1: 10
   
   `
-    .trim()
-    .replace(/\n\s+/g, '\n');
+      .trim()
+      .replace(/\n\s+/g, '\n');
 
   $('cells').style.height = '200px';
   $('cells').style.width = '500px';
@@ -57,7 +67,9 @@ require(['vs/editor/editor.main'], () => {
   editorContainer.style.height = '100px';
 
   let editor = monaco.editor.create(editorContainer, {
-    value: 'sum(A1:B2, 10, "OK", namedRange) + \n avg(A1:A3 \n',
+    value:
+      localStorage.getItem(formulaKey) ||
+      'sum(A1:B2, 10, "OK", namedRange) + \n avg(A1:A3 \n',
     language: 'lang-formula',
     theme: 'lang-formula-theme',
     minimap: {
@@ -70,7 +82,7 @@ require(['vs/editor/editor.main'], () => {
 
   $('fix').addEventListener('click', () => {
     let fixed = false;
-    const value = editor.getModel()!.getValue().trim();
+    const value = getEditorValue();
     const { recoveryTokens } = getAst(value, {
       onErrorRecovery({ errorNode }, { action }) {
         if (action === 'add') {
@@ -104,7 +116,7 @@ require(['vs/editor/editor.main'], () => {
   });
 
   function getCurrentAst() {
-    const value = editor.getModel()!.getValue().trim();
+    const value = getEditorValue();
     return { value, ret: getAst(value, {}) };
   }
 
@@ -120,7 +132,9 @@ require(['vs/editor/editor.main'], () => {
 
   function initSheet() {
     // @ts-ignore
-    const cells = getCellData($('cells').value);
+    const cellStr = $('cells').value;
+    localStorage.setItem(cellsKey, cellStr);
+    const cells = getCellData(cellStr);
     console.log('cells data: ', cells);
     engine = new FormulaEngine();
     engine.initWithValues(cells);

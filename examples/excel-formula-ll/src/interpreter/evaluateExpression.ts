@@ -27,8 +27,8 @@ import type {
 import { Context } from './types';
 import {
   assertType,
+  checkArrayNumber,
   checkError,
-  checkNumber,
   isSingleValueArray,
   mapArray,
 } from './utils';
@@ -47,7 +47,7 @@ function opOneAndMany(
       for (let j = 0; j < row.length; j++) {
         const d = row[j];
         if (d) {
-          const e = check && check(n, d);
+          const e = check && check(false, n, d);
           if (e) {
             return e;
           }
@@ -64,15 +64,15 @@ function opOneAndMany(
 
 function getRowColPos(value: Array_Type['value'], child: All_Type) {
   let startRow = 0;
-  let endRow = value.length;
+  let endRow = value.length - 1;
   let startCol = 0;
-  let endCol = value[0].length;
+  let endCol = value[0].length - 1;
 
   if (child.type === 'reference') {
     startRow = child.value[0].start.row;
-    endRow = child.value[0].end?.row ?? startRow + 1;
+    endRow = child.value[0].end.row;
     startCol = child.value[0].start.col;
-    endCol = child.value[0].end?.col ?? startCol + 1;
+    endCol = child.value[0].end.col;
   }
 
   return {
@@ -81,10 +81,6 @@ function getRowColPos(value: Array_Type['value'], child: All_Type) {
     startCol,
     endCol,
   };
-}
-
-function fillError(row: Atom_Type[], j: number) {
-  row[j] = makeError('unmatch shape', NA_ERROR);
 }
 
 function transformToArray(node: AstSymbolNode, context: Context) {
@@ -107,7 +103,10 @@ type BinaryDef = {
   fn: (a: Raw_Value, b: Raw_Value) => Atom_Value_Type;
   check?:
     | undefined
-    | ((...args: (All_Type | null)[]) => Error_Type | undefined);
+    | ((
+        isArrayFormula: boolean,
+        ...args: (All_Type | null)[]
+      ) => Error_Type | undefined);
 };
 
 function evaluateBinaryExp(
@@ -158,7 +157,7 @@ function evaluateBinaryExp(
     return e;
   }
 
-  e = check && check(left, right);
+  e = check && check(false, left, right);
   if (e) {
     return e;
   }
@@ -199,83 +198,48 @@ function evaluateBinaryExp(
     endCol: endRightCol,
   } = getRowColPos(rightValue, rightChild);
 
-  let rightRowCount = endRightRow - startRightRow;
-  let leftRowCount = endLeftRow - startLeftRow;
+  let rightRowCount = endRightRow - startRightRow + 1;
+  let leftRowCount = endLeftRow - startLeftRow + 1;
 
-  let rightColCount = endRightCol - startRightCol;
-  let leftColCount = endLeftCol - startLeftCol;
+  let rightColCount = endRightCol - startRightCol + 1;
+  let leftColCount = endLeftCol - startLeftCol + 1;
 
   let rowCount = Math.max(rightRowCount, leftRowCount);
   let colCount = Math.max(rightColCount, leftColCount);
 
-  const ret: Array_Type['value'] = [];
+  const ret: Atom_Value_Type[][] = [];
 
-  function getLeftValue(row: number, col: number) {
-    return leftValue[startLeftRow + row][startLeftCol + col];
+  function getValue(values: Atom_Value_Type[][], row: number, col: number) {
+    return row >= 0 && col >= 0 ? values[row][col] : null;
   }
 
-  function getRightValue(row: number, col: number) {
-    return rightValue[startRightRow + row][startRightCol + col];
+  function getPos(p: number, count: number) {
+    return count === 1 ? 0 : p >= count ? -1 : p;
   }
 
   for (let i = 0; i < rowCount; i++) {
-    const row: Exclude<Atom_Type, Ref_Type>[] = [];
+    const row: Atom_Value_Type[] = [];
     ret[i] = row;
     for (let j = 0; j < colCount; j++) {
-      let li = i;
-      let lj = j;
-      let lv = null,
-        rv = null;
-      if (rightColCount === 1) {
-        if (leftRowCount === 1) {
-          li = 0;
-        } else if (i >= leftRowCount) {
-          fillError(row, j);
-          continue;
-        }
-        lv = getLeftValue(li, lj);
-        rv = getRightValue(i, 0);
-      } else if (leftColCount === 1) {
-        if (rightRowCount === 1) {
-          li = 0;
-        } else if (i >= rightRowCount) {
-          fillError(row, j);
-          continue;
-        }
-        lv = getLeftValue(i, 0);
-        rv = getRightValue(li, lj);
-      } else if (leftRowCount === 1) {
-        if (lj >= rightColCount || lj >= leftColCount) {
-          fillError(row, j);
-        } else {
-          lv = getLeftValue(0, lj);
-          rv = getRightValue(li, lj);
-        }
-      } else if (rightRowCount === 1) {
-        if (lj >= rightColCount || lj >= leftColCount) {
-          fillError(row, j);
-        } else {
-          lv = getLeftValue(li, lj);
-          rv = getRightValue(0, lj);
-        }
-      } else if (
-        li >= rightRowCount ||
-        li >= leftRowCount ||
-        lj >= rightColCount ||
-        lj >= leftColCount
-      ) {
-        fillError(row, j);
-      } else {
-        lv = getLeftValue(i, 0);
-        rv = getRightValue(li, lj);
-      }
-      if (lv !== null || rv !== null) {
-        const r = check && check(lv, rv);
+      const lv = getValue(
+        leftValue,
+        getPos(i, leftRowCount),
+        getPos(j, leftColCount),
+      );
+      const rv = getValue(
+        rightValue,
+        getPos(i, rightRowCount),
+        getPos(j, rightColCount),
+      );
+      if (lv && rv) {
+        const r = check && check(true, lv, rv);
         if (r) {
           row[j] = r;
         } else {
-          row[j] = fn(lv?.value || 0, rv?.value || 0);
+          row[j] = fn(lv?.value, rv?.value);
         }
+      } else {
+        row[j] = makeError('unmatch shape', NA_ERROR);
       }
     }
   }
@@ -289,6 +253,8 @@ function evaluateBinaryExp(
 const opFn: Record<string, BinaryDef> = {
   '+': {
     fn(a: Raw_Value, b: Raw_Value) {
+      a = a ?? 0;
+      b = b ?? 0;
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -296,10 +262,12 @@ const opFn: Record<string, BinaryDef> = {
         value: a + b,
       };
     },
-    check: checkNumber,
+    check: checkArrayNumber,
   },
   '-': {
     fn(a: Raw_Value, b: Raw_Value) {
+      a = a ?? 0;
+      b = b ?? 0;
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -307,10 +275,12 @@ const opFn: Record<string, BinaryDef> = {
         value: a - b,
       };
     },
-    check: checkNumber,
+    check: checkArrayNumber,
   },
   '*': {
     fn(a: Raw_Value, b: Raw_Value) {
+      a = a ?? 0;
+      b = b ?? 0;
       assertType(a, 'number');
       assertType(b, 'number');
       return {
@@ -318,7 +288,7 @@ const opFn: Record<string, BinaryDef> = {
         value: a * b,
       };
     },
-    check: checkNumber,
+    check: checkArrayNumber,
   },
   '^': {
     fn(a: Raw_Value, b: Raw_Value) {
@@ -329,10 +299,12 @@ const opFn: Record<string, BinaryDef> = {
         value: a ** b,
       };
     },
-    check: checkNumber,
+    check: checkArrayNumber,
   },
   '/': {
     fn(a: Raw_Value, b: Raw_Value) {
+      a = a ?? 0;
+      b = b ?? 0;
       assertType(a, 'number');
       assertType(b, 'number');
       if (b === 0) {
@@ -343,7 +315,7 @@ const opFn: Record<string, BinaryDef> = {
         value: a / b,
       };
     },
-    check: checkNumber,
+    check: checkArrayNumber,
   },
   '=': {
     fn(a: Raw_Value, b: Raw_Value) {
@@ -395,9 +367,11 @@ const opFn: Record<string, BinaryDef> = {
   },
   '&': {
     fn(a: Raw_Value, b: Raw_Value) {
+      a = a ?? '';
+      b = b ?? '';
       return {
         type: 'string',
-        value: (a || '') + '' + (b || ''),
+        value: a + '' + '' + (b + ''),
       };
     },
   },
@@ -411,7 +385,7 @@ const unaryOp: Record<
 > = {
   '-': {
     fn(a) {
-      const value = Number(a.value);
+      const value = Number(a.value ?? 0);
       if (isNaN(value)) {
         return makeError('no number', VALUE_ERROR);
       }
@@ -423,7 +397,7 @@ const unaryOp: Record<
   },
   '+': {
     fn(a) {
-      const value = Number(a.value);
+      const value = Number(a.value ?? 0);
       if (isNaN(value)) {
         return makeError('no number', VALUE_ERROR);
       }

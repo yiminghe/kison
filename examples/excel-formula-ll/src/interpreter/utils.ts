@@ -3,6 +3,7 @@ import {
   makeReference,
   NULL_ERROR,
   VALUE_ERROR,
+  NA_ERROR,
 } from '../functions/utils';
 
 import type {
@@ -14,7 +15,7 @@ import type {
   RawCellAddress,
   CellRange,
   Atom_Value_Type,
-} from './types';
+} from '../common/types';
 
 import { parseCoord } from '../utils';
 
@@ -170,8 +171,18 @@ export function checkError(...args: All_Type[]) {
   }
 }
 
-export function checkNumber(...args: (All_Type | null)[]) {
+export function checkArrayNumber(
+  isArrayFormula: boolean,
+  ...args: (All_Type | null)[]
+) {
   for (const a of args) {
+    if (a && a.type === 'empty') {
+      if (isArrayFormula) {
+        return makeError('Value Not Available Error!', NA_ERROR);
+      } else {
+        continue;
+      }
+    }
     if (a && a.type !== 'number' && a.type !== 'array') {
       return makeError('not number!', VALUE_ERROR);
     }

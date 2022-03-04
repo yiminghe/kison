@@ -1,4 +1,5 @@
-import type { All_Type, Context } from '../interpreter/types';
+import type { Context } from '../interpreter/types';
+import type { All_Type } from '../common/types';
 
 export const functions = new Map();
 

@@ -39,8 +39,8 @@ export function transformByInsertRow(
   ast: Ast_Formula_Node,
   before: number,
   rowCount = 1,
-) {
-  const newAst = transformRoot(ast, {
+): { ast: Ast_Formula_Node, address: CellAddress } {
+  const newAst: Ast_Formula_Node = transformRoot(ast, {
     transformCellAdress(addr) {
       return transformCellAdressByInsertRow(addr, before, rowCount);
     },

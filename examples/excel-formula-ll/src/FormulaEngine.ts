@@ -1,8 +1,7 @@
-import { Ast_Formula_Node } from '.';
 import { EMPTY_VALUE } from './common/constants';
 import { Atom_Value_Type, RawCellAddress, Empty_Type } from './common/types';
 import { DependencyGraph } from './dependency-graph/DependencyGraph';
-import { evaluate } from './interpreter';
+import { evaluate } from './interpreter/index';
 import { parse } from './parserApi';
 
 type FormulaType = {

@@ -125,7 +125,7 @@ require(['vs/editor/editor.main'], () => {
   });
 
   $('evaluateData').addEventListener('click', () => {
-    editor.getModel()!.setValue(`sum(a1:c2) + sum({5;6}+{7;8})`);
+    editor.getModel()!.setValue(`sum(a1:c2) + sum(a1:a2*b1:c1)`);
   });
 
   let engine: FormulaEngine = undefined!;

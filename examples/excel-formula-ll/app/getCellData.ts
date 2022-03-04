@@ -9,9 +9,9 @@ export function getCellData(str: string) {
   const lines = str.split(/\n/);
   for (let l of lines) {
     l = l.trim();
-    const items = l.split(':');
-    const indexStr = items[0].trim();
-    const value = items[1].trim();
+    const comma = l.indexOf(':');
+    const indexStr = l.slice(0, comma);
+    const value = l.slice(comma + 1).trim();
     let { row, col } = parseCoord(indexStr);
     row--;
     col--;

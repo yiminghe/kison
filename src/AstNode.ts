@@ -132,4 +132,18 @@ export class AstSymbolNode extends BaseAstNode {
       c.parent = this;
     }
   }
+
+  override toJSON() {
+    const ret = super.toJSON();
+    const { children } = ret;
+    const l = children?.length;
+    if (l) {
+      const nc = new Array(l);
+      for (let i = 0; i < l; i++) {
+        nc[i] = children[i].toJSON();
+      }
+      ret.children = nc;
+    }
+    return ret;
+  }
 }

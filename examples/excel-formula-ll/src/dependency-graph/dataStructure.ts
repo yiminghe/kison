@@ -2,7 +2,7 @@ import { collect } from './collectDeps';
 import {
   Atom_Value_Type,
   Ref_Type,
-  RawCellAddress,
+  CellAddress,
   CellRange,
 } from '../common/types';
 import parser from '../parser';
@@ -22,10 +22,10 @@ export class FormulaNode {
   constructor(
     private dependencyGraph: DependencyGraph,
     public formula: string,
-    public address: RawCellAddress,
+    public address: CellAddress,
   ) {
     const { ast } = parser.parse(formula);
-    this.ast = ast;
+    this.ast = (ast as any).toJSON();
     collect(ast, {
       addDep: (dep) => {
         this.deps.push(dep);

@@ -2125,6 +2125,7 @@ __metadata:
     "@types/jest": 27.x
     "@types/node": ^17.0.21
     "@yiminghe/rr": 1.x
+    immer: 9.x
     jest: 27.x
     kison: 0.5.x
     monaco-editor: ^0.28.0
@@ -5310,6 +5311,13 @@ __metadata:
   version: 5.1.9
   resolution: "ignore@npm:5.1.9::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fignore%2Fdownload%2Fignore-5.1.9.tgz"
   checksum: 6f6b2235f4e63648116c5814f76b2d3d63fae9c21b8a466862e865732f59e787c9938a9042f9457091db6f0d811508ea3c8c6a60f35bafc4ceea08bbe8f96fd5
+  languageName: node
+  linkType: hard
+
+"immer@npm:9.x":
+  version: 9.0.12
+  resolution: "immer@npm:9.0.12::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2Fimmer%2F-%2Fimmer-9.0.12.tgz"
+  checksum: bcbec6d76dac65e49068eb67ece4d407116e62b8cde3126aa89c801e408f5047763ba0aeb62f1938c1aa704bb6612f1d8302bb2a86fa1fc60fcc12d8b25dc895
   languageName: node
   linkType: hard
 

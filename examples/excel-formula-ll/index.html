@@ -4,8 +4,21 @@
 <head>
     <link rel="icon" type="image/jpg" href="../favicon.ico" />
     <script src="../common/system.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://unpkg.com/immer@9.0.12/dist/immer.umd.development.js"></script> -->
+    <script type="systemjs-importmap">
+        {
+          "imports": {
+            "immer": "https://unpkg.com/immer@9.0.12/dist/immer.esm.js"
+          }
+        }
+        </script>
     <script>
         (function () {
+            window.process={
+                env:{
+                    NODE_ENV:'development'
+                }
+            };
             const endsWithFileExtension = /\/?\.[a-zA-Z]{2}$/;
             const originalResolve = System.constructor.prototype.resolve;
             System.constructor.prototype.resolve = function () {
@@ -103,6 +116,7 @@
 
             <h2>demo</h2>
             <div>
+                &nbsp; <button onclick="localStorage.clear();location.reload();">reset</button>
                 &nbsp; <button id='parse'>parse</button>
                 &nbsp; <button id='fix'>error recovery</button>
                 &nbsp; <button id='evaluate'>evaluate to console</button>
@@ -129,7 +143,9 @@
             <div>
                 <h3>sheet data:</h3>
                 <div>
-                    <button id='initSheet'>init sheet</button>
+                    &nbsp; <button id='initSheet'>init sheet</button>
+                    &nbsp; <button id='setCell'>setCell</button>
+                    &nbsp; <button id='insertRows'>insertRows</button>
                     <br /> <br />
                 </div>
                 <textarea id='cells'>

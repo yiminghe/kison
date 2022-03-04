@@ -3,12 +3,16 @@ import {
   cachedParser,
   FormulaEngine,
   evaluate,
+  CellAddress,
+  utils,
 } from '../src/index';
 import type { LiteralToken } from '../src/index';
 import functionNames from './functionNames';
 import { getCellData } from './getCellData';
 import type * as Manaco from 'monaco-editor';
+import { makeFormula, makeString } from '../tests/utils';
 
+const { toCoordString, parseCoord, isFormula } = utils;
 const { getAst } = cachedParser;
 
 // console.log(evaluators);
@@ -159,5 +163,49 @@ require(['vs/editor/editor.main'], () => {
       });
       console.log(value, ' = ', calValue);
     }
+  });
+
+  function refreshSheet() {
+    let contents: string[] = [];
+    function push(addr: CellAddress, content: any) {
+      contents.push(toCoordString(addr) + ': ' + content);
+    }
+    for (let col = 1; col <= engine.width; col++) {
+      for (let row = 1; row <= engine.height; row++) {
+        const addr = { row, col };
+        const cell = engine.getCellValue(addr);
+        if (cell) {
+          if (cell.type === 'formula') {
+            push(addr, '=' + cell.formula);
+          } else {
+            push(addr, cell.value);
+          }
+        }
+      }
+    }
+    // @ts-ignore
+    $('cells').value = contents.join('\n');
+  }
+
+  $('insertRows').addEventListener('click', () => {
+    const content = prompt('insert,count=1') || '';
+    const cs = content.split(',');
+    let before = parseInt(cs[0]);
+    let count = parseInt(cs[1]) || 1;
+    engine.insertRows(before, count);
+    refreshSheet();
+  });
+
+  $('setCell').addEventListener('click', () => {
+    const l = prompt('cell') || '';
+    const comma = l.indexOf(':');
+    const indexStr = l.slice(0, comma);
+    const value = l.slice(comma + 1).trim();
+    let addr = parseCoord(indexStr);
+    engine.setCellValue(
+      addr,
+      isFormula(value) ? makeFormula(value) : makeString(value),
+    );
+    refreshSheet();
   });
 });

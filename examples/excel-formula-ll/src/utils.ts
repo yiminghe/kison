@@ -1,3 +1,4 @@
+import { CellAddress } from './common/types';
 import { assertIsDefined } from './interpreter/utils';
 
 const A = 'A'.charCodeAt(0);
@@ -15,11 +16,18 @@ export function toColumnString(n: number) {
   return str.reverse().join('');
 }
 
-export function toCoordString({ row, col }: { row: number; col: number }) {
-  return `${toColumnString(col)}${row}`;
+export function toCoordString({
+  row,
+  col,
+  isColAbsolute,
+  isRowAbsolute,
+}: CellAddress) {
+  return `${isColAbsolute ? '$' : ''}${toColumnString(col)}${
+    isRowAbsolute ? '$' : ''
+  }${row}`;
 }
 
-export function parseCoord(str: string) {
+export function parseCoord(str: string): CellAddress {
   var [_, colStr, rowStr] = (str.match(/(\$?[A-Z]*)(\$?[0-9]*)/i) ||
     []) as string[];
   let isColAbsolute = false;

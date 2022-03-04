@@ -1,6 +1,6 @@
-import { RawCellAddress, CellRange, Atom_Value_Type } from '../common/types';
+import { CellAddress, CellRange, Atom_Value_Type } from '../common/types';
 
-export function getCellAddressKey(address: RawCellAddress) {
+export function getCellAddressKey(address: CellAddress) {
   return `${address.row}_${address.col}`;
 }
 

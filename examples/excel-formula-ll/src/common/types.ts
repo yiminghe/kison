@@ -49,16 +49,11 @@ export interface Error_Type {
   message: string;
 }
 
-export interface RawCellAddress {
-  col: number;
-  row: number;
-}
-
 export interface CellAddress {
   col: number;
   row: number;
-  isRowAbsolute: boolean;
-  isColAbsolute: boolean;
+  isRowAbsolute?: boolean;
+  isColAbsolute?: boolean;
 }
 
 export interface CellRange {

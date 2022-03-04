@@ -38,16 +38,18 @@ describe('excel-formula-engine', () => {
 
   function getCellValues() {
     const ret: Cell[][] = [[], []];
-    for (let col = 1; col <= 9; col++) {
-      ret[0].push({
-        adr: toCoordString({ row: 1, col }),
-        value: g.getCellValue({ row: 1, col }),
-      });
+    for (let row = 1; row <= g.height; row++) {
+      for (let col = 1; col <= g.width; col++) {
+        const addr = { row, col };
+        const value = g.getCellValue(addr);
+        if (value) {
+          ret[0].push({
+            adr: toCoordString(addr),
+            value,
+          });
+        }
+      }
     }
-    ret[1].push({
-      value: g.getCellValue({ row: 2, col: 1 }),
-      adr: toCoordString({ row: 2, col: 1 }),
-    });
     return ret;
   }
 
@@ -55,6 +57,13 @@ describe('excel-formula-engine', () => {
     expect(g.width).toBe(9);
     expect(g.height).toBe(2);
 
+    const ret = getCellValues();
+
+    expect(ret).toMatchSnapshot();
+  });
+
+  it('insertRow works', () => {
+    g.insertRows(1, 2);
     const ret = getCellValues();
 
     expect(ret).toMatchSnapshot();

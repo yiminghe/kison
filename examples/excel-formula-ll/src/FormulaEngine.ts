@@ -1,5 +1,5 @@
 import { EMPTY_VALUE } from './common/constants';
-import { Atom_Value_Type, RawCellAddress, Empty_Type } from './common/types';
+import { Atom_Value_Type, CellAddress, Empty_Type } from './common/types';
 import { DependencyGraph } from './dependency-graph/DependencyGraph';
 import { evaluate } from './interpreter/index';
 import { parse } from './parserApi';
@@ -42,7 +42,7 @@ export class FormulaEngine {
     }
   }
 
-  private _setCell(address: RawCellAddress, cell: CellValue) {
+  private _setCell(address: CellAddress, cell: CellValue) {
     const { dependencyGraph } = this;
     if (cell) {
       if (cell.type === 'formula') {
@@ -55,7 +55,7 @@ export class FormulaEngine {
     }
   }
 
-  setCellValue(address: RawCellAddress, cell: CellValue) {
+  setCellValue(address: CellAddress, cell: CellValue) {
     const { dependencyGraph } = this;
     this._setCell(address, cell);
     dependencyGraph.flush();
@@ -69,7 +69,7 @@ export class FormulaEngine {
     return this.dependencyGraph.height;
   }
 
-  getCellValue(address: RawCellAddress): CellValue {
+  getCellValue(address: CellAddress): CellValue {
     const { dependencyGraph } = this;
     const cellValue = dependencyGraph.getCellValue(address);
     if (cellValue.type === 'empty') {
@@ -84,6 +84,12 @@ export class FormulaEngine {
       };
     }
     return cellValue;
+  }
+
+  insertRows(before: number, count = 1) {
+    const { dependencyGraph } = this;
+    dependencyGraph.insertRows(before, count);
+    dependencyGraph.flush();
   }
 
   evaluateFormula(formula: string) {

@@ -253,10 +253,8 @@ function evaluateBinaryExp(
 const opFn: Record<string, BinaryDef> = {
   '+': {
     fn(a: Raw_Value, b: Raw_Value) {
-      a = a ?? 0;
-      b = b ?? 0;
-      assertType(a, 'number');
-      assertType(b, 'number');
+      a = Number(a ?? 0);
+      b = Number(b ?? 0);
       return {
         type: 'number',
         value: a + b,
@@ -266,10 +264,8 @@ const opFn: Record<string, BinaryDef> = {
   },
   '-': {
     fn(a: Raw_Value, b: Raw_Value) {
-      a = a ?? 0;
-      b = b ?? 0;
-      assertType(a, 'number');
-      assertType(b, 'number');
+      a = Number(a ?? 0);
+      b = Number(b ?? 0);
       return {
         type: 'number',
         value: a - b,
@@ -279,10 +275,8 @@ const opFn: Record<string, BinaryDef> = {
   },
   '*': {
     fn(a: Raw_Value, b: Raw_Value) {
-      a = a ?? 0;
-      b = b ?? 0;
-      assertType(a, 'number');
-      assertType(b, 'number');
+      a = Number(a ?? 0);
+      b = Number(b ?? 0);
       return {
         type: 'number',
         value: a * b,
@@ -292,8 +286,8 @@ const opFn: Record<string, BinaryDef> = {
   },
   '^': {
     fn(a: Raw_Value, b: Raw_Value) {
-      assertType(a, 'number');
-      assertType(b, 'number');
+      a = Number(a ?? 0);
+      b = Number(b ?? 0);
       return {
         type: 'number',
         value: a ** b,
@@ -303,10 +297,8 @@ const opFn: Record<string, BinaryDef> = {
   },
   '/': {
     fn(a: Raw_Value, b: Raw_Value) {
-      a = a ?? 0;
-      b = b ?? 0;
-      assertType(a, 'number');
-      assertType(b, 'number');
+      a = Number(a ?? 0);
+      b = Number(b ?? 0);
       if (b === 0) {
         return makeError('divide by 0', DIV_ERROR);
       }

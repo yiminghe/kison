@@ -218,8 +218,6 @@ Array [
         },
       },
     },
-  ],
-  Array [
     Object {
       "adr": "A2",
       "value": Object {
@@ -231,7 +229,168 @@ Array [
         },
       },
     },
+    Object {
+      "adr": "B2",
+      "value": Object {
+        "type": "number",
+        "value": 9,
+      },
+    },
+    Object {
+      "adr": "C2",
+      "value": Object {
+        "type": "number",
+        "value": 11,
+      },
+    },
+    Object {
+      "adr": "D2",
+      "value": Object {
+        "type": "number",
+        "value": 13,
+      },
+    },
   ],
+  Array [],
+]
+`;
+
+exports[`excel-formula-engine insertRow works 1`] = `
+Array [
+  Array [
+    Object {
+      "adr": "A3",
+      "value": Object {
+        "type": "number",
+        "value": 1,
+      },
+    },
+    Object {
+      "adr": "B3",
+      "value": Object {
+        "formula": "A3+1",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 2,
+        },
+      },
+    },
+    Object {
+      "adr": "C3",
+      "value": Object {
+        "formula": "B3+2",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 4,
+        },
+      },
+    },
+    Object {
+      "adr": "D3",
+      "value": Object {
+        "formula": "C3+3",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 7,
+        },
+      },
+    },
+    Object {
+      "adr": "E3",
+      "value": Object {
+        "formula": "C3+4",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 8,
+        },
+      },
+    },
+    Object {
+      "adr": "F3",
+      "value": Object {
+        "formula": "D3+H3",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "G3",
+      "value": Object {
+        "formula": "F3",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "H3",
+      "value": Object {
+        "formula": "G3",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "I3",
+      "value": Object {
+        "formula": "F3",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#CYCLE!",
+        },
+      },
+    },
+    Object {
+      "adr": "A4",
+      "value": Object {
+        "formula": "sum(A3:C3)",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 7,
+        },
+      },
+    },
+    Object {
+      "adr": "B4",
+      "value": Object {
+        "type": "number",
+        "value": 9,
+      },
+    },
+    Object {
+      "adr": "C4",
+      "value": Object {
+        "type": "number",
+        "value": 11,
+      },
+    },
+    Object {
+      "adr": "D4",
+      "value": Object {
+        "type": "number",
+        "value": 13,
+      },
+    },
+  ],
+  Array [],
 ]
 `;
 
@@ -333,8 +492,6 @@ Array [
         },
       },
     },
-  ],
-  Array [
     Object {
       "adr": "A2",
       "value": Object {
@@ -346,6 +503,28 @@ Array [
         },
       },
     },
+    Object {
+      "adr": "B2",
+      "value": Object {
+        "type": "number",
+        "value": 9,
+      },
+    },
+    Object {
+      "adr": "C2",
+      "value": Object {
+        "type": "number",
+        "value": 11,
+      },
+    },
+    Object {
+      "adr": "D2",
+      "value": Object {
+        "type": "number",
+        "value": 13,
+      },
+    },
   ],
+  Array [],
 ]
 `;

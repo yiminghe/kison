@@ -12,7 +12,7 @@ import type {
   Atom_Type,
   Error_Type,
   Ref_Type,
-  RawCellAddress,
+  CellAddress,
   CellRange,
   Atom_Value_Type,
 } from '../common/types';
@@ -105,7 +105,7 @@ export function unionReference(
   return makeReference(ref1.value.concat(ref2.value));
 }
 
-export function addressInRange(range: CellRange, address: RawCellAddress) {
+export function addressInRange(range: CellRange, address: CellAddress) {
   return (
     range.start.row <= address.row &&
     range.end.row >= address.row &&
@@ -184,6 +184,9 @@ export function checkArrayNumber(
       }
     }
     if (a && a.type !== 'number' && a.type !== 'array') {
+      if (a.type === 'string' && !isNaN(a.value as any)) {
+        continue;
+      }
       return makeError('not number!', VALUE_ERROR);
     }
   }

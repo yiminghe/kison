@@ -2,6 +2,7 @@ import type { AstNode, AstVisitor } from '../parser';
 import { captalize } from '../utils';
 import type { CollectContext, Collectors } from './types';
 import { resolveCell, resolveNamedExpression } from '../interpreter/utils';
+import { CellRange } from '../common/types';
 
 export function collect(ast: AstNode, context: CollectContext) {
   let symbol = '',
@@ -43,6 +44,26 @@ export function collect(ast: AstNode, context: CollectContext) {
 
 export const collectors: Collectors = {
   collect,
+
+  collectRangeReference(node, context) {
+    const { children } = node;
+    const range: CellRange = {} as any;
+    collect(children[0], {
+      addDep(dep) {
+        range.start = dep.value[0].start;
+      },
+    });
+    collect(children[2], {
+      addDep(dep) {
+        range.end = dep.value[0].start;
+      },
+    });
+    context.addDep({
+      type: 'reference',
+      value: [range],
+    });
+  },
+
   collectCELL(node, context) {
     const dep = resolveCell(node.text);
     context.addDep(dep);

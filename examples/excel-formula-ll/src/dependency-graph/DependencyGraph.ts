@@ -1,4 +1,4 @@
-import { Atom_Value_Type, RawCellAddress, CellRange } from '../common/types';
+import { Atom_Value_Type, CellAddress, CellRange } from '../common/types';
 import { addressInRange, isSingleCellRange } from '../interpreter/utils';
 import { CYCLE_ERROR, EMPTY_VALUE } from '../common/constants';
 import {
@@ -10,6 +10,11 @@ import {
 import { getCellAddressKey, getCellRangeKey } from './utils';
 import { isFormula } from './../utils';
 import { makeError } from '../functions/utils';
+import {
+  transformByInsertRow,
+  transformRangeByInsertRow,
+} from '../transformer/index';
+import { serialize } from '../serializer/index';
 
 export type { DependencyNode };
 
@@ -18,7 +23,6 @@ export class DependencyGraph {
   dependents: Map<DependencyNode, Set<DependencyNode>> = new Map();
   nodes: DependencyNode[][] = [];
   width = 0;
-  height = 0;
   formulaNodes: Map<string, FormulaNode> = new Map();
   rangeNodes: Map<string, RangeNode> = new Map();
   batching = 0;
@@ -41,7 +45,7 @@ export class DependencyGraph {
   }
 
   flush() {
-    if (!this.batching) {
+    if (!this.batching && this.changedNodes.size) {
       const shouldCheckSet = new Set(this.changedNodes);
       const { scc, sorted } = this.sort(this.changedNodes);
       this.changedNodes.clear();
@@ -104,7 +108,7 @@ export class DependencyGraph {
     };
   }
 
-  getCellValue(address: RawCellAddress) {
+  getCellValue(address: CellAddress) {
     const node = this.getNode(address) as FormulaNode | ValueNode;
     if (!node) {
       return EMPTY_VALUE;
@@ -268,13 +272,12 @@ export class DependencyGraph {
   }
 
   setFormulaCell(
-    address: RawCellAddress,
+    address: CellAddress,
     formula: string,
     value?: Atom_Value_Type,
   ) {
     const { row, col } = address;
     this.width = Math.max(this.width, col);
-    this.height = Math.max(this.height, row);
     let node: DependencyNode | undefined = undefined;
     if (isFormula(formula)) {
       formula = formula.slice(1);
@@ -302,10 +305,14 @@ export class DependencyGraph {
     this.swapOrSetNode(address, node);
   }
 
-  setCell(address: RawCellAddress, value: Atom_Value_Type) {
+  get height() {
+    return this.nodes.length - 1;
+  }
+
+  setCell(address: CellAddress, value: Atom_Value_Type) {
     const { row, col } = address;
     this.width = Math.max(this.width, col);
-    this.height = Math.max(this.height, row);
+
     const valueNode = this.getNode(address);
 
     if (valueNode && value.type === 'empty') {
@@ -327,7 +334,42 @@ export class DependencyGraph {
     }
   }
 
-  removeNode(address: RawCellAddress) {
+  insertRows(before: number, count = 1) {
+    const { nodes } = this;
+    if (nodes.length > before) {
+      nodes.splice(before, 0, ...new Array(count));
+    }
+    const { formulaNodes, rangeNodes } = this;
+    for (const node of Array.from(formulaNodes.values())) {
+      const { ast, address } = transformByInsertRow(
+        node.address,
+        node.ast,
+        before,
+        count,
+      );
+      if (node.ast !== ast) {
+        node.ast = ast;
+        node.formula = serialize(ast);
+      }
+      if (node.address !== address) {
+        const oldAddressKey = getCellAddressKey(node.address);
+        node.address = address;
+        formulaNodes.delete(oldAddressKey);
+        formulaNodes.set(getCellAddressKey(node.address), node);
+      }
+    }
+    for (const node of Array.from(rangeNodes.values())) {
+      const newRange = transformRangeByInsertRow(node.range, before, count);
+      if (newRange !== node.range) {
+        rangeNodes.delete(getCellRangeKey(node.range));
+        node.range = newRange;
+        rangeNodes.set(getCellRangeKey(node.range), node);
+        this.changedNodes.add(node);
+      }
+    }
+  }
+
+  removeNode(address: CellAddress) {
     const node = this.getNode(address);
     const row = this.nodes[address.row];
     if (row) {
@@ -337,7 +379,7 @@ export class DependencyGraph {
     this.removeEdge(node);
   }
 
-  getNode(address: RawCellAddress) {
+  getNode(address: CellAddress) {
     return this.nodes[address.row]?.[address.col];
   }
 
@@ -352,7 +394,7 @@ export class DependencyGraph {
     return node;
   }
 
-  getOrCreateCellNode(address: RawCellAddress) {
+  getOrCreateCellNode(address: CellAddress) {
     const { nodes } = this;
     const existNode = nodes[address.row]?.[address.col];
     if (existNode) {
@@ -364,7 +406,7 @@ export class DependencyGraph {
     return node;
   }
 
-  swapOrSetNode(address: RawCellAddress, node: DependencyNode) {
+  swapOrSetNode(address: CellAddress, node: DependencyNode) {
     const oldNode = this.getNode(address);
 
     if (oldNode) {

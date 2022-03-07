@@ -1,4 +1,4 @@
-import { CellAddress } from './common/types';
+import { CellAddress, CellRange } from './common/types';
 import { assertIsDefined } from './interpreter/utils';
 
 const A = 'A'.charCodeAt(0);
@@ -61,4 +61,12 @@ export function captalize(s: string) {
 
 export function isFormula(text: string) {
   return text.startsWith('=');
+}
+
+export function isValidCellAddress(adr: CellAddress) {
+  return adr.col > 0 && adr.row > 0;
+}
+
+export function isValidCellRange(range: CellRange) {
+  return isValidCellAddress(range.start) && isValidCellAddress(range.end);
 }

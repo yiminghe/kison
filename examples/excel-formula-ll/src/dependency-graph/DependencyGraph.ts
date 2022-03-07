@@ -1,6 +1,6 @@
 import { Atom_Value_Type, CellAddress, CellRange } from '../common/types';
 import { addressInRange, isSingleCellRange } from '../interpreter/utils';
-import { CYCLE_ERROR, EMPTY_VALUE } from '../common/constants';
+import { CYCLE_ERROR, EMPTY_VALUE, REF_ERROR } from '../common/constants';
 import {
   FormulaNode,
   ValueNode,
@@ -8,13 +8,16 @@ import {
   DependencyNode,
 } from './dataStructure';
 import { getCellAddressKey, getCellRangeKey } from './utils';
-import { isFormula } from './../utils';
+import { isFormula, isValidCellAddress, isValidCellRange } from './../utils';
 import { makeError } from '../functions/utils';
 import {
-  transformByInsertRow,
-  transformRangeByInsertRow,
+  transformByInsertRows,
+  transformRangeByInsertRows,
+  transformByDeleteRows,
+  transformRangeByDeleteRows,
 } from '../transformer/index';
 import { serialize } from '../serializer/index';
+import type { FormulaTransform, RangeTransform } from './types';
 
 export type { DependencyNode };
 
@@ -50,8 +53,12 @@ export class DependencyGraph {
       const { scc, sorted } = this.sort(this.changedNodes);
       this.changedNodes.clear();
       for (const c of scc) {
+        if (c.type === 'range') {
+          c.cyclic = true;
+          continue;
+        }
         if (c.type !== 'formula') {
-          throw new Error('cyclic but not formula!');
+          throw new Error(c.type + ': cyclic but not formula!');
         }
         c.cachedValue = makeError('', CYCLE_ERROR);
       }
@@ -63,7 +70,7 @@ export class DependencyGraph {
         if (s.type === 'value') {
           check = true;
         } else if (s.type === 'range') {
-          s.cachedValue.clear();
+          s.clear();
           check = true;
         } else if (s.type === 'formula') {
           // recompute
@@ -109,6 +116,9 @@ export class DependencyGraph {
   }
 
   getCellValue(address: CellAddress) {
+    if (!isValidCellAddress(address)) {
+      return makeError('', REF_ERROR);
+    }
     const node = this.getNode(address) as FormulaNode | ValueNode;
     if (!node) {
       return EMPTY_VALUE;
@@ -117,6 +127,9 @@ export class DependencyGraph {
   }
 
   getCellArrayFromRange(range: CellRange) {
+    if (!isValidCellRange(range)) {
+      return [[makeError('', REF_ERROR)]];
+    }
     let lastRowNumber = -1;
     const value: Atom_Value_Type[][] = [];
     let lastRow: Atom_Value_Type[] = [];
@@ -318,7 +331,7 @@ export class DependencyGraph {
     if (valueNode && value.type === 'empty') {
       const dependents = this.dependents.get(valueNode);
       if (!dependents || !dependents.size) {
-        this.removeNode(address);
+        this.removeCellNode(address);
         return;
       }
     }
@@ -334,19 +347,37 @@ export class DependencyGraph {
     }
   }
 
-  insertRows(before: number, count = 1) {
+  deleteRows(at: number, count = 1) {
     const { nodes } = this;
-    if (nodes.length > before) {
-      nodes.splice(before, 0, ...new Array(count));
+    if (nodes.length > at) {
+      for (let row = at; row < at + count; row++) {
+        const rowCells = nodes[row];
+        if (rowCells) {
+          for (const [col, d] of rowCells.entries()) {
+            if (!d) {
+              continue;
+            }
+            this.removeCellNode({ row, col });
+          }
+        }
+      }
+      nodes.splice(at, count);
     }
+
+    this._transform(
+      (node) => transformByDeleteRows(node.address, node.ast, at, count),
+      (node) => transformRangeByDeleteRows(node.range, at, count),
+    );
+  }
+
+  _transform(
+    formulaTransform: FormulaTransform,
+    rangeTransform: RangeTransform,
+  ) {
     const { formulaNodes, rangeNodes } = this;
+
     for (const node of Array.from(formulaNodes.values())) {
-      const { ast, address } = transformByInsertRow(
-        node.address,
-        node.ast,
-        before,
-        count,
-      );
+      const { ast, address } = formulaTransform(node);
       if (node.ast !== ast) {
         node.ast = ast;
         node.formula = serialize(ast);
@@ -359,7 +390,7 @@ export class DependencyGraph {
       }
     }
     for (const node of Array.from(rangeNodes.values())) {
-      const newRange = transformRangeByInsertRow(node.range, before, count);
+      const newRange = rangeTransform(node);
       if (newRange !== node.range) {
         rangeNodes.delete(getCellRangeKey(node.range));
         node.range = newRange;
@@ -369,13 +400,46 @@ export class DependencyGraph {
     }
   }
 
-  removeNode(address: CellAddress) {
+  insertRows(before: number, count = 1) {
+    const { nodes } = this;
+    if (nodes.length > before) {
+      nodes.splice(before, 0, ...new Array(count));
+    }
+    this._transform(
+      (node) => transformByInsertRows(node.address, node.ast, before, count),
+      (node) => transformRangeByInsertRows(node.range, before, count),
+    );
+  }
+
+  removeCellNode(address: CellAddress) {
     const node = this.getNode(address);
+    if (!node) {
+      return;
+    }
     const row = this.nodes[address.row];
     if (row) {
       row[address.col] = undefined!;
     }
     this.formulaNodes.delete(getCellAddressKey(address));
+    this.removeNode(node);
+  }
+
+  removeRangeNode(range: CellRange) {
+    const key = getCellRangeKey(range);
+    const rangeNode = this.rangeNodes.get(key);
+    if (rangeNode) {
+      this.removeNode(rangeNode);
+    }
+  }
+
+  removeNode(node: DependencyNode) {
+    const dependents = this.dependents.get(node);
+    if (dependents?.size) {
+      for (const d of dependents) {
+        this.changedNodes.add(d);
+      }
+    }
+    this.changedNodes.delete(node);
     this.removeEdge(node);
   }
 

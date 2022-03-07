@@ -44,7 +44,10 @@ export const transformers: Transformers = {
   transform,
 };
 
-export function transformRoot(root: Ast_Formula_Node, context: Context): Ast_Formula_Node {
+export function transformRoot(
+  root: Ast_Formula_Node,
+  context: Context,
+): Ast_Formula_Node {
   return produce(root, (draftRoot: Ast_Formula_Node) => {
     transform(draftRoot as any, context);
   });

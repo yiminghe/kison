@@ -1,6 +1,6 @@
 import { makeArray, makeError } from '../functions/utils';
 import type { AstNode, AstVisitor } from '../parser';
-import { captalize } from '../utils';
+import { captalize, isValidCellAddress, isValidCellRange } from '../utils';
 import type { All_Type, All_Value_Type } from '../common/types';
 import type { Context, Evaluators } from './types';
 import { isSingleCellRange } from './utils';
@@ -51,12 +51,12 @@ export const evaluators: Evaluators = {
   evaluate,
 };
 
-export function run(ast: AstNode, context: Context): All_Value_Type {
+export function evaluateRoot(ast: AstNode, context: Context): All_Value_Type {
   const ret = evaluate(ast, context);
   const { dependencyGraph, address } = context;
   if (ret.type === 'reference') {
     const range = ret.value;
-    if (range.length !== 1) {
+    if (range.length !== 1 || !isValidCellRange(range[0])) {
       return makeError('', REF_ERROR);
     }
     const r = range[0];

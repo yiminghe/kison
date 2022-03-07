@@ -14,8 +14,9 @@ Object {
       ],
       Array [
         Object {
-          "type": "number",
-          "value": 16,
+          "message": "Value Not Available Error!",
+          "type": "error",
+          "value": "#N/A",
         },
       ],
     ],
@@ -41,12 +42,14 @@ Object {
       ],
       Array [
         Object {
-          "type": "number",
-          "value": 9,
+          "message": "Value Not Available Error!",
+          "type": "error",
+          "value": "#N/A",
         },
         Object {
-          "type": "number",
-          "value": 11,
+          "message": "Value Not Available Error!",
+          "type": "error",
+          "value": "#N/A",
         },
       ],
     ],
@@ -72,12 +75,14 @@ Object {
       ],
       Array [
         Object {
-          "type": "number",
-          "value": 18,
+          "message": "Value Not Available Error!",
+          "type": "error",
+          "value": "#N/A",
         },
         Object {
-          "type": "number",
-          "value": 22,
+          "message": "Value Not Available Error!",
+          "type": "error",
+          "value": "#N/A",
         },
       ],
     ],
@@ -104,11 +109,11 @@ Object {
       Array [
         Object {
           "type": "number",
-          "value": 20,
+          "value": 9,
         },
         Object {
           "type": "number",
-          "value": 22,
+          "value": 9,
         },
       ],
     ],
@@ -116,7 +121,7 @@ Object {
 }
 `;
 
-exports[`excel-formula-engine compute works 1`] = `
+exports[`excel-formula-engine compute works 3`] = `
 Array [
   Array [
     Object {
@@ -219,9 +224,9 @@ Array [
       },
     },
     Object {
-      "adr": "A2",
+      "adr": "A3",
       "value": Object {
-        "formula": "sum(a1:c1)",
+        "formula": "sum(a1:c2)",
         "type": "formula",
         "value": Object {
           "type": "number",
@@ -230,24 +235,61 @@ Array [
       },
     },
     Object {
-      "adr": "B2",
+      "adr": "B3",
       "value": Object {
         "type": "number",
         "value": 9,
       },
     },
     Object {
-      "adr": "C2",
+      "adr": "C3",
       "value": Object {
-        "type": "number",
-        "value": 11,
+        "formula": "sum(a1:b3)",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 19,
+        },
       },
     },
     Object {
-      "adr": "D2",
+      "adr": "D3",
       "value": Object {
         "type": "number",
         "value": 13,
+      },
+    },
+    Object {
+      "adr": "A4",
+      "value": Object {
+        "formula": "a3+1",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 8,
+        },
+      },
+    },
+    Object {
+      "adr": "B4",
+      "value": Object {
+        "formula": "d1+10",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 17,
+        },
+      },
+    },
+    Object {
+      "adr": "C4",
+      "value": Object {
+        "formula": "b3+6",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 15,
+        },
       },
     },
   ],
@@ -255,7 +297,88 @@ Array [
 ]
 `;
 
-exports[`excel-formula-engine insertRow works 1`] = `
+exports[`excel-formula-engine deleteRows works 1`] = `
+Array [
+  Array [
+    Object {
+      "adr": "A1",
+      "value": Object {
+        "formula": "sum(#REF!)",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#REF!",
+        },
+      },
+    },
+    Object {
+      "adr": "B1",
+      "value": Object {
+        "type": "number",
+        "value": 9,
+      },
+    },
+    Object {
+      "adr": "C1",
+      "value": Object {
+        "formula": "sum(A1:B1)",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#REF!",
+        },
+      },
+    },
+    Object {
+      "adr": "D1",
+      "value": Object {
+        "type": "number",
+        "value": 13,
+      },
+    },
+    Object {
+      "adr": "A2",
+      "value": Object {
+        "formula": "A1+1",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#REF!",
+        },
+      },
+    },
+    Object {
+      "adr": "B2",
+      "value": Object {
+        "formula": "#REF!+10",
+        "type": "formula",
+        "value": Object {
+          "message": "",
+          "type": "error",
+          "value": "#REF!",
+        },
+      },
+    },
+    Object {
+      "adr": "C2",
+      "value": Object {
+        "formula": "B1+6",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 15,
+        },
+      },
+    },
+  ],
+  Array [],
+]
+`;
+
+exports[`excel-formula-engine insertRows works 1`] = `
 Array [
   Array [
     Object {
@@ -358,9 +481,9 @@ Array [
       },
     },
     Object {
-      "adr": "A4",
+      "adr": "A5",
       "value": Object {
-        "formula": "sum(A3:C3)",
+        "formula": "sum(A3:C4)",
         "type": "formula",
         "value": Object {
           "type": "number",
@@ -369,24 +492,61 @@ Array [
       },
     },
     Object {
-      "adr": "B4",
+      "adr": "B5",
       "value": Object {
         "type": "number",
         "value": 9,
       },
     },
     Object {
-      "adr": "C4",
+      "adr": "C5",
       "value": Object {
-        "type": "number",
-        "value": 11,
+        "formula": "sum(A3:B5)",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 19,
+        },
       },
     },
     Object {
-      "adr": "D4",
+      "adr": "D5",
       "value": Object {
         "type": "number",
         "value": 13,
+      },
+    },
+    Object {
+      "adr": "A6",
+      "value": Object {
+        "formula": "A5+1",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 8,
+        },
+      },
+    },
+    Object {
+      "adr": "B6",
+      "value": Object {
+        "formula": "D3+10",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 17,
+        },
+      },
+    },
+    Object {
+      "adr": "C6",
+      "value": Object {
+        "formula": "B5+6",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 15,
+        },
       },
     },
   ],
@@ -493,9 +653,9 @@ Array [
       },
     },
     Object {
-      "adr": "A2",
+      "adr": "A3",
       "value": Object {
-        "formula": "sum(a1:c1)",
+        "formula": "sum(a1:c2)",
         "type": "formula",
         "value": Object {
           "type": "number",
@@ -504,24 +664,61 @@ Array [
       },
     },
     Object {
-      "adr": "B2",
+      "adr": "B3",
       "value": Object {
         "type": "number",
         "value": 9,
       },
     },
     Object {
-      "adr": "C2",
+      "adr": "C3",
       "value": Object {
-        "type": "number",
-        "value": 11,
+        "formula": "sum(a1:b3)",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 25,
+        },
       },
     },
     Object {
-      "adr": "D2",
+      "adr": "D3",
       "value": Object {
         "type": "number",
         "value": 13,
+      },
+    },
+    Object {
+      "adr": "A4",
+      "value": Object {
+        "formula": "a3+1",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 14,
+        },
+      },
+    },
+    Object {
+      "adr": "B4",
+      "value": Object {
+        "formula": "d1+10",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 23,
+        },
+      },
+    },
+    Object {
+      "adr": "C4",
+      "value": Object {
+        "formula": "b3+6",
+        "type": "formula",
+        "value": Object {
+          "type": "number",
+          "value": 15,
+        },
       },
     },
   ],

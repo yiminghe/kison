@@ -1,7 +1,8 @@
 import { Atom_Value_Type, Error_Type } from '../common/types';
 import { isSingleCellRange } from '../interpreter/utils';
+import { isValidCellRange } from '../utils';
 import { register } from './register';
-import { makeError } from './utils';
+import { makeError, REF_ERROR, VALUE_ERROR } from './utils';
 
 function sumValues(values: Atom_Value_Type[][]): Error_Type | number {
   let ret = 0;
@@ -38,12 +39,15 @@ register('sum', {
         let values: Atom_Value_Type[][] = [];
 
         for (const r of rs) {
+          if (!isValidCellRange(r)) {
+            return makeError('', REF_ERROR);
+          }
           if (isSingleCellRange(r)) {
             const value = dependencyGraph.getCellValue(r.start);
             values.push([value]);
           } else {
             const rangeNode = dependencyGraph.getOrCreateRangeNode(r);
-            let sumValue = rangeNode.cachedValue.get('sum');
+            let sumValue = rangeNode.getValue('sum');
             if (!sumValue) {
               let rangeValues: Atom_Value_Type[][] = [];
               for (const sr of dependencyGraph.getCellFromRange(r)) {
@@ -56,10 +60,10 @@ register('sum', {
                   type: 'number',
                   value: ret,
                 };
-                rangeNode.cachedValue.set('sum', sumValue);
+                rangeNode.setValue('sum', sumValue);
               } else {
                 sumValue = ret;
-                rangeNode.cachedValue.set('sum', ret);
+                rangeNode.setValue('sum', ret);
               }
             }
             values.push([sumValue]);
@@ -75,7 +79,7 @@ register('sum', {
       } else if (typeof a.value === 'number') {
         ret += a.value;
       } else {
-        return makeError('not number type!', '#VALUE!');
+        return makeError('not number type!', VALUE_ERROR);
       }
     }
     return {

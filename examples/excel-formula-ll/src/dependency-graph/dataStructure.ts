@@ -5,12 +5,13 @@ import {
   CellAddress,
   CellRange,
 } from '../common/types';
-import parser from '../parser';
 import { Ast_Formula_Node } from '../parser';
-import { run } from '../interpreter/index';
+import { evaluateRoot } from '../interpreter/index';
 import { toCoordString } from '../utils';
 import type { DependencyGraph } from './DependencyGraph';
 import { isValueEqual } from './utils';
+import { parse } from '../parserApi';
+import { makeError } from '../functions/utils';
 
 export class FormulaNode {
   readonly type = 'formula';
@@ -24,7 +25,7 @@ export class FormulaNode {
     public formula: string,
     public address: CellAddress,
   ) {
-    const { ast } = parser.parse(formula);
+    const { ast } = parse(formula);
     this.ast = (ast as any).toJSON();
     collect(ast, {
       addDep: (dep) => {
@@ -43,17 +44,18 @@ export class FormulaNode {
 
   recompute() {
     const currentValue = this.cachedValue;
-    const value = run(this.ast, {
+    const value = evaluateRoot(this.ast, {
       dependencyGraph: this.dependencyGraph,
       address: this.address,
     }) as Atom_Value_Type;
+    this.cachedValue = value;
     return !currentValue || !isValueEqual(currentValue, value);
   }
 
   get value(): Atom_Value_Type {
     if (!this.cachedValue) {
       // TODO: fix type & array formula
-      this.cachedValue = run(this.ast, {
+      this.cachedValue = evaluateRoot(this.ast, {
         dependencyGraph: this.dependencyGraph,
         address: this.address,
       }) as Atom_Value_Type;
@@ -69,8 +71,22 @@ export class ValueNode {
 
 export class RangeNode {
   readonly type = 'range';
-  readonly cachedValue = new Map<string, Atom_Value_Type>();
+  private cachedValue = new Map<string, Atom_Value_Type>();
+  cyclic = false;
   constructor(public range: CellRange) {}
+  getValue(tag: string) {
+    if (this.cyclic) {
+      return makeError('', '#CYCLE!');
+    }
+    return this.cachedValue.get(tag);
+  }
+  setValue(tag: string, value: Atom_Value_Type) {
+    this.cachedValue.set(tag, value);
+  }
+  clear() {
+    this.cyclic = false;
+    this.cachedValue.clear();
+  }
 }
 
 export type DependencyNode = ValueNode | RangeNode | FormulaNode;

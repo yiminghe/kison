@@ -4,6 +4,7 @@ import {
   NULL_ERROR,
   VALUE_ERROR,
   NA_ERROR,
+  REF_ERROR,
 } from '../functions/utils';
 
 import type {
@@ -264,6 +265,18 @@ const cellAddress = `(?:
 )`.replace(/\s/g, '');
 
 export function resolveCell(text: string) {
+  if (text === REF_ERROR) {
+    const start: CellAddress = {
+      row: -1,
+      col: -1,
+    };
+    return makeReference([
+      {
+        start,
+        end: start,
+      },
+    ]);
+  }
   let rowMatch = text.match(rowRangeAddress);
   if (rowMatch) {
     let [_, start, end] = rowMatch;

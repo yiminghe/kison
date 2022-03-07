@@ -1,7 +1,12 @@
 import { EMPTY_VALUE } from './common/constants';
-import { Atom_Value_Type, CellAddress, Empty_Type } from './common/types';
+import {
+  Atom_Value_Type,
+  CellAddress,
+  Empty_Type,
+  All_Value_Type,
+} from './common/types';
 import { DependencyGraph } from './dependency-graph/DependencyGraph';
-import { evaluate } from './interpreter/index';
+import { evaluateRoot } from './interpreter/index';
 import { parse } from './parserApi';
 
 type FormulaType = {
@@ -92,12 +97,18 @@ export class FormulaEngine {
     dependencyGraph.flush();
   }
 
-  evaluateFormula(formula: string) {
+  deleteRows(at: number, count = 1) {
+    const { dependencyGraph } = this;
+    dependencyGraph.deleteRows(at, count);
+    dependencyGraph.flush();
+  }
+
+  evaluateFormula(formula: string): All_Value_Type {
     const ret = parse(formula);
     if (ret.error) {
       throw ret.error;
     }
-    return evaluate(ret.ast, {
+    return evaluateRoot(ret.ast, {
       dependencyGraph: this.dependencyGraph,
     });
   }

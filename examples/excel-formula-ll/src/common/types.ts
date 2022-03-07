@@ -8,6 +8,7 @@ import type {
   NAME_ERROR,
   CYCLE_ERROR,
   EMPTY_VALUE,
+  ERROR_ERROR,
 } from '../common/constants';
 
 export interface String_Type {
@@ -41,7 +42,7 @@ export type ERROR_ENUM =
   | typeof NUM_ERROR
   | typeof NAME_ERROR
   | typeof CYCLE_ERROR
-  | '#ERROR!';
+  | typeof ERROR_ERROR;
 
 export interface Error_Type {
   type: 'error';

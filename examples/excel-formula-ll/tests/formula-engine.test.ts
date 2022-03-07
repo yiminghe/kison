@@ -25,12 +25,14 @@ describe('excel-formula-engine', () => {
         makeFormula('g1'), // h1
         makeFormula('f1'), // i1
       ],
+      [],
       [
-        makeFormula('sum(a1:c1)'), //a2
-        makeNumber(9), // b2
-        makeNumber(11), // b2
-        makeNumber(13), // b2
+        makeFormula('sum(a1:c2)'), //a3
+        makeNumber(9), // b3
+        makeFormula('sum(a1:b3)'), //c3
+        makeNumber(13), // d3
       ],
+      [makeFormula('=a3+1'), makeFormula('=d1+10'), makeFormula('b3+6')],
     ]);
   });
 
@@ -54,26 +56,27 @@ describe('excel-formula-engine', () => {
   }
 
   it('compute works', () => {
-    expect(g.width).toBe(9);
-    expect(g.height).toBe(2);
-
+    expect(g.width).toMatchInlineSnapshot(`9`);
+    expect(g.height).toMatchInlineSnapshot(`4`);
     const ret = getCellValues();
-
     expect(ret).toMatchSnapshot();
   });
 
-  it('insertRow works', () => {
+  it('insertRows works', () => {
     g.insertRows(1, 2);
     const ret = getCellValues();
+    expect(ret).toMatchSnapshot();
+  });
 
+  it('deleteRows works', () => {
+    g.deleteRows(1, 2);
+    const ret = getCellValues();
     expect(ret).toMatchSnapshot();
   });
 
   it('recompute works', () => {
     g.setCellValue(parseCoord('c1'), makeNumber(10));
-
     const ret = getCellValues();
-
     expect(ret).toMatchSnapshot();
   });
 

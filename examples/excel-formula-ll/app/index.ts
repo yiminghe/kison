@@ -47,7 +47,8 @@ require(['vs/editor/editor.main'], () => {
   B1: =4+a2
   B2: =5+b1
   c1: 10
-  
+  c2: 30
+  d2: =2*sum(a1:b2)
   `
       .trim()
       .replace(/\n\s+/g, '\n');
@@ -194,6 +195,36 @@ require(['vs/editor/editor.main'], () => {
     let count = parseInt(cs[1]) || 1;
     engine.insertRows(before, count);
     refreshSheet();
+  });
+
+  $('deleteRows').addEventListener('click', () => {
+    const content = prompt('at,count=1') || '';
+    const cs = content.split(',');
+    let at = parseInt(cs[0]);
+    let count = parseInt(cs[1]) || 1;
+    engine.deleteRows(at, count);
+    refreshSheet();
+  });
+
+  $('printCells').addEventListener('click', () => {
+    let contents: any = {};
+    function push(addr: CellAddress, content: any) {
+      contents[toCoordString(addr)] = content;
+    }
+    for (let col = 1; col <= engine.width; col++) {
+      for (let row = 1; row <= engine.height; row++) {
+        const addr = { row, col };
+        const cell = engine.getCellValue(addr);
+        if (cell) {
+          if (cell.type === 'formula') {
+            push(addr, cell.value?.value);
+          } else {
+            push(addr, cell.value);
+          }
+        }
+      }
+    }
+    console.log(contents);
   });
 
   $('setCell').addEventListener('click', () => {

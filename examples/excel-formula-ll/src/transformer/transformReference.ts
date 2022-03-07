@@ -1,5 +1,6 @@
-import { resolveCell } from '../interpreter/utils';
-import { toCoordString } from '../utils';
+import { REF_ERROR } from '../common/constants';
+import { isSingleCellRange, resolveCell } from '../interpreter/utils';
+import { isValidCellAddress, isValidCellRange, toCoordString } from '../utils';
 import { transform, registerTransformers } from './transformers';
 
 registerTransformers({
@@ -11,16 +12,25 @@ registerTransformers({
   transformCELL(node, context) {
     const cell = resolveCell(node.text);
     // TODO row
-    const { start, end } = cell.value[0];
-    const newStart = context.transformCellAdress(start);
-    let changed = newStart !== start;
-    if (changed && start === end) {
-      node.text = toCoordString(newStart);
+    const range = cell.value[0];
+    const newStart = context.transformCellAdress(range.start);
+    if (isSingleCellRange(range)) {
+      if (newStart !== range.start) {
+        if (isValidCellAddress(newStart)) {
+          node.text = toCoordString(newStart);
+        } else {
+          node.text = REF_ERROR;
+        }
+      }
     } else {
-      const newEnd = context.transformCellAdress(end);
-      changed = changed || newEnd !== end;
-      if (changed) {
-        node.text = toCoordString(newStart) + ':' + toCoordString(newEnd);
+      const newRange = context.transformCellRange(range);
+      if (newRange !== range) {
+        if (isValidCellRange(newRange)) {
+          node.text =
+            toCoordString(newRange.start) + ':' + toCoordString(newRange.end);
+        } else {
+          node.text = REF_ERROR;
+        }
       }
     }
   },

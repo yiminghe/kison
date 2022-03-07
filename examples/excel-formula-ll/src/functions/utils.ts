@@ -8,6 +8,7 @@ import type {
   String_Type,
   Atom_Value_Type,
 } from '../common/types';
+import { ERROR_ERROR } from '../common/constants';
 
 export function toNumber(a: Atom_Type) {
   const { type, value } = a;
@@ -23,7 +24,7 @@ export function toNumber(a: Atom_Type) {
 export function makeError(message: string, value?: ERROR_ENUM): Error_Type {
   return {
     type: 'error',
-    value: value || '#ERROR!',
+    value: value || ERROR_ERROR,
     message,
   };
 }

@@ -436,7 +436,7 @@ registerEvaluators({
       }
       const v = Number(b.value);
       if (isNaN(v)) {
-        return makeError('not number', '#VALUE!');
+        return makeError('not number', VALUE_ERROR);
       }
       return {
         type: 'number',

@@ -40,6 +40,21 @@ console.log(engine.getCellValue({
 }));
 ```
 
+## api
+
+```ts
+export declare class FormulaEngine {
+    initWithValues(values: CellValue[][], options?: Options): void;
+    setCellValue(address: CellAddress, cell: CellValue): void;
+    get width(): number;
+    get height(): number;
+    getCellValue(address: CellAddress): CellValue;
+    insertRows(before: number, count?: number): void;
+    deleteRows(at: number, count?: number): void;
+    evaluateFormula(formula: string): CellValue;
+}
+```
+
 ## feature
 
 - function: `sum(a1:a2,b1)`

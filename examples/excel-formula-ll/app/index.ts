@@ -10,7 +10,7 @@ import type { LiteralToken } from '../src/index';
 import functionNames from './functionNames';
 import { getCellData } from './getCellData';
 import type * as Manaco from 'monaco-editor';
-import { makeFormula, makeString } from '../tests/utils';
+import { makeFormula, makeNumber, makeString } from '../tests/utils';
 
 const { toCoordString, parseCoord, isFormula } = utils;
 const { getAst } = cachedParser;
@@ -235,7 +235,7 @@ require(['vs/editor/editor.main'], () => {
     let addr = parseCoord(indexStr);
     engine.setCellValue(
       addr,
-      isFormula(value) ? makeFormula(value) : makeString(value),
+      isFormula(value) ? makeFormula(value) : (isNaN(parseInt(value)) ? makeString(value) : makeNumber(parseInt(value))),
     );
     refreshSheet();
   });

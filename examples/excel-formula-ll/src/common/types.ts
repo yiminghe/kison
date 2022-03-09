@@ -75,10 +75,18 @@ export type Atom_Type =
   | Error_Type
   | Bool_Type;
 
-export type All_Type = Atom_Type | Array_Type;
-
 export type All_Value_Type = Atom_Type | Array_Type;
 
 export type Atom_Value_Type = Exclude<Atom_Type, Ref_Type>;
 
 export type Raw_Value = Atom_Value_Type['value'];
+
+type EmptyToUndefined<T> = T extends Empty_Type ? undefined : T;
+
+export type Formula_Type = {
+  type: 'formula';
+  value?: EmptyToUndefined<Atom_Value_Type>;
+  formula: string;
+};
+
+export type CellValue = EmptyToUndefined<Atom_Value_Type | Formula_Type>;

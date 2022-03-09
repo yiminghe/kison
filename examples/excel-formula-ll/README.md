@@ -44,14 +44,14 @@ console.log(engine.getCellValue({
 
 ```ts
 export declare class FormulaEngine {
-    initWithValues(values: CellValue[][], options?: Options): void;
-    setCellValue(address: CellAddress, cell: CellValue): void;
+    initWithValues(values: CellValue[][], options?: FormulaEngineOptions): ChangedCell[] | undefined;
+    setCellValue(address: CellAddress, cell: CellValue): ChangedCell[];
     get width(): number;
     get height(): number;
     getCellValue(address: CellAddress): CellValue;
-    insertRows(before: number, count?: number): void;
-    deleteRows(at: number, count?: number): void;
-    evaluateFormula(formula: string): CellValue;
+    insertRows(before: number, count?: number): ChangedCell[];
+    deleteRows(at: number, count?: number): ChangedCell[];
+    evaluateFormula(formula: string): All_Value_Type;
 }
 ```
 

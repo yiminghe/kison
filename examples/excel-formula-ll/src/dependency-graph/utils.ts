@@ -13,3 +13,10 @@ export function getCellRangeKey(range: CellRange) {
 export function isValueEqual(v1: Atom_Value_Type, v2: Atom_Value_Type) {
   return v1.type === v2.type && v1.value === v2.value;
 }
+
+export function transformEmptyValue(v: Atom_Value_Type | undefined) {
+  if (v?.type === 'empty') {
+    return undefined;
+  }
+  return v;
+}

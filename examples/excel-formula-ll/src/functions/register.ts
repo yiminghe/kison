@@ -1,5 +1,5 @@
 import type { Context } from '../interpreter/types';
-import type { All_Type } from '../common/types';
+import type { All_Value_Type } from '../common/types';
 
 export const functions = new Map();
 
@@ -9,13 +9,13 @@ interface Def {
   interceptArgument?: (
     arg: {
       index: number;
-      value?: All_Type;
+      value?: All_Value_Type;
     },
-    args: All_Type[],
+    args: All_Value_Type[],
   ) => {
-    value: All_Type | undefined;
+    value: All_Value_Type | undefined;
   } | null;
-  fn: (args: All_Type[], context: Context) => All_Type;
+  fn: (args: All_Value_Type[], context: Context) => All_Value_Type;
 }
 
 export function register(name: string, def: Def) {

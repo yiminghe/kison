@@ -15,7 +15,7 @@ import type {
 
 import { evaluate, registerEvaluators } from './evaluators';
 import type {
-  All_Type,
+  All_Value_Type,
   Array_Type,
   Atom_Value_Type,
   Atom_Type,
@@ -37,7 +37,7 @@ function opOneAndMany(
   n: Atom_Value_Type,
   a: Array_Type,
   { fn, check }: BinaryDef,
-): All_Type {
+): All_Value_Type {
   let ret: Array_Type['value'] = [];
   const { value } = a;
   for (let i = 0; i < value.length; i++) {
@@ -62,7 +62,7 @@ function opOneAndMany(
   };
 }
 
-function getRowColPos(value: Array_Type['value'], child: All_Type) {
+function getRowColPos(value: Array_Type['value'], child: All_Value_Type) {
   let startRow = 0;
   let endRow = value.length - 1;
   let startCol = 0;
@@ -105,7 +105,7 @@ type BinaryDef = {
     | undefined
     | ((
         isArrayFormula: boolean,
-        ...args: (All_Type | null)[]
+        ...args: (All_Value_Type | null)[]
       ) => Error_Type | undefined);
 };
 
@@ -113,7 +113,7 @@ function evaluateBinaryExp(
   node: Ast_BinaryExp_Node,
   context: Context,
   def: BinaryDef,
-): All_Type {
+): All_Value_Type {
   const { fn } = def;
   let check;
   if ('check' in def) {
@@ -125,8 +125,8 @@ function evaluateBinaryExp(
   let rightRet = evaluate(children[2], context);
   const leftChild = leftRet;
   const rightChild = rightRet;
-  let left: Exclude<All_Type, Ref_Type>;
-  let right: Exclude<All_Type, Ref_Type>;
+  let left: Exclude<All_Value_Type, Ref_Type>;
+  let right: Exclude<All_Value_Type, Ref_Type>;
 
   if (leftRet.type === 'reference') {
     if (leftRet.value.length !== 1) {
@@ -404,7 +404,7 @@ function evaluatePrefixExp(
   node: Ast_PrefixExp_Node,
   context: Context,
   { fn }: { fn: (arg: Atom_Value_Type) => Number_Type | Error_Type },
-): All_Type {
+): All_Value_Type {
   const a = transformToArray(node.children[1], context);
 
   function one(b: Atom_Value_Type) {

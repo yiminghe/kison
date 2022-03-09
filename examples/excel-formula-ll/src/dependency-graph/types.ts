@@ -1,5 +1,10 @@
 import type { AstVisitors, Ast_Formula_Node } from '../parser';
-import type { Ref_Type, CellAddress, CellRange } from '../common/types';
+import type {
+  Ref_Type,
+  CellAddress,
+  CellRange,
+  CellValue,
+} from '../common/types';
 import type { FormulaNode, RangeNode } from './dataStructure';
 
 export interface CollectContext {
@@ -13,3 +18,10 @@ export type FormulaTransform = (node: FormulaNode) => {
   address: CellAddress;
 };
 export type RangeTransform = (node: RangeNode) => CellRange;
+
+export interface ChangedCell {
+  type: 'update';
+  address: CellAddress;
+  before: CellValue;
+  after: CellValue;
+}

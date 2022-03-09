@@ -8,7 +8,7 @@ import {
 } from '../functions/utils';
 
 import type {
-  All_Type,
+  All_Value_Type,
   Array_Type,
   Atom_Type,
   Error_Type,
@@ -164,7 +164,7 @@ export function intersectReference(
   ]);
 }
 
-export function checkError(...args: All_Type[]) {
+export function checkError(...args: All_Value_Type[]) {
   for (const a of args) {
     if (a?.type === 'error') {
       return a;
@@ -174,7 +174,7 @@ export function checkError(...args: All_Type[]) {
 
 export function checkArrayNumber(
   isArrayFormula: boolean,
-  ...args: (All_Type | null)[]
+  ...args: (All_Value_Type | null)[]
 ) {
   for (const a of args) {
     if (a && a.type === 'empty') {

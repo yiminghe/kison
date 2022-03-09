@@ -1,33 +1,20 @@
 import { EMPTY_VALUE } from './common/constants';
-import {
-  Atom_Value_Type,
-  CellAddress,
-  Empty_Type,
-  All_Value_Type,
-} from './common/types';
+import { CellAddress, All_Value_Type, CellValue } from './common/types';
 import { DependencyGraph } from './dependency-graph/DependencyGraph';
 import { evaluateRoot } from './interpreter/index';
 import { parse } from './parserApi';
+import type { ChangedCell } from './dependency-graph/types';
 
-type FormulaType = {
-  type: 'formula';
-  formula: string;
-  value?: Atom_Value_Type;
-};
-
-type Options = {
+export type FormulaEngineOptions = {
   noCompute?: boolean;
 };
 
-export type CellValue =
-  | Exclude<Atom_Value_Type, Empty_Type>
-  | FormulaType
-  | undefined;
+export type { CellValue, ChangedCell };
 
 export class FormulaEngine {
   dependencyGraph: DependencyGraph = new DependencyGraph();
 
-  initWithValues(values: CellValue[][], options: Options = {}) {
+  initWithValues(values: CellValue[][], options: FormulaEngineOptions = {}) {
     const { dependencyGraph } = this;
     dependencyGraph.beginTransaction();
     for (let row = 0; row < values.length; ++row) {
@@ -43,7 +30,7 @@ export class FormulaEngine {
     if (options.noCompute) {
       dependencyGraph.stopTransaction();
     } else {
-      dependencyGraph.endTransaction();
+      return dependencyGraph.endTransaction();
     }
   }
 
@@ -63,7 +50,7 @@ export class FormulaEngine {
   setCellValue(address: CellAddress, cell: CellValue) {
     const { dependencyGraph } = this;
     this._setCell(address, cell);
-    dependencyGraph.flush();
+    return dependencyGraph.flush();
   }
 
   get width() {
@@ -81,7 +68,7 @@ export class FormulaEngine {
       return undefined;
     }
     const cell = dependencyGraph.getNode(address);
-    if (cell.type === 'formula') {
+    if (cell?.type === 'formula') {
       return {
         type: 'formula',
         value: cellValue,
@@ -94,13 +81,13 @@ export class FormulaEngine {
   insertRows(before: number, count = 1) {
     const { dependencyGraph } = this;
     dependencyGraph.insertRows(before, count);
-    dependencyGraph.flush();
+    return dependencyGraph.flush();
   }
 
   deleteRows(at: number, count = 1) {
     const { dependencyGraph } = this;
     dependencyGraph.deleteRows(at, count);
-    dependencyGraph.flush();
+    return dependencyGraph.flush();
   }
 
   evaluateFormula(formula: string): All_Value_Type {

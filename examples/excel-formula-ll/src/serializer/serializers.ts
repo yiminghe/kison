@@ -1,6 +1,6 @@
 import type { AstNode, AstVisitor } from '../parser';
 import { captalize } from '../utils';
-import type { All_Type } from '../common/types';
+import type { All_Value_Type } from '../common/types';
 import type { Serializers } from './types';
 
 export function serialize(ast: AstNode): string {

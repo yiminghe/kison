@@ -6,7 +6,7 @@ import type { Ast_Exp_Node } from '../parser';
 
 import { evaluate, registerEvaluators } from './evaluators';
 
-import type { All_Type } from '../common/types';
+import type { All_Value_Type } from '../common/types';
 
 registerEvaluators({
   evaluateFunctionExp(node, context) {
@@ -56,7 +56,7 @@ registerEvaluators({
       }
     }
 
-    let argsValue: (All_Type | null)[] = [];
+    let argsValue: (All_Value_Type | null)[] = [];
 
     for (let i = 0; i < argsNode.length; i++) {
       const argNode = argsNode[i];

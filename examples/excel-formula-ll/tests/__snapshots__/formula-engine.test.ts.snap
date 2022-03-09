@@ -299,6 +299,115 @@ Array [
 
 exports[`excel-formula-engine deleteRows works 1`] = `
 Array [
+  Object {
+    "address": "B2",
+    "after": Object {
+      "formula": "#REF!+10",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#REF!",
+      },
+    },
+    "before": Object {
+      "formula": "d1+10",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 17,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "A1",
+    "after": Object {
+      "formula": "sum(#REF!)",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#REF!",
+      },
+    },
+    "before": Object {
+      "formula": "sum(a1:c2)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "A2",
+    "after": Object {
+      "formula": "A1+1",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#REF!",
+      },
+    },
+    "before": Object {
+      "formula": "a3+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "C1",
+    "after": Object {
+      "formula": "sum(A1:B1)",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#REF!",
+      },
+    },
+    "before": Object {
+      "formula": "sum(a1:b3)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 19,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "C2",
+    "after": Object {
+      "formula": "B1+6",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 15,
+      },
+    },
+    "before": Object {
+      "formula": "b3+6",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 15,
+      },
+    },
+    "type": "update",
+  },
+]
+`;
+
+exports[`excel-formula-engine deleteRows works 2`] = `
+Array [
   Array [
     Object {
       "adr": "A1",
@@ -379,6 +488,279 @@ Array [
 `;
 
 exports[`excel-formula-engine insertRows works 1`] = `
+Array [
+  Object {
+    "address": "A5",
+    "after": Object {
+      "formula": "sum(A3:C4)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "before": Object {
+      "formula": "sum(a1:c2)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "C5",
+    "after": Object {
+      "formula": "sum(A3:B5)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 19,
+      },
+    },
+    "before": Object {
+      "formula": "sum(a1:b3)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 19,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "B3",
+    "after": Object {
+      "formula": "A3+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 2,
+      },
+    },
+    "before": Object {
+      "formula": "a1+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 2,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "C3",
+    "after": Object {
+      "formula": "B3+2",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 4,
+      },
+    },
+    "before": Object {
+      "formula": "b1+2",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 4,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "D3",
+    "after": Object {
+      "formula": "C3+3",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "before": Object {
+      "formula": "c1+3",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "E3",
+    "after": Object {
+      "formula": "C3+4",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "before": Object {
+      "formula": "c1+4",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "F3",
+    "after": Object {
+      "formula": "D3+H3",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "before": Object {
+      "formula": "d1+h1",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "G3",
+    "after": Object {
+      "formula": "F3",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "before": Object {
+      "formula": "f1",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "H3",
+    "after": Object {
+      "formula": "G3",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "before": Object {
+      "formula": "g1",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "I3",
+    "after": Object {
+      "formula": "F3",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "before": Object {
+      "formula": "f1",
+      "type": "formula",
+      "value": Object {
+        "message": "",
+        "type": "error",
+        "value": "#CYCLE!",
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "A6",
+    "after": Object {
+      "formula": "A5+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "before": Object {
+      "formula": "a3+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "B6",
+    "after": Object {
+      "formula": "D3+10",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 17,
+      },
+    },
+    "before": Object {
+      "formula": "d1+10",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 17,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "C6",
+    "after": Object {
+      "formula": "B5+6",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 15,
+      },
+    },
+    "before": Object {
+      "formula": "b3+6",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 15,
+      },
+    },
+    "type": "update",
+  },
+]
+`;
+
+exports[`excel-formula-engine insertRows works 2`] = `
 Array [
   Array [
     Object {
@@ -555,6 +937,147 @@ Array [
 `;
 
 exports[`excel-formula-engine recompute works 1`] = `
+Array [
+  Object {
+    "address": "C1",
+    "after": Object {
+      "type": "number",
+      "value": 10,
+    },
+    "before": Object {
+      "formula": "b1+2",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 4,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "A3",
+    "after": Object {
+      "formula": "sum(a1:c2)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 13,
+      },
+    },
+    "before": Object {
+      "formula": "sum(a1:c2)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "A4",
+    "after": Object {
+      "formula": "a3+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 14,
+      },
+    },
+    "before": Object {
+      "formula": "a3+1",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "C3",
+    "after": Object {
+      "formula": "sum(a1:b3)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 25,
+      },
+    },
+    "before": Object {
+      "formula": "sum(a1:b3)",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 19,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "E1",
+    "after": Object {
+      "formula": "c1+4",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 14,
+      },
+    },
+    "before": Object {
+      "formula": "c1+4",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 8,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "D1",
+    "after": Object {
+      "formula": "c1+3",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 13,
+      },
+    },
+    "before": Object {
+      "formula": "c1+3",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 7,
+      },
+    },
+    "type": "update",
+  },
+  Object {
+    "address": "B4",
+    "after": Object {
+      "formula": "d1+10",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 23,
+      },
+    },
+    "before": Object {
+      "formula": "d1+10",
+      "type": "formula",
+      "value": Object {
+        "type": "number",
+        "value": 17,
+      },
+    },
+    "type": "update",
+  },
+]
+`;
+
+exports[`excel-formula-engine recompute works 2`] = `
 Array [
   Array [
     Object {

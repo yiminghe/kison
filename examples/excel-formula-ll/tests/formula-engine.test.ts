@@ -3,6 +3,13 @@ import { makeNumber, makeFormula } from './utils';
 
 const { parseCoord, toCoordString } = utils;
 
+function transformUpdates(updates: any) {
+  updates.forEach((element: any) => {
+    element.address = toCoordString(element.address);
+  });
+  return updates;
+}
+
 describe('excel-formula-engine', () => {
   let g: FormulaEngine = undefined!;
 
@@ -62,20 +69,23 @@ describe('excel-formula-engine', () => {
     expect(ret).toMatchSnapshot();
   });
 
+  it('recompute works', () => {
+    const updates = g.setCellValue(parseCoord('c1'), makeNumber(10));
+    expect(transformUpdates(updates)).toMatchSnapshot();
+    const ret = getCellValues();
+    expect(ret).toMatchSnapshot();
+  });
+
   it('insertRows works', () => {
-    g.insertRows(1, 2);
+    const updates = g.insertRows(1, 2);
+    expect(transformUpdates(updates)).toMatchSnapshot();
     const ret = getCellValues();
     expect(ret).toMatchSnapshot();
   });
 
   it('deleteRows works', () => {
-    g.deleteRows(1, 2);
-    const ret = getCellValues();
-    expect(ret).toMatchSnapshot();
-  });
-
-  it('recompute works', () => {
-    g.setCellValue(parseCoord('c1'), makeNumber(10));
+    const updates = g.deleteRows(1, 2);
+    expect(transformUpdates(updates)).toMatchSnapshot();
     const ret = getCellValues();
     expect(ret).toMatchSnapshot();
   });

@@ -1,12 +1,12 @@
 import { makeArray, makeError } from '../functions/utils';
 import type { AstNode, AstVisitor } from '../parser';
-import { captalize, isValidCellAddress, isValidCellRange } from '../utils';
-import type { All_Type, All_Value_Type } from '../common/types';
+import { captalize, isValidCellRange } from '../utils';
+import type { All_Value_Type } from '../common/types';
 import type { Context, Evaluators } from './types';
 import { isSingleCellRange } from './utils';
 import { EMPTY_VALUE, REF_ERROR } from '../common/constants';
 
-export function evaluate(ast: AstNode, context: Context): All_Type {
+export function evaluate(ast: AstNode, context: Context): All_Value_Type {
   let symbol = '',
     token = '',
     label = '';

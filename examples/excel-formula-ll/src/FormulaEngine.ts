@@ -29,6 +29,7 @@ export class FormulaEngine {
     }
     if (options.noCompute) {
       dependencyGraph.stopTransaction();
+      return [];
     } else {
       return dependencyGraph.endTransaction();
     }

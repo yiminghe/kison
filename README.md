@@ -30,12 +30,12 @@ A LALR(1)/LL(1)/LL(K) parser generator for `javascript`/`typescript`
 [![NPM downloads](https://img.shields.io/npm/dm/excel-formula-engine.svg)](https://npmjs.org/package/excel-formula-engine)
 
 
-- [regular expression engine](https://yiminghe.me/kison/examples/regular-expression-engine/): regexp engine, written in typescript/javascript, [support async stream match](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
+- [regular expression engine](https://yiminghe.me/kison/examples/regular-expression-engine/): support [async stream match](https://medium.com/@yiminghe/match-stream-data-using-regular-expression-a1a08b17ca2e)
 
 [![npm version](https://badge.fury.io/js/regular-expression-engine.svg)](https://badge.fury.io/js/regular-expression-engine)
 [![NPM downloads](https://img.shields.io/npm/dm/regular-expression-engine.svg)](https://npmjs.org/package/regular-expression-engine)
 
-- [vba](https://yiminghe.me/kison/examples/vba/): [vba engine](https://medium.com/@yiminghe/vba-engine-written-in-typescript-javascript-4ee8403777ec), written in typescript/javascript
+- [vba engine](https://yiminghe.me/kison/examples/vba/): [written in typescript/javascript](https://medium.com/@yiminghe/vba-engine-written-in-typescript-javascript-4ee8403777ec)
 
 [![npm version](https://badge.fury.io/js/vba.svg)](https://badge.fury.io/js/vba)
 [![NPM downloads](https://img.shields.io/npm/dm/vba.svg)](https://npmjs.org/package/vba)

@@ -5,7 +5,7 @@ https://github.com/yiminghe/kison
 ## usage
 
 ```js
-import { parser, FormulaEngine } from '@yiminghe/excel-formula';
+import { parser, FormulaEngine } from 'excel-formula-engine';
 
 console.log(parser.parse('sum(a1,a2)'));
 

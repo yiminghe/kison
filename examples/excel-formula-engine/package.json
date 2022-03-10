@@ -1,5 +1,5 @@
 {
-  "name": "@yiminghe/excel-formula",
+  "name": "excel-formula-engine",
   "version": "0.1.3",
   "author": "yiminghe <yiminghe@gmail.com>",
   "files": [

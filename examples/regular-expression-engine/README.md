@@ -1,14 +1,14 @@
-# regexp in js
+# regular-expression-engine
 
 https://github.com/yiminghe/kison
 
-Match regular expression synchronously or asynchronously ( stream ).
+Match regular expression synchronously or asynchronously (stream).
 
 ## usage
 
 ### sync match
 ```js
-import * as regexp from '@yiminghe/regexp';
+import * as regexp from 'regular-expression-engine';
 
 // parse ast
 console.log(regexp.parse('(a|b)*z'));
@@ -30,7 +30,7 @@ while (m = matcher.match()) {
 ### async match
 
 ```js
-import * as regexp from '@yiminghe/regexp';
+import * as regexp from 'regular-expression-engine';
 (async function(){
   let buffer = ["c", "a", "b", "x", "a", "a", "b"];
   const patternInstance = regexp.compile("a+b", { async: true });

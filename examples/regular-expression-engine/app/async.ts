@@ -1,4 +1,4 @@
-// import { compile } from "@yiminghe/regexp";
+// import { compile } from "regular-expression-engine";
 import { compile } from '../src/index';
 
 const asyncPattern = document.getElementById(

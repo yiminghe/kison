@@ -2114,47 +2114,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@yiminghe/excel-formula@workspace:examples/excel-formula-ll":
-  version: 0.0.0-use.local
-  resolution: "@yiminghe/excel-formula@workspace:examples/excel-formula-ll"
-  dependencies:
-    "@babel/cli": 7.x
-    "@babel/preset-env": 7.x
-    "@babel/preset-typescript": 7.x
-    "@pika/pack": ^0.5.0
-    "@types/jest": 27.x
-    "@types/node": ^17.0.21
-    "@yiminghe/rr": 1.x
-    immer: 9.x
-    jest: 27.x
-    kison: 0.5.x
-    monaco-editor: ^0.28.0
-    pika-plugin-build-web-babel: ^0.11.2
-    pika-plugin-clean-dist-src: ^0.1.1
-    pika-plugin-ts-types: ^0.1.5
-    typescript: 4.x
-  languageName: unknown
-  linkType: soft
-
-"@yiminghe/regexp@workspace:examples/regexp-ll":
-  version: 0.0.0-use.local
-  resolution: "@yiminghe/regexp@workspace:examples/regexp-ll"
-  dependencies:
-    "@babel/cli": 7.x
-    "@babel/preset-env": 7.x
-    "@babel/preset-typescript": 7.x
-    "@pika/pack": ^0.5.0
-    "@types/jest": 27.x
-    "@yiminghe/rr": 1.x
-    jest: 27.x
-    kison: 0.5.x
-    pika-plugin-build-web-babel: ^0.11.2
-    pika-plugin-clean-dist-src: ^0.1.1
-    pika-plugin-ts-types: ^0.1.5
-    typescript: 4.x
-  languageName: unknown
-  linkType: soft
-
 "@yiminghe/rr@npm:1.x":
   version: 1.63.3
   resolution: "@yiminghe/rr@npm:1.63.3::__archiveUrl=https%3A%2F%2Fregistry.npmmirror.com%2F%40yiminghe%2Frr%2Fdownload%2F%40yiminghe%2Frr-1.63.3.tgz"
@@ -4376,6 +4335,28 @@ __metadata:
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
   languageName: node
   linkType: hard
+
+"excel-formula-engine@workspace:examples/excel-formula-engine":
+  version: 0.0.0-use.local
+  resolution: "excel-formula-engine@workspace:examples/excel-formula-engine"
+  dependencies:
+    "@babel/cli": 7.x
+    "@babel/preset-env": 7.x
+    "@babel/preset-typescript": 7.x
+    "@pika/pack": ^0.5.0
+    "@types/jest": 27.x
+    "@types/node": ^17.0.21
+    "@yiminghe/rr": 1.x
+    immer: 9.x
+    jest: 27.x
+    kison: 0.5.x
+    monaco-editor: ^0.28.0
+    pika-plugin-build-web-babel: ^0.11.2
+    pika-plugin-clean-dist-src: ^0.1.1
+    pika-plugin-ts-types: ^0.1.5
+    typescript: 4.x
+  languageName: unknown
+  linkType: soft
 
 "execa@npm:^0.7.0":
   version: 0.7.0
@@ -9545,6 +9526,26 @@ __metadata:
   checksum: fefff9adcab47650817d2c492aac774f11a44b824a4a814e466ebc76313e03e79c50d2babde7e04888296f6ec0fd094e3eeeafa8122c60184de92cdb30636a57
   languageName: node
   linkType: hard
+
+"regular-expression-engine@workspace:examples/regular-expression-engine":
+  version: 0.0.0-use.local
+  resolution: "regular-expression-engine@workspace:examples/regular-expression-engine"
+  dependencies:
+    "@babel/cli": 7.x
+    "@babel/preset-env": 7.x
+    "@babel/preset-typescript": 7.x
+    "@pika/pack": ^0.5.0
+    "@types/jest": 27.x
+    "@types/node": ^17.0.21
+    "@yiminghe/rr": 1.x
+    jest: 27.x
+    kison: 0.5.x
+    pika-plugin-build-web-babel: ^0.11.2
+    pika-plugin-clean-dist-src: ^0.1.1
+    pika-plugin-ts-types: ^0.1.5
+    typescript: 4.x
+  languageName: unknown
+  linkType: soft
 
 "repeat-element@npm:^1.1.2":
   version: 1.1.4

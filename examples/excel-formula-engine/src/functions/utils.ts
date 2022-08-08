@@ -16,7 +16,7 @@ export function toNumber(a: Atom_Type) {
     return Number(value);
   }
   if (type === 'boolean') {
-    return value === 'true' ? 1 : 0;
+    return String(value) === 'true' ? 1 : 0;
   }
   return Number(value);
 }

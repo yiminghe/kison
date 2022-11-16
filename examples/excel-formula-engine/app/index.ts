@@ -235,7 +235,11 @@ require(['vs/editor/editor.main'], () => {
     let addr = parseCoord(indexStr);
     engine.setCellValue(
       addr,
-      isFormula(value) ? makeFormula(value) : (isNaN(parseInt(value)) ? makeString(value) : makeNumber(parseInt(value))),
+      isFormula(value)
+        ? makeFormula(value)
+        : isNaN(parseInt(value))
+        ? makeString(value)
+        : makeNumber(parseInt(value)),
     );
     refreshSheet();
   });

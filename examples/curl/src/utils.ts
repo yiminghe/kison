@@ -1,349 +1,209 @@
-// https://github.com/curlconverter/curlconverter
-
-export class CCError extends Error {}
-
-import { parser } from 'bash-parse';
-
-type Warnings = [string, string][];
-
-interface TokenizeResult {
-  cmdName: string;
-  args: string[];
-  stdin?: string;
-  stdinFile?: string;
+// TODO: this type doesn't work.
+export function has<T, K extends PropertyKey>(
+  obj: T,
+  prop: K,
+): obj is T & Record<K, unknown> {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-export const tokenize = (
-  curlCommand: string,
-  warnings: Warnings = [],
-): TokenizeResult => {
-  const ret = parser.parse(curlCommand);
-  // TODO: support strings with variable expansions inside
-  // TODO: support prefixed variables, e.g. "MY_VAR=hello curl example.com"
-  // TODO: get only named children?
-  if (ret.error) {
-    // TODO: better error message.
-    throw new CCError(ret.error.errorMessage);
+export type Query = Array<[string, string | null]>;
+export interface QueryDict {
+  [key: string]: string | null | Array<string | null>;
+}
+
+export function pushProp<Type>(
+  obj: { [key: string]: Type[] },
+  prop: string,
+  value: Type,
+) {
+  if (!has(obj, prop)) {
+    // TODO: I have no idea what
+    // Type 'never[]' is not assignable to type 'never'.
+    // means
+    (obj[prop] as Type[]) = [];
+  }
+  obj[prop].push(value);
+  return obj;
+}
+
+export function toBoolean(opt: string): boolean {
+  if (opt.startsWith('no-disable-')) {
+    return true;
+  }
+  if (opt.startsWith('disable-') || opt.startsWith('no-')) {
+    return false;
+  }
+  return true;
+}
+
+export type FormParam = { value: string; type: 'string' | 'form' };
+export type DataParam = [
+  'data' | 'raw' | 'binary' | 'urlencode' | 'json',
+  string,
+];
+
+export interface ParsedArguments {
+  request?: string; // the HTTP method
+  data?: DataParam[];
+  jsoned?: boolean;
+  form?: FormParam[];
+  // TODO
+  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+
+export function pushArgValue(
+  obj: ParsedArguments,
+  argName: string,
+  value: string,
+) {
+  switch (argName) {
+    case 'data':
+    case 'data-ascii':
+      return pushProp(obj, 'data', ['data', value]);
+    case 'data-binary':
+      return pushProp(obj, 'data', [
+        // Unless it's a file, --data-binary works the same as --data
+        value.startsWith('@') ? 'binary' : 'data',
+        value,
+      ]);
+    case 'data-raw':
+      return pushProp(obj, 'data', [
+        // Unless it's a file, --data-raw works the same as --data
+        value.startsWith('@') ? 'raw' : 'data',
+        value,
+      ]);
+    case 'data-urlencode':
+      return pushProp(obj, 'data', ['urlencode', value]);
+    case 'json':
+      obj.jsoned = true;
+      return pushProp(obj, 'data', ['json', value]); // TODO: just "data"?
+    // TODO: case "url-query":
+
+    case 'form':
+      return pushProp(obj, 'form', { value, type: 'form' });
+    case 'form-string':
+      return pushProp(obj, 'form', { value, type: 'string' });
   }
 
-  const ast = ret.ast;
+  return pushProp(obj, argName, value);
+}
 
-  if (ast.rootNode.childCount < 1 || !ast.rootNode.children) {
-    // TODO: better error message.
-    throw new CCError('empty "program" node');
+type Cookie = [string, string];
+export type Cookies = Array<Cookie>;
+
+export const parseCookiesStrict = (cookieString: string): Cookies | null => {
+  const cookies: Cookies = [];
+  for (let cookie of cookieString.split(';')) {
+    cookie = cookie.replace(/^ /, '');
+    const [name, value] = cookie.split(/=(.*)/s, 2);
+    if (value === undefined) {
+      return null;
+    }
+    cookies.push([name, value]);
   }
+  return cookies;
+};
 
-  // Get the curl call AST node. Skip comments
-  let command, lastNode, stdin, stdinFile;
-  for (const n of ast.rootNode.children) {
-    if (n.type === 'comment') {
+export const parseCookies = (cookieString: string): Cookies => {
+  const cookies: Cookies = [];
+  for (let cookie of cookieString.split(';')) {
+    cookie = cookie.trim();
+    if (!cookie) {
       continue;
-    } else if (n.type === 'command') {
-      command = n;
-      lastNode = n;
-      break;
-    } else if (n.type === 'redirected_statement') {
-      if (!n.childCount) {
-        throw new CCError('got empty "redirected_statement" AST node');
-      }
-      let redirects;
-      [command, ...redirects] = n.namedChildren;
-      lastNode = n;
-      if (command.type !== 'command') {
-        throw new CCError(
-          'got "redirected_statement" AST node whose first child is not a "command", got ' +
-            command.type +
-            ' instead\n' +
-            underlineBadNode(curlCommand, command),
-        );
-      }
-      if (n.childCount < 2) {
-        throw new CCError(
-          'got "redirected_statement" AST node with only one child - no redirect',
-        );
-      }
-      if (redirects.length > 1) {
-        warnings.push([
-          'multiple-redirects',
-          // TODO: only the Python generator uses the redirect so this is misleading.
-          'found ' +
-            redirects.length +
-            ' redirect nodes. Only the first one will be used:\n' +
-            underlineBadNode(curlCommand, redirects[1]),
-        ]);
-      }
-      const redirect = redirects[0];
-      if (redirect.type === 'file_redirect') {
-        stdinFile = toVal(redirect.namedChildren[0], curlCommand);
-      } else if (redirect.type === 'heredoc_redirect') {
-        // heredoc bodies are children of the parent program node
-        // https://github.com/tree-sitter/tree-sitter-bash/issues/118
-        if (redirect.namedChildCount < 1) {
-          throw new CCError(
-            'got "redirected_statement" AST node with heredoc but no heredoc start',
-          );
-        }
-        const heredocStart = redirect.namedChildren[0].text;
-        const heredocBody = n.nextNamedSibling;
-        lastNode = heredocBody;
-        if (!heredocBody) {
-          throw new CCError(
-            'got "redirected_statement" AST node with no heredoc body',
-          );
-        }
-        // TODO: herestrings and heredocs are different
-        if (heredocBody.type !== 'heredoc_body') {
-          throw new CCError(
-            'got "redirected_statement" AST node with heredoc but no heredoc body, got ' +
-              heredocBody.type +
-              ' instead',
-          );
-        }
-        // TODO: heredocs do variable expansion and stuff
-        if (heredocStart.length) {
-          stdin = heredocBody.text.slice(0, -heredocStart.length);
-        } else {
-          // this shouldn't happen
-          stdin = heredocBody.text;
-        }
-        // Curl removes newlines when you pass any @filename including @- for stdin
-        // TODO: bash_redirect_heredoc.sh makes it seem like this isn't actually true.
-        stdin = stdin.replace(/\n/g, '');
-      } else if (redirect.type === 'herestring_redirect') {
-        if (redirect.namedChildCount < 1 || !redirect.firstNamedChild) {
-          throw new CCError(
-            'got "redirected_statement" AST node with empty herestring',
-          );
-        }
-        // TODO: this just converts bash code to text
-        stdin = redirect.firstNamedChild.text;
-      } else {
-        throw new CCError(
-          'got "redirected_statement" AST node whose second child is not one of "file_redirect", "heredoc_redirect" or "herestring_redirect", got ' +
-            command.type +
-            ' instead',
-        );
-      }
+    }
+    const [name, value] = cookie.split(/=(.*)/s, 2);
+    cookies.push([name, value || '']);
+  }
+  return cookies;
+};
 
-      break;
-    } else if (n.type === 'ERROR') {
-      throw new CCError(
-        `Bash parsing error on line ${n.startPosition.row + 1}:\n` +
-          underlineBadNode(curlCommand, n),
-      );
+export const percentEncodeChar = (c: string): string =>
+  '%' + c.charCodeAt(0).toString(16).padStart(2, '0').toUpperCase();
+// Match Python's urllib.parse.quote() behavior
+// https://stackoverflow.com/questions/946170/equivalent-javascript-functions-for-pythons-urllib-parse-quote-and-urllib-par
+export const percentEncode = (s: string): string =>
+  encodeURIComponent(s).replace(/[()*!']/g, percentEncodeChar); // .replace('%20', '+')
+
+export function parseQueryString(
+  s: string | null,
+): [Query | null, QueryDict | null] {
+  // if url is 'example.com?' => s is ''
+  // if url is 'example.com'  => s is null
+  if (!s) {
+    return [null, null];
+  }
+
+  const asList: Query = [];
+  for (const param of s.split('&')) {
+    const [key, _val] = param.split(/=(.*)/s, 2);
+    const val = _val === undefined ? null : _val;
+    let decodedKey;
+    let decodedVal;
+    try {
+      // https://url.spec.whatwg.org/#urlencoded-parsing recommends replacing + with space
+      // before decoding.
+      decodedKey = decodeURIComponent(key.replace(/\+/g, ' '));
+      decodedVal =
+        val === null ? null : decodeURIComponent(val.replace(/\+/g, ' '));
+    } catch (e) {
+      if (e instanceof URIError) {
+        // Query string contains invalid percent encoded characters,
+        // we cannot properly convert it.
+        return [null, null];
+      }
+      throw e;
+    }
+    try {
+      // If the query string doesn't round-trip, we cannot properly convert it.
+      // TODO: this is too strict. Ideally we want to check how each runtime/library
+      // percent-encodes query strings. For example, a %27 character in the input query
+      // string will be decoded to a ' but won't be re-encoded into a %27 by encodeURIComponent
+      const roundTripKey = percentEncode(decodedKey);
+      const roundTripVal =
+        decodedVal === null ? null : percentEncode(decodedVal);
+      // If the original data used %20 instead of + (what requests will send), that's close enough
+      if (
+        (roundTripKey !== key && roundTripKey.replace(/%20/g, '+') !== key) ||
+        (roundTripVal !== null &&
+          roundTripVal !== val &&
+          roundTripVal.replace(/%20/g, '+') !== val)
+      ) {
+        return [null, null];
+      }
+    } catch (e) {
+      if (e instanceof URIError) {
+        return [null, null];
+      }
+      throw e;
+    }
+    asList.push([decodedKey, decodedVal]);
+  }
+
+  // Group keys
+  const asDict: QueryDict = {};
+  let prevKey = null;
+  for (const [key, val] of asList) {
+    if (prevKey === key) {
+      (asDict[key] as Array<string | null>).push(val);
     } else {
-      // TODO: better error message.
-      throw new CCError(
-        'expected a "command" or "redirected_statement" AST node, instead got ' +
-          ast.rootNode.children[0].type +
-          '\n' +
-          underlineBadNode(curlCommand, ast.rootNode.children[0]),
-      );
+      if (!has(asDict, key)) {
+        (asDict[key] as Array<string | null>) = [val];
+      } else {
+        // If there's a repeated key with a different key between
+        // one of its repetitions, there is no way to represent
+        // this query string as a dictionary.
+        return [asList, null];
+      }
     }
+    prevKey = key;
   }
-  // TODO: better logic, skip comments.
-  if (lastNode && lastNode.nextNamedSibling) {
-    // TODO: better wording
-    warnings.push([
-      'extra-commands',
-      `curl command ends on line ${
-        lastNode.endPosition.row + 1
-      }, everything after this is ignored:\n` +
-        underlineBadNodeEnd(curlCommand, lastNode),
-    ]);
 
-    const curlCommandLines = curlCommand.split('\n');
-    const lastNodeLine = curlCommandLines[lastNode.endPosition.row];
-    const impromperBackslash = lastNodeLine.match(/\\\s+$/);
-    if (
-      impromperBackslash &&
-      curlCommandLines.length > lastNode.endPosition.row + 1 &&
-      impromperBackslash.index !== undefined
-    ) {
-      warnings.push([
-        'unescaped-newline',
-        "The trailling '\\' on line " +
-          (lastNode.endPosition.row + 1) +
-          " is followed by whitespace, so it won't escape the newline after it:\n" +
-          // TODO: cut off line if it's very long?
-          lastNodeLine +
-          '\n' +
-          ' '.repeat(impromperBackslash.index) +
-          '^'.repeat(impromperBackslash[0].length),
-      ]);
-    }
-  }
-  if (!command) {
-    // NOTE: if you add more node types in the `for` loop above, this error needs to be updated.
-    // We would probably need to keep track of the node types we've seen.
-    throw new CCError(
-      'expected a "command" or "redirected_statement" AST node, only found "comment" nodes',
-    );
-  }
-  for (const n of ast.rootNode.children) {
-    if (n.type === 'ERROR') {
-      warnings.push([
-        'bash',
-        `Bash parsing error on line ${n.startPosition.row + 1}:\n` +
-          underlineBadNode(curlCommand, n),
-      ]);
+  // Convert lists with 1 element to the element
+  for (const [key, val] of Object.entries(asDict)) {
+    if ((val as Array<string | null>).length === 1) {
+      asDict[key] = (val as Array<string | null>)[0];
     }
   }
 
-  if (command.childCount < 1) {
-    // TODO: better error message.
-    throw new CCError('empty "command" node');
-  }
-  // Use namedChildren so that variable_assignment/file_redirect is skipped
-  // TODO: warn when command variable_assignment is skipped
-  // TODO: add childrenForFieldName to tree-sitter node/web bindings
-  const [cmdName, ...args] = command.namedChildren;
-  if (cmdName.type !== 'command_name') {
-    throw new CCError(
-      'expected a "command_name" AST node, found ' +
-        cmdName.type +
-        ' instead\n' +
-        underlineBadNode(curlCommand, cmdName),
-    );
-  }
-  if (cmdName.childCount < 1) {
-    throw new CCError(
-      'found empty "command_name" AST node\n' +
-        underlineBadNode(curlCommand, cmdName),
-    );
-  }
-
-  return {
-    cmdName: toVal(cmdName.firstChild!, curlCommand),
-    args: args.map((a) => toVal(a, curlCommand)),
-    stdin,
-    stdinFile,
-  };
-};
-
-function toVal(node: Parser.SyntaxNode, curlCommand: string): string {
-  switch (node.type) {
-    case 'word':
-      return parseWord(node.text);
-    case 'string':
-      return parseDoubleQuoteString(node.text);
-    case 'raw_string':
-      return parseSingleQuoteString(node.text);
-    case 'ansii_c_string':
-      return parseAnsiCString(node.text);
-    default:
-      throw new CCError(
-        'unexpected argument type ' +
-          JSON.stringify(node.type) +
-          '. Must be one of "word", "string", "raw_string", "ansii_c_string", "expansion", "simple_expansion", "string_expansion" or "concatenation"\n' +
-          underlineBadNode(curlCommand, node),
-      );
-  }
+  return [asList, asDict];
 }
-
-const parseWord = (str: string): string => {
-  const BACKSLASHES = /\\./gs;
-  const unescapeChar = (m: string) => (m.charAt(1) === '\n' ? '' : m.charAt(1));
-  return str.replace(BACKSLASHES, unescapeChar);
-};
-
-const parseDoubleQuoteString = (str: string): string => {
-  const BACKSLASHES = /\\(\n|\\|")/gs;
-  const unescapeChar = (m: string) => (m.charAt(1) === '\n' ? '' : m.charAt(1));
-  return str.slice(1, -1).replace(BACKSLASHES, unescapeChar);
-};
-
-const parseSingleQuoteString = (str: string): string => {
-  const BACKSLASHES = /\\(\n|')/gs;
-  const unescapeChar = (m: string) => (m.charAt(1) === '\n' ? '' : m.charAt(1));
-  return str.slice(1, -1).replace(BACKSLASHES, unescapeChar);
-};
-
-const parseAnsiCString = (str: string): string => {
-  const ANSI_BACKSLASHES =
-    /\\(\\|a|b|e|E|f|n|r|t|v|'|"|\?|[0-7]{1,3}|x[0-9A-Fa-f]{1,2}|u[0-9A-Fa-f]{1,4}|U[0-9A-Fa-f]{1,8}|c.)/gs;
-  const unescapeChar = (m: string) => {
-    switch (m.charAt(1)) {
-      case '\\':
-        return '\\';
-      case 'a':
-        return '\x07';
-      case 'b':
-        return '\b';
-      case 'e':
-      case 'E':
-        return '\x1B';
-      case 'f':
-        return '\f';
-      case 'n':
-        return '\n';
-      case 'r':
-        return '\r';
-      case 't':
-        return '\t';
-      case 'v':
-        return '\v';
-      case "'":
-        return "'";
-      case '"':
-        return '"';
-      case '?':
-        return '?';
-      case 'c':
-        // bash handles all characters by considering the first byte
-        // of its UTF-8 input and can produce invalid UTF-8, whereas
-        // JavaScript stores strings in UTF-16
-        if (m.codePointAt(2)! > 127) {
-          throw new CCError(
-            'non-ASCII control character in ANSI-C quoted string: "\\u{' +
-              m.codePointAt(2)!.toString(16) +
-              '}"',
-          );
-        }
-        // If this produces a 0x00 (null) character, it will cause bash to
-        // terminate the string at that character, but we return the null
-        // character in the result.
-        return m[2] === '?'
-          ? '\x7F'
-          : String.fromCodePoint(
-              m[2].toUpperCase().codePointAt(0)! & 0b00011111,
-            );
-      case 'x':
-      case 'u':
-      case 'U':
-        // Hexadecimal character literal
-        // Unlike bash, this will error if the the code point is greater than 10FFFF
-        return String.fromCodePoint(parseInt(m.slice(2), 16));
-      case '0':
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
-        // Octal character literal
-        return String.fromCodePoint(parseInt(m.slice(1), 8) % 256);
-      default:
-        // There must be a mis-match between ANSI_BACKSLASHES and the switch statement
-        throw new CCError(
-          'unhandled character in ANSI-C escape code: ' + JSON.stringify(m),
-        );
-    }
-  };
-
-  return str.slice(2, -1).replace(ANSI_BACKSLASHES, unescapeChar);
-};
-
-const underlineBadNode = (curlCommand: string, node: any): string => {
-  // TODO: is this exactly how tree-sitter splits lines?
-  const line = curlCommand.split('\n')[node.startPosition.row];
-  const onOneLine = node.endPosition.row === node.startPosition.row;
-  const end = onOneLine ? node.endPosition.column : line.length;
-  return (
-    `${line}\n` +
-    ' '.repeat(node.startPosition.column) +
-    '^'.repeat(end - node.startPosition.column) +
-    (onOneLine ? '' : '^') // TODO: something else?
-  );
-};

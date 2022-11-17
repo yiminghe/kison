@@ -68,7 +68,7 @@
     "reinstall": "rm -rf node_modules .yarn/cache yarn.lock && ayarn",
     "pub": "yarn run check && rm -rf pkg && yarn run compile && yarn np --no-cleanup  --no-publish --no-release-draft && npm publish",
     "lint-staged": "lint-staged",
-    "prettier": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
+    "format": "prettier --write \"{src,__tests__,examples,bin}/**/*.{js,tsx,ts,jsx}\"",
     "test": "jest",
     "test-debug": "rm -rf pkg && jest -i",
     "g:ts": "cd $PWD && babel-node -x '.js,.ts,.tsx',.mjs"

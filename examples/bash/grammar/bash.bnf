@@ -1,7 +1,4 @@
-progam ::= statements
-statements ::= ( statement )+
-statement ::= command
-command ::= literal ( literal | 'EQ_CURL' | 'EQ_EQ' literal )*
-literal ::= primary_expression
-primary_expression ::= 'WORD' | string | 'RAW_STRING' | 'ANSII_C_STRING'
+progam ::= ( command )+
+command ::= ( literal )+
+literal ::= 'WORD' | string | 'RAW_STRING' | 'ANSII_C_STRING'
 string ::= 'QUOTE' ( 'DOLLAR'? 'STRING_CONTENT' )* 'QUOTE'

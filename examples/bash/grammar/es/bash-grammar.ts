@@ -54,27 +54,12 @@ export default (options: Kison.Options) => {
   } = options;
   return {
     productions: n.makeProductions([
-      [n.progamName, n.statementsName],
+      [n.progamName, ...makeOneOrMoreGroup(n.commandName)],
 
-      [n.statementsName, ...makeOneOrMoreGroup(n.statementName)],
-
-      [n.statementName, n.commandName],
+      [n.commandName, ...makeOneOrMoreGroup(n.literalName)],
 
       [
-        n.commandName,
         n.literalName,
-        ...makeZeroOrMoreGroup(
-          ...makeAlternates(n.literalName, [
-            ...makeAlternates(n.EQ_CURLName, n.EQ_EQName),
-            n.literalName,
-          ]),
-        ),
-      ],
-
-      [n.literalName, n.primary_expressionName],
-
-      [
-        n.primary_expressionName,
         ...makeAlternates(
           n.WORDName,
           n.stringName,

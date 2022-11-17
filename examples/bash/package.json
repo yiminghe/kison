@@ -1,6 +1,6 @@
 {
   "name": "bash-parse",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "yiminghe <yiminghe@gmail.com>",
   "main": "src/index.ts",
   "repository": {

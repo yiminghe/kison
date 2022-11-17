@@ -1,6 +1,6 @@
 {
   "name": "curl2json",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "yiminghe <yiminghe@gmail.com>",
   "repository": {
     "type": "git",
@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "bash-parse": "0.0.3"
+    "bash-parse": "0.0.4"
   },
   "devDependencies": {
     "@babel/cli": "7.x",
@@ -59,7 +59,7 @@
     "test": "rm -rf pkg && jest",
     "test-debug": "jest -i",
     "check": "tsc --noEmit",
-    "build": "yarn run check && pika-pack build && cp src/*.d.ts pkg/dist-types/",
+    "build": "yarn run check && pika-pack build",
     "gen": "sh scripts/gen.sh",
     "pub": "sh scripts/pub.sh && rm -rf pkg"
   }

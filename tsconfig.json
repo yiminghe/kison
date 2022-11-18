@@ -8,7 +8,7 @@
     "isolatedModules": true,
     "resolveJsonModule":true,
     "moduleResolution": "node",
-    "types": ["kison","node","jest"]
+    "types": ["node","jest"]
   },
   "include": [
     "src/**/*",

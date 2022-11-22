@@ -18,14 +18,14 @@ const parseArgs = (
   shortOpts: ShortOpts,
 ): ParsedArguments => {
   const parsedArguments: ParsedArguments = {};
-  for (let i = 0, stillflags = true; i < args.length; i++) {
+  for (let i = 0, stillFlags = true; i < args.length; i++) {
     let arg: string | string[] = args[i];
     let argRepr = arg;
-    if (stillflags && arg.startsWith('-')) {
+    if (stillFlags && arg.startsWith('-')) {
       if (arg === '--') {
         /* This indicates the end of the flags and thus enables the
            following (URL) argument to start with -. */
-        stillflags = false;
+        stillFlags = false;
       } else if (arg.startsWith('--')) {
         const lookup = arg.slice(2);
         const longArg = longOpts[lookup];

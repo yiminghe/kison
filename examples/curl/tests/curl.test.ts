@@ -1,11 +1,19 @@
 import { toJSON } from '../src/';
+// @ts-ignore
+import { toJsonString } from 'curlconverter';
+import cookie from 'cookie';
+
+function curl2json(s: string) {
+  return JSON.parse(toJsonString(s));
+}
 
 describe('bash parser', () => {
   it('basic auth works', () => {
     const code = `
-    curl "https://api.test.com/" -u "some_username:some_password"
+    curl "https://api.test.com/x?t=1" -u "some_username:some_password"
 `.trim();
     const ret = toJSON(code);
+    expect(ret).toEqual(curl2json(code));
     expect(ret).toMatchInlineSnapshot(`
       Object {
         "auth": Object {
@@ -13,23 +21,27 @@ describe('bash parser', () => {
           "user": "some_username",
         },
         "method": "get",
-        "raw_url": "https://api.test.com/",
-        "url": "https://api.test.com",
+        "queries": Object {
+          "t": "1",
+        },
+        "raw_url": "https://api.test.com/x?t=1",
+        "url": "https://api.test.com/x",
       }
     `);
   });
 
   it('get works', () => {
     const code = `
-curl 'http://en.wikipedia.org/' \
-    -H 'Accept-Encoding: gzip, deflate, sdch' \
-    -H 'Accept-Language: en-US,en;q=0.8' \
-    -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36' \
-    -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
-    -H 'Referer: http://www.wikipedia.org/' \
+curl 'http://en.wikipedia.org/' \\
+    -H 'Accept-Encoding: gzip, deflate, sdch' \\
+    -H 'Accept-Language: en-US,en;q=0.8' \\
+    -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36' \\
+    -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \\
+    -H 'Referer: http://www.wikipedia.org/' \\
     -H 'Connection: keep-alive' --compressed
 `.trim();
     const ret = toJSON(code);
+    expect(ret).toEqual(curl2json(code));
     expect(ret).toMatchInlineSnapshot(`
       Object {
         "headers": Object {
@@ -62,6 +74,7 @@ curl 'http://en.wikipedia.org/' \
     --data 'msg1=wow&msg2=such&msg3=data' --compressed
     `.trim();
     const ret = toJSON(code);
+    expect(ret).toEqual(curl2json(code));
     expect(ret).toMatchInlineSnapshot(`
       Object {
         "data": Object {
@@ -85,5 +98,22 @@ curl 'http://en.wikipedia.org/' \
         "url": "http://fiddle.jshell.net/echo/html",
       }
     `);
+  });
+
+  it('cookie works', () => {
+    const code = `
+curl 'http://en.wikipedia.org/' \
+--header 'Cookie: d_t=8ceb8db40c49fc; n_m=NVRnqmStM; sessionid=36684d0c584632db6a; sessionid_ss=36684d0c4632db6a; sid_grd=36684d84632db6a%7C1666491976%7C5184000%7CThu%2C+22-Dec-2022+02%3A26%3A16+GMT; si_=36684d784632db6a; uid_=1706925e60ce; uid_s=17069285e60ce; MOOR_WD=9dd4aee2f60c2; ot=1bdab34ad92c12704d860f03bb8b96; t_csrf_token=208e8766096; t_csrf_t_d=208e84c4347e36096; inid=1966008919; eq=1$c9f62cd5; ken=49sKVZujfAD-tg==; ken=kHmZj4Of6abyGVzlZr4Lu6mtGQ==' \
+`.trim();
+    const r1 = curl2json(code);
+    const r2 = toJSON(code);
+    const c = cookie.parse(r2.headers!.Cookie!, {
+      decode(s) {
+        return s;
+      },
+    });
+    expect(r2.cookies).toEqual(c);
+    delete r2.headers!.Cookie;
+    expect(r2).toEqual(r1);
   });
 });

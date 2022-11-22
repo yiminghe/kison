@@ -48,13 +48,6 @@ function getDataString(request: CurlRequest): {
   if (!request.data) {
     return {};
   }
-  /*
-    if ( !request.isDataRaw && request.data.startsWith('@') ) {
-   var filePath = request.data.slice(1);
-   return filePath;
-   }
-   */
-
   const [parsedQuery, parsedQueryDict] = parseQueryString(request.data);
   if (
     !parsedQuery ||
@@ -113,39 +106,28 @@ function getFilesString(
 
 export const toJSON = (curlCommand: string, warnings: string[][] = []) => {
   const request = parseCurlCommand(curlCommand, supportedArgs, warnings);
+
   const requestJson: JSONOutput = {
     url: (request.queryDict ? request.urlWithoutQuery : request.url).replace(
       /\/$/,
       '',
     ),
-    // url: request.queryDict ? request.urlWithoutQuery : request.url,
     raw_url: request.url,
-    // TODO: move this after .query?
     method: request.method.toLowerCase(), // lowercase for backwards compatibility
   };
-  // if (request.queryDict) {
-  //   requestJson.query = request.queryDict
-  // }
 
   if (request.cookies) {
-    // TODO: repeated cookies
     requestJson.cookies = Object.fromEntries(request.cookies);
-    // Normally when a generator uses .cookies, it should delete it from
-    // headers, but users of the JSON output would expect to have all the
-    // headers in .headers.
   }
 
   if (request.headers) {
-    // TODO: what if Object.keys().length !== request.headers.length?
     requestJson.headers = Object.fromEntries(request.headers);
   }
 
   if (request.queryDict) {
-    // TODO: rename
     requestJson.queries = request.queryDict;
   }
 
-  // TODO: not Object.assign, doesn't work with type system
   if (request.data && typeof request.data === 'string') {
     Object.assign(requestJson, getDataString(request));
   } else if (request.multipartUploads) {

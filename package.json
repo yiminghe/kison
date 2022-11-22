@@ -62,7 +62,7 @@
   "scripts": {
     "prepack": "yarn run compile",
     "prepare": "husky install",
-    "compile": "babel -x '.js,.ts' src --out-dir pkg && cp src/*.d.ts pkg/",
+    "compile": "NODE_ENV=test babel -x '.js,.ts' src --out-dir pkg && cp src/*.d.ts pkg/",
     "check": "tsc --noEmit",
     "start": "http-server --mimetypes examples/mime.types",
     "reinstall": "rm -rf node_modules .yarn/cache yarn.lock && ayarn",

@@ -30,13 +30,16 @@ function generateLexerRulesByKeywords(arr: any[]) {
   return rules;
 }
 
-const LINE_CONTINUATION = `([\\u0020\\t]+_\\r?\\n)`;
-const WS = `((${LINE_CONTINUATION}|[\\u0020\\t])+)`;
+const LINE_CONTINUATION = `(?:[\\u0020\\t]+_\\r?\\n)`;
+const WS = `(?:(?:${LINE_CONTINUATION}|[\\u0020\\t])+)`;
 const HIDDEN_REG = new RegExp(
+  // /\\\n/
   `
+  (?:\\\\\\r?\\n)+
+  |
 ${WS}
 |
-(\\s+)
+(?:\\s+)
 |
 #.*
 `.replace(/\s/g, ''),

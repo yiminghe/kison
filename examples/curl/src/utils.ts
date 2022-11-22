@@ -93,12 +93,18 @@ export type Cookies = Array<Cookie>;
 
 export const parseCookiesStrict = (cookieString: string): Cookies | null => {
   const cookies: Cookies = [];
+  const map = new Map<string, number>();
   for (let cookie of cookieString.split(';')) {
     cookie = cookie.replace(/^ /, '');
     const [name, value] = cookie.split(/=(.*)/s, 2);
     if (value === undefined) {
       return null;
     }
+    // only assign once
+    if (map.has(name)) {
+      continue;
+    }
+    map.set(name, 1);
     cookies.push([name, value]);
   }
   return cookies;
@@ -106,12 +112,18 @@ export const parseCookiesStrict = (cookieString: string): Cookies | null => {
 
 export const parseCookies = (cookieString: string): Cookies => {
   const cookies: Cookies = [];
+  const map = new Map<string, number>();
   for (let cookie of cookieString.split(';')) {
     cookie = cookie.trim();
     if (!cookie) {
       continue;
     }
     const [name, value] = cookie.split(/=(.*)/s, 2);
+    // only assign once
+    if (map.has(name)) {
+      continue;
+    }
+    map.set(name, 1);
     cookies.push([name, value || '']);
   }
   return cookies;
@@ -129,6 +141,10 @@ export function parseQueryString(
 ): [Query | null, QueryDict | null] {
   // if url is 'example.com?' => s is ''
   // if url is 'example.com'  => s is null
+  if (s && s.startsWith('?')) {
+    s = s.slice(1);
+  }
+
   if (!s) {
     return [null, null];
   }

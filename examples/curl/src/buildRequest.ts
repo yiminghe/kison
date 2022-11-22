@@ -113,7 +113,6 @@ export function buildRequest(
 
   // curl expects you to uppercase methods always. If you do -X PoSt, that's what it
   // will send, but most APIs will helpfully uppercase what you pass in as the method.
-  // TODO: read curl's source to figure out precedence rules.
   let method = 'GET';
   if (parsedArguments.head) {
     method = 'HEAD';

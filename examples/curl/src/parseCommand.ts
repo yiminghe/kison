@@ -1,4 +1,4 @@
-import { tokenize } from './tokenize';
+import { tokenize, TokenizeResult } from './tokenize';
 import {
   curlLongOpts,
   curlShortOpts,
@@ -118,45 +118,42 @@ const parseArgs = (
 };
 
 export function parseCurlCommand(
-  curlCommand: string | string[],
+  curlCommand: string | string[][],
   supportedArgs: Set<string>,
   warnings: string[][],
-): CurlRequest {
-  let cmdName: string,
-    args: string[],
-    stdin: undefined | string,
-    stdinFile: undefined | string;
+) {
+  let cmds: TokenizeResult[] = [];
   if (Array.isArray(curlCommand)) {
-    [cmdName, ...args] = curlCommand;
-    if (typeof cmdName === 'undefined') {
-      throw new Error('no arguments provided');
-    }
+    cmds = curlCommand.map((cmd) => {
+      const [cmdName, ...args] = cmd;
+      return {
+        cmdName,
+        args,
+      };
+    });
   } else {
-    ({ cmdName, args, stdin, stdinFile } = tokenize(curlCommand));
+    cmds = tokenize(curlCommand);
   }
-  if (cmdName.trim() !== 'curl') {
-    const shortenedCmdName =
-      cmdName.length > 30 ? cmdName.slice(0, 27) + '...' : cmdName;
-    if (cmdName.startsWith('curl ')) {
-      throw new Error(
-        'command should begin with a single token "curl" but instead begins with ' +
-          JSON.stringify(shortenedCmdName),
-      );
-    } else {
-      throw new Error(
-        'command should begin with "curl" but instead begins with ' +
-          JSON.stringify(shortenedCmdName),
-      );
+  let reqs: CurlRequest[] = [];
+  for (const { cmdName, args } of cmds) {
+    if (cmdName.trim() !== 'curl') {
+      const shortenedCmdName =
+        cmdName.length > 30 ? cmdName.slice(0, 27) + '...' : cmdName;
+      if (cmdName.startsWith('curl ')) {
+        throw new Error(
+          'command should begin with a single token "curl" but instead begins with ' +
+            JSON.stringify(shortenedCmdName),
+        );
+      } else {
+        throw new Error(
+          'command should begin with "curl" but instead begins with ' +
+            JSON.stringify(shortenedCmdName),
+        );
+      }
     }
+    const parsedArguments = parseArgs(args, curlLongOpts, curlShortOpts);
+    const request = buildRequest(parsedArguments, warnings);
+    reqs.push(request);
   }
-
-  const parsedArguments = parseArgs(args, curlLongOpts, curlShortOpts);
-  const request = buildRequest(parsedArguments, warnings);
-  if (stdinFile) {
-    request.stdinFile = stdinFile;
-  }
-  if (stdin) {
-    request.stdin = stdin;
-  }
-  return request;
+  return reqs;
 }

@@ -41,8 +41,6 @@ export interface CurlRequest {
   queryDict?: QueryDict;
   method: string;
   headers?: CurlHeaders;
-  stdin?: string;
-  stdinFile?: string;
   multipartUploads?: ({
     name: string;
   } & ({ content: string } | { contentFile: string; filename?: string }))[];
@@ -72,7 +70,7 @@ export interface CurlRequest {
 }
 
 // BEGIN GENERATED CURL OPTIONS
-const _curlLongOpts: _LongOpts = {
+export const _curlLongOpts: _LongOpts = {
   url: { type: 'string' },
   'dns-ipv4-addr': { type: 'string' },
   'dns-ipv6-addr': { type: 'string' },

@@ -1,13 +1,12 @@
 import { AstNode, Ast_Command_Node, parser } from 'bash-parse';
 
-interface TokenizeResult {
+export interface TokenizeResult {
   cmdName: string;
   args: string[];
-  stdin?: string | undefined;
-  stdinFile?: string | undefined;
 }
 
-export const tokenize = (curlCommand: string): TokenizeResult => {
+export const tokenize = (curlCommand: string) => {
+  const tokenResult: TokenizeResult[] = [];
   const ret = parser.parse(curlCommand);
   // TODO: support strings with variable expansions inside
   // TODO: support prefixed variables, e.g. "MY_VAR=hello curl example.com"
@@ -18,41 +17,24 @@ export const tokenize = (curlCommand: string): TokenizeResult => {
   const ast = ret.ast;
 
   if (ast.children.length < 1) {
-    throw new Error('empty "program" node');
+    return tokenResult;
   }
 
   // Get the curl call AST node. Skip comments
-  let command: Ast_Command_Node | null = null,
-    lastNode,
-    stdin,
-    stdinFile;
   for (const node of ast.children) {
-    if (node.symbol === 'command') {
-      command = node;
-      lastNode = node;
-      break;
-    } else {
-      throw new Error(
-        'expected a "command"  instead got ' +
-          node.symbol +
-          '\n' +
-          underlineBadNode(curlCommand, node),
-      );
+    if (
+      node.type === 'symbol' &&
+      node.symbol === 'command' &&
+      node.children.length > 1
+    ) {
+      const [cmdName, ...args] = node.children;
+      tokenResult.push({
+        cmdName: toVal(cmdName.children[0], curlCommand),
+        args: args.map((a) => toVal(a.children[0], curlCommand)),
+      });
     }
   }
-  if (!command) {
-    throw new Error('expected a "command" AST node');
-  }
-  if (command.children.length < 1) {
-    throw new Error('empty "command" node');
-  }
-  const [cmdName, ...args] = command.children;
-  return {
-    cmdName: toVal(cmdName.children[0], curlCommand),
-    args: args.map((a) => toVal(a.children[0], curlCommand)),
-    stdin,
-    stdinFile,
-  };
+  return tokenResult;
 };
 
 function toVal(node: AstNode, curlCommand: string): string {

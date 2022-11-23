@@ -1,6 +1,6 @@
 {
   "name": "curl2json",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "author": "yiminghe <yiminghe@gmail.com>",
   "repository": {
     "type": "git",
@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "bash-parse": "0.0.5"
+    "bash-parse": "0.0.6"
   },
   "devDependencies": {
     "@babel/cli": "7.x",
@@ -53,6 +53,7 @@
     "curlconverter": "3.12.0",
     "jest": "27.x",
     "kison": "0.5.x",
+    "monaco-editor": "^0.28.0",
     "pika-plugin-build-web-babel": "^0.11.2",
     "pika-plugin-clean-dist-src": "^0.1.1",
     "pika-plugin-ts-types": "^0.1.5",

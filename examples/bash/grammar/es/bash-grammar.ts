@@ -30,17 +30,14 @@ function generateLexerRulesByKeywords(arr: any[]) {
   return rules;
 }
 
-const LINE_CONTINUATION = `(?:[\\u0020\\t]+_\\r?\\n)`;
-const WS = `(?:(?:${LINE_CONTINUATION}|[\\u0020\\t])+)`;
+const WS = `(?:[\\u0020\\t]+)`;
 const HIDDEN_REG = new RegExp(
   // /\\\n/
   `
   (?:\\\\\\r?\\n)+
   |
 ${WS}
-|
-(?:\\s+)
-|
+  |
 #.*
 `.replace(/\s/g, ''),
   'i',
@@ -57,7 +54,13 @@ export default (options: Kison.Options) => {
   } = options;
   return {
     productions: n.makeProductions([
-      [n.progamName, ...makeOneOrMoreGroup(n.commandName)],
+      [
+        n.progamName,
+        nn.LINE_ENDOptional,
+        n.commandName,
+        ...makeZeroOrMoreGroup(n.LINE_ENDName, n.commandName),
+        nn.LINE_ENDOptional,
+      ],
 
       [n.commandName, ...makeOneOrMoreGroup(n.literalName)],
 
@@ -82,7 +85,7 @@ export default (options: Kison.Options) => {
     lexer: {
       rules: n.makeLexerRules([
         {
-          regexp: /^"/,
+          regexp: /"/,
           token: n.QUOTEName,
           action(this: any) {
             this.userData.stringTag = this.userData.stringTag || [];
@@ -98,7 +101,7 @@ export default (options: Kison.Options) => {
         },
 
         {
-          regexp: /^([^"`$\\]|\\(.|\r?\n))+/,
+          regexp: /([^"`$\\]|\\(.|\r?\n))+/,
           token: n.STRING_CONTENTName,
           predict(this: any) {
             const { stringTag } = this.userData;
@@ -116,6 +119,8 @@ export default (options: Kison.Options) => {
         [n.RAW_STRINGName, /'[^']*'/],
 
         [n.ANSII_C_STRINGName, /\$'([^']|\\')*'/],
+
+        [n.LINE_ENDName, /(\r?\n)+/],
 
         ...generateLexerRulesByMap({}),
 

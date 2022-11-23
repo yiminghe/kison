@@ -7,8 +7,8 @@ export type AstNode = AstSymbolNode | AstTokenNode;
 
 // replace start
 export type AstSymbolNode = Ast_Progam_Node|Ast_Command_Node|Ast_Literal_Node|Ast_String_Node;
-export type AstTokenNode = Ast_$EOF_Node|Ast_$UNKNOWN_Node|Ast_WORD_Node|Ast_RAW_STRING_Node|Ast_ANSII_C_STRING_Node|Ast_DOLLAR_Node|Ast_STRING_CONTENT_Node|Ast_QUOTE_Node;
-export type LiteralToken = "QUOTE"|"STRING_CONTENT"|"WORD"|"RAW_STRING"|"ANSII_C_STRING"|"HIDDEN"|"DOLLAR"|"$EOF"|"$UNKNOWN";
+export type AstTokenNode = Ast_$EOF_Node|Ast_$UNKNOWN_Node|Ast_LINE_END_Node|Ast_WORD_Node|Ast_RAW_STRING_Node|Ast_ANSII_C_STRING_Node|Ast_DOLLAR_Node|Ast_STRING_CONTENT_Node|Ast_QUOTE_Node;
+export type LiteralToken = "QUOTE"|"STRING_CONTENT"|"WORD"|"RAW_STRING"|"ANSII_C_STRING"|"LINE_END"|"HIDDEN"|"DOLLAR"|"$EOF"|"$UNKNOWN";
 export type AstRootNode = Ast_Progam_Node;
 // replace end
 
@@ -114,6 +114,7 @@ literal: Ast_Literal_Node;
 string: Ast_String_Node;
 $EOF: Ast_$EOF_Node;
 $UNKNOWN: Ast_$UNKNOWN_Node;
+LINE_END: Ast_LINE_END_Node;
 WORD: Ast_WORD_Node;
 RAW_STRING: Ast_RAW_STRING_Node;
 ANSII_C_STRING: Ast_ANSII_C_STRING_Node;
@@ -163,88 +164,114 @@ interface Ast_$UNKNOWN_Node_ extends BaseTokenNode {
     }
 export type Ast_$UNKNOWN_Node = Ast_$UNKNOWN_Node_;
 
-        type Ast_Progam_group_def_2_Parent_Node = Ast_Progam_Node;
+        type Ast_Progam_group_def_2_Parent_Node = Ast_Progam_Node_1|Ast_Progam_Node_2|Ast_Progam_Node_3|Ast_Progam_Node_4;
         
 
         type Ast_Command_group_def_4_Parent_Node = Ast_Command_Node;
         
 
-        type Ast_String_group_def_6_Parent_Node_8 = Ast_String_Node;
+        type Ast_String_group_def_6_Parent_Node_11 = Ast_String_Node;
         
 
-        type Ast_String_group_def_6_Parent_Node_9 = Ast_String_Node;
+        type Ast_String_group_def_6_Parent_Node_12 = Ast_String_Node;
         
-type Ast_Progam_group_def_2_Node  = [Ast_Command_Node];
-interface Ast_Progam_Node_ extends BaseSymbolNode {
+interface Ast_LINE_END_Node_ extends BaseTokenNode {
+            token:"LINE_END";
+            parent:Ast_Progam_group_def_2_Parent_Node | Ast_Progam_Node_1 | Ast_Progam_Node_2 | Ast_Progam_Node_3;
+          }
+export type Ast_LINE_END_Node = Ast_LINE_END_Node_;
+type Ast_Progam_group_def_2_Node  = [Ast_LINE_END_Node,Ast_Command_Node];
+interface Ast_Progam_Node_1_ extends BaseSymbolNode {
         symbol:"progam";
         
-        children:[...OneOrMore<Ast_Progam_group_def_2_Node>];
+        children:[Ast_LINE_END_Node,Ast_Command_Node,...ZeroOrMore<Ast_Progam_group_def_2_Node>,Ast_LINE_END_Node];
         
       }
-type Ast_Progam_Node = Ast_Progam_Node_;
+type Ast_Progam_Node_1 = Ast_Progam_Node_1_;
+interface Ast_Progam_Node_2_ extends BaseSymbolNode {
+        symbol:"progam";
+        
+        children:[Ast_LINE_END_Node,Ast_Command_Node,...ZeroOrMore<Ast_Progam_group_def_2_Node>];
+        
+      }
+type Ast_Progam_Node_2 = Ast_Progam_Node_2_;
+interface Ast_Progam_Node_3_ extends BaseSymbolNode {
+        symbol:"progam";
+        
+        children:[Ast_Command_Node,...ZeroOrMore<Ast_Progam_group_def_2_Node>,Ast_LINE_END_Node];
+        
+      }
+type Ast_Progam_Node_3 = Ast_Progam_Node_3_;
+interface Ast_Progam_Node_4_ extends BaseSymbolNode {
+        symbol:"progam";
+        
+        children:[Ast_Command_Node,...ZeroOrMore<Ast_Progam_group_def_2_Node>];
+        
+      }
+type Ast_Progam_Node_4 = Ast_Progam_Node_4_;
 type Ast_Command_group_def_4_Node  = [Ast_Literal_Node];
 interface Ast_Command_Node_ extends BaseSymbolNode {
         symbol:"command";
         
         children:[...OneOrMore<Ast_Command_group_def_4_Node>];
-        parent:Ast_Progam_group_def_2_Parent_Node;
+        parent:Ast_Progam_group_def_2_Parent_Node | Ast_Progam_Node_1 | Ast_Progam_Node_2 | Ast_Progam_Node_3 | Ast_Progam_Node_4;
       }
 type Ast_Command_Node = Ast_Command_Node_;
 interface Ast_WORD_Node_ extends BaseTokenNode {
             token:"WORD";
-            parent:Ast_Literal_Node_4;
+            parent:Ast_Literal_Node_7;
           }
 export type Ast_WORD_Node = Ast_WORD_Node_;
-interface Ast_Literal_Node_4_ extends BaseSymbolNode {
+interface Ast_Literal_Node_7_ extends BaseSymbolNode {
         symbol:"literal";
         
         children:[Ast_WORD_Node];
         parent:Ast_Command_group_def_4_Parent_Node;
       }
-type Ast_Literal_Node_4 = Ast_Literal_Node_4_;
-interface Ast_Literal_Node_5_ extends BaseSymbolNode {
+type Ast_Literal_Node_7 = Ast_Literal_Node_7_;
+interface Ast_Literal_Node_8_ extends BaseSymbolNode {
         symbol:"literal";
         
         children:[Ast_String_Node];
         parent:Ast_Command_group_def_4_Parent_Node;
       }
-type Ast_Literal_Node_5 = Ast_Literal_Node_5_;
+type Ast_Literal_Node_8 = Ast_Literal_Node_8_;
 interface Ast_RAW_STRING_Node_ extends BaseTokenNode {
             token:"RAW_STRING";
-            parent:Ast_Literal_Node_6;
+            parent:Ast_Literal_Node_9;
           }
 export type Ast_RAW_STRING_Node = Ast_RAW_STRING_Node_;
-interface Ast_Literal_Node_6_ extends BaseSymbolNode {
+interface Ast_Literal_Node_9_ extends BaseSymbolNode {
         symbol:"literal";
         
         children:[Ast_RAW_STRING_Node];
         parent:Ast_Command_group_def_4_Parent_Node;
       }
-type Ast_Literal_Node_6 = Ast_Literal_Node_6_;
+type Ast_Literal_Node_9 = Ast_Literal_Node_9_;
 interface Ast_ANSII_C_STRING_Node_ extends BaseTokenNode {
             token:"ANSII_C_STRING";
-            parent:Ast_Literal_Node_7;
+            parent:Ast_Literal_Node_10;
           }
 export type Ast_ANSII_C_STRING_Node = Ast_ANSII_C_STRING_Node_;
-interface Ast_Literal_Node_7_ extends BaseSymbolNode {
+interface Ast_Literal_Node_10_ extends BaseSymbolNode {
         symbol:"literal";
         
         children:[Ast_ANSII_C_STRING_Node];
         parent:Ast_Command_group_def_4_Parent_Node;
       }
-type Ast_Literal_Node_7 = Ast_Literal_Node_7_;
+type Ast_Literal_Node_10 = Ast_Literal_Node_10_;
 interface Ast_DOLLAR_Node_ extends BaseTokenNode {
             token:"DOLLAR";
-            parent:Ast_String_group_def_6_Parent_Node_8;
+            parent:Ast_String_group_def_6_Parent_Node_11;
           }
 export type Ast_DOLLAR_Node = Ast_DOLLAR_Node_;
 interface Ast_STRING_CONTENT_Node_ extends BaseTokenNode {
             token:"STRING_CONTENT";
-            parent:Ast_String_group_def_6_Parent_Node_8 | Ast_String_group_def_6_Parent_Node_9;
+            parent:Ast_String_group_def_6_Parent_Node_11 | Ast_String_group_def_6_Parent_Node_12;
           }
 export type Ast_STRING_CONTENT_Node = Ast_STRING_CONTENT_Node_;
-type Ast_String_group_def_6_Node_8  = [Ast_DOLLAR_Node,Ast_STRING_CONTENT_Node];
-type Ast_String_group_def_6_Node_9  = [Ast_STRING_CONTENT_Node];
+type Ast_String_group_def_6_Node_11  = [Ast_DOLLAR_Node,Ast_STRING_CONTENT_Node];
+type Ast_String_group_def_6_Node_12  = [Ast_STRING_CONTENT_Node];
 interface Ast_QUOTE_Node_ extends BaseTokenNode {
             token:"QUOTE";
             parent:Ast_String_Node;
@@ -254,11 +281,11 @@ interface Ast_String_Node_ extends BaseSymbolNode {
         symbol:"string";
         
         children:[Ast_QUOTE_Node,...ZeroOrMore<Ast_String_group_def_6_Node>,Ast_QUOTE_Node];
-        parent:Ast_Literal_Node_5;
+        parent:Ast_Literal_Node_8;
       }
 type Ast_String_Node = Ast_String_Node_;
-export type { Ast_Progam_Node };
+export type Ast_Progam_Node = Ast_Progam_Node_1 | Ast_Progam_Node_2 | Ast_Progam_Node_3 | Ast_Progam_Node_4;
 export type { Ast_Command_Node };
-export type Ast_Literal_Node = Ast_Literal_Node_4 | Ast_Literal_Node_5 | Ast_Literal_Node_6 | Ast_Literal_Node_7;
-type Ast_String_group_def_6_Node = Ast_String_group_def_6_Node_8 | Ast_String_group_def_6_Node_9;
+export type Ast_Literal_Node = Ast_Literal_Node_7 | Ast_Literal_Node_8 | Ast_Literal_Node_9 | Ast_Literal_Node_10;
+type Ast_String_group_def_6_Node = Ast_String_group_def_6_Node_11 | Ast_String_group_def_6_Node_12;
 export type { Ast_String_Node };

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" type="image/jpg" href="../favicon.ico" />
+    <script src="../common/system.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://unpkg.com/immer@9.0.12/dist/immer.umd.development.js"></script> -->
+    <script type="systemjs-importmap">
+        {
+          "imports": {
+            "bash-parse": "../bash/src/index.ts"
+          }
+        }
+        </script>
+    <script>
+        (function () {
+            window.process={
+                env:{
+                    NODE_ENV:'development'
+                }
+            };
+            const endsWithFileExtension = /\/?\.[a-zA-Z]{2}$/;
+            const originalResolve = System.constructor.prototype.resolve;
+            System.constructor.prototype.resolve = function () {
+                // apply original resolve to make sure importmaps are resolved first
+                const url = originalResolve.apply(this, arguments);
+                // append .js file extension if url is missing a file extension
+                return endsWithFileExtension.test(url) ? url : (url.match(/\/parser(LL|LLK)?$/) ? url + '.js' : url + ".ts");
+            };
+        })();
+    </script>
+    <script src="../common/systemjs-babel.js" crossorigin="anonymous"></script>
+    <style>
+        #loading .spinner {
+            margin: 100px auto;
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            font-size: 10px
+        }
+
+        #loading .spinner>div {
+            background-color: #333;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+            animation: sk-stretchdelay 1.2s infinite ease-in-out
+        }
+
+        #loading .spinner .rect2 {
+            animation-delay: -1.1s
+        }
+
+        #loading .spinner .rect3 {
+            animation-delay: -1s
+        }
+
+        #loading .spinner .rect4 {
+            animation-delay: -.9s
+        }
+
+        #loading .spinner .rect5 {
+            animation-delay: -.8s
+        }
+
+        @keyframes sk-stretchdelay {
+
+            0%,
+            100%,
+            40% {
+                transform: scaleY(.4);
+            }
+
+            20% {
+                transform: scaleY(1);
+            }
+        }
+
+        #cells {
+            display: none;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h1>curl editor</h1>
+
+         
+
+            <h2>demo</h2>
+            <div>
+                &nbsp; <button onclick="localStorage.clear();location.reload();">reset</button>
+                &nbsp; <button id='parse'>parse</button>
+                &nbsp; <button id='toJSON'>toJSON</button>
+                <br />
+                <br />
+            </div>
+
+            <div id='monaco-editor'>
+                <div>
+                    loading monaco-editor....
+                </div>
+                <div id="loading">
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const monacoDev = location.search.indexOf('dev') !== -1 ? 'dev' : 'min';
+                const monacoBase = `https://unpkg.com/monaco-editor@0.27.0/${monacoDev}/vs/`;
+                document.writeln(` <script src="${monacoBase}loader.js"><\/script>`);
+            </script>
+
+            <script>
+                System.import('./app/index');
+            </script>
+            <script>
+                setTimeout(() => {
+                    document.getElementById('footer').innerHTML = `
+            <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+
+    <a class="github-fork-ribbon" href="https://github.com/yiminghe/kison" data-ribbon="Fork me on GitHub"
+        title="Fork me on GitHub">Fork me on GitHub</a>
+            `;
+                }, 1000);
+            </script>
+            <div id="footer"></div>
+
+</body>
+
+</html>

@@ -8,6 +8,7 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "cSpell.words": [
     "curlconverter",
-    "Repr"
+    "Repr",
+    "reqs"
   ]
 }

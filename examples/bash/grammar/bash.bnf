@@ -1,4 +1,4 @@
-progam ::= ( command )+
+progam ::= 'LINE_END'? command ( 'LINE_END' command )* 'LINE_END'?
 command ::= ( literal )+
 literal ::= 'WORD' | string | 'RAW_STRING' | 'ANSII_C_STRING'
 string ::= 'QUOTE' ( 'DOLLAR'? 'STRING_CONTENT' )* 'QUOTE'

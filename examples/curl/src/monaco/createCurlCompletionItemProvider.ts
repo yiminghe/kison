@@ -77,7 +77,8 @@ export function createCurlCompletionItemProvider(
           for (const item of getS()) {
             suggestions.push({
               ...item,
-              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              insertTextRules:
+                monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
               kind: monaco.languages.CompletionItemKind['Field'],
               range,
             });

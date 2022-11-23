@@ -179,6 +179,7 @@ export function buildRequest(
   }
 
   let urlObject = new URL(url); // eslint-disable-line
+
   if (parsedArguments['upload-file']) {
     // TODO: it's more complicated
     if (

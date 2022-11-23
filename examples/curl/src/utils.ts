@@ -169,29 +169,6 @@ export function parseQueryString(
       }
       throw e;
     }
-    try {
-      // If the query string doesn't round-trip, we cannot properly convert it.
-      // TODO: this is too strict. Ideally we want to check how each runtime/library
-      // percent-encodes query strings. For example, a %27 character in the input query
-      // string will be decoded to a ' but won't be re-encoded into a %27 by encodeURIComponent
-      const roundTripKey = percentEncode(decodedKey);
-      const roundTripVal =
-        decodedVal === null ? null : percentEncode(decodedVal);
-      // If the original data used %20 instead of + (what requests will send), that's close enough
-      if (
-        (roundTripKey !== key && roundTripKey.replace(/%20/g, '+') !== key) ||
-        (roundTripVal !== null &&
-          roundTripVal !== val &&
-          roundTripVal.replace(/%20/g, '+') !== val)
-      ) {
-        return [null, null];
-      }
-    } catch (e) {
-      if (e instanceof URIError) {
-        return [null, null];
-      }
-      throw e;
-    }
     asList.push([decodedKey, decodedVal]);
   }
 
@@ -208,7 +185,9 @@ export function parseQueryString(
         // If there's a repeated key with a different key between
         // one of its repetitions, there is no way to represent
         // this query string as a dictionary.
-        return [asList, null];
+        //return [asList, null];
+        // !merge it!
+        (asDict[key] as Array<string | null>).push(val);
       }
     }
     prevKey = key;

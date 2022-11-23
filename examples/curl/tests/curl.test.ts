@@ -143,6 +143,38 @@ curl 'http://en.wikipedia.org/' \\
     `);
   });
 
+  it('post with query works', () => {
+    const code = `
+    curl -X post 'http://ww.x.com/i?t=2&x=1&t=\${uid}' --data 'z=2'
+    `;
+    const r1 = curl2json(code);
+    const r2: any = toJSON(code)[0];
+    expect(r2).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "z": "2",
+        },
+        "headers": Object {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        "method": "post",
+        "queries": Object {
+          "t": Array [
+            "2",
+            "\${uid}",
+          ],
+          "x": "1",
+        },
+        "raw_url": "http://ww.x.com/i?t=2&x=1&t=\${uid}",
+        "url": "http://ww.x.com/i",
+      }
+    `);
+    delete r2.headers;
+    // ??
+    r2.queries!.t![1] = `'${r2.queries!.t[1]}'`;
+    expect(r2).toEqual(r1);
+  });
+
   it('cookie works', () => {
     const code = `
 curl 'http://en.wikipedia.org/' \

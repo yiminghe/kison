@@ -40,7 +40,7 @@ export interface CurlRequest {
   query?: Query;
   queryDict?: QueryDict;
   method: string;
-  headers?: CurlHeaders;
+  headers?: Array<[string, string]>;
   multipartUploads?: ({
     name: string;
   } & ({ content: string } | { contentFile: string; filename?: string }))[];

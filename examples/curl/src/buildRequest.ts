@@ -311,13 +311,15 @@ export function buildRequest(
   }
 
   if (headers.length > 0) {
-    for (let i = headers.length - 1; i >= 0; i--) {
-      if (headers[i][1] === null) {
-        // TODO: ideally we should generate code that explicitly unsets the header too
-        headers.splice(i, 1);
+    const validHeaders: Array<[string, string]> = [];
+    for (const h of headers) {
+      const [key, v] = h;
+      if (v !== null) {
+        validHeaders.push([key, v]);
       }
     }
-    request.headers = headers;
+
+    request.headers = validHeaders;
   }
 
   if (parsedArguments.user) {

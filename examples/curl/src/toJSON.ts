@@ -32,7 +32,7 @@ type JSONOutput = {
   raw_url: string;
   method: string;
   cookies?: { [key: string]: string };
-  headers?: { [key: string]: string | null };
+  headers?: { [key: string]: string };
   queries?: QueryDict;
   data?: { [key: string]: string };
   // raw_data?: string[],

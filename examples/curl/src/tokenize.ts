@@ -22,16 +22,21 @@ export const tokenize = (curlCommand: string) => {
 
   // Get the curl call AST node. Skip comments
   for (const node of ast.children) {
-    if (
-      node.type === 'symbol' &&
-      node.symbol === 'command' &&
-      node.children.length > 1
-    ) {
+    if (node.type === 'symbol' && node.symbol === 'command') {
       const [cmdName, ...args] = node.children;
-      tokenResult.push({
-        cmdName: toVal(cmdName.children[0], curlCommand),
-        args: args.map((a) => toVal(a.children[0], curlCommand)),
-      });
+      const cmd = toVal(cmdName.children[0], curlCommand);
+      if (args.length) {
+        tokenResult.push({
+          cmdName: cmd,
+          args: args.map((a) => toVal(a.children[0], curlCommand)),
+        });
+      } else if (cmd !== 'curl') {
+        throw new Error(
+          `command should begin with "curl" but instead begins with "${cmd}"`,
+        );
+      } else {
+        throw new Error(`curl command has no arguments`);
+      }
     }
   }
   return tokenResult;

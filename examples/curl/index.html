@@ -114,8 +114,8 @@
 
             <script>
                 const monacoDev = location.search.indexOf('dev') !== -1 ? 'dev' : 'min';
-                const monacoBase = `https://unpkg.com/monaco-editor@0.27.0/${monacoDev}/vs/`;
-                document.writeln(` <script src="${monacoBase}loader.js"><\/script>`);
+                const monacoBase = `https://unpkg.com/monaco-editor@0.34.1/${monacoDev}/vs`;
+                document.writeln(` <script src="${monacoBase}/loader.js"><\/script>`);
             </script>
 
             <script>

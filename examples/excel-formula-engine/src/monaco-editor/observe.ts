@@ -41,6 +41,12 @@ let injected = false;
 
 const prefix = `lang-formula-cell`;
 
+function getLanguageId(model: Monaco.editor.ITextModel) {
+  return model.getLanguageId
+    ? model.getLanguageId()
+    : (model as any).getModeId();
+}
+
 function injectStyle() {
   if (injected) {
     return;
@@ -57,7 +63,7 @@ function injectStyle() {
 export default function observe(monaco: typeof Monaco) {
   injectStyle();
 
-  const disposables = [];
+  const disposables: Monaco.IDisposable[] = [];
   const listeners: Record<string, () => void> = {};
   let decorations: string[] = [];
 
@@ -90,7 +96,7 @@ export default function observe(monaco: typeof Monaco) {
   }
 
   function onModelAdded(model: Monaco.editor.ITextModel) {
-    if (model.getModeId() !== langId) {
+    if (getLanguageId(model) !== langId) {
       return;
     }
 
@@ -171,7 +177,7 @@ export default function observe(monaco: typeof Monaco) {
     }
 
     const { expected } = errorNode.error;
-    let markers = [];
+    let markers: Monaco.editor.IMarkerData[] = [];
     const info = {
       severity: monaco.MarkerSeverity.Error,
       startLineNumber: token.firstLine,

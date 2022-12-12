@@ -48,7 +48,7 @@
     "@yiminghe/rr": "1.x",
     "jest": "27.x",
     "kison": "0.5.x",
-    "monaco-editor": "^0.28.0",
+    "monaco-editor": "^0.34.1",
     "pika-plugin-build-web-babel": "^0.11.2",
     "pika-plugin-clean-dist-src": "^0.1.1",
     "pika-plugin-ts-types": "^0.1.5",

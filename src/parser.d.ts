@@ -75,6 +75,8 @@ export interface LexerOptions<T = any> {
   }
 }
 
+
+
 export interface ParserOptions {
   // only for llk, global match improve accuracy but impact parse speed
   globalMatch?: boolean;
@@ -82,6 +84,7 @@ export interface ParserOptions {
   transformNode?: TransformNode | false;
   startSymbol?: string;
   parseTree?: boolean;
+  memoTable?:MemoTableItem[];
   onErrorRecovery?: (args: {
     parseTree: AstNode;
     errorNode: AstErrorNode;

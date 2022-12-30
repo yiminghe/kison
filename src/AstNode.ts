@@ -19,6 +19,7 @@ interface SymbolParams extends Params {
   id: number;
   children?: AstNode[] | undefined;
   symbol: string;
+  maxExaminedPos: number;
   label?: string | undefined;
   isWrap?: boolean | undefined;
   internalRuleIndex?: number | undefined;
@@ -38,7 +39,7 @@ export class BaseAstNode {
   toJSON() {
     const ret: Record<string, any> = {};
     for (const k of Object.keys(this)) {
-      if (k !== 'parent' && k !== 't') {
+      if (k !== 'parent' && k !== 't' && k !== 'maxExaminedPos') {
         const v = (this as any)[k];
         if (v !== undefined) {
           ret[k] = v;
@@ -79,6 +80,8 @@ export class AstSymbolNode extends BaseAstNode {
   ruleIndex: number = -1;
   internalRuleIndex: number = -1;
   isWrap: boolean | undefined;
+  maxExaminedPos: number = -1;
+  //rid=Math.random();
 
   constructor(params: SymbolParams) {
     super();
@@ -88,6 +91,13 @@ export class AstSymbolNode extends BaseAstNode {
     }
     if (params.internalRuleIndex !== undefined) {
       this.ruleIndex = productionRuleIndexMap[this.internalRuleIndex];
+    }
+  }
+
+  copy(symbolNode: AstSymbolNode) {
+    for (const i of Object.keys(symbolNode)) {
+      if (i !== 'id' && i !== 'isWrap' && i !== 'children')
+        (this as any)[i] = (symbolNode as any)[i];
     }
   }
 
@@ -101,17 +111,24 @@ export class AstSymbolNode extends BaseAstNode {
     this.setChildren(this.children);
   }
 
-  done(): boolean {
+  done() {
     if (this.isWrap && this.children.length === 1) {
       const c = this.children[0];
       if (c.type === 'symbol' && c.symbol === this.symbol) {
-        this.label = c.label;
-        this.setChildren(c.children);
-        return false;
+        //this.label = c.label;
+        //this.setChildren(c.children);
+        c.parent = this.parent;
+        if (c.parent) {
+          const childrenIndex = c.parent.children.indexOf(this);
+          if (childrenIndex !== -1) {
+            c.parent.children.splice(childrenIndex, 1, c);
+          }
+        }
+        return { component: c, action: false };
       }
     }
     this.setChildren(this.children);
-    return true;
+    return { component: this, action: true };
   }
 
   setChildren(cs: AstNode[]) {

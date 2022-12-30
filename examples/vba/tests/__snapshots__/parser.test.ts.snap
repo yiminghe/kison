@@ -383,10 +383,9 @@ exports[`vba parser parse comment and line continuation correctly 2`] = `
                                   'id': 28
                                 }
                               ],
-                              'ruleIndex': 88,
-                              'internalRuleIndex': 336,
-                              'id': 20,
-                              'isWrap': true
+                              'ruleIndex': 65,
+                              'internalRuleIndex': 170,
+                              'id': 27
                             }
                           ],
                           'ruleIndex': 46,
@@ -782,10 +781,9 @@ exports[`vba parser parse correctly 2`] = `
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 88,
-                                          'internalRuleIndex': 336,
-                                          'id': 17,
-                                          'isWrap': true
+                                          'ruleIndex': 65,
+                                          'internalRuleIndex': 170,
+                                          'id': 24
                                         }
                                       ],
                                       'ruleIndex': 55,
@@ -966,7 +964,7 @@ exports[`vba parser report error when extra ; 2`] = `
       'id': 3
     },
     {
-      'start': 0,
+      'start': 8,
       'end': 0,
       'firstLine': 0,
       'lastLine': 0,
@@ -976,7 +974,7 @@ exports[`vba parser report error when extra ; 2`] = `
       'type': 'symbol',
       'children': [
         {
-          'start': 0,
+          'start': 8,
           'end': 0,
           'firstLine': 0,
           'lastLine': 0,
@@ -1196,10 +1194,9 @@ exports[`vba parser report error when extra ; 2`] = `
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 88,
-                                          'internalRuleIndex': 336,
-                                          'id': 17,
-                                          'isWrap': true
+                                          'ruleIndex': 65,
+                                          'internalRuleIndex': 170,
+                                          'id': 24
                                         }
                                       ],
                                       'ruleIndex': 55,
@@ -1268,7 +1265,7 @@ exports[`vba parser report error when extra ; 2`] = `
                       'id': 31
                     },
                     {
-                      'start': 0,
+                      'start': 37,
                       'end': 0,
                       'firstLine': 0,
                       'lastLine': 0,
@@ -1278,7 +1275,7 @@ exports[`vba parser report error when extra ; 2`] = `
                       'type': 'symbol',
                       'children': [
                         {
-                          'start': 0,
+                          'start': 37,
                           'end': 0,
                           'firstLine': 0,
                           'lastLine': 0,
@@ -1324,7 +1321,7 @@ exports[`vba parser report error when extra ; 2`] = `
                                   'id': 36
                                 },
                                 {
-                                  'start': 0,
+                                  'start': 39,
                                   'end': 0,
                                   'firstLine': 0,
                                   'lastLine': 0,
@@ -1334,7 +1331,7 @@ exports[`vba parser report error when extra ; 2`] = `
                                   'type': 'symbol',
                                   'children': [
                                     {
-                                      'start': 0,
+                                      'start': 39,
                                       'end': 0,
                                       'firstLine': 0,
                                       'lastLine': 0,
@@ -1390,10 +1387,9 @@ exports[`vba parser report error when extra ; 2`] = `
                                                   'id': 47
                                                 }
                                               ],
-                                              'ruleIndex': 85,
-                                              'internalRuleIndex': 361,
-                                              'id': 44,
-                                              'isWrap': true
+                                              'ruleIndex': 65,
+                                              'internalRuleIndex': 170,
+                                              'id': 46
                                             },
                                             {
                                               'start': 39,
@@ -1546,7 +1542,7 @@ exports[`vba parser report error when missing end sub 2`] = `
       'id': 3
     },
     {
-      'start': 0,
+      'start': 8,
       'end': 0,
       'firstLine': 0,
       'lastLine': 0,
@@ -1556,7 +1552,7 @@ exports[`vba parser report error when missing end sub 2`] = `
       'type': 'symbol',
       'children': [
         {
-          'start': 0,
+          'start': 8,
           'end': 0,
           'firstLine': 0,
           'lastLine': 0,
@@ -1776,10 +1772,9 @@ exports[`vba parser report error when missing end sub 2`] = `
                                               'id': 25
                                             }
                                           ],
-                                          'ruleIndex': 88,
-                                          'internalRuleIndex': 336,
-                                          'id': 17,
-                                          'isWrap': true
+                                          'ruleIndex': 65,
+                                          'internalRuleIndex': 170,
+                                          'id': 24
                                         }
                                       ],
                                       'ruleIndex': 55,
@@ -1960,10 +1955,9 @@ exports[`vba parser report error when missing end sub 2`] = `
                                               'id': 47
                                             }
                                           ],
-                                          'ruleIndex': 88,
-                                          'internalRuleIndex': 336,
-                                          'id': 39,
-                                          'isWrap': true
+                                          'ruleIndex': 65,
+                                          'internalRuleIndex': 170,
+                                          'id': 46
                                         }
                                       ],
                                       'ruleIndex': 55,
@@ -2144,10 +2138,9 @@ exports[`vba parser report error when missing end sub 2`] = `
                                               'id': 69
                                             }
                                           ],
-                                          'ruleIndex': 88,
-                                          'internalRuleIndex': 336,
-                                          'id': 61,
-                                          'isWrap': true
+                                          'ruleIndex': 65,
+                                          'internalRuleIndex': 170,
+                                          'id': 68
                                         }
                                       ],
                                       'ruleIndex': 55,

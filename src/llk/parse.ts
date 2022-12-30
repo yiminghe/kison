@@ -9,8 +9,10 @@ import * as sm from './sm';
 import * as Utils from './utils';
 import type { Unit, PredictParam } from './sm';
 import type { ParseError } from '../types';
-
+import type { Matcher } from '../utils';
 const {
+  isProductionEndFlag,
+  isAddAstNodeFlag,
   AstSymbolNode,
   AstTokenNode,
   isZeroOrMoreSymbol,
@@ -28,6 +30,9 @@ const {
   takeCareLLError,
   checkLLEndError,
   getLabeledRhsForAddNodeFlag,
+  hasMemoizedResult,
+  useMemoizedResult,
+  applyEdit,
 } = utils;
 
 const { isSymbol } = Utils;
@@ -67,6 +72,16 @@ function parse(input: string, options: ParserOptions = {}) {
 
   let error: ParseError | undefined;
 
+  let matcher: Matcher | undefined;
+
+  if (options.memoTable) {
+    matcher = {
+      memoTable: options.memoTable,
+      pos: 0,
+      maxExaminedPos: -1,
+    };
+  }
+
   var {
     getProductionIsWrap,
     productions,
@@ -98,7 +113,9 @@ function parse(input: string, options: ParserOptions = {}) {
 
   let token: Token | undefined = undefined;
 
-  let next = null;
+  let next: null | { ruleIndex: number; unit?: sm.Unit } = {
+    ruleIndex: 0,
+  };
 
   let topSymbol: SymbolItem;
 
@@ -179,6 +196,31 @@ function parse(input: string, options: ParserOptions = {}) {
 
   let production;
 
+  function nextToken(advance: boolean) {
+    if (matcher && token) {
+      matcher.maxExaminedPos = Math.max(matcher.maxExaminedPos, matcher.pos);
+      matcher.pos = token.end;
+    }
+    token = lexer.lex();
+  }
+
+  function checkMatcher() {
+    if (next && matcher) {
+      const { ruleIndex } = next;
+      if (hasMemoizedResult(matcher, ruleIndex)) {
+        const ret = useMemoizedResult(matcher, ruleIndex)!;
+        lexer.setEnd(matcher.pos);
+        nextToken(true);
+        peekStack(astStack).addChild(ret);
+        astStack.push(ret);
+        if (!isZeroOrMoreSymbol(topSymbol)) {
+          popSymbolStack();
+        }
+        return true;
+      }
+    }
+  }
+
   while (1) {
     topSymbol = peekSymbolStack();
 
@@ -186,7 +228,12 @@ function parse(input: string, options: ParserOptions = {}) {
       break;
     }
 
+    if (checkMatcher()) {
+      continue;
+    }
+
     topSymbol = reduceLLAction(
+      matcher,
       parseTree,
       topSymbol,
       popSymbolStack,
@@ -195,8 +242,8 @@ function parse(input: string, options: ParserOptions = {}) {
 
     if (typeof topSymbol === 'string') {
       if (!token) {
-        token = lexer.lex();
-        pushRecoveryTokens(recoveryTokens, token);
+        nextToken(false);
+        pushRecoveryTokens(recoveryTokens, token!);
       }
 
       const normalizedSymbol = normalizeSymbol(topSymbol);
@@ -205,21 +252,25 @@ function parse(input: string, options: ParserOptions = {}) {
 
       if (isSymbol(normalizedSymbol)) {
         next = predictProductionIndexLLK(globalMatch, findSymbolIndex());
-      } else if (normalizedSymbol === token.t || normalizedSymbol === `$ANY`) {
+      } else if (normalizedSymbol === token!.t || normalizedSymbol === `$ANY`) {
         if (!isZeroOrMoreSymbol(topSymbol)) {
           popSymbolStack();
         }
-        const terminalNode = new AstTokenNode(token);
+        const terminalNode = new AstTokenNode(token!);
         terminalNodes.push(terminalNode);
         const parent = peekStack(astStack);
         parent.addChild(terminalNode);
-        token = lexer.lex();
-        pushRecoveryTokens(recoveryTokens, token);
+        nextToken(true);
+        pushRecoveryTokens(recoveryTokens, token!);
         continue;
       } else if (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol)) {
         next = {
           ruleIndex: VIRTUAL_OPTIONAL_RULE_INDEX,
         };
+      }
+
+      if (checkMatcher()) {
+        continue;
       }
 
       if (next && next.unit) {
@@ -245,11 +296,16 @@ function parse(input: string, options: ParserOptions = {}) {
             const newAst = new AstSymbolNode({
               internalRuleIndex: ruleIndex,
               id: ++globalSymbolNodeId,
+              maxExaminedPos: matcher?.maxExaminedPos || -1,
               symbol: getOriginalSymbol(normalizeSymbol(topSymbol)),
               label,
               isWrap,
               children: [],
             });
+            newAst.start = token!.end;
+            if (matcher) {
+              matcher.maxExaminedPos = -1;
+            }
             peekStack(astStack).addChild(newAst);
             astStack.push(newAst);
           }
@@ -306,6 +362,10 @@ function parse(input: string, options: ParserOptions = {}) {
 
   return {
     ast,
+    applyEdit(start: number, end: number, len: number) {
+      applyEdit(matcher!, start, end, len);
+      return { memoTable: matcher!.memoTable };
+    },
     tokens: lexer.tokens,
     recoveryTokens,
     errorNode,

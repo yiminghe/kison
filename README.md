@@ -255,6 +255,10 @@ npx kison@latest -m ll -g cal-grammar.js
 
 ## changelog
 
+### 0.6.0 - 2022/12/31
+
+- support incremental parser
+
 ### 0.5.0 - 2021/09/30
 
 - support '-m llk' support LL(K)

@@ -116,6 +116,7 @@ export default function parse(input: string, options: ParserOptions) {
     }
 
     topSymbol = reduceLLAction(
+      undefined,
       parseTree,
       topSymbol,
       popSymbolStack,
@@ -153,6 +154,7 @@ export default function parse(input: string, options: ParserOptions) {
               id: ++globalSymbolNodeId,
               internalRuleIndex: next[0],
               symbol: getOriginalSymbol(topSymbol),
+              maxExaminedPos: -1,
               label,
               isWrap,
               children: [],

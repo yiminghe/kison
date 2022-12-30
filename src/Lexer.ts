@@ -588,6 +588,11 @@ class Lexer {
     return ret;
   }
 
+  setEnd(end: number) {
+    this.resetInput(this.input);
+    this.end = end;
+  }
+
   lex(): Token {
     const { EOF_TOKEN } = Lexer.STATIC;
 

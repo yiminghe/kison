@@ -33,10 +33,9 @@ exports[`llk add error recovery works 1`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
-      'id': 2,
-      'isWrap': true
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
+      'id': 6
     },
     {
       'start': 1,
@@ -72,15 +71,14 @@ exports[`llk add error recovery works 1`] = `
           'recovery': 'add'
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 7,
-      'id': 13,
-      'isWrap': true
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
+      'id': 12
     }
   ],
-  'ruleIndex': 2,
-  'internalRuleIndex': 4,
-  'id': 14,
+  'ruleIndex': 8,
+  'internalRuleIndex': 2,
+  'id': 8,
   'isWrap': true
 }"
 `;
@@ -236,10 +234,9 @@ exports[`llk ast works 1`] = `
               'text': '1'
             }
           ],
-          'ruleIndex': 2,
-          'internalRuleIndex': 4,
-          'id': 2,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 6
         },
         {
           'start': 1,
@@ -274,14 +271,13 @@ exports[`llk ast works 1`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 7,
-          'id': 13,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 12
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
       'id': 8,
       'isWrap': true
     },
@@ -318,15 +314,14 @@ exports[`llk ast works 1`] = `
           'text': '3'
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 7,
-      'id': 19,
-      'isWrap': true
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
+      'id': 18
     }
   ],
-  'ruleIndex': 2,
-  'internalRuleIndex': 4,
-  'id': 20,
+  'ruleIndex': 8,
+  'internalRuleIndex': 2,
+  'id': 14,
   'isWrap': true
 }"
 `;
@@ -364,10 +359,9 @@ exports[`llk ast works 2`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
-      'id': 2,
-      'isWrap': true
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
+      'id': 6
     },
     {
       'start': 1,
@@ -412,10 +406,9 @@ exports[`llk ast works 2`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 7,
-          'id': 9,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 12
         },
         {
           'start': 3,
@@ -450,21 +443,20 @@ exports[`llk ast works 2`] = `
               'text': '3'
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 9,
-          'id': 14,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 16
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 7,
-      'id': 17,
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
+      'id': 13,
       'isWrap': true
     }
   ],
-  'ruleIndex': 2,
-  'internalRuleIndex': 4,
-  'id': 18,
+  'ruleIndex': 8,
+  'internalRuleIndex': 2,
+  'id': 8,
   'isWrap': true
 }"
 `;
@@ -512,10 +504,9 @@ exports[`llk ast works 3`] = `
               'text': '1'
             }
           ],
-          'ruleIndex': 2,
-          'internalRuleIndex': 4,
-          'id': 2,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 6
         },
         {
           'start': 1,
@@ -560,10 +551,9 @@ exports[`llk ast works 3`] = `
                   'text': '2'
                 }
               ],
-              'ruleIndex': 4,
-              'internalRuleIndex': 7,
-              'id': 9,
-              'isWrap': true
+              'ruleIndex': 8,
+              'internalRuleIndex': 2,
+              'id': 12
             },
             {
               'start': 3,
@@ -598,20 +588,19 @@ exports[`llk ast works 3`] = `
                   'text': '4'
                 }
               ],
-              'ruleIndex': 7,
-              'internalRuleIndex': 9,
-              'id': 14,
-              'isWrap': true
+              'ruleIndex': 8,
+              'internalRuleIndex': 2,
+              'id': 16
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 7,
-          'id': 17,
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 13,
           'isWrap': true
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
       'id': 8,
       'isWrap': true
     },
@@ -658,10 +647,9 @@ exports[`llk ast works 3`] = `
               'text': '5'
             }
           ],
-          'ruleIndex': 6,
-          'internalRuleIndex': 11,
-          'id': 21,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 22
         },
         {
           'start': 7,
@@ -706,10 +694,9 @@ exports[`llk ast works 3`] = `
                   'text': '2'
                 }
               ],
-              'ruleIndex': 6,
-              'internalRuleIndex': 11,
-              'id': 24,
-              'isWrap': true
+              'ruleIndex': 8,
+              'internalRuleIndex': 2,
+              'id': 25
             },
             {
               'start': 9,
@@ -744,10 +731,9 @@ exports[`llk ast works 3`] = `
                   'text': '3'
                 }
               ],
-              'ruleIndex': 7,
-              'internalRuleIndex': 9,
-              'id': 26,
-              'isWrap': true
+              'ruleIndex': 8,
+              'internalRuleIndex': 2,
+              'id': 28
             }
           ],
           'ruleIndex': 7,
@@ -755,15 +741,14 @@ exports[`llk ast works 3`] = `
           'id': 23
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 7,
-      'id': 29,
-      'isWrap': true
+      'ruleIndex': 7,
+      'internalRuleIndex': 10,
+      'id': 20
     }
   ],
-  'ruleIndex': 2,
-  'internalRuleIndex': 4,
-  'id': 30,
+  'ruleIndex': 8,
+  'internalRuleIndex': 2,
+  'id': 18,
   'isWrap': true
 }"
 `;
@@ -844,10 +829,9 @@ exports[`llk error detection works 1`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 2,
-      'internalRuleIndex': 4,
-      'id': 2,
-      'isWrap': true
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
+      'id': 6
     },
     {
       'start': 1,
@@ -892,10 +876,9 @@ exports[`llk error detection works 1`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 7,
-          'id': 9,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 12
         },
         {
           'start': 3,
@@ -942,14 +925,14 @@ exports[`llk error detection works 1`] = `
           }
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 7,
+      'ruleIndex': 8,
+      'internalRuleIndex': 2,
       'id': 13,
       'isWrap': true
     }
   ],
-  'ruleIndex': 2,
-  'internalRuleIndex': 4,
+  'ruleIndex': 8,
+  'internalRuleIndex': 2,
   'id': 8,
   'isWrap': true
 }"

@@ -187,6 +187,7 @@ const globalUtils = {
   },
 
   reduceLLAction<T>(
+    matcher: Matcher | undefined,
     parseTree: boolean,
     topSymbol: T,
     popSymbolStack: Function,
@@ -195,7 +196,16 @@ const globalUtils = {
     while (isProductionEndFlag(topSymbol) || isAddAstNodeFlag(topSymbol)) {
       if (parseTree) {
         let ast = astStack.pop()!;
-        const needAction = ast.done();
+        const ret = ast.done();
+        ast = ret.component;
+        const needAction = ret.action;
+        if (matcher) {
+          memoizeResult(matcher, ast.start, ast.internalRuleIndex, ast);
+          matcher.maxExaminedPos = Math.max(
+            matcher.maxExaminedPos,
+            ast.maxExaminedPos,
+          );
+        }
         if (needAction) {
           const ruleIndex = ast.internalRuleIndex;
           const production = parser.productions[ruleIndex];
@@ -211,9 +221,12 @@ const globalUtils = {
             isWrap: true,
             symbol: ast.symbol,
             label: ast.label,
+            maxExaminedPos: ast.maxExaminedPos,
             children: [ast],
             internalRuleIndex: ast.internalRuleIndex,
           });
+          wrap.start = ast.start;
+          wrap.copy(ast);
           stackTop.children.pop();
           stackTop.addChild(wrap);
           astStack.push(wrap);
@@ -235,6 +248,7 @@ const globalUtils = {
     astStack = [
       new AstSymbolNode({
         id: 0,
+        maxExaminedPos: -1,
         symbol: '',
         children: [],
       }),
@@ -434,6 +448,75 @@ const globalUtils = {
   isProductionEndFlag(t: any) {
     return t === productionEndFlag;
   },
+
+  hasMemoizedResult(match: Matcher, ruleIndex: number) {
+    var col = match.memoTable[match.pos];
+    return col && col.memo.has(ruleIndex);
+  },
+  memoizeResult(
+    match: Matcher,
+    pos: number,
+    ruleIndex: number,
+    ast: AstSymbolNodeType | null,
+  ) {
+    var col = match.memoTable[pos];
+    if (!col) {
+      col = match.memoTable[pos] = {
+        memo: new Map(),
+        maxExaminedLength: -1,
+      };
+    }
+    var examinedLength = match.maxExaminedPos - pos + 1;
+    if (ast) {
+      col.memo.set(ruleIndex, {
+        ast,
+        matchLength: match.pos - pos,
+        examinedLength,
+      });
+    } else {
+      col.memo.set(ruleIndex, {
+        ast: null,
+        examinedLength,
+      });
+    }
+    col.maxExaminedLength = Math.max(col.maxExaminedLength, examinedLength);
+  },
+  useMemoizedResult(match: Matcher, ruleIndex: number) {
+    var col = match.memoTable[match.pos];
+    var result = col.memo.get(ruleIndex)!;
+    match.maxExaminedPos = Math.max(
+      match.maxExaminedPos,
+      match.pos + result.examinedLength - 1,
+    );
+    if (result.ast) {
+      match.pos += result.matchLength!;
+    }
+    return result.ast;
+  },
+  applyEdit(match: Matcher, startPos: number, endPos: number, rLength: number) {
+    const { memoTable } = match;
+    match.memoTable = [
+      ...memoTable.slice(0, startPos),
+      ...new Array(rLength).fill(null),
+      ...memoTable.slice(endPos),
+    ];
+    for (var pos = 0; pos < startPos; pos++) {
+      var col = memoTable[pos];
+      if (col && pos + col.maxExaminedLength > startPos) {
+        var newMax = 0;
+        for (var [ruleIndex, entry] of col.memo.entries()) {
+          var { examinedLength } = entry;
+          if (pos + examinedLength > startPos) {
+            col.memo.delete(ruleIndex);
+          } else if (examinedLength > newMax) {
+            newMax = examinedLength;
+          }
+        }
+        col.maxExaminedLength = newMax;
+      }
+    }
+  },
+
   ...symbolUtils,
 };
 
@@ -574,6 +657,22 @@ const utils = {
     }
   },
 };
+export interface MemoTableItem {
+  memo: Map<
+    number,
+    {
+      ast: AstSymbolNodeType | null;
+      matchLength?: number;
+      examinedLength: number;
+    }
+  >;
+  maxExaminedLength: number;
+}
+export interface Matcher {
+  memoTable: MemoTableItem[];
+  pos: number;
+  maxExaminedPos: number;
+}
 
 const {
   cleanAst,
@@ -587,6 +686,7 @@ const {
   closeAstWhenError,
   getOriginalSymbol,
   pushRecoveryTokens,
+  memoizeResult,
 } = utils;
 
 for (const k of Object.keys(util)) {

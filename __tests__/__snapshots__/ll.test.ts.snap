@@ -33,10 +33,8 @@ exports[`ll add error recovery works 2`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 6,
-      'id': 2,
-      'isWrap': true
+      'internalRuleIndex': 13,
+      'id': 4
     },
     {
       'start': 1,
@@ -72,15 +70,12 @@ exports[`ll add error recovery works 2`] = `
           'recovery': 'add'
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 10,
-      'id': 13,
-      'isWrap': true
+      'internalRuleIndex': 13,
+      'id': 10
     }
   ],
-  'ruleIndex': 4,
-  'internalRuleIndex': 6,
-  'id': 14,
+  'internalRuleIndex': 13,
+  'id': 8,
   'isWrap': true
 }"
 `;
@@ -128,10 +123,8 @@ exports[`ll ast works 1`] = `
               'text': '1'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 6,
-          'id': 2,
-          'isWrap': true
+          'internalRuleIndex': 13,
+          'id': 4
         },
         {
           'start': 1,
@@ -166,14 +159,11 @@ exports[`ll ast works 1`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 10,
-          'id': 13,
-          'isWrap': true
+          'internalRuleIndex': 13,
+          'id': 10
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 6,
+      'internalRuleIndex': 13,
       'id': 8,
       'isWrap': true
     },
@@ -210,15 +200,12 @@ exports[`ll ast works 1`] = `
           'text': '3'
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 10,
-      'id': 19,
-      'isWrap': true
+      'internalRuleIndex': 13,
+      'id': 16
     }
   ],
-  'ruleIndex': 4,
-  'internalRuleIndex': 6,
-  'id': 20,
+  'internalRuleIndex': 13,
+  'id': 14,
   'isWrap': true
 }"
 `;
@@ -256,10 +243,8 @@ exports[`ll ast works 2`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 6,
-      'id': 2,
-      'isWrap': true
+      'internalRuleIndex': 13,
+      'id': 4
     },
     {
       'start': 1,
@@ -304,10 +289,8 @@ exports[`ll ast works 2`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 10,
-          'id': 9,
-          'isWrap': true
+          'internalRuleIndex': 13,
+          'id': 10
         },
         {
           'start': 3,
@@ -346,15 +329,13 @@ exports[`ll ast works 2`] = `
           'id': 14
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 10,
-      'id': 17,
+      'internalRuleIndex': 13,
+      'id': 13,
       'isWrap': true
     }
   ],
-  'ruleIndex': 4,
-  'internalRuleIndex': 6,
-  'id': 18,
+  'internalRuleIndex': 13,
+  'id': 8,
   'isWrap': true
 }"
 `;
@@ -402,10 +383,8 @@ exports[`ll ast works 3`] = `
               'text': '1'
             }
           ],
-          'ruleIndex': 4,
-          'internalRuleIndex': 6,
-          'id': 2,
-          'isWrap': true
+          'internalRuleIndex': 13,
+          'id': 4
         },
         {
           'start': 1,
@@ -450,10 +429,8 @@ exports[`ll ast works 3`] = `
                   'text': '2'
                 }
               ],
-              'ruleIndex': 7,
-              'internalRuleIndex': 10,
-              'id': 9,
-              'isWrap': true
+              'internalRuleIndex': 13,
+              'id': 10
             },
             {
               'start': 3,
@@ -492,14 +469,12 @@ exports[`ll ast works 3`] = `
               'id': 14
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 10,
-          'id': 17,
+          'internalRuleIndex': 13,
+          'id': 13,
           'isWrap': true
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 6,
+      'internalRuleIndex': 13,
       'id': 8,
       'isWrap': true
     },
@@ -546,9 +521,9 @@ exports[`ll ast works 3`] = `
               'text': '5'
             }
           ],
-          'internalRuleIndex': 14,
-          'id': 21,
-          'isWrap': true
+          'ruleIndex': 8,
+          'internalRuleIndex': 2,
+          'id': 22
         },
         {
           'start': 7,
@@ -593,9 +568,9 @@ exports[`ll ast works 3`] = `
                   'text': '2'
                 }
               ],
-              'internalRuleIndex': 14,
-              'id': 24,
-              'isWrap': true
+              'ruleIndex': 8,
+              'internalRuleIndex': 2,
+              'id': 25
             },
             {
               'start': 9,
@@ -638,15 +613,12 @@ exports[`ll ast works 3`] = `
           'id': 23
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 10,
-      'id': 29,
-      'isWrap': true
+      'internalRuleIndex': 13,
+      'id': 20
     }
   ],
-  'ruleIndex': 4,
-  'internalRuleIndex': 6,
-  'id': 30,
+  'internalRuleIndex': 13,
+  'id': 18,
   'isWrap': true
 }"
 `;
@@ -684,10 +656,8 @@ exports[`ll error detection works 1`] = `
           'text': '1'
         }
       ],
-      'ruleIndex': 4,
-      'internalRuleIndex': 6,
-      'id': 2,
-      'isWrap': true
+      'internalRuleIndex': 13,
+      'id': 4
     },
     {
       'start': 1,
@@ -732,10 +702,8 @@ exports[`ll error detection works 1`] = `
               'text': '2'
             }
           ],
-          'ruleIndex': 7,
-          'internalRuleIndex': 10,
-          'id': 9,
-          'isWrap': true
+          'internalRuleIndex': 13,
+          'id': 10
         },
         {
           'start': 3,
@@ -782,14 +750,12 @@ exports[`ll error detection works 1`] = `
           }
         }
       ],
-      'ruleIndex': 7,
-      'internalRuleIndex': 10,
+      'internalRuleIndex': 13,
       'id': 13,
       'isWrap': true
     }
   ],
-  'ruleIndex': 4,
-  'internalRuleIndex': 6,
+  'internalRuleIndex': 13,
   'id': 8,
   'isWrap': true
 }"

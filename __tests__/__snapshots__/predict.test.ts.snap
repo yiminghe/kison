@@ -75,7 +75,7 @@ exports[`llk predict simple predict 1`] = `
                   'text': '1'
                 },
                 {
-                  'start': 0,
+                  'start': 7,
                   'end': 0,
                   'firstLine': 0,
                   'lastLine': 0,
@@ -188,7 +188,7 @@ exports[`llk predict simple predict 1`] = `
                       'text': '1'
                     },
                     {
-                      'start': 0,
+                      'start': 13,
                       'end': 0,
                       'firstLine': 0,
                       'lastLine': 0,

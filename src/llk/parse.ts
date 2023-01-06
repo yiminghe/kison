@@ -74,9 +74,15 @@ function parse(input: string, options: ParserOptions = {}) {
 
   let matcher: Matcher | undefined;
 
-  if (options.memoTable) {
+  if (options.incremental) {
     matcher = {
-      memoTable: options.memoTable,
+      incremental: {
+        table: [],
+        start: -1,
+        end: -1,
+        len: -1,
+        ...options.incremental,
+      },
       pos: 0,
       maxExaminedPos: -1,
     };
@@ -196,7 +202,7 @@ function parse(input: string, options: ParserOptions = {}) {
 
   let production;
 
-  function nextToken(advance: boolean) {
+  function nextToken() {
     if (matcher && token) {
       matcher.maxExaminedPos = Math.max(matcher.maxExaminedPos, matcher.pos);
       matcher.pos = token.end;
@@ -210,7 +216,7 @@ function parse(input: string, options: ParserOptions = {}) {
       if (hasMemoizedResult(matcher, ruleIndex)) {
         const ret = useMemoizedResult(matcher, ruleIndex)!;
         lexer.setEnd(matcher.pos);
-        nextToken(true);
+        nextToken();
         peekStack(astStack).addChild(ret);
         astStack.push(ret);
         if (!isZeroOrMoreSymbol(topSymbol)) {
@@ -242,7 +248,7 @@ function parse(input: string, options: ParserOptions = {}) {
 
     if (typeof topSymbol === 'string') {
       if (!token) {
-        nextToken(false);
+        nextToken();
         pushRecoveryTokens(recoveryTokens, token!);
       }
 
@@ -260,7 +266,7 @@ function parse(input: string, options: ParserOptions = {}) {
         terminalNodes.push(terminalNode);
         const parent = peekStack(astStack);
         parent.addChild(terminalNode);
-        nextToken(true);
+        nextToken();
         pushRecoveryTokens(recoveryTokens, token!);
         continue;
       } else if (isZeroOrMoreSymbol(topSymbol) || isOptionalSymbol(topSymbol)) {
@@ -364,8 +370,9 @@ function parse(input: string, options: ParserOptions = {}) {
     ast,
     applyEdit(start: number, end: number, len: number) {
       applyEdit(matcher!, start, end, len);
-      return { memoTable: matcher!.memoTable };
+      return { ...matcher!.incremental, start, end, len };
     },
+    incremental: matcher?.incremental,
     tokens: lexer.tokens,
     recoveryTokens,
     errorNode,

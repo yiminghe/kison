@@ -3,14 +3,13 @@ import LLKGrammar from '../src/llk/LLKGrammar';
 import calGrammar from '../examples/cal-ll/action/cal-grammar';
 import { prettyJson, run } from './utils';
 
-describe.only('llk incremental', () => {
-  it.only('ast works', () => {
+describe('llk incremental', () => {
+  it('ast works', () => {
     var grammar = new LLKGrammar(calGrammar());
     const code = grammar.genCode();
     const parser = run(code);
-    let memoTable: any = [];
-    debugger;
-    let { ast } = parser.parse('1+2+3', { memoTable });
+    let { incremental, ast } = parser.parse('1+2+3', { incremental: {} });
+
     expect(prettyJson(ast)).toMatchInlineSnapshot(`
       "{
         'start': 0,
@@ -146,11 +145,10 @@ describe.only('llk incremental', () => {
       }"
     `);
 
-    const ret2 = parser.parse('1+2+3', { memoTable });
+    const ret2 = parser.parse('1+2+3', { incremental });
     expect(ret2.ast === ast).toBe(true);
-    const memoTableRet = ret2.applyEdit(2, 3, 1);
-
-    const ret3 = parser.parse('1+4+3', { memoTable: memoTableRet.memoTable });
+    const incrementalRet = ret2.applyEdit(2, 3, 2);
+    const ret3 = parser.parse('1+44+3', { incremental: incrementalRet });
 
     expect(ret3.ast === ast).toBe(false);
     expect(ret3.ast.children[0] === ast.children[0]).toBe(false);
@@ -162,7 +160,7 @@ describe.only('llk incremental', () => {
     expect(prettyJson(ret3.ast)).toMatchInlineSnapshot(`
       "{
         'start': 0,
-        'end': 5,
+        'end': 6,
         'firstLine': 1,
         'lastLine': 1,
         'firstColumn': 1,
@@ -172,11 +170,11 @@ describe.only('llk incremental', () => {
         'children': [
           {
             'start': 0,
-            'end': 3,
+            'end': 4,
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 1,
-            'lastColumn': 4,
+            'lastColumn': 5,
             'symbol': 'exp',
             'type': 'symbol',
             'children': [
@@ -219,24 +217,24 @@ describe.only('llk incremental', () => {
               },
               {
                 'start': 2,
-                'end': 3,
+                'end': 4,
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 3,
-                'lastColumn': 4,
+                'lastColumn': 5,
                 'symbol': 'exp',
                 'type': 'symbol',
                 'children': [
                   {
                     'start': 2,
-                    'end': 3,
+                    'end': 4,
                     'firstLine': 1,
                     'lastLine': 1,
                     'firstColumn': 3,
-                    'lastColumn': 4,
+                    'lastColumn': 5,
                     'token': 'NUMBER',
                     'type': 'token',
-                    'text': '4'
+                    'text': '44'
                   }
                 ],
                 'ruleIndex': 8,
@@ -250,19 +248,19 @@ describe.only('llk incremental', () => {
             'isWrap': true
           },
           {
-            'start': 3,
-            'end': 4,
+            'start': 4,
+            'end': 5,
             'firstLine': 1,
             'lastLine': 1,
-            'firstColumn': 4,
-            'lastColumn': 5,
+            'firstColumn': 5,
+            'lastColumn': 6,
             'token': '+',
             'type': 'token',
             'text': '+'
           },
           {
-            'start': 4,
-            'end': 5,
+            'start': 5,
+            'end': 6,
             'firstLine': 1,
             'lastLine': 1,
             'firstColumn': 5,
@@ -271,8 +269,8 @@ describe.only('llk incremental', () => {
             'type': 'symbol',
             'children': [
               {
-                'start': 4,
-                'end': 5,
+                'start': 5,
+                'end': 6,
                 'firstLine': 1,
                 'lastLine': 1,
                 'firstColumn': 5,

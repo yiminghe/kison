@@ -84,7 +84,12 @@ export interface ParserOptions {
   transformNode?: TransformNode | false;
   startSymbol?: string;
   parseTree?: boolean;
-  memoTable?:MemoTableItem[];
+  incremental?: {
+    table?: MemoTableItem[];
+    start?: number;
+    end?: number;
+    len?: number;
+  };
   onErrorRecovery?: (args: {
     parseTree: AstNode;
     errorNode: AstErrorNode;

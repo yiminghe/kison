@@ -7,7 +7,7 @@ import type {
   AstErrorNode as AstErrorNodeType,
 } from './AstNode';
 import data from './data';
-import type { Token } from './parser';
+import type { ParserOptions, Token } from './parser';
 import type { ParseError, Rhs, TransformNode } from './types';
 import type { ProductionRule } from './Grammar';
 import { symbolUtils } from './options';
@@ -450,7 +450,7 @@ const globalUtils = {
   },
 
   hasMemoizedResult(match: Matcher, ruleIndex: number) {
-    var col = match.memoTable[match.pos];
+    var col = match.incremental.table[match.pos];
     return col && col.memo.has(ruleIndex);
   },
   memoizeResult(
@@ -459,9 +459,9 @@ const globalUtils = {
     ruleIndex: number,
     ast: AstSymbolNodeType | null,
   ) {
-    var col = match.memoTable[pos];
+    var col = match.incremental.table[pos];
     if (!col) {
-      col = match.memoTable[pos] = {
+      col = match.incremental.table[pos] = {
         memo: new Map(),
         maxExaminedLength: -1,
       };
@@ -481,27 +481,45 @@ const globalUtils = {
     }
     col.maxExaminedLength = Math.max(col.maxExaminedLength, examinedLength);
   },
+  fixMemoPosition(node: AstNodeType, end: number, diff: number) {
+    if (node.start >= end) {
+      node.start += diff;
+      node.end += diff;
+    }
+    if (node.type === 'symbol') {
+      for (const c of node.children) {
+        fixMemoPosition(c, end, diff);
+      }
+    }
+  },
   useMemoizedResult(match: Matcher, ruleIndex: number) {
-    var col = match.memoTable[match.pos];
+    var col = match.incremental.table[match.pos];
     var result = col.memo.get(ruleIndex)!;
     match.maxExaminedPos = Math.max(
       match.maxExaminedPos,
       match.pos + result.examinedLength - 1,
     );
     if (result.ast) {
+      const { start, end, len } = match.incremental;
+      if (start !== -1) {
+        const diff = len - (end - start);
+        if (diff) {
+          fixMemoPosition(result.ast, end, diff);
+        }
+      }
       match.pos += result.matchLength!;
     }
     return result.ast;
   },
   applyEdit(match: Matcher, startPos: number, endPos: number, rLength: number) {
-    const { memoTable } = match;
-    match.memoTable = [
-      ...memoTable.slice(0, startPos),
+    const { table } = match.incremental;
+    match.incremental.table = [
+      ...table.slice(0, startPos),
       ...new Array(rLength).fill(null),
-      ...memoTable.slice(endPos),
+      ...table.slice(endPos),
     ];
     for (var pos = 0; pos < startPos; pos++) {
-      var col = memoTable[pos];
+      var col = table[pos];
       if (col && pos + col.maxExaminedLength > startPos) {
         var newMax = 0;
         for (var [ruleIndex, entry] of col.memo.entries()) {
@@ -669,7 +687,7 @@ export interface MemoTableItem {
   maxExaminedLength: number;
 }
 export interface Matcher {
-  memoTable: MemoTableItem[];
+  incremental: Required<Required<ParserOptions>['incremental']>;
   pos: number;
   maxExaminedPos: number;
 }
@@ -687,6 +705,7 @@ const {
   getOriginalSymbol,
   pushRecoveryTokens,
   memoizeResult,
+  fixMemoPosition,
 } = utils;
 
 for (const k of Object.keys(util)) {

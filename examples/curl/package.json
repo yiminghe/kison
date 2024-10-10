@@ -49,7 +49,7 @@
     "@types/cookie": "0.5.1",
     "@types/jest": "27.x",
     "@yiminghe/rr": "1.x",
-    "cookie": "0.5.0",
+    "cookie": "0.7.0",
     "curlconverter": "3.12.0",
     "jest": "27.x",
     "kison": "0.5.x",

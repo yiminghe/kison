@@ -3515,10 +3515,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:0.5.0":
-  version: 0.5.0
-  resolution: "cookie@npm:0.5.0"
-  checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+"cookie@npm:0.7.0":
+  version: 0.7.0
+  resolution: "cookie@npm:0.7.0"
+  checksum: c57551593f20212aaf8128433ace5bab788072100c0f3dec284392fec6ad013fb69f8ff1344b20a778df049d538c1951a892e8cb5632bbeeec24b59b7e59f94c
   languageName: node
   linkType: hard
 
@@ -3767,7 +3767,7 @@ __metadata:
     "@types/jest": 27.x
     "@yiminghe/rr": 1.x
     bash-parse: 0.0.6
-    cookie: 0.5.0
+    cookie: 0.7.0
     curlconverter: 3.12.0
     jest: 27.x
     kison: 0.5.x
@@ -7199,7 +7199,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kison@0.5.x, kison@workspace:.":
+"kison@npm:0.5.x":
+  version: 0.5.48
+  resolution: "kison@npm:0.5.48"
+  dependencies:
+    commander: 2.x
+    debug: 4.x
+    esbuild: ^0.14.10
+    modulex-util: 1.x
+  bin:
+    kison: bin/kison.js
+  checksum: a325d60f61a6fca9131d513eb7b95c4fa9bde7dce446a30499ff09075461ba7047e943219fb8c3f7f0de114253b027d8d83ead4892f8aaf0685c7d22a7d82e4f
+  languageName: node
+  linkType: hard
+
+"kison@workspace:.":
   version: 0.0.0-use.local
   resolution: "kison@workspace:."
   dependencies:
